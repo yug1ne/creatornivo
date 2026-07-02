@@ -5,7 +5,7 @@ import type { LegalSection } from "./types";
 export const termsOfServiceMeta = {
   title: "Terms of Service",
   effectiveDate: "July 2, 2026",
-  lastUpdated: "July 2, 2026",
+  lastUpdated: "July 3, 2026",
 } as const;
 
 export const termsOfServiceSections: LegalSection[] = [
@@ -108,7 +108,7 @@ export const termsOfServiceSections: LegalSection[] = [
     id: "payments-and-subscriptions",
     title: "Payments and Subscriptions",
     paragraphs: [
-      "Creatornivo offers free and paid subscription plans. Paid plans (such as Pro) are billed on a recurring basis through our payment processor, Stripe, unless otherwise stated at checkout.",
+      "Creatornivo offers free and paid subscription plans. Payments are processed by Paddle, our payment processor and Merchant of Record. Paid plans (such as Pro) are billed on a recurring basis unless otherwise stated at checkout.",
     ],
     list: [
       "Prices are displayed in U.S. dollars unless otherwise noted and may change with reasonable notice. Promotional or early-access pricing applies only while explicitly offered and within stated limits.",
@@ -208,7 +208,7 @@ export const termsOfServiceSections: LegalSection[] = [
     list: [
       `Email: ${siteConfig.legal.legalEmail}`,
       `Product: ${siteConfig.name} — AI Prompt Toolkit`,
-      `Website: ${siteConfig.url}/terms`,
+      "Website: https://www.creatornivo.com/terms",
     ],
   },
 ];

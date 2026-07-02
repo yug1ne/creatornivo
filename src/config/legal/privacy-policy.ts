@@ -7,7 +7,7 @@ export type { LegalSection } from "./types";
 export const privacyPolicyMeta = {
   title: "Privacy Policy",
   effectiveDate: "July 2, 2026",
-  lastUpdated: "July 2, 2026",
+  lastUpdated: "July 3, 2026",
 } as const;
 
 export const privacyPolicySections: LegalSection[] = [
@@ -77,7 +77,7 @@ export const privacyPolicySections: LegalSection[] = [
     ],
     list: [
       "AI processing providers: When you generate content, the assembled prompt and necessary context are transmitted to third-party AI infrastructure providers (such as OpenAI or comparable model providers) strictly to fulfill your generation request. These providers process data under their own terms and privacy policies and are not permitted to use your content to train models on your behalf unless you separately opt in with that provider.",
-      "Payment processing: If you purchase a Pro subscription, billing information is processed by Stripe. We receive subscription status, customer identifiers, and limited billing metadata — not your full card details.",
+      "Payment processing: Payments are processed by Paddle, our payment processor and Merchant of Record. We receive subscription status, customer identifiers, and limited billing metadata — not your full card details.",
       "Infrastructure providers: We use cloud hosting, database, and email delivery vendors that process data on our behalf under data processing agreements and only as instructed by us.",
       "Legal and safety: We may disclose information if required by law, court order, or governmental request, or when we believe disclosure is necessary to protect the rights, property, or safety of Creatornivo, our users, or the public.",
       "Business transfers: If we are involved in a merger, acquisition, or asset sale, your information may be transferred as part of that transaction, subject to continued protections consistent with this policy.",
@@ -193,7 +193,7 @@ export const privacyPolicySections: LegalSection[] = [
     list: [
       `Email: ${siteConfig.legal.privacyEmail}`,
       `Product: ${siteConfig.name} — AI Prompt Toolkit`,
-      `Website: ${siteConfig.url}/privacy`,
+      "Website: https://www.creatornivo.com/privacy",
     ],
   },
 ];

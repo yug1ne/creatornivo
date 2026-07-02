@@ -5,7 +5,7 @@ import type { LegalSection } from "./types";
 export const refundPolicyMeta = {
   title: "Refund Policy",
   effectiveDate: "July 2, 2026",
-  lastUpdated: "July 2, 2026",
+  lastUpdated: "July 3, 2026",
 } as const;
 
 /** Generations above this count during the guarantee window void eligibility. */
@@ -16,7 +16,7 @@ export const refundPolicySections: LegalSection[] = [
     id: "introduction",
     title: "Introduction",
     paragraphs: [
-      `This Refund Policy explains when and how you may request a refund for paid subscriptions to ${siteConfig.name} ("Creatornivo," "we," "us," or "our"). It applies to purchases made through our website and processed by Stripe.`,
+      `This Refund Policy explains when and how you may request a refund for paid subscriptions to ${siteConfig.name} ("Creatornivo," "we," "us," or "our"). It applies to purchases made through our website. Payments are processed by Paddle, our payment processor and Merchant of Record.`,
       "We want you to be confident when upgrading to Pro. If the Service is not a good fit, our 14-day money-back guarantee gives you a fair window to try it — while protecting against abuse of AI generation resources.",
       "This policy supplements our Terms of Service. Where they conflict on refund matters, this Refund Policy controls.",
     ],
@@ -62,7 +62,7 @@ export const refundPolicySections: LegalSection[] = [
       {
         title: "Why usage limits apply",
         paragraphs: [
-          "Pro subscriptions include access to AI infrastructure with real per-generation costs. The usage thresholds above are designed to be generous for genuine evaluation while preventing refund abuse. Most users evaluating Creatornivo for content workflows will remain well below these limits during a two-week trial.",
+          "Pro subscriptions include access to AI infrastructure with real per-generation costs. The usage thresholds above are designed to be generous for genuine evaluation while preventing refund abuse. Most users evaluating Creatornivo for content workflows will remain well below these limits during the 14-day guarantee period.",
         ],
       },
       {
@@ -89,7 +89,7 @@ export const refundPolicySections: LegalSection[] = [
       {
         title: "Review process",
         paragraphs: [
-          "We review refund requests within 3–5 business days. We may ask clarifying questions or verify account usage. If approved, refunds are issued to the original payment method through Stripe.",
+          "We review refund requests within 3–5 business days. We may ask clarifying questions or verify account usage. If approved, refunds are issued to the original payment method through Paddle.",
           "Depending on your financial institution, it may take an additional 5–10 business days for the refund to appear on your statement.",
         ],
       },
@@ -133,7 +133,7 @@ export const refundPolicySections: LegalSection[] = [
     list: [
       `Email: ${siteConfig.legal.billingEmail}`,
       `Product: ${siteConfig.name} — AI Prompt Toolkit`,
-      `Website: ${siteConfig.url}/refund-policy`,
+      "Website: https://www.creatornivo.com/refund-policy",
     ],
   },
 ];
