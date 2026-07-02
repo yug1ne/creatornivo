@@ -26,7 +26,7 @@ export function ProPlanPricing({ status, size = "md" }: ProPlanPricingProps) {
     <div className="mt-4 space-y-2">
       <div className="flex flex-wrap items-center gap-2">
         <Badge variant="pro">{earlyAccessConfig.badgeLabel}</Badge>
-        <Badge variant="success">{status.discountPercent}% off</Badge>
+        <Badge variant="success">Founding price</Badge>
       </div>
       <div className="flex flex-wrap items-baseline gap-2">
         <span className={cn("font-bold text-foreground", priceClass)}>

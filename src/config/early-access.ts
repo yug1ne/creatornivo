@@ -5,7 +5,7 @@ export const earlyAccessConfig = {
   maxSpots: 50,
   discountPercent: 90,
   limitLabel: "Only for first 50 users",
-  bannerText: "Early Access — 90% off for first users",
+  bannerText: "Early Access — Founding price for first users",
   badgeLabel: "Early Access",
 } as const;
 

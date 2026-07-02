@@ -7,7 +7,6 @@ import {
   isBillingCheckoutConfigured,
 } from "@/config/billing";
 import { PLANS } from "@/config/plans";
-import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ProPlanPricing } from "@/components/pricing/pro-plan-pricing";
@@ -57,7 +56,6 @@ export async function PricingSection() {
                   <h3 className="text-xl font-semibold text-foreground">
                     {plan.name}
                   </h3>
-                  <Badge variant={plan.badge}>{plan.name}</Badge>
                 </div>
 
                 {plan.id === PLANS.PRO ? (
