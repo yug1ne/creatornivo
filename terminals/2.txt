@@ -1,0 +1,19 @@
+---
+pid: 18740
+cwd: "F:\creatornivo"
+command: "npm install next-auth@beta @auth/prisma-adapter @prisma/client bcryptjs"
+started_at: 2026-07-01T21:57:12.947Z
+running_for_ms: 3580000  
+---
+
+added 11 packages, and audited 446 packages in 18s
+
+183 packages are looking for funding
+  run `npm fund` for details
+
+3 moderate severity vulnerabilities
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.

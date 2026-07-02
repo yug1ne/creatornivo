@@ -1,0 +1,53 @@
+---
+pid: 31984
+cwd: "F:\creatornivo"
+command: "npx create-next-app@latest . --typescript --tailwind --eslint --app --src-dir --import-alias \"@/*\" --turbopack --yes"
+started_at: 2026-07-01T21:50:48.234Z
+running_for_ms: 3964999  
+---
+npm warn exec The following package was not found and will be installed: create-next-app@16.2.10
+Creating a new Next.js app in F:\creatornivo.
+
+Using npm.
+
+Initializing project with template: app-tw 
+
+
+Installing dependencies:
+- next
+- react
+- react-dom
+
+Installing devDependencies:
+- @tailwindcss/postcss
+- @types/node
+- @types/react
+- @types/react-dom
+- eslint
+- eslint-config-next
+- tailwindcss
+- typescript
+
+
+added 434 packages, and audited 435 packages in 1m
+
+179 packages are looking for funding
+  run `npm fund` for details
+
+2 moderate severity vulnerabilities
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+
+Generating route types...
+✓ Types generated successfully
+
+npm notice
+npm notice New minor version of npm available! 11.4.2 -> 11.18.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.18.0
+npm notice To update run: npm install -g npm@11.18.0
+npm notice
+Success! Created creatornivo at F:\creatornivo
+
