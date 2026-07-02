@@ -78,8 +78,21 @@ model Subscription {
   status               SubscriptionStatus @default(incomplete)
   currentPeriodEnd     DateTime?
   cancelAtPeriodEnd    Boolean            @default(false)
+  lastPaddleEventAt    DateTime?
+  earlyAccessClaimedAt DateTime?
   createdAt            DateTime           @default(now())
   updatedAt            DateTime           @updatedAt
+
+  @@index([paddlePriceId, earlyAccessClaimedAt])
+}
+
+model PaddleWebhookEvent {
+  eventId     String   @id
+  eventType   String
+  occurredAt  DateTime
+  processedAt DateTime @default(now())
+
+  @@index([occurredAt])
 }
 
 model Account {

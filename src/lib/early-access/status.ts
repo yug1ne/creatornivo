@@ -1,52 +1,34 @@
+import type { Prisma } from "@prisma/client";
+
 import { earlyAccessConfig, type EarlyAccessStatus } from "@/config/early-access";
-import { getActiveBillingProvider } from "@/config/billing";
 import { paddleConfig } from "@/config/paddle";
-import { stripeConfig } from "@/config/stripe";
 import { prisma } from "@/lib/db";
 
-function getEarlyAccessPriceIds(): string[] {
-  const provider = getActiveBillingProvider();
-
-  if (provider === "paddle") {
-    return paddleConfig.earlyAccessPriceId
-      ? [paddleConfig.earlyAccessPriceId]
-      : [];
-  }
-
-  if (provider === "stripe") {
-    return stripeConfig.earlyAccessPriceId
-      ? [stripeConfig.earlyAccessPriceId]
-      : [];
-  }
-
-  return [
-    paddleConfig.earlyAccessPriceId,
-    stripeConfig.earlyAccessPriceId,
-  ].filter(Boolean);
+export function buildEarlyAccessClaimWhere(
+  priceId: string,
+): Prisma.SubscriptionWhereInput {
+  return {
+    paddlePriceId: priceId,
+    earlyAccessClaimedAt: { not: null },
+  };
 }
 
 export async function countEarlyAccessSpotsTaken(): Promise<number> {
-  const priceIds = getEarlyAccessPriceIds();
-
-  if (priceIds.length === 0) {
+  if (!paddleConfig.earlyAccessPriceId) {
     return 0;
   }
 
   return prisma.subscription.count({
-    where: {
-      OR: [
-        { paddlePriceId: { in: priceIds } },
-        { stripePriceId: { in: priceIds } },
-      ],
-    },
+    where: buildEarlyAccessClaimWhere(paddleConfig.earlyAccessPriceId),
   });
 }
 
-export async function getEarlyAccessStatus(): Promise<EarlyAccessStatus> {
-  const spotsTaken = await countEarlyAccessSpotsTaken();
+export function buildEarlyAccessStatus(
+  spotsTaken: number,
+  hasEarlyAccessPrice: boolean,
+): EarlyAccessStatus {
   const maxSpots = earlyAccessConfig.maxSpots;
   const spotsRemaining = Math.max(0, maxSpots - spotsTaken);
-  const hasEarlyAccessPrice = getEarlyAccessPriceIds().length > 0;
   const isAvailable = hasEarlyAccessPrice && spotsRemaining > 0;
 
   return {
@@ -59,4 +41,12 @@ export async function getEarlyAccessStatus(): Promise<EarlyAccessStatus> {
     discountPercent: earlyAccessConfig.discountPercent,
     limitLabel: earlyAccessConfig.limitLabel,
   };
+}
+
+export async function getEarlyAccessStatus(): Promise<EarlyAccessStatus> {
+  const spotsTaken = await countEarlyAccessSpotsTaken();
+  return buildEarlyAccessStatus(
+    spotsTaken,
+    Boolean(paddleConfig.earlyAccessPriceId),
+  );
 }
