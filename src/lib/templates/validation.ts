@@ -14,6 +14,7 @@ const CATEGORIES: TemplateCategory[] = [
   "marketing",
   "product",
   "youtube",
+  "seo",
   "other",
 ];
 

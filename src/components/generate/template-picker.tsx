@@ -4,15 +4,21 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 
 import {
-  ALL_CATEGORIES,
   getCategoryColor,
   getCategoryIcon,
   getCategoryLabel,
 } from "@/config/template-categories";
+import {
+  categoryMatchesGroup,
+  getGroupsInUse,
+  getGroupLabel,
+  getTemplateGroup,
+  type TemplateGroupId,
+} from "@/config/template-groups";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils/cn";
-import type { TemplateCategory, TemplateListItem } from "@/types/template";
+import type { TemplateListItem } from "@/types/template";
 
 interface TemplatePickerProps {
   templates: TemplateListItem[];
@@ -28,30 +34,32 @@ export function TemplatePicker({
   onSelect,
 }: TemplatePickerProps) {
   const [search, setSearch] = useState("");
-  const [category, setCategory] = useState<TemplateCategory | "all">("all");
+  const [group, setGroup] = useState<TemplateGroupId>("all");
 
   const accessibleCount = templates.filter((t) => !t.isLocked).length;
+
+  const groupsInUse = useMemo(
+    () => getGroupsInUse(templates.map((t) => t.category)),
+    [templates],
+  );
 
   const filtered = useMemo(() => {
     const query = search.trim().toLowerCase();
 
     return templates.filter((template) => {
-      const matchesCategory =
-        category === "all" || template.category === category;
+      const matchesGroup = categoryMatchesGroup(template.category, group);
       const matchesSearch =
         !query ||
         template.title.toLowerCase().includes(query) ||
         template.description.toLowerCase().includes(query) ||
-        getCategoryLabel(template.category).toLowerCase().includes(query);
+        getCategoryLabel(template.category).toLowerCase().includes(query) ||
+        getGroupLabel(getTemplateGroup(template.category))
+          .toLowerCase()
+          .includes(query);
 
-      return matchesCategory && matchesSearch;
+      return matchesGroup && matchesSearch;
     });
-  }, [templates, search, category]);
-
-  const categoriesInUse = useMemo(() => {
-    const used = new Set(templates.map((t) => t.category));
-    return ALL_CATEGORIES.filter((c) => used.has(c));
-  }, [templates]);
+  }, [templates, search, group]);
 
   return (
     <div className="space-y-4" data-onboarding="template-picker">
@@ -75,29 +83,29 @@ export function TemplatePicker({
       <div className="flex flex-wrap gap-1.5">
         <button
           type="button"
-          onClick={() => setCategory("all")}
+          onClick={() => setGroup("all")}
           className={cn(
             "rounded-full px-2.5 py-1 text-xs font-medium transition-colors",
-            category === "all"
+            group === "all"
               ? "bg-primary text-primary-foreground"
               : "bg-muted text-muted-foreground hover:text-foreground",
           )}
         >
           All
         </button>
-        {categoriesInUse.map((cat) => (
+        {groupsInUse.map((item) => (
           <button
-            key={cat}
+            key={item.id}
             type="button"
-            onClick={() => setCategory(cat)}
+            onClick={() => setGroup(item.id)}
             className={cn(
               "rounded-full px-2.5 py-1 text-xs font-medium transition-colors",
-              category === cat
+              group === item.id
                 ? "bg-primary text-primary-foreground"
                 : "bg-muted text-muted-foreground hover:text-foreground",
             )}
           >
-            {getCategoryLabel(cat)}
+            {item.label}
           </button>
         ))}
       </div>
@@ -149,6 +157,9 @@ export function TemplatePicker({
                         {template.requiredPlan === "pro" ? "Pro" : "Free"}
                       </Badge>
                     </div>
+                    <p className="mt-0.5 text-xs text-muted-foreground">
+                      {getGroupLabel(getTemplateGroup(template.category))}
+                    </p>
                     <p className="mt-1 line-clamp-2 text-xs text-muted-foreground">
                       {template.description}
                     </p>

@@ -5,22 +5,27 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { Suspense, useEffect, useState } from "react";
 
+import type { BillingProvider } from "@/config/billing";
 import { PLANS } from "@/config/plans";
+import { buttonVariants } from "@/components/ui/button";
 
 interface SubscriptionInfo {
   status: string | null;
   currentPeriodEnd: string | null;
   cancelAtPeriodEnd: boolean;
+  provider: BillingProvider | null;
 }
 
 interface SubscriptionManagerProps {
   subscription: SubscriptionInfo | null;
-  isStripeConfigured: boolean;
+  isBillingConfigured: boolean;
+  billingProvider: BillingProvider | null;
 }
 
 function SubscriptionManagerContent({
   subscription,
-  isStripeConfigured,
+  isBillingConfigured,
+  billingProvider,
 }: SubscriptionManagerProps) {
   const { data: session, update } = useSession();
   const router = useRouter();
@@ -43,7 +48,13 @@ function SubscriptionManagerContent({
 
   async function handlePortal() {
     setIsLoading(true);
-    const response = await fetch("/api/stripe/portal", { method: "POST" });
+
+    const endpoint =
+      billingProvider === "paddle"
+        ? "/api/paddle/portal"
+        : "/api/stripe/portal";
+
+    const response = await fetch(endpoint, { method: "POST" });
     const data = await response.json();
     setIsLoading(false);
 
@@ -56,18 +67,18 @@ function SubscriptionManagerContent({
   }
 
   return (
-    <div className="rounded-xl border border-zinc-200 p-6 dark:border-zinc-800">
-      <h3 className="font-medium text-zinc-900 dark:text-zinc-50">Subscription</h3>
+    <div className="rounded-xl border border-border p-6">
+      <h3 className="font-medium text-foreground">Subscription</h3>
 
-      <p className="mt-2 text-sm text-zinc-500 dark:text-zinc-400">
+      <p className="mt-2 text-sm text-muted-foreground">
         Current plan:{" "}
-        <span className="font-medium text-zinc-900 dark:text-zinc-50">
+        <span className="font-medium text-foreground">
           {isPro ? "Pro" : "Free"}
         </span>
       </p>
 
       {subscription?.status && (
-        <p className="mt-1 text-xs text-zinc-400">
+        <p className="mt-1 text-xs text-muted-foreground">
           Status: {subscription.status}
           {subscription.currentPeriodEnd && (
             <>
@@ -89,21 +100,22 @@ function SubscriptionManagerContent({
       )}
 
       <div className="mt-4 flex flex-wrap gap-3">
-        {!isPro && isStripeConfigured && (
-          <Link
-            href="/pricing"
-            className="rounded-lg bg-zinc-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-zinc-700 dark:bg-zinc-50 dark:text-zinc-900"
-          >
+        {!isPro && isBillingConfigured && (
+          <Link href="/pricing" className={buttonVariants({ size: "sm" })}>
             Upgrade to Pro
           </Link>
         )}
 
-        {isPro && subscription && isStripeConfigured && (
+        {isPro && subscription && isBillingConfigured && (
           <button
             type="button"
             onClick={handlePortal}
             disabled={isLoading}
-            className="rounded-lg border border-zinc-300 px-4 py-2 text-sm font-medium transition-colors hover:bg-zinc-50 disabled:opacity-50 dark:border-zinc-700 dark:hover:bg-zinc-800"
+            className={buttonVariants({
+              variant: "outline",
+              size: "sm",
+              className: "disabled:opacity-50",
+            })}
           >
             {isLoading ? "Loading..." : "Manage subscription"}
           </button>
@@ -115,7 +127,7 @@ function SubscriptionManagerContent({
 
 export function SubscriptionManager(props: SubscriptionManagerProps) {
   return (
-    <Suspense fallback={<div className="text-sm text-zinc-500">Loading...</div>}>
+    <Suspense fallback={<div className="text-sm text-muted-foreground">Loading...</div>}>
       <SubscriptionManagerContent {...props} />
     </Suspense>
   );

@@ -24,7 +24,11 @@ export const proRoutes = [
 export const adminRoutes = ["/admin"] as const;
 
 /** Префиксы API, не требующие сессии */
-export const publicApiPrefixes = ["/api/auth", "/api/stripe/webhook"] as const;
+export const publicApiPrefixes = [
+  "/api/auth",
+  "/api/stripe/webhook",
+  "/api/paddle/webhook",
+] as const;
 
 export type PublicRoute = (typeof publicRoutes)[number];
 export type ProtectedRoute = (typeof protectedRoutes)[number];

@@ -26,6 +26,11 @@ enum SubscriptionStatus {
   unpaid
 }
 
+enum PaymentProvider {
+  stripe
+  paddle
+}
+
 enum TemplateCategory {
   x_thread
   linkedin_post
@@ -36,6 +41,7 @@ enum TemplateCategory {
   marketing
   product
   youtube
+  seo
   other
 }
 
@@ -62,7 +68,11 @@ model Subscription {
   id                   String             @id @default(cuid())
   userId               String             @unique
   user                 User               @relation(fields: [userId], references: [id], onDelete: Cascade)
-  stripeCustomerId     String             @unique
+  provider             PaymentProvider    @default(paddle)
+  paddleCustomerId     String?            @unique
+  paddleSubscriptionId String?            @unique
+  paddlePriceId        String?
+  stripeCustomerId     String?            @unique
   stripeSubscriptionId String?            @unique
   stripePriceId        String?
   status               SubscriptionStatus @default(incomplete)

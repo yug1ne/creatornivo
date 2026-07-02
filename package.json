@@ -19,6 +19,7 @@
   "dependencies": {
     "@ai-sdk/openai": "^4.0.5",
     "@auth/prisma-adapter": "^2.11.2",
+    "@paddle/paddle-js": "^1.6.4",
     "@prisma/client": "^6.19.3",
     "@stripe/stripe-js": "^9.9.0",
     "ai": "^7.0.11",

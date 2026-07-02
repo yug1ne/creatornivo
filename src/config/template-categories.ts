@@ -10,6 +10,7 @@ export const templateCategoryLabels: Record<TemplateCategory, string> = {
   marketing: "Marketing",
   product: "Product",
   youtube: "YouTube Script",
+  seo: "SEO",
   other: "Other",
 };
 
@@ -23,6 +24,7 @@ export const templateCategoryIcons: Record<TemplateCategory, string> = {
   marketing: "📣",
   product: "📦",
   youtube: "▶",
+  seo: "⌕",
   other: "◇",
 };
 
@@ -36,6 +38,7 @@ export const templateCategoryColors: Record<TemplateCategory, string> = {
   marketing: "bg-orange-50 text-orange-700 dark:bg-orange-950 dark:text-orange-300",
   product: "bg-cyan-50 text-cyan-700 dark:bg-cyan-950 dark:text-cyan-300",
   youtube: "bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300",
+  seo: "bg-lime-50 text-lime-700 dark:bg-lime-950 dark:text-lime-300",
   other: "bg-muted text-muted-foreground",
 };
 

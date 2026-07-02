@@ -54,10 +54,12 @@ export async function getOrCreateStripeCustomer(
     where: { userId },
     create: {
       userId,
+      provider: "stripe",
       stripeCustomerId: customer.id,
       status: "incomplete",
     },
     update: {
+      provider: "stripe",
       stripeCustomerId: customer.id,
     },
   });

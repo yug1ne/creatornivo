@@ -4,7 +4,10 @@ import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { ThemeSettings } from "@/components/settings/theme-settings";
 import { SubscriptionManager } from "@/components/settings/subscription-manager";
 import { PLANS } from "@/config/plans";
-import { isStripeConfigured } from "@/config/stripe";
+import {
+  getActiveBillingProvider,
+  isBillingConfigured,
+} from "@/config/billing";
 import { requireSession } from "@/lib/auth/session";
 import { prisma } from "@/lib/db";
 
@@ -19,6 +22,7 @@ export default async function SettingsPage() {
       status: true,
       currentPeriodEnd: true,
       cancelAtPeriodEnd: true,
+      provider: true,
     },
   });
 
@@ -58,7 +62,8 @@ export default async function SettingsPage() {
         </Card>
 
         <SubscriptionManager
-          isStripeConfigured={isStripeConfigured()}
+          isBillingConfigured={isBillingConfigured()}
+          billingProvider={getActiveBillingProvider()}
           subscription={
             subscription
               ? {
@@ -66,6 +71,7 @@ export default async function SettingsPage() {
                   currentPeriodEnd:
                     subscription.currentPeriodEnd?.toISOString() ?? null,
                   cancelAtPeriodEnd: subscription.cancelAtPeriodEnd,
+                  provider: subscription.provider,
                 }
               : null
           }

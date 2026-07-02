@@ -4,38 +4,71 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
 
+import { usePaddleCheckout } from "@/hooks/use-paddle-checkout";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils/cn";
+
 interface UpgradeButtonProps {
   isConfigured: boolean;
+  billingProvider: "paddle" | "stripe" | null;
+  earlyAccessAvailable?: boolean;
+  earlyAccessPrice?: string;
+  className?: string;
 }
 
-export function UpgradeButton({ isConfigured }: UpgradeButtonProps) {
+export function UpgradeButton({
+  isConfigured,
+  billingProvider,
+  earlyAccessAvailable = false,
+  earlyAccessPrice = "$4.9",
+  className,
+}: UpgradeButtonProps) {
   const { data: session, status } = useSession();
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [stripeLoading, setStripeLoading] = useState(false);
+  const [stripeError, setStripeError] = useState("");
+  const { openCheckout, isLoading: paddleLoading, error: paddleError } =
+    usePaddleCheckout();
 
   const isPro = session?.user?.plan === "pro";
+  const isLoading = billingProvider === "paddle" ? paddleLoading : stripeLoading;
+  const error = billingProvider === "paddle" ? paddleError : stripeError;
 
-  async function handleUpgrade() {
-    setError("");
-    setIsLoading(true);
+  const buttonLabel = isLoading
+    ? "Opening checkout..."
+    : earlyAccessAvailable
+      ? `Get Pro — ${earlyAccessPrice}/mo`
+      : "Upgrade to Pro";
+
+  async function handleStripeUpgrade() {
+    setStripeError("");
+    setStripeLoading(true);
 
     const response = await fetch("/api/stripe/checkout", { method: "POST" });
     const data = await response.json();
 
-    setIsLoading(false);
+    setStripeLoading(false);
 
     if (!response.ok) {
-      setError(data.error ?? "Failed to create checkout session");
+      setStripeError(data.error ?? "Failed to create checkout session");
       return;
     }
 
     window.location.href = data.url;
   }
 
+  async function handleUpgrade() {
+    if (billingProvider === "paddle") {
+      await openCheckout();
+      return;
+    }
+
+    await handleStripeUpgrade();
+  }
+
   if (!isConfigured) {
     return (
-      <p className="mt-6 text-sm text-zinc-500">
-        Payments temporarily unavailable (Stripe not configured)
+      <p className={cn("mt-6 text-sm text-muted-foreground", className)}>
+        Payments temporarily unavailable (billing not configured)
       </p>
     );
   }
@@ -45,7 +78,10 @@ export function UpgradeButton({ isConfigured }: UpgradeButtonProps) {
       <button
         type="button"
         disabled
-        className="mt-6 w-full rounded-lg bg-zinc-200 px-4 py-2.5 text-sm font-medium text-zinc-500"
+        className={cn(
+          buttonVariants({ className: "mt-6 w-full opacity-60" }),
+          className,
+        )}
       >
         Loading...
       </button>
@@ -56,7 +92,7 @@ export function UpgradeButton({ isConfigured }: UpgradeButtonProps) {
     return (
       <Link
         href="/login?callbackUrl=/pricing"
-        className="mt-6 block w-full rounded-lg bg-zinc-900 px-4 py-2.5 text-center text-sm font-medium text-white transition-colors hover:bg-zinc-700 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-200"
+        className={cn(buttonVariants({ className: "mt-6 w-full" }), className)}
       >
         Sign in to get Pro
       </Link>
@@ -67,7 +103,10 @@ export function UpgradeButton({ isConfigured }: UpgradeButtonProps) {
     return (
       <Link
         href="/settings"
-        className="mt-6 block w-full rounded-lg border border-emerald-300 bg-emerald-50 px-4 py-2.5 text-center text-sm font-medium text-emerald-700 transition-colors hover:bg-emerald-100 dark:border-emerald-800 dark:bg-emerald-950 dark:text-emerald-300"
+        className={cn(
+          "mt-6 block w-full rounded-lg border border-emerald-300 bg-emerald-50 px-4 py-2.5 text-center text-sm font-medium text-emerald-700 transition-colors hover:bg-emerald-100 dark:border-emerald-800 dark:bg-emerald-950 dark:text-emerald-300",
+          className,
+        )}
       >
         ✓ You have active Pro
       </Link>
@@ -75,15 +114,21 @@ export function UpgradeButton({ isConfigured }: UpgradeButtonProps) {
   }
 
   return (
-    <div>
+    <div className={className}>
       <button
         type="button"
         onClick={handleUpgrade}
         disabled={isLoading}
-        className="mt-6 w-full rounded-lg bg-zinc-900 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-zinc-700 disabled:opacity-50 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-200"
+        className={cn(buttonVariants({ className: "mt-6 w-full" }))}
       >
-        {isLoading ? "Redirecting..." : "Upgrade to Pro"}
+        {buttonLabel}
       </button>
+      {billingProvider === "paddle" && (
+        <p className="mt-2 text-center text-xs text-muted-foreground">
+          Secure checkout powered by Paddle · Sandbox test card: 4242 4242 4242
+          4242
+        </p>
+      )}
       {error && (
         <p className="mt-2 text-xs text-red-600 dark:text-red-400">{error}</p>
       )}

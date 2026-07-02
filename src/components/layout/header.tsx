@@ -5,8 +5,9 @@ import { buttonVariants } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 const navItems = [
-  { href: "/templates", label: "Templates" },
-  { href: "/pricing", label: "Pricing" },
+  { href: "/#showcase", label: "Product" },
+  { href: "/#how-it-works", label: "How it works" },
+  { href: "/#pricing", label: "Pricing" },
 ];
 
 export function Header() {

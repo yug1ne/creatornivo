@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { siteConfig } from "@/config/site";
 import { stripeConfig } from "@/config/stripe";
 import { requireSession } from "@/lib/auth/session";
+import { resolveCheckoutPriceId } from "@/lib/billing/checkout-price";
 import { prisma } from "@/lib/db";
 import { getStripe } from "@/lib/stripe/client";
 import { getOrCreateStripeCustomer } from "@/lib/stripe/subscription-service";
@@ -41,13 +42,15 @@ export async function POST() {
       user.name,
     );
 
+    const priceId = await resolveCheckoutPriceId("stripe");
+
     const checkoutSession = await stripe.checkout.sessions.create({
       customer: customerId,
       mode: "subscription",
       payment_method_types: ["card"],
       line_items: [
         {
-          price: stripeConfig.proPriceId,
+          price: priceId,
           quantity: 1,
         },
       ],

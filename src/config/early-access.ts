@@ -1,0 +1,21 @@
+export const earlyAccessConfig = {
+  price: "$4.9",
+  priceLabel: "$4.9",
+  regularPrice: "$9.90",
+  maxSpots: 50,
+  discountPercent: 90,
+  limitLabel: "Only for first 50 users",
+  bannerText: "Early Access — 90% off for first users",
+  badgeLabel: "Early Access",
+} as const;
+
+export type EarlyAccessStatus = {
+  isAvailable: boolean;
+  spotsTaken: number;
+  spotsRemaining: number;
+  maxSpots: number;
+  price: string;
+  regularPrice: string;
+  discountPercent: number;
+  limitLabel: string;
+};

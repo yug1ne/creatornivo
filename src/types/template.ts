@@ -10,6 +10,7 @@ export type TemplateCategory =
   | "marketing"
   | "product"
   | "youtube"
+  | "seo"
   | "other";
 
 export interface TemplateVariable {
