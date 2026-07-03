@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
 import { ONBOARDING_STEPS } from "@/config/onboarding";
@@ -11,6 +11,10 @@ import {
   markOnboardingCompletedLocally,
   isOnboardingCompletedLocally,
 } from "@/lib/onboarding/service";
+import {
+  calculateTourPosition,
+  type TourPosition,
+} from "@/lib/onboarding/positioning";
 import { cn } from "@/lib/utils/cn";
 
 interface Rect {
@@ -59,11 +63,44 @@ function getTargetRect(element: HTMLElement | null): Rect | null {
   const rect = element.getBoundingClientRect();
 
   return {
-    top: Math.max(rect.top - padding, 8),
-    left: Math.max(rect.left - padding, 8),
+    top: rect.top - padding,
+    left: rect.left - padding,
     width: rect.width + padding * 2,
     height: rect.height + padding * 2,
   };
+}
+
+function getFixedHeaderHeight(): number {
+  const header = document.querySelector<HTMLElement>("header");
+  if (!header) return 0;
+  const position = window.getComputedStyle(header).position;
+  if (position !== "fixed" && position !== "sticky") return 0;
+  const rect = header.getBoundingClientRect();
+  return rect.top <= 0 && rect.bottom > 0 ? rect.bottom : 0;
+}
+
+function waitForScrollToSettle(timeout = 900): Promise<void> {
+  return new Promise((resolve) => {
+    const startedAt = performance.now();
+    let stableSince = startedAt;
+    let previousX = window.scrollX;
+    let previousY = window.scrollY;
+
+    function check(now: number) {
+      if (window.scrollX !== previousX || window.scrollY !== previousY) {
+        previousX = window.scrollX;
+        previousY = window.scrollY;
+        stableSince = now;
+      }
+      if (now - stableSince >= 120 || now - startedAt >= timeout) {
+        resolve();
+        return;
+      }
+      requestAnimationFrame(check);
+    }
+
+    requestAnimationFrame(check);
+  });
 }
 
 export function OnboardingTour({ userId }: OnboardingTourProps) {
@@ -76,6 +113,9 @@ export function OnboardingTour({ userId }: OnboardingTourProps) {
   const [targetRect, setTargetRect] = useState<Rect | null>(null);
   const [isReady, setIsReady] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [tooltipPosition, setTooltipPosition] =
+    useState<TourPosition | null>(null);
+  const tooltipRef = useRef<HTMLDivElement | null>(null);
 
   const step = ONBOARDING_STEPS[stepIndex];
   const isCentered = step?.placement === "center" || !step?.target;
@@ -102,7 +142,11 @@ export function OnboardingTour({ userId }: OnboardingTourProps) {
     }
   }, [userId, forceStart, router]);
 
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    // The portal can only render after the client document exists.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (!mounted || !userId) return;
@@ -150,13 +194,16 @@ export function OnboardingTour({ userId }: OnboardingTourProps) {
       if (cancelled) return;
 
       if (element) {
-        element.scrollIntoView({ behavior: "smooth", block: "center" });
-        window.setTimeout(() => {
-          if (!cancelled) {
-            setTargetRect(getTargetRect(element));
-            setIsReady(true);
-          }
-        }, 350);
+        element.scrollIntoView({
+          block: "center",
+          inline: "nearest",
+          behavior: "smooth",
+        });
+        await waitForScrollToSettle();
+        if (!cancelled) {
+          setTargetRect(getTargetRect(element));
+          setIsReady(true);
+        }
       } else {
         setIsReady(true);
       }
@@ -164,21 +211,51 @@ export function OnboardingTour({ userId }: OnboardingTourProps) {
 
     prepareStep();
 
-    function handleResize() {
-      if (!step.target) return;
-      const element = document.querySelector<HTMLElement>(step.target);
-      setTargetRect(getTargetRect(element));
-    }
-
-    window.addEventListener("resize", handleResize);
-    window.addEventListener("scroll", handleResize, true);
-
     return () => {
       cancelled = true;
-      window.removeEventListener("resize", handleResize);
-      window.removeEventListener("scroll", handleResize, true);
     };
   }, [isActive, step, pathname, router, isCentered]);
+
+  const recalculatePosition = useCallback(() => {
+    if (!step) return;
+    const element = step.target
+      ? document.querySelector<HTMLElement>(step.target)
+      : null;
+    const nextTargetRect = isCentered ? null : getTargetRect(element);
+    const popupRect = tooltipRef.current?.getBoundingClientRect();
+    const position = calculateTourPosition({
+      target: nextTargetRect,
+      popup: {
+        width: popupRect?.width ?? Math.min(360, window.innerWidth - 32),
+        height: popupRect?.height ?? 240,
+      },
+      viewport: { width: window.innerWidth, height: window.innerHeight },
+      preferredPlacement: step.placement ?? "bottom",
+      headerHeight: getFixedHeaderHeight(),
+    });
+    setTargetRect(nextTargetRect);
+    setTooltipPosition(position);
+  }, [isCentered, step]);
+
+  useEffect(() => {
+    if (!isReady || !isActive) return;
+    const frame = requestAnimationFrame(recalculatePosition);
+    const popup = tooltipRef.current;
+    const target = step.target
+      ? document.querySelector<HTMLElement>(step.target)
+      : null;
+    const observer = new ResizeObserver(recalculatePosition);
+    if (popup) observer.observe(popup);
+    if (target) observer.observe(target);
+    window.addEventListener("resize", recalculatePosition);
+    window.addEventListener("scroll", recalculatePosition, true);
+    return () => {
+      cancelAnimationFrame(frame);
+      observer.disconnect();
+      window.removeEventListener("resize", recalculatePosition);
+      window.removeEventListener("scroll", recalculatePosition, true);
+    };
+  }, [isActive, isReady, recalculatePosition, step.target]);
 
   async function handleNext() {
     if (isLastStep) {
@@ -202,53 +279,14 @@ export function OnboardingTour({ userId }: OnboardingTourProps) {
     return null;
   }
 
-  const tooltipStyle = (() => {
-    if (isCentered || !targetRect) {
-      return {
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%, -50%)",
-        maxWidth: "24rem",
-      } as const;
-    }
-
-    const margin = 16;
-    const viewportWidth = window.innerWidth;
-    const viewportHeight = window.innerHeight;
-    const tooltipWidth = Math.min(360, viewportWidth - 32);
-
-    let top = targetRect.top + targetRect.height + margin;
-    let left = targetRect.left;
-
-    if (step.placement === "top") {
-      top = targetRect.top - margin;
-    }
-
-    if (step.placement === "right") {
-      left = targetRect.left + targetRect.width + margin;
-      top = targetRect.top;
-    }
-
-    if (step.placement === "left") {
-      left = targetRect.left - tooltipWidth - margin;
-      top = targetRect.top;
-    }
-
-    if (top + 200 > viewportHeight) {
-      top = Math.max(margin, targetRect.top - 200 - margin);
-    }
-
-    left = Math.min(Math.max(margin, left), viewportWidth - tooltipWidth - margin);
-    top = Math.min(Math.max(margin, top), viewportHeight - 220);
-
-    return {
-      top,
-      left,
-      maxWidth: tooltipWidth,
-      transform:
-        step.placement === "top" ? "translateY(-100%)" : undefined,
-    };
-  })();
+  const tooltipStyle = tooltipPosition
+    ? {
+        top: tooltipPosition.top,
+        left: tooltipPosition.left,
+        width: tooltipPosition.width,
+        maxHeight: tooltipPosition.maxHeight,
+      }
+    : { visibility: "hidden" as const };
 
   return createPortal(
     <div className="fixed inset-0 z-[100]" role="dialog" aria-modal="true">
@@ -268,32 +306,35 @@ export function OnboardingTour({ userId }: OnboardingTourProps) {
       )}
 
       <div
-        className="absolute rounded-[var(--radius-xl)] border border-border bg-card p-5 shadow-[var(--shadow-md)] transition-all duration-300"
+        ref={tooltipRef}
+        className="fixed flex max-w-[calc(100vw-2rem)] flex-col overflow-hidden rounded-[var(--radius-xl)] border border-border bg-card p-5 shadow-[var(--shadow-md)] transition-all duration-300"
         style={tooltipStyle}
       >
-        <div className="mb-3 flex items-center justify-between gap-3">
-          <span className="text-xs font-medium text-muted-foreground">
-            Step {stepIndex + 1} of {ONBOARDING_STEPS.length}
-          </span>
-          <div className="flex gap-1">
-            {ONBOARDING_STEPS.map((_, index) => (
-              <span
-                key={ONBOARDING_STEPS[index].id}
-                className={cn(
-                  "h-1.5 w-1.5 rounded-full transition-colors",
-                  index === stepIndex ? "bg-primary" : "bg-muted",
-                )}
-              />
-            ))}
+        <div className="min-h-0 overflow-y-auto">
+          <div className="mb-3 flex items-center justify-between gap-3">
+            <span className="text-xs font-medium text-muted-foreground">
+              Step {stepIndex + 1} of {ONBOARDING_STEPS.length}
+            </span>
+            <div className="flex gap-1">
+              {ONBOARDING_STEPS.map((_, index) => (
+                <span
+                  key={ONBOARDING_STEPS[index].id}
+                  className={cn(
+                    "h-1.5 w-1.5 rounded-full transition-colors",
+                    index === stepIndex ? "bg-primary" : "bg-muted",
+                  )}
+                />
+              ))}
+            </div>
           </div>
+
+          <h3 className="text-lg font-semibold text-foreground">{step.title}</h3>
+          <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+            {step.description}
+          </p>
         </div>
 
-        <h3 className="text-lg font-semibold text-foreground">{step.title}</h3>
-        <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-          {step.description}
-        </p>
-
-        <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
+        <div className="mt-5 flex shrink-0 flex-wrap items-center justify-between gap-3">
           <button
             type="button"
             onClick={handleSkip}

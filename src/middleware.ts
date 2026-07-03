@@ -12,6 +12,7 @@ import { PLANS } from "@/config/plans";
 import { isAdminSession } from "@/lib/admin/is-admin-session";
 
 const { auth } = NextAuth(authConfig);
+export const CANONICAL_HOST = "www.creatornivo.com";
 
 export default auth((request) => {
   const { pathname } = request.nextUrl;
@@ -24,6 +25,17 @@ export default auth((request) => {
     pathname.startsWith("/favicon")
   ) {
     return NextResponse.next();
+  }
+
+  if (
+    request.nextUrl.hostname === "creatornivo.com" &&
+    (request.method === "GET" || request.method === "HEAD")
+  ) {
+    const canonicalUrl = request.nextUrl.clone();
+    canonicalUrl.hostname = CANONICAL_HOST;
+    canonicalUrl.protocol = "https";
+    canonicalUrl.port = "";
+    return NextResponse.redirect(canonicalUrl, 308);
   }
 
   if (isProtectedRoute(pathname) && !isAuthenticated) {

@@ -15,6 +15,10 @@ import {
   createServerPaddleCheckout,
   type PaddleCheckoutIntentStore,
 } from "../src/lib/paddle/checkout-service";
+import {
+  paddleApiFetch,
+  PaddleApiError,
+} from "../src/lib/paddle/client";
 
 const configured: PaddleServerCheckoutConfig = {
   clientToken: "test_client",
@@ -482,4 +486,31 @@ test("partial unique index excludes terminal intent statuses", () => {
   assert.match(index, /'transaction_completed'/);
   assert.match(index, /'subscription_bound'/);
   assert.doesNotMatch(index, /'expired'|'abandoned'|'failed'|'completed'/);
+});
+
+test("Paddle 403 preserves safe status and error code", async () => {
+  const originalKey = process.env.PADDLE_API_KEY;
+  const originalFetch = globalThis.fetch;
+  process.env.PADDLE_API_KEY = "test-api-key";
+  globalThis.fetch = (async () =>
+    Response.json(
+      { error: { code: "forbidden", detail: "Missing permission" } },
+      { status: 403 },
+    )) as typeof fetch;
+  try {
+    await assert.rejects(
+      paddleApiFetch("/transactions", { method: "POST" }),
+      (error) =>
+        error instanceof PaddleApiError &&
+        error.status === 403 &&
+        error.code === "forbidden",
+    );
+  } finally {
+    globalThis.fetch = originalFetch;
+    if (originalKey === undefined) {
+      delete process.env.PADDLE_API_KEY;
+    } else {
+      process.env.PADDLE_API_KEY = originalKey;
+    }
+  }
 });

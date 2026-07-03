@@ -13,6 +13,7 @@ import {
   createServerPaddleCheckout,
   PaddleCheckoutError,
 } from "@/lib/paddle/checkout-service";
+import { PaddleApiError } from "@/lib/paddle/client";
 
 interface CheckoutUserState {
   plan: string;
@@ -66,16 +67,31 @@ export function getPaddleCheckoutBlock(
   return null;
 }
 
+export function maskPaddlePriceId(priceId: string | null): string {
+  if (!priceId) return "missing";
+  return `${priceId.slice(0, 4)}…${priceId.slice(-4)}`;
+}
+
 export async function POST() {
   let session;
+  let selectedPriceId: string | null = null;
+  let stage = "session";
 
   try {
     session = await requireSession();
   } catch {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    console.warn("Paddle checkout rejected", {
+      stage,
+      sessionPresent: false,
+    });
+    return NextResponse.json(
+      { error: "Unauthorized", code: "unauthorized" },
+      { status: 401 },
+    );
   }
 
   try {
+    stage = "configuration";
     if (getActiveBillingProvider() !== "paddle") {
       return NextResponse.json(
         {
@@ -86,6 +102,7 @@ export async function POST() {
       );
     }
 
+    stage = "user_lookup";
     const user = await prisma.user.findUnique({
       where: { id: session.id },
       include: { subscription: true },
@@ -107,7 +124,9 @@ export async function POST() {
       );
     }
 
+    stage = "price_selection";
     const priceId = await resolveCheckoutPriceId("paddle");
+    selectedPriceId = priceId;
     const config = getPaddleServerCheckoutConfig();
 
     if (!isPaddleServerCheckoutConfigured(priceId, config)) {
@@ -120,6 +139,7 @@ export async function POST() {
       );
     }
 
+    stage = "transaction_creation";
     const { transactionId } = await createServerPaddleCheckout({
       userId: user.id,
       priceId,
@@ -137,9 +157,26 @@ export async function POST() {
         { status: error.status },
       );
     }
-    console.error("Paddle checkout creation failed:", error);
+    const paddleError = error instanceof PaddleApiError ? error : null;
+    console.error("Paddle checkout creation failed", {
+      stage,
+      sessionPresent: true,
+      environment: paddleConfig.environment,
+      priceId: maskPaddlePriceId(selectedPriceId),
+      paddleHttpStatus: paddleError?.status ?? null,
+      paddleErrorCode: paddleError?.code ?? null,
+    });
+    if (paddleError?.status === 403) {
+      return NextResponse.json(
+        {
+          error: "Billing permissions are temporarily unavailable.",
+          code: "paddle_forbidden",
+        },
+        { status: 502 },
+      );
+    }
     return NextResponse.json(
-      { error: "Failed to create checkout." },
+      { error: "Failed to create checkout.", code: "checkout_failed" },
       { status: 502 },
     );
   }

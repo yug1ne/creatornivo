@@ -7,6 +7,7 @@ import {
   isBillingCheckoutConfigured,
 } from "@/config/billing";
 import { PLANS } from "@/config/plans";
+import { paddleConfig } from "@/config/paddle";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ProPlanPricing } from "@/components/pricing/pro-plan-pricing";
@@ -84,6 +85,7 @@ export default async function PricingPage() {
                   billingProvider={billingProvider}
                   earlyAccessAvailable={earlyAccessStatus.isAvailable}
                   earlyAccessPrice={earlyAccessStatus.price}
+                  paddleEnvironment={paddleConfig.environment}
                 />
               ) : (
                 <Link

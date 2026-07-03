@@ -1,7 +1,7 @@
 import { Prisma } from "@prisma/client";
 
 import { prisma } from "@/lib/db";
-import { paddleApiFetch } from "@/lib/paddle/client";
+import { paddleApiFetch, PaddleApiError } from "@/lib/paddle/client";
 
 export const PADDLE_CHECKOUT_INTENT_TTL_MS = 30 * 60 * 1000;
 const EXPIRING_INTENT_STATUS = "pending";
@@ -211,7 +211,8 @@ async function handleExistingIntent(
       response = await apiFetch<PaddleTransactionStatusResponse>(
         `/transactions/${intent.paddleTransactionId}`,
       );
-    } catch {
+    } catch (error) {
+      if (error instanceof PaddleApiError) throw error;
       throw new PaddleCheckoutError(
         "checkout_status_unavailable",
         409,

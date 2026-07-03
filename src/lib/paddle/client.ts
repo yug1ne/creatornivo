@@ -1,5 +1,16 @@
 import { paddleConfig } from "@/config/paddle";
 
+export class PaddleApiError extends Error {
+  constructor(
+    public readonly status: number,
+    public readonly code: string,
+    message: string,
+  ) {
+    super(message);
+    this.name = "PaddleApiError";
+  }
+}
+
 function getPaddleApiBaseUrl(): string {
   return paddleConfig.environment === "production"
     ? "https://api.paddle.com"
@@ -25,16 +36,25 @@ export async function paddleApiFetch<T>(
     },
   });
 
-  const payload = (await response.json()) as T & {
-    error?: { detail?: string; message?: string };
+  let payload: T & {
+    error?: { code?: string; detail?: string; message?: string };
   };
+  try {
+    payload = (await response.json()) as typeof payload;
+  } catch {
+    payload = {} as typeof payload;
+  }
 
   if (!response.ok) {
     const message =
       payload.error?.detail ??
       payload.error?.message ??
       `Paddle API error (${response.status})`;
-    throw new Error(message);
+    throw new PaddleApiError(
+      response.status,
+      payload.error?.code ?? "paddle_api_error",
+      message,
+    );
   }
 
   return payload;
