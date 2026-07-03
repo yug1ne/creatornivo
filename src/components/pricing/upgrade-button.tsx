@@ -13,25 +13,32 @@ interface UpgradeButtonProps {
   billingProvider: "paddle" | "stripe" | null;
   earlyAccessAvailable?: boolean;
   earlyAccessPrice?: string;
+  paddleEnvironment?: "sandbox" | "production";
   className?: string;
-}
+  }
 
 export function UpgradeButton({
   isConfigured,
   billingProvider,
   earlyAccessAvailable = false,
   earlyAccessPrice = "$4.90",
+  paddleEnvironment,
   className,
 }: UpgradeButtonProps) {
   const { data: session, status } = useSession();
   const [stripeLoading, setStripeLoading] = useState(false);
   const [stripeError, setStripeError] = useState("");
-  const { openCheckout, isLoading: paddleLoading, error: paddleError } =
-    usePaddleCheckout();
+  const {
+    openCheckout,
+    isLoading: paddleLoading,
+    error: paddleError,
+    errorCode: paddleErrorCode,
+  } = usePaddleCheckout();
 
   const isPro = session?.user?.plan === "pro";
   const isLoading = billingProvider === "paddle" ? paddleLoading : stripeLoading;
   const error = billingProvider === "paddle" ? paddleError : stripeError;
+  const errorCode = billingProvider === "paddle" ? paddleErrorCode : "";
 
   const buttonLabel = isLoading
     ? "Opening checkout..."
@@ -125,12 +132,29 @@ export function UpgradeButton({
       </button>
       {billingProvider === "paddle" && (
         <p className="mt-2 text-center text-xs text-muted-foreground">
-          Secure checkout powered by Paddle · Sandbox test card: 4242 4242 4242
-          4242
+          Secure checkout powered by Paddle
+          {paddleEnvironment === "sandbox" &&
+            " · Sandbox test card: 4242 4242 4242 4242"}
         </p>
       )}
       {error && (
         <p className="mt-2 text-xs text-red-600 dark:text-red-400">{error}</p>
+      )}
+      {errorCode === "session_expired" && (
+        <Link
+          href="/login?callbackUrl=/pricing"
+          className="mt-2 block text-center text-xs font-medium text-primary hover:underline"
+        >
+          Sign in
+        </Link>
+      )}
+      {errorCode === "subscription_already_active" && (
+        <Link
+          href="/settings"
+          className="mt-2 block text-center text-xs font-medium text-primary hover:underline"
+        >
+          Open account settings
+        </Link>
       )}
     </div>
   );
