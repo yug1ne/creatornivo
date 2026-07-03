@@ -6,8 +6,32 @@ import { useSession } from "next-auth/react";
 import { Suspense, useEffect, useState } from "react";
 
 import type { BillingProvider } from "@/config/billing";
-import { PLANS } from "@/config/plans";
+import { PLANS, type Plan } from "@/config/plans";
 import { buttonVariants } from "@/components/ui/button";
+
+export const CHECKOUT_PENDING_MESSAGE =
+  "Payment received. Pro access will appear after secure webhook confirmation.";
+export const PRO_ACTIVE_MESSAGE = "Your Pro subscription is active.";
+
+export function getPostCheckoutMessage(
+  isPro: boolean,
+  hasCheckoutSuccess: boolean,
+): string | null {
+  if (isPro) return PRO_ACTIVE_MESSAGE;
+  return hasCheckoutSuccess ? CHECKOUT_PENDING_MESSAGE : null;
+}
+
+export function shouldShowPaddlePortalActions(input: {
+  isPro: boolean;
+  isBillingConfigured: boolean;
+  billingProvider: BillingProvider | null;
+}): boolean {
+  return (
+    input.isPro &&
+    input.isBillingConfigured &&
+    input.billingProvider === "paddle"
+  );
+}
 
 interface SubscriptionInfo {
   status: string | null;
@@ -17,12 +41,14 @@ interface SubscriptionInfo {
 }
 
 interface SubscriptionManagerProps {
+  plan: Plan;
   subscription: SubscriptionInfo | null;
   isBillingConfigured: boolean;
   billingProvider: BillingProvider | null;
 }
 
 function SubscriptionManagerContent({
+  plan,
   subscription,
   isBillingConfigured,
   billingProvider,
@@ -37,18 +63,31 @@ function SubscriptionManagerContent({
   >(null);
   const [message, setMessage] = useState("");
 
-  const isPro = session?.user?.plan === PLANS.PRO;
+  const isPro =
+    plan === PLANS.PRO || session?.user?.plan === PLANS.PRO;
+  const postCheckoutMessage = getPostCheckoutMessage(
+    isPro,
+    checkoutStatus === "success",
+  );
+  const showPaddlePortalActions = shouldShowPaddlePortalActions({
+    isPro,
+    isBillingConfigured,
+    billingProvider,
+  });
 
   useEffect(() => {
     if (checkoutStatus === "success") {
-      update().then(() => {
-        setMessage(
-          "Payment received. Pro access will appear after secure webhook confirmation.",
-        );
-        router.replace("/settings");
+      update().then((updatedSession) => {
+        if (
+          plan === PLANS.PRO ||
+          updatedSession?.user?.plan === PLANS.PRO
+        ) {
+          router.replace("/settings", { scroll: false });
+        }
+        router.refresh();
       });
     }
-  }, [checkoutStatus, update, router]);
+  }, [checkoutStatus, plan, update, router]);
 
   async function handlePortal(action: "update" | "cancel" | "stripe") {
     setLoadingAction(action);
@@ -109,9 +148,9 @@ function SubscriptionManagerContent({
         </p>
       )}
 
-      {message && (
+      {(postCheckoutMessage || message) && (
         <p className="mt-3 rounded-lg bg-emerald-50 px-3 py-2 text-sm text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">
-          {message}
+          {message || postCheckoutMessage}
         </p>
       )}
 
@@ -122,9 +161,7 @@ function SubscriptionManagerContent({
           </Link>
         )}
 
-        {subscription &&
-          isBillingConfigured &&
-          billingProvider === "paddle" && (
+        {showPaddlePortalActions && (
             <>
               <button
                 type="button"
@@ -155,7 +192,7 @@ function SubscriptionManagerContent({
                   : "Cancel subscription"}
               </button>
             </>
-          )}
+        )}
 
         {isPro &&
           subscription &&

@@ -2,6 +2,7 @@
 
 import {
   initializePaddle,
+  type CheckoutOpenOptions,
   type Paddle,
   type PaddleEventData,
 } from "@paddle/paddle-js";
@@ -18,6 +19,23 @@ export interface CheckoutErrorPayload {
   error?: string;
   code?: string;
   portalUrl?: string;
+}
+
+export function createPaddleCheckoutOptions(
+  transactionId: string,
+  email: string | null | undefined,
+  origin: string,
+): CheckoutOpenOptions {
+  return {
+    transactionId,
+    ...(email ? { customer: { email } } : {}),
+    settings: {
+      displayMode: "overlay",
+      theme: "light",
+      locale: "en",
+      successUrl: `${origin}/settings?checkout=success`,
+    },
+  };
 }
 
 export function mapCheckoutError(
@@ -87,7 +105,8 @@ async function getPaddleInstance(
 }
 
 export function usePaddleCheckout() {
-  const { update } = useSession();
+  const { data: session, update } = useSession();
+  const sessionEmail = session?.user?.email;
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [errorCode, setErrorCode] = useState("");
@@ -151,15 +170,13 @@ export function usePaddleCheckout() {
 
       openedRef.current = true;
 
-      paddle.Checkout.open({
-        transactionId: data.transactionId,
-        settings: {
-          displayMode: "overlay",
-          theme: "light",
-          locale: "en",
-          successUrl: `${window.location.origin}/settings?checkout=success`,
-        },
-      });
+      paddle.Checkout.open(
+        createPaddleCheckoutOptions(
+          data.transactionId,
+          sessionEmail,
+          window.location.origin,
+        ),
+      );
     } catch (checkoutError) {
       setError(
         checkoutError instanceof Error
@@ -171,7 +188,7 @@ export function usePaddleCheckout() {
       inFlightRef.current = false;
       setIsLoading(false);
     }
-  }, [handleCheckoutEvent]);
+  }, [handleCheckoutEvent, sessionEmail]);
 
   return { openCheckout, isLoading, error, errorCode };
 }

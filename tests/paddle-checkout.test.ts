@@ -444,7 +444,10 @@ test("client cannot supply userId, Price ID, items, or customData", () => {
   const hook = readFileSync("src/hooks/use-paddle-checkout.ts", "utf8");
   assert.match(route, /export async function POST\(\)/);
   assert.doesNotMatch(route, /request\.json|requestId|customData/);
-  assert.match(hook, /transactionId: data\.transactionId/);
+  assert.match(
+    hook,
+    /createPaddleCheckoutOptions\(\s*data\.transactionId,\s*sessionEmail,/,
+  );
   assert.doesNotMatch(hook, /items:|customData:|data\.userId|data\.priceId/);
   assert.match(route, /code: "billing_not_configured"/);
 });
@@ -464,6 +467,26 @@ test("portal returns update and cancellation URLs separately", () => {
       cancelSubscriptionUrl: "https://paddle.test/cancel",
     },
   );
+});
+
+test("portal preserves either management URL when the other is unavailable", () => {
+  assert.deepEqual(
+    getPaddleManagementUrls({
+      data: {
+        management_urls: {
+          update_payment_method: "https://paddle.test/update",
+        },
+      },
+    }),
+    {
+      updatePaymentMethodUrl: "https://paddle.test/update",
+      cancelSubscriptionUrl: null,
+    },
+  );
+  assert.deepEqual(getPaddleManagementUrls({ data: {} }), {
+    updatePaymentMethodUrl: null,
+    cancelSubscriptionUrl: null,
+  });
 });
 
 test("portal subscription lookup is scoped to the server session user", () => {

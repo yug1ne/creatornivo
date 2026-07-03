@@ -62,6 +62,7 @@ export default async function SettingsPage() {
         </Card>
 
         <SubscriptionManager
+          plan={session.plan}
           isBillingConfigured={isBillingConfigured()}
           billingProvider={getActiveBillingProvider()}
           subscription={
