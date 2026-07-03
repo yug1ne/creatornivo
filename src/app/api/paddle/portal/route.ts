@@ -13,6 +13,19 @@ interface PaddleSubscriptionResponse {
   };
 }
 
+export function getPaddleManagementUrls(
+  response: PaddleSubscriptionResponse,
+): {
+  updatePaymentMethodUrl: string | null;
+  cancelSubscriptionUrl: string | null;
+} {
+  return {
+    updatePaymentMethodUrl:
+      response.data.management_urls?.update_payment_method ?? null,
+    cancelSubscriptionUrl: response.data.management_urls?.cancel ?? null,
+  };
+}
+
 export async function POST() {
   try {
     const session = await requireSession();
@@ -39,18 +52,16 @@ export async function POST() {
       `/subscriptions/${subscription.paddleSubscriptionId}`,
     );
 
-    const portalUrl =
-      response.data.management_urls?.update_payment_method ??
-      response.data.management_urls?.cancel;
+    const urls = getPaddleManagementUrls(response);
 
-    if (!portalUrl) {
+    if (!urls.updatePaymentMethodUrl && !urls.cancelSubscriptionUrl) {
       return NextResponse.json(
         { error: "Subscription management link unavailable" },
         { status: 503 },
       );
     }
 
-    return NextResponse.json({ url: portalUrl });
+    return NextResponse.json(urls);
   } catch (error) {
     const message =
       error instanceof Error ? error.message : "Failed to open billing portal";

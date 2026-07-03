@@ -2,8 +2,10 @@ import { NextResponse } from "next/server";
 
 import {
   isPaddleSubscriptionEventType,
+  isPaddleTransactionEventType,
   processPaddleWebhookEvent,
   type PaddleSubscriptionPayload,
+  type PaddleTransactionPayload,
   type PaddleWebhookEventInput,
 } from "@/lib/paddle/subscription-service";
 import { verifyPaddleWebhookSignature } from "@/lib/paddle/webhook-verify";
@@ -38,11 +40,19 @@ function isValidSubscriptionPayload(
   }
 
   if (
+    value.transaction_id !== undefined &&
+    value.transaction_id !== null &&
+    !isNonEmptyString(value.transaction_id)
+  ) {
+    return false;
+  }
+
+  if (
     value.custom_data !== undefined &&
     value.custom_data !== null &&
     (!isRecord(value.custom_data) ||
-      (value.custom_data.userId !== undefined &&
-        !isNonEmptyString(value.custom_data.userId)))
+      (value.custom_data.checkoutIntentId !== undefined &&
+        !isNonEmptyString(value.custom_data.checkoutIntentId)))
   ) {
     return false;
   }
@@ -76,6 +86,53 @@ function isValidSubscriptionPayload(
     for (const item of value.items) {
       if (
         !isRecord(item) ||
+        (item.quantity !== undefined &&
+          (!Number.isInteger(item.quantity) || (item.quantity as number) < 1)) ||
+        (item.price_id !== undefined && !isNonEmptyString(item.price_id)) ||
+        (item.price !== undefined &&
+          (!isRecord(item.price) ||
+            (item.price.id !== undefined &&
+              !isNonEmptyString(item.price.id))))
+      ) {
+        return false;
+      }
+    }
+  }
+
+  return true;
+}
+
+function isValidTransactionPayload(
+  value: Record<string, unknown>,
+): value is Record<string, unknown> & PaddleTransactionPayload {
+  if (!isNonEmptyString(value.id)) return false;
+
+  if (
+    value.subscription_id !== undefined &&
+    value.subscription_id !== null &&
+    !isNonEmptyString(value.subscription_id)
+  ) {
+    return false;
+  }
+
+  if (
+    value.custom_data !== undefined &&
+    value.custom_data !== null &&
+    (!isRecord(value.custom_data) ||
+      (value.custom_data.checkoutIntentId !== undefined &&
+        !isNonEmptyString(value.custom_data.checkoutIntentId)))
+  ) {
+    return false;
+  }
+
+  if (value.items !== undefined) {
+    if (!Array.isArray(value.items)) return false;
+    for (const item of value.items) {
+      if (
+        !isRecord(item) ||
+        (item.quantity !== undefined &&
+          (!Number.isInteger(item.quantity) || (item.quantity as number) < 1)) ||
+        (item.price_id !== undefined && !isNonEmptyString(item.price_id)) ||
         (item.price !== undefined &&
           (!isRecord(item.price) ||
             (item.price.id !== undefined &&
@@ -105,6 +162,13 @@ export function parsePaddleWebhookEvent(
   if (
     isPaddleSubscriptionEventType(value.event_type) &&
     !isValidSubscriptionPayload(value.data)
+  ) {
+    return null;
+  }
+
+  if (
+    isPaddleTransactionEventType(value.event_type) &&
+    !isValidTransactionPayload(value.data)
   ) {
     return null;
   }

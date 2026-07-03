@@ -1,21 +1,33 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
+import type { PaddleServerCheckoutConfig } from "../src/config/paddle";
+import { parsePaddleWebhookEvent } from "../src/app/api/paddle/webhook/route";
 import {
   processPaddleWebhookEvent,
   type PaddleWebhookEventInput,
 } from "../src/lib/paddle/subscription-service";
 
-const EARLY_ACCESS_PRICE_ID = "pri_early";
-const PRO_PRICE_ID = "pri_pro";
+const EARLY_PRICE = "pri_early";
+const PRO_PRICE = "pri_pro";
+const config: PaddleServerCheckoutConfig = {
+  clientToken: "test_client",
+  environment: "sandbox",
+  environmentConfigured: true,
+  apiKey: "test_api",
+  webhookSecret: "test_secret",
+  proPriceId: PRO_PRICE,
+  earlyAccessPriceId: EARLY_PRICE,
+};
 
-type StoredSubscription = {
+type Subscription = {
   id: string;
   userId: string;
   provider: string;
   paddleCustomerId: string | null;
   paddleSubscriptionId: string | null;
   paddlePriceId: string | null;
+  paddleStatus: string | null;
   status: string;
   currentPeriodEnd: Date | null;
   cancelAtPeriodEnd: boolean;
@@ -23,66 +35,93 @@ type StoredSubscription = {
   earlyAccessClaimedAt: Date | null;
 };
 
-type TestState = {
-  events: Map<string, Record<string, unknown>>;
-  subscriptions: Map<string, StoredSubscription>;
-  users: Map<string, { plan: string }>;
-  userUpdates: number;
+type Intent = {
+  id: string;
+  userId: string;
+  priceId: string;
+  paddleTransactionId: string | null;
+  paddleSubscriptionId: string | null;
+  status: string;
+  expiresAt: Date;
+  completedAt: Date | null;
 };
 
-function project<T extends Record<string, unknown>>(
-  value: T,
-  select?: Record<string, boolean>,
-) {
-  if (!select) return value;
-
-  return Object.fromEntries(
-    Object.keys(select).map((key) => [key, value[key]]),
-  );
-}
-
-class InMemoryPaddleDatabase {
-  state: TestState = {
-    events: new Map(),
-    subscriptions: new Map(),
-    users: new Map([["user-1", { plan: "free" }]]),
-    userUpdates: 0,
-  };
-
+class MemoryDatabase {
+  events = new Map<string, unknown>();
+  subscriptions = new Map<string, Subscription>();
+  intents = new Map<string, Intent>();
+  users = new Map([
+    ["user-1", { id: "user-1", plan: "free" }],
+    ["user-2", { id: "user-2", plan: "free" }],
+  ]);
+  userUpdates = 0;
   failUserUpdate = false;
+
+  seedIntent(overrides: Partial<Intent> = {}) {
+    const intent: Intent = {
+      id: "intent-1",
+      userId: "user-1",
+      priceId: EARLY_PRICE,
+      paddleTransactionId: "txn_01",
+      paddleSubscriptionId: null,
+      status: "transaction_created",
+      expiresAt: new Date("2026-07-04T00:00:00.000Z"),
+      completedAt: null,
+      ...overrides,
+    };
+    this.intents.set(intent.id, intent);
+    return intent;
+  }
 
   async $transaction<T>(
     operation: (transaction: Record<string, unknown>) => Promise<T>,
   ): Promise<T> {
-    const draft = structuredClone(this.state);
+    const draft = structuredClone({
+      events: this.events,
+      subscriptions: this.subscriptions,
+      intents: this.intents,
+      users: this.users,
+      userUpdates: this.userUpdates,
+    });
     const findSubscription = (where: Record<string, unknown>) =>
-      Array.from(draft.subscriptions.values()).find((subscription) =>
+      Array.from(draft.subscriptions.values()).find((row) =>
         Object.entries(where).every(
-          ([key, value]) =>
-            subscription[key as keyof StoredSubscription] === value,
+          ([key, value]) => row[key as keyof Subscription] === value,
         ),
       ) ?? null;
-    const saveSubscription = (
-      subscription: StoredSubscription,
-      data: Record<string, unknown>,
-    ) => {
-      Object.assign(subscription, data);
-      draft.subscriptions.set(subscription.id, subscription);
-      return subscription;
-    };
     const transaction = {
       paddleWebhookEvent: {
-        create: async ({
-          data,
-        }: {
-          data: Record<string, unknown> & { eventId: string };
-        }) => {
+        create: async ({ data }: { data: { eventId: string } }) => {
           if (draft.events.has(data.eventId)) {
-            throw Object.assign(new Error("Unique event ID"), { code: "P2002" });
+            throw Object.assign(new Error("duplicate"), { code: "P2002" });
           }
-
           draft.events.set(data.eventId, data);
           return data;
+        },
+      },
+      paddleCheckoutIntent: {
+        findUnique: async ({
+          where,
+        }: {
+          where: { paddleTransactionId?: string; id?: string };
+        }) =>
+          Array.from(draft.intents.values()).find(
+            (intent) =>
+              (where.paddleTransactionId !== undefined &&
+                intent.paddleTransactionId === where.paddleTransactionId) ||
+              (where.id !== undefined && intent.id === where.id),
+          ) ?? null,
+        update: async ({
+          where,
+          data,
+        }: {
+          where: { id: string };
+          data: Partial<Intent>;
+        }) => {
+          const intent = draft.intents.get(where.id);
+          if (!intent) throw new Error("intent missing");
+          Object.assign(intent, data);
+          return intent;
         },
       },
       subscription: {
@@ -91,63 +130,35 @@ class InMemoryPaddleDatabase {
         }: {
           where: Record<string, unknown>;
         }) => findSubscription(where),
-        update: async ({
-          where,
-          data,
-          select,
-        }: {
-          where: Record<string, unknown>;
-          data: Record<string, unknown>;
-          select?: Record<string, boolean>;
-        }) => {
-          const subscription = findSubscription(where);
-          if (!subscription) throw new Error("Subscription not found");
-          return project(
-            saveSubscription(subscription, data) as unknown as Record<
-              string,
-              unknown
-            >,
-            select,
-          );
-        },
         upsert: async ({
           where,
           create,
           update,
-          select,
         }: {
-          where: Record<string, unknown>;
-          create: Record<string, unknown>;
-          update: Record<string, unknown>;
-          select?: Record<string, boolean>;
+          where: { userId: string };
+          create: Omit<Subscription, "id">;
+          update: Partial<Subscription>;
         }) => {
           const existing = findSubscription(where);
-          const subscription = existing
-            ? saveSubscription(existing, update)
-            : saveSubscription(
-                {
-                  id: `sub-${draft.subscriptions.size + 1}`,
-                  userId: create.userId as string,
-                  provider: "paddle",
-                  paddleCustomerId: null,
-                  paddleSubscriptionId: null,
-                  paddlePriceId: null,
-                  status: "incomplete",
-                  currentPeriodEnd: null,
-                  cancelAtPeriodEnd: false,
-                  lastPaddleEventAt: null,
-                  earlyAccessClaimedAt: null,
-                },
-                create,
-              );
-
-          return project(
-            subscription as unknown as Record<string, unknown>,
-            select,
-          );
+          if (existing) {
+            Object.assign(existing, update);
+            return existing;
+          }
+          const saved = {
+            id: `db-sub-${draft.subscriptions.size + 1}`,
+            ...create,
+          };
+          draft.subscriptions.set(saved.id, saved);
+          return saved;
         },
       },
       user: {
+        findUnique: async ({
+          where,
+        }: {
+          where: { id: string };
+          select: Record<string, boolean>;
+        }) => draft.users.get(where.id) ?? null,
         update: async ({
           where,
           data,
@@ -155,283 +166,404 @@ class InMemoryPaddleDatabase {
           where: { id: string };
           data: { plan: string };
         }) => {
-          if (this.failUserUpdate) {
-            throw new Error("Injected user update failure");
-          }
-
-          draft.users.set(where.id, { plan: data.plan });
+          if (this.failUserUpdate) throw new Error("injected failure");
+          const user = draft.users.get(where.id);
+          if (!user) throw new Error("user missing");
+          user.plan = data.plan;
           draft.userUpdates += 1;
-          return { id: where.id, ...data };
+          return user;
         },
       },
     };
 
     const result = await operation(transaction);
-    this.state = draft;
+    this.events = draft.events;
+    this.subscriptions = draft.subscriptions;
+    this.intents = draft.intents;
+    this.users = draft.users;
+    this.userUpdates = draft.userUpdates;
     return result;
   }
 
   get subscription() {
-    return Array.from(this.state.subscriptions.values())[0];
+    return Array.from(this.subscriptions.values())[0];
   }
 }
 
-function webhookEvent({
-  eventId,
-  occurredAt,
-  eventType = "subscription.activated",
-  status = "active",
-  priceId = EARLY_ACCESS_PRICE_ID,
-}: {
-  eventId: string;
-  occurredAt: string;
-  eventType?: string;
-  status?: string;
-  priceId?: string | null;
-}): PaddleWebhookEventInput {
+function subscriptionEvent(
+  overrides: {
+    eventId?: string;
+    eventType?: string;
+    occurredAt?: string;
+    status?: string;
+    priceId?: string;
+    transactionId?: string | null;
+    checkoutIntentId?: string;
+    userId?: string;
+    subscriptionId?: string;
+    scheduledCancel?: boolean;
+  } = {},
+): PaddleWebhookEventInput {
   return {
-    eventId,
-    eventType,
-    occurredAt: new Date(occurredAt),
+    eventId: overrides.eventId ?? "evt_01",
+    eventType: overrides.eventType ?? "subscription.activated",
+    occurredAt: new Date(
+      overrides.occurredAt ?? "2026-07-03T10:00:00.000Z",
+    ),
     data: {
-      id: "paddle-sub-1",
-      status,
-      customer_id: "paddle-customer-1",
-      custom_data: { userId: "user-1" },
-      ...(priceId
-        ? { items: [{ price: { id: priceId } }] }
+      id: overrides.subscriptionId ?? "sub_01",
+      status: overrides.status ?? "active",
+      customer_id: "ctm_01",
+      transaction_id:
+        overrides.transactionId === undefined
+          ? "txn_01"
+          : overrides.transactionId,
+      custom_data: {
+        checkoutIntentId: overrides.checkoutIntentId ?? "intent-1",
+        ...(overrides.userId ? { userId: overrides.userId } : {}),
+      },
+      items: [
+        {
+          quantity: 1,
+          price: { id: overrides.priceId ?? EARLY_PRICE },
+        },
+      ],
+      ...(overrides.scheduledCancel
+        ? { scheduled_change: { action: "cancel" } }
         : {}),
     },
   };
 }
 
-async function process(
-  database: InMemoryPaddleDatabase,
-  event: PaddleWebhookEventInput,
-) {
-  return processPaddleWebhookEvent(
-    event,
-    database as never,
-    EARLY_ACCESS_PRICE_ID,
-  );
+function transactionEvent(): PaddleWebhookEventInput {
+  return {
+    eventId: "evt_txn",
+    eventType: "transaction.completed",
+    occurredAt: new Date("2026-07-03T09:59:00.000Z"),
+    data: {
+      id: "txn_01",
+      subscription_id: "sub_01",
+      custom_data: { checkoutIntentId: "intent-1" },
+      items: [{ quantity: 1, price_id: EARLY_PRICE }],
+    },
+  };
 }
 
-test("the same event_id is applied once and the retry succeeds", async () => {
-  const database = new InMemoryPaddleDatabase();
-  const event = webhookEvent({
-    eventId: "evt-1",
-    occurredAt: "2026-07-03T10:00:00.000Z",
-  });
+function process(database: MemoryDatabase, event: PaddleWebhookEventInput) {
+  return processPaddleWebhookEvent(event, database as never, config);
+}
 
-  assert.equal(await process(database, event), "processed");
-  assert.equal(await process(database, event), "duplicate");
-  assert.equal(database.state.events.size, 1);
-  assert.equal(database.state.userUpdates, 1);
+test("transaction.completed is recognized without granting client authority", () => {
+  const parsed = parsePaddleWebhookEvent({
+    event_id: "evt_txn",
+    event_type: "transaction.completed",
+    occurred_at: "2026-07-03T09:59:00.000Z",
+    data: transactionEvent().data,
+  });
+  assert.equal(parsed?.eventType, "transaction.completed");
 });
 
-test("a new event_id with an older occurred_at is recorded but not applied", async () => {
-  const database = new InMemoryPaddleDatabase();
-
+test("subscription.created binds a valid intent but does not grant Pro", async () => {
+  const db = new MemoryDatabase();
+  db.seedIntent();
   await process(
-    database,
-    webhookEvent({
-      eventId: "evt-new",
+    db,
+    subscriptionEvent({
+      eventType: "subscription.created",
+      status: "active",
+    }),
+  );
+  assert.equal(db.subscription.userId, "user-1");
+  assert.equal(db.users.get("user-1")?.plan, "free");
+  assert.equal(db.intents.get("intent-1")?.status, "subscription_bound");
+});
+
+test("subscription.activated with a valid intent grants Pro and completes it", async () => {
+  const db = new MemoryDatabase();
+  db.seedIntent();
+  assert.equal(await process(db, subscriptionEvent()), "processed");
+  assert.equal(db.users.get("user-1")?.plan, "pro");
+  assert.equal(db.subscription.paddleCustomerId, "ctm_01");
+  assert.equal(db.subscription.paddleSubscriptionId, "sub_01");
+  assert.equal(db.subscription.paddlePriceId, EARLY_PRICE);
+  assert.equal(db.intents.get("intent-1")?.status, "completed");
+  assert.ok(db.intents.get("intent-1")?.completedAt);
+  assert.ok(db.subscription.earlyAccessClaimedAt);
+});
+
+test("subscription.created followed by activated completes the original intent", async () => {
+  const db = new MemoryDatabase();
+  db.seedIntent();
+  await process(
+    db,
+    subscriptionEvent({
+      eventType: "subscription.created",
+      status: "active",
+    }),
+  );
+  await process(
+    db,
+    subscriptionEvent({
+      eventId: "evt_activate",
+      occurredAt: "2026-07-03T10:01:00.000Z",
+    }),
+  );
+  assert.equal(db.users.get("user-1")?.plan, "pro");
+  assert.equal(db.intents.get("intent-1")?.status, "completed");
+});
+
+test("activated before created binds by checkoutIntentId without transaction_id", async () => {
+  const db = new MemoryDatabase();
+  db.seedIntent();
+  await process(
+    db,
+    subscriptionEvent({
+      transactionId: null,
       occurredAt: "2026-07-03T11:00:00.000Z",
     }),
   );
-  const claimedAt = database.subscription.earlyAccessClaimedAt;
+  assert.equal(db.users.get("user-1")?.plan, "pro");
+  assert.equal(db.intents.get("intent-1")?.status, "completed");
+  assert.equal(
+    db.intents.get("intent-1")?.paddleSubscriptionId,
+    "sub_01",
+  );
 
   assert.equal(
     await process(
-      database,
-      webhookEvent({
-        eventId: "evt-old",
+      db,
+      subscriptionEvent({
+        eventId: "evt_created_old",
+        eventType: "subscription.created",
+        status: "active",
         occurredAt: "2026-07-03T10:00:00.000Z",
-        eventType: "subscription.canceled",
-        status: "canceled",
-        priceId: null,
       }),
     ),
     "stale",
   );
-  assert.equal(database.state.events.size, 2);
-  assert.equal(database.subscription.status, "active");
-  assert.deepEqual(database.subscription.earlyAccessClaimedAt, claimedAt);
+  assert.equal(db.users.get("user-1")?.plan, "pro");
+  assert.equal(db.subscriptions.size, 1);
 });
 
-test("a newer event is applied", async () => {
-  const database = new InMemoryPaddleDatabase();
+test("a spoofed checkoutIntentId never grants Pro", async () => {
+  const db = new MemoryDatabase();
+  db.seedIntent();
+  await assert.rejects(
+    process(
+      db,
+      subscriptionEvent({
+        transactionId: null,
+        checkoutIntentId: "intent-spoofed",
+      }),
+    ),
+    /not available yet/,
+  );
+  assert.equal(db.users.get("user-1")?.plan, "free");
+  assert.equal(db.events.size, 0);
+});
 
+test("an intent completed by another subscription cannot be reused", async () => {
+  const db = new MemoryDatabase();
+  db.seedIntent({
+    status: "completed",
+    paddleSubscriptionId: "sub_other",
+    completedAt: new Date("2026-07-03T09:00:00.000Z"),
+  });
+  assert.equal(await process(db, subscriptionEvent()), "ignored");
+  assert.equal(db.users.get("user-1")?.plan, "free");
+});
+
+test("a matching signed active webhook succeeds after intent expiry", async () => {
+  const db = new MemoryDatabase();
+  db.seedIntent({
+    status: "expired",
+    expiresAt: new Date("2026-07-03T09:00:00.000Z"),
+  });
+  assert.equal(
+    await process(db, subscriptionEvent({ transactionId: null })),
+    "processed",
+  );
+  assert.equal(db.users.get("user-1")?.plan, "pro");
+  assert.equal(db.intents.get("intent-1")?.status, "completed");
+});
+
+test("an expired intent without a server transaction grants nothing", async () => {
+  const db = new MemoryDatabase();
+  db.seedIntent({
+    status: "expired",
+    paddleTransactionId: null,
+    expiresAt: new Date("2026-07-03T09:00:00.000Z"),
+  });
+  await assert.rejects(
+    process(db, subscriptionEvent({ transactionId: null })),
+    /not attached/,
+  );
+  assert.equal(db.users.get("user-1")?.plan, "free");
+  assert.equal(db.events.size, 0);
+});
+
+test("subscription events without a valid intent do not grant Pro", async () => {
+  const createdDb = new MemoryDatabase();
+  assert.equal(
+    await process(
+      createdDb,
+      subscriptionEvent({ eventType: "subscription.created" }),
+    ),
+    "ignored",
+  );
+
+  const activatedDb = new MemoryDatabase();
+  await assert.rejects(
+    process(
+      activatedDb,
+      subscriptionEvent({ eventType: "subscription.activated" }),
+    ),
+    /not available yet/,
+  );
+  assert.equal(activatedDb.events.size, 0);
+  assert.equal(activatedDb.users.get("user-1")?.plan, "free");
+  assert.equal(activatedDb.subscriptions.size, 0);
+});
+
+test("spoofed customData.userId is ignored", async () => {
+  const db = new MemoryDatabase();
+  db.seedIntent();
+  await process(db, subscriptionEvent({ userId: "user-2" }));
+  assert.equal(db.users.get("user-1")?.plan, "pro");
+  assert.equal(db.users.get("user-2")?.plan, "free");
+});
+
+test("unknown or mismatched Price IDs do not grant Pro", async () => {
+  for (const priceId of ["pri_unknown", PRO_PRICE]) {
+    const db = new MemoryDatabase();
+    db.seedIntent();
+    assert.equal(
+      await process(db, subscriptionEvent({ priceId })),
+      "ignored",
+    );
+    assert.equal(db.users.get("user-1")?.plan, "free");
+  }
+});
+
+test("transaction.completed records intent state but does not grant Pro", async () => {
+  const db = new MemoryDatabase();
+  db.seedIntent();
+  assert.equal(await process(db, transactionEvent()), "processed");
+  assert.equal(db.intents.get("intent-1")?.status, "transaction_completed");
+  assert.equal(db.users.get("user-1")?.plan, "free");
+  assert.equal(db.subscriptions.size, 0);
+});
+
+test("transaction.completed after activated cannot downgrade completed intent", async () => {
+  const db = new MemoryDatabase();
+  db.seedIntent();
+  await process(db, subscriptionEvent());
+  await process(db, {
+    ...transactionEvent(),
+    eventId: "evt_txn_late",
+    occurredAt: new Date("2026-07-03T12:00:00.000Z"),
+  });
+  assert.equal(db.intents.get("intent-1")?.status, "completed");
+  assert.ok(db.intents.get("intent-1")?.completedAt);
+});
+
+test("the same event_id is applied once", async () => {
+  const db = new MemoryDatabase();
+  db.seedIntent();
+  const event = subscriptionEvent();
+  assert.equal(await process(db, event), "processed");
+  assert.equal(await process(db, event), "duplicate");
+  assert.equal(db.userUpdates, 1);
+});
+
+test("an older occurred_at cannot overwrite newer subscription state", async () => {
+  const db = new MemoryDatabase();
+  db.seedIntent();
+  await process(db, subscriptionEvent());
+  assert.equal(
+    await process(
+      db,
+      subscriptionEvent({
+        eventId: "evt_old",
+        eventType: "subscription.canceled",
+        status: "canceled",
+        occurredAt: "2026-07-03T09:00:00.000Z",
+        transactionId: null,
+        userId: "user-2",
+      }),
+    ),
+    "stale",
+  );
+  assert.equal(db.users.get("user-1")?.plan, "pro");
+});
+
+test("subsequent events use paddleSubscriptionId and cancellation frees the owner", async () => {
+  const db = new MemoryDatabase();
+  db.seedIntent();
+  await process(db, subscriptionEvent());
   await process(
-    database,
-    webhookEvent({
-      eventId: "evt-1",
-      occurredAt: "2026-07-03T10:00:00.000Z",
+    db,
+    subscriptionEvent({
+      eventId: "evt_cancel",
+      eventType: "subscription.canceled",
+      status: "canceled",
+      occurredAt: "2026-07-03T11:00:00.000Z",
+      transactionId: null,
+      checkoutIntentId: "wrong-intent",
+      userId: "user-2",
+    }),
+  );
+  assert.equal(db.users.get("user-1")?.plan, "free");
+  assert.equal(db.users.get("user-2")?.plan, "free");
+  assert.equal(db.subscription.paddleSubscriptionId, "sub_01");
+});
+
+test("scheduled cancellation keeps Pro until subscription.canceled", async () => {
+  const db = new MemoryDatabase();
+  db.seedIntent();
+  await process(db, subscriptionEvent());
+  await process(
+    db,
+    subscriptionEvent({
+      eventId: "evt_scheduled",
+      eventType: "subscription.updated",
+      occurredAt: "2026-07-03T11:00:00.000Z",
+      transactionId: null,
+      scheduledCancel: true,
+    }),
+  );
+  assert.equal(db.users.get("user-1")?.plan, "pro");
+  assert.equal(db.subscription.cancelAtPeriodEnd, true);
+});
+
+test("trialing never grants Pro and resumed active restores Pro", async () => {
+  const db = new MemoryDatabase();
+  db.seedIntent();
+  await process(
+    db,
+    subscriptionEvent({
       eventType: "subscription.trialing",
       status: "trialing",
     }),
   );
-
-  assert.equal(
-    await process(
-      database,
-      webhookEvent({
-        eventId: "evt-2",
-        occurredAt: "2026-07-03T11:00:00.000Z",
-      }),
-    ),
-    "processed",
-  );
-  assert.equal(database.subscription.status, "active");
-  assert.equal(
-    database.subscription.lastPaddleEventAt?.toISOString(),
-    "2026-07-03T11:00:00.000Z",
-  );
-});
-
-test("a processing failure rolls back the event ID and subscription update", async () => {
-  const database = new InMemoryPaddleDatabase();
-  database.failUserUpdate = true;
-
-  await assert.rejects(
-    process(
-      database,
-      webhookEvent({
-        eventId: "evt-fails",
-        occurredAt: "2026-07-03T10:00:00.000Z",
-      }),
-    ),
-    /Injected user update failure/,
-  );
-  assert.equal(database.state.events.has("evt-fails"), false);
-  assert.equal(database.state.subscriptions.size, 0);
-});
-
-test("subscription.activated with the Early Access price creates one claim", async () => {
-  const database = new InMemoryPaddleDatabase();
-
+  assert.equal(db.users.get("user-1")?.plan, "free");
   await process(
-    database,
-    webhookEvent({
-      eventId: "evt-claim",
-      occurredAt: "2026-07-03T10:00:00.000Z",
-    }),
-  );
-
-  assert.equal(
-    database.subscription.earlyAccessClaimedAt?.toISOString(),
-    "2026-07-03T10:00:00.000Z",
-  );
-});
-
-test("subscription.activated with the Pro price does not create a claim", async () => {
-  const database = new InMemoryPaddleDatabase();
-
-  await process(
-    database,
-    webhookEvent({
-      eventId: "evt-pro",
-      occurredAt: "2026-07-03T10:00:00.000Z",
-      priceId: PRO_PRICE_ID,
-    }),
-  );
-
-  assert.equal(database.subscription.earlyAccessClaimedAt, null);
-});
-
-test("created and trialing events do not create claims", async () => {
-  for (const [eventType, status] of [
-    ["subscription.created", "incomplete"],
-    ["subscription.trialing", "trialing"],
-  ]) {
-    const database = new InMemoryPaddleDatabase();
-    await process(
-      database,
-      webhookEvent({
-        eventId: `evt-${status}`,
-        occurredAt: "2026-07-03T10:00:00.000Z",
-        eventType,
-        status,
-      }),
-    );
-    assert.equal(database.subscription.earlyAccessClaimedAt, null);
-  }
-});
-
-test("past_due without a previous claim does not create one", async () => {
-  const database = new InMemoryPaddleDatabase();
-
-  await process(
-    database,
-    webhookEvent({
-      eventId: "evt-past-due",
-      occurredAt: "2026-07-03T10:00:00.000Z",
-      eventType: "subscription.past_due",
-      status: "past_due",
-    }),
-  );
-
-  assert.equal(database.subscription.earlyAccessClaimedAt, null);
-});
-
-test("canceled and paused events never clear an existing claim", async () => {
-  const database = new InMemoryPaddleDatabase();
-
-  await process(
-    database,
-    webhookEvent({
-      eventId: "evt-activated",
-      occurredAt: "2026-07-03T10:00:00.000Z",
-    }),
-  );
-  const claimedAt = database.subscription.earlyAccessClaimedAt;
-
-  await process(
-    database,
-    webhookEvent({
-      eventId: "evt-canceled",
+    db,
+    subscriptionEvent({
+      eventId: "evt_resume",
+      eventType: "subscription.resumed",
       occurredAt: "2026-07-03T11:00:00.000Z",
-      eventType: "subscription.canceled",
-      status: "canceled",
-      priceId: null,
+      transactionId: null,
     }),
   );
-  assert.deepEqual(database.subscription.earlyAccessClaimedAt, claimedAt);
-
-  await process(
-    database,
-    webhookEvent({
-      eventId: "evt-paused",
-      occurredAt: "2026-07-03T12:00:00.000Z",
-      eventType: "subscription.paused",
-      status: "paused",
-      priceId: null,
-    }),
-  );
-  assert.deepEqual(database.subscription.earlyAccessClaimedAt, claimedAt);
+  assert.equal(db.users.get("user-1")?.plan, "pro");
 });
 
-test("cancellation does not clear Paddle IDs", async () => {
-  const database = new InMemoryPaddleDatabase();
-
-  await process(
-    database,
-    webhookEvent({
-      eventId: "evt-activated",
-      occurredAt: "2026-07-03T10:00:00.000Z",
-    }),
-  );
-  await process(
-    database,
-    webhookEvent({
-      eventId: "evt-canceled",
-      occurredAt: "2026-07-03T11:00:00.000Z",
-      eventType: "subscription.canceled",
-      status: "canceled",
-      priceId: null,
-    }),
-  );
-
-  assert.equal(database.subscription.paddleSubscriptionId, "paddle-sub-1");
-  assert.equal(database.subscription.paddlePriceId, EARLY_ACCESS_PRICE_ID);
+test("event ID and all state roll back together on failure", async () => {
+  const db = new MemoryDatabase();
+  db.seedIntent();
+  db.failUserUpdate = true;
+  await assert.rejects(process(db, subscriptionEvent()), /injected failure/);
+  assert.equal(db.events.size, 0);
+  assert.equal(db.subscriptions.size, 0);
 });

@@ -32,7 +32,9 @@ function SubscriptionManagerContent({
   const searchParams = useSearchParams();
   const checkoutStatus = searchParams.get("checkout");
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [loadingAction, setLoadingAction] = useState<
+    "update" | "cancel" | "stripe" | null
+  >(null);
   const [message, setMessage] = useState("");
 
   const isPro = session?.user?.plan === PLANS.PRO;
@@ -40,14 +42,16 @@ function SubscriptionManagerContent({
   useEffect(() => {
     if (checkoutStatus === "success") {
       update().then(() => {
-        setMessage("Pro subscription activated successfully!");
+        setMessage(
+          "Payment received. Pro access will appear after secure webhook confirmation.",
+        );
         router.replace("/settings");
       });
     }
   }, [checkoutStatus, update, router]);
 
-  async function handlePortal() {
-    setIsLoading(true);
+  async function handlePortal(action: "update" | "cancel" | "stripe") {
+    setLoadingAction(action);
 
     const endpoint =
       billingProvider === "paddle"
@@ -56,14 +60,26 @@ function SubscriptionManagerContent({
 
     const response = await fetch(endpoint, { method: "POST" });
     const data = await response.json();
-    setIsLoading(false);
+    setLoadingAction(null);
 
     if (!response.ok) {
       setMessage(data.error ?? "Something went wrong");
       return;
     }
 
-    window.location.href = data.url;
+    const url =
+      action === "update"
+        ? data.updatePaymentMethodUrl
+        : action === "cancel"
+          ? data.cancelSubscriptionUrl
+          : data.url;
+
+    if (!url) {
+      setMessage("This subscription management action is unavailable.");
+      return;
+    }
+
+    window.location.href = url;
   }
 
   return (
@@ -106,20 +122,58 @@ function SubscriptionManagerContent({
           </Link>
         )}
 
-        {isPro && subscription && isBillingConfigured && (
+        {subscription &&
+          isBillingConfigured &&
+          billingProvider === "paddle" && (
+            <>
+              <button
+                type="button"
+                onClick={() => handlePortal("update")}
+                disabled={loadingAction !== null}
+                className={buttonVariants({
+                  variant: "outline",
+                  size: "sm",
+                  className: "disabled:opacity-50",
+                })}
+              >
+                {loadingAction === "update"
+                  ? "Loading..."
+                  : "Update payment method"}
+              </button>
+              <button
+                type="button"
+                onClick={() => handlePortal("cancel")}
+                disabled={loadingAction !== null}
+                className={buttonVariants({
+                  variant: "outline",
+                  size: "sm",
+                  className: "disabled:opacity-50",
+                })}
+              >
+                {loadingAction === "cancel"
+                  ? "Loading..."
+                  : "Cancel subscription"}
+              </button>
+            </>
+          )}
+
+        {isPro &&
+          subscription &&
+          isBillingConfigured &&
+          billingProvider === "stripe" && (
           <button
             type="button"
-            onClick={handlePortal}
-            disabled={isLoading}
+            onClick={() => handlePortal("stripe")}
+            disabled={loadingAction !== null}
             className={buttonVariants({
               variant: "outline",
               size: "sm",
               className: "disabled:opacity-50",
             })}
           >
-            {isLoading ? "Loading..." : "Manage subscription"}
+            {loadingAction === "stripe" ? "Loading..." : "Manage subscription"}
           </button>
-        )}
+          )}
       </div>
     </div>
   );

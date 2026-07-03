@@ -11,10 +11,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 interface PaddleCheckoutConfig {
   clientToken: string;
   environment: "sandbox" | "production";
-  priceId: string;
-  userId: string;
-  email: string;
-  successUrl: string;
+  transactionId: string;
 }
 
 let paddleInitPromise: Promise<Paddle | undefined> | null = null;
@@ -61,12 +58,21 @@ export function usePaddleCheckout() {
     setIsLoading(true);
 
     try {
-      const response = await fetch("/api/paddle/checkout");
+      const response = await fetch("/api/paddle/checkout", { method: "POST" });
       const data = (await response.json()) as PaddleCheckoutConfig & {
         error?: string;
+        code?: string;
+        portalUrl?: string;
       };
 
       if (!response.ok) {
+        if (
+          data.code === "subscription_requires_action" &&
+          data.portalUrl
+        ) {
+          window.location.href = data.portalUrl;
+          return;
+        }
         throw new Error(data.error ?? "Failed to start checkout");
       }
 
@@ -83,14 +89,12 @@ export function usePaddleCheckout() {
       openedRef.current = true;
 
       paddle.Checkout.open({
-        items: [{ priceId: data.priceId, quantity: 1 }],
-        customer: data.email ? { email: data.email } : undefined,
-        customData: { userId: data.userId },
+        transactionId: data.transactionId,
         settings: {
           displayMode: "overlay",
           theme: "light",
           locale: "en",
-          successUrl: data.successUrl,
+          successUrl: `${window.location.origin}/settings?checkout=success`,
         },
       });
     } catch (checkoutError) {
