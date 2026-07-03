@@ -7,6 +7,7 @@ import {
   isBillingCheckoutConfigured,
 } from "@/config/billing";
 import { PLANS } from "@/config/plans";
+import { paddleConfig } from "@/config/paddle";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ProPlanPricing } from "@/components/pricing/pro-plan-pricing";
@@ -28,8 +29,8 @@ export async function PricingSection() {
             Start free. Scale when you&apos;re ready.
           </h2>
           <p className="mt-4 text-muted-foreground">
-            Everything you need to test the workflow on Free. Unlock unlimited
-            power on Pro.
+            Everything you need to test the workflow on Free. Unlock more
+            capacity and Pro tools.
           </p>
           {earlyAccessStatus.isAvailable && (
             <p className="mt-3 text-sm font-medium text-primary">
@@ -93,6 +94,7 @@ export async function PricingSection() {
                     billingProvider={billingProvider}
                     earlyAccessAvailable={earlyAccessStatus.isAvailable}
                     earlyAccessPrice={earlyAccessStatus.price}
+                    paddleEnvironment={paddleConfig.environment}
                   />
                 ) : (
                   <Link
