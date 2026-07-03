@@ -7,23 +7,24 @@ import type { Plan } from "@/config/plans";
 
 interface UsageBannerProps {
   plan: Plan;
-  generationsToday: number;
-  maxGenerations: number;
+  generationsUsed: number;
+  generationLimit: number;
+  generationPeriod: "day" | "month";
   savedCount: number;
   maxSavedPrompts: number;
 }
 
 export function UsageBanner({
   plan,
-  generationsToday,
-  maxGenerations,
+  generationsUsed,
+  generationLimit,
+  generationPeriod,
   savedCount,
   maxSavedPrompts,
 }: UsageBannerProps) {
-  const generationWarning = getGenerationLimitMessage(plan, generationsToday);
+  const generationWarning = getGenerationLimitMessage(plan, generationsUsed);
   const saveWarning = getSaveLimitMessage(plan, savedCount);
-  const isGenerationExhausted =
-    maxGenerations !== Infinity && generationsToday >= maxGenerations;
+  const isGenerationExhausted = generationsUsed >= generationLimit;
 
   return (
     <div className="space-y-3">
@@ -32,21 +33,18 @@ export function UsageBanner({
           <CardContent className="p-4">
             <div className="flex items-center justify-between gap-2">
               <p className="text-xs font-medium text-muted-foreground">
-                Generations today
+                Generation usage
               </p>
               <span className="text-xs font-semibold text-foreground">
-                {maxGenerations === Infinity
-                  ? generationsToday
-                  : `${generationsToday} / ${maxGenerations}`}
+                {generationsUsed} of {generationLimit} generations used{" "}
+                {generationPeriod === "day" ? "today" : "this month"}
               </span>
             </div>
-            {maxGenerations !== Infinity && (
-              <Progress
-                className="mt-2"
-                value={generationsToday}
-                max={maxGenerations}
-              />
-            )}
+            <Progress
+              className="mt-2"
+              value={generationsUsed}
+              max={generationLimit}
+            />
           </CardContent>
         </Card>
 

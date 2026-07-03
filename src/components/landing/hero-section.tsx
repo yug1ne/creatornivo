@@ -67,7 +67,7 @@ export function HeroSection() {
             </div>
 
             <p className="mt-4 text-xs text-muted-foreground">
-              No credit card required · 20 free generations per day
+              No credit card required · 5 free generations per day
             </p>
 
             <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-xs text-muted-foreground lg:justify-start">

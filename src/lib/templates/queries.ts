@@ -1,7 +1,6 @@
 import { hasProAccess } from "@/lib/auth/guards";
 import { prisma } from "@/lib/db";
 import { canUseTemplate } from "@/lib/subscriptions/limits";
-import type { Plan } from "@/config/plans";
 import type { SessionUser } from "@/types";
 import type { TemplateListItem } from "@/types/template";
 
@@ -10,7 +9,6 @@ import { parseTemplateVariables } from "./utils";
 export async function getTemplatesForUser(
   session: SessionUser | null,
 ): Promise<TemplateListItem[]> {
-  const userPlan: Plan = session?.plan ?? "free";
   const canAccessPro = hasProAccess(session);
 
   const templates = await prisma.template.findMany({
@@ -64,16 +62,4 @@ export async function assertTemplateAccess(
   }
 
   return { error: null, status: null, template };
-}
-
-export async function countGenerationsToday(userId: string): Promise<number> {
-  const startOfDay = new Date();
-  startOfDay.setHours(0, 0, 0, 0);
-
-  return prisma.generation.count({
-    where: {
-      userId,
-      createdAt: { gte: startOfDay },
-    },
-  });
 }

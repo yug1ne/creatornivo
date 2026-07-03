@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getPlanLimits, PLANS } from "@/config/plans";
 import { requireSession } from "@/lib/auth/session";
 import { prisma } from "@/lib/db";
-import { countGenerationsToday } from "@/lib/templates/queries";
+import { getGenerationUsage } from "@/lib/generation/usage-service";
 
 export const dynamic = "force-dynamic";
 
@@ -16,9 +16,9 @@ export default async function DashboardPage() {
   const session = await requireSession();
   const limits = getPlanLimits(session.plan);
 
-  const [savedCount, generationsToday, recentPrompts] = await Promise.all([
+  const [savedCount, generationUsage, recentPrompts] = await Promise.all([
     prisma.savedPrompt.count({ where: { userId: session.id } }),
-    countGenerationsToday(session.id),
+    getGenerationUsage(session.id, session.plan),
     prisma.savedPrompt.findMany({
       where: { userId: session.id },
       orderBy: { updatedAt: "desc" },
@@ -29,15 +29,10 @@ export default async function DashboardPage() {
 
   const maxPrompts =
     limits.maxSavedPrompts === Infinity ? "∞" : limits.maxSavedPrompts;
-  const maxGenerations =
-    limits.maxGenerationsPerDay === Infinity
-      ? "∞"
-      : limits.maxGenerationsPerDay;
-
-  const generationProgress =
-    limits.maxGenerationsPerDay === Infinity
-      ? undefined
-      : { current: generationsToday, max: limits.maxGenerationsPerDay };
+  const generationProgress = {
+    current: generationUsage.used,
+    max: generationUsage.limit,
+  };
 
   const savedProgress =
     limits.maxSavedPrompts === Infinity
@@ -70,12 +65,14 @@ export default async function DashboardPage() {
         className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
       >
         <StatsCard
-          label="Generations today"
-          value={`${generationsToday} / ${maxGenerations}`}
+          label={`Generations ${
+            generationUsage.period === "day" ? "today" : "this month"
+          }`}
+          value={`${generationUsage.used} / ${generationUsage.limit}`}
           description={
-            session.plan === PLANS.FREE
-              ? "Limit resets at midnight"
-              : "Unlimited access"
+            generationUsage.period === "day"
+              ? "Resets at midnight UTC"
+              : "Resets monthly at 00:00 UTC"
           }
           icon="✦"
           progress={generationProgress}
@@ -143,7 +140,7 @@ export default async function DashboardPage() {
                 Unlock full potential
               </p>
               <p className="mt-1 text-sm text-muted-foreground">
-                Pro templates, unlimited generations, export to .md and .txt
+                Pro templates, 100 generations per month, export to .md and .txt
               </p>
             </div>
             <Link href="/pricing" className={buttonVariants()}>

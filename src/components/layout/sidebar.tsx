@@ -131,7 +131,7 @@ export function Sidebar({ mobileOpen, onMobileClose }: SidebarProps) {
         <div className="mt-4 rounded-[var(--radius-md)] bg-muted/60 p-4">
           <p className="text-xs font-medium text-foreground">Need more?</p>
           <p className="mt-1 text-xs text-muted-foreground">
-            Pro — unlimited generations and export
+            Pro — 100 generations per month and export
           </p>
           <Link
             href="/pricing"

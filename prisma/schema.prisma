@@ -161,6 +161,28 @@ model Generation {
   @@index([userId, createdAt])
 }
 
+model GenerationReservation {
+  id                       String   @id @default(cuid())
+  requestId                String
+  userId                   String
+  plan                     Plan
+  periodKey                String
+  status                   String   @default("reserved")
+  model                    String
+  estimatedMaxOutputTokens Int
+  actualInputTokens        Int?
+  actualOutputTokens       Int?
+  createdAt                DateTime @default(now())
+  startedAt                DateTime?
+  completedAt              DateTime?
+  expiresAt                DateTime
+
+  @@unique([userId, requestId])
+  @@index([userId, periodKey])
+  @@index([userId, createdAt])
+  @@index([userId, status, expiresAt])
+}
+
 model SavedPrompt {
   id         String    @id @default(cuid())
   userId     String

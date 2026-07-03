@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import {
   getCategoryColor,
@@ -32,8 +32,16 @@ import { TemplatePicker } from "./template-picker";
 import { UsageBanner } from "./usage-banner";
 
 interface UsageStats {
-  generationsToday: number;
+  generationsUsed: number;
+  generationLimit: number;
+  generationPeriod: "day" | "month";
   savedCount: number;
+}
+
+export interface GenerationUsageSnapshot {
+  generationsUsed: number;
+  generationLimit: number;
+  generationPeriod: "day" | "month";
 }
 
 interface GenerateWorkspaceProps {
@@ -41,6 +49,40 @@ interface GenerateWorkspaceProps {
   userPlan: Plan;
   canExport: boolean;
   usage: UsageStats;
+}
+
+export function acquireGenerationAttempt(
+  currentRequestId: string | null,
+  isInFlight: boolean,
+  createRequestId: () => string = () => crypto.randomUUID(),
+): string | null {
+  if (isInFlight) return null;
+  return currentRequestId ?? createRequestId();
+}
+
+export async function fetchGenerationUsageSnapshot(
+  fetcher: typeof fetch = fetch,
+): Promise<GenerationUsageSnapshot | null> {
+  const response = await fetcher("/api/ai/usage", {
+    method: "GET",
+    cache: "no-store",
+  });
+  if (!response.ok) return null;
+
+  const data = (await response.json()) as Record<string, unknown>;
+  if (
+    typeof data.generationsUsed !== "number" ||
+    typeof data.generationLimit !== "number" ||
+    (data.generationPeriod !== "day" && data.generationPeriod !== "month")
+  ) {
+    return null;
+  }
+
+  return {
+    generationsUsed: data.generationsUsed,
+    generationLimit: data.generationLimit,
+    generationPeriod: data.generationPeriod,
+  };
 }
 
 export function GenerateWorkspace({
@@ -61,23 +103,36 @@ export function GenerateWorkspace({
   const [model, setModel] = useState("");
   const [error, setError] = useState("");
   const [isStreaming, setIsStreaming] = useState(false);
-  const [generationsToday, setGenerationsToday] = useState(
-    initialUsage.generationsToday,
-  );
+  const [generationUsage, setGenerationUsage] =
+    useState<GenerationUsageSnapshot>({
+      generationsUsed: initialUsage.generationsUsed,
+      generationLimit: initialUsage.generationLimit,
+      generationPeriod: initialUsage.generationPeriod,
+    });
   const [savedCount, setSavedCount] = useState(initialUsage.savedCount);
   const [savedPromptId, setSavedPromptId] = useState<string | null>(null);
+  const requestIdRef = useRef<string | null>(null);
+  const inFlightRef = useRef(false);
 
   const selected = templates.find((t) => t.id === selectedId) ?? null;
 
   const canGenerate =
-    limits.maxGenerationsPerDay === Infinity ||
-    generationsToday < limits.maxGenerationsPerDay;
+    generationUsage.generationsUsed < generationUsage.generationLimit;
 
   const canSave =
     limits.maxSavedPrompts === Infinity ||
     savedCount < limits.maxSavedPrompts;
 
   const saveLimitMessage = getSaveLimitMessage(userPlan, savedCount);
+
+  const refreshGenerationUsage = useCallback(async () => {
+    try {
+      const usage = await fetchGenerationUsageSnapshot();
+      if (usage) setGenerationUsage(usage);
+    } catch {
+      // Keep the last server-provided value if usage refresh is unavailable.
+    }
+  }, []);
 
   const isFormValid = useMemo(() => {
     if (!selected) return false;
@@ -87,6 +142,7 @@ export function GenerateWorkspace({
   const selectTemplate = useCallback(
     (template: TemplateListItem) => {
       if (template.isLocked) return;
+      if (!inFlightRef.current) requestIdRef.current = null;
 
       setSelectedId(template.id);
       setValues(buildDefaultValues(template.variables));
@@ -110,12 +166,25 @@ export function GenerateWorkspace({
       : accessibleTemplates[0];
 
     if (preselected) {
+      // The initial selection synchronizes local state with the URL/default.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       selectTemplate(preselected);
     }
   }, [initialSlug, accessibleTemplates, selectedId, selectTemplate]);
 
   async function handleGenerate() {
-    if (!selected || !isFormValid || !canGenerate) return;
+    if (!selected || !isFormValid || !canGenerate || inFlightRef.current) {
+      return;
+    }
+
+    const requestId = acquireGenerationAttempt(
+      requestIdRef.current,
+      inFlightRef.current,
+    );
+    if (!requestId) return;
+
+    requestIdRef.current = requestId;
+    inFlightRef.current = true;
 
     setError("");
     setIsStreaming(true);
@@ -123,33 +192,44 @@ export function GenerateWorkspace({
     setModel(MODEL_BY_PLAN[userPlan]);
     setSavedPromptId(null);
 
-    const response = await fetch("/api/ai/generate", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ templateId: selected.id, values }),
-    });
-
-    if (!response.ok) {
-      const data = await response.json();
-      setError(data.error ?? "Generation failed");
-      setIsStreaming(false);
-      return;
-    }
-
-    const responseModel = response.headers.get("X-Model");
-    if (responseModel) setModel(responseModel);
-
-    const reader = response.body?.getReader();
-    if (!reader) {
-      setError("Failed to receive data stream");
-      setIsStreaming(false);
-      return;
-    }
-
-    const decoder = new TextDecoder();
-    let accumulated = "";
-
     try {
+      const response = await fetch("/api/ai/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          requestId,
+          templateId: selected.id,
+          values,
+        }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        if (
+          response.status === 400 ||
+          data.code === "generation_already_completed" ||
+          data.code === "generation_request_failed"
+        ) {
+          requestIdRef.current = null;
+        }
+        setError(data.error ?? "Generation failed");
+        await refreshGenerationUsage();
+        return;
+      }
+
+      const responseModel = response.headers.get("X-Model");
+      if (responseModel) setModel(responseModel);
+
+      const reader = response.body?.getReader();
+      if (!reader) {
+        setError("Failed to receive data stream");
+        await refreshGenerationUsage();
+        return;
+      }
+
+      const decoder = new TextDecoder();
+      let accumulated = "";
+
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
@@ -157,12 +237,16 @@ export function GenerateWorkspace({
         accumulated += decoder.decode(value, { stream: true });
         setStreamedContent(accumulated);
       }
-    } catch {
-      setError("Failed to read generation stream");
-    }
 
-    setIsStreaming(false);
-    setGenerationsToday((prev) => prev + 1);
+      requestIdRef.current = null;
+      await refreshGenerationUsage();
+    } catch {
+      setError("Network error. Please retry this generation.");
+      await refreshGenerationUsage();
+    } finally {
+      inFlightRef.current = false;
+      setIsStreaming(false);
+    }
   }
 
   async function handleSave(): Promise<{ error?: string; id?: string }> {
@@ -199,8 +283,9 @@ export function GenerateWorkspace({
     <div className="space-y-6">
       <UsageBanner
         plan={userPlan}
-        generationsToday={generationsToday}
-        maxGenerations={limits.maxGenerationsPerDay}
+        generationsUsed={generationUsage.generationsUsed}
+        generationLimit={generationUsage.generationLimit}
+        generationPeriod={generationUsage.generationPeriod}
         savedCount={savedCount}
         maxSavedPrompts={limits.maxSavedPrompts}
       />
@@ -273,12 +358,15 @@ export function GenerateWorkspace({
                           id={variable.key}
                           type="text"
                           value={values[variable.key] ?? ""}
-                          onChange={(e) =>
+                          onChange={(e) => {
+                            if (!inFlightRef.current) {
+                              requestIdRef.current = null;
+                            }
                             setValues((prev) => ({
                               ...prev,
                               [variable.key]: e.target.value,
-                            }))
-                          }
+                            }));
+                          }}
                           placeholder={variable.placeholder}
                         />
                       </div>
@@ -297,7 +385,10 @@ export function GenerateWorkspace({
                   disabled={isStreaming || !isFormValid || !canGenerate}
                   title={
                     !canGenerate
-                      ? getGenerationLimitMessage(userPlan, generationsToday) ??
+                      ? getGenerationLimitMessage(
+                          userPlan,
+                          generationUsage.generationsUsed,
+                        ) ??
                         undefined
                       : undefined
                   }

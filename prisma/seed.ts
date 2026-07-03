@@ -351,7 +351,7 @@ const templates = [
       {
         key: "benefits",
         label: "Key benefits",
-        placeholder: "unlimited generations, all templates, export to .md",
+        placeholder: "100 generations per month, all templates, export to .md",
         required: true,
       },
       {

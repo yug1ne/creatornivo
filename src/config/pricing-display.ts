@@ -12,7 +12,7 @@ export const pricingPlans = [
     cta: { label: "Get started for free", href: "/register" },
     features: [
       `Up to ${planLimits.free.maxSavedPrompts} saved prompts`,
-      `${planLimits.free.maxGenerationsPerDay} generations per day`,
+      `${planLimits.free.maxGenerationsPerPeriod} generations per day`,
       "8 core templates",
       "GPT-4o mini generation",
       "Personal prompt library",
@@ -28,7 +28,7 @@ export const pricingPlans = [
     highlighted: true,
     cta: { label: "Upgrade to Pro", href: "/pricing" },
     features: [
-      "Unlimited generations",
+      "100 generations per month",
       "Unlimited saved prompts",
       "All templates, including Pro",
       "GPT-4o priority models",

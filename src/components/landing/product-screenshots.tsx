@@ -43,7 +43,7 @@ const screenshots = [
     label: "Dashboard",
     title: "Limits at a glance",
     description:
-      "Track daily generations, saved prompts, and your plan — so you always know where you stand.",
+      "Track usage at a glance: Free includes 5 generations per day, while Pro includes 100 generations per month.",
     url: "app.creatornivo.com/dashboard",
     Mockup: DashboardMockup,
   },

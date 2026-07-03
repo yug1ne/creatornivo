@@ -8,7 +8,7 @@ export function DashboardMockup() {
 
       <div className="mt-4 grid grid-cols-3 gap-2">
         {[
-          { label: "Today", value: "3 / 20", pct: 15 },
+          { label: "Today", value: "3 / 5", pct: 60 },
           { label: "Saved", value: "7 / 10", pct: 70 },
           { label: "Plan", value: "Free", pct: 0 },
         ].map((stat) => (

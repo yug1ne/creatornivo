@@ -1,39 +1,99 @@
 import { NextResponse } from "next/server";
 
-import { createContentStream } from "@/lib/ai/provider";
+import {
+  createContentStream,
+  isAIProviderConfigured,
+} from "@/lib/ai/provider";
 import { requireSession } from "@/lib/auth/session";
 import { prisma } from "@/lib/db";
 import {
-  assertTemplateAccess,
-  countGenerationsToday,
-} from "@/lib/templates/queries";
+  GenerationPolicyError,
+  prismaGenerationReservationStore,
+  reserveGeneration,
+  validateUserInput,
+} from "@/lib/generation/usage-service";
+import { assertTemplateAccess } from "@/lib/templates/queries";
 import {
   fillPromptTemplate,
   parseTemplateVariables,
   validateVariableValues,
 } from "@/lib/templates/utils";
-import { canGenerate } from "@/lib/subscriptions/limits";
-import { getGenerationLimitMessage } from "@/lib/subscriptions/messages";
+
+function isValidRequestId(value: unknown): value is string {
+  return (
+    typeof value === "string" &&
+    /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
+      value,
+    )
+  );
+}
+
+export function requireGenerationRequestId(value: unknown): string {
+  if (!isValidRequestId(value)) {
+    throw new GenerationPolicyError(
+      "invalid_request",
+      400,
+      "A valid generation request ID is required.",
+    );
+  }
+
+  return value;
+}
+
+export function parseGenerationRequestBody(body: unknown): {
+  requestId?: unknown;
+  templateId: string | null;
+  values: unknown;
+} {
+  if (typeof body !== "object" || body === null || Array.isArray(body)) {
+    return { templateId: null, values: undefined };
+  }
+
+  const record = body as Record<string, unknown>;
+
+  return {
+    requestId: record.requestId,
+    templateId:
+      typeof record.templateId === "string" ? record.templateId : null,
+    values: record.values,
+  };
+}
 
 export async function POST(request: Request) {
+  let session;
+
   try {
-    const session = await requireSession();
-    const body = await request.json();
+    session = await requireSession();
+  } catch {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
-    const { templateId, values } = body as {
-      templateId?: string;
-      values?: Record<string, string>;
-    };
+  let requestId: string | null = null;
 
-    if (!templateId || !values) {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: session.id },
+      select: { plan: true },
+    });
+
+    if (!user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const body = parseGenerationRequestBody(await request.json());
+    const { templateId, requestId: suppliedRequestId } = body;
+
+    if (!templateId || !body.values) {
       return NextResponse.json(
         { error: "templateId and values are required" },
         { status: 400 },
       );
     }
 
+    requestId = requireGenerationRequestId(suppliedRequestId);
+    const serverSession = { ...session, plan: user.plan };
     const { error, status, template } = await assertTemplateAccess(
-      session,
+      serverSession,
       templateId,
     );
 
@@ -41,53 +101,103 @@ export async function POST(request: Request) {
       return NextResponse.json({ error }, { status: status ?? 404 });
     }
 
+    validateUserInput(user.plan, body.values);
+
     const variables = parseTemplateVariables(template.variables);
-    const validationError = validateVariableValues(variables, values);
+    const validationError = validateVariableValues(variables, body.values);
 
     if (validationError) {
       return NextResponse.json({ error: validationError }, { status: 400 });
     }
 
-    const generationsToday = await countGenerationsToday(session.id);
-
-    if (!canGenerate(session.plan, generationsToday)) {
+    if (!isAIProviderConfigured()) {
       return NextResponse.json(
         {
-          error:
-            getGenerationLimitMessage(session.plan, generationsToday) ??
-            "Generation limit reached",
+          error: "AI generation is temporarily unavailable.",
+          code: "generation_disabled",
         },
-        { status: 429 },
+        { status: 503 },
       );
     }
 
-    const filledPrompt = fillPromptTemplate(template.prompt, values);
-
-    const { stream, model } = await createContentStream({
-      prompt: filledPrompt,
-      plan: session.plan,
-      onFinish: async ({ text, model: usedModel, tokensUsed }) => {
-        await prisma.generation.create({
-          data: {
-            userId: session.id,
-            templateId: template.id,
-            prompt: filledPrompt,
-            result: text,
-            model: usedModel,
-            tokensUsed,
-          },
-        });
-      },
+    const filledPrompt = fillPromptTemplate(template.prompt, body.values);
+    const reservation = await reserveGeneration({
+      requestId,
+      userId: session.id,
+      plan: user.plan,
     });
 
-    return new Response(stream, {
-      headers: {
-        "Content-Type": "text/plain; charset=utf-8",
-        "Cache-Control": "no-cache",
-        "X-Model": model,
-      },
-    });
-  } catch {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    try {
+      const { stream, model } = await createContentStream({
+        prompt: filledPrompt,
+        plan: user.plan,
+        onStart: () =>
+          prismaGenerationReservationStore.markStarted(
+            session.id,
+            requestId!,
+            new Date(),
+          ),
+        onFinish: async ({
+          text,
+          model: usedModel,
+          inputTokens,
+          outputTokens,
+        }) => {
+          await prismaGenerationReservationStore.complete(
+            session.id,
+            requestId!,
+            {
+              userId: session.id,
+              templateId: template.id,
+              prompt: filledPrompt,
+              result: text,
+              model: usedModel,
+              inputTokens,
+              outputTokens,
+            },
+            new Date(),
+          );
+        },
+        onError: ({ error: streamError, inputTokens, outputTokens }) =>
+          prismaGenerationReservationStore.fail(
+            session.id,
+            requestId!,
+            { inputTokens, outputTokens },
+            new Date(),
+          ).then(() => {
+            console.error("AI generation stream error:", streamError);
+          }),
+      });
+
+      return new Response(stream, {
+        headers: {
+          "Content-Type": "text/plain; charset=utf-8",
+          "Cache-Control": "no-cache",
+          "X-Model": model,
+          "X-Request-Id": reservation.requestId,
+        },
+      });
+    } catch (error) {
+      await prismaGenerationReservationStore.fail(
+        session.id,
+        requestId,
+        {},
+        new Date(),
+      );
+      throw error;
+    }
+  } catch (error) {
+    if (error instanceof GenerationPolicyError) {
+      return NextResponse.json(
+        { error: error.message, code: error.code },
+        { status: error.status },
+      );
+    }
+
+    console.error("AI generation error:", error);
+    return NextResponse.json(
+      { error: "Generation failed. Please try again." },
+      { status: 500 },
+    );
   }
 }

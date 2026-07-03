@@ -1,23 +1,27 @@
-import { getPlanLimits, type Plan } from "@/config/plans";
+import {
+  getGenerationPolicy,
+  getPlanLimits,
+  type Plan,
+} from "@/config/plans";
 
 export function getGenerationLimitMessage(
   plan: Plan,
-  generationsToday: number,
+  generationsUsed: number,
 ): string | null {
-  const { maxGenerationsPerDay } = getPlanLimits(plan);
+  const policy = getGenerationPolicy(plan);
 
-  if (maxGenerationsPerDay === Infinity) {
-    return null;
+  if (generationsUsed >= policy.maxGenerationsPerPeriod) {
+    return plan === "free"
+      ? "You’ve reached today’s free generation limit."
+      : "You’ve reached your monthly generation limit.";
   }
 
-  if (generationsToday >= maxGenerationsPerDay) {
-    return `You've reached your daily limit (${maxGenerationsPerDay} generations on the Free plan). Upgrade to Pro for unlimited generation.`;
-  }
-
-  const remaining = maxGenerationsPerDay - generationsToday;
+  const remaining = policy.maxGenerationsPerPeriod - generationsUsed;
 
   if (remaining <= 3) {
-    return `${remaining} ${remaining === 1 ? "generation" : "generations"} left today.`;
+    return `${remaining} ${remaining === 1 ? "generation" : "generations"} left ${
+      policy.period === "day" ? "today" : "this month"
+    }.`;
   }
 
   return null;

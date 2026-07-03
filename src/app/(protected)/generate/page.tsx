@@ -5,16 +5,17 @@ import { PageHeader } from "@/components/ui/page-header";
 import { canExportContent } from "@/lib/export/permissions";
 import { requireSession } from "@/lib/auth/session";
 import { prisma } from "@/lib/db";
-import { countGenerationsToday, getTemplatesForUser } from "@/lib/templates/queries";
+import { getGenerationUsage } from "@/lib/generation/usage-service";
+import { getTemplatesForUser } from "@/lib/templates/queries";
 
 export const dynamic = "force-dynamic";
 
 export default async function GeneratePage() {
   const session = await requireSession();
 
-  const [templates, generationsToday, savedCount] = await Promise.all([
+  const [templates, generationUsage, savedCount] = await Promise.all([
     getTemplatesForUser(session),
-    countGenerationsToday(session.id),
+    getGenerationUsage(session.id, session.plan),
     prisma.savedPrompt.count({ where: { userId: session.id } }),
   ]);
 
@@ -34,7 +35,12 @@ export default async function GeneratePage() {
           templates={templates}
           userPlan={session.plan}
           canExport={canExportContent(session)}
-          usage={{ generationsToday, savedCount }}
+          usage={{
+            generationsUsed: generationUsage.used,
+            generationLimit: generationUsage.limit,
+            generationPeriod: generationUsage.period,
+            savedCount,
+          }}
         />
       </Suspense>
     </>
