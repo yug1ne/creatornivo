@@ -31,9 +31,9 @@ export const pricingPlans = [
       "100 generations per month",
       "Unlimited saved prompts",
       "All templates, including Pro",
-      "GPT-4o priority models",
+      "GPT-4o generation",
       "Export to .md and .txt",
-      "Priority support",
+      "Email support",
     ],
   },
 ] as const;

@@ -8,9 +8,6 @@ export const refundPolicyMeta = {
   lastUpdated: "July 3, 2026",
 } as const;
 
-/** Generations above this count during the guarantee window void eligibility. */
-export const refundUsageThreshold = 100;
-
 export const refundPolicySections: LegalSection[] = [
   {
     id: "introduction",
@@ -27,7 +24,7 @@ export const refundPolicySections: LegalSection[] = [
     paragraphs: [
       "If you are a new Pro subscriber, you may request a full refund of your first Pro subscription payment within fourteen (14) calendar days of the initial charge date (the \"Guarantee Period\").",
       "This guarantee applies only to your first paid Pro subscription on Creatornivo. It does not apply to subscription renewals, add-ons, taxes, currency conversion fees charged by your bank, or purchases made after a prior refund on the same account or email address.",
-      "Promotional and early-access pricing (including discounted introductory rates) is eligible for the same 14-day guarantee, subject to the usage limits described below.",
+      "Promotional and early-access pricing (including discounted introductory rates) is eligible for the same 14-day guarantee and individual review process.",
     ],
   },
   {
@@ -45,26 +42,12 @@ export const refundPolicySections: LegalSection[] = [
     ],
   },
   {
-    id: "usage-limits",
-    title: "When Refunds Are Not Available",
+    id: "individual-review",
+    title: "Individual Review",
     paragraphs: [
-      `Even within the 14-day Guarantee Period, you are not eligible for a refund if you have substantially used Pro features. Specifically, refunds will be denied if any of the following apply:`,
-    ],
-    list: [
-      `You have completed more than ${refundUsageThreshold} AI generations on your Pro plan during the Guarantee Period (including streamed or partial generations counted as completed).`,
-      "You have exported more than 25 files using Pro export features during the Guarantee Period.",
-      "Your account has been suspended or terminated for abuse, fraud, or violation of our Terms.",
-      "You request a refund after the 14-day Guarantee Period has expired.",
-      "You request a refund for a subscription renewal, partial billing period, or prorated charge after the first payment.",
-      "You purchased through an unauthorized reseller or received access outside our official checkout flow.",
+      "Refund requests submitted within 14 days of the initial purchase will be reviewed individually. Refunds may be denied in cases of fraud, abuse, repeated refund requests, chargeback misuse, or other clear misuse of the service.",
     ],
     subsections: [
-      {
-        title: "Why usage limits apply",
-        paragraphs: [
-          "Pro subscriptions include access to AI infrastructure with real per-generation costs. The usage thresholds above are designed to be generous for genuine evaluation while preventing refund abuse. Most users evaluating Creatornivo for content workflows will remain well below these limits during the 14-day guarantee period.",
-        ],
-      },
       {
         title: "Renewals and cancellation",
         paragraphs: [
@@ -89,7 +72,7 @@ export const refundPolicySections: LegalSection[] = [
       {
         title: "Review process",
         paragraphs: [
-          "We review refund requests within 3–5 business days. We may ask clarifying questions or verify account usage. If approved, refunds are issued to the original payment method through Paddle.",
+          "We review refund requests within 3–5 business days. We may ask clarifying questions or verify relevant account information. Refunds, when approved, are issued to the original payment method through Paddle.",
           "Depending on your financial institution, it may take an additional 5–10 business days for the refund to appear on your statement.",
         ],
       },

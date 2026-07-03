@@ -1,6 +1,6 @@
 export const earlyAccessConfig = {
-  price: "$4.9",
-  priceLabel: "$4.9",
+  price: "$4.90",
+  priceLabel: "$4.90",
   regularPrice: "$9.90",
   maxSpots: 50,
   discountPercent: 90,

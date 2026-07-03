@@ -13,9 +13,10 @@ export const termsOfServiceSections: LegalSection[] = [
     id: "introduction",
     title: "Introduction",
     paragraphs: [
-      `These Terms of Service ("Terms") govern your access to and use of ${siteConfig.name}, an AI-powered prompt generation and content toolkit (the "Service"), operated by ${siteConfig.legal.companyName} ("Creatornivo," "we," "us," or "our").`,
+      "Creatornivo is an independent software project operated by an individual based in Ukraine.",
+      `These Terms of Service ("Terms") govern your access to and use of ${siteConfig.name}, an AI-powered prompt generation and content toolkit (the "Service"). References to "we," "us," or "our" mean the operator of Creatornivo.`,
       'By creating an account, accessing, or using the Service, you agree to be bound by these Terms and our Privacy Policy. If you do not agree, do not use the Service.',
-      "These Terms constitute a legally binding agreement between you and Creatornivo. If you are using the Service on behalf of an organization, you represent that you have authority to bind that organization to these Terms.",
+      "These Terms constitute a legally binding agreement between you and the operator of Creatornivo. If you are using the Service on behalf of an organization, you represent that you have authority to bind that organization to these Terms.",
     ],
   },
   {
@@ -23,7 +24,14 @@ export const termsOfServiceSections: LegalSection[] = [
     title: "The Service",
     paragraphs: [
       "Creatornivo provides structured AI prompt templates, content generation tools, and a personal library for saving and reusing outputs. The Service uses third-party artificial intelligence models to process prompts and return generated content based on your inputs.",
-      "We may update, modify, or discontinue features at any time. We strive to provide reliable uptime but do not guarantee uninterrupted or error-free operation. Beta or experimental features may be offered without warranty.",
+      "We may update, modify, suspend, or discontinue features at any time. The Service may be interrupted or unavailable and is not guaranteed to operate without errors.",
+    ],
+  },
+  {
+    id: "beta-service",
+    title: "Beta Service",
+    paragraphs: [
+      "Creatornivo is currently provided as a beta service. Features, usage limits, availability, pricing, and supported integrations may change during development. Users should keep their own copies of important content and prompts.",
     ],
   },
   {
@@ -80,13 +88,13 @@ export const termsOfServiceSections: LegalSection[] = [
     id: "intellectual-property",
     title: "Intellectual Property",
     paragraphs: [
-      "The Service, including its software, design, branding, built-in templates, documentation, and underlying technology, is owned by Creatornivo and protected by intellectual property laws. Except for the limited rights expressly granted in these Terms, we reserve all rights.",
+      "The Service, including its software, design, branding, built-in templates, documentation, and underlying technology, is owned by the operator of Creatornivo and protected by intellectual property laws. Except for the limited rights expressly granted in these Terms, the operator reserves all rights.",
     ],
     subsections: [
       {
         title: "Your content",
         paragraphs: [
-          "You retain ownership of the original inputs you provide and the outputs generated for your account, subject to third-party AI provider terms and applicable law. By using the Service, you grant Creatornivo a non-exclusive, worldwide, royalty-free license to host, process, store, and display your content solely to operate, maintain, and improve the Service — including processing prompts through AI infrastructure providers on your behalf.",
+          "You retain ownership of the original inputs you provide and the outputs generated for your account, subject to third-party AI provider terms and applicable law. By using the Service, you grant the operator of Creatornivo a non-exclusive, worldwide, royalty-free license to host, process, store, and display your content solely to operate, maintain, and improve the Service — including processing prompts through AI infrastructure providers on your behalf.",
           "You represent that you have all necessary rights to submit your content and that your use of the Service does not infringe any third party's intellectual property or privacy rights.",
         ],
       },
@@ -99,7 +107,7 @@ export const termsOfServiceSections: LegalSection[] = [
       {
         title: "Trademarks",
         paragraphs: [
-          `${siteConfig.name} and associated logos are trademarks of Creatornivo. You may not use our trademarks without prior written permission.`,
+          `${siteConfig.name} and associated logos are identifiers of the Creatornivo project. You may not use them without prior written permission from the operator of Creatornivo.`,
         ],
       },
     ],
@@ -134,7 +142,7 @@ export const termsOfServiceSections: LegalSection[] = [
     ],
     subsections: [
       {
-        title: "Termination by Creatornivo",
+        title: "Termination by the operator of Creatornivo",
         paragraphs: [
           "We may suspend or terminate your access immediately, without prior notice, if you violate these Terms, abuse the Service, fail to pay applicable fees, or if we are required to do so by law. We may also discontinue the Service or your account with reasonable notice where practicable.",
         ],
@@ -162,7 +170,7 @@ export const termsOfServiceSections: LegalSection[] = [
     id: "limitation-of-liability",
     title: "Limitation of Liability",
     paragraphs: [
-      "TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, CREATORNIVO AND ITS OFFICERS, DIRECTORS, EMPLOYEES, AGENTS, AND AFFILIATES SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, EXEMPLARY, OR PUNITIVE DAMAGES, OR ANY LOSS OF PROFITS, REVENUE, DATA, GOODWILL, OR BUSINESS OPPORTUNITIES, ARISING OUT OF OR RELATED TO YOUR USE OF THE SERVICE — EVEN IF WE HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.",
+      "TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE OPERATOR OF CREATORNIVO AND ITS CONTRACTORS AND SERVICE PROVIDERS SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, EXEMPLARY, OR PUNITIVE DAMAGES, OR ANY LOSS OF PROFITS, REVENUE, DATA, GOODWILL, OR BUSINESS OPPORTUNITIES, ARISING OUT OF OR RELATED TO YOUR USE OF THE SERVICE — EVEN IF THE OPERATOR HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.",
       "TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, OUR TOTAL AGGREGATE LIABILITY FOR ALL CLAIMS ARISING OUT OF OR RELATING TO THESE TERMS OR THE SERVICE SHALL NOT EXCEED THE GREATER OF (A) THE AMOUNTS YOU PAID TO CREATORNIVO IN THE TWELVE (12) MONTHS PRECEDING THE EVENT GIVING RISE TO THE CLAIM, OR (B) ONE HUNDRED U.S. DOLLARS (USD $100).",
       "Some jurisdictions do not allow certain limitations of liability. In those jurisdictions, our liability is limited to the greatest extent permitted by law.",
     ],
@@ -171,25 +179,23 @@ export const termsOfServiceSections: LegalSection[] = [
     id: "indemnification",
     title: "Indemnification",
     paragraphs: [
-      "You agree to defend, indemnify, and hold harmless Creatornivo and its affiliates from and against any claims, damages, losses, liabilities, costs, and expenses (including reasonable attorneys' fees) arising out of or related to your use of the Service, your content, your violation of these Terms, or your violation of any third-party rights.",
+      "You agree to defend, indemnify, and hold harmless the operator of Creatornivo and its contractors and service providers from and against any claims, damages, losses, liabilities, costs, and expenses (including reasonable attorneys' fees) arising out of or related to your use of the Service, your content, your violation of these Terms, or your violation of any third-party rights.",
     ],
   },
   {
     id: "governing-law",
     title: "Governing Law",
     paragraphs: [
-      "These Terms are governed by and construed in accordance with the laws of the State of Delaware, United States, without regard to its conflict-of-law principles.",
-      "Any dispute arising out of or relating to these Terms or the Service shall be resolved exclusively in the state or federal courts located in Delaware, and you consent to the personal jurisdiction of those courts.",
-      "Nothing in this section prevents either party from seeking injunctive or equitable relief in any court of competent jurisdiction to protect intellectual property or confidential information.",
+      "These Terms are governed by the laws of Ukraine, without prejudice to mandatory consumer rights that may apply in the user's country of residence. Any dispute shall be handled by the competent courts of Ukraine unless mandatory applicable law requires otherwise.",
     ],
   },
   {
     id: "general",
     title: "General Provisions",
     paragraphs: [
-      "These Terms, together with the Privacy Policy and any plan-specific terms presented at checkout, constitute the entire agreement between you and Creatornivo regarding the Service.",
+      "These Terms, together with the Privacy Policy and any plan-specific terms presented at checkout, constitute the entire agreement between you and the operator of Creatornivo regarding the Service.",
       "If any provision of these Terms is held invalid or unenforceable, the remaining provisions remain in full force and effect. Our failure to enforce any right or provision is not a waiver of that right or provision.",
-      "You may not assign or transfer these Terms without our prior written consent. We may assign these Terms in connection with a merger, acquisition, or sale of assets.",
+      "You may not assign or transfer these Terms without prior written consent. The operator may assign these Terms to a successor operator in connection with a transfer of the Service or its assets.",
     ],
   },
   {

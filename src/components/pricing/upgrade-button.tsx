@@ -20,7 +20,7 @@ export function UpgradeButton({
   isConfigured,
   billingProvider,
   earlyAccessAvailable = false,
-  earlyAccessPrice = "$4.9",
+  earlyAccessPrice = "$4.90",
   className,
 }: UpgradeButtonProps) {
   const { data: session, status } = useSession();

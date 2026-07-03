@@ -15,7 +15,8 @@ export const privacyPolicySections: LegalSection[] = [
     id: "introduction",
     title: "Introduction",
     paragraphs: [
-      'Creatornivo ("Creatornivo," "we," "us," or "our") operates an AI-powered prompt toolkit and content generation platform (the "Service"). This Privacy Policy explains how we collect, use, disclose, and safeguard personal information when you visit our website, create an account, or use our features.',
+      "Creatornivo is an independent software project operated by an individual based in Ukraine.",
+      'Creatornivo ("Creatornivo," "we," "us," or "our") provides an AI-powered prompt toolkit and content generation platform (the "Service"). This Privacy Policy explains how the operator of Creatornivo collects, uses, discloses, and safeguards personal information when you visit our website, create an account, or use our features.',
       "Creatornivo is designed to help creators, marketers, and teams generate content using structured AI prompts and templates. Because the Service relies on artificial intelligence, some information you provide is processed by third-party AI providers solely to deliver generation results.",
       "We do not sell your personal information. We do not share your data with advertisers for targeted advertising. Wherever practical, preferences and non-essential settings are stored locally in your browser rather than on our servers.",
     ],
@@ -30,7 +31,7 @@ export const privacyPolicySections: LegalSection[] = [
       {
         title: "Information you provide",
         list: [
-          "Account details such as your name, email address, and authentication credentials (including passwords or OAuth sign-in data from providers you choose, such as Google or GitHub).",
+          "Account details such as your name, email address, and authentication credentials, including your securely hashed password.",
           "Profile information you optionally add, including an avatar image.",
           "Content you submit when using templates, including variable inputs, assembled prompts, AI-generated outputs, and saved prompts in your personal library.",
           "Billing-related identifiers when you subscribe to a paid plan (handled by our payment processor; we do not store full payment card numbers).",
@@ -57,7 +58,7 @@ export const privacyPolicySections: LegalSection[] = [
     id: "how-we-use-information",
     title: "How We Use Information",
     paragraphs: [
-      "We use personal information only for legitimate business purposes related to operating and improving Creatornivo:",
+      "We use personal information only for legitimate purposes related to operating and improving Creatornivo:",
     ],
     list: [
       "Providing, maintaining, and securing the Service, including authentication, account management, and subscription billing.",
@@ -76,11 +77,13 @@ export const privacyPolicySections: LegalSection[] = [
       "We do not sell, rent, or trade your personal information. We share information only in the limited circumstances described below:",
     ],
     list: [
-      "AI processing providers: When you generate content, the assembled prompt and necessary context are transmitted to third-party AI infrastructure providers (such as OpenAI or comparable model providers) strictly to fulfill your generation request. These providers process data under their own terms and privacy policies and are not permitted to use your content to train models on your behalf unless you separately opt in with that provider.",
+      "AI processing: When you generate content, the assembled prompt and necessary context are transmitted to OpenAI strictly to fulfill your generation request. OpenAI processes data under its own terms and privacy policy.",
       "Payment processing: Payments are processed by Paddle, our payment processor and Merchant of Record. We receive subscription status, customer identifiers, and limited billing metadata — not your full card details.",
-      "Infrastructure providers: We use cloud hosting, database, and email delivery vendors that process data on our behalf under data processing agreements and only as instructed by us.",
+      "Database infrastructure: Supabase provides the hosted PostgreSQL database used to store account and Service data.",
+      "Hosting infrastructure: Vercel hosts and delivers the Service.",
+      "Email communications: Namecheap Private Email provides the email service used for support and policy-related communications.",
       "Legal and safety: We may disclose information if required by law, court order, or governmental request, or when we believe disclosure is necessary to protect the rights, property, or safety of Creatornivo, our users, or the public.",
-      "Business transfers: If we are involved in a merger, acquisition, or asset sale, your information may be transferred as part of that transaction, subject to continued protections consistent with this policy.",
+      "Project transfers: If operation of Creatornivo or its assets is transferred to a successor operator, relevant information may be transferred as part of that transaction, subject to continued protections consistent with this policy.",
     ],
     subsections: [
       {
@@ -124,7 +127,7 @@ export const privacyPolicySections: LegalSection[] = [
     id: "data-security",
     title: "Data Security",
     paragraphs: [
-      "We implement technical and organizational measures designed to protect personal information against unauthorized access, alteration, disclosure, or destruction. These measures include encryption in transit (TLS/HTTPS), access controls, hashed password storage, and restricted internal access on a need-to-know basis.",
+      "We implement technical and organizational measures designed to protect personal information against unauthorized access, alteration, disclosure, or destruction. These measures include encryption in transit (TLS/HTTPS), access controls, hashed password storage, and access limited to the operator and service providers where needed to operate the Service.",
       "No method of transmission or electronic storage is completely secure. While we strive to protect your information, we cannot guarantee absolute security. You are responsible for maintaining the confidentiality of your account credentials.",
       "If we become aware of a data breach that affects your personal information, we will notify you and relevant authorities as required by applicable law.",
     ],
