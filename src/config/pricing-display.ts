@@ -111,33 +111,3 @@ export const howItWorksSteps = [
       "Build a library of your best outputs. Search, filter, and export when you're on Pro.",
   },
 ] as const;
-
-export const socialProofStats = [
-  { value: "2,400+", label: "creators signed up" },
-  { value: "50k+", label: "pieces generated" },
-  { value: "4.9/5", label: "average rating" },
-] as const;
-
-export const testimonials = [
-  {
-    quote:
-      "I went from staring at a blank doc to publishing 3 LinkedIn posts a week. Templates + preview sold me in one session.",
-    name: "Sarah Chen",
-    role: "Indie hacker & newsletter writer",
-    initials: "SC",
-  },
-  {
-    quote:
-      "Our tiny marketing team uses Creatornivo for first drafts. We cut content production time by half.",
-    name: "Marcus Webb",
-    role: "Head of Growth, B2B SaaS",
-    initials: "MW",
-  },
-  {
-    quote:
-      "Finally — AI content that doesn't sound generic. The prompt preview alone is worth it.",
-    name: "Elena Rossi",
-    role: "Freelance content strategist",
-    initials: "ER",
-  },
-] as const;

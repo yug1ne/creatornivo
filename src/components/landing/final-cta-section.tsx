@@ -1,6 +1,5 @@
 import Link from "next/link";
 
-import { siteConfig } from "@/config/site";
 import { buttonVariants } from "@/components/ui/button";
 
 export function FinalCtaSection() {
@@ -16,8 +15,8 @@ export function FinalCtaSection() {
             Ready to create your first piece?
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
-            Join thousands of creators using {siteConfig.name} to turn ideas
-            into content — without starting from scratch.
+            Start building a faster, more consistent content workflow — without
+            starting every prompt from scratch.
           </p>
           <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link
