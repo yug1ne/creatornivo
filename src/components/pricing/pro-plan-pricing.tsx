@@ -39,13 +39,6 @@ export function ProPlanPricing({ status, size = "md" }: ProPlanPricingProps) {
       </div>
       <p className="text-sm font-medium text-primary">
         {status.limitLabel}
-        {status.spotsRemaining > 0 && (
-          <span className="text-muted-foreground">
-            {" "}
-            · {status.spotsRemaining} spot
-            {status.spotsRemaining === 1 ? "" : "s"} left
-          </span>
-        )}
       </p>
     </div>
   );

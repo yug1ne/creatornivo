@@ -7,7 +7,7 @@ export function HowItWorksSection() {
         <div className="mx-auto max-w-2xl text-center">
           <p className="text-sm font-medium text-primary">How it works</p>
           <h2 className="mt-2 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-            Four steps from idea to published content
+            Four steps from idea to editable draft
           </h2>
           <p className="mt-4 text-muted-foreground">
             No prompt engineering degree required. Just pick, customize, and

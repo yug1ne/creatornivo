@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useTheme } from "@/components/providers/theme-provider";
 import {
   THEME_PREFERENCES,
+  themePreferenceDescriptions,
   themePreferenceLabels,
   type ThemePreference,
 } from "@/config/theme";
@@ -13,6 +14,7 @@ import { cn } from "@/lib/utils/cn";
 interface ThemeToggleProps {
   className?: string;
   showLabel?: boolean;
+  compact?: boolean;
 }
 
 function SunIcon({ className }: { className?: string }) {
@@ -80,22 +82,57 @@ const themeIcons: Record<ThemePreference, typeof SunIcon> = {
   system: SystemIcon,
 };
 
-export function ThemeToggle({ className, showLabel = false }: ThemeToggleProps) {
+export function getNextThemePreference(
+  preference: ThemePreference,
+): ThemePreference {
+  const index = THEME_PREFERENCES.indexOf(preference);
+  return THEME_PREFERENCES[(index + 1) % THEME_PREFERENCES.length];
+}
+
+export function ThemeToggle({
+  className,
+  showLabel = false,
+  compact = false,
+}: ThemeToggleProps) {
   const { preference, setPreference } = useTheme();
   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    // Theme controls render only after the stored client preference is available.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMounted(true);
+  }, []);
 
   if (!mounted) {
     return (
       <div
         className={cn(
           "h-9 rounded-[var(--radius-md)] bg-muted",
-          showLabel ? "w-full" : "w-[108px]",
+          compact ? "w-9" : showLabel ? "w-full" : "w-[108px]",
           className,
         )}
         aria-hidden
       />
+    );
+  }
+
+  if (compact) {
+    const Icon = themeIcons[preference];
+    const nextPreference = getNextThemePreference(preference);
+
+    return (
+      <button
+        type="button"
+        onClick={() => setPreference(nextPreference)}
+        className={cn(
+          "inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-[var(--radius-md)] border border-border bg-muted/50 text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+          className,
+        )}
+        aria-label={`${themePreferenceDescriptions[preference]}. Switch theme`}
+        title={themePreferenceDescriptions[preference]}
+      >
+        <Icon />
+      </button>
     );
   }
 
@@ -125,9 +162,9 @@ export function ThemeToggle({ className, showLabel = false }: ThemeToggleProps) 
                 : "text-muted-foreground hover:text-foreground",
               showLabel ? "min-w-0" : "min-w-8",
             )}
-            aria-label={themePreferenceLabels[option]}
+            aria-label={themePreferenceDescriptions[option]}
             aria-pressed={isActive}
-            title={themePreferenceLabels[option]}
+            title={themePreferenceDescriptions[option]}
           >
             <Icon />
             {showLabel && (

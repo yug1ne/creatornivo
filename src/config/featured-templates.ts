@@ -40,9 +40,9 @@ What's the hardest lesson you learned after launch?`,
     variables: ["Topic", "Tone", "Tweet count"],
     preview: `1/ Creators don't need more ideas. They need a system.
 
-Here are 7 AI workflows I use to publish 10x faster:
+Here are 7 reusable AI workflows for drafting content:
 
-2/ Start with a proven template — not a blank page...
+2/ Start with a structured template — not a blank page...
 
 7/ Want the full playbook? Follow for more.`,
   },
@@ -58,7 +58,7 @@ Here are 7 AI workflows I use to publish 10x faster:
 
 Hey there,
 
-This week I tested three prompts that turned a 2-hour draft into a 15-minute edit...
+This week I tested three prompts for turning a rough outline into an editable draft...
 
 [Register for the live walkthrough →]`,
   },
@@ -72,9 +72,9 @@ This week I tested three prompts that turned a 2-hour draft into a 15-minute edi
     variables: ["Recipient role", "Your offer", "Pain point"],
     preview: `Subject: Quick idea for your content workflow
 
-Hi Sarah — saw Acme's LinkedIn cadence ramp up last quarter.
+Hi there — I noticed your team is publishing more consistently.
 
-Most two-person marketing teams lose 6+ hrs/week on first drafts. We help cut that in half with templated AI workflows.
+Drafting consistently can slow down a small marketing team. Structured AI workflows can help organize the first draft.
 
 Worth a 15-min chat this week?`,
   },
@@ -106,7 +106,7 @@ The problem isn't ideas — it's the blank page...
 AI Content Tools for Marketers | Creatornivo
 
 Meta (152 chars):
-Compare the best AI content tools for marketers. Templates, workflows, and real output examples — no generic fluff.`,
+Compare AI content tools for marketers, including templates, workflows, and example outputs.`,
   },
   {
     slug: "youtube-script",
@@ -134,9 +134,9 @@ Section 2: Fill three fields...
     groupLabel: "Marketing",
     requiredPlan: "pro",
     variables: ["Product", "Audience", "Pain point"],
-    preview: `Headline: Ship content 10x faster
+    preview: `Headline: Create content faster with reusable AI workflows
 
-Subhead: Battle-tested AI prompts for LinkedIn, email, SEO, and more.
+Subhead: Structured AI templates for LinkedIn, email, SEO, and more.
 
 ✓ 15 templates  ✓ Real-time preview  ✓ Personal library
 

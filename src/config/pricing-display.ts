@@ -6,7 +6,7 @@ export const pricingPlans = [
     name: "Free",
     price: "$0",
     period: "forever",
-    description: "Perfect for trying Creatornivo and shipping your first pieces of content.",
+    description: "A simple way to try the Creatornivo workflow.",
     badge: "free" as const,
     highlighted: false,
     cta: { label: "Get started for free", href: "/register" },
@@ -76,11 +76,11 @@ What's the hardest lesson you learned after launch?`,
     },
     after: {
       title: "Generated output",
-      preview: `1/ Creators don't need more ideas. They need a system.
+      preview: `1/ Creators don't need more ideas. They need a repeatable workflow.
 
-Here are 5 AI workflows I use to publish 10x faster (without sounding robotic):
+Here are 5 reusable AI workflows for drafting content:
 
-2/ Start with a proven template — not a blank page...`,
+2/ Start with a structured template — not a blank page...`,
     },
   },
 ] as const;
@@ -90,7 +90,7 @@ export const howItWorksSteps = [
     step: "01",
     title: "Pick a template",
     description:
-      "Choose from battle-tested prompts for LinkedIn, X, newsletters, blogs, and more.",
+      "Choose a structured template for LinkedIn, X, newsletters, blogs, and more.",
   },
   {
     step: "02",
@@ -100,14 +100,14 @@ export const howItWorksSteps = [
   },
   {
     step: "03",
-    title: "Generate in seconds",
+    title: "Generate a draft",
     description:
-      "Stream polished content in real time. Edit, copy, or save straight to your library.",
+      "Stream editable AI-generated content. Review, copy, or save it to your library.",
   },
   {
     step: "04",
     title: "Reuse what works",
     description:
-      "Build a library of your best outputs. Search, filter, and export when you're on Pro.",
+      "Build a library of useful outputs. Search, filter, and export when you're on Pro.",
   },
 ] as const;

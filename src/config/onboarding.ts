@@ -52,7 +52,7 @@ export const ONBOARDING_STEPS: OnboardingStep[] = [
     target: '[data-onboarding="library-content"]',
     title: "Saving to the library",
     description:
-      "After generating, save your best results to the library for search and reuse.",
+      "After generating, save useful results to the library for search and reuse.",
     placement: "top",
   },
   {

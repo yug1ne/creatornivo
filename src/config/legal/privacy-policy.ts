@@ -17,7 +17,7 @@ export const privacyPolicySections: LegalSection[] = [
     paragraphs: [
       "Creatornivo is an independent software project operated by an individual based in Ukraine.",
       'Creatornivo ("Creatornivo," "we," "us," or "our") provides an AI-powered prompt toolkit and content generation platform (the "Service"). This Privacy Policy explains how the operator of Creatornivo collects, uses, discloses, and safeguards personal information when you visit our website, create an account, or use our features.',
-      "Creatornivo is designed to help creators, marketers, and teams generate content using structured AI prompts and templates. Because the Service relies on artificial intelligence, some information you provide is processed by third-party AI providers solely to deliver generation results.",
+      "Creatornivo is designed to help people generate content using structured AI prompts and templates. Because the Service relies on artificial intelligence, information included in a generation request is sent to an AI provider to return the requested result.",
       "We do not sell your personal information. We do not share your data with advertisers for targeted advertising. Wherever practical, preferences and non-essential settings are stored locally in your browser rather than on our servers.",
     ],
   },
@@ -31,8 +31,7 @@ export const privacyPolicySections: LegalSection[] = [
       {
         title: "Information you provide",
         list: [
-          "Account details such as your name, email address, and authentication credentials, including your securely hashed password.",
-          "Profile information you optionally add, including an avatar image.",
+          "Account details such as your optional name, email address, and authentication credentials, including your hashed password.",
           "Content you submit when using templates, including variable inputs, assembled prompts, AI-generated outputs, and saved prompts in your personal library.",
           "Billing-related identifiers when you subscribe to a paid plan (handled by our payment processor; we do not store full payment card numbers).",
           "Communications you send to us, including support requests and privacy inquiries.",
@@ -42,8 +41,8 @@ export const privacyPolicySections: LegalSection[] = [
         title: "Information collected automatically",
         list: [
           "Session and authentication tokens necessary to keep you signed in.",
-          "Usage data such as generation counts, template selections, and feature interactions needed to operate the Service and enforce plan limits.",
-          "Device and log data, including IP address, browser type, operating system, referring URLs, and timestamps — collected in server logs for security, debugging, and abuse prevention.",
+          "Usage records needed to operate the Service and enforce plan limits, including generation reservations and counts, model and token information, timestamps, and template references where applicable.",
+          "Hosting and infrastructure providers may process basic request information, such as IP address and browser request headers, when delivering and protecting the Service under their own terms and privacy policies. Creatornivo does not currently operate a separate analytics or advertising tracking system.",
         ],
       },
       {
@@ -58,7 +57,7 @@ export const privacyPolicySections: LegalSection[] = [
     id: "how-we-use-information",
     title: "How We Use Information",
     paragraphs: [
-      "We use personal information only for legitimate purposes related to operating and improving Creatornivo:",
+      "We use personal information for purposes related to operating Creatornivo:",
     ],
     list: [
       "Providing, maintaining, and securing the Service, including authentication, account management, and subscription billing.",
@@ -66,7 +65,6 @@ export const privacyPolicySections: LegalSection[] = [
       "Storing your generations and saved prompts in your account so you can access, search, and reuse them.",
       "Enforcing plan limits, preventing fraud and abuse, and protecting the integrity of the platform.",
       "Responding to support requests and communicating important Service updates.",
-      "Analyzing aggregated, de-identified usage patterns to improve templates, performance, and product experience.",
       "Complying with legal obligations and enforcing our terms of service.",
     ],
   },
@@ -136,8 +134,8 @@ export const privacyPolicySections: LegalSection[] = [
     id: "data-retention",
     title: "Data Retention",
     paragraphs: [
-      "We retain account information for as long as your account is active or as needed to provide the Service. Generation history and saved prompts are retained until you delete them or close your account, unless a longer retention period is required by law.",
-      "You may request deletion of your account and associated data at any time by contacting us. Some information may be retained in anonymized or backup form for a limited period where necessary for legal compliance, dispute resolution, or security.",
+      "We retain account information, generation history, generation usage records, and saved prompts while your account is active or as needed to provide the Service. The product does not currently provide self-service deletion of the account, saved library items, or complete generation history.",
+      "You may request deletion of your account and associated data by contacting support. Limited records may need to be retained where required for legal compliance, billing disputes, fraud prevention, or security. Service providers may apply their own documented retention periods.",
     ],
   },
   {
@@ -170,7 +168,7 @@ export const privacyPolicySections: LegalSection[] = [
     id: "international-transfers",
     title: "International Data Transfers",
     paragraphs: [
-      "Creatornivo may process and store information in countries other than your own, including the United States, where our infrastructure and service providers operate. When we transfer personal information internationally, we implement appropriate safeguards such as Standard Contractual Clauses or equivalent mechanisms as required by applicable law.",
+      "Creatornivo and its service providers may process information in countries other than your own, including locations used by OpenAI, Paddle, Supabase, Vercel, and the email provider. Where applicable law requires safeguards for an international transfer, the operator will use an appropriate lawful mechanism. The specific mechanism depends on the provider and transfer involved.",
     ],
   },
   {

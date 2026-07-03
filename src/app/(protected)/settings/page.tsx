@@ -47,11 +47,15 @@ export default async function SettingsPage() {
             <dl className="mt-4 space-y-2 text-sm">
               <div className="flex justify-between gap-4">
                 <dt className="text-muted-foreground">Name</dt>
-                <dd className="text-foreground">{session.name ?? "—"}</dd>
+                <dd className="min-w-0 break-words text-right text-foreground [overflow-wrap:anywhere]">
+                  {session.name ?? "—"}
+                </dd>
               </div>
               <div className="flex justify-between gap-4">
                 <dt className="text-muted-foreground">Email</dt>
-                <dd className="text-foreground">{session.email}</dd>
+                <dd className="min-w-0 break-all text-right text-foreground">
+                  {session.email}
+                </dd>
               </div>
               <div className="flex justify-between gap-4">
                 <dt className="text-muted-foreground">Role</dt>

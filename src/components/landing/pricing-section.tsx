@@ -34,8 +34,7 @@ export async function PricingSection() {
           </p>
           {earlyAccessStatus.isAvailable && (
             <p className="mt-3 text-sm font-medium text-primary">
-              {earlyAccessConfig.limitLabel} — lock in {earlyAccessStatus.price}
-              /mo before spots run out
+              {earlyAccessConfig.limitLabel}
             </p>
           )}
         </div>

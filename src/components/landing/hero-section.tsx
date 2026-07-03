@@ -31,17 +31,18 @@ export function HeroSection() {
             </p>
 
             <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-[3.25rem] lg:leading-[1.08]">
-              Ship content{" "}
+              Create content faster{" "}
               <span className="bg-gradient-to-r from-primary via-primary to-primary/50 bg-clip-text text-transparent">
-                10x faster
+                with reusable
               </span>{" "}
-              with proven AI prompts
+              AI workflows
             </h1>
 
             <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground lg:mx-0">
               {siteConfig.name} gives marketers, indie hackers, and creators
-              ready-made templates, real-time generation, and a library — so you
-              publish more without the blank-page anxiety.
+              ready-made templates, streaming generation, and a personal
+              library — so you can move from an idea to an editable draft
+              without starting every prompt from scratch.
             </p>
 
             <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row lg:justify-start">

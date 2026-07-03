@@ -16,7 +16,7 @@ export const termsOfServiceSections: LegalSection[] = [
       "Creatornivo is an independent software project operated by an individual based in Ukraine.",
       `These Terms of Service ("Terms") govern your access to and use of ${siteConfig.name}, an AI-powered prompt generation and content toolkit (the "Service"). References to "we," "us," or "our" mean the operator of Creatornivo.`,
       'By creating an account, accessing, or using the Service, you agree to be bound by these Terms and our Privacy Policy. If you do not agree, do not use the Service.',
-      "These Terms constitute a legally binding agreement between you and the operator of Creatornivo. If you are using the Service on behalf of an organization, you represent that you have authority to bind that organization to these Terms.",
+      "These Terms constitute a legally binding agreement between you and the operator of Creatornivo.",
     ],
   },
   {
@@ -38,7 +38,7 @@ export const termsOfServiceSections: LegalSection[] = [
     id: "user-accounts",
     title: "User Accounts",
     paragraphs: [
-      "To use most features of the Service, you must create an account. You may register with an email and password or through supported third-party authentication providers.",
+      "To use most features of the Service, you must create an account using an email address and password.",
     ],
     list: [
       "You must provide accurate, current, and complete registration information and keep it up to date.",
@@ -51,7 +51,7 @@ export const termsOfServiceSections: LegalSection[] = [
       {
         title: "Account security",
         paragraphs: [
-          "We implement reasonable security measures, but you acknowledge that no system is completely secure. You agree not to share your login credentials or allow others to access your account except as permitted under a team or enterprise agreement we expressly authorize in writing.",
+          "We implement reasonable security measures, but you acknowledge that no system is completely secure. You agree not to share your login credentials or allow others to access your account.",
         ],
       },
     ],
@@ -94,7 +94,7 @@ export const termsOfServiceSections: LegalSection[] = [
       {
         title: "Your content",
         paragraphs: [
-          "You retain ownership of the original inputs you provide and the outputs generated for your account, subject to third-party AI provider terms and applicable law. By using the Service, you grant the operator of Creatornivo a non-exclusive, worldwide, royalty-free license to host, process, store, and display your content solely to operate, maintain, and improve the Service — including processing prompts through AI infrastructure providers on your behalf.",
+          "You retain ownership of the original inputs you provide and the outputs generated for your account, subject to third-party AI provider terms and applicable law. By using the Service, you grant the operator of Creatornivo a non-exclusive, worldwide, royalty-free license to host, process, store, and display your content only as needed to provide and maintain the Service — including processing prompts through AI infrastructure providers on your behalf.",
           "You represent that you have all necessary rights to submit your content and that your use of the Service does not infringe any third party's intellectual property or privacy rights.",
         ],
       },
@@ -123,7 +123,7 @@ export const termsOfServiceSections: LegalSection[] = [
       "Subscriptions renew automatically at the end of each billing period unless you cancel before the renewal date through your account billing portal or by contacting support.",
       "You authorize us and our payment processor to charge your payment method for recurring fees, applicable taxes, and any agreed-upon add-ons.",
       "Refunds are governed by our Refund Policy, which includes a 14-day money-back guarantee for eligible first-time Pro purchases. Subscription renewals are generally non-refundable. If you cancel, you retain access to paid features through the end of the current billing period.",
-      "We may suspend or downgrade your account if payment fails after reasonable retry attempts and notice.",
+      "Access to paid features may be restricted or downgraded when Paddle reports a subscription as overdue, unpaid, paused, or canceled. Any mandatory notice or consumer rights under applicable law continue to apply.",
     ],
     subsections: [
       {
@@ -164,6 +164,7 @@ export const termsOfServiceSections: LegalSection[] = [
       'THE SERVICE IS PROVIDED ON AN "AS IS" AND "AS AVAILABLE" BASIS WITHOUT WARRANTIES OF ANY KIND, WHETHER EXPRESS, IMPLIED, OR STATUTORY. TO THE FULLEST EXTENT PERMITTED BY LAW, CREATORNIVO DISCLAIMS ALL WARRANTIES, INCLUDING IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT.',
       "We do not warrant that AI-generated outputs will be accurate, unique, free of third-party claims, or suitable for your intended use. You assume all risk arising from your use of generated content.",
       "The Service may integrate with third-party providers (including AI and payment services). We are not responsible for third-party products, services, or policies.",
+      "Nothing in these Terms excludes warranties, remedies, or consumer rights that cannot lawfully be excluded or limited.",
     ],
   },
   {

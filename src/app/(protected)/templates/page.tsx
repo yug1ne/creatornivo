@@ -16,7 +16,7 @@ export default async function TemplatesPage() {
     <>
       <PageHeader
         title="Templates"
-        description="Browse battle-tested prompts across social, email, marketing, SEO, video, and more"
+        description="Browse structured templates across social, email, marketing, SEO, video, and more"
         action={
           <Link href="/generate" className={buttonVariants()}>
             Start generating

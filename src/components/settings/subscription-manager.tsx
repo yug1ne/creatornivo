@@ -10,7 +10,7 @@ import { PLANS, type Plan } from "@/config/plans";
 import { buttonVariants } from "@/components/ui/button";
 
 export const CHECKOUT_PENDING_MESSAGE =
-  "Payment received. Pro access will appear after secure webhook confirmation.";
+  "Payment received. Pro access will appear after Paddle webhook confirmation.";
 export const PRO_ACTIVE_MESSAGE = "Your Pro subscription is active.";
 
 export function getPostCheckoutMessage(

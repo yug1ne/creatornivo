@@ -38,7 +38,9 @@ export function StatsCard({
               {value}
             </p>
             {description && (
-              <p className="mt-1 text-xs text-muted-foreground">{description}</p>
+              <p className="mt-1 break-words text-xs text-muted-foreground [overflow-wrap:anywhere]">
+                {description}
+              </p>
             )}
           </div>
           <span

@@ -15,7 +15,25 @@ interface UpgradeButtonProps {
   earlyAccessPrice?: string;
   paddleEnvironment?: "sandbox" | "production";
   className?: string;
-  }
+}
+
+export function getUpgradeButtonLabel(
+  earlyAccessAvailable: boolean,
+  earlyAccessPrice: string,
+): string {
+  return earlyAccessAvailable
+    ? `Get Pro — ${earlyAccessPrice}/mo`
+    : "Upgrade to Pro";
+}
+
+export function getGuestUpgradeLabel(
+  earlyAccessAvailable: boolean,
+  earlyAccessPrice: string,
+): string {
+  return earlyAccessAvailable
+    ? `Sign in to get Pro — ${earlyAccessPrice}/mo`
+    : "Sign in to get Pro";
+}
 
 export function UpgradeButton({
   isConfigured,
@@ -42,9 +60,7 @@ export function UpgradeButton({
 
   const buttonLabel = isLoading
     ? "Opening checkout..."
-    : earlyAccessAvailable
-      ? `Get Pro — ${earlyAccessPrice}/mo`
-      : "Upgrade to Pro";
+    : getUpgradeButtonLabel(earlyAccessAvailable, earlyAccessPrice);
 
   async function handleStripeUpgrade() {
     setStripeError("");
@@ -101,7 +117,7 @@ export function UpgradeButton({
         href="/login?callbackUrl=/pricing"
         className={cn(buttonVariants({ className: "mt-6 w-full" }), className)}
       >
-        Sign in to get Pro
+        {getGuestUpgradeLabel(earlyAccessAvailable, earlyAccessPrice)}
       </Link>
     );
   }
@@ -132,7 +148,7 @@ export function UpgradeButton({
       </button>
       {billingProvider === "paddle" && (
         <p className="mt-2 text-center text-xs text-muted-foreground">
-          Secure checkout powered by Paddle
+          Checkout powered by Paddle
           {paddleEnvironment === "sandbox" &&
             " · Sandbox test card: 4242 4242 4242 4242"}
         </p>

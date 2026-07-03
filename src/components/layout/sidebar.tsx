@@ -98,7 +98,7 @@ export function Sidebar({ mobileOpen, onMobileClose }: SidebarProps) {
 
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-50 flex w-72 flex-col border-r border-border bg-card p-5 transition-transform lg:static lg:z-auto lg:w-64 lg:translate-x-0 lg:shrink-0",
+          "fixed inset-y-0 left-0 z-50 flex w-[min(18rem,calc(100vw-1rem))] max-w-full flex-col overflow-y-auto border-r border-border bg-card p-5 transition-transform lg:static lg:z-auto lg:w-64 lg:translate-x-0 lg:shrink-0",
           isOpen ? "translate-x-0" : "-translate-x-full",
         )}
       >

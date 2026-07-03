@@ -23,7 +23,7 @@ export const refundPolicySections: LegalSection[] = [
     title: "14-Day Money-Back Guarantee",
     paragraphs: [
       "If you are a new Pro subscriber, you may request a full refund of your first Pro subscription payment within fourteen (14) calendar days of the initial charge date (the \"Guarantee Period\").",
-      "This guarantee applies only to your first paid Pro subscription on Creatornivo. It does not apply to subscription renewals, add-ons, taxes, currency conversion fees charged by your bank, or purchases made after a prior refund on the same account or email address.",
+      "This guarantee applies only to the first paid Pro subscription for your Creatornivo account. It does not apply to subscription renewals, add-ons, taxes, currency conversion fees charged by your bank, or a later purchase after a prior refund.",
       "Promotional and early-access pricing (including discounted introductory rates) is eligible for the same 14-day guarantee and individual review process.",
     ],
   },
@@ -35,9 +35,8 @@ export const refundPolicySections: LegalSection[] = [
     ],
     list: [
       "Your request is submitted within 14 calendar days of your first Pro payment.",
-      "This is the first paid Pro subscription associated with your Creatornivo account and email address.",
+      "This is the first paid Pro subscription associated with your Creatornivo account.",
       "Your account is in good standing and has not violated our Terms of Service or Acceptable Use policy.",
-      "You have not previously received a refund from Creatornivo on any account.",
       "You have not initiated a chargeback or payment dispute with your bank or card issuer before contacting us.",
     ],
   },
@@ -72,14 +71,14 @@ export const refundPolicySections: LegalSection[] = [
       {
         title: "Review process",
         paragraphs: [
-          "We review refund requests within 3–5 business days. We may ask clarifying questions or verify relevant account information. Refunds, when approved, are issued to the original payment method through Paddle.",
-          "Depending on your financial institution, it may take an additional 5–10 business days for the refund to appear on your statement.",
+          "Refund requests are reviewed individually. We may ask clarifying questions or verify relevant account and transaction information. Refunds, when approved, are issued to the original payment method through Paddle.",
+          "The time for an approved refund to appear depends on Paddle, the payment method, and your financial institution.",
         ],
       },
       {
         title: "After approval",
         paragraphs: [
-          "Upon refund approval, your Pro subscription will be canceled immediately and your account will be downgraded to the Free plan. Saved content and generation history may remain accessible under Free plan limits unless you request account deletion separately.",
+          "Approved refunds are processed through Paddle, and account access may be adjusted after Paddle confirms the outcome. A refund does not currently trigger an automatic downgrade or cancellation inside Creatornivo. Any required subscription or access change is handled separately after confirmation.",
         ],
       },
     ],
@@ -88,7 +87,7 @@ export const refundPolicySections: LegalSection[] = [
     id: "chargebacks",
     title: "Chargebacks and Disputes",
     paragraphs: [
-      "Please contact us before filing a chargeback or payment dispute with your bank. We are committed to resolving billing concerns fairly and promptly.",
+      "Please contact support before filing a chargeback or payment dispute with your bank so the billing concern can be reviewed.",
       "If a chargeback is filed while a refund request is pending or without contacting us first, we may suspend your account pending resolution and decline future refund requests associated with that payment method or identity.",
     ],
   },

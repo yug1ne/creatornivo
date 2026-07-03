@@ -2,7 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 
 const workflowBenefits = [
   {
-    title: "Start with a proven structure",
+    title: "Start with a reusable structure",
     text: "Choose a template instead of rebuilding every prompt from scratch.",
   },
   {

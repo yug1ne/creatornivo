@@ -18,7 +18,7 @@ export function ShowcaseSection() {
           </h2>
           <p className="mt-4 text-muted-foreground">
             Explore the real workflow — from picking a template to saving your
-            best output. Faithful recreations of the actual product interface.
+            useful output. Product previews reflect the current workflow.
           </p>
         </div>
 
@@ -28,10 +28,11 @@ export function ShowcaseSection() {
           <div className="mx-auto max-w-2xl text-center">
             <p className="text-sm font-medium text-primary">Before → After</p>
             <h3 className="mt-2 text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
-              From blank inputs to publish-ready copy
+              From structured inputs to an editable AI-generated draft
             </h3>
             <p className="mt-3 text-sm text-muted-foreground">
-              A few fields in. Polished content out. Under a minute.
+              Add the context, generate a draft, then review and edit it for
+              your use case.
             </p>
           </div>
 

@@ -23,8 +23,9 @@ export function ExploreTemplatesSection() {
             Explore templates
           </h2>
           <p className="mt-4 text-muted-foreground">
-            15 battle-tested prompts across social, email, marketing, SEO, and
-            video. Pick one, fill in a few fields, and generate in seconds.
+            15 structured templates across social, email, marketing, SEO, and
+            video. Pick one, fill in a few fields, and generate an editable
+            draft.
           </p>
         </div>
 
