@@ -856,6 +856,9 @@ function nextPlan(
   status: SubscriptionStatus,
   currentPlan: Plan,
 ): Plan {
+  if (eventType === "subscription.created") {
+    return currentPlan;
+  }
   if (eventType === "subscription.activated") {
     return status === "active" ? PLANS.PRO : PLANS.FREE;
   }
@@ -866,6 +869,42 @@ function nextPlan(
     return currentPlan;
   }
   return PLANS.FREE;
+}
+
+function shouldPreserveExistingAtSameTimestamp(
+  existingStatus: string | null,
+  eventType: PaddleSubscriptionEventType,
+  incomingStatus: string,
+): boolean {
+  const statusRank: Record<string, number> = {
+    trialing: 0,
+    active: 1,
+    past_due: 2,
+    paused: 3,
+    canceled: 4,
+  };
+
+  if (
+    eventType === "subscription.resumed" &&
+    incomingStatus === "active" &&
+    (existingStatus === "paused" || existingStatus === "past_due")
+  ) {
+    return false;
+  }
+  if (
+    eventType === "subscription.activated" &&
+    incomingStatus === "active" &&
+    (existingStatus === "trialing" || existingStatus === "past_due")
+  ) {
+    return false;
+  }
+  if (existingStatus === "active" && incomingStatus === "trialing") {
+    return true;
+  }
+
+  return (
+    (statusRank[incomingStatus] ?? -1) < (statusRank[existingStatus ?? ""] ?? -1)
+  );
 }
 
 async function applySubscriptionEvent(
@@ -895,9 +934,32 @@ async function applySubscriptionEvent(
 
   if (
     owner.existing?.lastPaddleEventAt &&
-    event.occurredAt <= owner.existing.lastPaddleEventAt
+    event.occurredAt < owner.existing.lastPaddleEventAt
   ) {
     return "stale";
+  }
+
+  const sameTimestamp =
+    owner.existing?.lastPaddleEventAt?.getTime() === event.occurredAt.getTime();
+  const preserveExisting =
+    Boolean(owner.existing) &&
+    (event.eventType === "subscription.created" ||
+      (sameTimestamp &&
+        shouldPreserveExistingAtSameTimestamp(
+          owner.existing?.paddleStatus ?? null,
+          event.eventType as PaddleSubscriptionEventType,
+          subscription.status,
+        )));
+  if (preserveExisting) {
+    if (owner.intent && event.eventType === "subscription.created") {
+      await advanceIntent(
+        transaction,
+        owner.intent,
+        "subscription_bound",
+        { subscriptionId: subscription.id },
+      );
+    }
+    return "processed";
   }
 
   const accessRevocation = await transaction.paddleAdjustment.findFirst({

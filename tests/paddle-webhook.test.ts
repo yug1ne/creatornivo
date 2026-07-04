@@ -525,6 +525,70 @@ test("subscription.created followed by activated completes the original intent",
   assert.equal(db.intents.get("intent-1")?.status, "completed");
 });
 
+test("created then activated with the same occurred_at grants Pro", async () => {
+  const db = new MemoryDatabase();
+  db.seedIntent();
+  const occurredAt = "2026-07-04T10:55:53.759Z";
+
+  assert.equal(
+    await process(
+      db,
+      subscriptionEvent({
+        eventId: "evt_created_same_time",
+        eventType: "subscription.created",
+        occurredAt,
+      }),
+    ),
+    "processed",
+  );
+  assert.equal(
+    await process(
+      db,
+      subscriptionEvent({
+        eventId: "evt_activated_same_time",
+        eventType: "subscription.activated",
+        occurredAt,
+      }),
+    ),
+    "processed",
+  );
+  assert.equal(db.users.get("user-1")?.plan, "pro");
+  assert.equal(db.subscription.status, "active");
+  assert.equal(db.intents.get("intent-1")?.status, "completed");
+});
+
+test("activated then created with the same occurred_at cannot remove Pro", async () => {
+  const db = new MemoryDatabase();
+  db.seedIntent();
+  const occurredAt = "2026-07-04T11:07:57.245Z";
+
+  assert.equal(
+    await process(
+      db,
+      subscriptionEvent({
+        eventId: "evt_activated_first_same_time",
+        eventType: "subscription.activated",
+        occurredAt,
+      }),
+    ),
+    "processed",
+  );
+  assert.equal(
+    await process(
+      db,
+      subscriptionEvent({
+        eventId: "evt_created_second_same_time",
+        eventType: "subscription.created",
+        occurredAt,
+      }),
+    ),
+    "processed",
+  );
+  assert.equal(db.users.get("user-1")?.plan, "pro");
+  assert.equal(db.subscription.status, "active");
+  assert.equal(db.intents.get("intent-1")?.status, "completed");
+});
+
 test("activated before created binds by checkoutIntentId without transaction_id", async () => {
   const db = new MemoryDatabase();
   db.seedIntent();
@@ -689,6 +753,91 @@ test("the same event_id is applied once", async () => {
   assert.equal(db.userUpdates, 1);
 });
 
+test("active updated at the same timestamp preserves Pro", async () => {
+  const db = new MemoryDatabase();
+  db.seedIntent();
+  const occurredAt = "2026-07-04T12:00:00.000Z";
+  await process(db, subscriptionEvent({ occurredAt }));
+
+  assert.equal(
+    await process(
+      db,
+      subscriptionEvent({
+        eventId: "evt_updated_same_time",
+        eventType: "subscription.updated",
+        occurredAt,
+        transactionId: null,
+      }),
+    ),
+    "processed",
+  );
+  assert.equal(db.users.get("user-1")?.plan, "pro");
+  assert.equal(db.subscription.status, "active");
+});
+
+test("past_due and paused cannot be undone by weaker equal-time events", async () => {
+  for (const restrictive of ["past_due", "paused"]) {
+    const db = new MemoryDatabase();
+    db.seedIntent();
+    const occurredAt = "2026-07-04T12:30:00.000Z";
+    await process(db, subscriptionEvent({ occurredAt }));
+    await process(
+      db,
+      subscriptionEvent({
+        eventId: `evt_${restrictive}`,
+        eventType: `subscription.${restrictive}`,
+        status: restrictive,
+        occurredAt,
+        transactionId: null,
+      }),
+    );
+
+    assert.equal(
+      await process(
+        db,
+        subscriptionEvent({
+          eventId: `evt_updated_after_${restrictive}`,
+          eventType: "subscription.updated",
+          status: "active",
+          occurredAt,
+          transactionId: null,
+        }),
+      ),
+      "processed",
+    );
+    assert.equal(db.users.get("user-1")?.plan, "free");
+    assert.equal(db.subscription.paddleStatus, restrictive);
+  }
+});
+
+test("created cannot overwrite equal-time trialing state", async () => {
+  const db = new MemoryDatabase();
+  db.seedIntent();
+  const occurredAt = "2026-07-04T12:45:00.000Z";
+  await process(
+    db,
+    subscriptionEvent({
+      eventId: "evt_trialing_same_time",
+      eventType: "subscription.trialing",
+      status: "trialing",
+      occurredAt,
+    }),
+  );
+
+  await process(
+    db,
+    subscriptionEvent({
+      eventId: "evt_created_after_trialing_same_time",
+      eventType: "subscription.created",
+      status: "active",
+      occurredAt,
+    }),
+  );
+  assert.equal(db.users.get("user-1")?.plan, "free");
+  assert.equal(db.subscription.status, "trialing");
+  assert.equal(db.subscription.paddleStatus, "trialing");
+});
+
 test("an older occurred_at cannot overwrite newer subscription state", async () => {
   const db = new MemoryDatabase();
   db.seedIntent();
@@ -729,6 +878,58 @@ test("subsequent events use paddleSubscriptionId and cancellation frees the owne
   assert.equal(db.users.get("user-1")?.plan, "free");
   assert.equal(db.users.get("user-2")?.plan, "free");
   assert.equal(db.subscription.paddleSubscriptionId, "sub_01");
+});
+
+test("created at the canceled timestamp cannot restore or overwrite canceled state", async () => {
+  const db = new MemoryDatabase();
+  db.seedIntent();
+  await process(
+    db,
+    subscriptionEvent({ occurredAt: "2026-07-04T12:00:00.000Z" }),
+  );
+  const canceledAt = "2026-07-04T13:00:00.000Z";
+  assert.equal(
+    await process(
+      db,
+      subscriptionEvent({
+        eventId: "evt_canceled_newer",
+        eventType: "subscription.canceled",
+        status: "canceled",
+        occurredAt: canceledAt,
+        transactionId: null,
+      }),
+    ),
+    "processed",
+  );
+  assert.equal(db.users.get("user-1")?.plan, "free");
+  assert.equal(db.subscription.status, "canceled");
+
+  assert.equal(
+    await process(
+      db,
+      subscriptionEvent({
+        eventId: "evt_created_after_cancel_same_time",
+        eventType: "subscription.created",
+        status: "active",
+        occurredAt: canceledAt,
+      }),
+    ),
+    "processed",
+  );
+  assert.equal(db.users.get("user-1")?.plan, "free");
+  assert.equal(db.subscription.status, "canceled");
+  assert.equal(db.subscription.paddleStatus, "canceled");
+});
+
+test("webhook route returns the processed subscription result", () => {
+  const route = readFileSync(
+    "src/app/api/paddle/webhook/route.ts",
+    "utf8",
+  );
+  assert.match(
+    route,
+    /const result = await processPaddleWebhookEvent\(event\);[\s\S]*NextResponse\.json\(\{ received: true, result \}\)/,
+  );
 });
 
 test("scheduled cancellation keeps Pro until subscription.canceled", async () => {
