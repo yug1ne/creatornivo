@@ -1,9 +1,11 @@
 import { NextResponse } from "next/server";
 
 import {
+  isPaddleAdjustmentEventType,
   isPaddleSubscriptionEventType,
   isPaddleTransactionEventType,
   processPaddleWebhookEvent,
+  type PaddleAdjustmentPayload,
   type PaddleSubscriptionPayload,
   type PaddleTransactionPayload,
   type PaddleWebhookEventInput,
@@ -146,6 +148,67 @@ function isValidTransactionPayload(
   return true;
 }
 
+function isValidAdjustmentPayload(
+  value: Record<string, unknown>,
+): value is Record<string, unknown> & PaddleAdjustmentPayload {
+  if (
+    !isNonEmptyString(value.id) ||
+    !isNonEmptyString(value.action) ||
+    !isNonEmptyString(value.status) ||
+    !isNonEmptyString(value.transaction_id) ||
+    !isNonEmptyString(value.customer_id)
+  ) {
+    return false;
+  }
+
+  if (
+    value.subscription_id !== undefined &&
+    value.subscription_id !== null &&
+    !isNonEmptyString(value.subscription_id)
+  ) {
+    return false;
+  }
+
+  if (
+    value.type !== undefined &&
+    value.type !== null &&
+    !isNonEmptyString(value.type)
+  ) {
+    return false;
+  }
+
+  if (
+    value.currency_code !== undefined &&
+    value.currency_code !== null &&
+    !isNonEmptyString(value.currency_code)
+  ) {
+    return false;
+  }
+
+  if (
+    value.totals !== undefined &&
+    value.totals !== null &&
+    (!isRecord(value.totals) ||
+      (value.totals.total !== undefined &&
+        !isNonEmptyString(value.totals.total)) ||
+      (value.totals.currency_code !== undefined &&
+        !isNonEmptyString(value.totals.currency_code)))
+  ) {
+    return false;
+  }
+
+  for (const dateField of ["created_at", "updated_at"] as const) {
+    if (
+      value[dateField] !== undefined &&
+      !isValidDateString(value[dateField])
+    ) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
 export function parsePaddleWebhookEvent(
   value: unknown,
 ): PaddleWebhookEventInput | null {
@@ -169,6 +232,13 @@ export function parsePaddleWebhookEvent(
   if (
     isPaddleTransactionEventType(value.event_type) &&
     !isValidTransactionPayload(value.data)
+  ) {
+    return null;
+  }
+
+  if (
+    isPaddleAdjustmentEventType(value.event_type) &&
+    !isValidAdjustmentPayload(value.data)
   ) {
     return null;
   }

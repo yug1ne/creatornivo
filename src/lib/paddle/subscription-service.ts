@@ -1,4 +1,4 @@
-import type { Prisma, SubscriptionStatus } from "@prisma/client";
+import { Prisma, type SubscriptionStatus } from "@prisma/client";
 
 import { PLANS, type Plan } from "@/config/plans";
 import {
@@ -7,6 +7,10 @@ import {
   type PaddleServerCheckoutConfig,
 } from "@/config/paddle";
 import { prisma } from "@/lib/db";
+import {
+  cancelPaddleSubscriptionImmediately,
+  type PaddleCancellationResult,
+} from "@/lib/paddle/subscription-cancel";
 
 export const PADDLE_SUBSCRIPTION_EVENT_TYPES = [
   "subscription.created",
@@ -21,10 +25,17 @@ export const PADDLE_SUBSCRIPTION_EVENT_TYPES = [
 
 export const PADDLE_TRANSACTION_EVENT_TYPES = ["transaction.completed"] as const;
 
+export const PADDLE_ADJUSTMENT_EVENT_TYPES = [
+  "adjustment.created",
+  "adjustment.updated",
+] as const;
+
 export type PaddleSubscriptionEventType =
   (typeof PADDLE_SUBSCRIPTION_EVENT_TYPES)[number];
 export type PaddleTransactionEventType =
   (typeof PADDLE_TRANSACTION_EVENT_TYPES)[number];
+export type PaddleAdjustmentEventType =
+  (typeof PADDLE_ADJUSTMENT_EVENT_TYPES)[number];
 
 interface PaddleItem {
   quantity?: number;
@@ -62,6 +73,23 @@ export interface PaddleTransactionPayload {
   items?: PaddleItem[];
 }
 
+export interface PaddleAdjustmentPayload {
+  id: string;
+  action: string;
+  type?: string | null;
+  status: string;
+  transaction_id: string;
+  subscription_id?: string | null;
+  customer_id: string;
+  currency_code?: string | null;
+  totals?: {
+    total?: string;
+    currency_code?: string;
+  } | null;
+  created_at?: string;
+  updated_at?: string;
+}
+
 export interface PaddleWebhookEventInput {
   eventId: string;
   eventType: string;
@@ -69,6 +97,7 @@ export interface PaddleWebhookEventInput {
   data:
     | PaddleSubscriptionPayload
     | PaddleTransactionPayload
+    | PaddleAdjustmentPayload
     | Record<string, unknown>;
 }
 
@@ -89,8 +118,36 @@ interface CheckoutIntentRecord {
   completedAt: Date | null;
 }
 
+interface PaddleAdjustmentRecord {
+  id: string;
+  paddleAdjustmentId: string;
+  paddleTransactionId: string;
+  paddleSubscriptionId: string | null;
+  userId: string | null;
+  occurredAt: Date;
+  accessRevokedAt: Date | null;
+  cancellationRequired: boolean;
+  cancellationAttemptedAt: Date | null;
+  cancellationCompletedAt: Date | null;
+}
+
+interface PaddleCancellationRequest {
+  adjustmentId: string;
+  paddleAdjustmentId: string;
+  paddleSubscriptionId: string;
+}
+
+interface PaddleWebhookWorkResult {
+  result: PaddleWebhookProcessingResult;
+  cancellation: PaddleCancellationRequest | null;
+}
+
+export type CancelPaddleSubscription = (
+  subscriptionId: string,
+) => Promise<PaddleCancellationResult>;
+
 class DuplicatePaddleWebhookEventError extends Error {}
-class RetryablePaddleWebhookError extends Error {}
+export class RetryablePaddleWebhookError extends Error {}
 
 const INTENT_STATUS_RANK: Record<string, number> = {
   pending: 0,
@@ -113,6 +170,12 @@ export function isPaddleTransactionEventType(
   return PADDLE_TRANSACTION_EVENT_TYPES.some((type) => type === eventType);
 }
 
+export function isPaddleAdjustmentEventType(
+  eventType: string,
+): eventType is PaddleAdjustmentEventType {
+  return PADDLE_ADJUSTMENT_EVENT_TYPES.some((type) => type === eventType);
+}
+
 function isUniqueConstraintError(error: unknown): boolean {
   return (
     typeof error === "object" &&
@@ -120,6 +183,15 @@ function isUniqueConstraintError(error: unknown): boolean {
     "code" in error &&
     error.code === "P2002"
   );
+}
+
+function getPrismaErrorCode(error: unknown): string | null {
+  return typeof error === "object" &&
+    error !== null &&
+    "code" in error &&
+    typeof error.code === "string"
+    ? error.code
+    : null;
 }
 
 export function mapPaddleStatus(status: string): SubscriptionStatus {
@@ -144,6 +216,10 @@ export function isPaddleCustomerId(value: unknown): value is string {
 
 export function isPaddleTransactionId(value: unknown): value is string {
   return typeof value === "string" && /^txn_[a-z0-9]+$/i.test(value);
+}
+
+export function isPaddleAdjustmentId(value: unknown): value is string {
+  return typeof value === "string" && /^adj_[a-z0-9]+$/i.test(value);
 }
 
 function getPriceAndQuantity(payload: {
@@ -321,6 +397,311 @@ async function applyTransactionCompleted(
   return "processed";
 }
 
+interface AdjustmentDecision {
+  accessAction: string;
+  revokeAccess: boolean;
+  revokeReason: string | null;
+}
+
+export function getAdjustmentDecision(
+  adjustment: Pick<PaddleAdjustmentPayload, "action" | "status" | "type">,
+): AdjustmentDecision {
+  if (adjustment.action === "refund") {
+    if (adjustment.status === "pending_approval") {
+      return {
+        accessAction: "refund_pending",
+        revokeAccess: false,
+        revokeReason: null,
+      };
+    }
+    if (adjustment.status === "rejected") {
+      return {
+        accessAction: "refund_rejected",
+        revokeAccess: false,
+        revokeReason: null,
+      };
+    }
+    if (adjustment.status === "approved" && adjustment.type === "full") {
+      return {
+        accessAction: "revoked_full_refund",
+        revokeAccess: true,
+        revokeReason: "full_refund",
+      };
+    }
+    if (adjustment.status === "approved" && adjustment.type === "partial") {
+      return {
+        accessAction: "partial_refund_kept",
+        revokeAccess: false,
+        revokeReason: null,
+      };
+    }
+  }
+
+  if (adjustment.action === "chargeback") {
+    return {
+      accessAction: "revoked_chargeback",
+      revokeAccess: true,
+      revokeReason: "chargeback",
+    };
+  }
+
+  if (adjustment.action === "chargeback_warning") {
+    return {
+      accessAction: "chargeback_warning",
+      revokeAccess: false,
+      revokeReason: null,
+    };
+  }
+
+  if (
+    adjustment.action === "chargeback_reverse" ||
+    adjustment.action === "chargeback_warning_reverse" ||
+    adjustment.action === "credit_reverse"
+  ) {
+    return {
+      accessAction: "manual_review_reversal",
+      revokeAccess: false,
+      revokeReason: null,
+    };
+  }
+
+  if (adjustment.action === "credit") {
+    return {
+      accessAction: "credit_no_access_change",
+      revokeAccess: false,
+      revokeReason: null,
+    };
+  }
+
+  return {
+    accessAction: "ignored_unsupported_adjustment",
+    revokeAccess: false,
+    revokeReason: null,
+  };
+}
+
+async function resolveAdjustmentOwner(
+  transaction: Prisma.TransactionClient,
+  adjustment: PaddleAdjustmentPayload,
+): Promise<{
+  userId: string | null;
+  paddleSubscriptionId: string | null;
+  conflict: boolean;
+}> {
+  const subscription = isPaddleSubscriptionId(adjustment.subscription_id)
+    ? await transaction.subscription.findUnique({
+        where: { paddleSubscriptionId: adjustment.subscription_id },
+      })
+    : null;
+  const intent = await findIntentByTransaction(
+    transaction,
+    adjustment.transaction_id,
+  );
+
+  if (
+    subscription &&
+    intent &&
+    (subscription.userId !== intent.userId ||
+      (intent.paddleSubscriptionId &&
+        adjustment.subscription_id &&
+        intent.paddleSubscriptionId !== adjustment.subscription_id))
+  ) {
+    return {
+      userId: null,
+      paddleSubscriptionId: adjustment.subscription_id ?? null,
+      conflict: true,
+    };
+  }
+
+  if (
+    !subscription &&
+    intent?.paddleSubscriptionId &&
+    adjustment.subscription_id &&
+    intent.paddleSubscriptionId !== adjustment.subscription_id
+  ) {
+    return {
+      userId: null,
+      paddleSubscriptionId: adjustment.subscription_id,
+      conflict: true,
+    };
+  }
+
+  const userId = subscription?.userId ?? intent?.userId ?? null;
+  if (userId) {
+    const user = await transaction.user.findUnique({
+      where: { id: userId },
+      select: { id: true },
+    });
+    if (!user) {
+      return {
+        userId: null,
+        paddleSubscriptionId:
+          adjustment.subscription_id ??
+          intent?.paddleSubscriptionId ??
+          null,
+        conflict: false,
+      };
+    }
+  }
+
+  return {
+    userId,
+    paddleSubscriptionId:
+      adjustment.subscription_id ?? intent?.paddleSubscriptionId ?? null,
+    conflict: false,
+  };
+}
+
+function pendingCancellation(
+  adjustment: PaddleAdjustmentRecord,
+): PaddleCancellationRequest | null {
+  return adjustment.cancellationRequired &&
+    !adjustment.cancellationCompletedAt &&
+    isPaddleSubscriptionId(adjustment.paddleSubscriptionId)
+    ? {
+        adjustmentId: adjustment.id,
+        paddleAdjustmentId: adjustment.paddleAdjustmentId,
+        paddleSubscriptionId: adjustment.paddleSubscriptionId,
+      }
+    : null;
+}
+
+async function applyAdjustmentEvent(
+  transaction: Prisma.TransactionClient,
+  event: PaddleWebhookEventInput,
+): Promise<PaddleWebhookWorkResult> {
+  const adjustment = event.data as PaddleAdjustmentPayload;
+  if (
+    !isPaddleAdjustmentId(adjustment.id) ||
+    !isPaddleTransactionId(adjustment.transaction_id) ||
+    (adjustment.subscription_id !== undefined &&
+      adjustment.subscription_id !== null &&
+      !isPaddleSubscriptionId(adjustment.subscription_id))
+  ) {
+    logIgnored(event.eventType, "invalid adjustment identity");
+    return { result: "ignored", cancellation: null };
+  }
+
+  const existing = await transaction.paddleAdjustment.findUnique({
+    where: { paddleAdjustmentId: adjustment.id },
+  });
+
+  if (
+    existing &&
+    (existing.paddleTransactionId !== adjustment.transaction_id ||
+      (existing.paddleSubscriptionId &&
+        adjustment.subscription_id &&
+        existing.paddleSubscriptionId !== adjustment.subscription_id))
+  ) {
+    logIgnored(event.eventType, "adjustment identity changed");
+    return { result: "ignored", cancellation: null };
+  }
+
+  if (existing && event.occurredAt <= existing.occurredAt) {
+    return {
+      result: "stale",
+      cancellation: pendingCancellation(existing),
+    };
+  }
+
+  const owner = await resolveAdjustmentOwner(transaction, adjustment);
+  if (
+    existing?.userId &&
+    owner.userId &&
+    existing.userId !== owner.userId
+  ) {
+    logIgnored(event.eventType, "adjustment owner changed");
+    return { result: "ignored", cancellation: null };
+  }
+
+  const userId = existing?.userId ?? owner.userId;
+  const paddleSubscriptionId =
+    existing?.paddleSubscriptionId ?? owner.paddleSubscriptionId;
+  const decision = getAdjustmentDecision(adjustment);
+  const canApplyAccessDecision = Boolean(userId) && !owner.conflict;
+  const currentSubscription = userId
+    ? await transaction.subscription.findUnique({ where: { userId } })
+    : null;
+  const recordAccessRevocation =
+    canApplyAccessDecision && decision.revokeAccess;
+  const revokeCurrentAccess =
+    recordAccessRevocation &&
+    (!currentSubscription?.paddleSubscriptionId ||
+      !paddleSubscriptionId ||
+      currentSubscription.paddleSubscriptionId === paddleSubscriptionId);
+  const accessAction = owner.conflict
+    ? "ignored_owner_conflict"
+    : userId
+      ? decision.accessAction
+      : "ignored_unresolved_owner";
+  const cancellationRequired =
+    !existing?.cancellationCompletedAt &&
+    ((existing?.cancellationRequired ?? false) || recordAccessRevocation);
+  const processedAt = new Date();
+
+  const saved = await transaction.paddleAdjustment.upsert({
+    where: { paddleAdjustmentId: adjustment.id },
+    create: {
+      paddleAdjustmentId: adjustment.id,
+      paddleTransactionId: adjustment.transaction_id,
+      paddleSubscriptionId,
+      userId: owner.conflict ? null : userId,
+      action: adjustment.action,
+      type: adjustment.type ?? null,
+      status: adjustment.status,
+      currencyCode:
+        adjustment.currency_code ??
+        adjustment.totals?.currency_code ??
+        null,
+      total: adjustment.totals?.total ?? null,
+      occurredAt: event.occurredAt,
+      processedAt,
+      accessAction,
+      accessRevokedAt: recordAccessRevocation ? event.occurredAt : null,
+      accessRevokedReason: recordAccessRevocation
+        ? decision.revokeReason
+        : null,
+      cancellationRequired,
+      lastEventId: event.eventId,
+    },
+    update: {
+      paddleSubscriptionId,
+      userId: owner.conflict ? existing?.userId : userId,
+      action: adjustment.action,
+      type: adjustment.type ?? null,
+      status: adjustment.status,
+      currencyCode:
+        adjustment.currency_code ??
+        adjustment.totals?.currency_code ??
+        null,
+      total: adjustment.totals?.total ?? null,
+      occurredAt: event.occurredAt,
+      processedAt,
+      accessAction,
+      ...(recordAccessRevocation && !existing?.accessRevokedAt
+        ? {
+            accessRevokedAt: event.occurredAt,
+            accessRevokedReason: decision.revokeReason,
+          }
+        : {}),
+      cancellationRequired,
+      lastEventId: event.eventId,
+    },
+  });
+
+  if (revokeCurrentAccess && userId) {
+    await transaction.user.update({
+      where: { id: userId },
+      data: { plan: PLANS.FREE },
+    });
+  }
+
+  return {
+    result: owner.conflict || !userId ? "ignored" : "processed",
+    cancellation: pendingCancellation(saved),
+  };
+}
+
 async function resolveSubscriptionOwner(
   transaction: Prisma.TransactionClient,
   event: PaddleWebhookEventInput,
@@ -447,6 +828,26 @@ async function resolveSubscriptionOwner(
     return null;
   }
 
+  const currentSubscription = await transaction.subscription.findUnique({
+    where: { userId: intent.userId },
+  });
+  if (
+    currentSubscription?.paddleSubscriptionId &&
+    currentSubscription.paddleSubscriptionId !== subscription.id
+  ) {
+    const incomingRevocation = await transaction.paddleAdjustment.findFirst({
+      where: {
+        paddleSubscriptionId: subscription.id,
+        accessRevokedAt: { not: null },
+      },
+      select: { id: true },
+    });
+    if (incomingRevocation) {
+      logIgnored(event.eventType, "refunded subscription is no longer current");
+      return null;
+    }
+  }
+
   return { existing: null, intent, user, priceId };
 }
 
@@ -499,12 +900,21 @@ async function applySubscriptionEvent(
     return "stale";
   }
 
+  const accessRevocation = await transaction.paddleAdjustment.findFirst({
+    where: {
+      paddleSubscriptionId: subscription.id,
+      accessRevokedAt: { not: null },
+    },
+    select: { id: true },
+  });
   const status = mapPaddleStatus(subscription.status);
-  const plan = nextPlan(
-    event.eventType as PaddleSubscriptionEventType,
-    status,
-    owner.user.plan,
-  );
+  const plan = accessRevocation
+    ? PLANS.FREE
+    : nextPlan(
+        event.eventType as PaddleSubscriptionEventType,
+        status,
+        owner.user.plan,
+      );
   const claimEarlyAccess =
     event.eventType === "subscription.activated" &&
     status === "active" &&
@@ -558,42 +968,205 @@ async function applySubscriptionEvent(
   return "processed";
 }
 
-export async function processPaddleWebhookEvent(
-  event: PaddleWebhookEventInput,
-  database: Pick<typeof prisma, "$transaction"> = prisma,
-  config = getPaddleServerCheckoutConfig(),
-): Promise<PaddleWebhookProcessingResult> {
-  try {
-    return await database.$transaction(async (transaction) => {
-      try {
-        await transaction.paddleWebhookEvent.create({
-          data: {
-            eventId: event.eventId,
-            eventType: event.eventType,
-            occurredAt: event.occurredAt,
-          },
-        });
-      } catch (error) {
-        if (isUniqueConstraintError(error)) {
-          throw new DuplicatePaddleWebhookEventError();
-        }
-        throw error;
+type PaddleWebhookDatabase = Pick<typeof prisma, "$transaction">;
+
+async function runSerializableWithRetry<T>(
+  database: PaddleWebhookDatabase,
+  operation: (transaction: Prisma.TransactionClient) => Promise<T>,
+): Promise<T> {
+  let lastError: unknown;
+
+  for (let attempt = 1; attempt <= 3; attempt += 1) {
+    try {
+      return await database.$transaction(operation, {
+        isolationLevel: Prisma.TransactionIsolationLevel.Serializable,
+      });
+    } catch (error) {
+      if (error instanceof DuplicatePaddleWebhookEventError) throw error;
+
+      const code = getPrismaErrorCode(error);
+      if ((code === "P2002" || code === "P2034") && attempt < 3) {
+        lastError = error;
+        continue;
       }
 
-      if (isPaddleTransactionEventType(event.eventType)) {
-        return applyTransactionCompleted(transaction, event, config);
-      }
-      if (isPaddleSubscriptionEventType(event.eventType)) {
-        return applySubscriptionEvent(transaction, event, config);
-      }
-      return "ignored";
-    });
-  } catch (error) {
-    if (error instanceof DuplicatePaddleWebhookEventError) {
-      return "duplicate";
+      throw error;
     }
+  }
+
+  throw lastError ?? new Error("Paddle webhook transaction retry exhausted");
+}
+
+async function processWebhookTransaction(
+  event: PaddleWebhookEventInput,
+  database: PaddleWebhookDatabase,
+  config: PaddleServerCheckoutConfig,
+): Promise<PaddleWebhookWorkResult> {
+  return runSerializableWithRetry(database, async (transaction) => {
+    try {
+      await transaction.paddleWebhookEvent.create({
+        data: {
+          eventId: event.eventId,
+          eventType: event.eventType,
+          occurredAt: event.occurredAt,
+        },
+      });
+    } catch (error) {
+      if (isUniqueConstraintError(error)) {
+        throw new DuplicatePaddleWebhookEventError();
+      }
+      throw error;
+    }
+
+    if (isPaddleTransactionEventType(event.eventType)) {
+      return {
+        result: await applyTransactionCompleted(transaction, event, config),
+        cancellation: null,
+      };
+    }
+    if (isPaddleSubscriptionEventType(event.eventType)) {
+      return {
+        result: await applySubscriptionEvent(transaction, event, config),
+        cancellation: null,
+      };
+    }
+    if (isPaddleAdjustmentEventType(event.eventType)) {
+      return applyAdjustmentEvent(transaction, event);
+    }
+    return { result: "ignored", cancellation: null };
+  });
+}
+
+async function findPendingCancellationForEvent(
+  event: PaddleWebhookEventInput,
+  database: PaddleWebhookDatabase,
+): Promise<PaddleCancellationRequest | null> {
+  if (
+    !isPaddleAdjustmentEventType(event.eventType) ||
+    !isPaddleAdjustmentId((event.data as PaddleAdjustmentPayload).id)
+  ) {
+    return null;
+  }
+
+  return runSerializableWithRetry(database, async (transaction) => {
+    const adjustment = await transaction.paddleAdjustment.findUnique({
+      where: {
+        paddleAdjustmentId: (event.data as PaddleAdjustmentPayload).id,
+      },
+    });
+    return adjustment ? pendingCancellation(adjustment) : null;
+  });
+}
+
+async function completePaddleCancellation(
+  request: PaddleCancellationRequest,
+  database: PaddleWebhookDatabase,
+  cancelSubscription: CancelPaddleSubscription,
+): Promise<void> {
+  const attemptedAt = new Date();
+  const staleBefore = new Date(attemptedAt.getTime() - 5 * 60 * 1000);
+  const claim = await runSerializableWithRetry(
+    database,
+    async (transaction) => {
+      const claimed = await transaction.paddleAdjustment.updateMany({
+        where: {
+          id: request.adjustmentId,
+          paddleAdjustmentId: request.paddleAdjustmentId,
+          paddleSubscriptionId: request.paddleSubscriptionId,
+          cancellationRequired: true,
+          cancellationCompletedAt: null,
+          OR: [
+            { cancellationAttemptedAt: null },
+            { cancellationAttemptedAt: { lt: staleBefore } },
+          ],
+        },
+        data: { cancellationAttemptedAt: attemptedAt },
+      });
+      if (claimed.count === 1) return "claimed" as const;
+
+      const current = await transaction.paddleAdjustment.findUnique({
+        where: { paddleAdjustmentId: request.paddleAdjustmentId },
+      });
+      return current?.cancellationCompletedAt
+        ? ("completed" as const)
+        : ("in_progress" as const);
+    },
+  );
+
+  if (claim === "completed") return;
+  if (claim === "in_progress") {
+    throw new RetryablePaddleWebhookError(
+      "Paddle subscription cancellation is already in progress",
+    );
+  }
+
+  try {
+    await cancelSubscription(request.paddleSubscriptionId);
+  } catch (error) {
+    await runSerializableWithRetry(database, async (transaction) => {
+      await transaction.paddleAdjustment.updateMany({
+        where: {
+          id: request.adjustmentId,
+          cancellationAttemptedAt: attemptedAt,
+          cancellationCompletedAt: null,
+        },
+        data: { cancellationAttemptedAt: null },
+      });
+    });
     throw error;
   }
+
+  await runSerializableWithRetry(database, async (transaction) => {
+    const completed = await transaction.paddleAdjustment.updateMany({
+      where: {
+        id: request.adjustmentId,
+        paddleAdjustmentId: request.paddleAdjustmentId,
+        paddleSubscriptionId: request.paddleSubscriptionId,
+        cancellationAttemptedAt: attemptedAt,
+        cancellationCompletedAt: null,
+      },
+      data: {
+        cancellationRequired: false,
+        cancellationCompletedAt: new Date(),
+      },
+    });
+    if (completed.count !== 1) {
+      throw new RetryablePaddleWebhookError(
+        "Paddle cancellation result could not be persisted",
+      );
+    }
+  });
+}
+
+export async function processPaddleWebhookEvent(
+  event: PaddleWebhookEventInput,
+  database: PaddleWebhookDatabase = prisma,
+  config = getPaddleServerCheckoutConfig(),
+  cancelSubscription: CancelPaddleSubscription =
+    cancelPaddleSubscriptionImmediately,
+): Promise<PaddleWebhookProcessingResult> {
+  let work: PaddleWebhookWorkResult;
+
+  try {
+    work = await processWebhookTransaction(event, database, config);
+  } catch (error) {
+    if (!(error instanceof DuplicatePaddleWebhookEventError)) throw error;
+
+    work = {
+      result: "duplicate",
+      cancellation: await findPendingCancellationForEvent(event, database),
+    };
+  }
+
+  if (work.cancellation) {
+    await completePaddleCancellation(
+      work.cancellation,
+      database,
+      cancelSubscription,
+    );
+  }
+
+  return work.result;
 }
 
 export async function downgradeUserToFree(userId: string) {

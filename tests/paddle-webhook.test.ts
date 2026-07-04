@@ -1,12 +1,16 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import test from "node:test";
 
 import type { PaddleServerCheckoutConfig } from "../src/config/paddle";
 import { parsePaddleWebhookEvent } from "../src/app/api/paddle/webhook/route";
 import {
   processPaddleWebhookEvent,
+  type CancelPaddleSubscription,
   type PaddleWebhookEventInput,
 } from "../src/lib/paddle/subscription-service";
+import { cancelPaddleSubscriptionImmediately } from "../src/lib/paddle/subscription-cancel";
+import { verifyPaddleWebhookSignature } from "../src/lib/paddle/webhook-verify";
 
 const EARLY_PRICE = "pri_early";
 const PRO_PRICE = "pri_pro";
@@ -46,16 +50,43 @@ type Intent = {
   completedAt: Date | null;
 };
 
+type Adjustment = {
+  id: string;
+  paddleAdjustmentId: string;
+  paddleTransactionId: string;
+  paddleSubscriptionId: string | null;
+  userId: string | null;
+  action: string;
+  type: string | null;
+  status: string;
+  currencyCode: string | null;
+  total: string | null;
+  occurredAt: Date;
+  processedAt: Date | null;
+  accessAction: string;
+  accessRevokedAt: Date | null;
+  accessRevokedReason: string | null;
+  cancellationRequired: boolean;
+  cancellationAttemptedAt: Date | null;
+  cancellationCompletedAt: Date | null;
+  lastEventId: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
 class MemoryDatabase {
   events = new Map<string, unknown>();
   subscriptions = new Map<string, Subscription>();
   intents = new Map<string, Intent>();
+  adjustments = new Map<string, Adjustment>();
   users = new Map([
     ["user-1", { id: "user-1", plan: "free" }],
     ["user-2", { id: "user-2", plan: "free" }],
   ]);
   userUpdates = 0;
   failUserUpdate = false;
+  serializationFailures = 0;
+  private transactionTail = Promise.resolve();
 
   seedIntent(overrides: Partial<Intent> = {}) {
     const intent: Intent = {
@@ -76,10 +107,26 @@ class MemoryDatabase {
   async $transaction<T>(
     operation: (transaction: Record<string, unknown>) => Promise<T>,
   ): Promise<T> {
+    const previous = this.transactionTail;
+    let release!: () => void;
+    this.transactionTail = new Promise<void>((resolve) => {
+      release = resolve;
+    });
+    await previous;
+
+    try {
+      if (this.serializationFailures > 0) {
+        this.serializationFailures -= 1;
+        throw Object.assign(new Error("serialization conflict"), {
+          code: "P2034",
+        });
+      }
+
     const draft = structuredClone({
       events: this.events,
       subscriptions: this.subscriptions,
       intents: this.intents,
+      adjustments: this.adjustments,
       users: this.users,
       userUpdates: this.userUpdates,
     });
@@ -122,6 +169,117 @@ class MemoryDatabase {
           if (!intent) throw new Error("intent missing");
           Object.assign(intent, data);
           return intent;
+        },
+      },
+      paddleAdjustment: {
+        findUnique: async ({
+          where,
+        }: {
+          where: { id?: string; paddleAdjustmentId?: string };
+        }) =>
+          Array.from(draft.adjustments.values()).find(
+            (adjustment) =>
+              (where.id !== undefined && adjustment.id === where.id) ||
+              (where.paddleAdjustmentId !== undefined &&
+                adjustment.paddleAdjustmentId === where.paddleAdjustmentId),
+          ) ?? null,
+        findFirst: async ({
+          where,
+        }: {
+          where: {
+            paddleSubscriptionId?: string;
+            accessRevokedAt?: { not: null };
+          };
+        }) =>
+          Array.from(draft.adjustments.values()).find(
+            (adjustment) =>
+              (where.paddleSubscriptionId === undefined ||
+                adjustment.paddleSubscriptionId ===
+                  where.paddleSubscriptionId) &&
+              (where.accessRevokedAt === undefined ||
+                adjustment.accessRevokedAt !== null),
+          ) ?? null,
+        upsert: async ({
+          where,
+          create,
+          update,
+        }: {
+          where: { paddleAdjustmentId: string };
+          create: Omit<Adjustment, "id" | "createdAt" | "updatedAt">;
+          update: Partial<Adjustment>;
+        }) => {
+          const existing = Array.from(draft.adjustments.values()).find(
+            (adjustment) =>
+              adjustment.paddleAdjustmentId === where.paddleAdjustmentId,
+          );
+          if (existing) {
+            Object.assign(existing, update, { updatedAt: new Date() });
+            return existing;
+          }
+          const saved: Adjustment = {
+            id: `db-adj-${draft.adjustments.size + 1}`,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+            ...create,
+            cancellationAttemptedAt: create.cancellationAttemptedAt ?? null,
+            cancellationCompletedAt: create.cancellationCompletedAt ?? null,
+          };
+          draft.adjustments.set(saved.id, saved);
+          return saved;
+        },
+        updateMany: async ({
+          where,
+          data,
+        }: {
+          where: Record<string, unknown>;
+          data: Partial<Adjustment>;
+        }) => {
+          const matches = (
+            adjustment: Adjustment,
+            filter: Record<string, unknown>,
+          ): boolean =>
+            Object.entries(filter).every(([key, value]) => {
+              if (key === "OR" && Array.isArray(value)) {
+                return value.some((part) =>
+                  matches(adjustment, part as Record<string, unknown>),
+                );
+              }
+
+              const current = adjustment[key as keyof Adjustment];
+              if (
+                key === "cancellationAttemptedAt" &&
+                typeof value === "object" &&
+                value !== null &&
+                "lt" in value &&
+                value.lt instanceof Date
+              ) {
+                return current instanceof Date && current < value.lt;
+              }
+              if (current instanceof Date && value instanceof Date) {
+                return current.getTime() === value.getTime();
+              }
+              return current === value;
+            });
+
+          let count = 0;
+          for (const adjustment of draft.adjustments.values()) {
+            if (!matches(adjustment, where)) continue;
+            Object.assign(adjustment, data, { updatedAt: new Date() });
+            count += 1;
+          }
+          return { count };
+        },
+        update: async ({
+          where,
+          data,
+        }: {
+          where: { id: string };
+          data: Partial<Adjustment>;
+        }) => {
+          const adjustment = draft.adjustments.get(where.id);
+          if (!adjustment) throw new Error("adjustment missing");
+          Object.assign(adjustment, data, { updatedAt: new Date() });
+          return adjustment;
         },
       },
       subscription: {
@@ -180,13 +338,21 @@ class MemoryDatabase {
     this.events = draft.events;
     this.subscriptions = draft.subscriptions;
     this.intents = draft.intents;
+    this.adjustments = draft.adjustments;
     this.users = draft.users;
     this.userUpdates = draft.userUpdates;
     return result;
+    } finally {
+      release();
+    }
   }
 
   get subscription() {
     return Array.from(this.subscriptions.values())[0];
+  }
+
+  get adjustment() {
+    return Array.from(this.adjustments.values())[0];
   }
 }
 
@@ -249,8 +415,55 @@ function transactionEvent(): PaddleWebhookEventInput {
   };
 }
 
-function process(database: MemoryDatabase, event: PaddleWebhookEventInput) {
-  return processPaddleWebhookEvent(event, database as never, config);
+function adjustmentEvent(
+  overrides: {
+    eventId?: string;
+    eventType?: string;
+    occurredAt?: string;
+    adjustmentId?: string;
+    action?: string;
+    type?: string | null;
+    status?: string;
+    transactionId?: string;
+    subscriptionId?: string | null;
+  } = {},
+): PaddleWebhookEventInput {
+  return {
+    eventId: overrides.eventId ?? "evt_adj_01",
+    eventType: overrides.eventType ?? "adjustment.created",
+    occurredAt: new Date(
+      overrides.occurredAt ?? "2026-07-03T12:00:00.000Z",
+    ),
+    data: {
+      id: overrides.adjustmentId ?? "adj_01",
+      action: overrides.action ?? "refund",
+      type: overrides.type === undefined ? "full" : overrides.type,
+      status: overrides.status ?? "approved",
+      transaction_id: overrides.transactionId ?? "txn_01",
+      subscription_id:
+        overrides.subscriptionId === undefined
+          ? "sub_01"
+          : overrides.subscriptionId,
+      customer_id: "ctm_01",
+      currency_code: "USD",
+      totals: { total: "490", currency_code: "USD" },
+      created_at: "2026-07-03T11:59:00.000Z",
+      updated_at: overrides.occurredAt ?? "2026-07-03T12:00:00.000Z",
+    },
+  };
+}
+
+function process(
+  database: MemoryDatabase,
+  event: PaddleWebhookEventInput,
+  cancelSubscription?: CancelPaddleSubscription,
+) {
+  return processPaddleWebhookEvent(
+    event,
+    database as never,
+    config,
+    cancelSubscription ?? (async () => "canceled"),
+  );
 }
 
 test("transaction.completed is recognized without granting client authority", () => {
@@ -566,4 +779,650 @@ test("event ID and all state roll back together on failure", async () => {
   await assert.rejects(process(db, subscriptionEvent()), /injected failure/);
   assert.equal(db.events.size, 0);
   assert.equal(db.subscriptions.size, 0);
+});
+
+test("adjustment.created and adjustment.updated payloads are accepted", () => {
+  for (const eventType of ["adjustment.created", "adjustment.updated"]) {
+    const event = adjustmentEvent({ eventType });
+    const parsed = parsePaddleWebhookEvent({
+      event_id: event.eventId,
+      event_type: event.eventType,
+      occurred_at: event.occurredAt.toISOString(),
+      data: event.data,
+    });
+    assert.equal(parsed?.eventType, eventType);
+  }
+});
+
+test("invalid webhook signatures are rejected", () => {
+  assert.equal(
+    verifyPaddleWebhookSignature(
+      JSON.stringify({ event_id: "evt_invalid" }),
+      "ts=1720000000;h1=invalid",
+      "test_secret",
+    ),
+    false,
+  );
+});
+
+test("unknown valid events are recorded and ignored without changing access", async () => {
+  const db = new MemoryDatabase();
+  db.users.get("user-1")!.plan = "pro";
+
+  assert.equal(
+    await process(db, {
+      eventId: "evt_unknown",
+      eventType: "product.updated",
+      occurredAt: new Date("2026-07-03T12:00:00.000Z"),
+      data: { id: "pro_01" },
+    }),
+    "ignored",
+  );
+  assert.equal(db.events.size, 1);
+  assert.equal(db.users.get("user-1")?.plan, "pro");
+});
+
+test("pending and rejected refunds preserve Pro", async () => {
+  for (const status of ["pending_approval", "rejected"]) {
+    const db = new MemoryDatabase();
+    db.seedIntent();
+    await process(db, subscriptionEvent());
+    let cancellationCalls = 0;
+
+    await process(
+      db,
+      adjustmentEvent({ status }),
+      async () => {
+        cancellationCalls += 1;
+        return "canceled";
+      },
+    );
+
+    assert.equal(db.users.get("user-1")?.plan, "pro");
+    assert.equal(db.adjustment.status, status);
+    assert.equal(db.adjustment.accessRevokedAt, null);
+    assert.equal(cancellationCalls, 0);
+  }
+});
+
+test("an approved partial refund preserves Pro and never cancels", async () => {
+  const db = new MemoryDatabase();
+  db.seedIntent();
+  await process(db, subscriptionEvent());
+  let cancellationCalls = 0;
+
+  await process(
+    db,
+    adjustmentEvent({ type: "partial" }),
+    async () => {
+      cancellationCalls += 1;
+      return "canceled";
+    },
+  );
+
+  assert.equal(db.users.get("user-1")?.plan, "pro");
+  assert.equal(db.adjustment.accessAction, "partial_refund_kept");
+  assert.equal(cancellationCalls, 0);
+});
+
+test("an approved full refund revokes Pro and cancels the verified subscription", async () => {
+  const db = new MemoryDatabase();
+  db.seedIntent();
+  await process(db, subscriptionEvent());
+  const canceled: string[] = [];
+
+  await process(
+    db,
+    adjustmentEvent(),
+    async (subscriptionId) => {
+      canceled.push(subscriptionId);
+      return "canceled";
+    },
+  );
+
+  assert.equal(db.users.get("user-1")?.plan, "free");
+  assert.equal(db.adjustment.userId, "user-1");
+  assert.equal(db.adjustment.accessAction, "revoked_full_refund");
+  assert.equal(db.adjustment.accessRevokedReason, "full_refund");
+  assert.ok(db.adjustment.accessRevokedAt);
+  assert.equal(db.adjustment.cancellationRequired, false);
+  assert.ok(db.adjustment.cancellationCompletedAt);
+  assert.deepEqual(canceled, ["sub_01"]);
+});
+
+test("a renewal transaction full refund resolves through subscription_id", async () => {
+  const db = new MemoryDatabase();
+  db.seedIntent();
+  await process(db, subscriptionEvent());
+
+  await process(
+    db,
+    adjustmentEvent({ transactionId: "txn_renewal" }),
+  );
+
+  assert.equal(db.adjustment.paddleTransactionId, "txn_renewal");
+  assert.equal(db.adjustment.userId, "user-1");
+  assert.equal(db.users.get("user-1")?.plan, "free");
+});
+
+test("transaction-only adjustment binding uses PaddleCheckoutIntent", async () => {
+  const db = new MemoryDatabase();
+  db.seedIntent({ paddleSubscriptionId: null });
+  db.users.get("user-1")!.plan = "pro";
+  let cancellationCalls = 0;
+
+  await process(
+    db,
+    adjustmentEvent({ subscriptionId: null }),
+    async () => {
+      cancellationCalls += 1;
+      return "canceled";
+    },
+  );
+
+  assert.equal(db.adjustment.userId, "user-1");
+  assert.equal(db.users.get("user-1")?.plan, "free");
+  assert.equal(db.adjustment.cancellationRequired, true);
+  assert.equal(cancellationCalls, 0);
+});
+
+test("unknown adjustment identifiers change no user", async () => {
+  const db = new MemoryDatabase();
+  db.users.get("user-1")!.plan = "pro";
+
+  assert.equal(
+    await process(
+      db,
+      adjustmentEvent({
+        subscriptionId: "sub_unknown",
+        transactionId: "txn_unknown",
+      }),
+    ),
+    "ignored",
+  );
+
+  assert.equal(db.users.get("user-1")?.plan, "pro");
+  assert.equal(db.users.get("user-2")?.plan, "free");
+  assert.equal(db.adjustment.userId, null);
+  assert.equal(db.adjustment.accessAction, "ignored_unresolved_owner");
+});
+
+test("conflicting subscription and transaction owners affect neither user", async () => {
+  const db = new MemoryDatabase();
+  db.seedIntent();
+  await process(db, subscriptionEvent());
+  db.seedIntent({
+    id: "intent-2",
+    userId: "user-2",
+    paddleTransactionId: "txn_user2",
+    paddleSubscriptionId: "sub_user2",
+  });
+
+  assert.equal(
+    await process(
+      db,
+      adjustmentEvent({ transactionId: "txn_user2" }),
+    ),
+    "ignored",
+  );
+
+  assert.equal(db.users.get("user-1")?.plan, "pro");
+  assert.equal(db.users.get("user-2")?.plan, "free");
+  assert.equal(db.adjustment.userId, null);
+  assert.equal(db.adjustment.accessAction, "ignored_owner_conflict");
+});
+
+test("chargeback revokes Pro while warning and reversal never grant it", async () => {
+  const db = new MemoryDatabase();
+  db.seedIntent();
+  await process(db, subscriptionEvent());
+
+  await process(
+    db,
+    adjustmentEvent({
+      adjustmentId: "adj_warning",
+      eventId: "evt_warning",
+      action: "chargeback_warning",
+    }),
+  );
+  assert.equal(db.users.get("user-1")?.plan, "pro");
+
+  await process(
+    db,
+    adjustmentEvent({
+      adjustmentId: "adj_chargeback",
+      eventId: "evt_chargeback",
+      action: "chargeback",
+      occurredAt: "2026-07-03T13:00:00.000Z",
+    }),
+  );
+  assert.equal(db.users.get("user-1")?.plan, "free");
+
+  await process(
+    db,
+    adjustmentEvent({
+      adjustmentId: "adj_reverse",
+      eventId: "evt_reverse",
+      action: "chargeback_reverse",
+      status: "approved",
+      occurredAt: "2026-07-03T14:00:00.000Z",
+    }),
+  );
+  assert.equal(db.users.get("user-1")?.plan, "free");
+  assert.equal(db.adjustments.size, 3);
+});
+
+test("credit and reverse actions are stored without granting or revoking Pro", async () => {
+  for (const action of [
+    "credit",
+    "chargeback_warning_reverse",
+    "credit_reverse",
+  ]) {
+    const db = new MemoryDatabase();
+    db.seedIntent();
+    await process(db, subscriptionEvent());
+
+    await process(
+      db,
+      adjustmentEvent({
+        adjustmentId: `adj_${action.replaceAll("_", "")}`,
+        eventId: `evt_${action.replaceAll("_", "")}`,
+        action,
+      }),
+    );
+
+    assert.equal(db.users.get("user-1")?.plan, "pro");
+    assert.equal(db.adjustment.action, action);
+    assert.equal(db.adjustment.accessRevokedAt, null);
+  }
+});
+
+test("chargeback after subscription cancellation remains safely revoked", async () => {
+  const db = new MemoryDatabase();
+  db.seedIntent();
+  await process(db, subscriptionEvent());
+  await process(
+    db,
+    subscriptionEvent({
+      eventId: "evt_cancel_before_chargeback",
+      eventType: "subscription.canceled",
+      status: "canceled",
+      occurredAt: "2026-07-03T11:00:00.000Z",
+      transactionId: null,
+    }),
+  );
+
+  await process(
+    db,
+    adjustmentEvent({ action: "chargeback" }),
+    async () => "already_canceled",
+  );
+
+  assert.equal(db.users.get("user-1")?.plan, "free");
+  assert.equal(db.adjustment.accessRevokedReason, "chargeback");
+  assert.ok(db.adjustment.cancellationCompletedAt);
+});
+
+test("a stale created event cannot roll approved back to pending", async () => {
+  const db = new MemoryDatabase();
+  db.seedIntent();
+  await process(db, subscriptionEvent());
+  const updated = adjustmentEvent({
+    eventType: "adjustment.updated",
+    eventId: "evt_updated",
+    occurredAt: "2026-07-03T13:00:00.000Z",
+  });
+  await process(db, updated);
+
+  assert.equal(
+    await process(
+      db,
+      adjustmentEvent({
+        eventId: "evt_created_old",
+        status: "pending_approval",
+        occurredAt: "2026-07-03T12:00:00.000Z",
+      }),
+    ),
+    "stale",
+  );
+  assert.equal(db.adjustment.status, "approved");
+  assert.equal(db.users.get("user-1")?.plan, "free");
+  assert.equal(db.adjustments.size, 1);
+});
+
+test("adjustment.updated before created is processed safely", async () => {
+  const db = new MemoryDatabase();
+  db.seedIntent();
+  await process(db, subscriptionEvent());
+
+  await process(
+    db,
+    adjustmentEvent({
+      eventType: "adjustment.updated",
+      eventId: "evt_updated_first",
+    }),
+  );
+
+  assert.equal(db.adjustments.size, 1);
+  assert.equal(db.adjustment.status, "approved");
+  assert.equal(db.users.get("user-1")?.plan, "free");
+});
+
+test("duplicate adjustment ID updates one record and duplicate event does no work", async () => {
+  const db = new MemoryDatabase();
+  db.seedIntent();
+  await process(db, subscriptionEvent());
+  let cancellationCalls = 0;
+  const cancel: CancelPaddleSubscription = async () => {
+    cancellationCalls += 1;
+    return "canceled";
+  };
+  const event = adjustmentEvent();
+
+  assert.equal(await process(db, event, cancel), "processed");
+  assert.equal(await process(db, event, cancel), "duplicate");
+  assert.equal(db.adjustments.size, 1);
+  assert.equal(cancellationCalls, 1);
+});
+
+test("parallel adjustment events serialize into one revocation", async () => {
+  const db = new MemoryDatabase();
+  db.seedIntent();
+  await process(db, subscriptionEvent());
+  let cancellationCalls = 0;
+  const cancel: CancelPaddleSubscription = async () => {
+    cancellationCalls += 1;
+    return "canceled";
+  };
+
+  await Promise.all([
+    process(
+      db,
+      adjustmentEvent({
+        eventId: "evt_pending",
+        status: "pending_approval",
+      }),
+      cancel,
+    ),
+    process(
+      db,
+      adjustmentEvent({
+        eventId: "evt_approved",
+        eventType: "adjustment.updated",
+        occurredAt: "2026-07-03T13:00:00.000Z",
+      }),
+      cancel,
+    ),
+  ]);
+
+  assert.equal(db.adjustments.size, 1);
+  assert.equal(db.users.get("user-1")?.plan, "free");
+  assert.equal(cancellationCalls, 1);
+});
+
+test("parallel approved events cannot call Paddle cancellation twice", async () => {
+  const db = new MemoryDatabase();
+  db.seedIntent();
+  await process(db, subscriptionEvent());
+  let cancellationCalls = 0;
+  let releaseCancellation!: () => void;
+  let signalStarted!: () => void;
+  const cancellationGate = new Promise<void>((resolve) => {
+    releaseCancellation = resolve;
+  });
+  const cancellationStarted = new Promise<void>((resolve) => {
+    signalStarted = resolve;
+  });
+  const cancel: CancelPaddleSubscription = async () => {
+    cancellationCalls += 1;
+    signalStarted();
+    await cancellationGate;
+    return "canceled";
+  };
+
+  const first = process(db, adjustmentEvent(), cancel);
+  await cancellationStarted;
+  const secondEvent = adjustmentEvent({
+    eventId: "evt_adj_parallel_newer",
+    eventType: "adjustment.updated",
+    occurredAt: "2026-07-03T13:00:00.000Z",
+  });
+  await assert.rejects(
+    process(db, secondEvent, cancel),
+    /cancellation is already in progress/,
+  );
+  releaseCancellation();
+  await first;
+  assert.equal(await process(db, secondEvent, cancel), "duplicate");
+  assert.equal(cancellationCalls, 1);
+});
+
+test("P2034 retries the webhook transaction without repeating cancellation", async () => {
+  const db = new MemoryDatabase();
+  db.seedIntent();
+  await process(db, subscriptionEvent());
+  db.serializationFailures = 1;
+  let cancellationCalls = 0;
+
+  await process(db, adjustmentEvent(), async () => {
+    cancellationCalls += 1;
+    return "canceled";
+  });
+
+  assert.equal(db.users.get("user-1")?.plan, "free");
+  assert.equal(cancellationCalls, 1);
+});
+
+test("temporary Paddle cancellation failure remains retryable", async () => {
+  const db = new MemoryDatabase();
+  db.seedIntent();
+  await process(db, subscriptionEvent());
+  const event = adjustmentEvent();
+
+  await assert.rejects(
+    process(db, event, async () => {
+      throw new Error("temporary Paddle outage");
+    }),
+    /temporary Paddle outage/,
+  );
+  assert.equal(db.users.get("user-1")?.plan, "free");
+  assert.equal(db.adjustment.cancellationRequired, true);
+  assert.equal(db.adjustment.cancellationCompletedAt, null);
+
+  let retryCalls = 0;
+  assert.equal(
+    await process(db, event, async () => {
+      retryCalls += 1;
+      return "canceled";
+    }),
+    "duplicate",
+  );
+  assert.equal(retryCalls, 1);
+  assert.equal(db.adjustment.cancellationRequired, false);
+  assert.ok(db.adjustment.cancellationCompletedAt);
+});
+
+test("adjustment event and access changes roll back on database failure", async () => {
+  const db = new MemoryDatabase();
+  db.seedIntent();
+  await process(db, subscriptionEvent());
+  const eventCount = db.events.size;
+  db.failUserUpdate = true;
+  let cancellationCalls = 0;
+
+  await assert.rejects(
+    process(db, adjustmentEvent(), async () => {
+      cancellationCalls += 1;
+      return "canceled";
+    }),
+    /injected failure/,
+  );
+
+  assert.equal(db.events.size, eventCount);
+  assert.equal(db.adjustments.size, 0);
+  assert.equal(db.users.get("user-1")?.plan, "pro");
+  assert.equal(cancellationCalls, 0);
+});
+
+test("already canceled is an idempotent cancellation success", async () => {
+  const db = new MemoryDatabase();
+  db.seedIntent();
+  await process(db, subscriptionEvent());
+
+  await process(db, adjustmentEvent(), async () => "already_canceled");
+
+  assert.equal(db.users.get("user-1")?.plan, "free");
+  assert.equal(db.adjustment.cancellationRequired, false);
+  assert.ok(db.adjustment.cancellationCompletedAt);
+});
+
+test("old active events cannot restore Pro after refund, but a new subscription can", async () => {
+  const db = new MemoryDatabase();
+  db.seedIntent();
+  await process(db, subscriptionEvent());
+  await process(db, adjustmentEvent());
+
+  await process(
+    db,
+    subscriptionEvent({
+      eventId: "evt_old_subscription_replayed",
+      occurredAt: "2026-07-03T14:00:00.000Z",
+      transactionId: null,
+    }),
+  );
+  assert.equal(db.users.get("user-1")?.plan, "free");
+
+  db.seedIntent({
+    id: "intent-new",
+    paddleTransactionId: "txn_new",
+    paddleSubscriptionId: null,
+  });
+  await process(
+    db,
+    subscriptionEvent({
+      eventId: "evt_new_subscription",
+      occurredAt: "2026-07-03T15:00:00.000Z",
+      transactionId: "txn_new",
+      checkoutIntentId: "intent-new",
+      subscriptionId: "sub_new",
+    }),
+  );
+  assert.equal(db.users.get("user-1")?.plan, "pro");
+  assert.equal(db.subscription.paddleSubscriptionId, "sub_new");
+
+  assert.equal(
+    await process(
+      db,
+      subscriptionEvent({
+        eventId: "evt_old_after_new",
+        occurredAt: "2026-07-03T16:00:00.000Z",
+        transactionId: "txn_01",
+        checkoutIntentId: "intent-1",
+        subscriptionId: "sub_01",
+      }),
+    ),
+    "ignored",
+  );
+  assert.equal(db.users.get("user-1")?.plan, "pro");
+  assert.equal(db.subscription.paddleSubscriptionId, "sub_new");
+
+  await process(
+    db,
+    adjustmentEvent({
+      adjustmentId: "adj_old_after_new",
+      eventId: "evt_adj_old_after_new",
+      occurredAt: "2026-07-03T17:00:00.000Z",
+    }),
+  );
+  assert.equal(db.users.get("user-1")?.plan, "pro");
+  assert.equal(db.subscription.paddleSubscriptionId, "sub_new");
+});
+
+test("refund lifecycle never deletes prompts or changes generation usage", () => {
+  const source = readFileSync(
+    "src/lib/paddle/subscription-service.ts",
+    "utf8",
+  );
+  assert.doesNotMatch(source, /savedPrompt\.(delete|deleteMany)/);
+  assert.doesNotMatch(source, /generationReservation\.(delete|update)/);
+  assert.doesNotMatch(source, /generation\.(delete|deleteMany)/);
+});
+
+test("the adjustment migration is additive and preserves existing data", () => {
+  const migration = readFileSync(
+    "prisma/migrations/20260710100000_paddle_adjustments/migration.sql",
+    "utf8",
+  );
+  assert.match(migration, /CREATE TABLE "PaddleAdjustment"/);
+  assert.match(
+    migration,
+    /CREATE UNIQUE INDEX "PaddleAdjustment_paddleAdjustmentId_key"/,
+  );
+  assert.doesNotMatch(
+    migration,
+    /^\s*(?:DROP|DELETE|TRUNCATE|UPDATE)\b|ALTER TABLE[^;]*DROP/gim,
+  );
+});
+
+test("Paddle cancellation uses the verified subscription and immediate mode", async () => {
+  const originalKey = globalThis.process.env.PADDLE_API_KEY;
+  const originalFetch = globalThis.fetch;
+  globalThis.process.env.PADDLE_API_KEY = "test-api-key";
+  let requestUrl = "";
+  let requestBody = "";
+  globalThis.fetch = (async (input, init) => {
+    requestUrl = String(input);
+    requestBody = String(init?.body);
+    return Response.json({
+      data: { id: "sub_01", status: "canceled" },
+    });
+  }) as typeof fetch;
+
+  try {
+    assert.equal(
+      await cancelPaddleSubscriptionImmediately("sub_01"),
+      "canceled",
+    );
+    assert.match(requestUrl, /\/subscriptions\/sub_01\/cancel$/);
+    assert.deepEqual(JSON.parse(requestBody), {
+      effective_from: "immediately",
+    });
+  } finally {
+    globalThis.fetch = originalFetch;
+    if (originalKey === undefined) {
+      delete globalThis.process.env.PADDLE_API_KEY;
+    } else {
+      globalThis.process.env.PADDLE_API_KEY = originalKey;
+    }
+  }
+});
+
+test("Paddle already-canceled response is treated as idempotent success", async () => {
+  const originalKey = globalThis.process.env.PADDLE_API_KEY;
+  const originalFetch = globalThis.fetch;
+  globalThis.process.env.PADDLE_API_KEY = "test-api-key";
+  globalThis.fetch = (async () =>
+    Response.json(
+      {
+        error: {
+          code: "subscription_is_canceled_action_invalid",
+          detail: "action cannot be performed on canceled subscription",
+        },
+      },
+      { status: 400 },
+    )) as typeof fetch;
+
+  try {
+    assert.equal(
+      await cancelPaddleSubscriptionImmediately("sub_01"),
+      "already_canceled",
+    );
+  } finally {
+    globalThis.fetch = originalFetch;
+    if (originalKey === undefined) {
+      delete globalThis.process.env.PADDLE_API_KEY;
+    } else {
+      globalThis.process.env.PADDLE_API_KEY = originalKey;
+    }
+  }
 });
