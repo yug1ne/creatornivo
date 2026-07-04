@@ -5,6 +5,10 @@ import Credentials from "next-auth/providers/credentials";
 
 import { authConfig } from "@/auth.config";
 import { prisma } from "@/lib/db";
+import {
+  authorizeCredentials,
+  logSessionRefreshDatabaseError,
+} from "@/lib/auth/credentials";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   ...authConfig,
@@ -16,36 +20,19 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
-          return null;
-        }
-
-        const email = credentials.email as string;
-        const password = credentials.password as string;
-
-        const user = await prisma.user.findUnique({
-          where: { email },
+      async authorize(credentials, request) {
+        return authorizeCredentials(credentials, request, {
+          findUserByEmail: (email) =>
+            prisma.user.findFirst({
+              where: {
+                email: {
+                  equals: email,
+                  mode: "insensitive",
+                },
+              },
+            }),
+          comparePassword: bcrypt.compare,
         });
-
-        if (!user?.password) {
-          return null;
-        }
-
-        const isValid = await bcrypt.compare(password, user.password);
-
-        if (!isValid) {
-          return null;
-        }
-
-        return {
-          id: user.id,
-          email: user.email,
-          name: user.name,
-          image: user.image,
-          plan: user.plan,
-          role: user.role,
-        };
       },
     }),
   ],
@@ -59,10 +46,20 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       }
 
       if (token.id) {
-        const dbUser = await prisma.user.findUnique({
-          where: { id: token.id as string },
-          select: { plan: true, role: true },
-        });
+        let dbUser;
+        try {
+          dbUser = await prisma.user.findUnique({
+            where: { id: token.id as string },
+            select: { plan: true, role: true },
+          });
+        } catch (error) {
+          logSessionRefreshDatabaseError({
+            userId: token.id as string,
+            email: token.email,
+            error,
+          });
+          throw error;
+        }
 
         if (dbUser) {
           token.plan = dbUser.plan;
