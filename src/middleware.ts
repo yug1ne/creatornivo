@@ -73,7 +73,10 @@ export default auth((request) => {
 
   if (
     isAuthenticated &&
-    (pathname === "/login" || pathname === "/register")
+    (pathname === "/login" ||
+      pathname === "/register" ||
+      pathname === "/forgot-password" ||
+      pathname === "/reset-password")
   ) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }

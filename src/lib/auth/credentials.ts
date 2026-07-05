@@ -2,13 +2,18 @@ import { createHash, randomUUID } from "node:crypto";
 
 import type { Plan } from "@/config/plans";
 import type { UserRole } from "@/types/user";
+import {
+  AuthRateLimitError,
+  enforceAuthRateLimit,
+} from "@/lib/auth/rate-limit";
 
 export type CredentialsAuthorizeFailureReason =
   | "user_not_found"
   | "password_hash_missing"
   | "bcrypt_mismatch"
   | "database_error"
-  | "unexpected_authorize_error";
+  | "unexpected_authorize_error"
+  | "rate_limited";
 
 export interface CredentialsUserRecord {
   id: string;
@@ -41,6 +46,7 @@ export type AuthDiagnosticLogger = (entry: AuthDiagnosticEntry) => void;
 interface AuthorizeDependencies {
   findUserByEmail(email: string): Promise<CredentialsUserRecord | null>;
   comparePassword(password: string, hash: string): Promise<boolean>;
+  enforceRateLimit?: (request: Request, email: string) => Promise<void>;
   log?: AuthDiagnosticLogger;
   now?: () => Date;
 }
@@ -197,6 +203,25 @@ export async function authorizeCredentials(
   if (!email || password === null || password.length === 0) {
     emit("denied", "user_not_found", null);
     return null;
+  }
+
+  const enforceRateLimit =
+    dependencies.enforceRateLimit ??
+    ((request, candidateEmail) =>
+      enforceAuthRateLimit({
+        action: "login",
+        request,
+        email: candidateEmail,
+      }));
+
+  try {
+    await enforceRateLimit(request, email);
+  } catch (error) {
+    if (error instanceof AuthRateLimitError) {
+      emit("denied", "rate_limited", null);
+      throw error;
+    }
+    throw error;
   }
 
   let user: CredentialsUserRecord | null;

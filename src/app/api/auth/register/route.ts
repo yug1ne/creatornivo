@@ -1,13 +1,24 @@
 import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
 
-import { prisma } from "@/lib/db";
+import { AUTH_RATE_LIMIT_GENERIC_MESSAGE } from "@/config/auth-rate-limit";
 import {
   CredentialsRegistrationError,
   registerCredentialsUser,
 } from "@/lib/auth/credentials";
+import { AuthRateLimitError, enforceAuthRateLimit } from "@/lib/auth/rate-limit";
+import { prisma } from "@/lib/db";
 
-export async function POST(request: Request) {
+type RegisterRouteDependencies = {
+  enforceRateLimit?: typeof enforceAuthRateLimit;
+};
+
+export async function postAuthRegister(
+  request: Request,
+  dependencies: RegisterRouteDependencies = {},
+) {
+  const enforceRateLimit = dependencies.enforceRateLimit ?? enforceAuthRateLimit;
+
   try {
     const body = await request.json();
     const { name, email, password } = body as {
@@ -15,6 +26,12 @@ export async function POST(request: Request) {
       email?: string;
       password?: string;
     };
+
+    await enforceRateLimit({
+      action: "register",
+      request,
+      email,
+    });
 
     const user = await registerCredentialsUser(
       { name, email, password },
@@ -48,6 +65,13 @@ export async function POST(request: Request) {
       { status: 201 },
     );
   } catch (error) {
+    if (error instanceof AuthRateLimitError) {
+      return NextResponse.json(
+        { error: AUTH_RATE_LIMIT_GENERIC_MESSAGE },
+        { status: 429 },
+      );
+    }
+
     if (error instanceof CredentialsRegistrationError) {
       if (error.code === "missing_credentials") {
         return NextResponse.json(
@@ -74,4 +98,8 @@ export async function POST(request: Request) {
       { status: 500 },
     );
   }
+}
+
+export async function POST(request: Request) {
+  return postAuthRegister(request);
 }
