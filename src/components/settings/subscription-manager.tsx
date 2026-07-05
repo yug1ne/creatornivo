@@ -122,7 +122,7 @@ function SubscriptionManagerContent({
   }
 
   return (
-    <div className="rounded-xl border border-border p-6">
+    <div id="subscription" className="rounded-xl border border-border p-6">
       <h3 className="font-medium text-foreground">Subscription</h3>
 
       <p className="mt-2 text-sm text-muted-foreground">

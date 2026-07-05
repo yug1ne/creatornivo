@@ -1,7 +1,10 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { AUTH_RATE_LIMIT_GENERIC_MESSAGE } from "../src/config/auth-rate-limit";
+import {
+  AUTH_RATE_LIMIT_GENERIC_MESSAGE,
+  authRateLimitPolicies,
+} from "../src/config/auth-rate-limit";
 import { postAuthRegister } from "../src/app/api/auth/register/route";
 import {
   AuthRateLimitError,
@@ -162,4 +165,47 @@ test("register and login remain available when rate limit passes", async () => {
   );
 
   assert.equal(authenticated?.id, user.id);
+});
+
+test("checkAuthRateLimits enforces export_data ip and account buckets", async () => {
+  const buckets: string[] = [];
+
+  await checkAuthRateLimits({
+    action: "export_data",
+    ipKey: "203.0.113.55",
+    email: "export@example.com",
+    enabled: true,
+    consume: async (bucket) => {
+      buckets.push(bucket);
+      return true;
+    },
+  });
+
+  assert.equal(buckets.length, 2);
+  assert.match(buckets[0], /^export_data:ip:/);
+  assert.match(buckets[1], /^export_data:account:sha256:/);
+});
+
+test("checkAuthRateLimits enforces delete_account ip and account buckets", async () => {
+  const buckets: string[] = [];
+
+  await checkAuthRateLimits({
+    action: "delete_account",
+    ipKey: "203.0.113.56",
+    email: "delete@example.com",
+    enabled: true,
+    consume: async (bucket) => {
+      buckets.push(bucket);
+      return true;
+    },
+  });
+
+  assert.equal(buckets.length, 2);
+  assert.match(buckets[0], /^delete_account:ip:/);
+  assert.match(buckets[1], /^delete_account:account:sha256:/);
+});
+
+test("auth rate limit policies keep privacy action limits documented", () => {
+  assert.equal(authRateLimitPolicies.export_data.account?.maxAttempts, 3);
+  assert.equal(authRateLimitPolicies.delete_account.account?.maxAttempts, 3);
 });

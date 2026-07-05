@@ -39,7 +39,7 @@ Creatornivo — честный Early Access продукт.
 | 1    | Воспроизвести login incident + найти root cause | СЕЙЧАС    | IN PROGRESS | NOT REPRODUCED in controlled test (3/3); мониторинг реальных инцидентов |
 | 2    | Исправить подтверждённую причину auth       | BLOCKER       | BLOCKER    | После этапа 1 |
 | 3    | Password reset + auth rate limiting         | HIGH          | DONE       | 2026-07-05: forgot/reset, Resend, Upstash limits, 20/20 tests PASS |
-| 4    | Account deletion + personal-data export     | BLOCKER       | IN PROGRESS | 4.1+4.2 DONE 2026-07-05; 4.3+4.4 pending |
+| 4    | Account deletion + personal-data export     | BLOCKER       | IN PROGRESS | 4.1–4.3 DONE 2026-07-05; 4.4 pending |
 | 5    | Backups + restore drill                     | BLOCKER       | BLOCKER    | Infrastructure |
 | 6    | Monitoring + global OpenAI budget           | HIGH          | -          | - |
 | 7    | Legal owner review                          | REVIEW        | -          | - |

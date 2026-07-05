@@ -10,6 +10,7 @@ import {
   isBillingConfigured,
 } from "@/config/billing";
 import { requireSession } from "@/lib/auth/session";
+import { getAccountDeletionBlock } from "@/lib/privacy/account-deletion-policy";
 import { prisma } from "@/lib/db";
 
 export const dynamic = "force-dynamic";
@@ -24,7 +25,24 @@ export default async function SettingsPage() {
       currentPeriodEnd: true,
       cancelAtPeriodEnd: true,
       provider: true,
+      paddleStatus: true,
     },
+  });
+
+  const deletionBlock = getAccountDeletionBlock({
+    id: session.id,
+    email: session.email,
+    plan: session.plan,
+    role: session.role,
+    subscription: subscription
+      ? {
+          provider: subscription.provider,
+          status: subscription.status,
+          paddleStatus: subscription.paddleStatus,
+          cancelAtPeriodEnd: subscription.cancelAtPeriodEnd,
+          currentPeriodEnd: subscription.currentPeriodEnd,
+        }
+      : null,
   });
 
   return (
@@ -66,11 +84,6 @@ export default async function SettingsPage() {
           </CardContent>
         </Card>
 
-        <PrivacySettings
-          isBillingConfigured={isBillingConfigured()}
-          billingProvider={getActiveBillingProvider()}
-        />
-
         <SubscriptionManager
           plan={session.plan}
           isBillingConfigured={isBillingConfigured()}
@@ -86,6 +99,12 @@ export default async function SettingsPage() {
                 }
               : null
           }
+        />
+
+        <PrivacySettings
+          isBillingConfigured={isBillingConfigured()}
+          billingProvider={getActiveBillingProvider()}
+          deletionBlock={deletionBlock}
         />
       </div>
     </>

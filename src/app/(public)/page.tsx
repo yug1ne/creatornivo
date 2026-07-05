@@ -1,3 +1,6 @@
+import { Suspense } from "react";
+
+import { AccountDeletedBanner } from "@/components/landing/account-deleted-banner";
 import { EarlyAccessBanner } from "@/components/landing/early-access-banner";
 import { ExploreTemplatesSection } from "@/components/landing/explore-templates-section";
 import { FinalCtaSection } from "@/components/landing/final-cta-section";
@@ -10,6 +13,9 @@ import { SocialProofSection } from "@/components/landing/social-proof-section";
 export default function HomePage() {
   return (
     <>
+      <Suspense fallback={null}>
+        <AccountDeletedBanner />
+      </Suspense>
       <EarlyAccessBanner />
       <HeroSection />
       <ShowcaseSection />
