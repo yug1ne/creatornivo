@@ -70,6 +70,11 @@
 - Runbook: раздел 13 (`roadmap.md`).
 - Тесты: `legal-copy` обновлены; Legal pages остаются **REVIEW** (не юридическое заключение).
 
+**Заметка (2026-07-06):** Временный development banner.
+- Компонент `src/components/layout/development-banner.tsx` (amber/warning стиль).
+- Показывается на главной (`/`) и в dashboard (`/dashboard`) после авторизации.
+- Удалить после полноценного запуска: компонент + импорты (см. `// TODO: Удалить после запуска`).
+
 ## 12. Deploy checklist: этап 3 (password reset + rate limiting)
 
 ### Перед деплоем (Vercel → Settings → Environment Variables)
@@ -227,3 +232,35 @@ npx prisma migrate deploy
 | Paddle Live          | Не подтверждён                              | BLOCKER     | Domain approval, Live product/price/keys/webhook/default link |
 | Live validation      | Не проводилась                              | BLOCKER     | Одна покупка + refund малыми деньгами |
 
+Область,Состояние,Комментарий
+Главная и Pricing,DONE,Публичный copy очищен
+Регистрация / вход + Password Reset,DONE,Credentials + diagnostics + rate limiting + password reset (Этап 3)
+Dashboard,DONE,План + usage
+Templates + Generate,DONE,С квотами и streaming
+Library,DONE частично,Нет удаления saved items
+Settings + Privacy & Data,DONE,"Export + Delete аккаунта + UI polish + Legal обновления (Этап 4, 2026-07-05)"
+Paddle Sandbox,DONE,Полный цикл checkout/webhook/portal
+Legal pages,REVIEW,"Улучшены, но требуют юридического ревью"
+Resources / Guides,NOT ADDED,Пока нет
+Monitoring & Error Tracking,NOT STARTED,Один из следующих приоритетов
+Backups + Disaster Recovery,NOT STARTED,BLOCKER перед Live
+Admin Panel,NOT STARTED,—
+
+
+Этап,Задача,Ожидаемый результат,Статус,Приоритет
+3,Password reset + auth rate limiting,Восстановление доступа + brute-force protection,DONE (2026-07-05),—
+4,Account deletion + personal-data export + legal,Self-service DSR + audit + legal обновления,DONE (2026-07-05),—
+5,Backups + restore drill,Регулярные бэкапы + подтверждённое восстановление,BLOCKER,Высокий
+6,Monitoring + Error Tracking + Budget alerts,Sentry + алерты на ошибки и превышение бюджета,HIGH,Высокий
+7,Admin Panel / Moderation tools,"Просмотр пользователей, генераций, блокировка",HIGH,Средний
+8,Paddle Live onboarding + Live validation,Domain approval + одна покупка + refund на малую сумму,BLOCKER,Высокий
+9,Analytics (PostHog / аналог),Понимание поведения пользователей,HIGH,Средний
+10,Billing reliability improvements,"Улучшение webhook, dunning, edge cases",Средний,Средний
+11,Resources + Onboarding polish,База знаний + улучшение пустых состояний,Средний,Низкий
+12,Legal owner review,Финальное юридическое ревью,REVIEW,Высокий
+
+Что я рекомендую сделать следующим (топ-3)
+Приоритет,Этап,Почему именно сейчас
+1,Backups + Disaster Recovery,Без надёжных бэкапов и restore drill ты рискуешь данными пользователей. Это фундаментальный блокер перед Live.
+2,Monitoring + Error Tracking (Sentry),Сейчас ты почти не видишь ошибки в production. Это критично для стабильности.
+3,Admin Panel,"Позволит управлять пользователями, смотреть генерации и быстро реагировать на проблемы без SQL."

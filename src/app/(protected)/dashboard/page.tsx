@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { DevelopmentBanner } from "@/components/layout/development-banner";
 import { StatsCard } from "@/components/dashboard/stats-card";
 import { PageHeader } from "@/components/ui/page-header";
 import { Badge } from "@/components/ui/badge";
@@ -41,6 +42,8 @@ export default async function DashboardPage() {
 
   return (
     <>
+      {/* TODO: Удалить после запуска */}
+      <DevelopmentBanner className="-mx-4 -mt-6 mb-6 sm:-mx-6 sm:-mt-8 sm:mb-8" />
       <PageHeader
         title="Overview"
         description={`Welcome${session.name ? `, ${session.name}` : ""}! Here is a summary of your account.`}
