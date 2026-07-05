@@ -66,7 +66,10 @@ export default async function SettingsPage() {
           </CardContent>
         </Card>
 
-        <PrivacySettings />
+        <PrivacySettings
+          isBillingConfigured={isBillingConfigured()}
+          billingProvider={getActiveBillingProvider()}
+        />
 
         <SubscriptionManager
           plan={session.plan}

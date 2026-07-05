@@ -68,6 +68,22 @@ model User {
   updatedAt             DateTime               @updatedAt
 }
 
+model AccountDeletionRequest {
+  id            String    @id @default(cuid())
+  userId        String
+  emailHash     String
+  status        String
+  blockReason   String?
+  failureReason String?
+  requestedAt   DateTime  @default(now())
+  completedAt   DateTime?
+  ipHash        String?
+
+  @@index([userId, requestedAt])
+  @@index([emailHash, requestedAt])
+  @@index([status, requestedAt])
+}
+
 model PasswordResetToken {
   id        String    @id @default(cuid())
   userId    String
