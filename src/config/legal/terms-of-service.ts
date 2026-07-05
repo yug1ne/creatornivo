@@ -5,7 +5,7 @@ import type { LegalSection } from "./types";
 export const termsOfServiceMeta = {
   title: "Terms of Service",
   effectiveDate: "July 2, 2026",
-  lastUpdated: "July 3, 2026",
+  lastUpdated: "July 5, 2026",
 } as const;
 
 export const termsOfServiceSections: LegalSection[] = [
@@ -138,7 +138,8 @@ export const termsOfServiceSections: LegalSection[] = [
     id: "termination",
     title: "Termination",
     paragraphs: [
-      "You may stop using the Service at any time and may request account deletion by contacting us. You may cancel a paid subscription through the billing portal provided in your account settings.",
+      "You may stop using the Service at any time. You may delete your account from Settings → Privacy & Data by confirming your password and typing DELETE. Account deletion is permanent and cannot be undone.",
+      "If you have an active paid subscription, cancel it in the Customer Portal (Settings → Subscription) before deleting your account. Deletion is blocked while paid access or unresolved billing requires attention.",
     ],
     subsections: [
       {
@@ -151,7 +152,7 @@ export const termsOfServiceSections: LegalSection[] = [
         title: "Effect of termination",
         list: [
           "Your right to access the Service ends upon termination.",
-          "We may delete your account data after a reasonable retention period, subject to our Privacy Policy and legal obligations.",
+          "When you complete self-service account deletion, we remove your account data promptly, subject to limited retention described in our Privacy Policy and legal obligations.",
           "Provisions that by their nature should survive termination — including intellectual property, disclaimers, limitation of liability, and governing law — will continue to apply.",
         ],
       },

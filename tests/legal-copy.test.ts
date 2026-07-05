@@ -50,12 +50,36 @@ test("Privacy reflects stored product data without unsupported providers or feat
   assert.match(privacy, /optional name, email address/i);
   assert.match(privacy, /generation reservations and counts/i);
   assert.match(privacy, /does not currently operate a separate analytics/i);
-  assert.match(privacy, /does not currently provide self-service deletion/i);
-  assert.match(privacy, /request deletion.*contacting support/i);
+  assert.match(privacy, /Settings → Privacy & Data/i);
+  assert.match(privacy, /Download my data/i);
+  assert.match(privacy, /Delete account/i);
+  assert.match(privacy, /5,000 records per category/i);
+  assert.match(
+    privacy,
+    /cancel or resolve billing in the Customer Portal before deletion/i,
+  );
+  assert.match(privacy, /contact support.*verify your identity/i);
+  assert.doesNotMatch(
+    privacy,
+    /does not currently provide self-service deletion/i,
+  );
   assert.doesNotMatch(
     privacy,
     /avatar|Google OAuth|GitHub OAuth|Standard Contractual Clauses|aggregated, de-identified usage/i,
   );
+});
+
+test("Terms describe self-service account deletion and subscription prerequisites", () => {
+  const terms = legalText(termsOfServiceSections);
+
+  assert.match(terms, /Settings → Privacy & Data/i);
+  assert.match(terms, /typing DELETE/i);
+  assert.match(terms, /permanent and cannot be undone/i);
+  assert.match(
+    terms,
+    /cancel it in the Customer Portal.*before deleting your account/i,
+  );
+  assert.doesNotMatch(terms, /request account deletion by contacting us/i);
 });
 
 test("Refund Policy does not promise unimplemented automatic account changes", () => {

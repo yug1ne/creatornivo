@@ -23,7 +23,7 @@
 | 1    | Воспроизвести login incident                        | Получить reason/prismaCode/databaseFingerprint и доказать root cause | IN PROGRESS (NOT REPRODUCED in controlled test) |
 | 2    | Исправить подтверждённую auth/DB/session причину    | Немедленный register → logout → login стабильно работает | BLOCKER         |
 | 3    | Password reset + auth rate limiting                 | Восстановление доступа и brute-force protection          | DONE (2026-07-05: forgot/reset flow, Resend email, Upstash rate limits, 20/20 tests PASS, immediate-login не сломан) |
-| 4    | Account deletion + personal-data export runbook     | Проверяемый DSR workflow и identity verification         | IN PROGRESS (4.1–4.3 DONE 2026-07-05; 4.4 legal + runbook pending) |
+| 4    | Account deletion + personal-data export runbook     | Проверяемый DSR workflow и identity verification         | DONE (4.1–4.4, 2026-07-05: export, delete, UI polish, legal copy, runbook §13) |
 | 5    | Backups + restore drill                             | Регулярные dumps и подтверждённое восстановление         | BLOCKER         |
 | 6    | Monitoring + global OpenAI budget                   | Alerts и защита от неожиданных расходов                  | HIGH            |
 | 7    | Legal owner review                                  | Решения по governing law, withdrawal, liability, privacy, taxes | REVIEW     |
@@ -57,8 +57,6 @@
 - Удаление: cascade User + manual `GenerationReservation`/`VerificationToken`; `PaddleAdjustment.userId` → null.
 - Тесты: `account-deletion` + export/credentials regression — 23/23 PASS; build OK.
 - Миграция: `20260712100000_account_deletion_requests`.
-- Pending: 4.4 (legal copy + runbook).
-
 **Заметка (этап 4.3, 2026-07-05):** Privacy & Data UI polish + rate limiting review.
 - Settings: Subscription выше Privacy; якорь `#subscription`.
 - Proactive info-блок при блокировке удаления (активная подписка) до submit.
@@ -66,6 +64,11 @@
 - 429 mapping в UI; cross-disable loading между export/delete.
 - Home banner `/?accountDeleted=1` (аналог `?reset=success`).
 - Rate limit tests: `export_data` + `delete_account` IP/account buckets.
+
+**Заметка (этап 4.4, 2026-07-05):** Legal copy + support runbook.
+- Privacy Policy и Terms of Service: self-service export/delete в Settings → Privacy & Data; подписка до удаления; retention exceptions; support fallback.
+- Runbook: раздел 13 (`roadmap.md`).
+- Тесты: `legal-copy` обновлены; Legal pages остаются **REVIEW** (не юридическое заключение).
 
 ## 12. Deploy checklist: этап 3 (password reset + rate limiting)
 
@@ -96,6 +99,80 @@ npx prisma migrate deploy
 5. **Новый пароль:** login с новым → успех.
 6. **Immediate-login:** register → logout → login (0 сек) → успех.
 7. **Rate limit (опционально):** 6-й forgot-password с одного IP за час → 429.
+
+### Deploy checklist: этап 4 (privacy export + account deletion)
+
+#### Миграция БД
+
+```bash
+npx prisma migrate deploy
+```
+
+Миграция: `20260712100000_account_deletion_requests` (`AccountDeletionRequest` audit table).
+
+#### Smoke test после деплоя (этап 4)
+
+1. **Export:** Settings → Privacy & Data → Download my data → password → JSON download.
+2. **Delete block (Pro):** при активной подписке → 409 + ссылка на Subscription.
+3. **Delete success:** cancel subscription → password + `DELETE` → redirect `/?accountDeleted=1`.
+4. **Rate limit (опционально):** 4-й export за час с одного account → 429.
+
+## 13. Runbook: Privacy & Data (export + delete)
+
+### Self-service: экспорт данных
+
+1. Пользователь: Settings → Privacy & Data → **Download my data**.
+2. Вводит пароль → `POST /api/account/export-data`.
+3. Rate limit: `export_data` — 3/hour per account, 10/hour per IP (Upstash).
+4. Ответ: JSON v1 (`DATA_EXPORT_VERSION`), категории account/subscription/billing/library/generations/usage.
+5. Лимит: 5000 записей на категорию; при превышении — `truncated: true` + `totalCount`.
+6. Не включается: password hash, OAuth secrets.
+
+### Self-service: удаление аккаунта
+
+1. Пользователь: Settings → Privacy & Data → **Delete account**.
+2. Проверки до submit:
+   - Активная подписка Paddle/Stripe → блок UI + 409 `subscription_active` / `subscription_requires_action`.
+   - Generation in progress (`reserved`/`started`, не истёк) → 409 `generation_in_progress`.
+   - Admin role → 409 `admin_account`.
+3. Submit: password + exact `DELETE` → `POST /api/account/delete`.
+4. Rate limit: `delete_account` — 3/hour per account, 5/hour per IP.
+5. Успех: cascade User data; `PaddleAdjustment.userId` → null; audit `completed`; session invalid; redirect `/?accountDeleted=1`.
+6. Необратимо: восстановление только через support при доказанной ошибке (редкий edge case).
+
+### Manual support fallback (DSR)
+
+Когда направлять в support:
+- `password_not_supported` (нет credentials auth).
+- Пользователь не может войти и нужен export/delete.
+- Запрос относится к данным вне self-service (rectification, restriction, objection).
+- Подозрение на fraud / duplicate accounts / chargeback dispute.
+
+Процесс:
+1. Запрос на `support@creatornivo.com` с темой «Privacy request» / «Account deletion».
+2. **Identity verification:** подтвердить владение email (ответ с того же адреса) + дополнительный фактор при сомнении (дата регистрации, последний template, fragment billing ID без полного PAN).
+3. SLA: ответ в течение **30 дней** (GDPR); срочные security — приоритет.
+4. Export вручную: тот же JSON v1 через admin/script или воспроизведение API после verified session.
+5. Delete вручную: только после verification; проверить подписку в Paddle dashboard; записать audit `AccountDeletionRequest` со status `completed` и `emailHash` (без PII в публичных логах).
+
+### Audit: `AccountDeletionRequest` (без PII в логах)
+
+| Поле | Назначение |
+|------|------------|
+| `emailHash` | Корреляция без хранения email |
+| `status` | `requested` / `blocked` / `completed` / `failed` |
+| `blockReason` | `subscription_active`, `generation_in_progress`, `admin_account`, … |
+| `ipHash` | Rate-limit / abuse correlation |
+| `failureReason` | Truncated error (max 200 chars), без stack в UI |
+
+**Не логировать публично:** email, password, export JSON content, полные Paddle IDs в support tickets.
+
+### Retention после удаления
+
+- User и связанные записи (generations, library, sessions) — удаляются.
+- `PaddleAdjustment` — `userId` обнуляется; billing metadata остаётся для compliance.
+- Support переписка — по политике хранения почты Namecheap.
+- Audit `AccountDeletionRequest` — сохраняется без FK на User.
 
 ## 11. Runbook: мониторинг immediate-login incident (этап 1)
 

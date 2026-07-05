@@ -7,7 +7,7 @@ export type { LegalSection } from "./types";
 export const privacyPolicyMeta = {
   title: "Privacy Policy",
   effectiveDate: "July 2, 2026",
-  lastUpdated: "July 3, 2026",
+  lastUpdated: "July 5, 2026",
 } as const;
 
 export const privacyPolicySections: LegalSection[] = [
@@ -134,8 +134,11 @@ export const privacyPolicySections: LegalSection[] = [
     id: "data-retention",
     title: "Data Retention",
     paragraphs: [
-      "We retain account information, generation history, generation usage records, and saved prompts while your account is active or as needed to provide the Service. The product does not currently provide self-service deletion of the account, saved library items, or complete generation history.",
-      "You may request deletion of your account and associated data by contacting support. Limited records may need to be retained where required for legal compliance, billing disputes, fraud prevention, or security. Service providers may apply their own documented retention periods.",
+      "We retain account information, generation history, generation usage records, and saved prompts while your account is active or as needed to provide the Service.",
+      "You can download a machine-readable copy of your account data from Settings → Privacy & Data. Exports are provided in JSON format and may be truncated to 5,000 records per category when your history is very large; the export indicates when truncation occurred.",
+      "You can delete your account from Settings → Privacy & Data. Deletion requires re-entering your password and typing DELETE to confirm. Account deletion is permanent and removes your profile, generations, saved library items, sessions, and related account data. If you have an active paid subscription (including a subscription scheduled to cancel at period end while paid access remains), you must cancel or resolve billing in the Customer Portal before deletion can proceed.",
+      "Limited records may be retained where required for legal compliance, billing disputes, fraud prevention, or security. For example, anonymized billing adjustment records may remain without a link to your user account. Service providers may apply their own documented retention periods.",
+      "If you cannot use self-service tools (for example, password verification is unavailable for your account type), contact support and we will help verify your identity and process your request.",
     ],
   },
   {
@@ -158,7 +161,8 @@ export const privacyPolicySections: LegalSection[] = [
       {
         title: "How to exercise your rights",
         paragraphs: [
-          "To exercise any of these rights, contact us using the details in the Contact Information section below. We will respond within the timeframe required by applicable law (typically within 30 days for GDPR requests). We may need to verify your identity before fulfilling a request.",
+          "For access and data portability, use Settings → Privacy & Data → Download my data. For erasure, use Settings → Privacy & Data → Delete account (subject to the restrictions described in Data Retention). Both actions require password verification.",
+          "For other rights (rectification, restriction, objection, or requests you cannot complete in the product), contact us using the details in the Contact Information section below. We will respond within the timeframe required by applicable law (typically within 30 days for GDPR requests). We may need to verify your identity before fulfilling a request.",
           "Creatornivo processes personal data on the legal bases of contract performance (providing the Service you signed up for), legitimate interests (security, product improvement, fraud prevention), legal obligation, and consent where applicable.",
         ],
       },
