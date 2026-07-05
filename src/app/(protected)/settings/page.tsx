@@ -1,6 +1,7 @@
 import { PageHeader } from "@/components/ui/page-header";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
+import { PrivacySettings } from "@/components/settings/privacy-settings";
 import { ThemeSettings } from "@/components/settings/theme-settings";
 import { SubscriptionManager } from "@/components/settings/subscription-manager";
 import { PLANS } from "@/config/plans";
@@ -64,6 +65,8 @@ export default async function SettingsPage() {
             </dl>
           </CardContent>
         </Card>
+
+        <PrivacySettings />
 
         <SubscriptionManager
           plan={session.plan}

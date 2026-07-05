@@ -8,7 +8,7 @@
 | Templates                  | DONE               | 15 templates, 8 доступны Free. |
 | Generate                   | DONE               | Серверные квоты, idempotency, streaming; без OpenAI key — безопасный 503 generation_disabled. |
 | Library                    | DONE частично      | Сохранение, поиск, просмотр и экспорт работают; удаления saved items пока нет. |
-| Settings                   | DONE               | Тема, профиль, статус подписки, Customer Portal actions. |
+| Settings                   | DONE               | Тема, профиль, статус подписки, Customer Portal; self-service data export JSON (этап 4.1, 2026-07-05). |
 | Onboarding и mobile header | DONE               | Burger, guest/auth меню, responsive, focus, backdrop, System theme. |
 | Paddle Sandbox             | DONE               | Checkout, receipt, webhook, Pro, portal, update payment method, cancel at period end. |
 | Refund/chargeback logic    | DONE технически    | Существующие handlers сохраняются и проходят regression suite; Live E2E ещё не выполнен. |
@@ -23,7 +23,7 @@
 | 1    | Воспроизвести login incident                        | Получить reason/prismaCode/databaseFingerprint и доказать root cause | IN PROGRESS (NOT REPRODUCED in controlled test) |
 | 2    | Исправить подтверждённую auth/DB/session причину    | Немедленный register → logout → login стабильно работает | BLOCKER         |
 | 3    | Password reset + auth rate limiting                 | Восстановление доступа и brute-force protection          | DONE (2026-07-05: forgot/reset flow, Resend email, Upstash rate limits, 20/20 tests PASS, immediate-login не сломан) |
-| 4    | Account deletion + personal-data export runbook     | Проверяемый DSR workflow и identity verification         | BLOCKER         |
+| 4    | Account deletion + personal-data export runbook     | Проверяемый DSR workflow и identity verification         | IN PROGRESS (4.1 DONE 2026-07-05; 4.2 account deletion — pending) |
 | 5    | Backups + restore drill                             | Регулярные dumps и подтверждённое восстановление         | BLOCKER         |
 | 6    | Monitoring + global OpenAI budget                   | Alerts и защита от неожиданных расходов                  | HIGH            |
 | 7    | Legal owner review                                  | Решения по governing law, withdrawal, liability, privacy, taxes | REVIEW     |
@@ -41,6 +41,13 @@
 - Rate limiting (Upstash): login, register, forgot-password (IP + emailHash), reset-password (IP).
 - Тесты: `auth-password-reset`, `auth-rate-limit`, `auth-credentials` — 20/20 PASS; build OK.
 - Production env (обязательно на Vercel): `RESEND_API_KEY`, `EMAIL_FROM`, `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`, `AUTH_URL` (или `NEXTAUTH_URL`).
+
+**Заметка (этап 4.1, 2026-07-05):** Personal Data Export реализован и протестирован.
+- API: `POST /api/account/export-data` (password re-auth, rate limit `export_data`).
+- UI: Settings → Privacy & Data → Download my data (JSON v1).
+- Экспорт: account, subscription, billing history, library, generations, usage/reservations.
+- Лимит: 5000 записей на категорию (`truncated` + `totalCount`); без password hash и OAuth secrets.
+- Тесты: `account-data-export` + `auth-credentials` regression — 15/15 PASS; build OK.
 
 ## 12. Deploy checklist: этап 3 (password reset + rate limiting)
 

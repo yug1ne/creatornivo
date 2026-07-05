@@ -3,7 +3,8 @@ export type AuthRateLimitAction =
   | "register"
   | "forgot_password"
   | "reset_password"
-  | "change_password";
+  | "change_password"
+  | "export_data";
 
 export interface AuthRateLimitPolicy {
   /** Sliding window duration in seconds. */
@@ -30,6 +31,10 @@ export const authRateLimitPolicies = {
   },
   change_password: {
     account: { windowSeconds: 60 * 60, maxAttempts: 10 },
+  },
+  export_data: {
+    ip: { windowSeconds: 60 * 60, maxAttempts: 10 },
+    account: { windowSeconds: 60 * 60, maxAttempts: 3 },
   },
 } as const satisfies Record<
   AuthRateLimitAction,
