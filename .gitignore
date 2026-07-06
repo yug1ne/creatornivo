@@ -42,8 +42,15 @@ next-env.d.ts
 
 terminals/
 
-# Backup keys (никогда не коммить!)
+# Backup pipeline artifacts (никогда не коммить!)
 backup-key.txt
+backup-key*.txt
+backup-*.txt
 *.key
 *.age
-backup-*.txt
+*.dump
+*.dump.age
+*.sha256
+restore-work/
+scripts/backup/restore-work/
+ignor.txt

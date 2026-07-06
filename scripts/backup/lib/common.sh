@@ -83,6 +83,8 @@ verify_restore_env() {
   require_env R2_BUCKET_NAME
 }
 
+# Fallback retention: delete *.dump.age (+ .sha256) older than retention_days under R2_PREFIX/.
+# Primary retention should be an R2 Lifecycle rule on prefix daily/ (see roadmap.md §14).
 prune_old_r2_backups() {
   local retention_days="$1"
   local cutoff_date

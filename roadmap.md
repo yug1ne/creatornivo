@@ -14,6 +14,7 @@
 | Refund/chargeback logic    | DONE технически    | Существующие handlers сохраняются и проходят regression suite; Live E2E ещё не выполнен. |
 | Legal pages                | REVIEW             | Фактически улучшены, но не являются юридическим заключением. |
 | Resources / Guides         | NOT ADDED          | Архитектура и список тем есть, страницы ещё не созданы. |
+| Backups + Disaster Recovery | DONE (2026-07-06) | GitHub Actions → R2 (age-encrypted); restore drill PASS; R2 Lifecycle rule — настроить вручную (§14). |
 
 ## 10. Приоритетная дорожная карта
 
@@ -24,7 +25,7 @@
 | 2    | Исправить подтверждённую auth/DB/session причину    | Немедленный register → logout → login стабильно работает | BLOCKER         |
 | 3    | Password reset + auth rate limiting                 | Восстановление доступа и brute-force protection          | DONE (2026-07-05: forgot/reset flow, Resend email, Upstash rate limits, 20/20 tests PASS, immediate-login не сломан) |
 | 4    | Account deletion + personal-data export runbook     | Проверяемый DSR workflow и identity verification         | DONE (4.1–4.4, 2026-07-05: export, delete, UI polish, legal copy, runbook §13) |
-| 5    | Backups + restore drill                             | Регулярные dumps и подтверждённое восстановление         | BLOCKER         |
+| 5    | Backups + restore drill                             | Регулярные dumps и подтверждённое восстановление         | DONE (2026-07-06) |
 | 6    | Monitoring + global OpenAI budget                   | Alerts и защита от неожиданных расходов                  | HIGH            |
 | 7    | Legal owner review                                  | Решения по governing law, withdrawal, liability, privacy, taxes | REVIEW     |
 | 8    | Paddle Live onboarding                              | Domain approval, Live products/prices/keys/webhook/default link | BLOCKER    |
@@ -222,7 +223,7 @@ npx prisma migrate deploy
 
 | Область              | Сейчас                                      | Приоритет   | Минимум перед Live |
 |----------------------|---------------------------------------------|-------------|--------------------|
-| Database backups     | Есть разовый custom-format pg_dump          | BLOCKER     | Автоматический schedule, offsite copy, retention, restore drill |
+| Database backups     | GitHub Actions daily + R2 (age); drill PASS   | DONE        | Настроить R2 Lifecycle rule (§14); мониторить failed workflow |
 | Supabase/Prisma pooler | Работает, но возможен transient incident  | IN PROGRESS | Auth diagnostics на production; transient incident в smoke test B не воспроизведён |
 | Error monitoring     | Нет production alerting                     | HIGH        | Webhook/auth/5xx alerts без prompt content |
 | Global OpenAI budget | Есть per-user quota                         | HIGH        | Daily/monthly global breaker и owner alert |
@@ -232,35 +233,163 @@ npx prisma migrate deploy
 | Paddle Live          | Не подтверждён                              | BLOCKER     | Domain approval, Live product/price/keys/webhook/default link |
 | Live validation      | Не проводилась                              | BLOCKER     | Одна покупка + refund малыми деньгами |
 
-Область,Состояние,Комментарий
-Главная и Pricing,DONE,Публичный copy очищен
-Регистрация / вход + Password Reset,DONE,Credentials + diagnostics + rate limiting + password reset (Этап 3)
-Dashboard,DONE,План + usage
-Templates + Generate,DONE,С квотами и streaming
-Library,DONE частично,Нет удаления saved items
-Settings + Privacy & Data,DONE,"Export + Delete аккаунта + UI polish + Legal обновления (Этап 4, 2026-07-05)"
-Paddle Sandbox,DONE,Полный цикл checkout/webhook/portal
-Legal pages,REVIEW,"Улучшены, но требуют юридического ревью"
-Resources / Guides,NOT ADDED,Пока нет
-Monitoring & Error Tracking,NOT STARTED,Один из следующих приоритетов
-Backups + Disaster Recovery,NOT STARTED,BLOCKER перед Live
-Admin Panel,NOT STARTED,—
 
+**Заметка (этап 5, 2026-07-06):** Backups + restore drill.
+- Pipeline: `pg_dump` (custom format) → age encryption → upload Cloudflare R2 (`daily/YYYY/MM/DD/`).
+- GitHub Actions: `.github/workflows/database-backup.yml` — cron `0 3 * * *` UTC + `workflow_dispatch`.
+- Retention: 30 дней — R2 Lifecycle rule (§14) + запасной prune в скриптах.
+- Restore drill PASS (Windows, `drill.ps1`): User 13, Generation 1, Subscription 4, `_prisma_migrations` 12.
+- Предупреждения `supabase_vault` при локальном restore — ожидаемы и игнорируются.
+- Осталось вручную: R2 Lifecycle rule в Cloudflare dashboard (§14).
 
-Этап,Задача,Ожидаемый результат,Статус,Приоритет
-3,Password reset + auth rate limiting,Восстановление доступа + brute-force protection,DONE (2026-07-05),—
-4,Account deletion + personal-data export + legal,Self-service DSR + audit + legal обновления,DONE (2026-07-05),—
-5,Backups + restore drill,Регулярные бэкапы + подтверждённое восстановление,BLOCKER,Высокий
-6,Monitoring + Error Tracking + Budget alerts,Sentry + алерты на ошибки и превышение бюджета,HIGH,Высокий
-7,Admin Panel / Moderation tools,"Просмотр пользователей, генераций, блокировка",HIGH,Средний
-8,Paddle Live onboarding + Live validation,Domain approval + одна покупка + refund на малую сумму,BLOCKER,Высокий
-9,Analytics (PostHog / аналог),Понимание поведения пользователей,HIGH,Средний
-10,Billing reliability improvements,"Улучшение webhook, dunning, edge cases",Средний,Средний
-11,Resources + Onboarding polish,База знаний + улучшение пустых состояний,Средний,Низкий
-12,Legal owner review,Финальное юридическое ревью,REVIEW,Высокий
+## 14. Runbook: Backup & Restore
 
-Что я рекомендую сделать следующим (топ-3)
-Приоритет,Этап,Почему именно сейчас
-1,Backups + Disaster Recovery,Без надёжных бэкапов и restore drill ты рискуешь данными пользователей. Это фундаментальный блокер перед Live.
-2,Monitoring + Error Tracking (Sentry),Сейчас ты почти не видишь ошибки в production. Это критично для стабильности.
-3,Admin Panel,"Позволит управлять пользователями, смотреть генерации и быстро реагировать на проблемы без SQL."
+### Архитектура
+
+| Компонент | Где | Назначение |
+|-----------|-----|------------|
+| Скрипты | `scripts/backup/` | backup, restore, drill (+ `lib/common.sh` / `lib/common.ps1`) |
+| CI | `.github/workflows/database-backup.yml` | Ежедневный encrypted backup в R2 |
+| Хранилище | Cloudflare R2 bucket | Prefix `daily/`, файлы `*.dump.age` + `*.sha256` |
+| Шифрование | [age](https://github.com/FiloSottile/age) | Публичный ключ в GitHub Secrets; приватный — **только локально / оффлайн** |
+| Секреты CI | GitHub → Settings → Secrets | `BACKUP_DATABASE_URL`, `BACKUP_AGE_PUBLIC_KEY`, `R2_*` |
+
+**Никогда не коммитить:** приватный age-ключ, `*.dump`, `*.age`, `backup-key.txt`.
+
+### GitHub Actions: ежедневный backup
+
+1. Workflow запускается в **03:00 UTC** или вручную (**Actions → Database Backup → Run workflow**).
+2. Runner: Ubuntu, PostgreSQL 17 client, age, AWS CLI.
+3. `scripts/backup/backup.sh`: `pg_dump` → encrypt → upload R2 → prune старых объектов (fallback).
+4. При **неудаче** workflow создаёт GitHub Issue с префиксом `[backup-failure]` (временный алерт до Sentry).
+
+**Проверка после первого успешного run:**
+```bash
+aws s3 ls s3://$R2_BUCKET_NAME/daily/ --recursive --endpoint-url https://$R2_ACCOUNT_ID.r2.cloudflarestorage.com
+```
+
+### R2 Lifecycle rule (рекомендуется — основной retention)
+
+Настрой один раз в Cloudflare Dashboard. Скриптовый prune (§ ниже) — запасной вариант.
+
+1. [Cloudflare Dashboard](https://dash.cloudflare.com) → **R2** → выбери bucket бэкапов.
+2. **Settings** → **Lifecycle rules** → **Add rule**.
+3. Параметры:
+   - **Rule name:** `daily-backup-retention-30d`
+   - **Prefix:** `daily/`
+   - **Action:** **Delete uploaded objects**
+   - **Days after upload:** `30`
+4. **Save**. Правило применяется ко всем объектам под `daily/` (включая `.sha256` sidecars).
+5. Проверка: через 30+ дней объект должен исчезнуть из bucket; до этого — виден в **Objects** с датой upload.
+
+> Lifecycle и скриптовый prune могут работать параллельно — это безопасно (удаление идемпотентно).
+
+### Запасной prune (скрипт)
+
+Если Lifecycle rule ещё не настроен или нужна ручная очистка:
+
+```bash
+# Linux / CI (только удаление объектов старше 30 дней)
+BACKUP_RETENTION_DAYS=30 \
+R2_ACCOUNT_ID=... R2_ACCESS_KEY_ID=... R2_SECRET_ACCESS_KEY=... R2_BUCKET_NAME=... \
+  scripts/backup/backup.sh --prune-only
+```
+
+```powershell
+# Windows
+$env:R2_ACCOUNT_ID = "..."
+$env:R2_ACCESS_KEY_ID = "..."
+$env:R2_SECRET_ACCESS_KEY = "..."
+$env:R2_BUCKET_NAME = "..."
+.\scripts\backup\backup.ps1 -PruneOnly -RetentionDays 30
+```
+
+Полный backup локально (без upload, для теста):
+```bash
+SKIP_UPLOAD=1 scripts/backup/backup.sh
+```
+
+### Restore (ручной)
+
+**Требуется:** приватный age-ключ (файл, не в репозитории), R2 credentials.
+
+```powershell
+# Windows: скачать latest, расшифровать, restore в целевую БД
+.\scripts\backup\restore.ps1 -Latest -AgeKeyFile "C:\secure\backup-key.txt" `
+  -TargetDatabaseUrl $env:RESTORE_DATABASE_URL
+```
+
+```bash
+# Linux/macOS
+./scripts/backup/restore.sh --latest --age-key-file /secure/backup-key.txt \
+  --target-database-url "$RESTORE_DATABASE_URL"
+```
+
+Только скачать и расшифровать (без restore в БД):
+```powershell
+.\scripts\backup\restore.ps1 -Latest -AgeKeyFile "..." -DecryptOnly -OutputDir ./restore-work
+```
+
+### Restore drill (обязательно раз в квартал / после изменений pipeline)
+
+Проверяет, что latest backup реально восстанавливается и содержит данные.
+
+```powershell
+.\scripts\backup\drill.ps1 -AgeKeyFile "C:\secure\backup-key.txt"
+```
+
+```bash
+./scripts/backup/drill.sh --age-key-file /secure/backup-key.txt
+```
+
+**Ожидаемый результат:** `=== DRILL PASS ===`
+
+#### Restore Drill — 2026-07-06
+
+| Поле | Значение |
+|------|----------|
+| Статус | **DRILL PASS** |
+| Бэкап | `creatornivo-2026-07-06-155308.dump.age` |
+| Размер (decrypted) | ~249 KB |
+| Время restore | ~1.3s |
+| User | 13 |
+| Generation | 1 |
+| Subscription | 4 |
+| `_prisma_migrations` | 12 |
+| Примечание | Предупреждения `supabase_vault` — норма для локального PostgreSQL |
+
+### Что делать при ошибке backup
+
+1. **GitHub Actions:** открыть failed run → лог шага *Run encrypted backup upload*.
+2. **Авто-алерт:** проверить open Issue с префиксом `[backup-failure]` в репозитории.
+3. **Типичные причины:**
+   - `BACKUP_DATABASE_URL` недоступен (Supabase maintenance, pooler timeout)
+   - Неверный / истёкший R2 API token
+   - `pg_dump` version mismatch (workflow использует PG 17)
+   - Нехватка места / timeout runner (20 min)
+4. **Ручной backup (экстренный):**
+   ```bash
+   export BACKUP_DATABASE_URL="..."
+   export BACKUP_AGE_PUBLIC_KEY="age1..."
+   export R2_ACCOUNT_ID=... # остальные R2_*
+   scripts/backup/backup.sh
+   ```
+5. **После исправления:** re-run workflow; убедиться, что объект появился в R2; закрыть Issue.
+6. **Если backup пропущен >24h:** после восстановления pipeline — restore drill (§ выше).
+
+### Секреты и ключи
+
+| Секрет | Где хранить | Комментарий |
+|--------|-------------|-------------|
+| `BACKUP_AGE_PUBLIC_KEY` | GitHub Secrets | Только шифрование в CI |
+| Приватный age-ключ | Оффлайн + password manager / USB | Для restore; **не** в Vercel, **не** в git |
+| `BACKUP_DATABASE_URL` | GitHub Secrets | Read-only connection string к production DB |
+| `R2_*` | GitHub Secrets + локально для drill | S3-compatible API keys |
+
+### Чеклист перед Live
+
+- [x] Ежедневный automated backup в offsite (R2)
+- [x] Restore drill PASS с реальными counts
+- [ ] R2 Lifecycle rule `daily/` → delete after 30 days
+- [ ] Подтверждён алерт при failed backup (GitHub Issue)
+- [ ] Приватный age-ключ сохранён в двух независимых местах

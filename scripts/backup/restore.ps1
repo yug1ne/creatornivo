@@ -1,4 +1,6 @@
 # Download, verify, decrypt, and restore a Creatornivo database backup.
+#
+# Requires private age key file (never commit). See roadmap.md §14.
 
 [CmdletBinding()]
 param(

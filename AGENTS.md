@@ -40,14 +40,14 @@ Creatornivo — честный Early Access продукт.
 | 2    | Исправить подтверждённую причину auth       | BLOCKER       | BLOCKER    | После этапа 1 |
 | 3    | Password reset + auth rate limiting         | HIGH          | DONE       | 2026-07-05: forgot/reset, Resend, Upstash limits, 20/20 tests PASS |
 | 4    | Account deletion + personal-data export     | BLOCKER       | DONE       | 4.1–4.4 DONE 2026-07-05: export, delete, UI polish, legal copy, runbook §13 |
-| 5    | Backups + restore drill                     | BLOCKER       | BLOCKER    | Infrastructure |
+| 5    | Backups + restore drill                     | BLOCKER       | DONE       | 2026-07-06: GitHub Actions → R2, drill PASS; R2 Lifecycle rule — вручную (roadmap §14) |
 | 6    | Monitoring + global OpenAI budget           | HIGH          | -          | - |
 | 7    | Legal owner review                          | REVIEW        | -          | - |
 | 8    | Paddle Live onboarding                      | BLOCKER       | BLOCKER    | Domain, keys, webhook |
 | 9    | Controlled Live purchase + refund test      | BLOCKER       | BLOCKER    | Реальная проверка |
 | 10   | Resources + branded UX                      | После blockers| -          | - |
 
-**Текущий фокус сессии**: Этап 1 (воспроизведение immediate-login incident + root cause evidence).
+**Текущий фокус сессии**: Этап 1 (воспроизведение immediate-login incident + root cause evidence). Этап 5 закрыт (2026-07-06).
 
 ## 4. Правила по ключевым областям
 
@@ -72,6 +72,36 @@ Creatornivo — честный Early Access продукт.
 - Регулярные backups + restore drill — обязательно перед Live.
 - Error monitoring и алерты без промпт-контента.
 
+### Backup Pipeline (этап 5 — DONE 2026-07-06)
+
+**Скрипты:** `scripts/backup/`
+| Файл | Назначение |
+|------|------------|
+| `backup.sh` / `backup.ps1` | `pg_dump` → age encrypt → upload R2; `--prune-only` / `-PruneOnly` для fallback retention |
+| `restore.sh` / `restore.ps1` | Скачать из R2, расшифровать, `pg_restore` |
+| `drill.sh` / `drill.ps1` | Restore drill в локальный Docker PostgreSQL + проверка counts |
+| `lib/common.sh` / `lib/common.ps1` | Shared helpers (R2, checksum, prune, docker psql) |
+
+**GitHub Actions:** `.github/workflows/database-backup.yml`
+- Cron: `0 3 * * *` UTC + `workflow_dispatch`
+- Секреты: `BACKUP_DATABASE_URL`, `BACKUP_AGE_PUBLIC_KEY`, `R2_ACCOUNT_ID`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `R2_BUCKET_NAME`
+- При неудаче: job `notify-failure` создаёт GitHub Issue `[backup-failure] ...` — временный алерт до Sentry
+
+**Хранение:**
+- Бэкапы: Cloudflare R2, prefix `daily/YYYY/MM/DD/`, файлы `*.dump.age` + `.sha256`
+- Retention 30 дней: **R2 Lifecycle rule** (основной, настроить вручную — `roadmap.md` §14) + скриптовый prune (fallback)
+- **Приватный age-ключ:** только локально / оффлайн (password manager, USB). **Никогда** в git, Vercel, GitHub Secrets
+- **Публичный age-ключ:** GitHub Secrets (`BACKUP_AGE_PUBLIC_KEY`) — только для шифрования в CI
+
+**При ошибке бэкапа:**
+1. Проверить failed workflow run в Actions
+2. Проверить open Issue с префиксом `[backup-failure]`
+3. Следовать `roadmap.md` §14 (*Что делать при ошибке backup*)
+4. Экстренный ручной backup: `scripts/backup/backup.sh` с env vars
+5. После fix — re-run workflow; при пропуске >24h — restore drill (`drill.ps1`)
+
+**Restore drill (последний PASS 2026-07-06):** User 13, Generation 1, Subscription 4, `_prisma_migrations` 12. Предупреждения `supabase_vault` при локальном restore — норма.
+
 ### Генерации и лимиты
 - Free: 5 генераций в UTC-день
 - Pro: 100 генераций в UTC-месяц
@@ -82,6 +112,7 @@ Creatornivo — честный Early Access продукт.
 - TypeScript strict + ESLint — прогонять после любых изменений.
 - Перед коммитом: `git diff --check`, `git diff --cached --check`.
 - Не коммитить: `.env`, реальные ключи, `DATABASE_URL`, password hashes, session tokens, полные Paddle ID в публичных местах.
+- Не коммитить backup-артефакты: `backup-key.txt`, `*.dump`, `*.dump.age`, `*.age`, `restore-work/`.
 - После деплоя на Vercel — обязательный ручной smoke test.
 
 ## 5. Правила тестирования (обязательно после каждой задачи)

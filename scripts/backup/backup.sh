@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 # Create an encrypted PostgreSQL backup and upload it to Cloudflare R2.
+#
+# Usage:
+#   backup.sh                  # full backup + upload + retention prune
+#   backup.sh --prune-only     # delete R2 objects older than BACKUP_RETENTION_DAYS (fallback to Lifecycle rule)
+#   SKIP_UPLOAD=1 backup.sh    # local encrypted dump only (no R2 upload)
+#
+# See roadmap.md §14 for R2 Lifecycle rule and restore drill.
 
 set -euo pipefail
 
@@ -7,9 +14,33 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck source=lib/common.sh
 source "${SCRIPT_DIR}/lib/common.sh"
 
+PRUNE_ONLY=0
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --prune-only) PRUNE_ONLY=1; shift ;;
+    -h|--help)
+      sed -n '2,8p' "$0" | sed 's/^# \{0,1\}//'
+      exit 0
+      ;;
+    *) echo "unknown argument: $1" >&2; exit 1 ;;
+  esac
+done
+
 SKIP_UPLOAD="${SKIP_UPLOAD:-0}"
 SKIP_RETENTION="${SKIP_RETENTION:-0}"
 PG_DUMP="${PG_DUMP:-pg_dump}"
+
+if [[ "${PRUNE_ONLY}" == "1" ]]; then
+  require_cmd aws
+  require_env R2_ACCOUNT_ID
+  require_env R2_ACCESS_KEY_ID
+  require_env R2_SECRET_ACCESS_KEY
+  require_env R2_BUCKET_NAME
+  setup_r2_aws_env
+  prune_old_r2_backups "${BACKUP_RETENTION_DAYS}"
+  echo "prune completed"
+  exit 0
+fi
 
 if [[ ! -x "${PG_DUMP}" ]] && ! command -v "${PG_DUMP}" >/dev/null 2>&1; then
   echo "error: pg_dump not found: ${PG_DUMP}" >&2
@@ -58,6 +89,7 @@ if [[ "${SKIP_UPLOAD}" != "1" ]]; then
   aws s3 cp "${encrypted_path}" "${s3_uri}" --endpoint-url "${endpoint}"
   aws s3 cp "${encrypted_path}.sha256" "${checksum_uri}" --endpoint-url "${endpoint}"
 
+  # Fallback retention prune (primary: R2 Lifecycle rule on prefix daily/ — see roadmap.md §14)
   if [[ "${SKIP_RETENTION}" != "1" ]]; then
     prune_old_r2_backups "${BACKUP_RETENTION_DAYS}"
   fi

@@ -1,5 +1,9 @@
 # Mandatory restore drill for Windows: download latest encrypted backup,
 # restore to local Docker PostgreSQL, and verify core table counts.
+#
+# Expected: === DRILL PASS ===
+# supabase_vault warnings during pg_restore are normal for local PostgreSQL.
+# See roadmap.md §14 for full runbook.
 
 [CmdletBinding()]
 param(

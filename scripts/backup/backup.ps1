@@ -1,4 +1,11 @@
 # Create an encrypted PostgreSQL backup and upload it to Cloudflare R2.
+#
+# Usage:
+#   .\backup.ps1                         # full backup + upload + retention prune
+#   .\backup.ps1 -PruneOnly              # delete R2 objects older than RetentionDays (fallback to Lifecycle rule)
+#   .\backup.ps1 -SkipUpload             # local encrypted dump only (no R2 upload)
+#
+# See roadmap.md §14 for R2 Lifecycle rule and restore drill.
 
 [CmdletBinding()]
 param(
@@ -10,15 +17,28 @@ param(
     [string]$R2BucketName = $env:R2_BUCKET_NAME,
     [int]$RetentionDays = $(if ($env:BACKUP_RETENTION_DAYS) { [int]$env:BACKUP_RETENTION_DAYS } else { 30 }),
     [switch]$SkipUpload,
-    [switch]$SkipRetention
+    [switch]$SkipRetention,
+    [switch]$PruneOnly
 )
 
 $ErrorActionPreference = "Stop"
 . "$PSScriptRoot/lib/common.ps1"
 
+Require-Command "aws"
+
+if ($PruneOnly) {
+    if ([string]::IsNullOrWhiteSpace($R2AccountId)) { throw "R2_ACCOUNT_ID is required" }
+    if ([string]::IsNullOrWhiteSpace($R2AccessKeyId)) { throw "R2_ACCESS_KEY_ID is required" }
+    if ([string]::IsNullOrWhiteSpace($R2SecretAccessKey)) { throw "R2_SECRET_ACCESS_KEY is required" }
+    if ([string]::IsNullOrWhiteSpace($R2BucketName)) { throw "R2_BUCKET_NAME is required" }
+
+    Remove-OldR2Backups -BucketName $R2BucketName -AccountId $R2AccountId -RetentionDays $RetentionDays
+    Write-Host "Prune completed"
+    return
+}
+
 Require-Command "pg_dump"
 Require-Command "age"
-Require-Command "aws"
 
 if ([string]::IsNullOrWhiteSpace($DatabaseUrl)) { throw "BACKUP_DATABASE_URL is required" }
 if ([string]::IsNullOrWhiteSpace($AgePublicKey)) { throw "BACKUP_AGE_PUBLIC_KEY is required" }
@@ -66,6 +86,7 @@ try {
         aws s3 cp $encryptedPath $s3Uri --endpoint-url $endpoint | Out-Null
         aws s3 cp "$encryptedPath.sha256" $checksumUri --endpoint-url $endpoint | Out-Null
 
+        # Fallback retention prune (primary: R2 Lifecycle rule on prefix daily/ — see roadmap.md §14)
         if (-not $SkipRetention) {
             Remove-OldR2Backups -BucketName $R2BucketName -AccountId $R2AccountId -RetentionDays $RetentionDays
         }

@@ -255,6 +255,8 @@ function Get-LatestR2BackupKey {
     return $latest.Key
 }
 
+# Fallback retention: delete *.dump.age (+ .sha256) older than RetentionDays under daily/.
+# Primary retention should be an R2 Lifecycle rule on prefix daily/ (see roadmap.md §14).
 function Remove-OldR2Backups {
     param(
         [Parameter(Mandatory = $true)][string]$BucketName,
