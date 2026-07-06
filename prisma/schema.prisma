@@ -64,8 +64,24 @@ model User {
   onboardingCompletedAt DateTime?
   passwordChangedAt     DateTime?
   passwordResetTokens   PasswordResetToken[]
+  userUsage             UserUsage[]
   createdAt             DateTime               @default(now())
   updatedAt             DateTime               @updatedAt
+}
+
+model UserUsage {
+  id        String   @id @default(cuid())
+  userId    String
+  date      DateTime // UTC period start: day boundary (Free) or month boundary (Pro)
+  count     Int      @default(0)
+  period    String   // "daily" | "monthly"
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, date, period])
+  @@index([userId, period])
 }
 
 model AccountDeletionRequest {
