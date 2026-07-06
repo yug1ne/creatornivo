@@ -28,6 +28,7 @@ export const adminRoutes = ["/admin"] as const;
 /** Префиксы API, не требующие сессии */
 export const publicApiPrefixes = [
   "/api/auth",
+  "/api/health",
   "/api/stripe/webhook",
   "/api/paddle/webhook",
 ] as const;
