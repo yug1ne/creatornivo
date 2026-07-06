@@ -22,7 +22,8 @@ export default auth((request) => {
   if (
     publicApiPrefixes.some((prefix) => pathname.startsWith(prefix)) ||
     pathname.startsWith("/_next") ||
-    pathname.startsWith("/favicon")
+    pathname.startsWith("/favicon") ||
+    pathname.startsWith("/monitoring") // Sentry tunnel route (ad-blocker bypass)
   ) {
     return NextResponse.next();
   }
@@ -85,5 +86,5 @@ export default auth((request) => {
 });
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|.*\\..*).*)"],
+  matcher: ["/((?!monitoring|_next/static|_next/image|.*\\..*).*)"],
 };
