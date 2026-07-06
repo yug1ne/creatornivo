@@ -19,8 +19,6 @@ $ErrorActionPreference = "Stop"
 . "$PSScriptRoot/lib/common.ps1"
 
 Require-Command "docker"
-Require-Command "psql"
-Require-Command "pg_restore"
 
 function Remove-DrillContainer {
     docker rm -f $ContainerName 2>$null | Out-Null
@@ -66,20 +64,37 @@ try {
         throw "Postgres container did not become ready in time"
     }
 
-    $targetUrl = "postgresql://postgres:$DbPassword@127.0.0.1:$HostPort/postgres"
+    $containerDumpPath = "/tmp/restore.dump"
+    $dumpSizeBytes = (Get-Item $dumpPath).Length
+    $dumpSizePretty = if ($dumpSizeBytes -lt 1MB) {
+        "{0:N0} KB" -f ($dumpSizeBytes / 1KB)
+    } else {
+        "{0:N2} MB" -f ($dumpSizeBytes / 1MB)
+    }
+    Write-Host "Decrypted dump size: $dumpSizePretty"
 
-    Write-Host "Restoring decrypted dump into drill database"
-    pg_restore `
-        --dbname=$targetUrl `
+    Write-Host "Copying dump into Docker container"
+    docker cp $dumpPath "${ContainerName}:${containerDumpPath}"
+
+    $sw = [System.Diagnostics.Stopwatch]::StartNew()
+    Write-Host "Restoring decrypted dump into drill database (pg_restore inside container)"
+    docker exec $ContainerName pg_restore `
+        -U postgres `
+        -d postgres `
         --no-owner `
         --no-acl `
-        $dumpPath
+        $containerDumpPath
+    if ($LASTEXITCODE -gt 1) {
+        throw "pg_restore failed with exit code $LASTEXITCODE"
+    }
+    $sw.Stop()
+    Write-Host "Restore elapsed: $($sw.Elapsed.TotalSeconds.ToString('0.0'))s"
 
     Write-Host "Running verification queries"
-    $userCount = psql $targetUrl -Atqc 'SELECT count(*) FROM "User";'
-    $generationCount = psql $targetUrl -Atqc 'SELECT count(*) FROM "Generation";'
-    $subscriptionCount = psql $targetUrl -Atqc 'SELECT count(*) FROM "Subscription";'
-    $migrationCount = psql $targetUrl -Atqc 'SELECT count(*) FROM "_prisma_migrations";'
+    $userCount = (docker exec $ContainerName psql -U postgres -Atqc 'SELECT count(*) FROM "User";').Trim()
+    $generationCount = (docker exec $ContainerName psql -U postgres -Atqc 'SELECT count(*) FROM "Generation";').Trim()
+    $subscriptionCount = (docker exec $ContainerName psql -U postgres -Atqc 'SELECT count(*) FROM "Subscription";').Trim()
+    $migrationCount = (docker exec $ContainerName psql -U postgres -Atqc 'SELECT count(*) FROM "_prisma_migrations";').Trim()
 
     Write-Host "User count: $userCount"
     Write-Host "Generation count: $generationCount"
