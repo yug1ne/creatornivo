@@ -108,7 +108,7 @@ function Invoke-DrillPgRestore {
 function Get-DockerPsqlCount {
     param(
         [Parameter(Mandatory = $true)][string]$ContainerName,
-        [Parameter(Mandatory = $true)][string]$TableSql,
+        [Parameter(Mandatory = $true)][string]$TableName,
         [string]$DbUser = "postgres",
         [string]$DbName = "postgres"
     )
@@ -121,20 +121,22 @@ function Get-DockerPsqlCount {
         $nativePreferenceRestored = $true
     }
 
-    $query = "SELECT count(*) FROM $TableSql;"
+    # Quote identifier for PostgreSQL; run via sh -c so docker exec on Windows preserves quotes.
+    $query = "SELECT count(*) FROM ""$TableName"";"
+    $shellCmd = "psql -U $DbUser -d $DbName -Atqc '$query'"
 
     try {
         $ErrorActionPreference = 'Continue'
-        $result = docker exec $ContainerName psql -U $DbUser -d $DbName -Atqc $query 2>&1
+        $result = docker exec $ContainerName sh -c $shellCmd 2>&1
         if ($LASTEXITCODE -ne 0) {
             $detail = @($result | ForEach-Object { "$_" }) -join '; '
-            throw "psql count query failed for $TableSql (exit $LASTEXITCODE): $detail"
+            throw "psql count query failed for ""$TableName"" (exit $LASTEXITCODE): $detail"
         }
 
         $text = @($result | ForEach-Object { "$_" }) -join "`n"
         $text = $text.Trim()
         if ([string]::IsNullOrWhiteSpace($text)) {
-            throw "psql count query returned no output for $TableSql"
+            throw "psql count query returned no output for ""$TableName"""
         }
 
         return $text

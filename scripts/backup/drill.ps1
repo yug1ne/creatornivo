@@ -79,10 +79,10 @@ try {
     Write-Host "Restore elapsed: $($sw.Elapsed.TotalSeconds.ToString('0.0'))s"
 
     Write-Host "Running verification queries"
-    $userCount = Get-DockerPsqlCount -ContainerName $ContainerName -TableSql '"User"'
-    $generationCount = Get-DockerPsqlCount -ContainerName $ContainerName -TableSql '"Generation"'
-    $subscriptionCount = Get-DockerPsqlCount -ContainerName $ContainerName -TableSql '"Subscription"'
-    $migrationCount = Get-DockerPsqlCount -ContainerName $ContainerName -TableSql '"_prisma_migrations"'
+    $userCount = Get-DockerPsqlCount -ContainerName $ContainerName -TableName "User"
+    $generationCount = Get-DockerPsqlCount -ContainerName $ContainerName -TableName "Generation"
+    $subscriptionCount = Get-DockerPsqlCount -ContainerName $ContainerName -TableName "Subscription"
+    $migrationCount = Get-DockerPsqlCount -ContainerName $ContainerName -TableName "_prisma_migrations"
 
     Write-Host "User count: $userCount"
     Write-Host "Generation count: $generationCount"
