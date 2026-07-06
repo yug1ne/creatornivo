@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 
+import type { Plan } from "@/config/plans";
 import {
   createContentStream,
   isAIProviderConfigured,
@@ -13,11 +14,16 @@ import {
   validateUserInput,
 } from "@/lib/generation/usage-service";
 import {
-  getRemainingGenerations,
   getUsagePeriodForPlan,
+  getUserUsageSnapshot,
   incrementUsage,
   UsageError,
+  type UserUsageSnapshot,
 } from "@/lib/usage";
+import {
+  buildQuotaExceededBody,
+  getRetryAfterSeconds,
+} from "@/lib/usage/quota-exceeded";
 import { assertTemplateAccess } from "@/lib/templates/queries";
 import {
   fillPromptTemplate,
@@ -65,6 +71,19 @@ export function parseGenerationRequestBody(body: unknown): {
   };
 }
 
+/** Rich 429 payload when UserUsage quota is exhausted (monitoring-friendly Retry-After). */
+function quotaExceededResponse(snapshot: UserUsageSnapshot) {
+  const body = buildQuotaExceededBody(snapshot);
+
+  return NextResponse.json(body, {
+    status: 429,
+    headers: {
+      "Retry-After": String(getRetryAfterSeconds(snapshot.resetAt)),
+      "Cache-Control": "no-store",
+    },
+  });
+}
+
 export async function POST(request: Request) {
   let session;
 
@@ -75,6 +94,7 @@ export async function POST(request: Request) {
   }
 
   let requestId: string | null = null;
+  let userPlan: Plan | undefined;
 
   try {
     const user = await prisma.user.findUnique({
@@ -85,6 +105,8 @@ export async function POST(request: Request) {
     if (!user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
+
+    userPlan = user.plan;
 
     const body = parseGenerationRequestBody(await request.json());
     const { templateId, requestId: suppliedRequestId } = body;
@@ -131,10 +153,10 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    // UserUsage quota (Stage 2) — checked before reservation/idempotency flow
-    let remaining: number;
+    // UserUsage quota — checked before reservation/idempotency flow
+    let usageSnapshot: UserUsageSnapshot;
     try {
-      remaining = await getRemainingGenerations(userId, user.plan);
+      usageSnapshot = await getUserUsageSnapshot(userId, user.plan);
     } catch (error) {
       if (error instanceof UsageError) {
         console.error("UserUsage check failed:", error);
@@ -149,14 +171,8 @@ export async function POST(request: Request) {
       throw error;
     }
 
-    if (remaining <= 0) {
-      return NextResponse.json(
-        {
-          error: "Generation limit reached for today/month",
-          code: "quota",
-        },
-        { status: 429 },
-      );
+    if (usageSnapshot.remaining <= 0) {
+      return quotaExceededResponse(usageSnapshot);
     }
 
     const filledPrompt = fillPromptTemplate(template.prompt, body.values);
@@ -238,6 +254,20 @@ export async function POST(request: Request) {
     }
   } catch (error) {
     if (error instanceof GenerationPolicyError) {
+      // Reservation layer may still hit quota (legacy rows / drift) — return same rich 429
+      if (
+        error.code === "quota" &&
+        session?.id &&
+        userPlan
+      ) {
+        try {
+          const snapshot = await getUserUsageSnapshot(session.id, userPlan);
+          return quotaExceededResponse({ ...snapshot, remaining: 0 });
+        } catch (usageLoadError) {
+          console.error("Failed to build quota exceeded response:", usageLoadError);
+        }
+      }
+
       return NextResponse.json(
         { error: error.message, code: error.code },
         { status: error.status },

@@ -25,6 +25,10 @@ import {
 } from "@/lib/subscriptions/messages";
 import type { Plan } from "@/config/plans";
 import type { UserUsageSnapshot } from "@/lib/usage";
+import {
+  parseGenerationApiError,
+  type ParsedGenerationError,
+} from "@/lib/usage/quota-exceeded";
 import type { TemplateListItem } from "@/types/template";
 
 import { GenerationResult } from "./generation-result";
@@ -105,7 +109,7 @@ export function GenerateWorkspace({
   const [values, setValues] = useState<Record<string, string>>({});
   const [streamedContent, setStreamedContent] = useState("");
   const [model, setModel] = useState("");
-  const [error, setError] = useState("");
+  const [error, setError] = useState<ParsedGenerationError | null>(null);
   const [isStreaming, setIsStreaming] = useState(false);
   const [generationUsage, setGenerationUsage] =
     useState<GenerationUsageSnapshot>({
@@ -154,7 +158,7 @@ export function GenerateWorkspace({
       setValues(buildDefaultValues(template.variables));
       setStreamedContent("");
       setModel("");
-      setError("");
+      setError(null);
       setSavedPromptId(null);
 
       const url = new URL(window.location.href);
@@ -192,7 +196,7 @@ export function GenerateWorkspace({
     requestIdRef.current = requestId;
     inFlightRef.current = true;
 
-    setError("");
+    setError(null);
     setIsStreaming(true);
     setStreamedContent("");
     setModel(MODEL_BY_PLAN[userPlan]);
@@ -218,7 +222,7 @@ export function GenerateWorkspace({
         ) {
           requestIdRef.current = null;
         }
-        setError(data.error ?? "Generation failed");
+        setError(parseGenerationApiError(data));
         await refreshGenerationUsage();
         return;
       }
@@ -228,7 +232,10 @@ export function GenerateWorkspace({
 
       const reader = response.body?.getReader();
       if (!reader) {
-        setError("Failed to receive data stream");
+        setError({
+          message: "Failed to receive data stream. Please try again.",
+          showUpgradeLink: false,
+        });
         await refreshGenerationUsage();
         return;
       }
@@ -247,7 +254,10 @@ export function GenerateWorkspace({
       requestIdRef.current = null;
       await refreshGenerationUsage();
     } catch {
-      setError("Network error. Please retry this generation.");
+      setError({
+        message: "Network error. Please retry this generation.",
+        showUpgradeLink: false,
+      });
       await refreshGenerationUsage();
     } finally {
       inFlightRef.current = false;
@@ -422,8 +432,19 @@ export function GenerateWorkspace({
               </div>
 
               {error && (
-                <div className="rounded-[var(--radius-md)] bg-destructive/10 px-4 py-3 text-sm text-destructive">
-                  {error}
+                <div
+                  className="rounded-[var(--radius-md)] bg-destructive/10 px-4 py-3 text-sm text-destructive"
+                  role="alert"
+                >
+                  <p>{error.message}</p>
+                  {error.showUpgradeLink && (
+                    <Link
+                      href="/pricing"
+                      className="mt-2 inline-block font-medium underline hover:no-underline"
+                    >
+                      View Pro pricing
+                    </Link>
+                  )}
                 </div>
               )}
 

@@ -15,6 +15,7 @@ import {
   fetchGenerationUsageSnapshot,
 } from "../src/components/generate/generate-workspace";
 import { isAIProviderConfigured } from "../src/lib/ai/provider";
+import { buildQuotaExceededBody } from "../src/lib/usage/quota-exceeded";
 import {
   GENERATION_RESERVATION_STATUS,
   GENERATION_RESERVATION_TTL_MS,
@@ -682,6 +683,22 @@ test("network retry reuses the existing client requestId", () => {
   assert.equal(generatedIds, 1);
 });
 
+test("quota exceeded payload includes reset guidance for Free users", () => {
+  const body = buildQuotaExceededBody({
+    plan: "free",
+    remaining: 0,
+    limit: 5,
+    period: "daily",
+    resetAt: "2026-07-07T00:00:00.000Z",
+    used: 5,
+  });
+
+  assert.equal(body.code, "quota_exceeded");
+  assert.equal(body.remaining, 0);
+  assert.match(body.message, /midnight UTC/i);
+  assert.match(body.message, /Upgrade to Pro/i);
+});
+
 test("missing OpenAI API key disables generation before reservation", () => {
   assert.equal(isAIProviderConfigured(""), false);
   assert.equal(isAIProviderConfigured("   "), false);
@@ -694,7 +711,7 @@ test("missing OpenAI API key disables generation before reservation", () => {
     "if (!isAIProviderConfigured())",
   );
   const usageCheck = routeSource.indexOf(
-    "await getRemainingGenerations(userId, user.plan)",
+    "await getUserUsageSnapshot(userId, user.plan)",
   );
   const reservation = routeSource.indexOf("await reserveGeneration");
 
@@ -703,6 +720,8 @@ test("missing OpenAI API key disables generation before reservation", () => {
   assert.ok(reservation > usageCheck);
   assert.match(routeSource, /code: "generation_disabled"/);
   assert.match(routeSource, /await incrementUsage\(userId, getUsagePeriodForPlan/);
+  assert.match(routeSource, /quotaExceededResponse/);
+  assert.match(routeSource, /buildQuotaExceededBody/);
 });
 
 test("successful generation usage is reconciled from the server", async () => {
