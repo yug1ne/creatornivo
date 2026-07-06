@@ -121,13 +121,14 @@ function Get-DockerPsqlCount {
         $nativePreferenceRestored = $true
     }
 
-    # Quote identifier for PostgreSQL; run via sh -c so docker exec on Windows preserves quotes.
+    # Quoted identifier required for Prisma PascalCase tables. Pipe SQL via stdin to avoid
+    # Windows docker exec / sh -c stripping double quotes from -c arguments.
     $query = "SELECT count(*) FROM ""$TableName"";"
-    $shellCmd = "psql -U $DbUser -d $DbName -Atqc '$query'"
+    Write-Verbose "psql query: $query"
 
     try {
         $ErrorActionPreference = 'Continue'
-        $result = docker exec $ContainerName sh -c $shellCmd 2>&1
+        $result = $query | docker exec -i $ContainerName psql -U $DbUser -d $DbName -At 2>&1
         if ($LASTEXITCODE -ne 0) {
             $detail = @($result | ForEach-Object { "$_" }) -join '; '
             throw "psql count query failed for ""$TableName"" (exit $LASTEXITCODE): $detail"
