@@ -708,16 +708,21 @@ test("missing OpenAI API key disables generation before reservation", () => {
 test("successful generation usage is reconciled from the server", async () => {
   const usage = await fetchGenerationUsageSnapshot(async () =>
     Response.json({
-      generationsUsed: 4,
-      generationLimit: 5,
-      generationPeriod: "day",
+      plan: "free",
+      remaining: 1,
+      limit: 5,
+      period: "daily",
+      resetAt: "2026-07-07T00:00:00.000Z",
     }),
   );
 
   assert.deepEqual(usage, {
-    generationsUsed: 4,
-    generationLimit: 5,
-    generationPeriod: "day",
+    plan: "free",
+    remaining: 1,
+    limit: 5,
+    period: "daily",
+    resetAt: "2026-07-07T00:00:00.000Z",
+    used: 4,
   });
 });
 
@@ -998,7 +1003,10 @@ test("page refresh restores usage from server reservation data", async () => {
   );
 
   assert.equal(usage.used, 3);
-  assert.match(pageSource, /getGenerationUsage\(session\.id, session\.plan\)/);
+  assert.match(
+    pageSource,
+    /getUserUsageSnapshot\(session\.id, session\.plan\)/,
+  );
 });
 
 test("actual input and output token usage is persisted", async () => {

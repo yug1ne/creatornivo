@@ -2,14 +2,19 @@ import { NextResponse } from "next/server";
 
 import { requireSession } from "@/lib/auth/session";
 import { prisma } from "@/lib/db";
-import { getGenerationUsage } from "@/lib/generation/usage-service";
+import { getUserUsageSnapshot, UsageError } from "@/lib/usage";
 
+/** Returns UserUsage-backed quota for the authenticated user. */
 export async function GET() {
   let session;
 
   try {
     session = await requireSession();
   } catch {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  if (!session.id) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -23,14 +28,15 @@ export async function GET() {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const usage = await getGenerationUsage(session.id, user.plan);
+    const snapshot = await getUserUsageSnapshot(session.id, user.plan);
 
     return NextResponse.json(
       {
-        generationsUsed: usage.used,
-        generationLimit: usage.limit,
-        generationPeriod: usage.period,
-        periodKey: usage.periodKey,
+        plan: snapshot.plan,
+        remaining: snapshot.remaining,
+        limit: snapshot.limit,
+        period: snapshot.period,
+        resetAt: snapshot.resetAt,
       },
       {
         headers: {
@@ -38,7 +44,11 @@ export async function GET() {
         },
       },
     );
-  } catch {
+  } catch (error) {
+    if (error instanceof UsageError) {
+      console.error("Failed to load UserUsage snapshot:", error);
+    }
+
     return NextResponse.json(
       { error: "Failed to load generation usage." },
       { status: 500 },

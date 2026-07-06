@@ -24,6 +24,7 @@ import {
   getSaveLimitMessage,
 } from "@/lib/subscriptions/messages";
 import type { Plan } from "@/config/plans";
+import type { UserUsageSnapshot } from "@/lib/usage";
 import type { TemplateListItem } from "@/types/template";
 
 import { GenerationResult } from "./generation-result";
@@ -31,18 +32,11 @@ import { PromptPreview } from "./prompt-preview";
 import { TemplatePicker } from "./template-picker";
 import { UsageBanner } from "./usage-banner";
 
-interface UsageStats {
-  generationsUsed: number;
-  generationLimit: number;
-  generationPeriod: "day" | "month";
+interface UsageStats extends UserUsageSnapshot {
   savedCount: number;
 }
 
-export interface GenerationUsageSnapshot {
-  generationsUsed: number;
-  generationLimit: number;
-  generationPeriod: "day" | "month";
-}
+export type GenerationUsageSnapshot = UserUsageSnapshot;
 
 interface GenerateWorkspaceProps {
   templates: TemplateListItem[];
@@ -71,17 +65,27 @@ export async function fetchGenerationUsageSnapshot(
 
   const data = (await response.json()) as Record<string, unknown>;
   if (
-    typeof data.generationsUsed !== "number" ||
-    typeof data.generationLimit !== "number" ||
-    (data.generationPeriod !== "day" && data.generationPeriod !== "month")
+    (data.plan !== "free" && data.plan !== "pro") ||
+    typeof data.remaining !== "number" ||
+    typeof data.limit !== "number" ||
+    (data.period !== "daily" && data.period !== "monthly") ||
+    typeof data.resetAt !== "string"
   ) {
     return null;
   }
 
+  const used =
+    typeof data.used === "number"
+      ? data.used
+      : Math.max(0, (data.limit as number) - (data.remaining as number));
+
   return {
-    generationsUsed: data.generationsUsed,
-    generationLimit: data.generationLimit,
-    generationPeriod: data.generationPeriod,
+    plan: data.plan,
+    remaining: data.remaining,
+    limit: data.limit,
+    period: data.period,
+    resetAt: data.resetAt,
+    used,
   };
 }
 
@@ -105,9 +109,12 @@ export function GenerateWorkspace({
   const [isStreaming, setIsStreaming] = useState(false);
   const [generationUsage, setGenerationUsage] =
     useState<GenerationUsageSnapshot>({
-      generationsUsed: initialUsage.generationsUsed,
-      generationLimit: initialUsage.generationLimit,
-      generationPeriod: initialUsage.generationPeriod,
+      plan: initialUsage.plan,
+      remaining: initialUsage.remaining,
+      limit: initialUsage.limit,
+      period: initialUsage.period,
+      resetAt: initialUsage.resetAt,
+      used: initialUsage.used,
     });
   const [savedCount, setSavedCount] = useState(initialUsage.savedCount);
   const [savedPromptId, setSavedPromptId] = useState<string | null>(null);
@@ -116,8 +123,7 @@ export function GenerateWorkspace({
 
   const selected = templates.find((t) => t.id === selectedId) ?? null;
 
-  const canGenerate =
-    generationUsage.generationsUsed < generationUsage.generationLimit;
+  const canGenerate = generationUsage.remaining > 0;
 
   const canSave =
     limits.maxSavedPrompts === Infinity ||
@@ -283,9 +289,11 @@ export function GenerateWorkspace({
     <div className="space-y-6">
       <UsageBanner
         plan={userPlan}
-        generationsUsed={generationUsage.generationsUsed}
-        generationLimit={generationUsage.generationLimit}
-        generationPeriod={generationUsage.generationPeriod}
+        remaining={generationUsage.remaining}
+        used={generationUsage.used}
+        limit={generationUsage.limit}
+        period={generationUsage.period}
+        resetAt={generationUsage.resetAt}
         savedCount={savedCount}
         maxSavedPrompts={limits.maxSavedPrompts}
       />

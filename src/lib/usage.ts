@@ -150,6 +150,64 @@ export function getUsagePeriodForPlan(plan: Plan): UsagePeriod {
     : USAGE_PERIOD.MONTHLY;
 }
 
+/** UTC instant when the current usage bucket resets (next day or next month). */
+export function getUsageResetAt(period: UsagePeriod, now = new Date()): Date {
+  if (period === USAGE_PERIOD.DAILY) {
+    return new Date(
+      Date.UTC(
+        now.getUTCFullYear(),
+        now.getUTCMonth(),
+        now.getUTCDate() + 1,
+      ),
+    );
+  }
+
+  return new Date(
+    Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, 1),
+  );
+}
+
+export type UserUsageSnapshot = {
+  plan: Plan;
+  remaining: number;
+  limit: number;
+  period: UsagePeriod;
+  resetAt: string;
+  used: number;
+};
+
+/**
+ * Full usage snapshot for API/UI — backed by UserUsage counters.
+ * Free: daily bucket. Pro: monthly bucket. All boundaries are UTC.
+ */
+export async function getUserUsageSnapshot(
+  userId: string,
+  plan: Plan,
+  now = new Date(),
+): Promise<UserUsageSnapshot> {
+  assertUserId(userId);
+
+  const policy = getGenerationPolicy(plan);
+  const usagePeriod = getUsagePeriodForPlan(plan);
+  const usage =
+    usagePeriod === USAGE_PERIOD.DAILY
+      ? await getOrCreateDailyUsage(userId, now)
+      : await getOrCreateMonthlyUsage(userId, now);
+
+  const limit = policy.maxGenerationsPerPeriod;
+  const used = usage.count;
+  const remaining = Math.max(0, limit - used);
+
+  return {
+    plan,
+    remaining,
+    limit,
+    period: usagePeriod,
+    resetAt: getUsageResetAt(usagePeriod, now).toISOString(),
+    used,
+  };
+}
+
 /**
  * Remaining generations for the user's plan in the current period.
  * Free: 5/day (UTC). Pro: 100/month (UTC).
@@ -159,13 +217,6 @@ export async function getRemainingGenerations(
   plan: Plan,
   now = new Date(),
 ): Promise<number> {
-  assertUserId(userId);
-
-  const policy = getGenerationPolicy(plan);
-  const usage =
-    policy.period === "day"
-      ? await getOrCreateDailyUsage(userId, now)
-      : await getOrCreateMonthlyUsage(userId, now);
-
-  return Math.max(0, policy.maxGenerationsPerPeriod - usage.count);
+  const snapshot = await getUserUsageSnapshot(userId, plan, now);
+  return snapshot.remaining;
 }

@@ -4,6 +4,18 @@ import {
   type Plan,
 } from "@/config/plans";
 
+/** Primary label for usage UI — remaining quota in the current period. */
+export function getRemainingGenerationsLabel(
+  plan: Plan,
+  remaining: number,
+): string {
+  const noun = remaining === 1 ? "generation" : "generations";
+
+  return plan === "free"
+    ? `${remaining} ${noun} left today`
+    : `${remaining} ${noun} left this month`;
+}
+
 export function getGenerationLimitMessage(
   plan: Plan,
   generationsUsed: number,

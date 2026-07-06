@@ -9,7 +9,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getPlanLimits, PLANS } from "@/config/plans";
 import { requireSession } from "@/lib/auth/session";
 import { prisma } from "@/lib/db";
-import { getGenerationUsage } from "@/lib/generation/usage-service";
+import { getUserUsageSnapshot } from "@/lib/usage";
+import { getRemainingGenerationsLabel } from "@/lib/subscriptions/messages";
 
 export const dynamic = "force-dynamic";
 
@@ -17,9 +18,9 @@ export default async function DashboardPage() {
   const session = await requireSession();
   const limits = getPlanLimits(session.plan);
 
-  const [savedCount, generationUsage, recentPrompts] = await Promise.all([
+  const [savedCount, usageSnapshot, recentPrompts] = await Promise.all([
     prisma.savedPrompt.count({ where: { userId: session.id } }),
-    getGenerationUsage(session.id, session.plan),
+    getUserUsageSnapshot(session.id, session.plan),
     prisma.savedPrompt.findMany({
       where: { userId: session.id },
       orderBy: { updatedAt: "desc" },
@@ -31,8 +32,8 @@ export default async function DashboardPage() {
   const maxPrompts =
     limits.maxSavedPrompts === Infinity ? "∞" : limits.maxSavedPrompts;
   const generationProgress = {
-    current: generationUsage.used,
-    max: generationUsage.limit,
+    current: usageSnapshot.used,
+    max: usageSnapshot.limit,
   };
 
   const savedProgress =
@@ -69,14 +70,13 @@ export default async function DashboardPage() {
       >
         <StatsCard
           label={`Generations ${
-            generationUsage.period === "day" ? "today" : "this month"
+            usageSnapshot.period === "daily" ? "today" : "this month"
           }`}
-          value={`${generationUsage.used} / ${generationUsage.limit}`}
-          description={
-            generationUsage.period === "day"
-              ? "Resets at midnight UTC"
-              : "Resets monthly at 00:00 UTC"
-          }
+          value={getRemainingGenerationsLabel(
+            session.plan,
+            usageSnapshot.remaining,
+          )}
+          description={`${usageSnapshot.used} / ${usageSnapshot.limit} used`}
           icon="✦"
           progress={generationProgress}
           href="/generate"
