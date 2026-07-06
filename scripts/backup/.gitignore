@@ -1,0 +1,6 @@
+*.dump
+*.dump.age
+*.sha256
+restore-work/
+*.age-key*
+backup-key.txt
