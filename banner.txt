@@ -1,0 +1,4 @@
+Как убрать после запуска
+
+1. Удалить src/components/layout/development-banner.tsx
+2. Убрать импорты и <DevelopmentBanner /> из page.tsx и dashboard/page.tsx
