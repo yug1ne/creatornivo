@@ -9,11 +9,19 @@ source "${SCRIPT_DIR}/lib/common.sh"
 
 SKIP_UPLOAD="${SKIP_UPLOAD:-0}"
 SKIP_RETENTION="${SKIP_RETENTION:-0}"
+PG_DUMP="${PG_DUMP:-pg_dump}"
 
-require_cmd pg_dump
+if [[ ! -x "${PG_DUMP}" ]] && ! command -v "${PG_DUMP}" >/dev/null 2>&1; then
+  echo "error: pg_dump not found: ${PG_DUMP}" >&2
+  exit 1
+fi
+
 require_cmd age
 require_cmd aws
 verify_backup_env
+
+echo "using pg_dump: ${PG_DUMP}"
+"${PG_DUMP}" --version
 
 basename="$(backup_basename)"
 dump_file="${basename}.dump"
@@ -27,7 +35,7 @@ encrypted_path="${work_dir}/${encrypted_file}"
 echo "starting backup: ${basename}"
 echo "running pg_dump (custom format, compressed)"
 
-pg_dump "${BACKUP_DATABASE_URL}" \
+"${PG_DUMP}" "${BACKUP_DATABASE_URL}" \
   --format=custom \
   --no-owner \
   --no-acl \
