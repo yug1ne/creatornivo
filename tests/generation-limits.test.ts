@@ -693,11 +693,16 @@ test("missing OpenAI API key disables generation before reservation", () => {
   const configurationCheck = routeSource.indexOf(
     "if (!isAIProviderConfigured())",
   );
+  const usageCheck = routeSource.indexOf(
+    "await getRemainingGenerations(userId, user.plan)",
+  );
   const reservation = routeSource.indexOf("await reserveGeneration");
 
   assert.ok(configurationCheck >= 0);
-  assert.ok(reservation > configurationCheck);
+  assert.ok(usageCheck > configurationCheck);
+  assert.ok(reservation > usageCheck);
   assert.match(routeSource, /code: "generation_disabled"/);
+  assert.match(routeSource, /await incrementUsage\(userId, getUsagePeriodForPlan/);
 });
 
 test("successful generation usage is reconciled from the server", async () => {

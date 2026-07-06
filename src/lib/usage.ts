@@ -143,6 +143,13 @@ export async function incrementUsage(
   }
 }
 
+/** Maps plan billing period to UserUsage.period column value. */
+export function getUsagePeriodForPlan(plan: Plan): UsagePeriod {
+  return getGenerationPolicy(plan).period === "day"
+    ? USAGE_PERIOD.DAILY
+    : USAGE_PERIOD.MONTHLY;
+}
+
 /**
  * Remaining generations for the user's plan in the current period.
  * Free: 5/day (UTC). Pro: 100/month (UTC).

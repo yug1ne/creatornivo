@@ -12,6 +12,12 @@ import {
   reserveGeneration,
   validateUserInput,
 } from "@/lib/generation/usage-service";
+import {
+  getRemainingGenerations,
+  getUsagePeriodForPlan,
+  incrementUsage,
+  UsageError,
+} from "@/lib/usage";
 import { assertTemplateAccess } from "@/lib/templates/queries";
 import {
   fillPromptTemplate,
@@ -120,6 +126,39 @@ export async function POST(request: Request) {
       );
     }
 
+    const userId = session.id;
+    if (!userId) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    // UserUsage quota (Stage 2) — checked before reservation/idempotency flow
+    let remaining: number;
+    try {
+      remaining = await getRemainingGenerations(userId, user.plan);
+    } catch (error) {
+      if (error instanceof UsageError) {
+        console.error("UserUsage check failed:", error);
+        return NextResponse.json(
+          {
+            error: "Unable to verify generation limit. Please try again.",
+            code: "usage_check_failed",
+          },
+          { status: 500 },
+        );
+      }
+      throw error;
+    }
+
+    if (remaining <= 0) {
+      return NextResponse.json(
+        {
+          error: "Generation limit reached for today/month",
+          code: "quota",
+        },
+        { status: 429 },
+      );
+    }
+
     const filledPrompt = fillPromptTemplate(template.prompt, body.values);
     const reservation = await reserveGeneration({
       requestId,
@@ -157,6 +196,17 @@ export async function POST(request: Request) {
             },
             new Date(),
           );
+
+          // Count only completed generations toward UserUsage (after DB persist)
+          try {
+            await incrementUsage(userId, getUsagePeriodForPlan(user.plan));
+          } catch (error) {
+            // Stream already succeeded — log for manual reconciliation
+            console.error(
+              "Failed to increment UserUsage after successful generation:",
+              error,
+            );
+          }
         },
         onError: ({ error: streamError, inputTokens, outputTokens }) =>
           prismaGenerationReservationStore.fail(
