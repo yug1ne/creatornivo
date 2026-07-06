@@ -13,6 +13,140 @@ function Require-Command {
     }
 }
 
+function Remove-DockerContainer {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$Name
+    )
+
+    $prevErrorAction = $ErrorActionPreference
+    $nativePreferenceRestored = $false
+    if (Test-Path variable:PSNativeCommandUseErrorActionPreference) {
+        $prevNative = $PSNativeCommandUseErrorActionPreference
+        $PSNativeCommandUseErrorActionPreference = $false
+        $nativePreferenceRestored = $true
+    }
+
+    try {
+        $ErrorActionPreference = 'Continue'
+        docker rm -f $Name 2>$null | Out-Null
+        # Exit code 1 = container not found (acceptable during cleanup)
+        if ($LASTEXITCODE -gt 1) {
+            throw "docker rm -f $Name failed with exit code $LASTEXITCODE"
+        }
+    }
+    finally {
+        $ErrorActionPreference = $prevErrorAction
+        if ($nativePreferenceRestored) {
+            $PSNativeCommandUseErrorActionPreference = $prevNative
+        }
+    }
+}
+
+function Test-DrillPgRestoreLineIgnorable {
+    param([Parameter(Mandatory = $true)][string]$Line)
+
+    return $Line -match 'supabase_vault'
+}
+
+function Invoke-DrillPgRestore {
+    param(
+        [Parameter(Mandatory = $true)][string]$ContainerName,
+        [Parameter(Mandatory = $true)][string]$DumpPath,
+        [string]$DbUser = "postgres",
+        [string]$DbName = "postgres"
+    )
+
+    $prevErrorAction = $ErrorActionPreference
+    $nativePreferenceRestored = $false
+    if (Test-Path variable:PSNativeCommandUseErrorActionPreference) {
+        $prevNative = $PSNativeCommandUseErrorActionPreference
+        $PSNativeCommandUseErrorActionPreference = $false
+        $nativePreferenceRestored = $true
+    }
+
+    try {
+        $ErrorActionPreference = 'Continue'
+        $output = docker exec $ContainerName pg_restore `
+            -U $DbUser `
+            -d $DbName `
+            --no-owner `
+            --no-acl `
+            $DumpPath 2>&1
+        $exitCode = $LASTEXITCODE
+
+        $lines = @($output | ForEach-Object { "$_" })
+        foreach ($line in $lines) {
+            if ([string]::IsNullOrWhiteSpace($line)) {
+                continue
+            }
+            if (Test-DrillPgRestoreLineIgnorable -Line $line) {
+                Write-Warning "pg_restore (ignored): $line"
+                continue
+            }
+            Write-Host $line
+        }
+
+        # 0 = clean; 1 = completed with warnings (expected for local drill restores)
+        if ($exitCode -gt 1) {
+            throw "pg_restore failed with exit code $exitCode"
+        }
+        if ($exitCode -eq 1) {
+            Write-Warning "pg_restore completed with warnings (exit code 1)"
+        }
+
+        return $exitCode
+    }
+    finally {
+        $ErrorActionPreference = $prevErrorAction
+        if ($nativePreferenceRestored) {
+            $PSNativeCommandUseErrorActionPreference = $prevNative
+        }
+    }
+}
+
+function Get-DockerPsqlCount {
+    param(
+        [Parameter(Mandatory = $true)][string]$ContainerName,
+        [Parameter(Mandatory = $true)][string]$TableSql,
+        [string]$DbUser = "postgres",
+        [string]$DbName = "postgres"
+    )
+
+    $prevErrorAction = $ErrorActionPreference
+    $nativePreferenceRestored = $false
+    if (Test-Path variable:PSNativeCommandUseErrorActionPreference) {
+        $prevNative = $PSNativeCommandUseErrorActionPreference
+        $PSNativeCommandUseErrorActionPreference = $false
+        $nativePreferenceRestored = $true
+    }
+
+    $query = "SELECT count(*) FROM $TableSql;"
+
+    try {
+        $ErrorActionPreference = 'Continue'
+        $result = docker exec $ContainerName psql -U $DbUser -d $DbName -Atqc $query 2>&1
+        if ($LASTEXITCODE -ne 0) {
+            $detail = @($result | ForEach-Object { "$_" }) -join '; '
+            throw "psql count query failed for $TableSql (exit $LASTEXITCODE): $detail"
+        }
+
+        $text = @($result | ForEach-Object { "$_" }) -join "`n"
+        $text = $text.Trim()
+        if ([string]::IsNullOrWhiteSpace($text)) {
+            throw "psql count query returned no output for $TableSql"
+        }
+
+        return $text
+    }
+    finally {
+        $ErrorActionPreference = $prevErrorAction
+        if ($nativePreferenceRestored) {
+            $PSNativeCommandUseErrorActionPreference = $prevNative
+        }
+    }
+}
+
 function Require-Env {
     param([Parameter(Mandatory = $true)][string]$Name)
 

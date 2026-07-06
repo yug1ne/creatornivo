@@ -20,10 +20,6 @@ $ErrorActionPreference = "Stop"
 
 Require-Command "docker"
 
-function Remove-DrillContainer {
-    docker rm -f $ContainerName 2>$null | Out-Null
-}
-
 try {
     Write-Host "=== Creatornivo restore drill ==="
 
@@ -43,7 +39,7 @@ try {
     }
 
     Write-Host "Starting temporary postgres container on port $HostPort"
-    Remove-DrillContainer
+    Remove-DockerContainer -Name $ContainerName
     docker run -d `
         --name $ContainerName `
         -e "POSTGRES_PASSWORD=$DbPassword" `
@@ -78,23 +74,15 @@ try {
 
     $sw = [System.Diagnostics.Stopwatch]::StartNew()
     Write-Host "Restoring decrypted dump into drill database (pg_restore inside container)"
-    docker exec $ContainerName pg_restore `
-        -U postgres `
-        -d postgres `
-        --no-owner `
-        --no-acl `
-        $containerDumpPath
-    if ($LASTEXITCODE -gt 1) {
-        throw "pg_restore failed with exit code $LASTEXITCODE"
-    }
+    Invoke-DrillPgRestore -ContainerName $ContainerName -DumpPath $containerDumpPath | Out-Null
     $sw.Stop()
     Write-Host "Restore elapsed: $($sw.Elapsed.TotalSeconds.ToString('0.0'))s"
 
     Write-Host "Running verification queries"
-    $userCount = (docker exec $ContainerName psql -U postgres -Atqc 'SELECT count(*) FROM "User";').Trim()
-    $generationCount = (docker exec $ContainerName psql -U postgres -Atqc 'SELECT count(*) FROM "Generation";').Trim()
-    $subscriptionCount = (docker exec $ContainerName psql -U postgres -Atqc 'SELECT count(*) FROM "Subscription";').Trim()
-    $migrationCount = (docker exec $ContainerName psql -U postgres -Atqc 'SELECT count(*) FROM "_prisma_migrations";').Trim()
+    $userCount = Get-DockerPsqlCount -ContainerName $ContainerName -TableSql '"user"'
+    $generationCount = Get-DockerPsqlCount -ContainerName $ContainerName -TableSql "generation"
+    $subscriptionCount = Get-DockerPsqlCount -ContainerName $ContainerName -TableSql "subscription"
+    $migrationCount = Get-DockerPsqlCount -ContainerName $ContainerName -TableSql "_prisma_migrations"
 
     Write-Host "User count: $userCount"
     Write-Host "Generation count: $generationCount"
@@ -111,5 +99,5 @@ try {
     Write-Host "=== DRILL PASS ==="
 }
 finally {
-    Remove-DrillContainer
+    Remove-DockerContainer -Name $ContainerName
 }
