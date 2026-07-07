@@ -19,6 +19,24 @@ Creatornivo — честный Early Access продукт.
 
 Перед коммитом маркетингового/UI-контента проверяй: `rg "app\.creatornivo" src/` — **0 совпадений**.
 
+## 1.2 Текущий фокус разработки (Июль 2026)
+
+> **Приоритет сейчас — качество опыта существующих и новых пользователей**, а не добавление большого количества нового функционала.
+
+Технический фундамент в основном закрыт: бэкапы + DR, Sentry, Health Check, серверные квоты генераций, privacy (export/delete), password reset, Logout в protected-зоне.
+
+**Активные направления:**
+
+| Направление | Что делать |
+|-------------|------------|
+| **Полировка UX** | Тексты, empty/error states, консистентность UI, мелкие friction points в Dashboard/Generate/Library/Settings. |
+| **Onboarding и удержание** | Доработка tour для новых пользователей: register → first template → first generation → save to library. |
+| **Email-коммуникация** | Базовые transactional emails: welcome, Pro purchase confirmation, quota warning (80%/100%). |
+
+**Не приоритет сейчас:** кастомные шаблоны, one-time generation packs, analytics/SEO, глубокое stress-тестирование генераций на production (отложено — риск расходов и нагрузки). См. `roadmap.md` → Backlog.
+
+**Blockers для Live** (параллельно, не перескакивать): auth incident monitoring (этап 1), Paddle Live (8), controlled purchase test (9), legal review (7).
+
 ## 2. Обязательный безопасный workflow (выполнять всегда)
 
 **Никогда не делай изменения "одним махом".** Проект сложный и важный.
@@ -51,18 +69,18 @@ Creatornivo — честный Early Access продукт.
 | 3    | Password reset + auth rate limiting         | HIGH          | DONE       | 2026-07-05: forgot/reset, Resend, Upstash limits, 20/20 tests PASS |
 | 4    | Account deletion + personal-data export     | BLOCKER       | DONE       | 4.1–4.4 DONE 2026-07-05: export, delete, UI polish, legal copy, runbook §13 |
 | 5    | Backups + restore drill                     | BLOCKER       | DONE       | 2026-07-06: GitHub Actions → R2, drill PASS; R2 Lifecycle rule — вручную (roadmap §14) |
-| 6    | Monitoring + global OpenAI budget           | HIGH          | -          | - |
+| 6    | Monitoring + global OpenAI budget           | HIGH          | PARTIAL    | Sentry + `/api/health` DONE; global OpenAI budget breaker — pending |
 | 7    | Legal owner review                          | REVIEW        | -          | - |
 | 8    | Paddle Live onboarding                      | BLOCKER       | BLOCKER    | Domain, keys, webhook |
 | 9    | Controlled Live purchase + refund test      | BLOCKER       | BLOCKER    | Реальная проверка |
 | 10   | Resources + branded UX                      | После blockers| -          | - |
 
-**Текущий фокус сессии**: Этап 1 (воспроизведение immediate-login incident + root cause evidence). Этап 5 закрыт (2026-07-06).
+**Текущий фокус сессии**: UX-полировка, onboarding, email-уведомления (см. §1.2). Auth incident — мониторинг (этап 1). Blockers Live — этапы 7–9.
 
 ## 4. Правила по ключевым областям
 
 ### Auth и immediate-login incident
-- Самая приоритетная проблема сейчас.
+- Мониторинг реальных инцидентов (этап 1); не блокирует UX-работу, но этап 2 — BLOCKER при подтверждённом root cause.
 - Сначала опубликовать диагностику (staged файлы), потом воспроизводить баг в production.
 - Никогда не добавлять `setTimeout`, искусственные retry или костыли вместо исправления настоящей причины.
 - Возможные причины (проверять по логам): `database_error/P2024`, `user_not_found`, `bcrypt_mismatch`, JWT/session error.

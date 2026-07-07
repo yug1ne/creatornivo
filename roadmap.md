@@ -15,6 +15,33 @@
 | Legal pages                | REVIEW             | Фактически улучшены, но не являются юридическим заключением. |
 | Resources / Guides         | NOT ADDED          | Архитектура и список тем есть, страницы ещё не созданы. |
 | Backups + Disaster Recovery | DONE (2026-07-06) | GitHub Actions → R2 (age-encrypted); restore drill PASS; R2 Lifecycle rule — настроить вручную (§14). |
+| Sentry (error monitoring)  | DONE               | Server/edge/client SDK; tunnel route в middleware; без prompt content в событиях. |
+| Health Check               | DONE               | `GET /api/health` — DB probe, version, без auth; для uptime-мониторов. |
+| Система лимитов генераций  | DONE               | `UserUsage` counters, `getUserUsageSnapshot`, серверные квоты Free/Pro, UI usage banner. |
+| Logout (Sign out)          | DONE (2026-07-07)  | Кнопка в сайдбаре protected-зоны; `signOut({ redirectTo: "/" })` + confirm. |
+| Домен на главной           | DONE (2026-07-07)  | Mockup-иллюстрации: `creatornivo.com` вместо `app.creatornivo.com`; правило в AGENTS.md §1.1. |
+
+## Текущие приоритеты (Июль 2026)
+
+> **Сдвиг фокуса:** технический фундамент (бэкапы, мониторинг, квоты, privacy, auth hardening) в основном закрыт. Основной приоритет — **пользовательский опыт** и подготовка к запуску, а не массовое добавление нового функционала.
+
+| Приоритет | Задача | Ожидаемый результат |
+|-----------|--------|----------------------|
+| **1** | Полировка UX и текстов | Единый тон copy, понятные empty/error states, микро-улучшения Dashboard/Generate/Library/Settings, убрать development banner перед launch. |
+| **2** | Onboarding новых пользователей | Доработать существующий tour: первый визит → template → generate → save; снизить drop-off после регистрации. |
+| **3** | Базовые email-уведомления | Resend: welcome после регистрации, подтверждение покупки Pro, предупреждение при исчерпании лимита (80%/100%). |
+
+**Параллельно (blockers для Live, без перескакивания):** этапы 1–2 auth incident (мониторинг), Paddle Live onboarding (8), controlled purchase/refund test (9), legal review (7).
+
+## Backlog / Будущие идеи
+
+| Идея | Статус | Комментарий |
+|------|--------|-------------|
+| Кастомные шаблоны пользователей | Backlog | Создание и сохранение собственных templates. |
+| Статьи + кастомные промпты | Backlog | Resources/Guides + генерация промптов на основе статей. |
+| Докупка генераций (one-time purchase) | Backlog | Разовая покупка доп. квоты без смены плана. |
+| Аналитика, Cookies, SEO | Backlog | Product analytics, cookie consent, meta/OG/sitemap. |
+| Глубокое тестирование системы генераций | **Отложено** | Stress/load/idempotency/regression suite на production-like данных — **риск для продакшена** (расход OpenAI, нагрузка на DB). Вернуться после Live launch и стабилизации UX. |
 
 ## 10. Приоритетная дорожная карта
 
@@ -26,7 +53,7 @@
 | 3    | Password reset + auth rate limiting                 | Восстановление доступа и brute-force protection          | DONE (2026-07-05: forgot/reset flow, Resend email, Upstash rate limits, 20/20 tests PASS, immediate-login не сломан) |
 | 4    | Account deletion + personal-data export runbook     | Проверяемый DSR workflow и identity verification         | DONE (4.1–4.4, 2026-07-05: export, delete, UI polish, legal copy, runbook §13) |
 | 5    | Backups + restore drill                             | Регулярные dumps и подтверждённое восстановление         | DONE (2026-07-06) |
-| 6    | Monitoring + global OpenAI budget                   | Alerts и защита от неожиданных расходов                  | HIGH            |
+| 6    | Monitoring + global OpenAI budget                   | Alerts и защита от неожиданных расходов                  | PARTIAL (Sentry + health DONE; global budget — pending) |
 | 7    | Legal owner review                                  | Решения по governing law, withdrawal, liability, privacy, taxes | REVIEW     |
 | 8    | Paddle Live onboarding                              | Domain approval, Live products/prices/keys/webhook/default link | BLOCKER    |
 | 9    | Controlled Live purchase/refund test                | End-to-end validation на малой сумме                     | BLOCKER         |
@@ -225,7 +252,8 @@ npx prisma migrate deploy
 |----------------------|---------------------------------------------|-------------|--------------------|
 | Database backups     | GitHub Actions daily + R2 (age); drill PASS   | DONE        | Настроить R2 Lifecycle rule (§14); мониторить failed workflow |
 | Supabase/Prisma pooler | Работает, но возможен transient incident  | IN PROGRESS | Auth diagnostics на production; transient incident в smoke test B не воспроизведён |
-| Error monitoring     | Нет production alerting                     | HIGH        | Webhook/auth/5xx alerts без prompt content |
+| Error monitoring     | Sentry SDK на production (DSN в Vercel)     | DONE        | Настроить алерты owner (5xx, webhook failures); без prompt content |
+| Health check         | `GET /api/health`                           | DONE        | Подключить внешний uptime monitor |
 | Global OpenAI budget | Есть per-user quota                         | HIGH        | Daily/monthly global breaker и owner alert |
 | Secrets              | Vercel env; раскрытый ключ ранее отозван    | REVIEW      | Rotation runbook, не показывать в screenshots |
 | Support mailbox      | Создан                                      | HIGH        | Deliverability test |
