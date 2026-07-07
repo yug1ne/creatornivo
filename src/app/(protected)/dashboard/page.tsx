@@ -114,10 +114,11 @@ export default async function DashboardPage() {
           <CardContent className="flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <p className="font-semibold text-foreground">
-                Unlock full potential
+                Need more generations?
               </p>
               <p className="mt-1 text-sm text-muted-foreground">
-                Pro templates, 100 generations per month, export to .md and .txt
+                Pro gives you 100/month, all templates, and export to .md /
+                .txt.
               </p>
             </div>
             <Link href="/pricing" className={buttonVariants()}>

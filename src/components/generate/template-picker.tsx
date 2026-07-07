@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 
 import {
@@ -17,8 +17,29 @@ import {
 } from "@/config/template-groups";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { Tooltip } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils/cn";
 import type { TemplateListItem } from "@/types/template";
+
+function LockIcon() {
+  return (
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="shrink-0 text-muted-foreground"
+      aria-hidden
+    >
+      <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+    </svg>
+  );
+}
 
 interface TemplatePickerProps {
   templates: TemplateListItem[];
@@ -33,6 +54,7 @@ export function TemplatePicker({
   userPlan,
   onSelect,
 }: TemplatePickerProps) {
+  const router = useRouter();
   const [search, setSearch] = useState("");
   const [group, setGroup] = useState<TemplateGroupId>("all");
 
@@ -118,19 +140,20 @@ export function TemplatePicker({
         ) : (
           filtered.map((template) => {
             const isSelected = selectedId === template.id;
+            const isLocked = template.isLocked;
 
-            return (
+            const card = (
               <button
-                key={template.id}
                 type="button"
-                onClick={() => onSelect(template)}
-                disabled={template.isLocked}
+                onClick={() =>
+                  isLocked ? router.push("/pricing") : onSelect(template)
+                }
                 className={cn(
                   "w-full rounded-[var(--radius-lg)] border p-4 text-left transition-all",
                   isSelected
                     ? "border-primary bg-accent shadow-[var(--shadow-sm)]"
-                    : template.isLocked
-                      ? "cursor-not-allowed border-border opacity-50"
+                    : isLocked
+                      ? "cursor-pointer border-border bg-muted/30 opacity-70 hover:border-primary/30 hover:opacity-90"
                       : "border-border hover:border-primary/40 hover:shadow-[var(--shadow-sm)]",
                 )}
               >
@@ -139,6 +162,7 @@ export function TemplatePicker({
                     className={cn(
                       "flex h-9 w-9 shrink-0 items-center justify-center rounded-[var(--radius-md)] text-xs font-bold",
                       getCategoryColor(template.category),
+                      isLocked && "opacity-60",
                     )}
                     aria-hidden
                   >
@@ -146,8 +170,9 @@ export function TemplatePicker({
                   </span>
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center justify-between gap-2">
-                      <span className="truncate text-sm font-medium text-foreground">
-                        {template.title}
+                      <span className="flex min-w-0 items-center gap-1.5 truncate text-sm font-medium text-foreground">
+                        {isLocked && <LockIcon />}
+                        <span className="truncate">{template.title}</span>
                       </span>
                       <Badge
                         variant={
@@ -163,20 +188,22 @@ export function TemplatePicker({
                     <p className="mt-1 line-clamp-2 text-xs text-muted-foreground">
                       {template.description}
                     </p>
-                    {template.isLocked && (
-                      <p className="mt-2 text-xs text-warning">
-                        <Link
-                          href="/pricing"
-                          className="underline hover:no-underline"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          Pro required
-                        </Link>
-                      </p>
-                    )}
                   </div>
                 </div>
               </button>
+            );
+
+            if (!isLocked) {
+              return <div key={template.id}>{card}</div>;
+            }
+
+            return (
+              <Tooltip
+                key={template.id}
+                content="Pro template – upgrade to unlock"
+              >
+                {card}
+              </Tooltip>
             );
           })
         )}

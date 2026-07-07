@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 
+import { GenerateWorkspaceSkeleton } from "@/components/generate/generate-workspace-skeleton";
 import { GenerateWorkspace } from "@/components/generate/generate-workspace";
 import { PageHeader } from "@/components/ui/page-header";
 import { canExportContent } from "@/lib/export/permissions";
@@ -26,11 +27,7 @@ export default async function GeneratePage() {
         description="Fill in parameters, review the prompt, and get content in real time"
       />
 
-      <Suspense
-        fallback={
-          <div className="text-sm text-zinc-500">Loading templates...</div>
-        }
-      >
+      <Suspense fallback={<GenerateWorkspaceSkeleton />}>
         <GenerateWorkspace
           templates={templates}
           userPlan={session.plan}
