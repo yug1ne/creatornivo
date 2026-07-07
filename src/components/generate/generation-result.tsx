@@ -100,8 +100,9 @@ export function GenerationResult({
                 onClick={handleSave}
                 disabled={isSaving || !canSave}
                 title={saveLimitMessage ?? undefined}
+                data-onboarding="save-to-library"
               >
-                {isSaving ? "Saving..." : "Save"}
+                {isSaving ? "Saving..." : "Save to library"}
               </Button>
             )}
 

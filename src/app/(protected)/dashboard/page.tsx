@@ -1,11 +1,13 @@
 import Link from "next/link";
 
+import { DashboardRecentSaves } from "@/components/dashboard/dashboard-recent-saves";
 import { DevelopmentBanner } from "@/components/layout/development-banner";
 import { StatsCard } from "@/components/dashboard/stats-card";
 import { PageHeader } from "@/components/ui/page-header";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
+
 import { getPlanLimits, PLANS } from "@/config/plans";
 import { requireSession } from "@/lib/auth/session";
 import { prisma } from "@/lib/db";
@@ -101,39 +103,14 @@ export default async function DashboardPage() {
         />
       </div>
 
-      {recentPrompts.length > 0 && (
-        <Card className="mt-8">
-          <CardHeader>
-            <CardTitle>Recent saves</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3 pt-0">
-            {recentPrompts.map((prompt) => (
-              <Link
-                key={prompt.id}
-                href={`/library/${prompt.id}`}
-                className="flex items-center justify-between gap-4 rounded-[var(--radius-md)] border border-border p-4 transition-colors hover:bg-muted/50"
-              >
-                <div className="min-w-0">
-                  <p className="truncate font-medium text-foreground">
-                    {prompt.title}
-                  </p>
-                  {prompt.template && (
-                    <p className="mt-0.5 text-xs text-muted-foreground">
-                      {prompt.template.title}
-                    </p>
-                  )}
-                </div>
-                <span className="shrink-0 text-xs text-muted-foreground">
-                  {prompt.updatedAt.toLocaleDateString("en-US", {
-                    day: "numeric",
-                    month: "short",
-                  })}
-                </span>
-              </Link>
-            ))}
-          </CardContent>
-        </Card>
-      )}
+      <DashboardRecentSaves
+        prompts={recentPrompts.map((prompt) => ({
+          id: prompt.id,
+          title: prompt.title,
+          updatedAt: prompt.updatedAt,
+          templateTitle: prompt.template?.title ?? null,
+        }))}
+      />
 
       {session.plan === PLANS.FREE && (
         <Card className="mt-8 border-primary/20 bg-accent/30">

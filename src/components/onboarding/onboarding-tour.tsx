@@ -5,7 +5,10 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
-import { ONBOARDING_STEPS } from "@/config/onboarding";
+import {
+  getOnboardingStarterGenerateUrl,
+  ONBOARDING_STEPS,
+} from "@/config/onboarding";
 import { buttonVariants } from "@/components/ui/button";
 import {
   markOnboardingCompletedLocally,
@@ -356,11 +359,11 @@ export function OnboardingTour({ userId }: OnboardingTourProps) {
 
             {isLastStep ? (
               <Link
-                href="/generate"
+                href={getOnboardingStarterGenerateUrl()}
                 onClick={() => void completeTour()}
                 className={buttonVariants({ size: "sm" })}
               >
-                Go to generation
+                Start with LinkedIn Post
               </Link>
             ) : (
               <button
