@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { ExportButtons } from "@/components/export/export-buttons";
 import { Button } from "@/components/ui/button";
@@ -21,6 +21,10 @@ interface GenerationResultProps {
   savedPromptId?: string | null;
 }
 
+function isSaveLimitError(message: string): boolean {
+  return /save limit|limit reached/i.test(message);
+}
+
 export function GenerationResult({
   content,
   model,
@@ -35,7 +39,14 @@ export function GenerationResult({
   const [copied, setCopied] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [saveError, setSaveError] = useState("");
-  const savedId = initialSavedId;
+  const [savedId, setSavedId] = useState<string | null>(initialSavedId ?? null);
+  const [saveSuccessFlash, setSaveSuccessFlash] = useState(false);
+
+  useEffect(() => {
+    if (initialSavedId) {
+      setSavedId(initialSavedId);
+    }
+  }, [initialSavedId]);
 
   async function handleCopy() {
     if (!content) return;
@@ -47,6 +58,7 @@ export function GenerationResult({
 
   async function handleSave() {
     setSaveError("");
+    setSaveSuccessFlash(false);
     setIsSaving(true);
 
     const result = await onSave();
@@ -54,6 +66,13 @@ export function GenerationResult({
 
     if (result.error) {
       setSaveError(result.error);
+      return;
+    }
+
+    if (result.id) {
+      setSavedId(result.id);
+      setSaveSuccessFlash(true);
+      window.setTimeout(() => setSaveSuccessFlash(false), 2000);
     }
   }
 
@@ -70,6 +89,9 @@ export function GenerationResult({
                 <span className="mr-1.5 inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-success" />
                 Generating...
               </Badge>
+            )}
+            {saveSuccessFlash && (
+              <Badge variant="success">Saved to library</Badge>
             )}
           </div>
           <p className="mt-1 font-mono text-xs text-muted-foreground">{model}</p>
@@ -122,9 +144,32 @@ export function GenerationResult({
       </CardContent>
 
       {saveError && (
-        <p className="border-t border-border px-6 py-3 text-xs text-destructive">
-          {saveError}
-        </p>
+        <div
+          className="border-t border-destructive/20 bg-destructive/10 px-6 py-3 text-sm text-destructive"
+          role="alert"
+        >
+          <p>{saveError}</p>
+          <div className="mt-2 flex flex-wrap items-center gap-3">
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={handleSave}
+              disabled={isSaving}
+              className="border-destructive/30 bg-background/80 text-destructive hover:bg-background"
+            >
+              {isSaving ? "Saving..." : "Try again"}
+            </Button>
+            {(saveLimitMessage || isSaveLimitError(saveError)) && (
+              <Link
+                href="/library"
+                className="text-sm font-medium underline hover:no-underline"
+              >
+                Manage library
+              </Link>
+            )}
+          </div>
+        </div>
       )}
     </Card>
   );

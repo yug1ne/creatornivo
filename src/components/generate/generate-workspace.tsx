@@ -456,7 +456,27 @@ export function GenerateWorkspace({
                   }`}
                   role="alert"
                 >
-                  <p>{error.message}</p>
+                  <div className="flex flex-wrap items-start justify-between gap-3">
+                    <p className="min-w-0 flex-1">{error.message}</p>
+                    {error.code !== "quota_exceeded" && error.code !== "quota" && (
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={handleGenerate}
+                        disabled={
+                          isStreaming || !isFormValid || !canGenerate
+                        }
+                        className={
+                          error.code === "generation_disabled"
+                            ? "border-warning/40 bg-background/80 hover:bg-background"
+                            : "bg-background/80 hover:bg-background"
+                        }
+                      >
+                        Try again
+                      </Button>
+                    )}
+                  </div>
                   {error.showUpgradeLink && (
                     <Link
                       href="/pricing"

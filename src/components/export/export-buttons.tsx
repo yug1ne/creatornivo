@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 
+import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { EXPORT_UPGRADE_MESSAGE } from "@/lib/export/permissions";
 import { cn } from "@/lib/utils/cn";
@@ -14,6 +15,42 @@ interface ExportButtonsProps {
   content?: string;
   promptId?: string;
   size?: "sm" | "md";
+}
+
+const EXPORT_OPTIONS: {
+  format: ExportFormat;
+  label: string;
+  title: string;
+}[] = [
+  {
+    format: "md",
+    label: "Markdown",
+    title: "Download as Markdown (.md)",
+  },
+  {
+    format: "txt",
+    label: "Plain text",
+    title: "Download as plain text (.txt)",
+  },
+];
+
+function LockIcon() {
+  return (
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+    </svg>
+  );
 }
 
 async function downloadFromResponse(response: Response) {
@@ -45,14 +82,21 @@ export function ExportButtons({
   const buttonClass = buttonVariants({
     variant: "outline",
     size: size === "sm" ? "sm" : "md",
-    className: cn(size === "md" && "text-sm"),
+    className: cn(
+      "inline-flex items-center gap-1.5",
+      size === "md" && "text-sm",
+    ),
   });
+
+  const lockedButtonClass = cn(
+    buttonClass,
+    "cursor-pointer opacity-75 hover:opacity-100",
+  );
 
   async function handleExport(format: ExportFormat) {
     setMessage("");
 
     if (!canExport) {
-      setMessage(EXPORT_UPGRADE_MESSAGE);
       return;
     }
 
@@ -93,22 +137,35 @@ export function ExportButtons({
   return (
     <div>
       <div className="flex flex-wrap gap-2">
-        <button
-          type="button"
-          onClick={() => handleExport("md")}
-          disabled={Boolean(isExporting)}
-          className={buttonClass}
-        >
-          {isExporting === "md" ? "Downloading..." : ".md"}
-        </button>
-        <button
-          type="button"
-          onClick={() => handleExport("txt")}
-          disabled={Boolean(isExporting)}
-          className={buttonClass}
-        >
-          {isExporting === "txt" ? "Downloading..." : ".txt"}
-        </button>
+        {EXPORT_OPTIONS.map((option) =>
+          canExport ? (
+            <button
+              key={option.format}
+              type="button"
+              onClick={() => handleExport(option.format)}
+              disabled={Boolean(isExporting)}
+              title={option.title}
+              className={buttonClass}
+            >
+              {isExporting === option.format
+                ? "Downloading..."
+                : `Export ${option.label}`}
+            </button>
+          ) : (
+            <Link
+              key={option.format}
+              href="/pricing"
+              title={`${option.title} — Pro plan required`}
+              className={lockedButtonClass}
+            >
+              <LockIcon />
+              <span>Export {option.label}</span>
+              <Badge variant="pro" className="px-1.5 py-0 text-[10px]">
+                Pro
+              </Badge>
+            </Link>
+          ),
+        )}
       </div>
 
       {message && (
@@ -120,6 +177,10 @@ export function ExportButtons({
             </Link>
           )}
         </p>
+      )}
+
+      {!canExport && !message && (
+        <p className="sr-only">{EXPORT_UPGRADE_MESSAGE}</p>
       )}
     </div>
   );
