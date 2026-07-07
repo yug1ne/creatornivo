@@ -7,6 +7,9 @@ export const earlyAccessConfig = {
     "Early Access founding price — available for a limited time.",
   bannerText: "Early Access founding price",
   badgeLabel: "Early Access",
+  /** Short status line for app-wide Early Access banner (pre-launch). */
+  statusBannerMessage:
+    "Features and limits may change while we actively improve the product.",
 } as const;
 
 export type EarlyAccessStatus = {

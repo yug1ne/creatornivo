@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 
-import { DevelopmentBanner } from "@/components/layout/development-banner";
+import { EarlyAccessStatusBanner } from "@/components/layout/early-access-status-banner";
 import { AccountDeletedBanner } from "@/components/landing/account-deleted-banner";
 import { EarlyAccessBanner } from "@/components/landing/early-access-banner";
 import { ExploreTemplatesSection } from "@/components/landing/explore-templates-section";
@@ -17,8 +17,7 @@ export default function HomePage() {
       <Suspense fallback={null}>
         <AccountDeletedBanner />
       </Suspense>
-      {/* TODO: Удалить после запуска */}
-      <DevelopmentBanner />
+      <EarlyAccessStatusBanner />
       <EarlyAccessBanner />
       <HeroSection />
       <ShowcaseSection />
