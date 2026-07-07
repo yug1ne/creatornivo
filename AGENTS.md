@@ -21,21 +21,31 @@ Creatornivo — честный Early Access продукт.
 
 ## 1.2 Текущий фокус разработки (Июль 2026)
 
-> **Приоритет сейчас — качество опыта существующих и новых пользователей**, а не добавление большого количества нового функционала.
+> **Базовый UX и email закрыты.** Приоритет сейчас — **тестирование**, оставшиеся мелкие UX-улучшения и подготовка к привлечению пользователей, а не массовое добавление нового функционала.
 
-Технический фундамент в основном закрыт: бэкапы + DR, Sentry, Health Check, серверные квоты генераций, privacy (export/delete), password reset, Logout в protected-зоне.
+Технический фундамент в основном закрыт: бэкапы + DR, Sentry, Health Check, серверные квоты генераций, privacy (export/delete), password reset, sign out в protected-зоне.
+
+**Выполнено (2026-07-07):**
+
+| Направление | Результат |
+|-------------|-----------|
+| **Полировка UX (аудит)** | Generate: quota countdown, disabled hints, `generation_disabled`, retry, skeleton loading. Dashboard: empty state + конкретный upgrade copy. Early Access banner унифицирован. Sign out modal. Pro templates: lock + tooltip на `/generate` и `/templates`. Save feedback + export labels. |
+| **Onboarding** | Tour перестроен под путь register → linkedin-post → generate → save. |
+| **Email (Resend)** | Welcome, Pro confirmation, quota warning (1 left/day), quota exhausted; idempotent dedupe, fire-and-forget. |
 
 **Активные направления:**
 
 | Направление | Что делать |
 |-------------|------------|
-| **Полировка UX** | Тексты, empty/error states, консистентность UI, мелкие friction points в Dashboard/Generate/Library/Settings. |
-| **Onboarding и удержание** | Доработка tour для новых пользователей: register → first template → first generation → save to library. |
-| **Email-коммуникация** | Базовые transactional emails: welcome, Pro purchase confirmation, quota warning (80%/100%). |
+| **Тестирование** | Smoke после деплоя: auth, generate/quota, emails (Resend), Sandbox checkout, sign out modal, locked templates. |
+| **Мелкие UX-остатки** | Library/Settings friction, branded 404/error (часть этапа 10 roadmap). |
+| **Подготовка к пользователям** | Early Access messaging, support readiness, мониторинг onboarding drop-off. |
 
 **Не приоритет сейчас:** кастомные шаблоны, one-time generation packs, analytics/SEO, глубокое stress-тестирование генераций на production (отложено — риск расходов и нагрузки). См. `roadmap.md` → Backlog.
 
 **Blockers для Live** (параллельно, не перескакивать): auth incident monitoring (этап 1), Paddle Live (8), controlled purchase test (9), legal review (7).
+
+**Production deploy (email):** `npx prisma migrate deploy` — миграции `welcome_email_sent`, `transactional_email_dedupe`, `quota_warning_email`.
 
 ## 2. Обязательный безопасный workflow (выполнять всегда)
 
@@ -73,9 +83,9 @@ Creatornivo — честный Early Access продукт.
 | 7    | Legal owner review                          | REVIEW        | -          | - |
 | 8    | Paddle Live onboarding                      | BLOCKER       | BLOCKER    | Domain, keys, webhook |
 | 9    | Controlled Live purchase + refund test      | BLOCKER       | BLOCKER    | Реальная проверка |
-| 10   | Resources + branded UX                      | После blockers| -          | - |
+| 10   | Resources + branded UX                      | После blockers| PARTIAL    | Generate skeleton DONE; branded 404/error — pending |
 
-**Текущий фокус сессии**: UX-полировка, onboarding, email-уведомления (см. §1.2). Auth incident — мониторинг (этап 1). Blockers Live — этапы 7–9.
+**Текущий фокус сессии**: тестирование, мелкие UX-остатки, подготовка к пользователям (см. §1.2). Auth incident — мониторинг (этап 1). Blockers Live — этапы 7–9.
 
 ## 4. Правила по ключевым областям
 

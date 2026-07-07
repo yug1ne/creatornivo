@@ -4,12 +4,12 @@
 |----------------------------|--------------------|-----------|
 | Главная и Pricing          | DONE               | Публичный copy очищен от fake scarcity и недоказуемых claims. |
 | Регистрация / вход         | DONE с оговоркой   | Credentials auth, bcrypt, auth diagnostics (`b643e35`), password reset и auth rate limiting (этап 3, 2026-07-05); этап 1 IN PROGRESS — мониторинг реальных инцидентов. |
-| Dashboard                  | DONE               | Показывает текущий план и серверный usage. |
-| Templates                  | DONE               | 15 templates, 8 доступны Free. |
-| Generate                   | DONE               | Серверные квоты, idempotency, streaming; без OpenAI key — безопасный 503 generation_disabled. |
+| Dashboard                  | DONE               | План, серверный usage; empty state recent saves; конкретный upgrade copy для Free. |
+| Templates                  | DONE               | 15 templates, 8 доступны Free; Pro lock + tooltip + `/pricing` (как на Generate). |
+| Generate                   | DONE               | Квоты, idempotency, streaming, 503 `generation_disabled`; UX: quota countdown, disabled hints, retry, skeleton loading. |
 | Library                    | DONE частично      | Сохранение, поиск, просмотр и экспорт работают; удаления saved items пока нет. |
 | Settings                   | DONE               | Тема, профиль, подписка, Customer Portal; Privacy & Data: export + delete + UI polish (4.1–4.3, 2026-07-05). |
-| Onboarding и mobile header | DONE               | Burger, guest/auth меню, responsive, focus, backdrop, System theme. |
+| Onboarding и mobile header | DONE               | Tour под путь register → template → generate → save; burger, responsive, System theme. |
 | Paddle Sandbox             | DONE               | Checkout, receipt, webhook, Pro, portal, update payment method, cancel at period end. |
 | Refund/chargeback logic    | DONE технически    | Существующие handlers сохраняются и проходят regression suite; Live E2E ещё не выполнен. |
 | Legal pages                | REVIEW             | Фактически улучшены, но не являются юридическим заключением. |
@@ -18,20 +18,41 @@
 | Sentry (error monitoring)  | DONE               | Server/edge/client SDK; tunnel route в middleware; без prompt content в событиях. |
 | Health Check               | DONE               | `GET /api/health` — DB probe, version, без auth; для uptime-мониторов. |
 | Система лимитов генераций  | DONE               | `UserUsage` counters, `getUserUsageSnapshot`, серверные квоты Free/Pro, UI usage banner. |
-| Logout (Sign out)          | DONE (2026-07-07)  | Кнопка в сайдбаре protected-зоны; `signOut({ redirectTo: "/" })` + confirm. |
+| Logout (Sign out)          | DONE (2026-07-07)  | Сайдбар protected-зоны; modal «Sign out of Creatornivo?» + `signOut({ redirectTo: "/" })`. |
+| Early Access banner        | DONE (2026-07-07)  | `early-access-status-banner` на `/` и всех protected-страницах; `development-banner` удалён. |
+| UX-полировка (аудит)       | DONE в основном    | 4 итерации: Generate, Dashboard, onboarding, Pro templates, save/export feedback — см. § «Что сделано по UX». |
+| Transactional email (Resend) | DONE (2026-07-07) | Welcome, Pro confirmation, quota warning (1 left), quota exhausted; dedupe + fire-and-forget. |
 | Домен на главной           | DONE (2026-07-07)  | Mockup-иллюстрации: `creatornivo.com` вместо `app.creatornivo.com`; правило в AGENTS.md §1.1. |
 
 ## Текущие приоритеты (Июль 2026)
 
-> **Сдвиг фокуса:** технический фундамент (бэкапы, мониторинг, квоты, privacy, auth hardening) в основном закрыт. Основной приоритет — **пользовательский опыт** и подготовка к запуску, а не массовое добавление нового функционала.
+> **Сдвиг фокуса:** технический фундамент и базовый UX/email закрыты в значительной степени. Текущий приоритет — **тестирование**, оставшиеся мелкие UX-улучшения, подготовка к привлечению пользователей и blockers для Live.
+
+| Приоритет | Задача | Статус / ожидаемый результат |
+|-----------|--------|------------------------------|
+| ~~**1**~~ | ~~Полировка UX и текстов~~ | **DONE в основном** (2026-07-07, UX-аудит) — см. подраздел ниже. Остаток: Library/Settings мелочи, branded 404/loading (этап 10). |
+| ~~**2**~~ | ~~Onboarding новых пользователей~~ | **DONE** — tour перестроен: register → linkedin-post template → generate → save to library. |
+| ~~**3**~~ | ~~Базовые email-уведомления~~ | **DONE** (2026-07-07) — welcome, Pro confirmation, quota warning (1 left), quota exhausted. |
 
 | Приоритет | Задача | Ожидаемый результат |
 |-----------|--------|----------------------|
-| **1** | Полировка UX и текстов | Единый тон copy, понятные empty/error states, микро-улучшения Dashboard/Generate/Library/Settings, убрать development banner перед launch. |
-| **2** | Onboarding новых пользователей | Доработать существующий tour: первый визит → template → generate → save; снизить drop-off после регистрации. |
-| **3** | Базовые email-уведомления | Resend: welcome после регистрации, подтверждение покупки Pro, предупреждение при исчерпании лимита (80%/100%). |
+| **1** | Ручное тестирование + smoke после деплоя | Register → generate → save → quota emails; Pro checkout (Sandbox); sign out modal; locked templates на `/generate` и `/templates`. |
+| **2** | Мелкие UX-остатки | Library empty/error states, Settings friction, branded error/404 (часть этапа 10). |
+| **3** | Подготовка к привлечению пользователей | Early Access messaging, onboarding metrics, готовность support mailbox. |
 
 **Параллельно (blockers для Live, без перескакивания):** этапы 1–2 auth incident (мониторинг), Paddle Live onboarding (8), controlled purchase/refund test (9), legal review (7).
+
+### Что сделано по UX (аудит, 4 итерации, 2026-07-07)
+
+| Область | Улучшения |
+|---------|-----------|
+| **Generate** | Disabled hints у кнопки Generate; единые quota messages с UTC countdown; обработка `generation_disabled`; Try again на ошибках; skeleton loading (`loading.tsx` + `GenerateWorkspaceSkeleton`); post-save flash + export labels (.md / .txt). |
+| **Dashboard** | Empty state recent saves + CTA «Start with LinkedIn Post»; конкретный upgrade copy («Need more generations? Pro gives you 100/month…»). |
+| **Onboarding** | 7-step tour под реальный путь; starter template `linkedin-post`; финальный CTA обновлён. |
+| **Early Access** | Унифицированный `early-access-status-banner` на `/` и protected layout (вместо `development-banner`). |
+| **Sign out** | Modal вместо `window.confirm()`. |
+| **Pro-шаблоны** | Lock icon + tooltip «Pro template – upgrade to unlock» + клик → `/pricing` на `/generate` и `/templates`. |
+| **Save / Export** | Success feedback при сохранении; понятные labels экспорта; Pro lock links для Free. |
 
 ## Backlog / Будущие идеи
 
@@ -57,7 +78,7 @@
 | 7    | Legal owner review                                  | Решения по governing law, withdrawal, liability, privacy, taxes | REVIEW     |
 | 8    | Paddle Live onboarding                              | Domain approval, Live products/prices/keys/webhook/default link | BLOCKER    |
 | 9    | Controlled Live purchase/refund test                | End-to-end validation на малой сумме                     | BLOCKER         |
-| 10   | Resources + branded UX                              | 3-5 статей, branded error/loading/404, polish            | После BLOCKERS  |
+| 10   | Resources + branded UX                              | 3-5 статей, branded error/404; Generate skeleton DONE    | PARTIAL / после BLOCKERS |
 
 **Заметка (этап 1, 2026-07-04):** Immediate login не воспроизвёлся в 3/3 попытках после нормализации email. Требуется мониторинг реальных инцидентов. Возможные transient-причины: pooler timeout (`P2024`), replication lag.
 
@@ -98,10 +119,13 @@
 - Runbook: раздел 13 (`roadmap.md`).
 - Тесты: `legal-copy` обновлены; Legal pages остаются **REVIEW** (не юридическое заключение).
 
-**Заметка (2026-07-06):** Временный development banner.
-- Компонент `src/components/layout/development-banner.tsx` (amber/warning стиль).
-- Показывается на главной (`/`) и в dashboard (`/dashboard`) после авторизации.
-- Удалить после полноценного запуска: компонент + импорты (см. `// TODO: Удалить после запуска`).
+**Заметка (2026-07-07):** UX-полировка + transactional email.
+- UX: 4 итерации по аудиту (см. «Что сделано по UX»); тесты `quota-copy`, `onboarding-config`, `ux-polish`, `pro-quota-email`, `welcome-email`.
+- Email: `send-welcome`, `send-pro-confirmation`, `send-quota-warning`, `send-quota-exhausted` + `sendTransactionalEmail`; dedupe поля в `User` / `UserUsage`.
+- Миграции (production: `npx prisma migrate deploy`): `20260713100000_welcome_email_sent`, `20260714100000_transactional_email_dedupe`, `20260715100000_quota_warning_email`.
+- Early Access banner: `early-access-status-banner.tsx`; `development-banner.tsx` удалён.
+
+**Заметка (2026-07-06):** ~~Временный development banner~~ → заменён Early Access banner (2026-07-07).
 
 ## 12. Deploy checklist: этап 3 (password reset + rate limiting)
 
