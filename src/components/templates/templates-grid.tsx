@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 
 import {
@@ -18,14 +19,36 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { Tooltip } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils/cn";
 import type { TemplateListItem } from "@/types/template";
+
+function LockIcon() {
+  return (
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="shrink-0 text-muted-foreground"
+      aria-hidden
+    >
+      <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+    </svg>
+  );
+}
 
 interface TemplatesGridProps {
   templates: TemplateListItem[];
 }
 
 export function TemplatesGrid({ templates }: TemplatesGridProps) {
+  const router = useRouter();
   const [search, setSearch] = useState("");
   const [group, setGroup] = useState<TemplateGroupId>("all");
 
@@ -54,6 +77,10 @@ export function TemplatesGrid({ templates }: TemplatesGridProps) {
 
   const freeCount = templates.filter((t) => t.requiredPlan === "free").length;
   const proCount = templates.filter((t) => t.requiredPlan === "pro").length;
+
+  function goToPricing() {
+    router.push("/pricing");
+  }
 
   return (
     <div className="space-y-6">
@@ -108,74 +135,105 @@ export function TemplatesGrid({ templates }: TemplatesGridProps) {
         </p>
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((template) => (
-            <Card
-              key={template.id}
-              hover={!template.isLocked}
-              className={cn("flex flex-col", template.isLocked && "opacity-70")}
-            >
-              <CardContent className="flex flex-1 flex-col p-5">
-                <div className="flex items-start gap-3">
-                  <span
-                    className={cn(
-                      "flex h-10 w-10 shrink-0 items-center justify-center rounded-[var(--radius-md)] text-xs font-bold",
-                      getCategoryColor(template.category),
-                    )}
-                    aria-hidden
-                  >
-                    {getCategoryIcon(template.category)}
-                  </span>
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-center justify-between gap-2">
-                      <h3 className="font-semibold text-foreground">
-                        {template.title}
-                      </h3>
-                      <Badge
-                        variant={
-                          template.requiredPlan === "pro" ? "pro" : "free"
+          {filtered.map((template) => {
+            const isLocked = template.isLocked;
+
+            const card = (
+              <Card
+                hover={!isLocked}
+                role={isLocked ? "button" : undefined}
+                tabIndex={isLocked ? 0 : undefined}
+                onClick={isLocked ? goToPricing : undefined}
+                onKeyDown={
+                  isLocked
+                    ? (event) => {
+                        if (event.key === "Enter" || event.key === " ") {
+                          event.preventDefault();
+                          goToPricing();
                         }
-                      >
-                        {template.requiredPlan === "pro" ? "Pro" : "Free"}
-                      </Badge>
+                      }
+                    : undefined
+                }
+                className={cn(
+                  "flex flex-col transition-all",
+                  isLocked &&
+                    "cursor-pointer bg-muted/30 opacity-70 hover:border-primary/30 hover:opacity-90",
+                )}
+              >
+                <CardContent className="flex flex-1 flex-col p-5">
+                  <div className="flex items-start gap-3">
+                    <span
+                      className={cn(
+                        "flex h-10 w-10 shrink-0 items-center justify-center rounded-[var(--radius-md)] text-xs font-bold",
+                        getCategoryColor(template.category),
+                        isLocked && "opacity-60",
+                      )}
+                      aria-hidden
+                    >
+                      {getCategoryIcon(template.category)}
+                    </span>
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center justify-between gap-2">
+                        <h3 className="flex min-w-0 items-center gap-1.5 font-semibold text-foreground">
+                          {isLocked && <LockIcon />}
+                          <span className="truncate">{template.title}</span>
+                        </h3>
+                        <Badge
+                          variant={
+                            template.requiredPlan === "pro" ? "pro" : "free"
+                          }
+                        >
+                          {template.requiredPlan === "pro" ? "Pro" : "Free"}
+                        </Badge>
+                      </div>
+                      <p className="mt-1 text-xs text-muted-foreground">
+                        {getCategoryLabel(template.category)}
+                      </p>
                     </div>
-                    <p className="mt-1 text-xs text-muted-foreground">
-                      {getCategoryLabel(template.category)}
-                    </p>
                   </div>
-                </div>
 
-                <p className="mt-4 flex-1 text-sm leading-relaxed text-muted-foreground">
-                  {template.description}
-                </p>
-
-                {template.variables.length > 0 && (
-                  <p className="mt-3 text-xs text-muted-foreground">
-                    {template.variables.length} variable
-                    {template.variables.length === 1 ? "" : "s"}
+                  <p className="mt-4 flex-1 text-sm leading-relaxed text-muted-foreground">
+                    {template.description}
                   </p>
-                )}
-              </CardContent>
 
-              <CardFooter className="border-t border-border p-5 pt-4">
-                {template.isLocked ? (
-                  <p className="text-xs text-warning">
-                    Available on the{" "}
-                    <Link href="/pricing" className="font-medium underline">
-                      Pro
-                    </Link>{" "}
-                    plan
-                  </p>
-                ) : (
-                  <Link
-                    href={`/generate?template=${template.slug}`}
-                    className="text-sm font-medium text-primary hover:underline"
-                  >
-                    Use template →
-                  </Link>
-                )}
-              </CardFooter>
-            </Card>
-          ))}
+                  {template.variables.length > 0 && (
+                    <p className="mt-3 text-xs text-muted-foreground">
+                      {template.variables.length} variable
+                      {template.variables.length === 1 ? "" : "s"}
+                    </p>
+                  )}
+                </CardContent>
+
+                <CardFooter className="border-t border-border p-5 pt-4">
+                  {isLocked ? (
+                    <span className="text-sm font-medium text-muted-foreground">
+                      Upgrade to unlock →
+                    </span>
+                  ) : (
+                    <Link
+                      href={`/generate?template=${template.slug}`}
+                      className="text-sm font-medium text-primary hover:underline"
+                    >
+                      Use template →
+                    </Link>
+                  )}
+                </CardFooter>
+              </Card>
+            );
+
+            if (!isLocked) {
+              return <div key={template.id}>{card}</div>;
+            }
+
+            return (
+              <Tooltip
+                key={template.id}
+                content="Pro template – upgrade to unlock"
+              >
+                {card}
+              </Tooltip>
+            );
+          })}
         </div>
       )}
     </div>

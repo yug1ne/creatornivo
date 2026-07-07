@@ -29,14 +29,16 @@ test("sign out uses modal instead of window.confirm", () => {
 });
 
 test("locked pro templates show tooltip and navigate to pricing", () => {
-  const source = readFileSync(
+  for (const file of [
     "src/components/generate/template-picker.tsx",
-    "utf8",
-  );
+    "src/components/templates/templates-grid.tsx",
+  ]) {
+    const source = readFileSync(file, "utf8");
 
-  assert.match(source, /Pro template – upgrade to unlock/);
-  assert.match(source, /LockIcon/);
-  assert.match(source, /router\.push\("\/pricing"\)/);
+    assert.match(source, /Pro template – upgrade to unlock/);
+    assert.match(source, /LockIcon/);
+    assert.match(source, /router\.push\("\/pricing"\)|goToPricing/);
+  }
 });
 
 test("dashboard upgrade card uses concrete copy", () => {
