@@ -7,6 +7,7 @@ import {
   registerCredentialsUser,
 } from "@/lib/auth/credentials";
 import { AuthRateLimitError, enforceAuthRateLimit } from "@/lib/auth/rate-limit";
+import { sendWelcomeEmail } from "@/lib/email/send-welcome";
 import { prisma } from "@/lib/db";
 
 type RegisterRouteDependencies = {
@@ -59,6 +60,14 @@ export async function postAuthRegister(
           }),
       },
     );
+
+    void sendWelcomeEmail({
+      userId: user.id,
+      email: user.email,
+      name: user.name,
+    }).catch((error) => {
+      console.error("[email] Welcome email task failed:", error);
+    });
 
     return NextResponse.json(
       { message: "Registration successful", user },

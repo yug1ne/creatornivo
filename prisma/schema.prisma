@@ -62,6 +62,7 @@ model User {
   paddleAdjustments     PaddleAdjustment[]
   subscription          Subscription?
   onboardingCompletedAt DateTime?
+  welcomeEmailSentAt    DateTime?
   passwordChangedAt     DateTime?
   passwordResetTokens   PasswordResetToken[]
   userUsage             UserUsage[]
