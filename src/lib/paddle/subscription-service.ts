@@ -6,6 +6,7 @@ import {
   isAllowedPaddlePriceId,
   type PaddleServerCheckoutConfig,
 } from "@/config/paddle";
+import { sendProConfirmationEmail } from "@/lib/email/send-pro-confirmation";
 import { prisma } from "@/lib/db";
 import {
   cancelPaddleSubscriptionImmediately,
@@ -137,9 +138,22 @@ interface PaddleCancellationRequest {
   paddleSubscriptionId: string;
 }
 
+/** Set when a webhook upgrades the user from Free to Pro (email sent after commit). */
+export type PaddleProActivationEmailTarget = {
+  userId: string;
+  email: string;
+  name: string | null;
+};
+
+type ApplySubscriptionEventResult = {
+  result: PaddleWebhookProcessingResult;
+  proActivation?: PaddleProActivationEmailTarget;
+};
+
 interface PaddleWebhookWorkResult {
   result: PaddleWebhookProcessingResult;
   cancellation: PaddleCancellationRequest | null;
+  proActivation?: PaddleProActivationEmailTarget;
 }
 
 export type CancelPaddleSubscription = (
@@ -727,7 +741,7 @@ async function resolveSubscriptionOwner(
 
     const user = await transaction.user.findUnique({
       where: { id: existing.userId },
-      select: { id: true, plan: true },
+      select: { id: true, plan: true, email: true, name: true },
     });
     if (!user) {
       logIgnored(event.eventType, "subscription user not found");
@@ -821,7 +835,7 @@ async function resolveSubscriptionOwner(
 
   const user = await transaction.user.findUnique({
     where: { id: intent.userId },
-    select: { id: true, plan: true },
+    select: { id: true, plan: true, email: true, name: true },
   });
   if (!user) {
     logIgnored(event.eventType, "checkout intent user not found");
@@ -911,14 +925,14 @@ async function applySubscriptionEvent(
   transaction: Prisma.TransactionClient,
   event: PaddleWebhookEventInput,
   config: PaddleServerCheckoutConfig,
-): Promise<PaddleWebhookProcessingResult> {
+): Promise<ApplySubscriptionEventResult> {
   const subscription = event.data as PaddleSubscriptionPayload;
   if (
     !isPaddleSubscriptionId(subscription.id) ||
     !isPaddleCustomerId(subscription.customer_id)
   ) {
     logIgnored(event.eventType, "invalid subscription or customer ID");
-    return "ignored";
+    return { result: "ignored" };
   }
 
   const { priceId, quantity } = getPriceAndQuantity(subscription);
@@ -930,13 +944,13 @@ async function applySubscriptionEvent(
     quantity,
     config,
   );
-  if (!owner) return "ignored";
+  if (!owner) return { result: "ignored" };
 
   if (
     owner.existing?.lastPaddleEventAt &&
     event.occurredAt < owner.existing.lastPaddleEventAt
   ) {
-    return "stale";
+    return { result: "stale" };
   }
 
   const sameTimestamp =
@@ -959,9 +973,10 @@ async function applySubscriptionEvent(
         { subscriptionId: subscription.id },
       );
     }
-    return "processed";
+    return { result: "processed" };
   }
 
+  const previousPlan = owner.user.plan;
   const accessRevocation = await transaction.paddleAdjustment.findFirst({
     where: {
       paddleSubscriptionId: subscription.id,
@@ -1027,7 +1042,16 @@ async function applySubscriptionEvent(
     );
   }
 
-  return "processed";
+  const proActivation =
+    previousPlan === PLANS.FREE && plan === PLANS.PRO
+      ? {
+          userId: owner.user.id,
+          email: owner.user.email,
+          name: owner.user.name,
+        }
+      : undefined;
+
+  return { result: "processed", proActivation };
 }
 
 type PaddleWebhookDatabase = Pick<typeof prisma, "$transaction">;
@@ -1087,9 +1111,15 @@ async function processWebhookTransaction(
       };
     }
     if (isPaddleSubscriptionEventType(event.eventType)) {
+      const subscriptionWork = await applySubscriptionEvent(
+        transaction,
+        event,
+        config,
+      );
       return {
-        result: await applySubscriptionEvent(transaction, event, config),
+        result: subscriptionWork.result,
         cancellation: null,
+        proActivation: subscriptionWork.proActivation,
       };
     }
     if (isPaddleAdjustmentEventType(event.eventType)) {
@@ -1226,6 +1256,13 @@ export async function processPaddleWebhookEvent(
       database,
       cancelSubscription,
     );
+  }
+
+  // Fire-and-forget after the Serializable transaction commits (dedupe inside sender).
+  if (work.proActivation) {
+    void sendProConfirmationEmail(work.proActivation).catch((error) => {
+      console.error("[email] Pro confirmation email task failed:", error);
+    });
   }
 
   return work.result;

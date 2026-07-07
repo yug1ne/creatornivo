@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import type { Plan } from "@/config/plans";
+import { PLANS, type Plan } from "@/config/plans";
 import {
   createContentStream,
   isAIProviderConfigured,
@@ -24,6 +24,7 @@ import {
   buildQuotaExceededBody,
   getRetryAfterSeconds,
 } from "@/lib/usage/quota-exceeded";
+import { maybeSendQuotaExhaustedEmail } from "@/lib/email/send-quota-exhausted";
 import { assertTemplateAccess } from "@/lib/templates/queries";
 import {
   fillPromptTemplate,
@@ -216,6 +217,21 @@ export async function POST(request: Request) {
           // Count only completed generations toward UserUsage (after DB persist)
           try {
             await incrementUsage(userId, getUsagePeriodForPlan(user.plan));
+
+            if (user.plan === PLANS.FREE) {
+              const snapshot = await getUserUsageSnapshot(userId, user.plan);
+              if (snapshot.remaining === 0) {
+                void maybeSendQuotaExhaustedEmail({
+                  userId,
+                  resetAt: snapshot.resetAt,
+                }).catch((emailError) => {
+                  console.error(
+                    "[email] Quota exhausted email task failed:",
+                    emailError,
+                  );
+                });
+              }
+            }
           } catch (error) {
             // Stream already succeeded — log for manual reconciliation
             console.error(

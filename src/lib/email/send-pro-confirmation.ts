@@ -1,5 +1,3 @@
-import { getOnboardingStarterGenerateUrl } from "@/config/onboarding";
-import { earlyAccessConfig } from "@/config/early-access";
 import { siteConfig } from "@/config/site";
 import { getSafeEmailHash } from "@/lib/auth/credentials";
 import { prisma } from "@/lib/db";
@@ -7,37 +5,34 @@ import { prisma } from "@/lib/db";
 import { getAppBaseUrl } from "./app-url";
 import { sendTransactionalEmail } from "./send-transactional";
 
-export type WelcomeEmailUser = {
+export type ProConfirmationEmailUser = {
   userId: string;
   email: string;
   name: string | null;
 };
 
-export function buildWelcomeEmailText(input: {
+export function buildProConfirmationEmailText(input: {
   name: string | null;
   baseUrl?: string;
 }): string {
   const baseUrl = (input.baseUrl ?? getAppBaseUrl()).replace(/\/$/, "");
   const greeting = input.name?.trim() ? `Hi ${input.name.trim()},` : "Hi there,";
-  const generateUrl = `${baseUrl}${getOnboardingStarterGenerateUrl()}`;
 
   return [
     greeting,
     "",
-    `Welcome to ${siteConfig.name}!`,
+    `Your ${siteConfig.name} Pro subscription is active.`,
     "",
-    `You're in Early Access — ${earlyAccessConfig.statusBannerMessage}`,
+    "Here's what's included:",
+    "- 100 generations per month (UTC)",
+    "- Access to all templates",
+    "- Export as Markdown (.md) or plain text (.txt)",
     "",
-    "On the Free plan you get 5 generations per day (UTC). Pick a template, add your topic, and generate content in real time.",
+    "Start generating:",
+    `${baseUrl}/generate`,
     "",
-    "Start with LinkedIn Post:",
-    generateUrl,
-    "",
-    "Browse templates:",
-    `${baseUrl}/templates`,
-    "",
-    "Your dashboard:",
-    `${baseUrl}/dashboard`,
+    "Manage your subscription:",
+    `${baseUrl}/settings#subscription`,
     "",
     `Questions? ${siteConfig.legal.privacyEmail}`,
     "",
@@ -45,33 +40,37 @@ export function buildWelcomeEmailText(input: {
   ].join("\n");
 }
 
-export async function sendWelcomeEmail(
-  input: WelcomeEmailUser,
+/**
+ * Sends Pro confirmation once per user (idempotent via `proConfirmationEmailSentAt`).
+ * Intended after Paddle webhook upgrades plan free → pro.
+ */
+export async function sendProConfirmationEmail(
+  input: ProConfirmationEmailUser,
 ): Promise<{ delivered: boolean; skipped?: boolean }> {
   const emailHash = getSafeEmailHash(input.email);
 
   const claimed = await prisma.user.updateMany({
-    where: { id: input.userId, welcomeEmailSentAt: null },
-    data: { welcomeEmailSentAt: new Date() },
+    where: { id: input.userId, proConfirmationEmailSentAt: null },
+    data: { proConfirmationEmailSentAt: new Date() },
   });
 
   if (claimed.count === 0) {
     return { delivered: false, skipped: true };
   }
 
-  const text = buildWelcomeEmailText({ name: input.name });
+  const text = buildProConfirmationEmailText({ name: input.name });
   const { delivered } = await sendTransactionalEmail({
     to: input.email,
-    subject: `Welcome to ${siteConfig.name}`,
+    subject: `Your ${siteConfig.name} Pro subscription is active`,
     text,
     emailHash,
-    kind: "welcome",
+    kind: "pro confirmation",
   });
 
   if (!delivered) {
     await prisma.user.update({
       where: { id: input.userId },
-      data: { welcomeEmailSentAt: null },
+      data: { proConfirmationEmailSentAt: null },
     });
   }
 
