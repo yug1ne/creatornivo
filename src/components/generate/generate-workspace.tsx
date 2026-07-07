@@ -405,7 +405,7 @@ export function GenerateWorkspace({
                     !canGenerate
                       ? getGenerationLimitMessage(
                           userPlan,
-                          generationUsage.generationsUsed,
+                          generationUsage.used,
                         ) ??
                         undefined
                       : undefined
