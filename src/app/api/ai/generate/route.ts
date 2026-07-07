@@ -25,6 +25,7 @@ import {
   getRetryAfterSeconds,
 } from "@/lib/usage/quota-exceeded";
 import { maybeSendQuotaExhaustedEmail } from "@/lib/email/send-quota-exhausted";
+import { maybeSendQuotaWarningEmail } from "@/lib/email/send-quota-warning";
 import { assertTemplateAccess } from "@/lib/templates/queries";
 import {
   fillPromptTemplate,
@@ -227,6 +228,16 @@ export async function POST(request: Request) {
                 }).catch((emailError) => {
                   console.error(
                     "[email] Quota exhausted email task failed:",
+                    emailError,
+                  );
+                });
+              } else if (snapshot.remaining === 1) {
+                void maybeSendQuotaWarningEmail(
+                  userId,
+                  snapshot.resetAt,
+                ).catch((emailError) => {
+                  console.error(
+                    "[email] Quota warning email task failed:",
                     emailError,
                   );
                 });

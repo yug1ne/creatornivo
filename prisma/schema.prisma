@@ -78,6 +78,7 @@ model UserUsage {
   count                      Int       @default(0)
   period                     String    // "daily" | "monthly"
   quotaExhaustedEmailSentAt  DateTime?
+  quotaWarningEmailSentAt    DateTime?
   createdAt                  DateTime  @default(now())
   updatedAt DateTime @updatedAt
 
