@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
+import { SignOutButton } from "@/components/auth/sign-out-button";
 import { siteConfig } from "@/config/site";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { cn } from "@/lib/utils/cn";
@@ -60,9 +62,11 @@ function NavContent({ onNavigate }: { onNavigate?: () => void }) {
 }
 
 export function Sidebar({ mobileOpen, onMobileClose }: SidebarProps) {
+  const { data: session } = useSession();
   const [internalOpen, setInternalOpen] = useState(false);
   const isOpen = mobileOpen ?? internalOpen;
   const close = onMobileClose ?? (() => setInternalOpen(false));
+  const userLabel = session?.user?.name ?? session?.user?.email;
 
   useEffect(() => {
     if (isOpen) {
@@ -124,7 +128,16 @@ export function Sidebar({ mobileOpen, onMobileClose }: SidebarProps) {
 
         <NavContent onNavigate={close} />
 
-        <div className="mt-6">
+        <div className="mt-6 border-t border-border pt-4">
+          {userLabel ? (
+            <p className="mb-2 truncate px-3 text-xs text-muted-foreground">
+              {userLabel}
+            </p>
+          ) : null}
+          <SignOutButton onNavigate={close} />
+        </div>
+
+        <div className="mt-4">
           <ThemeToggle showLabel className="w-full" />
         </div>
 
