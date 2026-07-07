@@ -9,6 +9,7 @@ import {
 } from "@/lib/subscriptions/messages";
 import type { Plan } from "@/config/plans";
 import type { UsagePeriod } from "@/lib/usage";
+import { getQuotaResetHint } from "@/lib/usage/quota-copy";
 
 interface UsageBannerProps {
   plan: Plan;
@@ -21,17 +22,6 @@ interface UsageBannerProps {
   maxSavedPrompts: number;
 }
 
-function formatResetHint(period: UsagePeriod, resetAt: string): string {
-  const resetDate = new Date(resetAt);
-  if (Number.isNaN(resetDate.getTime())) {
-    return period === "daily" ? "Resets at midnight UTC" : "Resets monthly UTC";
-  }
-
-  return period === "daily"
-    ? `Resets ${resetDate.toLocaleString(undefined, { timeZone: "UTC", hour: "2-digit", minute: "2-digit", timeZoneName: "short" })}`
-    : `Resets ${resetDate.toLocaleDateString(undefined, { month: "short", day: "numeric", timeZone: "UTC" })} UTC`;
-}
-
 export function UsageBanner({
   plan,
   remaining,
@@ -42,7 +32,7 @@ export function UsageBanner({
   savedCount,
   maxSavedPrompts,
 }: UsageBannerProps) {
-  const generationWarning = getGenerationLimitMessage(plan, used);
+  const generationWarning = getGenerationLimitMessage(plan, used, resetAt);
   const saveWarning = getSaveLimitMessage(plan, savedCount);
   const isGenerationExhausted = remaining <= 0;
 
@@ -60,7 +50,7 @@ export function UsageBanner({
                   {getRemainingGenerationsLabel(plan, remaining)}
                 </p>
                 <p className="mt-0.5 text-xs text-muted-foreground">
-                  {used} of {limit} used · {formatResetHint(period, resetAt)}
+                  {used} of {limit} used · {getQuotaResetHint(period, resetAt)}
                 </p>
               </div>
             </div>

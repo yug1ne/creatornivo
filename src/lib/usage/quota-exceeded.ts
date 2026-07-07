@@ -1,6 +1,10 @@
 import { PLANS, type Plan } from "@/config/plans";
 
 import type { UserUsageSnapshot } from "@/lib/usage";
+import {
+  GENERATION_DISABLED_MESSAGE,
+  getQuotaExceededCopy,
+} from "@/lib/usage/quota-copy";
 
 /** JSON body for HTTP 429 when generation quota is exhausted. */
 export type QuotaExceededBody = {
@@ -19,29 +23,11 @@ export type ParsedGenerationError = {
   showUpgradeLink: boolean;
 };
 
-/** Plan-specific short error + longer guidance for the client UI. */
-export function getQuotaExceededCopy(
-  plan: Plan,
-): Pick<QuotaExceededBody, "error" | "message"> {
-  if (plan === PLANS.FREE) {
-    return {
-      error: "You've reached your daily generation limit",
-      message:
-        "Your daily limit resets at midnight UTC. Upgrade to Pro for 100 generations per month.",
-    };
-  }
-
-  return {
-    error: "You've reached your monthly generation limit",
-    message:
-      "Your monthly limit resets at the start of the next calendar month (UTC).",
-  };
-}
-
 export function buildQuotaExceededBody(
   snapshot: UserUsageSnapshot,
+  now = new Date(),
 ): QuotaExceededBody {
-  const copy = getQuotaExceededCopy(snapshot.plan);
+  const copy = getQuotaExceededCopy(snapshot.plan, snapshot.resetAt, now);
 
   return {
     ...copy,
@@ -67,6 +53,14 @@ export function getRetryAfterSeconds(resetAt: string, now = new Date()): number 
 export function parseGenerationApiError(
   data: Record<string, unknown>,
 ): ParsedGenerationError {
+  if (data.code === "generation_disabled") {
+    return {
+      message: GENERATION_DISABLED_MESSAGE,
+      code: "generation_disabled",
+      showUpgradeLink: false,
+    };
+  }
+
   if (data.code === "quota_exceeded") {
     const message =
       typeof data.message === "string"

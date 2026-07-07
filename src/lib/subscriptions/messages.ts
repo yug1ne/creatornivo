@@ -3,6 +3,7 @@ import {
   getPlanLimits,
   type Plan,
 } from "@/config/plans";
+import { getQuotaExhaustedBannerMessage } from "@/lib/usage/quota-copy";
 
 /** Primary label for usage UI — remaining quota in the current period. */
 export function getRemainingGenerationsLabel(
@@ -19,13 +20,19 @@ export function getRemainingGenerationsLabel(
 export function getGenerationLimitMessage(
   plan: Plan,
   generationsUsed: number,
+  resetAt?: string,
+  now = new Date(),
 ): string | null {
   const policy = getGenerationPolicy(plan);
 
   if (generationsUsed >= policy.maxGenerationsPerPeriod) {
+    if (resetAt) {
+      return getQuotaExhaustedBannerMessage(plan, resetAt, now);
+    }
+
     return plan === "free"
-      ? "You’ve reached today’s free generation limit."
-      : "You’ve reached your monthly generation limit.";
+      ? "You've reached today's free generation limit."
+      : "You've reached your monthly generation limit.";
   }
 
   const remaining = policy.maxGenerationsPerPeriod - generationsUsed;

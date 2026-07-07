@@ -684,18 +684,23 @@ test("network retry reuses the existing client requestId", () => {
 });
 
 test("quota exceeded payload includes reset guidance for Free users", () => {
-  const body = buildQuotaExceededBody({
-    plan: "free",
-    remaining: 0,
-    limit: 5,
-    period: "daily",
-    resetAt: "2026-07-07T00:00:00.000Z",
-    used: 5,
-  });
+  const now = new Date("2026-07-06T20:00:00.000Z");
+  const body = buildQuotaExceededBody(
+    {
+      plan: "free",
+      remaining: 0,
+      limit: 5,
+      period: "daily",
+      resetAt: "2026-07-07T00:00:00.000Z",
+      used: 5,
+    },
+    now,
+  );
 
   assert.equal(body.code, "quota_exceeded");
   assert.equal(body.remaining, 0);
-  assert.match(body.message, /midnight UTC/i);
+  assert.match(body.message, /00:00 UTC/i);
+  assert.match(body.message, /in about/i);
   assert.match(body.message, /Upgrade to Pro/i);
 });
 

@@ -25,6 +25,7 @@ import {
 } from "@/lib/subscriptions/messages";
 import type { Plan } from "@/config/plans";
 import type { UserUsageSnapshot } from "@/lib/usage";
+import { getGenerateDisabledHint } from "@/lib/usage/quota-copy";
 import {
   parseGenerationApiError,
   type ParsedGenerationError,
@@ -148,6 +149,15 @@ export function GenerateWorkspace({
     if (!selected) return false;
     return validateVariableValues(selected.variables, values) === null;
   }, [selected, values]);
+
+  const generateDisabledHint = getGenerateDisabledHint({
+    hasTemplate: Boolean(selected),
+    values,
+    variableCount: selected?.variables.length ?? 0,
+    isFormValid,
+    canGenerate,
+    isStreaming,
+  });
 
   const selectTemplate = useCallback(
     (template: TemplateListItem) => {
@@ -406,9 +416,9 @@ export function GenerateWorkspace({
                       ? getGenerationLimitMessage(
                           userPlan,
                           generationUsage.used,
-                        ) ??
-                        undefined
-                      : undefined
+                          generationUsage.resetAt,
+                        ) ?? undefined
+                      : generateDisabledHint ?? undefined
                   }
                 >
                   {isStreaming ? (
@@ -431,9 +441,19 @@ export function GenerateWorkspace({
                 )}
               </div>
 
+              {generateDisabledHint && (
+                <p className="text-sm text-muted-foreground">
+                  {generateDisabledHint}
+                </p>
+              )}
+
               {error && (
                 <div
-                  className="rounded-[var(--radius-md)] bg-destructive/10 px-4 py-3 text-sm text-destructive"
+                  className={`rounded-[var(--radius-md)] px-4 py-3 text-sm ${
+                    error.code === "generation_disabled"
+                      ? "bg-warning/10 text-warning"
+                      : "bg-destructive/10 text-destructive"
+                  }`}
                   role="alert"
                 >
                   <p>{error.message}</p>
