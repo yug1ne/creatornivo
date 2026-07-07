@@ -17,7 +17,7 @@ const screenshots = [
     title: "Template picker + parameters",
     description:
       "Choose a template, fill in your topic and tone, and preview the exact prompt before hitting generate.",
-    url: "app.creatornivo.com/generate",
+    url: "creatornivo.com/generate",
     Mockup: GenerateMockup,
   },
   {
@@ -26,7 +26,7 @@ const screenshots = [
     title: "Streaming AI output",
     description:
       "Watch content stream in real time. Copy, save to your library, or export on Pro.",
-    url: "app.creatornivo.com/generate",
+    url: "creatornivo.com/generate",
     Mockup: ResultMockup,
   },
   {
@@ -35,7 +35,7 @@ const screenshots = [
     title: "Your content library",
     description:
       "Search, filter, and revisit every piece you've saved. Never lose a great draft again.",
-    url: "app.creatornivo.com/library",
+    url: "creatornivo.com/library",
     Mockup: LibraryMockup,
   },
   {
@@ -44,7 +44,7 @@ const screenshots = [
     title: "Limits at a glance",
     description:
       "Track usage at a glance: Free includes 5 generations per day, while Pro includes 100 generations per month.",
-    url: "app.creatornivo.com/dashboard",
+    url: "creatornivo.com/dashboard",
     Mockup: DashboardMockup,
   },
 ] as const;

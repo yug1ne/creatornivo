@@ -9,7 +9,7 @@ interface BrowserFrameProps {
 
 export function BrowserFrame({
   children,
-  url = "app.creatornivo.com/generate",
+  url = "creatornivo.com/generate",
   className,
   glow = false,
 }: BrowserFrameProps) {

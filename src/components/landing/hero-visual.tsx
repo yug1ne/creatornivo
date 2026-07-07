@@ -11,7 +11,7 @@ export function HeroVisual() {
       />
 
       <BrowserFrame
-        url="app.creatornivo.com/generate"
+        url="creatornivo.com/generate"
         glow
         className="relative z-10 shadow-2xl"
       >
@@ -20,7 +20,7 @@ export function HeroVisual() {
 
       <div className="absolute -bottom-6 -left-4 z-20 hidden w-[55%] sm:block lg:-left-8 lg:w-[48%]">
         <BrowserFrame
-          url="app.creatornivo.com/generate"
+          url="creatornivo.com/generate"
           className="shadow-xl ring-1 ring-border"
         >
           <ResultMockup />
