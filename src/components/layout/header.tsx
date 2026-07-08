@@ -4,7 +4,7 @@ import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
 import { useEffect, useRef, useState } from "react";
 
-import { siteConfig } from "@/config/site";
+import { Logo } from "@/components/logo";
 import { buttonVariants } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 
@@ -50,13 +50,7 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-card/95 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 px-4 sm:px-6">
-        <Link
-          href="/"
-          onClick={closeMenu}
-          className="min-w-0 truncate text-lg font-bold tracking-tight text-foreground"
-        >
-          {siteConfig.name}
-        </Link>
+        <Logo onClick={closeMenu} />
 
         <nav className="hidden items-center gap-6 text-sm text-muted-foreground lg:flex">
           {navItems.map((item) => (
