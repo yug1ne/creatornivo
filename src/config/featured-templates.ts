@@ -138,7 +138,7 @@ Section 2: Fill three fields...
 
 Subhead: Structured AI templates for LinkedIn, email, SEO, and more.
 
-✓ 15 templates  ✓ Real-time preview  ✓ Personal library
+✓ 45 templates  ✓ Real-time preview  ✓ Personal library
 
 [Start free →]`,
   },

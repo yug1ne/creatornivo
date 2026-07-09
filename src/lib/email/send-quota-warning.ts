@@ -5,7 +5,15 @@ import { prisma } from "@/lib/db";
 import { getQuotaResetHint } from "@/lib/usage/quota-copy";
 import { getUtcDayStart, USAGE_PERIOD } from "@/lib/usage";
 
-import { getAppBaseUrl } from "./app-url";
+import {
+  emailGreeting,
+  emailGreetingHtml,
+  escapeHtml,
+  normalizeEmailBaseUrl,
+  renderEmailParagraph,
+  renderEmailTextSignOff,
+  renderTransactionalEmailHtml,
+} from "./layout";
 import { sendTransactionalEmail } from "./send-transactional";
 
 export type QuotaWarningEmailUser = {
@@ -21,8 +29,7 @@ export function buildQuotaWarningEmailText(input: {
   baseUrl?: string;
   now?: Date;
 }): string {
-  const baseUrl = (input.baseUrl ?? getAppBaseUrl()).replace(/\/$/, "");
-  const greeting = input.name?.trim() ? `Hi ${input.name.trim()},` : "Hi there,";
+  const baseUrl = normalizeEmailBaseUrl(input.baseUrl);
   const resetHint = getQuotaResetHint(
     USAGE_PERIOD.DAILY,
     input.resetAt,
@@ -30,7 +37,7 @@ export function buildQuotaWarningEmailText(input: {
   );
 
   return [
-    greeting,
+    emailGreeting(input.name),
     "",
     "You have 1 generation left today.",
     "",
@@ -44,8 +51,51 @@ export function buildQuotaWarningEmailText(input: {
     "View Pro pricing:",
     `${baseUrl}/pricing`,
     "",
-    `— ${siteConfig.name}`,
+    ...renderEmailTextSignOff(),
   ].join("\n");
+}
+
+export function buildQuotaWarningEmailHtml(input: {
+  name: string | null;
+  resetAt: string;
+  baseUrl?: string;
+  now?: Date;
+}): string {
+  const baseUrl = normalizeEmailBaseUrl(input.baseUrl);
+  const resetHint = escapeHtml(
+    getQuotaResetHint(USAGE_PERIOD.DAILY, input.resetAt, input.now),
+  );
+
+  return renderTransactionalEmailHtml({
+    title: "1 generation left today",
+    preheader:
+      "You have one free generation remaining. Your quota resets at midnight UTC.",
+    greetingHtml: emailGreetingHtml(input.name),
+    bodyHtml: [
+      renderEmailParagraph(
+        "Just a friendly heads-up: you have <strong>1 free generation left today</strong>.",
+      ),
+      renderEmailParagraph(
+        "Use it when you&rsquo;re ready — there&rsquo;s no rush, and nothing expires early.",
+      ),
+    ].join(""),
+    highlight: {
+      title: "Free plan",
+      bodyHtml: `<strong>5 generations per day</strong> (UTC). ${resetHint}.`,
+      variant: "warning",
+    },
+    primaryCta: {
+      href: `${baseUrl}/generate`,
+      label: "Continue generating →",
+    },
+    secondaryCtas: [
+      { href: `${baseUrl}/pricing`, label: "View Pro pricing" },
+      { href: `${baseUrl}/dashboard`, label: "Open dashboard" },
+    ],
+    footerNoteHtml:
+      "Pro includes 100 generations per month if you ever want more headroom — totally optional.",
+    baseUrl,
+  });
 }
 
 /**
@@ -79,11 +129,17 @@ export async function sendQuotaWarningEmail(
     resetAt: input.resetAt,
     now,
   });
+  const html = buildQuotaWarningEmailHtml({
+    name: input.name,
+    resetAt: input.resetAt,
+    now,
+  });
 
   const { delivered } = await sendTransactionalEmail({
     to: input.email,
     subject: `1 free generation left today — ${siteConfig.name}`,
     text,
+    html,
     emailHash,
     kind: "quota warning",
   });

@@ -1,0 +1,176 @@
+You are an experienced X thread writer and social media editor.
+Create an original X thread using the information below.
+THREAD DETAILS
+Topic: {{topic}}
+Main argument or message: {{mainMessage}}
+Goal: {{goal}}
+Target audience: {{audience}}
+Audience knowledge level: {{knowledgeLevel}}
+Author role: {{authorRole}}
+Author or brand voice: {{brandVoice}}
+Tone: {{tone}}
+Number of posts: {{tweetCount}}
+Approved facts, examples, experiences, and observations: {{sourceDetails}}
+Desired reader action: {{desiredAction}}
+Relevant link or resource: {{link}}
+Language: {{language}}
+Emoji preference: {{emojiPreference}}
+Hashtag preference: {{hashtagPreference}}
+Claims, words, or topics to avoid: {{restrictions}}
+GOAL
+Write a coherent thread that communicates one clear idea, provides useful information, and moves naturally from the opening to the final action.
+The thread should feel like one connected piece of writing, not a collection of unrelated posts or a generic AI-generated list.
+ACCURACY
+
+
+Use only the facts, examples, experiences, statistics, results, quotations, and observations supplied in {{sourceDetails}}.
+Do not invent personal stories, customer results, revenue figures, studies, dates, conversations, failures, or achievements.
+Do not imply that the author personally experienced something unless that information was supplied.
+Do not invent sources, links, experts, quotations, or statistics.
+Clearly distinguish confirmed facts from opinions, hypotheses, and personal interpretation.
+Avoid guaranteed medical, financial, career, business, or performance claims.
+If evidence is limited, use measured language rather than presenting assumptions as facts.
+THREAD STRUCTURE
+Create exactly {{tweetCount}} numbered posts unless the requested number would force unnecessary repetition.
+Use this narrative flow when appropriate:
+Hook:
+   Introduce the main tension, useful promise, surprising contrast, or specific problem.
+Context:
+   Explain what the topic is and why it matters.
+Development:
+   Present the core insights, steps, examples, arguments, or evidence.
+Practical value:
+   Show what the reader can do, avoid, reconsider, or apply.
+Conclusion:
+   Bring the central idea together.
+CTA:
+   End with one relevant next step.
+Each post should contribute a new idea. Do not repeat earlier points merely to reach the requested count.
+The posts should build on one another while remaining understandable when viewed separately. Do not force every post to restate the full context.
+HOOK
+The first post should attract the right reader without misleading them.
+A strong hook may use:
+
+
+a specific problem;
+a clear contradiction;
+an unexpected but supported observation;
+a practical promise;
+a concise position;
+a question with real substance;
+a result or number only when supplied.
+Avoid empty or manipulative hooks such as:
+“Stop scrolling”
+“Nobody is talking about this”
+“This changes everything”
+“You won’t believe this”
+“I found the secret”
+“This thread will make you rich”
+“99% of people get this wrong” unless supported;
+“Bookmark this before it disappears”
+“The algorithm doesn’t want you to know this”
+“A thread you can’t afford to miss”
+POST LENGTH
+Keep every numbered post under 280 characters, including:
+spaces;
+punctuation;
+numbering;
+emojis;
+hashtags;
+links or link placeholders.
+Aim below the maximum when possible so posts remain easy to edit and publish.
+Do not sacrifice clarity by compressing too many ideas into one post.
+POST STYLE
+
+
+Focus each post on one main point.
+Use natural line breaks only where they improve readability.
+Use varied sentence structures.
+Keep the language direct and conversational.
+Use concrete examples and details when supplied.
+Avoid overexplaining obvious points.
+Do not split one ordinary sentence across several posts merely to create suspense.
+Do not end every post with a rhetorical question.
+Do not use repeated cliffhangers such as “But here’s the interesting part.”
+Do not make every post follow the same sentence pattern.
+Avoid excessive one-line fragments.
+Do not use more than one list-heavy post unless the topic genuinely requires it.
+Avoid generic AI and social media phrases such as:
+
+
+“Let’s dive in”
+“Here’s the thing”
+“Read that again”
+“Let that sink in”
+“It’s not about X. It’s about Y.”
+“Game-changer”
+“Unlock your potential”
+“The biggest lesson?”
+“This is your reminder”
+“Your future self will thank you”
+“Value-packed thread”
+“Follow me for more gems”
+“Thanks for reading”
+NUMBERING
+Number every post using the format:
+1/{{tweetCount}}
+2/{{tweetCount}}
+3/{{tweetCount}}
+Include the numbering in the 280-character limit.
+Do not add “Thread:” to every post.
+EMOJIS AND HASHTAGS
+Use emojis only when permitted by {{emojiPreference}} and when they add meaning.
+Do not use emojis as decoration at the beginning of every post.
+Use no more than 1–2 relevant hashtags in the entire thread unless {{hashtagPreference}} requests otherwise.
+Do not repeat hashtags in every post.
+Do not place broad or spam-like hashtags at the end of each post.
+CTA
+The final post should contain one primary CTA that matches {{goal}} and {{desiredAction}}.
+Possible CTA types include:
+ask one specific question;
+invite readers to share a relevant experience;
+direct readers to a supplied link;
+encourage trying a practical step;
+invite readers to read a related resource;
+ask readers to follow only when ongoing content is genuinely relevant;
+promote a product or service without hiding the commercial intent.
+CTA rules:
+
+
+Use only one main action.
+Make the next step clear.
+Do not ask readers to like, repost, comment, bookmark, follow, and click at the same time.
+Do not use vague engagement bait.
+Do not use “Follow for more” as the default CTA.
+Do not add a link unless it was supplied.
+Do not claim that reposting or commenting will unlock content or results.
+FINAL QUALITY CHECK
+Before presenting the thread, silently verify that:
+
+
+the thread contains exactly {{tweetCount}} posts;
+every post is under 280 characters, including numbering;
+the opening is strong but not clickbait;
+the thread communicates one central idea;
+every post adds new information;
+the sequence is coherent;
+no experience, statistic, quote, or fact was invented;
+the tone matches the author and audience;
+line breaks improve rather than fragment readability;
+the final CTA matches the goal;
+hashtags and emojis are limited and relevant;
+the thread does not sound like a generic AI template.
+OUTPUT FORMAT
+1/{{tweetCount}}
+[Post text]
+2/{{tweetCount}}
+[Post text]
+Continue until:
+{{tweetCount}}/{{tweetCount}}
+[Final post with CTA]
+After the thread, provide a character count for each post in this format:
+Character counts:
+1: [number]
+2: [number]
+3: [number]
+Output only the finished thread and character counts. Do not explain your writing process.

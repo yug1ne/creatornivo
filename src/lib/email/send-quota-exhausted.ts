@@ -5,7 +5,15 @@ import { prisma } from "@/lib/db";
 import { getQuotaExceededCopy } from "@/lib/usage/quota-copy";
 import { getUtcDayStart, USAGE_PERIOD } from "@/lib/usage";
 
-import { getAppBaseUrl } from "./app-url";
+import {
+  emailGreeting,
+  emailGreetingHtml,
+  escapeHtml,
+  normalizeEmailBaseUrl,
+  renderEmailParagraph,
+  renderEmailTextSignOff,
+  renderTransactionalEmailHtml,
+} from "./layout";
 import { sendTransactionalEmail } from "./send-transactional";
 
 export type QuotaExhaustedEmailUser = {
@@ -21,8 +29,7 @@ export function buildQuotaExhaustedEmailText(input: {
   baseUrl?: string;
   now?: Date;
 }): string {
-  const baseUrl = (input.baseUrl ?? getAppBaseUrl()).replace(/\/$/, "");
-  const greeting = input.name?.trim() ? `Hi ${input.name.trim()},` : "Hi there,";
+  const baseUrl = normalizeEmailBaseUrl(input.baseUrl);
   const { message: quotaMessage } = getQuotaExceededCopy(
     PLANS.FREE,
     input.resetAt,
@@ -33,7 +40,7 @@ export function buildQuotaExhaustedEmailText(input: {
     .replace(/ Upgrade to Pro for 100 generations per month\.$/, "");
 
   return [
-    greeting,
+    emailGreeting(input.name),
     "",
     "You've used all 5 free generations today.",
     "",
@@ -47,8 +54,58 @@ export function buildQuotaExhaustedEmailText(input: {
     "Your dashboard:",
     `${baseUrl}/dashboard`,
     "",
-    `— ${siteConfig.name}`,
+    ...renderEmailTextSignOff(),
   ].join("\n");
+}
+
+export function buildQuotaExhaustedEmailHtml(input: {
+  name: string | null;
+  resetAt: string;
+  baseUrl?: string;
+  now?: Date;
+}): string {
+  const baseUrl = normalizeEmailBaseUrl(input.baseUrl);
+  const { message: quotaMessage } = getQuotaExceededCopy(
+    PLANS.FREE,
+    input.resetAt,
+    input.now,
+  );
+  const resetLine = escapeHtml(
+    quotaMessage
+      .replace(/^You've used all 5 free generations today\. /, "")
+      .replace(/ Upgrade to Pro for 100 generations per month\.$/, ""),
+  );
+
+  return renderTransactionalEmailHtml({
+    title: "Today's free generations are used",
+    preheader:
+      "You've used all 5 free generations today. Your quota resets at midnight UTC.",
+    greetingHtml: emailGreetingHtml(input.name),
+    bodyHtml: [
+      renderEmailParagraph(
+        "You&rsquo;ve used all <strong>5 free generations</strong> for today. Nice work getting real drafts done.",
+      ),
+      renderEmailParagraph(
+        "Your free quota returns automatically — no action needed. Until then you can browse templates, review your library, or continue on Pro if you need more capacity.",
+      ),
+    ].join(""),
+    highlight: {
+      title: "Quota status",
+      bodyHtml: resetLine,
+      variant: "warning",
+    },
+    primaryCta: {
+      href: `${baseUrl}/pricing`,
+      label: "View Pro pricing →",
+    },
+    secondaryCtas: [
+      { href: `${baseUrl}/dashboard`, label: "Open dashboard" },
+      { href: `${baseUrl}/library`, label: "Open library" },
+    ],
+    footerNoteHtml:
+      "Pro includes 100 generations per month — no pressure either way.",
+    baseUrl,
+  });
 }
 
 /**
@@ -82,11 +139,17 @@ export async function sendQuotaExhaustedEmail(
     resetAt: input.resetAt,
     now,
   });
+  const html = buildQuotaExhaustedEmailHtml({
+    name: input.name,
+    resetAt: input.resetAt,
+    now,
+  });
 
   const { delivered } = await sendTransactionalEmail({
     to: input.email,
     subject: `You've used today's free generations — ${siteConfig.name}`,
     text,
+    html,
     emailHash,
     kind: "quota exhausted",
   });

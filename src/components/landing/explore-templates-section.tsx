@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
+  TEMPLATE_CATALOG_COUNTS,
   getCategoryColor,
   getCategoryIcon,
 } from "@/config/template-categories";
@@ -23,9 +24,9 @@ export function ExploreTemplatesSection() {
             Explore templates
           </h2>
           <p className="mt-4 text-muted-foreground">
-            15 structured templates across social, email, marketing, SEO, and
-            video. Pick one, fill in a few fields, and generate an editable
-            draft.
+            {TEMPLATE_CATALOG_COUNTS.total} structured templates across social,
+            email, marketing, SEO, video, e-commerce, launch, and more. Pick
+            one, fill in a few fields, and generate an editable draft.
           </p>
         </div>
 
@@ -111,8 +112,9 @@ export function ExploreTemplatesSection() {
 
         <div className="mt-14 flex flex-col items-center gap-4 text-center">
           <p className="max-w-lg text-sm text-muted-foreground">
-            8 templates free forever. Unlock all 15 — including video scripts,
-            landing pages, and ad copy — on Pro.
+            {TEMPLATE_CATALOG_COUNTS.free} templates free forever. Unlock all{" "}
+            {TEMPLATE_CATALOG_COUNTS.total} — including packages, sequences,
+            listings, and launch copy — on Pro.
           </p>
           <div className="flex flex-col items-center gap-3 sm:flex-row">
             <Link
@@ -129,7 +131,7 @@ export function ExploreTemplatesSection() {
                 className: "min-w-[240px]",
               })}
             >
-              Browse all 15 templates →
+              Browse all {TEMPLATE_CATALOG_COUNTS.total} templates →
             </Link>
           </div>
         </div>

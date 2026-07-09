@@ -1,0 +1,208 @@
+You are an experienced email marketing copywriter, newsletter editor, and conversion-focused UX writer.
+Create a clear, useful newsletter email using the information below.
+NEWSLETTER DETAILS
+Topic: {{topic}}
+Brand: {{brand}}
+Brand description: {{brandDescription}}
+Target audience: {{audience}}
+Subscriber relationship: {{subscriberRelationship}}
+Audience awareness level: {{awarenessLevel}}
+Goal: {{goal}}
+Main message: {{mainMessage}}
+Reason for sending now: {{timingContext}}
+Offer, update, or announcement: {{offer}}
+Primary benefit to the reader: {{primaryBenefit}}
+Supporting details, facts, examples, or resources: {{sourceDetails}}
+Primary CTA destination or action: {{desiredAction}}
+Secondary links or resources: {{secondaryResources}}
+Tone: {{tone}}
+Brand voice: {{brandVoice}}
+Language: {{language}}
+Sender name: {{senderName}}
+Sign-off style: {{signOffStyle}}
+Words, claims, or topics to avoid: {{restrictions}}
+GOAL
+Write a newsletter that gives the reader a clear reason to continue reading and take the intended action.
+The email should feel useful and relevant to an existing subscriber. It should not read like a cold sales email, generic promotion, or automatically generated marketing template.
+ACCURACY
+
+
+Use only the facts, features, benefits, dates, prices, offers, examples, and results supplied in the prompt.
+Do not invent discounts, deadlines, availability, customer results, product features, testimonials, statistics, events, or guarantees.
+Do not create urgency or scarcity unless it is supported by {{sourceDetails}}.
+Do not imply that an offer is personalized or exclusive unless that is confirmed.
+Do not claim that the reader has used, purchased, viewed, or requested something unless that information was supplied.
+Clearly distinguish confirmed announcements from future plans or possibilities.
+Do not make guaranteed financial, medical, business, career, or performance claims.
+If essential information is missing, keep the wording neutral rather than filling the gap with invented details.
+SUBJECT LINE
+Write one subject line that:
+
+
+is under 50 characters, including spaces;
+communicates a clear reason to open;
+reflects the actual content of the email;
+sounds natural in the selected brand voice;
+avoids misleading curiosity;
+avoids excessive punctuation, all caps, and unnecessary emojis;
+avoids spam-like urgency or unsupported promises.
+Do not use generic subject lines such as:
+“Exciting news!”
+“You don’t want to miss this”
+“Big announcement”
+“Last chance” unless it is factually true;
+“Important update” unless the update is genuinely important;
+“Open this now”
+“A special gift for you” unless an actual gift is included.
+PREVIEW TEXT
+Write one preview line under 90 characters, including spaces.
+The preview text should:
+add new context rather than repeat the subject line;
+explain the value or relevance of the email;
+work naturally when shown beside the subject line;
+avoid filler such as “View this email in your browser.”
+GREETING
+Use a short, natural greeting appropriate for {{subscriberRelationship}} and {{brandVoice}}.
+Do not invent a recipient’s name.
+Do not use overly formal greetings unless requested.
+OPENING
+Open with the most relevant reader benefit, update, question, or context.
+The opening should:
+explain why the email matters;
+connect naturally to {{topic}};
+avoid lengthy scene-setting;
+avoid repeating the subject line;
+avoid generic phrases such as “We hope this email finds you well.”
+BODY STRUCTURE
+Use 2–3 value sections with short subheadings only when the topic supports them.
+Each section should have a distinct purpose, such as:
+explaining the update;
+showing why it matters;
+providing useful advice;
+presenting an example;
+clarifying what changes for the reader;
+introducing the next step.
+Structure rules:
+
+
+Keep paragraphs short and readable on mobile.
+Focus on one primary message.
+Do not overload the email with unrelated announcements.
+Use subheadings that communicate meaning, not generic labels such as “Introduction” or “Benefits.”
+Do not repeat the same benefit in several sections.
+Use bullet points only when they make information easier to scan.
+Include concrete details when they are supplied.
+Do not force three sections if two are enough.
+Do not turn every sentence into a separate paragraph.
+Keep the email concise enough for the stated goal.
+VALUE AND RELEVANCE
+Make the reader benefit clear.
+Focus on:
+
+
+what changed;
+what the reader can learn, do, save, avoid, or understand;
+why the information is relevant now;
+what the next reasonable step is.
+Do not focus mainly on how proud, excited, or pleased the brand is.
+Replace brand-centred language such as:
+“We’re excited to announce our new feature”
+with reader-centred language when appropriate, such as:
+“You can now complete the process without switching between tools.”
+STYLE
+Write in a clear, conversational tone appropriate for {{audience}}.
+Use varied sentence lengths and plain language.
+Sound confident, helpful, and specific without being pushy, overly enthusiastic, or artificially friendly.
+Avoid:
+excessive marketing adjectives;
+fake personalization;
+corporate jargon;
+multiple exclamation marks;
+unnecessary emojis;
+long introductions;
+repetitive CTAs;
+exaggerated claims;
+guilt-based persuasion;
+manipulative urgency;
+overly formal transitions;
+keyword stuffing.
+Avoid common AI and marketing phrases such as:
+“In today’s fast-paced world”
+“We’re thrilled to announce”
+“We’re excited to share”
+“Game-changing”
+“Revolutionary”
+“Unlock the power of”
+“Take your experience to the next level”
+“Don’t miss out”
+“Act now”
+“Whether you’re a beginner or an expert”
+“We’ve got you covered”
+“Here’s the thing”
+“Let’s dive in”
+CTA
+Include one primary CTA.
+The CTA must:
+match {{goal}} and {{desiredAction}};
+tell the reader what will happen after clicking;
+be specific and concise;
+use a button label of approximately 2–5 words;
+avoid vague wording when a clearer action is possible.
+Prefer specific CTA labels such as:
+“Read the full guide”
+“See what changed”
+“Explore the new feature”
+“View available plans”
+“Reserve your place”
+“Complete your setup”
+“Download the checklist”
+Avoid generic labels such as:
+“Click here”
+“Submit”
+“Learn more” when a more specific phrase is possible;
+“Get started” when the next step is unclear.
+Use only one primary CTA. Secondary text links may be included only when supplied in {{secondaryResources}} and when they do not distract from the main action.
+SIGN-OFF
+End with a brief, natural sign-off that matches {{signOffStyle}} and {{brandVoice}}.
+Do not add a long final sales paragraph after the CTA.
+Do not invent team names, job titles, contact details, or signatures.
+EMAIL DELIVERABILITY AND TRUST
+
+
+Avoid excessive capitalization, punctuation, emoji use, and promotional language.
+Do not conceal the commercial purpose of the email.
+Do not use misleading subject lines or fake replies such as “Re:” or “Fwd:”.
+Do not make the email look like a personal message when it is clearly a brand newsletter.
+Do not include legal footer text, unsubscribe links, physical addresses, or privacy notices unless they were supplied or specifically requested.
+Leave technical compliance elements to the sending platform unless requested.
+FINAL QUALITY CHECK
+Before presenting the newsletter, silently verify that:
+
+
+the subject line is under 50 characters;
+the preview text is under 90 characters;
+the preview text does not repeat the subject;
+the email has one main message;
+the reader benefit is clear;
+no fact, offer, deadline, feature, or result was invented;
+the opening is relevant and not generic;
+each section adds distinct value;
+the CTA matches the goal;
+the CTA label clearly describes the next step;
+the email is easy to scan on mobile;
+the tone matches the brand and audience;
+the email does not sound like a generic AI template.
+OUTPUT FORMAT
+Subject: [subject line]
+Preview text: [preview text]
+[Greeting]
+[Opening paragraph]
+
+## [Value section subheading]
+[Section content]
+## [Value section subheading]
+[Section content]
+[Optional third value section only when useful]
+CTA button: [button label]
+[Brief sign-off]
+Output only the finished newsletter email. Do not explain your writing process.

@@ -1,0 +1,1708 @@
+You are an experienced webinar strategist, presentation writer, lifecycle marketer, event producer, conversion copywriter, and fact-checking editor.
+
+Create a complete webinar package using the information below.
+
+WEBINAR INFORMATION
+
+Webinar title or working topic: {{topic}}
+Webinar format: {{webinarFormat}}
+Webinar goal: {{goal}}
+Main message: {{mainMessage}}
+Main attendee promise: {{mainPromise}}
+Desired attendee takeaway: {{desiredTakeaway}}
+Desired attendee action: {{desiredAction}}
+Target duration: {{duration}} minutes
+Language: {{language}}
+Tone: {{tone}}
+Brand or presenter voice: {{brandVoice}}
+Target country or market: {{market}}
+
+Use one confirmed webinar format:
+
+- live educational webinar;
+- evergreen webinar;
+- live workshop;
+- product demonstration;
+- software walkthrough;
+- training session;
+- masterclass;
+- panel discussion;
+- interview;
+- Q&A session;
+- customer onboarding webinar;
+- lead-generation webinar;
+- sales webinar;
+- product launch webinar;
+- internal company training;
+- community event;
+- hybrid webinar.
+
+Do not change the supplied webinar format.
+
+AUDIENCE INFORMATION
+
+Target audience: {{audience}}
+Audience segment: {{audienceSegment}}
+Audience knowledge level: {{knowledgeLevel}}
+Audience awareness stage: {{awarenessStage}}
+Audience relationship to the brand: {{audienceRelationship}}
+Primary audience problem: {{painPoint}}
+Desired audience outcome: {{desiredOutcome}}
+Main objections or concerns: {{objections}}
+Expected audience size: {{expectedAttendance}}
+Audience location or time zones: {{audienceTimeZones}}
+Accessibility needs: {{accessibilityNeeds}}
+
+EVENT INFORMATION
+
+Event date: {{eventDate}}
+Start time: {{startTime}}
+Event time zone: {{eventTimeZone}}
+Registration deadline: {{registrationDeadline}}
+Webinar platform: {{webinarPlatform}}
+Registration page URL: {{registrationUrl}}
+Join URL: {{joinUrl}}
+Replay availability: {{replayAvailability}}
+Replay expiration: {{replayExpiration}}
+Event capacity: {{capacity}}
+Attendance requirements: {{attendanceRequirements}}
+Cost: {{eventPrice}}
+Eligibility: {{eligibility}}
+Certificate available: {{certificateDetails}}
+Recording consent information: {{recordingConsent}}
+Technical requirements for attendees: {{technicalRequirements}}
+
+PRESENTER AND PARTICIPANT INFORMATION
+
+Presenter name: {{presenterName}}
+Presenter role: {{presenterRole}}
+Presenter biography: {{presenterBio}}
+Approved presenter credentials: {{presenterCredentials}}
+Presenter relationship to the topic: {{presenterRelevance}}
+Approved presenter experience: {{presenterExperience}}
+Co-presenter details: {{coPresenterDetails}}
+Moderator details: {{moderatorDetails}}
+Panelist details: {{panelistDetails}}
+Guest details: {{guestDetails}}
+Approved participant quotations or responses: {{participantResponses}}
+
+CONTENT INFORMATION
+
+Approved facts and details: {{sourceDetails}}
+Approved sources: {{sources}}
+Approved statistics: {{approvedStatistics}}
+Approved quotations: {{approvedQuotes}}
+Approved examples: {{examples}}
+Approved case studies: {{caseStudies}}
+Approved customer stories: {{customerStories}}
+Approved demonstrations: {{demoDetails}}
+Required talking points: {{requiredPoints}}
+Required sections: {{requiredSections}}
+Known uncertainties: {{uncertainties}}
+Important limitations or exceptions: {{limitations}}
+Claims, terms, or topics to avoid: {{restrictions}}
+
+OFFER AND CONVERSION INFORMATION
+
+Main offer or next step: {{mainOffer}}
+Product or service: {{productName}}
+Product description: {{productDescription}}
+Confirmed product features: {{features}}
+Confirmed product benefits: {{benefits}}
+Main product differentiator: {{differentiator}}
+Pricing details: {{pricing}}
+Plan or package options: {{plans}}
+Free trial details: {{trialDetails}}
+Bonus details: {{bonuses}}
+Confirmed promotion: {{promotion}}
+Promo code: {{promoCode}}
+Offer deadline: {{offerDeadline}}
+Eligibility and exclusions: {{offerTerms}}
+Refund or cancellation policy: {{refundPolicy}}
+Sales page URL: {{salesPageUrl}}
+Booking URL: {{bookingUrl}}
+Approved CTA destination: {{ctaLink}}
+
+LEAD GENERATION INFORMATION
+
+Registration fields: {{registrationFields}}
+Lead magnet or attendee resource: {{leadMagnet}}
+Resource delivery method: {{resourceDelivery}}
+Consent requirements: {{consentRequirements}}
+Marketing permission language: {{marketingConsent}}
+CRM or audience tags: {{crmTags}}
+Post-webinar segmentation: {{segmentationRules}}
+
+BRANDING AND VISUALS
+
+Available brand assets: {{brandAssets}}
+Available presenter photos: {{presenterPhotos}}
+Available product screenshots: {{screenshots}}
+Available charts or data visuals: {{charts}}
+Available demonstration assets: {{demoAssets}}
+Available customer logos: {{customerLogos}}
+Available testimonials: {{approvedTestimonials}}
+Presentation style: {{presentationStyle}}
+Brand colors or design guidance: {{designGuidelines}}
+Visual restrictions: {{visualRestrictions}}
+
+INTERACTION INFORMATION
+
+Live chat enabled: {{chatEnabled}}
+Q&A enabled: {{qaEnabled}}
+Polls enabled: {{pollsEnabled}}
+Breakout rooms enabled: {{breakoutRoomsEnabled}}
+Handouts available: {{handouts}}
+Interactive exercise: {{interactiveExercise}}
+Approved poll questions: {{pollDetails}}
+Approved audience questions: {{audienceQuestions}}
+Moderation rules: {{moderationRules}}
+
+COMMERCIAL AND LEGAL DISCLOSURE
+
+Commercial relationship: {{commercialRelationship}}
+Sponsor information: {{sponsorDetails}}
+Affiliate relationship: {{affiliateStatus}}
+Required disclosure: {{disclosure}}
+Medical, financial, legal, safety, or regulated-topic disclaimer: {{requiredDisclaimer}}
+Privacy notice: {{privacyNotice}}
+
+GOAL
+
+Create a complete webinar package that attracts the right registrants, sets accurate expectations, delivers meaningful value, and guides attendees toward one appropriate next step.
+
+The package should:
+
+- accurately explain what the webinar covers;
+- clearly identify who it is for;
+- communicate a specific and realistic attendee benefit;
+- provide a logical registration and reminder journey;
+- support a well-paced live or recorded presentation;
+- keep the webinar useful even when no purchase is made;
+- distinguish education from promotion;
+- include transparent pricing, limitations, and offer conditions;
+- prepare the presenter for questions and technical issues;
+- support follow-up after the webinar;
+- avoid unsupported claims, fake urgency, and generic event copy.
+
+ACCURACY
+
+1. Use only facts, statistics, examples, credentials, features, prices, dates, policies, results, links, and resources supplied in the prompt.
+
+2. Do not invent:
+
+- presenter credentials;
+- speaker biographies;
+- customer results;
+- testimonials;
+- case studies;
+- attendee counts;
+- company partnerships;
+- product functionality;
+- integrations;
+- prices;
+- discounts;
+- bonuses;
+- promo codes;
+- deadlines;
+- certificates;
+- replay availability;
+- downloadable resources;
+- platform features;
+- event capacity;
+- guarantees;
+- links;
+- sources.
+
+3. Do not claim that attendees will achieve a guaranteed result.
+
+4. Do not describe the webinar as:
+
+- exclusive;
+- limited;
+- sold out;
+- highly requested;
+- award-winning;
+- certified;
+- free;
+- live;
+- interactive;
+- hands-on;
+
+unless the supplied information confirms that description.
+
+5. Do not say that thousands of people have registered, attended, benefited, or requested the webinar unless verified.
+
+6. Do not imply that the presenter personally achieved, tested, or experienced something unless it appears in {{presenterExperience}}.
+
+7. Do not invent audience questions, poll results, chat messages, speaker reactions, or live interactions.
+
+8. Clearly distinguish:
+
+- currently available features;
+- beta features;
+- planned features;
+- educational information;
+- presenter opinion;
+- customer experience;
+- hypothetical examples.
+
+9. Do not claim that a webinar recording or replay will be available unless confirmed.
+
+10. When important information is missing, use an explicit placeholder:
+
+[INFORMATION REQUIRED: exact event time]
+
+Do not fill gaps with plausible assumptions.
+
+WEBINAR FORMAT
+
+Adapt the package to {{webinarFormat}}.
+
+LIVE EDUCATIONAL WEBINAR
+
+For a live educational webinar:
+
+- establish the learning outcome;
+- provide useful instruction before any commercial offer;
+- include realistic interaction points;
+- reserve time for questions;
+- avoid overloading the session with too many concepts;
+- include a concise recap;
+- make the CTA optional and relevant.
+
+EVERGREEN WEBINAR
+
+For an evergreen webinar:
+
+- do not pretend that the webinar is live;
+- do not include fake chat references;
+- do not create false countdowns or artificial seat scarcity;
+- clearly explain replay or on-demand access;
+- use evergreen timing language;
+- avoid phrases such as “today only” unless a real personalized deadline system exists and is disclosed.
+
+LIVE WORKSHOP
+
+For a workshop:
+
+- define the task attendees will complete;
+- list prerequisites;
+- explain what materials or software are required;
+- include work periods and pauses;
+- provide checkpoints;
+- state what attendees should have by the end;
+- avoid promising completion when the task depends on individual circumstances.
+
+PRODUCT DEMONSTRATION
+
+For a demonstration:
+
+- show real available functionality;
+- organize the demo around user tasks;
+- explain setup requirements;
+- identify limitations;
+- avoid demonstrating mock features as live functionality;
+- include fallback screenshots or a recorded backup when available;
+- reserve time for product questions.
+
+PANEL DISCUSSION
+
+For a panel:
+
+- establish one central question;
+- introduce each panelist concisely;
+- give each participant a distinct role or perspective;
+- create balanced moderator questions;
+- prevent repetitive answers;
+- reserve time for audience questions;
+- do not script panelist answers unless approved responses were supplied.
+
+INTERVIEW
+
+For an interview:
+
+- create the host introduction;
+- explain why the guest is relevant;
+- organize questions into a logical progression;
+- include optional follow-ups;
+- do not invent guest answers;
+- leave realistic time for responses.
+
+When no guest answers were supplied, use:
+
+HOST:
+[Question]
+
+FOLLOW-UP OPTIONS:
+- [Follow-up]
+- [Follow-up]
+
+GUEST:
+[Response not scripted]
+
+SALES WEBINAR
+
+For a sales webinar:
+
+- provide genuine educational value;
+- establish the problem and decision context;
+- explain the method or framework;
+- transition clearly into the offer;
+- disclose that the webinar includes a commercial offer;
+- explain pricing, eligibility, limitations, and terms accurately;
+- avoid withholding the entire solution solely to force a purchase;
+- avoid exaggerated transformation stories.
+
+CUSTOMER ONBOARDING WEBINAR
+
+For onboarding:
+
+- help users complete the first meaningful task;
+- explain account and access requirements;
+- demonstrate the core workflow;
+- prevent common setup mistakes;
+- direct users to approved support resources;
+- avoid turning onboarding into an unrelated upsell presentation.
+
+DURATION AND PACING
+
+Create a realistic agenda matching {{duration}} minutes.
+
+Account for:
+
+- opening and housekeeping;
+- presenter introduction;
+- core teaching;
+- examples;
+- demonstrations;
+- audience interaction;
+- pauses;
+- transitions;
+- offer presentation;
+- Q&A;
+- closing.
+
+Do not divide all sections evenly.
+
+Prioritize the sections that deliver the main promise.
+
+Suggested pacing guidance:
+
+For a 30-minute webinar:
+
+- 2–4 minutes: opening and expectations;
+- 18–22 minutes: core content;
+- 3–5 minutes: recap or CTA;
+- 3–5 minutes: questions.
+
+For a 45–60-minute webinar:
+
+- 3–5 minutes: opening;
+- 30–40 minutes: teaching or demonstration;
+- 5–10 minutes: offer or next step;
+- 8–15 minutes: Q&A.
+
+Use these only as guidance.
+
+Adjust timing to the actual format.
+
+Do not create a 15-minute sales pitch inside a short educational session unless explicitly requested.
+
+TITLE
+
+Write one recommended webinar title and four alternate titles.
+
+All titles should:
+
+- accurately represent the session;
+- communicate the primary topic or outcome;
+- identify the intended audience when useful;
+- remain clear outside the registration page;
+- avoid unsupported claims;
+- avoid excessive length;
+- avoid generic event language.
+
+Use different approaches:
+
+1. Direct and descriptive.
+2. Outcome-led.
+3. Problem-led.
+4. Audience-led.
+5. Method- or framework-led.
+
+Avoid titles such as:
+
+- “The Ultimate Masterclass”
+- “Change Your Life in One Hour”
+- “The Secret to Guaranteed Success”
+- “The Webinar You Can’t Miss”
+- “The Number One Strategy”
+- “Everything You Need to Know”
+- “Unlock Unlimited Growth”
+- “The Future of Everything”
+
+unless the wording is factually justified.
+
+SUBTITLE
+
+Write one webinar subtitle.
+
+The subtitle should:
+
+- clarify what attendees will learn;
+- explain the practical relevance;
+- add information not already in the title;
+- avoid repeating the complete title;
+- avoid guaranteed outcomes.
+
+REGISTRATION PAGE
+
+Write a complete webinar registration page.
+
+Use this structure:
+
+1. Webinar title
+2. Subtitle
+3. Date, time, and time zone
+4. Webinar format
+5. Main attendee promise
+6. Short description
+7. Who it is for
+8. What attendees will learn
+9. What attendees will not receive or important limitations
+10. Presenter information
+11. Event logistics
+12. Registration CTA
+13. Privacy or marketing-consent note when supplied
+14. FAQ
+15. Commercial disclosure when relevant
+
+REGISTRATION PAGE RULES
+
+The page should:
+
+- state whether the webinar is live, recorded, or evergreen;
+- explain whether a replay will be available;
+- identify required software, account, or experience;
+- state the cost accurately;
+- mention commercial content when relevant;
+- explain what happens after registration;
+- use one primary registration CTA;
+- remain useful on mobile.
+
+Do not:
+
+- invent seat limits;
+- add fake countdown language;
+- create unsupported bonuses;
+- imply certification when none exists;
+- hide the presence of a sales offer;
+- claim that registration closes unless a real deadline exists;
+- claim that replay access is guaranteed unless confirmed.
+
+LEARNING OUTCOMES
+
+Write 3–5 specific learning outcomes.
+
+Each outcome should describe what the attendee will:
+
+- understand;
+- identify;
+- compare;
+- evaluate;
+- configure;
+- create;
+- practise;
+- decide;
+- apply.
+
+Avoid vague outcomes such as:
+
+- learn valuable insights;
+- discover powerful secrets;
+- transform your strategy;
+- master everything;
+- achieve success.
+
+Do not promise that every attendee will complete or implement the outcome when that depends on individual ability or external factors.
+
+AUDIENCE QUALIFICATION
+
+Write a “Who this webinar is for” section.
+
+Use specific audience situations, roles, or needs.
+
+Also write a brief “This may not be for you if” section when relevant.
+
+Do not use exclusion to manufacture prestige.
+
+Use it to clarify:
+
+- required knowledge;
+- product compatibility;
+- professional scope;
+- geographic availability;
+- budget or account requirements;
+- technical prerequisites;
+- topic relevance.
+
+PRESENTER BIO
+
+Write one concise presenter biography.
+
+Use only approved information.
+
+Include:
+
+- presenter name;
+- current role;
+- relevant experience;
+- relationship to the topic;
+- one or two approved credentials when important.
+
+Do not include unrelated career history.
+
+Do not invent awards, media appearances, clients, qualifications, certifications, or years of experience.
+
+AGENDA
+
+Create a timed webinar agenda.
+
+For every section include:
+
+- approximate start time;
+- approximate duration;
+- section title;
+- section goal;
+- presenter action;
+- audience action;
+- visual or demo requirement;
+- transition.
+
+Label timing as:
+
+Draft webinar timing — adjust during rehearsal
+
+The agenda must fit within {{duration}} minutes.
+
+Include buffer time for:
+
+- technical delays;
+- transitions;
+- audience questions;
+- demonstrations taking longer than expected.
+
+Do not schedule every minute without flexibility.
+
+WEBINAR SCRIPT
+
+Write the complete presenter script where appropriate.
+
+Separate spoken content from production instructions.
+
+Use these labels:
+
+PRESENTER:
+[Exact spoken text]
+
+MODERATOR:
+[Exact spoken text]
+
+PANELIST:
+[Approved response or “Response not scripted”]
+
+PRODUCTION NOTE:
+[Internal instruction]
+
+SLIDE:
+[Slide title or visual]
+
+DEMO:
+[Confirmed demonstration step]
+
+POLL:
+[Approved poll]
+
+CHAT PROMPT:
+[Specific audience prompt]
+
+PAUSE:
+[Approximate pause]
+
+Do not include internal instructions inside presenter dialogue.
+
+OPENING SCRIPT
+
+The opening should include:
+
+1. A concise topic-led opening.
+2. A clear explanation of what the session covers.
+3. The main attendee benefit.
+4. Relevant housekeeping.
+5. Presenter identification.
+6. A brief agenda.
+7. Commercial disclosure when relevant.
+
+Do not begin with a long biography.
+
+Do not spend several minutes asking where attendees are joining from unless community interaction is central to the format.
+
+Avoid:
+
+- “We’re so excited to have you here.”
+- “This webinar will change everything.”
+- “You’re in exactly the right place.”
+- “Stay until the end for a surprise.”
+- “You won’t want to miss what’s coming.”
+
+unless the wording naturally fits and is accurate.
+
+HOUSEKEEPING
+
+Include only relevant housekeeping information:
+
+- session duration;
+- whether the session is recorded;
+- replay information;
+- how to submit questions;
+- whether chat is monitored;
+- accessibility information;
+- technical support;
+- whether slides or resources will be shared;
+- commercial disclosure.
+
+Do not announce features unavailable on the selected platform.
+
+CORE CONTENT
+
+Organize the teaching into 3–5 main sections unless the topic requires another structure.
+
+Every section should:
+
+- contribute directly to the main promise;
+- introduce one clear concept, step, or decision;
+- include a useful explanation;
+- include an example, exercise, visual, or demonstration when appropriate;
+- mention limitations or exceptions;
+- transition logically.
+
+Do not:
+
+- repeat the same point in several sections;
+- introduce unrelated background;
+- overload slides with paragraphs;
+- use several unsupported statistics;
+- turn every point into a product pitch;
+- create artificial suspense.
+
+FRAMEWORKS
+
+When introducing a framework:
+
+- give it a descriptive name;
+- explain every component;
+- clarify whether the framework is original, adapted, or widely used;
+- do not claim ownership of a known framework;
+- avoid forced acronyms;
+- provide a practical example;
+- explain where the framework may not apply.
+
+Do not invent proprietary methods solely to make the webinar sound distinctive.
+
+EXAMPLES AND CASE STUDIES
+
+Use only supplied examples and case studies.
+
+For every case study distinguish:
+
+- starting situation;
+- action taken;
+- relevant context;
+- verified result;
+- limitations;
+- whether the outcome is typical.
+
+Do not imply universal results.
+
+Do not invent customer names, revenue, conversion rates, timelines, screenshots, or quotations.
+
+When an example is hypothetical, label it clearly:
+
+HYPOTHETICAL EXAMPLE:
+[Example]
+
+Do not make a hypothetical example sound like a real customer success story.
+
+PRODUCT DEMONSTRATION
+
+When a demonstration is included, create a step-by-step demo plan.
+
+For each step provide:
+
+- user goal;
+- screen or feature shown;
+- presenter explanation;
+- action performed;
+- expected result;
+- limitation or warning;
+- fallback visual.
+
+Do not invent product screens, buttons, menu labels, workflows, integrations, or outcomes.
+
+Insert:
+
+PRODUCTION NOTE:
+Prepare a recorded backup or screenshots for any live demonstration.
+
+Only include this note when backup assets can realistically be prepared.
+
+SLIDE DECK OUTLINE
+
+Create a complete slide-by-slide outline.
+
+For every slide provide:
+
+- slide number;
+- slide title;
+- slide purpose;
+- key message;
+- recommended visual;
+- maximum on-slide text;
+- presenter notes;
+- approximate speaking time.
+
+Recommended slide roles may include:
+
+1. Title
+2. Attendee promise
+3. Agenda
+4. Problem or context
+5. Key concept
+6. Framework
+7. Example
+8. Demonstration
+9. Common mistake
+10. Practical action
+11. Recap
+12. Offer or next step
+13. Q&A
+14. Closing
+
+Do not force all slides.
+
+SLIDE RULES
+
+Slides should support the presenter rather than duplicate the full script.
+
+Use:
+
+- one main idea per slide;
+- short headings;
+- concise labels;
+- simple diagrams;
+- real screenshots;
+- readable charts;
+- relevant examples.
+
+Avoid:
+
+- paragraphs;
+- tiny text;
+- decorative stock images;
+- unsupported graphs;
+- fake customer comments;
+- unnecessary animations;
+- several competing visuals;
+- placing the full presenter script on slides.
+
+For charts:
+
+- use only supplied data;
+- label axes and units;
+- state the source;
+- avoid misleading scales;
+- do not invent trends or projections.
+
+AUDIENCE INTERACTION
+
+Create interaction moments only when the platform supports them.
+
+Possible interactions include:
+
+- chat question;
+- poll;
+- short reflection;
+- worksheet task;
+- demonstration choice;
+- Q&A;
+- breakout exercise.
+
+Every interaction should:
+
+- support a learning objective;
+- have a clear instruction;
+- fit the available time;
+- avoid unnecessary personal data;
+- have a fallback when participation is low.
+
+Do not add interaction merely to claim the webinar is interactive.
+
+POLL QUESTIONS
+
+Use approved polls when supplied.
+
+When poll creation is requested but exact options were not supplied, create draft poll ideas labelled:
+
+Draft poll — presenter approval required
+
+Poll rules:
+
+- ask one clear question;
+- keep options distinct;
+- avoid biased wording;
+- avoid collecting sensitive information;
+- do not claim the result is representative of a wider population;
+- do not invent live results.
+
+CHAT PROMPTS
+
+Write specific chat prompts.
+
+Avoid generic prompts such as:
+
+- “Drop a yes in the chat.”
+- “Type 1 if you agree.”
+- “Who is excited?”
+- “Where is everyone joining from?”
+
+unless they serve a clear purpose.
+
+Prefer prompts such as:
+
+“What is the main obstacle you encounter during [specific process]?”
+
+Do not use chat activity as fake social proof.
+
+Q&A PREPARATION
+
+Create a Q&A preparation section with:
+
+- likely audience questions;
+- approved answer framework;
+- facts or policies to verify;
+- questions that require follow-up;
+- questions outside the webinar’s scope;
+- sensitive questions requiring careful handling.
+
+Do not invent definitive answers when information is unavailable.
+
+Use:
+
+“Based on the information confirmed for this session…”
+
+“I don’t have enough verified information to answer that accurately.”
+
+“That depends on [specific factor].”
+
+“We should follow up after the session rather than speculate.”
+
+Do not pressure the presenter to improvise legal, medical, financial, technical, or policy claims.
+
+MODERATOR GUIDE
+
+When a moderator is involved, create a guide containing:
+
+- opening responsibilities;
+- presenter introduction;
+- chat moderation;
+- technical support process;
+- question selection criteria;
+- time warnings;
+- transition into Q&A;
+- handling inappropriate comments;
+- closing responsibilities.
+
+Do not ask the moderator to fabricate enthusiasm, testimonials, attendance figures, or audience reactions.
+
+OFFER TRANSITION
+
+When the webinar includes an offer, create a transparent transition.
+
+The transition should:
+
+- connect the educational content to the next step;
+- make it clear that the session is moving into a commercial section;
+- explain who the offer is for;
+- avoid implying that the free content was intentionally incomplete;
+- avoid emotional pressure.
+
+Example structure:
+
+PRESENTER:
+“We’ve covered the process you can apply independently. For those who want [specific additional support], I’ll briefly explain the available option.”
+
+Do not use:
+
+- “You have two choices…”
+- “Stay stuck or invest in yourself.”
+- “Serious people will act now.”
+- “The price of doing nothing is…”
+- “If you really want results…”
+
+OFFER PRESENTATION
+
+Present the offer accurately.
+
+Include only confirmed:
+
+- product or service name;
+- intended user;
+- included features;
+- delivery method;
+- pricing;
+- payment options;
+- trial;
+- bonuses;
+- deadline;
+- eligibility;
+- limitations;
+- cancellation or refund terms;
+- CTA link.
+
+Explain:
+
+- what the buyer receives;
+- what is not included;
+- whether implementation support exists;
+- whether results depend on user action;
+- whether access is recurring or one-time;
+- what happens after the purchase or booking.
+
+Do not invent value calculations, discounts, bonus prices, scarcity, or guarantees.
+
+Do not create a fake “total value” by assigning unsupported prices to components.
+
+URGENCY AND SCARCITY
+
+Use urgency only when supported by a real event.
+
+Permitted urgency may include:
+
+- confirmed registration deadline;
+- real cohort start date;
+- actual capacity;
+- genuine promo expiration;
+- time-limited replay;
+- confirmed application window.
+
+Do not invent:
+
+- expiring timers;
+- limited seats;
+- disappearing bonuses;
+- price increases;
+- closing enrolment;
+- one-time-only offers;
+- webinar-only pricing.
+
+When no real deadline exists, do not create one.
+
+CALL TO ACTION
+
+Use one primary CTA.
+
+Possible CTAs include:
+
+- register;
+- attend live;
+- watch the replay;
+- download an approved resource;
+- book a consultation;
+- start a trial;
+- view plans;
+- purchase a confirmed offer;
+- answer a feedback survey;
+- complete an onboarding task.
+
+CTA rules:
+
+- describe the next step clearly;
+- use one destination;
+- explain what happens after clicking;
+- avoid several competing actions;
+- do not imply something is free unless confirmed;
+- do not request unnecessary personal information.
+
+CLOSING SCRIPT
+
+The closing should:
+
+1. Recap the central takeaway.
+2. Clarify the next practical step.
+3. Mention the approved CTA.
+4. Explain replay or resource access when confirmed.
+5. Thank attendees briefly.
+6. End the session clearly.
+
+Do not repeat the entire webinar.
+
+Do not introduce a new major topic.
+
+Do not create an unconfirmed future event.
+
+REGISTRATION CONFIRMATION EMAIL
+
+Write one registration confirmation email.
+
+Include:
+
+- confirmation of registration;
+- webinar title;
+- date;
+- time;
+- time zone;
+- join instructions;
+- calendar reminder language;
+- technical requirements;
+- what to prepare;
+- replay information only when confirmed;
+- support contact only when supplied.
+
+Do not invent a calendar link or join link.
+
+REMINDER EMAIL SEQUENCE
+
+Create an appropriate reminder sequence based on the event date.
+
+Possible timing:
+
+- immediately after registration;
+- 24 hours before;
+- 1 hour before;
+- 10–15 minutes before.
+
+Use only the number of reminders requested or appropriate.
+
+Each reminder should have:
+
+- timing;
+- subject;
+- preview text;
+- concise body;
+- one CTA;
+- relevant preparation note.
+
+Do not use fake urgency.
+
+Do not claim that the session is nearly full unless confirmed.
+
+Do not send a “starting now” reminder for an evergreen session.
+
+NO-SHOW EMAIL
+
+Write a no-show email only when attendance tracking exists.
+
+The email may:
+
+- acknowledge that the registrant could not attend;
+- provide replay access when confirmed;
+- summarize the session value;
+- give one next step.
+
+Do not guilt the recipient.
+
+Do not say:
+
+- “We missed you.”
+- “You forgot.”
+- “You failed to attend.”
+
+unless the brand voice specifically supports that wording and the statement is appropriate.
+
+ATTENDEE FOLLOW-UP EMAIL
+
+Write one follow-up email for attendees.
+
+Include:
+
+- concise thank-you;
+- central takeaway;
+- replay or slides when confirmed;
+- approved resource;
+- one CTA;
+- feedback request only when useful.
+
+Do not include several competing links.
+
+REPLAY EMAIL
+
+Write a replay email only when a replay exists.
+
+Include:
+
+- replay availability;
+- confirmed expiration;
+- what the viewer will learn;
+- timestamps or key sections when available;
+- one CTA.
+
+Do not claim that the replay expires when it does not.
+
+POST-WEBINAR SALES EMAILS
+
+When a sales follow-up sequence is requested:
+
+- segment attendees and no-shows when possible;
+- build on the content delivered;
+- address one objection at a time;
+- use only confirmed offer details;
+- respect the offer deadline;
+- stop sending conversion emails after purchase when the system supports it.
+
+Do not create artificial urgency or repeat the same pitch in every email.
+
+SOCIAL PROMOTION
+
+Create promotional social assets only when requested.
+
+Possible assets include:
+
+- launch announcement;
+- educational teaser;
+- presenter quote;
+- last-day registration reminder;
+- starting-soon reminder;
+- replay announcement;
+- post-event takeaway.
+
+Each social post should:
+
+- accurately describe the webinar;
+- state the date and time when relevant;
+- mention the time zone;
+- identify who it is for;
+- use one CTA;
+- avoid fake engagement;
+- avoid unsupported attendee counts.
+
+Do not write “limited seats” unless confirmed.
+
+LANDING PAGE FAQ
+
+Create a webinar FAQ using only supplied details.
+
+Potential questions include:
+
+- Is the webinar live?
+- Is it free?
+- Will there be a replay?
+- How long is the session?
+- Who is it for?
+- What experience is required?
+- Will there be a sales offer?
+- Can I ask questions?
+- What platform is used?
+- What should I prepare?
+- Are slides or resources included?
+- Is a certificate provided?
+- Is the session accessible?
+- Can I attend from another time zone?
+
+Do not answer questions with invented policies.
+
+ACCESSIBILITY
+
+Create an accessibility plan based on supplied capabilities.
+
+Consider:
+
+- captions;
+- transcript;
+- readable slide contrast;
+- large text;
+- verbal descriptions of visuals;
+- accessible documents;
+- keyboard navigation;
+- recording;
+- language support;
+- breaks in longer sessions.
+
+Do not claim that captions, sign-language interpretation, or transcripts are available unless confirmed.
+
+When a chart, screenshot, or visual is shown, the presenter should explain the relevant information aloud.
+
+TECHNICAL REHEARSAL
+
+Create a technical rehearsal checklist.
+
+Include relevant checks for:
+
+- presenter microphone;
+- camera;
+- internet connection;
+- lighting;
+- screen sharing;
+- slide deck;
+- demonstration account;
+- browser notifications;
+- backup device;
+- recording;
+- captions;
+- polls;
+- Q&A;
+- moderator access;
+- join links;
+- sponsor media;
+- backup demonstration;
+- presenter permissions.
+
+Do not assume access to tools or backup equipment not supplied.
+
+LIVE EVENT CHECKLIST
+
+Create a launch checklist covering:
+
+- room opening time;
+- presenter and moderator arrival;
+- sound check;
+- recording confirmation;
+- slide loading;
+- link testing;
+- chat settings;
+- attendee admission;
+- content warning or disclosure;
+- timing cues;
+- Q&A collection;
+- CTA link posting;
+- event closing;
+- recording storage;
+- follow-up activation.
+
+POST-EVENT CHECKLIST
+
+Include:
+
+- verify recording;
+- edit replay when required;
+- upload approved resources;
+- send follow-up emails;
+- answer unresolved questions;
+- publish replay only when permitted;
+- review attendance data;
+- collect feedback;
+- update CRM segmentation;
+- document technical issues;
+- avoid using attendee data outside approved consent.
+
+FACT-CHECK CHECKLIST
+
+Create a list of claims that require verification before publication or delivery.
+
+Check:
+
+- event date and time;
+- time zone;
+- presenter credentials;
+- statistics;
+- quotations;
+- product features;
+- prices;
+- offer deadline;
+- replay conditions;
+- links;
+- refund terms;
+- certification claims;
+- customer results;
+- sponsor claims;
+- legal or regulated-topic statements.
+
+Use:
+
+[VERIFY BEFORE PUBLISHING]
+
+for unresolved details.
+
+Do not hide unresolved claims inside finished marketing copy.
+
+STYLE
+
+Write in clear, natural language appropriate for {{audience}}, {{tone}}, and {{brandVoice}}.
+
+Use:
+
+- concise sentences;
+- practical explanations;
+- specific outcomes;
+- realistic confidence;
+- natural spoken transitions;
+- mobile-friendly copy;
+- clear visual hierarchy.
+
+Avoid:
+
+- corporate event jargon;
+- artificial excitement;
+- exaggerated promises;
+- forced inspiration;
+- fake exclusivity;
+- manipulative scarcity;
+- keyword stuffing;
+- excessive exclamation marks;
+- generic AI copy;
+- repeated rhetorical questions;
+- overly polished presenter banter.
+
+Avoid phrases such as:
+
+- “We’re thrilled to announce”
+- “This is a game-changer”
+- “Unlock your full potential”
+- “Don’t miss this incredible opportunity”
+- “Seats are filling fast” unless confirmed;
+- “Transform your business overnight”
+- “The secrets nobody tells you”
+- “A once-in-a-lifetime event”
+- “You can’t afford to miss this”
+- “Stay until the end for a surprise”
+- “Packed with value”
+- “Actionable insights”
+- “Take your results to the next level”
+
+unless the wording is accurate, specific, and consistent with the brand voice.
+
+FINAL QUALITY CHECK
+
+Before presenting the package, silently verify that:
+
+- the webinar format is correct;
+- the title matches the actual content;
+- date, time, and time zone are accurate;
+- the registration page sets realistic expectations;
+- learning outcomes are specific and achievable;
+- the agenda fits {{duration}} minutes;
+- the script sounds natural when spoken;
+- slides support rather than duplicate the narration;
+- interactions are supported by the platform;
+- no presenter credentials, facts, statistics, customer results, prices, bonuses, deadlines, links, or features were invented;
+- panelist and guest answers were not fabricated;
+- educational content provides real value;
+- commercial content is disclosed;
+- urgency is based on real constraints;
+- replay language is accurate;
+- accessibility claims are confirmed;
+- reminder emails match the event type;
+- Q&A answers do not speculate;
+- technical and fact-check issues are clearly marked;
+- the package does not sound like generic AI webinar copy.
+
+OUTPUT FORMAT
+
+## Webinar Strategy
+
+Format:
+[Webinar format]
+
+Goal:
+[Goal]
+
+Target audience:
+[Audience]
+
+Main promise:
+[Promise]
+
+Main takeaway:
+[Takeaway]
+
+Primary CTA:
+[Action]
+
+Target duration:
+[Duration]
+
+## Recommended Webinar Title
+
+[Title]
+
+## Alternate Titles
+
+1. Direct: [Title]
+2. Outcome-led: [Title]
+3. Problem-led: [Title]
+4. Audience-led: [Title]
+
+## Subtitle
+
+[Subtitle]
+
+## Registration Page
+
+### Headline
+
+[Headline]
+
+### Subtitle
+
+[Subtitle]
+
+### Event Details
+
+Date:
+[Date]
+
+Time:
+[Time and time zone]
+
+Format:
+[Live, evergreen, workshop, demo, or other]
+
+Duration:
+[Duration]
+
+Cost:
+[Confirmed price]
+
+Replay:
+[Confirmed replay details]
+
+### Short Description
+
+[Description]
+
+### Who It Is For
+
+[Audience section]
+
+### This May Not Be for You If
+
+[Qualification section or omit]
+
+### What You Will Learn
+
+1. [Learning outcome]
+2. [Learning outcome]
+3. [Learning outcome]
+
+### Presenter
+
+[Approved presenter bio]
+
+### Registration CTA
+
+Button:
+[Label]
+
+Destination:
+[Approved URL]
+
+### FAQ
+
+[Questions and confirmed answers]
+
+## Draft Webinar Agenda
+
+Draft webinar timing — adjust during rehearsal
+
+### 00:00–[time] — [Section]
+
+Goal:
+[Purpose]
+
+Presenter action:
+[Action]
+
+Audience action:
+[Action]
+
+Visual or demo:
+[Requirement]
+
+Continue through the full duration.
+
+## Slide Deck Outline
+
+### Slide 1 — [Title]
+
+Purpose:
+[Purpose]
+
+Key message:
+[Message]
+
+On-slide content:
+[Concise content]
+
+Visual:
+[Visual concept]
+
+Presenter notes:
+[Notes]
+
+Approximate time:
+[Time]
+
+Continue through all slides.
+
+## Webinar Script
+
+### Opening
+
+PRODUCTION NOTE:
+[Instruction]
+
+PRESENTER:
+[Spoken script]
+
+### Housekeeping
+
+PRESENTER:
+[Spoken script]
+
+### Section 1 — [Name]
+
+SLIDE:
+[Slide]
+
+PRESENTER:
+[Script]
+
+INTERACTION:
+[Poll, chat prompt, or exercise]
+
+Continue through all sections.
+
+### Offer Transition
+
+[Transparent transition or omit]
+
+### Offer Presentation
+
+[Accurate offer script or omit]
+
+### Q&A Transition
+
+[Script]
+
+### Closing
+
+[Recap, CTA, replay details, and sign-off]
+
+## Demonstration Plan
+
+[Steps and backup plan]
+
+Omit when no demonstration is included.
+
+## Audience Interaction Plan
+
+[Polls, chat prompts, exercises, and timing]
+
+Omit when no interaction is required.
+
+## Q&A Preparation
+
+### Question 1
+
+Question:
+[Likely question]
+
+Answer framework:
+[Approved answer]
+
+Verification required:
+[Details or “None”]
+
+Continue for relevant questions.
+
+## Moderator Guide
+
+[Moderator responsibilities]
+
+Omit when no moderator is involved.
+
+## Registration Confirmation Email
+
+Timing:
+Immediately after registration
+
+Subject:
+[Subject]
+
+Preview text:
+[Preview]
+
+Body:
+[Email]
+
+CTA:
+[Join or calendar action]
+
+## Reminder Emails
+
+### Reminder 1
+
+Timing:
+[Relative timing]
+
+Subject:
+[Subject]
+
+Preview:
+[Preview]
+
+Body:
+[Email]
+
+CTA:
+[Action]
+
+Continue for appropriate reminders.
+
+## Attendee Follow-Up Email
+
+[Email]
+
+## No-Show or Replay Email
+
+[Email or omit]
+
+## Social Promotion
+
+### Announcement Post
+
+[Post]
+
+### Reminder Post
+
+[Post]
+
+### Replay Post
+
+[Post or omit]
+
+## Technical Rehearsal Checklist
+
+- [Check]
+- [Check]
+- [Check]
+
+## Live Event Checklist
+
+- [Check]
+- [Check]
+- [Check]
+
+## Post-Event Checklist
+
+- [Check]
+- [Check]
+- [Check]
+
+## Fact-Check Checklist
+
+- [Item requiring verification]
+
+Omit when no unresolved items remain.
+
+Output only the completed webinar package. Do not explain your writing process.

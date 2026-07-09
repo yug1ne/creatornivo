@@ -1,0 +1,317 @@
+[
+  {
+    "slug": "blog-article",
+    "title": "Blog Article",
+    "category": "blog",
+    "plan": "free",
+    "vars": 12
+  },
+  {
+    "slug": "cold-email-outreach",
+    "title": "Cold Email Outreach",
+    "category": "email",
+    "plan": "free",
+    "vars": 13
+  },
+  {
+    "slug": "facebook-post",
+    "title": "Facebook Post",
+    "category": "facebook_post",
+    "plan": "free",
+    "vars": 14
+  },
+  {
+    "slug": "faq-page",
+    "title": "FAQ Page",
+    "category": "seo",
+    "plan": "free",
+    "vars": 13
+  },
+  {
+    "slug": "google-business-profile-post",
+    "title": "Google Business Profile Post",
+    "category": "google_business",
+    "plan": "free",
+    "vars": 13
+  },
+  {
+    "slug": "instagram-post",
+    "title": "Instagram Post",
+    "category": "instagram_post",
+    "plan": "free",
+    "vars": 10
+  },
+  {
+    "slug": "linkedin-post",
+    "title": "LinkedIn Post",
+    "category": "linkedin_post",
+    "plan": "free",
+    "vars": 10
+  },
+  {
+    "slug": "newsletter",
+    "title": "Newsletter",
+    "category": "newsletter",
+    "plan": "free",
+    "vars": 11
+  },
+  {
+    "slug": "product-description",
+    "title": "Product Description",
+    "category": "product",
+    "plan": "free",
+    "vars": 10
+  },
+  {
+    "slug": "reddit-post",
+    "title": "Reddit Post",
+    "category": "reddit",
+    "plan": "free",
+    "vars": 12
+  },
+  {
+    "slug": "seo-meta-tags",
+    "title": "SEO Meta Tags",
+    "category": "seo",
+    "plan": "free",
+    "vars": 10
+  },
+  {
+    "slug": "short-form-video",
+    "title": "Short-Form Video Script",
+    "category": "youtube",
+    "plan": "free",
+    "vars": 10
+  },
+  {
+    "slug": "threads-post",
+    "title": "Threads Post",
+    "category": "threads_post",
+    "plan": "free",
+    "vars": 13
+  },
+  {
+    "slug": "tiktok-caption",
+    "title": "TikTok Caption",
+    "category": "tiktok",
+    "plan": "free",
+    "vars": 13
+  },
+  {
+    "slug": "x-thread",
+    "title": "X Thread",
+    "category": "x_thread",
+    "plan": "free",
+    "vars": 10
+  },
+  {
+    "slug": "amazon-listing",
+    "title": "Amazon Listing",
+    "category": "ecommerce",
+    "plan": "pro",
+    "vars": 14
+  },
+  {
+    "slug": "app-store-listing",
+    "title": "App Store Listing",
+    "category": "ecommerce",
+    "plan": "pro",
+    "vars": 14
+  },
+  {
+    "slug": "case-study",
+    "title": "Case Study",
+    "category": "marketing",
+    "plan": "pro",
+    "vars": 12
+  },
+  {
+    "slug": "discord-announcement",
+    "title": "Discord Announcement",
+    "category": "community",
+    "plan": "pro",
+    "vars": 11
+  },
+  {
+    "slug": "email-sequence",
+    "title": "Email Sequence",
+    "category": "email",
+    "plan": "pro",
+    "vars": 14
+  },
+  {
+    "slug": "etsy-listing",
+    "title": "Etsy Listing",
+    "category": "ecommerce",
+    "plan": "pro",
+    "vars": 14
+  },
+  {
+    "slug": "github-readme",
+    "title": "GitHub README",
+    "category": "app_ux",
+    "plan": "pro",
+    "vars": 11
+  },
+  {
+    "slug": "in-app-ux-copy",
+    "title": "In-App UX Copy",
+    "category": "app_ux",
+    "plan": "pro",
+    "vars": 16
+  },
+  {
+    "slug": "indie-hackers-post",
+    "title": "Indie Hackers Post",
+    "category": "community",
+    "plan": "pro",
+    "vars": 16
+  },
+  {
+    "slug": "instagram-carousel",
+    "title": "Instagram Carousel",
+    "category": "instagram_post",
+    "plan": "pro",
+    "vars": 13
+  },
+  {
+    "slug": "kickstarter-campaign",
+    "title": "Kickstarter Campaign",
+    "category": "product_launch",
+    "plan": "pro",
+    "vars": 12
+  },
+  {
+    "slug": "landing-page-copy",
+    "title": "Landing Page Copy",
+    "category": "marketing",
+    "plan": "pro",
+    "vars": 12
+  },
+  {
+    "slug": "linkedin-carousel",
+    "title": "LinkedIn Carousel",
+    "category": "linkedin_post",
+    "plan": "pro",
+    "vars": 10
+  },
+  {
+    "slug": "paid-ad-copy",
+    "title": "Paid Ad Copy",
+    "category": "marketing",
+    "plan": "pro",
+    "vars": 11
+  },
+  {
+    "slug": "pinterest-pin",
+    "title": "Pinterest Pin",
+    "category": "pinterest",
+    "plan": "pro",
+    "vars": 13
+  },
+  {
+    "slug": "podcast-script",
+    "title": "Podcast Script",
+    "category": "youtube",
+    "plan": "pro",
+    "vars": 14
+  },
+  {
+    "slug": "press-release",
+    "title": "Press Release",
+    "category": "sales",
+    "plan": "pro",
+    "vars": 9
+  },
+  {
+    "slug": "product-hunt-launch",
+    "title": "Product Hunt Launch",
+    "category": "product_launch",
+    "plan": "pro",
+    "vars": 14
+  },
+  {
+    "slug": "push-notification",
+    "title": "Push Notification",
+    "category": "marketing",
+    "plan": "pro",
+    "vars": 11
+  },
+  {
+    "slug": "quora-answer",
+    "title": "Quora Answer",
+    "category": "community",
+    "plan": "pro",
+    "vars": 12
+  },
+  {
+    "slug": "review-response",
+    "title": "Review Response",
+    "category": "sales",
+    "plan": "pro",
+    "vars": 8
+  },
+  {
+    "slug": "sales-proposal",
+    "title": "Sales Proposal",
+    "category": "sales",
+    "plan": "pro",
+    "vars": 10
+  },
+  {
+    "slug": "sms-campaign",
+    "title": "SMS Campaign",
+    "category": "marketing",
+    "plan": "pro",
+    "vars": 12
+  },
+  {
+    "slug": "substack-post",
+    "title": "Substack Post",
+    "category": "community",
+    "plan": "pro",
+    "vars": 14
+  },
+  {
+    "slug": "telegram-post",
+    "title": "Telegram Post",
+    "category": "community",
+    "plan": "pro",
+    "vars": 14
+  },
+  {
+    "slug": "webinar-package",
+    "title": "Webinar Package",
+    "category": "marketing",
+    "plan": "pro",
+    "vars": 16
+  },
+  {
+    "slug": "website-popup",
+    "title": "Website Popup",
+    "category": "app_ux",
+    "plan": "pro",
+    "vars": 11
+  },
+  {
+    "slug": "whatsapp-broadcast",
+    "title": "WhatsApp Broadcast",
+    "category": "community",
+    "plan": "pro",
+    "vars": 11
+  },
+  {
+    "slug": "youtube-script",
+    "title": "YouTube Script",
+    "category": "youtube",
+    "plan": "pro",
+    "vars": 11
+  },
+  {
+    "slug": "youtube-video-package",
+    "title": "YouTube Video Package",
+    "category": "youtube",
+    "plan": "pro",
+    "vars": 13
+  }
+]

@@ -6,6 +6,8 @@ export type TransactionalEmailInput = {
   to: string;
   subject: string;
   text: string;
+  /** Optional HTML body (multipart with `text` fallback). */
+  html?: string;
   /** Precomputed hash for logs; derived from `to` when omitted. */
   emailHash?: string;
   /** Short label for log lines, e.g. "welcome", "pro confirmation". */
@@ -13,7 +15,7 @@ export type TransactionalEmailInput = {
 };
 
 /**
- * Sends a plain-text transactional email via Resend.
+ * Sends a transactional email via Resend (text, optional HTML).
  * Returns `{ delivered: false }` when Resend is unavailable or send fails — callers handle dedupe rollback.
  */
 export async function sendTransactionalEmail(
@@ -48,6 +50,7 @@ export async function sendTransactionalEmail(
     to: input.to,
     subject: input.subject,
     text: input.text,
+    ...(input.html ? { html: input.html } : {}),
   });
 
   if (result.error) {

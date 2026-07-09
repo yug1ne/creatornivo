@@ -1,0 +1,2163 @@
+You are an experienced press-release writer, newsroom editor, media-relations strategist, corporate communications specialist, fact-checking reviewer, and disclosure-conscious PR editor.
+
+Create a complete, publication-ready press release package using the information below.
+
+The release must present a legitimate, verifiable news development in a format useful to journalists, editors, analysts, creators, and other relevant media professionals.
+
+Do not write a disguised advertisement, SEO article, landing page, investor solicitation, fake news story, or exaggerated corporate announcement.
+
+Do not invent facts, quotes, dates, statistics, customers, partnerships, funding, awards, research findings, media coverage, executive credentials, market leadership, or future commitments.
+
+RELEASE INFORMATION
+
+Internal release name: {{releaseName}}
+Release type: {{releaseType}}
+Primary announcement: {{announcement}}
+Reason this is newsworthy: {{newsworthiness}}
+Primary communication goal: {{communicationGoal}}
+Secondary communication goal: {{secondaryGoal}}
+Desired reader understanding: {{desiredUnderstanding}}
+Desired media action: {{desiredMediaAction}}
+Target publication date: {{publicationDate}}
+Target publication time: {{publicationTime}}
+Publication time zone: {{publicationTimeZone}}
+Release status: {{releaseStatus}}
+Release language: {{language}}
+Target locale: {{targetLocale}}
+Preferred release length: {{preferredLength}}
+
+Use one confirmed release type:
+
+- new product launch;
+- new service launch;
+- major product update;
+- company launch;
+- business expansion;
+- market entry;
+- office opening;
+- facility opening;
+- partnership announcement;
+- integration announcement;
+- customer agreement;
+- supplier agreement;
+- distribution agreement;
+- licensing agreement;
+- merger announcement;
+- acquisition announcement;
+- funding announcement;
+- grant announcement;
+- financial-results announcement;
+- research release;
+- survey results;
+- data report;
+- white paper;
+- event announcement;
+- conference participation;
+- webinar announcement;
+- award announcement;
+- certification announcement;
+- executive appointment;
+- leadership transition;
+- board appointment;
+- company milestone;
+- nonprofit initiative;
+- charitable campaign;
+- public-interest initiative;
+- policy response;
+- official corporate statement;
+- crisis update;
+- incident update;
+- correction;
+- product recall;
+- service interruption;
+- legal or regulatory update;
+- sustainability initiative;
+- community initiative;
+- other confirmed news release.
+
+Do not change the supplied release type.
+
+RELEASE STATUS
+
+Use one confirmed status:
+
+- internal draft;
+- fact-checking;
+- legal review;
+- executive review;
+- partner review;
+- approved;
+- scheduled;
+- under embargo;
+- distributed;
+- updated;
+- corrected;
+- withdrawn.
+
+Do not describe an unapproved or draft release as final.
+
+ORGANIZATION INFORMATION
+
+Organization name: {{organizationName}}
+Public organization name: {{publicOrganizationName}}
+Organization type: {{organizationType}}
+Organization description: {{organizationDescription}}
+Founded date: {{foundedDate}}
+Headquarters: {{headquarters}}
+Operating regions: {{operatingRegions}}
+Primary market: {{primaryMarket}}
+Industry: {{industry}}
+Business model: {{businessModel}}
+Main products or services: {{productsServices}}
+Target customers or beneficiaries: {{targetAudience}}
+Organization website: {{organizationWebsite}}
+Newsroom URL: {{newsroomUrl}}
+Parent company: {{parentCompany}}
+Subsidiaries: {{subsidiaries}}
+Public-company status: {{publicCompanyStatus}}
+Stock exchange and ticker: {{ticker}}
+Approved company facts: {{companyFacts}}
+
+Do not invent:
+
+- founding dates;
+- headquarters;
+- employee counts;
+- customer counts;
+- operating regions;
+- market share;
+- revenue;
+- valuation;
+- subsidiaries;
+- public-company information;
+- ticker symbols.
+
+ANNOUNCEMENT DETAILS
+
+Announcement subject: {{announcementSubject}}
+What happened: {{whatHappened}}
+Who is involved: {{partiesInvolved}}
+Announcement date: {{announcementDate}}
+Effective date: {{effectiveDate}}
+Availability date: {{availabilityDate}}
+Location: {{announcementLocation}}
+Target market or audience: {{announcementAudience}}
+Current status: {{currentStatus}}
+Previous status: {{previousStatus}}
+What is changing: {{whatChanges}}
+What remains unchanged: {{whatRemainsUnchanged}}
+Why the announcement matters: {{whyItMatters}}
+Immediate impact: {{immediateImpact}}
+Expected future impact: {{futureImpact}}
+Customer or public action required: {{requiredAction}}
+Important limitations: {{limitations}}
+Known dependencies: {{dependencies}}
+Known risks: {{risks}}
+Next milestone: {{nextMilestone}}
+
+PRODUCT OR SERVICE INFORMATION
+
+Product or service name: {{productName}}
+Product category: {{productCategory}}
+Product description: {{productDescription}}
+Primary use case: {{primaryUseCase}}
+Target users: {{targetUsers}}
+Problem addressed: {{problemAddressed}}
+Confirmed features: {{features}}
+Confirmed benefits: {{benefits}}
+Main differentiator: {{differentiator}}
+Current development stage: {{developmentStage}}
+Availability: {{availability}}
+Supported markets: {{supportedMarkets}}
+Supported languages: {{supportedLanguages}}
+Supported platforms: {{supportedPlatforms}}
+Compatibility: {{compatibility}}
+Pricing: {{pricing}}
+Trial or introductory offer: {{trialOffer}}
+Purchase or access destination: {{productUrl}}
+Known limitations: {{productLimitations}}
+Required account or subscription: {{requirements}}
+Regulatory status: {{regulatoryStatus}}
+Certification status: {{certificationStatus}}
+
+Clearly distinguish:
+
+- concept;
+- prototype;
+- beta;
+- limited release;
+- Early Access;
+- general availability;
+- planned availability;
+- phased rollout.
+
+Do not describe planned or beta functionality as generally available.
+
+PARTNERSHIP INFORMATION
+
+Partner organization: {{partnerName}}
+Partner description: {{partnerDescription}}
+Nature of partnership: {{partnershipType}}
+Agreement status: {{agreementStatus}}
+Agreement date: {{agreementDate}}
+Partnership scope: {{partnershipScope}}
+Markets covered: {{partnershipMarkets}}
+Responsibilities of organization: {{organizationResponsibilities}}
+Responsibilities of partner: {{partnerResponsibilities}}
+Customer impact: {{partnershipImpact}}
+Financial terms disclosed: {{financialTerms}}
+Agreement duration: {{agreementDuration}}
+Exclusivity: {{exclusivity}}
+Approved partner quote: {{partnerQuote}}
+Partner quote attribution: {{partnerQuoteAttribution}}
+Partner approval status: {{partnerApproval}}
+
+Do not call:
+
+- a conversation a partnership;
+- a memorandum a completed agreement;
+- an integration test a commercial launch;
+- a supplier a strategic partner;
+- a customer a partner
+
+unless the supplied relationship supports that wording.
+
+Do not imply endorsement beyond the confirmed relationship.
+
+FUNDING INFORMATION
+
+Funding type: {{fundingType}}
+Funding amount: {{fundingAmount}}
+Currency: {{currency}}
+Funding round: {{fundingRound}}
+Round status: {{roundStatus}}
+Closing date: {{closingDate}}
+Lead investor: {{leadInvestor}}
+Participating investors: {{participatingInvestors}}
+Existing investors: {{existingInvestors}}
+Valuation disclosed: {{valuation}}
+Use of funds: {{useOfFunds}}
+Total funding to date: {{totalFunding}}
+Approved investor quote: {{investorQuote}}
+Investor quote attribution: {{investorQuoteAttribution}}
+Investor approval status: {{investorApproval}}
+Regulatory or securities restrictions: {{securitiesRestrictions}}
+
+Do not invent:
+
+- funding amounts;
+- valuations;
+- investor participation;
+- round names;
+- use-of-funds allocations;
+- total capital raised;
+- investor quotes.
+
+Do not describe:
+
+- a grant as venture funding;
+- debt as equity;
+- committed funding as closed funding;
+- crowdfunding pledges as completed investment;
+- discussions as a financing round.
+
+Do not solicit investments.
+
+Do not predict investment returns.
+
+MERGER OR ACQUISITION INFORMATION
+
+Transaction type: {{transactionType}}
+Acquirer: {{acquirer}}
+Target organization: {{targetOrganization}}
+Transaction status: {{transactionStatus}}
+Announcement date: {{transactionAnnouncementDate}}
+Expected closing date: {{expectedClosingDate}}
+Confirmed closing date: {{confirmedClosingDate}}
+Transaction value disclosed: {{transactionValue}}
+Payment structure disclosed: {{paymentStructure}}
+Regulatory approval required: {{regulatoryApproval}}
+Shareholder approval required: {{shareholderApproval}}
+Operational impact: {{operationalImpact}}
+Leadership impact: {{leadershipImpact}}
+Employee impact: {{employeeImpact}}
+Customer impact: {{customerImpact}}
+Brand impact: {{brandImpact}}
+Approved transaction quote: {{transactionQuote}}
+Legal restrictions: {{transactionRestrictions}}
+
+Clearly distinguish:
+
+- signed agreement;
+- proposed transaction;
+- pending approval;
+- completed transaction;
+- terminated transaction.
+
+Do not state that a transaction is complete before closing.
+
+Do not speculate about layoffs, restructuring, product discontinuation, or integration plans.
+
+RESEARCH, SURVEY, OR DATA INFORMATION
+
+Research title: {{researchTitle}}
+Research organization: {{researchOrganization}}
+Research objective: {{researchObjective}}
+Research period: {{researchPeriod}}
+Publication date: {{researchPublicationDate}}
+Population studied: {{population}}
+Sample size: {{sampleSize}}
+Sampling method: {{samplingMethod}}
+Geographic scope: {{geographicScope}}
+Data sources: {{dataSources}}
+Methodology: {{methodology}}
+Primary findings: {{primaryFindings}}
+Secondary findings: {{secondaryFindings}}
+Approved statistics: {{approvedStatistics}}
+Margin of error: {{marginOfError}}
+Confidence level: {{confidenceLevel}}
+Study limitations: {{studyLimitations}}
+Funding source: {{researchFunding}}
+Conflicts of interest: {{conflictsOfInterest}}
+Peer-review status: {{peerReviewStatus}}
+Full report URL: {{reportUrl}}
+Dataset URL: {{datasetUrl}}
+Research contact: {{researchContact}}
+
+Do not invent methodology details.
+
+Do not describe:
+
+- a customer poll as independent research;
+- a convenience sample as nationally representative;
+- correlation as causation;
+- preliminary findings as final;
+- internal analysis as peer-reviewed research;
+- survey responses as observed behavior.
+
+Every statistic must include sufficient context, including the relevant population, period, sample, and definition when available.
+
+EVENT INFORMATION
+
+Event name: {{eventName}}
+Event type: {{eventType}}
+Event description: {{eventDescription}}
+Event date: {{eventDate}}
+Start time: {{eventStartTime}}
+End time: {{eventEndTime}}
+Time zone: {{eventTimeZone}}
+Location: {{eventLocation}}
+Online or in-person: {{eventFormat}}
+Host: {{eventHost}}
+Confirmed speakers: {{speakers}}
+Confirmed participants: {{participants}}
+Target attendees: {{eventAudience}}
+Registration requirement: {{registrationRequirement}}
+Registration deadline: {{registrationDeadline}}
+Ticket price: {{ticketPrice}}
+Capacity: {{eventCapacity}}
+Agenda: {{agenda}}
+Media accreditation: {{mediaAccreditation}}
+Livestream availability: {{livestream}}
+Replay availability: {{replayAvailability}}
+Event URL: {{eventUrl}}
+
+Do not invent speakers, sponsors, attendance numbers, capacity, replay access, or media availability.
+
+EXECUTIVE APPOINTMENT INFORMATION
+
+Appointee name: {{appointeeName}}
+New role: {{newRole}}
+Effective date: {{appointmentEffectiveDate}}
+Previous role: {{previousRole}}
+Relevant experience: {{relevantExperience}}
+Approved credentials: {{credentials}}
+Responsibilities: {{responsibilities}}
+Reporting line: {{reportingLine}}
+Predecessor: {{predecessor}}
+Predecessor status: {{predecessorStatus}}
+Transition plan: {{transitionPlan}}
+Approved appointee quote: {{appointeeQuote}}
+Approved leadership quote: {{leadershipQuote}}
+Biography URL: {{biographyUrl}}
+
+Do not invent:
+
+- credentials;
+- employment history;
+- educational background;
+- achievements;
+- board memberships;
+- reasons for departure;
+- leadership responsibilities.
+
+Do not imply misconduct, conflict, or failure in a predecessor’s departure without confirmed and approved information.
+
+AWARD OR CERTIFICATION INFORMATION
+
+Award or certification name: {{awardName}}
+Awarding organization: {{awardingOrganization}}
+Award category: {{awardCategory}}
+Recipient: {{awardRecipient}}
+Award date: {{awardDate}}
+Selection criteria: {{selectionCriteria}}
+Number of entrants or nominees: {{entrantCount}}
+Award status: {{awardStatus}}
+Certification scope: {{certificationScope}}
+Certification period: {{certificationPeriod}}
+Certification standard: {{certificationStandard}}
+Verification URL: {{verificationUrl}}
+Approved award quotation: {{awardQuote}}
+
+Do not describe:
+
+- paid directory inclusion as an independent award;
+- participation as winning;
+- nomination as selection;
+- self-certification as third-party certification;
+- expired certification as current.
+
+SUSTAINABILITY OR SOCIAL-IMPACT INFORMATION
+
+Initiative name: {{initiativeName}}
+Initiative description: {{initiativeDescription}}
+Target outcome: {{targetOutcome}}
+Baseline: {{baseline}}
+Measurement method: {{measurementMethod}}
+Reporting period: {{impactPeriod}}
+Confirmed results: {{impactResults}}
+Environmental claims: {{environmentalClaims}}
+Social-impact claims: {{socialImpactClaims}}
+Independent verification: {{independentVerification}}
+Certification: {{impactCertification}}
+Known limitations: {{impactLimitations}}
+Future targets: {{futureTargets}}
+Target dates: {{targetDates}}
+Partner organizations: {{impactPartners}}
+Report URL: {{impactReportUrl}}
+
+Do not use vague claims such as:
+
+- eco-friendly;
+- green;
+- sustainable;
+- carbon neutral;
+- ethical;
+- zero waste;
+- climate positive;
+- socially responsible
+
+without a specific, verifiable basis and relevant limitations.
+
+Do not present an aspiration as a completed result.
+
+CRISIS, INCIDENT, OR CORRECTION INFORMATION
+
+Incident type: {{incidentType}}
+Incident start date: {{incidentStartDate}}
+Current incident status: {{incidentStatus}}
+Affected people or systems: {{affectedParties}}
+Confirmed impact: {{confirmedImpact}}
+Potential impact: {{potentialImpact}}
+Confirmed cause: {{confirmedCause}}
+Investigation status: {{investigationStatus}}
+Corrective action: {{correctiveAction}}
+Customer action required: {{incidentUserAction}}
+Support destination: {{incidentSupport}}
+Next update time: {{nextUpdateTime}}
+Regulatory notification status: {{regulatoryNotification}}
+Legal review status: {{incidentLegalReview}}
+Correction details: {{correctionDetails}}
+Original incorrect statement: {{incorrectStatement}}
+Correct information: {{correctInformation}}
+
+Do not speculate about:
+
+- cause;
+- blame;
+- attack method;
+- financial loss;
+- data exposure;
+- number of affected users;
+- recovery time.
+
+Do not state that an incident is fully resolved while monitoring or investigation continues.
+
+Do not hide a correction inside unrelated text.
+
+QUOTE INFORMATION
+
+Primary spokesperson: {{primarySpokesperson}}
+Primary spokesperson title: {{primarySpokespersonTitle}}
+Approved primary quote: {{primaryQuote}}
+Secondary spokesperson: {{secondarySpokesperson}}
+Secondary spokesperson title: {{secondarySpokespersonTitle}}
+Approved secondary quote: {{secondaryQuote}}
+Customer quote: {{customerQuote}}
+Customer quote attribution: {{customerQuoteAttribution}}
+Expert quote: {{expertQuote}}
+Expert quote attribution: {{expertQuoteAttribution}}
+Quote approval status: {{quoteApprovalStatus}}
+
+Every quotation must be:
+
+- supplied;
+- approved;
+- accurately attributed;
+- relevant to the announcement;
+- distinct from surrounding factual prose.
+
+Do not fabricate quotations.
+
+Do not create a quote and attribute it to a real person.
+
+When no approved quote exists, insert:
+
+[APPROVED QUOTE REQUIRED]
+
+Do not convert paraphrased information into quotation marks.
+
+MEDIA CONTACT INFORMATION
+
+Media contact name: {{mediaContactName}}
+Media contact role: {{mediaContactRole}}
+Media contact organization: {{mediaContactOrganization}}
+Media contact email: {{mediaContactEmail}}
+Media contact phone: {{mediaContactPhone}}
+Media contact time zone: {{mediaContactTimeZone}}
+Media-response hours: {{mediaResponseHours}}
+Alternative media contact: {{alternativeMediaContact}}
+Interview availability: {{interviewAvailability}}
+Press-kit URL: {{pressKitUrl}}
+
+Do not invent media contact information.
+
+Do not use a private personal number or email unless explicitly approved.
+
+MEDIA ASSETS
+
+Approved company logo: {{companyLogo}}
+Approved product images: {{productImages}}
+Approved executive headshots: {{executiveHeadshots}}
+Approved screenshots: {{screenshots}}
+Approved charts: {{charts}}
+Approved video: {{videoAsset}}
+Approved B-roll: {{bRoll}}
+Approved fact sheet: {{factSheet}}
+Approved media kit: {{mediaKit}}
+Approved biographies: {{biographies}}
+Approved backgrounder: {{backgrounder}}
+Approved captions: {{captions}}
+Image-credit requirements: {{imageCredits}}
+Asset usage restrictions: {{assetRestrictions}}
+
+Do not invent visual assets or state that high-resolution assets are available when they are not.
+
+DISTRIBUTION INFORMATION
+
+Target media audience: {{targetMediaAudience}}
+Target media categories: {{mediaCategories}}
+Target industries: {{targetIndustries}}
+Target countries: {{distributionCountries}}
+Target languages: {{distributionLanguages}}
+Target journalists or outlets: {{targetOutlets}}
+Wire distribution planned: {{wireDistribution}}
+Owned-newsroom publication: {{ownedPublication}}
+Email outreach planned: {{emailOutreach}}
+Social distribution planned: {{socialDistribution}}
+Partner distribution planned: {{partnerDistribution}}
+Distribution restrictions: {{distributionRestrictions}}
+
+EMBARGO INFORMATION
+
+Embargo status: {{embargoStatus}}
+Embargo date: {{embargoDate}}
+Embargo time: {{embargoTime}}
+Embargo time zone: {{embargoTimeZone}}
+Embargo audience: {{embargoAudience}}
+Embargo terms: {{embargoTerms}}
+Exclusive arrangement: {{exclusiveArrangement}}
+Advance materials allowed: {{advanceMaterials}}
+Public posting restriction: {{publicPostingRestriction}}
+
+Use one confirmed status:
+
+- no embargo;
+- under embargo;
+- exclusive briefing;
+- background only;
+- not for attribution;
+- internal only;
+- requires clarification.
+
+Do not invent or imply an embargo.
+
+Do not write “For Immediate Release” when the release is under embargo.
+
+LEGAL, FINANCIAL, AND REGULATORY INFORMATION
+
+Applicable jurisdiction: {{jurisdiction}}
+Legal review required: {{legalReviewRequired}}
+Legal review completed: {{legalReviewCompleted}}
+Regulatory review required: {{regulatoryReviewRequired}}
+Financial disclosure review: {{financialDisclosureReview}}
+Material information status: {{materialInformationStatus}}
+Forward-looking statements present: {{forwardLookingStatements}}
+Required forward-looking statement: {{forwardLookingStatementText}}
+Risk disclosures: {{riskDisclosures}}
+Trademark notices: {{trademarkNotices}}
+Patent status: {{patentStatus}}
+Confidentiality restrictions: {{confidentialityRestrictions}}
+Securities-law restrictions: {{securitiesRestrictions}}
+Health-claim restrictions: {{healthRestrictions}}
+Financial-claim restrictions: {{financialRestrictions}}
+
+Do not provide legal conclusions.
+
+Do not claim regulatory approval, patent protection, certification, or compliance unless confirmed.
+
+APPROVED FACTS AND RESTRICTIONS
+
+Approved facts: {{sourceDetails}}
+Approved dates: {{approvedDates}}
+Approved statistics: {{approvedStatistics}}
+Approved quotations: {{approvedQuotes}}
+Approved financial figures: {{approvedFinancialFigures}}
+Approved market figures: {{approvedMarketFigures}}
+Approved customer information: {{approvedCustomerInformation}}
+Approved partner information: {{approvedPartnerInformation}}
+Approved claims: {{approvedClaims}}
+Approved biographies: {{approvedBiographies}}
+Approved policies: {{approvedPolicies}}
+Required disclosures: {{requiredDisclosures}}
+Required terminology: {{requiredTerminology}}
+Prohibited terminology: {{prohibitedTerminology}}
+Known uncertainties: {{uncertainties}}
+Information requiring verification: {{unverifiedDetails}}
+Confidential information: {{confidentialInformation}}
+Information under NDA: {{ndaInformation}}
+Information under embargo: {{embargoedInformation}}
+Competitor restrictions: {{competitorRestrictions}}
+
+GOAL
+
+Create a press release that enables a journalist or editor to quickly determine:
+
+- what the news is;
+- who is involved;
+- when and where it happened or will happen;
+- why it matters;
+- who is affected;
+- what evidence supports the announcement;
+- which facts can be quoted;
+- who is available for comment;
+- where supporting materials can be found.
+
+The release should be:
+
+- factual;
+- concise;
+- news-led;
+- independently understandable;
+- easy to verify;
+- clearly attributed;
+- professionally structured;
+- free from unsupported superlatives;
+- useful even when published without additional context.
+
+The release should not be:
+
+- a sales page;
+- an opinion article;
+- a keyword-stuffed SEO page;
+- a founder biography;
+- a collection of slogans;
+- a disguised advertisement;
+- an exaggerated celebration of ordinary business activity.
+
+NEWSWORTHINESS GATE
+
+Before writing the release, silently determine whether the supplied announcement contains a genuine news development.
+
+Potentially newsworthy elements include:
+
+- a confirmed launch;
+- a material product change;
+- a signed partnership;
+- a completed funding round;
+- a significant research result;
+- a verified company milestone;
+- a major appointment;
+- an acquisition or merger;
+- a public event;
+- a substantial market expansion;
+- a documented public-interest initiative;
+- a material operational or regulatory update.
+
+The following may not justify a press release without additional context:
+
+- a minor website update;
+- ordinary hiring;
+- a routine discount;
+- a new blog post;
+- an unverified future idea;
+- a general company anniversary;
+- a vague intention;
+- an internal meeting;
+- ordinary product maintenance;
+- a marketing slogan.
+
+When the announcement does not appear sufficiently newsworthy, output:
+
+NEWSWORTHINESS REVIEW REQUIRED
+
+Reason:
+[Specific weakness]
+
+Information that could establish news value:
+- [Verified result]
+- [Specific scale]
+- [Material audience impact]
+- [Independent evidence]
+- [Clear timing or milestone]
+
+Do not manufacture newsworthiness through hype.
+
+FACTUAL ACCURACY
+
+1. Use only supplied facts.
+
+2. Do not invent:
+
+- launch dates;
+- product availability;
+- company history;
+- executive biography;
+- customer numbers;
+- user numbers;
+- revenue;
+- funding;
+- valuation;
+- investor participation;
+- market size;
+- market share;
+- growth rates;
+- survey results;
+- research methodology;
+- quotes;
+- partnerships;
+- certifications;
+- awards;
+- regulatory approvals;
+- patents;
+- media coverage;
+- future plans;
+- contact details.
+
+3. Every number must have:
+
+- a definition;
+- a period;
+- a source;
+- appropriate context.
+
+4. Distinguish:
+
+- signed;
+- agreed;
+- proposed;
+- planned;
+- launched;
+- available;
+- rolling out;
+- completed;
+- pending approval;
+- under review.
+
+5. Do not describe an estimate as an audited result.
+
+6. Do not describe a forecast as historical performance.
+
+7. Do not describe an aspiration as a commitment.
+
+8. Do not describe a company-provided market estimate as independent research.
+
+9. When information is missing, use:
+
+[INFORMATION REQUIRED: describe the missing fact]
+
+10. When information conflicts, use:
+
+[VERIFY: describe the conflicting information]
+
+Do not silently resolve contradictions.
+
+PRESS-RELEASE STRUCTURE
+
+Use a traditional press-release structure adapted to the announcement:
+
+1. Release instruction
+2. Headline
+3. Optional subheadline
+4. Dateline
+5. Lead paragraph
+6. Supporting details
+7. Evidence, facts, or context
+8. Approved quote
+9. Additional operational or market details
+10. Availability or next step
+11. Boilerplate
+12. Media contact
+13. Supporting links
+14. End mark when appropriate
+
+Do not force every section when it is unnecessary.
+
+RELEASE INSTRUCTION
+
+Use one appropriate instruction:
+
+FOR IMMEDIATE RELEASE
+
+or:
+
+UNDER EMBARGO UNTIL {{embargoDate}}, {{embargoTime}} {{embargoTimeZone}}
+
+or another exact approved instruction.
+
+Do not combine immediate-release and embargo language.
+
+Do not use “Confidential” in a publicly distributed release unless the document is genuinely restricted and not for publication.
+
+HEADLINE
+
+Write one recommended headline and four alternatives.
+
+The recommended headline should:
+
+- state the main news;
+- identify the principal organization or product;
+- use a strong factual verb;
+- remain understandable without the subheadline;
+- avoid marketing slogans;
+- avoid unnecessary adjectives;
+- avoid unsupported claims;
+- avoid ending with a period.
+
+Use five meaningfully different approaches:
+
+1. Direct announcement.
+2. Audience-impact-led.
+3. Partnership or participant-led.
+4. Data- or milestone-led.
+5. Local or industry-context-led.
+
+Useful headline structures may include:
+
+- “[Organization] Launches [Confirmed Product] for [Audience]”
+- “[Organization] and [Partner] Announce [Confirmed Partnership]”
+- “[Organization] Raises [Confirmed Amount] to [Confirmed Use]”
+- “[Organization] Appoints [Name] as [Role]”
+- “New [Research Type] Finds [Confirmed Finding]”
+- “[Organization] Expands [Service] to [Confirmed Market]”
+- “[Organization] Releases [Report or Product] on [Topic]”
+
+Do not use:
+
+- revolutionary;
+- game-changing;
+- groundbreaking;
+- world-class;
+- cutting-edge;
+- unprecedented;
+- industry-leading;
+- best-in-class;
+- first-of-its-kind;
+- transforms;
+- disrupts;
+- redefines;
+- changes everything;
+- takes the world by storm
+
+unless the exact claim is independently verifiable, necessary, and approved.
+
+Do not write clickbait headlines.
+
+SUBHEADLINE
+
+Use a subheadline only when it adds important information not contained in the headline.
+
+The subheadline may clarify:
+
+- audience;
+- timing;
+- scale;
+- location;
+- primary benefit;
+- evidence;
+- availability.
+
+Keep it to one concise sentence or phrase.
+
+Do not repeat the headline.
+
+Do not pack several unrelated claims into the subheadline.
+
+DATELINE
+
+Use the supplied city, region, and release date.
+
+Recommended format:
+
+CITY, Region — Month Day, Year —
+
+Adapt to the target locale and house style.
+
+Do not invent a city or use the organization’s headquarters when the announcement occurred elsewhere unless approved.
+
+Do not use a future date in a release distributed earlier unless the release is under embargo and the dating convention is approved.
+
+LEAD PARAGRAPH
+
+The first paragraph should communicate the essential news.
+
+It should answer as many relevant questions as possible:
+
+- Who?
+- What?
+- When?
+- Where?
+- Why?
+- How?
+
+The lead should:
+
+- contain the central announcement;
+- identify the principal organization;
+- explain why the development matters;
+- state availability or effective timing;
+- avoid unnecessary background;
+- avoid opening with a quotation.
+
+Do not begin with:
+
+- “We are excited to announce…”
+- “In today’s rapidly changing world…”
+- “Since the dawn of…”
+- a rhetorical question;
+- a long company history;
+- a broad market problem;
+- a quotation;
+- a promotional slogan.
+
+The first sentence should remain useful when extracted by a news aggregator.
+
+INVERTED-PYRAMID STRUCTURE
+
+Place the most important information first.
+
+Recommended priority:
+
+1. Main news.
+2. Audience and impact.
+3. Essential details.
+4. Evidence or data.
+5. Quotes.
+6. Background.
+7. Boilerplate.
+
+Do not hide the announcement after several paragraphs of context.
+
+Do not require the reader to reach the end to understand what happened.
+
+BODY PARAGRAPHS
+
+Use short, focused paragraphs.
+
+Each paragraph should advance one element:
+
+- product detail;
+- audience impact;
+- partnership scope;
+- funding use;
+- research result;
+- operational timeline;
+- market availability;
+- confirmed limitation;
+- supporting context.
+
+Avoid repeating the same claim in several paragraphs.
+
+Avoid unnecessary adjectives.
+
+Do not use bullet lists unless:
+
+- the release contains several structured findings;
+- product features need clear separation;
+- event details are easier to scan;
+- the target distribution format supports them.
+
+Do not turn the entire release into a list.
+
+QUOTES
+
+Use one or two approved quotations when they add:
+
+- interpretation;
+- motivation;
+- strategic context;
+- leadership perspective;
+- customer impact;
+- expert analysis.
+
+A quote should not merely repeat the lead.
+
+Avoid quotes such as:
+
+“We are thrilled to announce this exciting new milestone.”
+
+A useful quote should explain:
+
+- why the decision was made;
+- what the organization expects to enable;
+- what problem the development addresses;
+- what comes next.
+
+Do not place unsupported facts inside quotations.
+
+Do not use a quote to avoid fact-checking.
+
+Use the correct attribution:
+
+“[Approved quote],” said {{speakerName}}, {{speakerTitle}}.
+
+Adapt punctuation and attribution to the target language.
+
+Do not invent titles or credentials.
+
+PRODUCT CLAIMS
+
+Describe products through specific, confirmed capabilities.
+
+Prefer:
+
+“The platform allows approved users to export reports in PDF and CSV formats.”
+
+Avoid:
+
+“The revolutionary platform transforms productivity.”
+
+Connect every benefit to a confirmed feature or implementation.
+
+Do not claim:
+
+- guaranteed performance;
+- complete security;
+- universal compatibility;
+- guaranteed savings;
+- guaranteed health outcomes;
+- guaranteed financial outcomes;
+- zero risk;
+- perfect accuracy;
+- unlimited use
+
+unless explicitly supported and approved.
+
+MARKET CLAIMS
+
+Use market claims only when a credible source and definition were supplied.
+
+For claims such as:
+
+- fastest-growing;
+- leading;
+- largest;
+- first;
+- only;
+- most popular;
+- number one;
+- category creator;
+
+require:
+
+- geographic scope;
+- time period;
+- comparison set;
+- measurement method;
+- source.
+
+Otherwise remove the claim or flag it.
+
+Do not write “one of the leading” as a vague substitute for evidence.
+
+STATISTICS
+
+Every statistic should identify:
+
+- what was measured;
+- who or what was measured;
+- period;
+- source;
+- relevant sample or denominator;
+- material limitation.
+
+Do not use percentages without base numbers when context is important.
+
+Do not compare incompatible periods.
+
+Do not imply causation from correlation.
+
+Do not use a statistic merely because it sounds impressive.
+
+FINANCIAL INFORMATION
+
+For financial information:
+
+- state currency;
+- state reporting period;
+- distinguish revenue from bookings, GMV, funding, valuation, and profit;
+- distinguish historical result from forecast;
+- identify audited or unaudited status when supplied;
+- include required forward-looking disclosures.
+
+Do not calculate or invent financial metrics unless the required inputs are supplied and calculation is requested.
+
+Do not write investment advice.
+
+Do not promise financial performance.
+
+FORWARD-LOOKING STATEMENTS
+
+Identify statements about:
+
+- future availability;
+- expected growth;
+- market expansion;
+- product roadmap;
+- projected benefits;
+- transaction completion;
+- regulatory approval;
+- financial outlook;
+- hiring;
+- operational targets.
+
+Use cautious language such as:
+
+- plans to;
+- expects to;
+- intends to;
+- is scheduled to;
+- subject to;
+- may;
+- aims to.
+
+Do not write future statements as guaranteed outcomes.
+
+When a required forward-looking statement was supplied, include it exactly or according to legal instructions.
+
+Do not invent legal boilerplate.
+
+CUSTOMER OR PARTNER REFERENCES
+
+Use customer, partner, investor, supplier, or nonprofit names only when:
+
+- the relationship is confirmed;
+- public disclosure is approved;
+- the naming form is approved;
+- quotation approval is complete.
+
+Do not imply:
+
+- endorsement;
+- exclusivity;
+- customer satisfaction;
+- product adoption;
+- financial relationship
+
+beyond the supplied facts.
+
+Do not use company logos in the press package without approval.
+
+COMPETITOR REFERENCES
+
+Mention competitors only when directly necessary and legally reviewed.
+
+Use neutral factual descriptions.
+
+Do not:
+
+- attack competitors;
+- make unsupported comparisons;
+- copy competitor slogans;
+- imply competitor failure;
+- use competitor trademarks improperly;
+- create a superiority comparison from internal opinion.
+
+Prefer category-level context when exact comparisons are unavailable.
+
+AVAILABILITY AND CTA
+
+A press release may contain a factual next step, such as:
+
+- view the full report;
+- access the product;
+- register for the event;
+- download approved assets;
+- contact the media representative;
+- read the full policy;
+- view the status page.
+
+Use one primary destination.
+
+Do not use aggressive sales CTAs such as:
+
+- Buy now
+- Act today
+- Don’t miss out
+- Claim your offer
+- Limited time only
+
+unless the release specifically announces a verified public offer and the wording remains appropriate for a press release.
+
+The release should not read like an advertisement.
+
+BOILERPLATE
+
+Write a concise “About” boilerplate using only approved organization facts.
+
+The boilerplate may include:
+
+- organization identity;
+- main activity;
+- target audience;
+- headquarters;
+- founded year;
+- primary products or mission;
+- approved geographic scope;
+- official website.
+
+Recommended length:
+
+Approximately 50–120 words, depending on complexity.
+
+Do not include:
+
+- unverified leadership claims;
+- lengthy history;
+- all product features;
+- promotional slogans;
+- unsupported market position;
+- every award;
+- several unrelated links.
+
+When multiple organizations are central to the announcement, create a separate approved boilerplate for each.
+
+MEDIA CONTACT
+
+Include only approved media-contact details.
+
+Recommended format:
+
+Media Contact:
+{{mediaContactName}}
+{{mediaContactRole}}
+{{mediaContactOrganization}}
+Email: {{mediaContactEmail}}
+Phone: {{mediaContactPhone}}
+Press kit: {{pressKitUrl}}
+
+Omit unavailable fields.
+
+Do not use general customer support as the media contact unless explicitly designated.
+
+Do not publish private contact information without approval.
+
+END MARK
+
+Use an end mark such as:
+
+###
+
+only when appropriate to the distribution style.
+
+Do not insert decorative separators throughout the release.
+
+STYLE
+
+Write in a clear, neutral, professional newsroom style.
+
+Use:
+
+- active voice;
+- precise verbs;
+- short to medium sentences;
+- factual attribution;
+- concrete dates;
+- clear definitions;
+- restrained language;
+- consistent terminology.
+
+Avoid:
+
+- promotional hype;
+- corporate jargon;
+- marketing slogans;
+- vague strategic language;
+- keyword stuffing;
+- excessive capitalization;
+- exclamation marks;
+- rhetorical questions;
+- emotional manipulation;
+- empty adjectives;
+- repeated company names;
+- artificial urgency;
+- generic AI phrasing.
+
+Avoid phrases such as:
+
+- We are thrilled to announce
+- We are excited to share
+- Game-changing
+- Revolutionary
+- Cutting-edge
+- Next-generation
+- Best-in-class
+- Industry-leading
+- World-class
+- Seamless
+- Innovative solution
+- Unlock new possibilities
+- Transform the future
+- Redefine the industry
+- Take things to the next level
+- A major milestone in our journey
+- This changes everything
+- The future is here
+- Unique opportunity
+- Unprecedented demand
+
+unless a specific phrase is supplied, factually supportable, and essential.
+
+CORPORATE JARGON
+
+Replace vague phrases with concrete information.
+
+Avoid:
+
+- leverage synergies;
+- drive innovation;
+- empower stakeholders;
+- deliver value;
+- holistic ecosystem;
+- strategic alignment;
+- scalable solution;
+- robust platform;
+- end-to-end transformation;
+- industry landscape;
+- dynamic marketplace;
+- thought leadership.
+
+State what the organization is actually doing.
+
+PRESS-RELEASE LENGTH
+
+Match length to the announcement.
+
+Typical guidance:
+
+- brief operational statement: approximately 250–450 words;
+- standard announcement: approximately 400–700 words;
+- complex partnership, research, transaction, or funding release: approximately 600–1,000 words;
+- crisis update: only as long as needed for accurate public information.
+
+Do not make the release long merely to appear important.
+
+Do not omit essential terms or limitations merely to shorten it.
+
+SEO AND DISCOVERABILITY
+
+Optimize for clarity, not keyword density.
+
+Use the primary organization, product, event, location, or research topic naturally in:
+
+- headline;
+- lead;
+- one or more body paragraphs;
+- metadata when requested.
+
+Do not repeat exact phrases unnaturally.
+
+Create an optional SEO title and meta description only when the release will appear in an online newsroom.
+
+Do not replace a news-led headline with a search-engine headline when the release is distributed to journalists.
+
+LINKS
+
+Use only approved links.
+
+Prefer:
+
+- official organization website;
+- newsroom;
+- product page;
+- full report;
+- registration page;
+- media kit;
+- status page;
+- official regulatory document.
+
+Do not include:
+
+- unrelated sales links;
+- affiliate links;
+- unapproved short links;
+- tracking-heavy URLs in visible copy;
+- unsupported social-media profiles.
+
+Do not invent URLs.
+
+MEDIA ASSET NOTES
+
+For each approved asset provide:
+
+- filename or reference;
+- description;
+- caption;
+- credit;
+- usage restriction;
+- preferred placement;
+- accessibility alt text;
+- download destination.
+
+Do not place factual information only inside an image.
+
+Do not distribute charts without source and methodology information.
+
+PRESS KIT
+
+When enough information is supplied, create a recommended press-kit inventory:
+
+- final press release;
+- company fact sheet;
+- announcement fact sheet;
+- executive biography;
+- approved headshot;
+- company logo;
+- product screenshots;
+- product or facility images;
+- video or B-roll;
+- research methodology;
+- FAQ;
+- timeline;
+- media-contact sheet.
+
+Do not claim that these assets exist when they have not been supplied.
+
+Label missing assets:
+
+PRESS ASSET REQUIRED
+
+MEDIA PITCH
+
+Create a short media-pitch email when requested or appropriate.
+
+The pitch should:
+
+- identify why the development matters to the specific journalist or outlet;
+- summarize the news in two or three sentences;
+- offer a relevant interview, data point, demonstration, or asset;
+- include one approved release or press-kit link;
+- avoid copying the full press release;
+- avoid generic praise of the journalist;
+- avoid mass-email language.
+
+Do not write:
+
+“I’m a huge fan of your work”
+
+unless that relationship is real and supplied.
+
+Do not claim exclusivity unless confirmed.
+
+MEDIA SUBJECT LINES
+
+Create three concise media-pitch subject lines.
+
+Use different approaches:
+
+1. Direct announcement.
+2. Data- or impact-led.
+3. Interview or access-led.
+
+Avoid:
+
+- PRESS RELEASE
+- Big news
+- Exclusive opportunity
+- You won’t want to miss this
+- Story idea
+- Urgent
+
+unless accurate and strategically appropriate.
+
+SOCIAL ANNOUNCEMENT
+
+Create optional owned-channel summaries only when requested.
+
+Possible formats:
+
+- LinkedIn post;
+- X post;
+- company newsroom summary;
+- executive post;
+- internal employee announcement.
+
+Do not copy the full press release into every channel.
+
+Do not alter facts or add unsupported enthusiasm.
+
+INTERNAL ANNOUNCEMENT
+
+When employees, contractors, or partners need advance notice, create an internal summary that explains:
+
+- what is being announced;
+- when it becomes public;
+- what employees may say;
+- what remains confidential;
+- where media inquiries should be directed;
+- who can speak on behalf of the organization.
+
+Do not include confidential details in a broadly distributed internal message unless approved.
+
+FAQ AND Q&A
+
+Create a media FAQ using only approved information.
+
+Possible questions include:
+
+- What exactly is being announced?
+- When does it take effect?
+- Who is affected?
+- Why is the organization making this change?
+- How is the product different from what existed before?
+- What is currently available?
+- Which markets are included?
+- How was the research conducted?
+- How will funding be used?
+- What are the transaction conditions?
+- Are regulatory approvals required?
+- What limitations remain?
+- Who can comment?
+- Where are supporting materials available?
+
+Do not invent answers.
+
+When an answer is unavailable, write:
+
+To be confirmed before distribution.
+
+SPOKESPERSON Q&A
+
+Prepare difficult-question guidance when requested.
+
+For every question provide:
+
+- recommended factual answer;
+- facts that may be disclosed;
+- information that must remain private;
+- bridge to relevant confirmed context;
+- escalation requirement.
+
+Do not create evasive language intended to mislead reporters.
+
+Do not instruct the spokesperson to repeat a slogan instead of answering.
+
+CRISIS AND INCIDENT RELEASES
+
+For a crisis or incident release:
+
+- prioritize affected people and factual safety information;
+- state current status;
+- acknowledge confirmed impact;
+- explain required action;
+- identify what is under investigation;
+- provide the next update time;
+- avoid promotional boilerplate when inappropriate;
+- avoid congratulating the organization;
+- avoid premature conclusions;
+- avoid minimizing harm.
+
+Do not use a standard celebratory quote.
+
+Do not describe a preventable failure as a “learning opportunity” in the initial public statement.
+
+CORRECTIONS
+
+For a correction release:
+
+- clearly label it as a correction or update;
+- identify the affected release;
+- state the original incorrect information;
+- provide the correct information;
+- explain material consequences;
+- update supporting materials;
+- avoid burying the correction.
+
+Do not rewrite history or imply that the original statement was merely misunderstood when it was incorrect.
+
+RECALLS AND SAFETY NOTICES
+
+For product recalls or safety notices:
+
+- identify the exact product;
+- include model, batch, lot, date, or other confirmed identifiers;
+- state the confirmed risk;
+- explain who is affected;
+- provide immediate user instructions;
+- explain refund, repair, return, or replacement steps;
+- include official regulatory references when supplied;
+- provide a verified support route.
+
+Do not include promotional content.
+
+Do not minimize the risk.
+
+HIGH-STAKES CLAIMS
+
+For medical, financial, legal, safety, environmental, or regulated topics:
+
+- use approved wording;
+- avoid guarantees;
+- distinguish evidence level;
+- identify regulatory status;
+- include limitations;
+- avoid individualized advice;
+- obtain appropriate review.
+
+Do not claim:
+
+- disease prevention;
+- diagnosis;
+- treatment;
+- guaranteed financial return;
+- legal outcome;
+- complete safety;
+- zero environmental impact
+
+without valid, approved evidence and authorization.
+
+LOCALIZATION
+
+Write naturally for {{targetLocale}}.
+
+Adapt:
+
+- dateline;
+- date format;
+- punctuation;
+- quotation style;
+- organization titles;
+- formal address;
+- numbers;
+- currency;
+- units;
+- legal terminology;
+- media-contact format.
+
+Do not translate word for word.
+
+Do not translate:
+
+- registered company names;
+- product names;
+- ticker symbols;
+- legal entity names;
+- certification names;
+- report titles;
+- official regulatory language
+
+unless an approved localized form was supplied.
+
+For several markets, create separate localized releases rather than combining several full translations into one document.
+
+ACCESSIBILITY
+
+For online publication:
+
+- use descriptive headings;
+- provide alt text for meaningful images;
+- provide captions and transcripts for media;
+- avoid placing essential information only in charts;
+- explain charts in text;
+- use descriptive link labels;
+- avoid link text such as “click here.”
+
+Do not claim accessibility compliance without review.
+
+DISTRIBUTION REVIEW
+
+Before distribution, verify:
+
+- release instruction;
+- embargo;
+- publication date;
+- dateline;
+- company and product names;
+- executive names and titles;
+- partner approval;
+- quotation approval;
+- financial figures;
+- research methodology;
+- legal and regulatory language;
+- media-contact availability;
+- all links;
+- all assets;
+- regional restrictions;
+- translation approval.
+
+Do not send the release to broad irrelevant lists merely to increase distribution numbers.
+
+MEASUREMENT
+
+Suggest realistic communications metrics when requested.
+
+Possible metrics include:
+
+- relevant journalist opens;
+- replies;
+- interview requests;
+- earned-media mentions;
+- quality of publication;
+- message accuracy;
+- link visits;
+- press-kit downloads;
+- referral traffic;
+- event registrations;
+- report downloads;
+- share of relevant coverage;
+- correction rate.
+
+Do not use raw distribution volume as the primary measure of success.
+
+Do not invent media-value estimates or guaranteed coverage.
+
+Do not promise publication.
+
+FINAL QUALITY CHECK
+
+Before presenting the package, silently verify that:
+
+- the announcement is genuinely news-led;
+- the release type is correct;
+- release status is represented accurately;
+- embargo instructions are consistent;
+- headline states the actual news;
+- subheadline adds new information;
+- dateline is correct;
+- lead contains the central announcement;
+- important facts appear before background information;
+- no fact, figure, date, quote, partnership, credential, customer, investor, award, certification, or result was invented;
+- product stage and availability are accurate;
+- planned actions are not described as completed;
+- research limitations are included;
+- financial terminology is accurate;
+- market claims have evidence;
+- quotations are approved;
+- partner and customer references are authorized;
+- confidential or personal information is excluded;
+- legal, regulatory, and forward-looking language is handled appropriately;
+- boilerplate uses approved facts;
+- media-contact information is correct;
+- all links and assets exist;
+- the release does not read like an advertisement;
+- unresolved information is clearly marked.
+
+OUTPUT FORMAT
+
+## Release Status
+
+Status:
+[Ready for internal review / Newsworthiness review required / Fact review required / Partner review required / Legal review required / Embargo review required]
+
+Reason:
+[Concise explanation]
+
+Risk level:
+[Low / medium / high / critical]
+
+Critical missing information:
+- [Item]
+- [Item]
+
+Omit the missing-information list when complete.
+
+## Release Strategy
+
+Release type:
+[Type]
+
+Primary news:
+[One sentence]
+
+Newsworthiness:
+[Why the development matters]
+
+Primary audience:
+[Media and stakeholder audience]
+
+Geographic focus:
+[Market or region]
+
+Release timing:
+[Date, time, and time zone]
+
+Release instruction:
+[Immediate / embargoed / restricted]
+
+Primary spokesperson:
+[Name and title]
+
+Primary media action:
+[Action]
+
+## Recommended Headline
+
+[Headline]
+
+## Alternate Headlines
+
+1. Direct announcement: [Headline]
+2. Audience-impact-led: [Headline]
+3. Participant- or partner-led: [Headline]
+4. Data- or milestone-led: [Headline]
+
+## Subheadline
+
+[Subheadline]
+
+Omit when it does not add meaningful information.
+
+## Complete Press Release
+
+[RELEASE INSTRUCTION]
+
+# [Headline]
+
+[Subheadline when used]
+
+**[DATELINE]** — [Complete press release body]
+
+### About {{organizationName}}
+
+[Approved boilerplate]
+
+### Media Contact
+
+[Approved media-contact details]
+
+### Supporting Resources
+
+- [Descriptive label]: [Approved URL]
+- [Descriptive label]: [Approved URL]
+
+Include only verified resources.
+
+[End mark when appropriate]
+
+Do not wrap the completed release in an additional code block inside this output.
+
+## Fact Sheet
+
+Organization:
+[Name]
+
+Announcement:
+[One-sentence summary]
+
+Announcement date:
+[Date]
+
+Effective or availability date:
+[Date]
+
+Target audience:
+[Audience]
+
+Markets:
+[Markets]
+
+Key confirmed facts:
+- [Fact]
+- [Fact]
+- [Fact]
+
+Important limitations:
+- [Limitation]
+- [Limitation]
+
+Primary spokesperson:
+[Name and title]
+
+Media contact:
+[Contact]
+
+## Quote Approval Sheet
+
+### Quote 1
+
+Speaker:
+[Name]
+
+Title:
+[Title]
+
+Quote:
+[Approved quotation]
+
+Approval status:
+[Approved / requires approval]
+
+Factual claims inside quote:
+- [Claim]
+
+### Quote 2
+
+Continue only for supplied quotations.
+
+## Media Pitch Email
+
+Subject:
+[Recommended subject]
+
+Body:
+[Concise personalized media pitch]
+
+Primary asset or interview offer:
+[Offer]
+
+Approved link:
+[Link]
+
+## Alternate Media Subject Lines
+
+1. [Subject]
+2. [Subject]
+
+## Press Kit Checklist
+
+Available:
+- [Asset]
+- [Asset]
+
+Required before distribution:
+- [Asset]
+- [Asset]
+
+Usage restrictions:
+- [Restriction]
+
+## Media Asset Plan
+
+### Asset 1 — [Asset Name]
+
+Purpose:
+[Purpose]
+
+Caption:
+[Caption]
+
+Credit:
+[Credit]
+
+Alt text:
+[Alt text]
+
+Usage restriction:
+[Restriction]
+
+Download destination:
+[URL or “Asset required”]
+
+Continue for all relevant assets.
+
+## Media FAQ
+
+### What is being announced?
+
+[Answer]
+
+### Why does it matter?
+
+[Answer]
+
+### When does it take effect?
+
+[Answer]
+
+### Who is affected?
+
+[Answer]
+
+### What is currently available?
+
+[Answer]
+
+### What limitations remain?
+
+[Answer]
+
+### Where can journalists find supporting information?
+
+[Answer]
+
+Add only relevant questions.
+
+## Spokesperson Q&A
+
+### Question 1 — [Likely journalist question]
+
+Recommended answer:
+[Answer]
+
+Approved facts:
+- [Fact]
+
+Do not disclose:
+- [Restricted information]
+
+Escalation:
+[Required / not required]
+
+Continue for important questions.
+
+## Online Newsroom Metadata
+
+SEO title:
+[Title]
+
+Meta description:
+[Description]
+
+Suggested URL slug:
+[Slug]
+
+Social-preview title:
+[Title]
+
+Social-preview description:
+[Description]
+
+Primary image:
+[Approved asset]
+
+Omit when the release will not be published online.
+
+## Internal Announcement Summary
+
+Audience:
+[Employees, contractors, partners, or leadership]
+
+Embargo reminder:
+[Reminder]
+
+Summary:
+[Internal summary]
+
+What may be shared:
+- [Information]
+
+What remains confidential:
+- [Information]
+
+Media inquiries:
+[Approved routing]
+
+Omit when no internal communication is required.
+
+## Owned-Channel Summaries
+
+### Company Website Summary
+
+[Summary]
+
+### LinkedIn Summary
+
+[Summary]
+
+### Executive Post
+
+[Summary]
+
+Include only requested channels.
+
+## Distribution Plan
+
+Primary media categories:
+- [Category]
+- [Category]
+
+Target regions:
+- [Region]
+
+Distribution channels:
+- [Channel]
+
+Embargo handling:
+[Process]
+
+Partner coordination:
+[Process]
+
+Follow-up timing:
+[Timing]
+
+Do not list specific journalists unless supplied.
+
+## Verification Checklist
+
+[VERIFY BEFORE DISTRIBUTION]
+
+- Confirm release status.
+- Confirm publication date and time.
+- Confirm release instruction and embargo.
+- Verify headline and subheadline.
+- Verify dateline.
+- Verify organization and legal entity names.
+- Verify product, service, event, or report name.
+- Verify launch, availability, or effective dates.
+- Verify all financial figures and currencies.
+- Verify funding, investor, partner, and transaction details.
+- Verify research sample, methodology, period, and limitations.
+- Verify statistics and original sources.
+- Verify executive names, titles, and biographies.
+- Verify every quotation and attribution.
+- Confirm customer, partner, and investor approval.
+- Verify product stage, availability, and limitations.
+- Verify awards, certifications, patents, and regulatory status.
+- Review market-leadership and comparative claims.
+- Review environmental and social-impact claims.
+- Confirm forward-looking statements and risk disclosures.
+- Remove confidential, personal, or embargoed information.
+- Verify media-contact availability.
+- Test all URLs.
+- Confirm image rights, captions, credits, and alt text.
+- Verify boilerplate.
+- Complete legal, regulatory, partner, executive, and localization review.
+- Confirm that all approved versions match before distribution.
+
+## Fact, Legal, and Editorial Review
+
+[VERIFY BEFORE DISTRIBUTION]
+
+- [Unresolved fact]
+- [Unapproved quote]
+- [Partner issue]
+- [Financial issue]
+- [Research issue]
+- [Legal or regulatory issue]
+- [Embargo issue]
+- [Asset issue]
+
+Omit when no unresolved items remain.
+
+Output only the completed press-release package. Do not explain your internal writing process.

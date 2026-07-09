@@ -5,7 +5,7 @@
 | Главная и Pricing          | DONE               | Публичный copy очищен от fake scarcity и недоказуемых claims. |
 | Регистрация / вход         | DONE с оговоркой   | Credentials auth, bcrypt, auth diagnostics (`b643e35`), password reset и auth rate limiting (этап 3, 2026-07-05); этап 1 IN PROGRESS — мониторинг реальных инцидентов. |
 | Dashboard                  | DONE               | План, серверный usage; empty state recent saves; конкретный upgrade copy для Free. |
-| Templates                  | DONE               | 15 templates, 8 доступны Free; Pro lock + tooltip + `/pricing` (как на Generate). |
+| Templates                  | DONE (2026-07-09)  | **45 templates** (15 Free / 30 Pro); improved prompts for core set; platform expansion seeded; Pro lock + tooltip. |
 | Generate                   | DONE               | Квоты, idempotency, streaming, 503 `generation_disabled`; UX: quota countdown, disabled hints, retry, skeleton loading. |
 | Library                    | DONE частично      | Сохранение, поиск, просмотр и экспорт работают; удаления saved items пока нет. |
 | Settings                   | DONE               | Тема, профиль, подписка, Customer Portal; Privacy & Data: export + delete + UI polish (4.1–4.3, 2026-07-05). |
@@ -39,6 +39,7 @@
 | **1** | Ручное тестирование + smoke после деплоя | Register → generate → save → quota emails; Pro checkout (Sandbox); sign out modal; locked templates на `/generate` и `/templates`. |
 | **2** | Мелкие UX-остатки | Library empty/error states, Settings friction, branded error/404 (часть этапа 10). |
 | **3** | Подготовка к привлечению пользователей | Early Access messaging, onboarding metrics, готовность support mailbox. |
+| ~~**4** (product)~~ | ~~Platform expansion — очереди 1–3~~ | **DONE (2026-07-09)** — 45 templates seeded (15 Free / 30 Pro); improved prompts for original 15; public counts updated. |
 
 **Параллельно (blockers для Live, без перескакивания):** этапы 1–2 auth incident (мониторинг), Paddle Live onboarding (8), controlled purchase/refund test (9), legal review (7).
 
@@ -54,6 +55,73 @@
 | **Pro-шаблоны** | Lock icon + tooltip «Pro template – upgrade to unlock» + клик → `/pricing` на `/generate` и `/templates`. |
 | **Save / Export** | Success feedback при сохранении; понятные labels экспорта; Pro lock links для Free. |
 
+## Платформы и шаблоны (Roadmap)
+
+> **Обновление 2026-07-09 (реализация).**  
+> **45 templates** в каталоге (`prisma/templates-catalog.json` + seed).  
+> 15 original prompts заменены на improved versions (файлы в `prisma/template-prompts/`).  
+> Очереди 1–3 **seeded**. Public copy: `TEMPLATE_CATALOG_COUNTS` (45 / 15 free / 30 pro).  
+> После deploy: `npx prisma migrate deploy` + `npx prisma db seed`.
+
+### Free / Pro distribution (актуально)
+
+| План | Кол-во | Состав (логика) |
+|------|--------|-----------------|
+| **Free** | **15** | Daily social + entry content: LinkedIn, X, Instagram, Facebook, Threads, TikTok Caption, Reddit, Google Business, Newsletter, Cold Email, Blog, SEO Meta, FAQ, Product Description, Short-form Video |
+| **Pro** | **30** | Packages, carousels, sequences, ads, case studies, listings, launch, community broadcast, sales/UX |
+
+### Taxonomy + UI groups
+
+Product taxonomy → `TemplateCategory` enum + `template-groups.ts`  
+(Social, Email, Marketing, Content, SEO, Video & Audio, E-commerce, Community, Product Launch, App/Sales & Support).
+
+### Каталог (все DONE)
+
+#### Core (improved prompts) — 15
+
+| Slug | Plan | Notes |
+|------|------|-------|
+| `linkedin-post`, `x-thread`, `instagram-post`, `newsletter`, `cold-email-outreach`, `blog-article`, `seo-meta-tags`, `faq-page`, `product-description`, `short-form-video` | Free | Improved prompts |
+| `youtube-script`, `landing-page-copy`, `paid-ad-copy`, `case-study`, `linkedin-carousel` | Pro | Improved prompts |
+
+#### Очередь 1 — DONE
+
+| Slug | Plan |
+|------|------|
+| `facebook-post`, `threads-post`, `reddit-post`, `google-business-profile-post`, `tiktok-caption` | Free |
+| `instagram-carousel`, `pinterest-pin`, `youtube-video-package`, `email-sequence`, `product-hunt-launch` | Pro |
+
+#### Очередь 2 — DONE
+
+| Slug | Plan |
+|------|------|
+| `app-store-listing`, `amazon-listing`, `etsy-listing`, `telegram-post`, `whatsapp-broadcast`, `discord-announcement`, `quora-answer`, `substack-post`, `podcast-script`, `webinar-package`, `sms-campaign`, `push-notification` | Pro (all) |
+
+#### Очередь 3 — DONE
+
+| Slug | Plan |
+|------|------|
+| `kickstarter-campaign`, `indie-hackers-post`, `github-readme`, `review-response`, `sales-proposal`, `press-release`, `website-popup`, `in-app-ux-copy` | Pro (all) |
+
+### Технические артефакты
+
+| Артефакт | Путь |
+|----------|------|
+| Catalog (source of seed) | `prisma/templates-catalog.json` |
+| Improved prompt files | `prisma/template-prompts/*.txt` |
+| Generator | `scripts/generate-templates-catalog.mjs`, `scripts/new-templates-data.mjs` |
+| Seed | `prisma/seed.ts` (upsert by slug) |
+| Migration | `20260716100000_expand_template_categories` |
+| Public counts | `src/config/template-categories.ts` → `TEMPLATE_CATALOG_COUNTS` |
+
+### Deploy checklist (templates)
+
+1. `npx prisma migrate deploy` (new TemplateCategory values)
+2. `npx prisma db seed` (45 upserts)
+3. Smoke: `/templates` shows 45; Free user can open free templates; Pro lock on packages
+4. Smoke: generate LinkedIn Post + one new free (e.g. Facebook Post) → save
+5. Landing/pricing: counts 15 free / 45 total (no stale «15 templates» / «8 core»)
+
 ## Backlog / Будущие идеи
 
 | Идея | Статус | Комментарий |
@@ -62,6 +130,8 @@
 | Статьи + кастомные промпты | Backlog | Resources/Guides + генерация промптов на основе статей. |
 | Докупка генераций (one-time purchase) | Backlog | Разовая покупка доп. квоты без смены плана. |
 | Аналитика, Cookies, SEO | Backlog | Product analytics, cookie consent, meta/OG/sitemap. |
+| **Branded Invoice / Receipt** | **Backlog (LOW)** | Собственный invoice/receipt email в едином стиле Creatornivo (`src/lib/email/layout.ts`). Актуально **перед Live Paddle billing**. Сейчас Paddle шлёт стандартные чеки. |
+| Platform expansion (очереди 1–3) | **DONE (2026-07-09)** | 45 templates seeded (15 Free / 30 Pro); improved core prompts; see «Платформы и шаблоны». |
 | Глубокое тестирование системы генераций | **Отложено** | Stress/load/idempotency/regression suite на production-like данных — **риск для продакшена** (расход OpenAI, нагрузка на DB). Вернуться после Live launch и стабилизации UX. |
 
 ## 10. Приоритетная дорожная карта
@@ -124,6 +194,13 @@
 - Email: `send-welcome`, `send-pro-confirmation`, `send-quota-warning`, `send-quota-exhausted` + `sendTransactionalEmail`; dedupe поля в `User` / `UserUsage`.
 - Миграции (production: `npx prisma migrate deploy`): `20260713100000_welcome_email_sent`, `20260714100000_transactional_email_dedupe`, `20260715100000_quota_warning_email`.
 - Early Access banner: `early-access-status-banner.tsx`; `development-banner.tsx` удалён.
+
+**Заметка (2026-07-09):** Platform expansion **implemented**.
+- 45 templates in `prisma/templates-catalog.json`; seed upserts all.
+- Improved prompts for original 15 (`prisma/template-prompts/`).
+- New enum values + UI groups/categories; Free 15 / Pro 30 distribution.
+- Landing + pricing use `TEMPLATE_CATALOG_COUNTS` (no hardcoded stale counts).
+- Production: migrate `20260716100000_expand_template_categories` + `prisma db seed`.
 
 **Заметка (2026-07-06):** ~~Временный development banner~~ → заменён Early Access banner (2026-07-07).
 

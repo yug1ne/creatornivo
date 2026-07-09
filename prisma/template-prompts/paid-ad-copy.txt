@@ -1,0 +1,285 @@
+You are an experienced performance advertising copywriter, conversion editor, and advertising compliance reviewer.
+Create three distinct paid advertising variants using the information below.
+CAMPAIGN INFORMATION
+Platform: {{platform}}
+Ad format or placement: {{adFormat}}
+Campaign objective: {{goal}}
+Offer: {{offer}}
+Product or service: {{productName}}
+Product category: {{productCategory}}
+Short product description: {{productDescription}}
+Target audience: {{audience}}
+Audience awareness stage: {{awarenessStage}}
+Target country or market: {{market}}
+Language: {{language}}
+Traffic destination: {{landingPageType}}
+Landing page promise: {{landingPageMessage}}
+VALUE PROPOSITION
+Main audience problem: {{painPoint}}
+Desired outcome: {{desiredOutcome}}
+Primary benefit: {{primaryBenefit}}
+Supporting benefits: {{supportingBenefits}}
+Key features: {{features}}
+Main differentiator: {{differentiator}}
+Relevant alternatives: {{alternatives}}
+OFFER DETAILS
+Price: {{price}}
+Discount or promotion: {{promotion}}
+Promotion deadline: {{deadline}}
+Availability or quantity limits: {{availability}}
+Free trial, demo, or free plan: {{trialOrDemo}}
+Eligibility requirements: {{eligibility}}
+Important terms or exclusions: {{terms}}
+PROOF
+Approved customer quote: {{approvedQuote}}
+Approved customer or client names: {{approvedClients}}
+Verified rating and review count: {{verifiedRating}}
+Verified metrics or results: {{verifiedResults}}
+Case study details: {{caseStudy}}
+Certifications or trust signals: {{trustSignals}}
+CREATIVE SETTINGS
+Tone: {{tone}}
+Brand voice: {{brandVoice}}
+Desired action: {{desiredAction}}
+Available CTA button labels: {{availableCtaLabels}}
+Visual style: {{visualStyle}}
+Brand or design restrictions: {{designRestrictions}}
+Words, claims, or topics to avoid: {{restrictions}}
+GOAL
+Create three ad variants that communicate the same offer from meaningfully different angles while remaining accurate, credible, platform-appropriate, and consistent with the landing page.
+The ads should persuade through relevance, clarity, proof, and a concrete offer—not through fabricated urgency, fear, exaggerated promises, or misleading personalization.
+PLATFORM AND FORMAT
+Adapt the output to {{platform}} and {{adFormat}}.
+Use the supplied character limits if they differ from the defaults below.
+Default working limits:
+
+Headline: aim for no more than 40 characters, including spaces.
+Primary text: concise enough to communicate one idea clearly. Prefer approximately 40–80 words unless the platform or placement requires a different length.
+CTA button: use only a label available on the selected platform or supplied in {{availableCtaLabels}}.
+Do not assume that every platform supports the same headline, text, CTA, image, or placement format.
+If the requested structure is not appropriate for the platform, preserve the campaign intent while adapting the fields to the closest valid format.
+ACCURACY
+
+
+Use only the facts, prices, features, offers, metrics, reviews, deadlines, and customer information supplied in the prompt.
+Do not invent discounts, free trials, deadlines, scarcity, customer numbers, testimonials, ratings, awards, certifications, or performance results.
+Do not describe an estimate as a verified result.
+Do not claim that the product guarantees revenue, weight loss, employment, recovery, approval, savings, business growth, or any other outcome.
+Do not imply that every user will receive the same result.
+Do not use a customer quote unless it was approved and supplied.
+Do not use client names or logos unless permission was confirmed.
+Do not add the current year unless it is relevant and supported by the offer or landing page.
+Ensure every promise in the ad is supported by the destination page.
+Do not create a stronger promise in the ad than the landing page can substantiate.
+AUDIENCE AND PERSONALIZATION
+Address the audience’s situation without claiming to know sensitive or private facts about the individual viewer.
+Avoid direct statements such as:
+
+
+“You have debt.”
+“Are you depressed?”
+“You’re overweight.”
+“Your business is failing.”
+“We know you’re struggling.”
+“Tired of being single?”
+“You look older than your age.”
+Prefer contextual phrasing such as:
+“For teams managing several projects at once…”
+“When manual reporting starts taking more time than analysis…”
+“A simpler option for people comparing…”
+“Designed for businesses that need…”
+Do not infer or mention sensitive personal attributes, including health conditions, financial hardship, age, ethnicity, religion, political affiliation, sexual orientation, disability, or other protected characteristics.
+AD VARIANTS
+Create three variants using these angles:
+VARIANT 1 — PROBLEM-AWARE
+Focus on one recognizable situation, friction point, or inefficient process.
+Requirements:
+describe the problem without insulting, frightening, or diagnosing the reader;
+avoid implying that the platform knows the viewer personally;
+connect the problem directly to the offer;
+focus on one consequence rather than listing every possible pain point;
+present the product as a relevant option, not a guaranteed cure.
+VARIANT 2 — BENEFIT OR VERIFIED PROOF
+Lead with either:
+the clearest confirmed customer benefit; or
+a verified metric, rating, quote, or case study.
+Requirements:
+use proof only when supplied;
+include enough context for a metric to be meaningful;
+do not imply universal results;
+if no verified proof was supplied, use a benefit-led angle instead;
+do not write fictional social proof or placeholders that look like real testimonials.
+VARIANT 3 — OFFER OR TIMELY RELEVANCE
+Lead with:
+a confirmed promotion;
+a real deadline;
+limited availability;
+a seasonal or event-related reason;
+a practical reason to act now;
+or the immediate value of taking the next step.
+Requirements:
+use urgency only when supported by {{deadline}}, {{availability}}, or another confirmed timing detail;
+do not invent countdowns, limited spots, ending dates, or scarcity;
+if no valid urgency exists, use an offer-led or timing-context angle instead;
+avoid pressure phrases such as “act now or regret it.”
+HEADLINES
+Each headline should:
+be clear and specific;
+communicate one main idea;
+relate directly to the offer;
+remain understandable without the primary text;
+fit the platform and placement;
+avoid vague slogans;
+avoid keyword stuffing;
+avoid unsupported superlatives.
+Do not use generic headlines such as:
+“Change Your Life Today”
+“The Ultimate Solution”
+“Results Guaranteed”
+“Don’t Miss Out”
+“Limited Time Only” unless confirmed;
+“Best Product Ever”
+“Unlock Your Potential”
+“Revolutionize Your Business”
+PRIMARY TEXT
+For each variant:
+
+
+Open with the angle immediately.
+Focus on one core message.
+Explain what the product or offer does in plain language.
+Connect a feature to a concrete benefit.
+Include proof or offer details only when verified.
+End naturally near the CTA without repeating the button label word for word.
+Keep the text easy to understand on mobile.
+Avoid long lists of features.
+Avoid several CTAs in one ad.
+Avoid unnecessary hashtags unless the platform and campaign require them.
+CTA BUTTON
+Choose one CTA button label that:
+
+
+is supported by the platform;
+matches {{goal}};
+accurately describes the next step;
+does not imply a free offer unless one exists;
+does not imply immediate approval, purchase, or access unless accurate.
+Possible labels may include:
+Learn More
+Sign Up
+Shop Now
+Get Quote
+Book Now
+Download
+Contact Us
+Apply Now
+Subscribe
+Request Demo
+Use only a valid or supplied platform CTA.
+VISUAL CONCEPT
+Provide one visual concept for each variant.
+The visual concept should include:
+the main subject;
+the environment or context;
+the intended composition;
+the product or benefit being shown;
+the emotional tone;
+any important on-image text guidance.
+The visual should support the claim rather than merely decorate the ad.
+Do not suggest:
+fake interfaces or fabricated dashboards;
+invented customer logos;
+fake reviews or rating screenshots;
+unrealistic before-and-after imagery;
+misleading product demonstrations;
+guaranteed-result imagery;
+humiliating or fear-based depictions;
+exaggerated piles of money or instant-success symbolism;
+medical, financial, or body transformation claims unsupported by evidence;
+excessive text inside the image.
+When relevant, recommend leaving clean space for manually added ad copy.
+Do not rely solely on a generic rocket, target, trophy, lightbulb, handshake, or upward graph.
+STYLE
+Write in a clear, concise, natural advertising voice.
+Match {{tone}} and {{brandVoice}} without sounding like a generic marketing template.
+Avoid:
+hype;
+fake excitement;
+excessive exclamation marks;
+all caps;
+vague transformation language;
+corporate jargon;
+emotional manipulation;
+guilt;
+shame;
+fear;
+false exclusivity;
+excessive emoji use;
+repetitive rhetorical questions.
+Avoid phrases such as:
+“game-changing”
+“revolutionary”
+“unlock your potential”
+“take your business to the next level”
+“say goodbye to”
+“you deserve better”
+“don’t get left behind”
+“everyone is switching”
+“join thousands” unless confirmed;
+“results speak for themselves”
+“risk-free” unless fully supported.
+FINAL QUALITY CHECK
+Before presenting the ads, silently verify that:
+all three variants promote the same offer;
+each variant uses a genuinely different angle;
+no fact, price, deadline, testimonial, result, or scarcity claim was invented;
+pain-point copy does not imply sensitive personal knowledge;
+social proof is verified or replaced with a benefit-led angle;
+urgency is real or replaced with timely relevance;
+every CTA is valid and accurate;
+every headline fits the requested limit;
+the copy matches the landing page promise;
+visual concepts do not create misleading expectations;
+the ads are clear, concise, and appropriate for the selected platform.
+OUTPUT FORMAT
+
+## Variant 1 — Problem-Aware
+Headline:
+[Headline]
+Character count:
+[Number]
+Primary text:
+[Ad copy]
+Word count:
+[Number]
+CTA button:
+[Valid CTA label]
+Visual concept:
+[Specific creative concept]
+## Variant 2 — Benefit or Verified Proof
+Headline:
+[Headline]
+Character count:
+[Number]
+Primary text:
+[Ad copy]
+Word count:
+[Number]
+CTA button:
+[Valid CTA label]
+Visual concept:
+[Specific creative concept]
+## Variant 3 — Offer or Timely Relevance
+Headline:
+[Headline]
+Character count:
+[Number]
+Primary text:
+[Ad copy]
+Word count:
+[Number]
+CTA button:
+[Valid CTA label]
+Visual concept:
+[Specific creative concept]
+Output only the three completed variants and their counts. Do not explain the writing process.

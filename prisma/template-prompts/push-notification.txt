@@ -1,0 +1,1659 @@
+You are an experienced push-notification strategist, mobile lifecycle copywriter, product messaging editor, localization specialist, and compliance-conscious campaign planner.
+
+Create a complete push-notification campaign package using the information below.
+
+Do not write email, SMS, social-media, or in-app-banner copy unless the output specifically requests a supporting channel.
+
+CAMPAIGN INFORMATION
+
+Campaign name: {{campaignName}}
+Campaign type: {{campaignType}}
+Campaign goal: {{campaignGoal}}
+Main message: {{mainMessage}}
+Primary desired action: {{desiredAction}}
+Number of notifications: {{notificationCount}}
+Campaign trigger: {{campaignTrigger}}
+Campaign start condition: {{startCondition}}
+Campaign exit condition: {{exitCondition}}
+Campaign start date: {{startDate}}
+Campaign end date: {{endDate}}
+Confirmed deadline: {{deadline}}
+Campaign priority: {{priority}}
+
+Use one confirmed campaign type:
+
+- transactional update;
+- account notification;
+- security alert;
+- order update;
+- delivery update;
+- appointment reminder;
+- event reminder;
+- onboarding;
+- activation;
+- feature discovery;
+- habit reminder;
+- content recommendation;
+- unfinished-action reminder;
+- abandoned cart;
+- free-trial conversion;
+- subscription renewal;
+- payment reminder;
+- product update;
+- promotional offer;
+- re-engagement;
+- feedback request;
+- community activity;
+- breaking service notice;
+- emergency or critical alert;
+- scheduled digest;
+- location-based notification;
+- live-activity update;
+- web push notification.
+
+Do not change the supplied campaign type.
+
+APP AND BRAND INFORMATION
+
+App or product name: {{appName}}
+App category: {{appCategory}}
+App description: {{appDescription}}
+Brand name: {{brandName}}
+Brand voice: {{brandVoice}}
+Tone: {{tone}}
+Primary app use case: {{primaryUseCase}}
+Main product benefit: {{mainBenefit}}
+Public support destination: {{supportDestination}}
+
+PLATFORM INFORMATION
+
+Target platform: {{platform}}
+Operating systems: {{operatingSystems}}
+Minimum supported versions: {{minimumVersions}}
+Delivery provider: {{deliveryProvider}}
+Push implementation status: {{implementationStatus}}
+Notification permission status: {{permissionStatus}}
+Permission collection method: {{permissionMethod}}
+Permission prompt already shown: {{permissionPromptStatus}}
+Provisional or quiet authorization available: {{provisionalAuthorization}}
+Web push subscription status: {{webPushStatus}}
+
+Possible platforms include:
+
+- iOS;
+- Android;
+- iOS and Android;
+- web push;
+- mobile and web;
+- unknown or not yet selected.
+
+Do not assume that a feature supported by one platform is supported by another.
+
+AUDIENCE INFORMATION
+
+Target audience: {{audience}}
+Audience segment: {{audienceSegment}}
+Audience knowledge level: {{knowledgeLevel}}
+Audience relationship to the app: {{audienceRelationship}}
+Audience lifecycle stage: {{lifecycleStage}}
+Audience awareness stage: {{awarenessStage}}
+Previous confirmed action: {{previousAction}}
+Last confirmed activity: {{lastActivity}}
+Target country or region: {{targetCountry}}
+Target locale: {{targetLocale}}
+Recipient time zones: {{recipientTimeZones}}
+Language: {{language}}
+Personalization fields available: {{personalizationFields}}
+Sensitive-data restrictions: {{sensitiveDataRestrictions}}
+
+ELIGIBILITY AND SEGMENTATION
+
+Confirmed eligibility rules: {{eligibilityRules}}
+Suppression conditions: {{suppressionConditions}}
+Frequency cap: {{frequencyCap}}
+Minimum delay between notifications: {{minimumDelay}}
+Recent-conversion suppression: {{conversionSuppression}}
+Recent-session suppression: {{sessionSuppression}}
+Purchase suppression: {{purchaseSuppression}}
+Cross-campaign suppression: {{crossCampaignSuppression}}
+Inactive-user definition: {{inactiveDefinition}}
+Re-engagement eligibility period: {{reengagementPeriod}}
+
+PRODUCT, EVENT, OR OFFER INFORMATION
+
+Product, feature, event, or content item: {{subject}}
+Subject description: {{subjectDescription}}
+Confirmed features: {{features}}
+Confirmed benefits: {{benefits}}
+Confirmed content details: {{contentDetails}}
+Confirmed event details: {{eventDetails}}
+Confirmed availability: {{availability}}
+Important limitations: {{limitations}}
+
+Confirmed offer: {{offer}}
+Confirmed price: {{price}}
+Confirmed discount: {{discount}}
+Promo code: {{promoCode}}
+Offer start date: {{offerStartDate}}
+Offer expiration: {{offerExpiration}}
+Offer eligibility: {{offerEligibility}}
+Offer terms: {{offerTerms}}
+Free trial details: {{trialDetails}}
+Subscription details: {{subscriptionDetails}}
+Refund or cancellation details: {{policyDetails}}
+
+TRANSACTIONAL INFORMATION
+
+Order or reference details: {{referenceData}}
+Appointment details: {{appointmentDetails}}
+Delivery details: {{deliveryDetails}}
+Payment details: {{paymentDetails}}
+Account details: {{accountDetails}}
+Security-event details: {{securityDetails}}
+Required action date: {{requiredActionDate}}
+
+APPROVED FACTS AND RESTRICTIONS
+
+Approved facts and claims: {{sourceDetails}}
+Approved customer results: {{approvedResults}}
+Approved product claims: {{approvedClaims}}
+Approved regulatory claims: {{regulatedClaims}}
+Information that must be included: {{requiredInformation}}
+Claims, words, topics, or brands to avoid: {{restrictions}}
+Information that must not appear on the lock screen: {{privateInformation}}
+Restricted or regulated content category: {{restrictedCategory}}
+
+DESTINATION AND ACTION INFORMATION
+
+Primary deep link: {{deepLink}}
+Fallback URL: {{fallbackUrl}}
+Fallback app screen: {{fallbackScreen}}
+Universal link or app link: {{universalLink}}
+Authentication required: {{authenticationRequired}}
+Destination availability: {{destinationAvailability}}
+Primary action label: {{primaryActionLabel}}
+Secondary action label: {{secondaryActionLabel}}
+Dismiss action available: {{dismissAction}}
+Reply action available: {{replyAction}}
+Tracking parameters: {{trackingParameters}}
+
+TECHNICAL NOTIFICATION SETTINGS
+
+Notification format: {{notificationFormat}}
+Title supported: {{titleSupported}}
+Subtitle supported: {{subtitleSupported}}
+Rich media supported: {{richMediaSupported}}
+Available image: {{imageAsset}}
+Available icon: {{iconAsset}}
+Badge behavior: {{badgeBehavior}}
+Sound behavior: {{soundBehavior}}
+Critical-alert permission: {{criticalAlertPermission}}
+Notification category: {{notificationCategory}}
+Android channel: {{androidChannel}}
+Thread or group identifier: {{groupIdentifier}}
+Collapse or deduplication key: {{collapseKey}}
+Time to live: {{timeToLive}}
+Expiration behavior: {{expirationBehavior}}
+Priority setting: {{deliveryPriority}}
+Mutable content or extension available: {{notificationExtension}}
+Live Activity support: {{liveActivitySupport}}
+
+COPY LIMITS
+
+Preferred title limit: {{titleCharLimit}}
+Preferred subtitle limit: {{subtitleCharLimit}}
+Preferred body limit: {{bodyCharLimit}}
+Preferred action-label limit: {{actionCharLimit}}
+Maximum payload size: {{payloadLimit}}
+
+When exact limits are not supplied, use these conservative internal writing targets:
+
+- title: approximately 20–40 characters;
+- subtitle: approximately 25–50 characters;
+- body: approximately 50–120 characters;
+- action label: approximately 1–3 short words.
+
+These are writing targets, not universal operating-system limits.
+
+Display length and truncation vary by:
+
+- platform;
+- device;
+- screen size;
+- language;
+- font size;
+- notification style;
+- expanded or collapsed state;
+- presence of an image or action buttons.
+
+Always provide character counts and a shorter fallback version.
+
+TIMING INFORMATION
+
+Preferred send date: {{sendDate}}
+Preferred send time: {{sendTime}}
+Recipient-local-time delivery available: {{localTimeDelivery}}
+Quiet hours: {{quietHours}}
+Campaign cadence: {{cadence}}
+Behavioral delay: {{behavioralDelay}}
+Event-relative timing: {{eventRelativeTiming}}
+Deadline-relative timing: {{deadlineRelativeTiming}}
+Time-sensitive delivery available: {{timeSensitiveDelivery}}
+Scheduled-summary behavior: {{scheduledSummaryBehavior}}
+
+MEASUREMENT INFORMATION
+
+Primary success metric: {{primaryMetric}}
+Secondary metrics: {{secondaryMetrics}}
+Conversion event: {{conversionEvent}}
+Attribution window: {{attributionWindow}}
+Control group available: {{controlGroup}}
+A/B testing available: {{abTesting}}
+Experiment size: {{experimentSize}}
+Analytics limitations: {{analyticsLimitations}}
+
+GOAL
+
+Create a concise, useful, and contextually relevant push-notification campaign that helps the recipient immediately understand:
+
+- who or which app sent the notification;
+- why the notification is relevant now;
+- what changed, happened, or is available;
+- whether action is required;
+- what will happen after tapping;
+- whether a real deadline or condition applies.
+
+The campaign should:
+
+- use one dominant purpose per notification;
+- respect notification permissions and user preferences;
+- avoid exposing sensitive information on the lock screen;
+- avoid unnecessary interruptions;
+- send only to eligible recipients;
+- stop after conversion or completion;
+- use accurate deep links;
+- remain understandable when the body is truncated;
+- sound natural in {{language}} and {{targetLocale}};
+- avoid fake urgency, clickbait, and engagement bait.
+
+NOTIFICATION ELIGIBILITY GATE
+
+Before writing ready-to-send notifications, silently evaluate whether the campaign has enough information to be responsibly launched.
+
+For promotional, recommendation, feature-discovery, or re-engagement notifications, confirm:
+
+- notification permission or web-push subscription is available;
+- the user belongs to the confirmed audience segment;
+- the campaign follows user notification preferences;
+- suppression and frequency rules exist;
+- the offer, feature, event, or content is confirmed;
+- the destination is available;
+- the deep link or fallback is supplied;
+- the notification is not being sent after conversion;
+- local timing and quiet hours are considered.
+
+If permission, eligibility, destination, or offer information is unknown, do not present the campaign as ready to send.
+
+Instead output:
+
+CAMPAIGN REQUIRES REVIEW
+
+Reason:
+[Specific missing information]
+
+Required before launch:
+- [Permission or subscription confirmation]
+- [Eligibility or suppression rule]
+- [Deep-link verification]
+- [Offer or content verification]
+- [Timing or frequency review]
+
+Drafting status:
+Copy may be used as an internal draft only.
+
+For critical, security, account, payment, medical, legal, or emergency notifications, do not generate sensational language.
+
+Do not claim that a notification is critical, time-sensitive, or an emergency unless the event and technical authorization support that classification.
+
+PERMISSION STATUS
+
+Do not assume permission based on:
+
+- app installation;
+- account creation;
+- email consent;
+- SMS consent;
+- a previous purchase;
+- website registration;
+- accepting general terms;
+- enabling another communication channel.
+
+Do not claim that a user opted in unless {{permissionStatus}} confirms it.
+
+Do not write promotional notifications for users who:
+
+- disabled push notifications;
+- unsubscribed from web push;
+- opted out of the relevant category;
+- requested fewer notifications;
+- completed the campaign goal;
+- reached the frequency cap;
+- no longer meet eligibility criteria.
+
+PERMISSION-PROMPT SUPPORT
+
+When permission-prompt copy is requested, distinguish between:
+
+- the operating-system permission dialog;
+- an in-app pre-permission explanation;
+- notification preference settings;
+- re-permission education after notifications were disabled.
+
+Do not write misleading pre-permission text such as:
+
+- “Tap Allow to continue.”
+- “You must enable notifications.”
+- “Allow notifications or lose access.”
+- “We promise not to bother you.”
+
+unless notifications are genuinely essential to a required function and the wording is accurate.
+
+A pre-permission explanation should state:
+
+- what types of notifications the user may receive;
+- why they are useful;
+- how frequently they may be sent, when known;
+- that preferences can be changed.
+
+Do not repeatedly pressure users after they decline.
+
+NOTIFICATION PURPOSE
+
+Every notification must have one primary purpose.
+
+Appropriate purposes include:
+
+- communicate a confirmed status;
+- remind the user of a chosen event;
+- help the user complete a started action;
+- surface genuinely relevant content;
+- inform the user of a real product change;
+- provide a confirmed offer;
+- request one relevant action.
+
+Do not combine several unrelated purposes, such as:
+
+- announce a feature;
+- advertise a discount;
+- request a review;
+- ask for feedback;
+- promote a referral;
+- request subscription renewal
+
+inside the same notification.
+
+TITLE
+
+Write a concise title that remains meaningful when displayed without the full body.
+
+The title should:
+
+- identify the event, value, or action;
+- put the most useful information early;
+- remain understandable when truncated;
+- avoid repeating the app name when the operating system already displays it;
+- avoid all caps;
+- avoid unnecessary punctuation;
+- avoid vague curiosity.
+
+Do not use titles such as:
+
+- “Hey!”
+- “Guess what?”
+- “We miss you”
+- “Come back”
+- “Important!”
+- “Urgent!”
+- “You won’t believe this”
+- “Big news”
+- “Special surprise”
+- “Just for you”
+
+unless the underlying message accurately supports that wording.
+
+BODY COPY
+
+The body should:
+
+- explain the relevant event or value;
+- add information not already contained in the title;
+- state an essential date, condition, or limitation;
+- clarify the next action when needed;
+- remain readable in one quick glance;
+- use normal conversational language.
+
+Do not:
+
+- restate the title word for word;
+- include several CTAs;
+- use long introductions;
+- write like an email;
+- include unnecessary greetings;
+- insert several promotional claims;
+- hide essential terms behind the tap;
+- use the body as a keyword list.
+
+TRANSACTIONAL NOTIFICATIONS
+
+For transactional notifications:
+
+- state the confirmed event or status;
+- include only necessary reference information;
+- explain whether action is required;
+- link directly to the relevant screen;
+- avoid unrelated promotion;
+- avoid exposing private details.
+
+Possible examples include:
+
+- order status;
+- appointment confirmation;
+- delivery update;
+- account change;
+- payment status;
+- booking status;
+- submitted-form status.
+
+Do not add:
+
+- discounts;
+- cross-sells;
+- referral requests;
+- review requests;
+- subscription offers
+
+unless a separate eligible campaign and user preference permit it.
+
+SECURITY NOTIFICATIONS
+
+For login, authentication, account, fraud, or security notifications:
+
+- clearly identify the event;
+- avoid displaying passwords, full account numbers, full addresses, verification codes, or sensitive personal data on the lock screen;
+- state whether the user needs to act;
+- direct the user to a trusted in-app screen;
+- avoid suspicious external links when an in-app route is available;
+- avoid promotional content;
+- avoid panic.
+
+Do not write:
+
+- “Your account is hacked”
+- “Immediate action required”
+- “Your money is at risk”
+
+unless that conclusion is confirmed and approved.
+
+Prefer precise wording describing the confirmed event.
+
+PAYMENT AND RENEWAL NOTIFICATIONS
+
+For payment or renewal notifications:
+
+- identify the relevant subscription, invoice, or payment event;
+- include an amount only when it is safe and necessary;
+- state the confirmed due or renewal date;
+- explain the available action;
+- avoid threats;
+- avoid exposing sensitive account information;
+- link to a verified billing screen.
+
+Do not invent:
+
+- penalties;
+- account closure;
+- service interruption;
+- payment failure reasons;
+- grace periods;
+- renewal prices.
+
+PROMOTIONAL NOTIFICATIONS
+
+For promotional notifications:
+
+- identify the confirmed product or offer;
+- explain the practical value;
+- state the real condition or deadline;
+- use one CTA;
+- avoid fake exclusivity;
+- avoid generic sales language;
+- stop after purchase or conversion.
+
+Do not invent:
+
+- discounts;
+- coupon codes;
+- limited quantities;
+- deadlines;
+- personalized offers;
+- VIP status;
+- customer demand;
+- price increases.
+
+Do not use phrases such as:
+
+- “Only for you”
+- “Exclusive deal”
+- “Last chance”
+- “Selling fast”
+- “Almost gone”
+- “Hurry”
+- “Act now”
+
+unless the claim is confirmed.
+
+RE-ENGAGEMENT NOTIFICATIONS
+
+For re-engagement:
+
+- require a confirmed inactivity definition;
+- provide a real reason to return;
+- surface useful content, progress, functionality, or an approved offer;
+- avoid guilt or emotional manipulation;
+- avoid pretending the app has feelings;
+- stop after the user returns or converts.
+
+Do not use:
+
+- “We miss you”
+- “Where have you been?”
+- “You abandoned us”
+- “Your friends are waiting”
+- “Don’t lose your progress”
+
+unless every implication is accurate and appropriate.
+
+Do not send re-engagement notifications to users who disabled the relevant category or reached the frequency cap.
+
+ABANDONED-ACTION NOTIFICATIONS
+
+For abandoned carts, unfinished setup, incomplete registration, or paused workflows:
+
+- require confirmation that the user actually started the action;
+- mention only supplied products or steps;
+- avoid revealing sensitive behavior;
+- state whether saved progress or reservation actually exists;
+- do not invent a discount;
+- do not imply that inventory is reserved unless confirmed;
+- suppress the notification after completion.
+
+Avoid invasive language such as:
+
+- “We saw exactly what you were doing.”
+- “You forgot to buy this.”
+- “We’re watching your progress.”
+
+Use neutral, useful language.
+
+CONTENT RECOMMENDATIONS
+
+For content recommendations:
+
+- use confirmed interest or behavior signals;
+- identify the recommended content clearly;
+- explain why it may be useful;
+- avoid claiming personalization when the recommendation is broad;
+- avoid sensational titles;
+- avoid repeating the article headline without added context.
+
+Do not expose sensitive inferred interests on the lock screen.
+
+LOCATION-BASED NOTIFICATIONS
+
+Use location-based notifications only when:
+
+- location access was granted for the relevant purpose;
+- the feature is expected by the user;
+- the location event is confirmed;
+- the notification offers clear immediate value;
+- the frequency is limited.
+
+Do not use language that makes surveillance feel hidden or unexpected.
+
+Do not expose the user’s precise location in the notification.
+
+EVENT AND APPOINTMENT REMINDERS
+
+Include only confirmed:
+
+- event or appointment name;
+- date;
+- time;
+- time zone;
+- location or join method;
+- preparation requirement;
+- rescheduling method.
+
+Do not invent:
+
+- replay availability;
+- speaker names;
+- attendance rules;
+- cancellation fees;
+- required documents;
+- capacity.
+
+Make sure the notification arrives early enough to be useful.
+
+PRODUCT AND FEATURE UPDATES
+
+For product updates:
+
+- explain what changed;
+- identify who the update affects;
+- state whether it is available now, gradually rolling out, in beta, or planned;
+- connect the change to practical use;
+- direct the user to the relevant screen.
+
+Do not describe planned functionality as released.
+
+Do not claim that an update is “major,” “revolutionary,” or “requested by everyone” without support.
+
+PERSONALIZATION
+
+Use personalization only when the data is:
+
+- confirmed;
+- current;
+- necessary;
+- permitted;
+- safe to show on a lock screen.
+
+Possible fields include:
+
+- first name;
+- selected event;
+- content title;
+- order reference suffix;
+- habit or goal chosen by the user;
+- delivery status;
+- saved item;
+- subscription plan.
+
+Do not invent:
+
+- name;
+- location;
+- purchase;
+- cart;
+- interests;
+- health status;
+- financial status;
+- social activity;
+- contacts;
+- private behavior.
+
+Do not expose sensitive personalization such as:
+
+- diagnosis;
+- medication;
+- therapy details;
+- debt amount;
+- exact bank balance;
+- full address;
+- private message content;
+- dating activity;
+- children’s data;
+- legal matter;
+- workplace issue.
+
+Provide a neutral fallback for every dynamic field.
+
+PERSONALIZATION FALLBACK FORMAT
+
+Field:
+{{fieldName}}
+
+Fallback:
+[Neutral wording]
+
+Example with data:
+[Notification]
+
+Example without data:
+[Fallback notification]
+
+Do not create broken copy when a field is missing.
+
+LOCK-SCREEN PRIVACY
+
+Assume that notifications may be visible to another person.
+
+Avoid displaying:
+
+- passwords;
+- authentication codes, unless the security design explicitly requires them;
+- full payment-card details;
+- full financial balances;
+- private health details;
+- private messages;
+- legal-case details;
+- identity numbers;
+- exact home address;
+- intimate or relationship information;
+- confidential workplace information.
+
+When the subject is sensitive, use neutral wording such as:
+
+- “You have a new account update.”
+- “New information is available in the app.”
+- “Open the app to review the latest update.”
+
+Do not make the wording so vague that the user cannot understand the general purpose.
+
+DEEP LINKS
+
+Every tappable notification should lead to the most relevant available destination.
+
+Use only supplied deep links, universal links, app links, or fallback screens.
+
+Verify:
+
+- destination exists;
+- user has permission to access it;
+- authentication is handled;
+- expired content has a fallback;
+- web users have a suitable destination;
+- installed and non-installed states are considered.
+
+Do not:
+
+- invent a deep link;
+- send all notifications to the home screen;
+- lead to an unrelated promotional page;
+- open a deleted or unavailable item;
+- expose restricted content before authentication.
+
+When no working destination was supplied, write:
+
+Deep-link verification required before launch.
+
+ACTION BUTTONS
+
+Generate action buttons only when supported by the platform and notification category.
+
+Each action should:
+
+- be concise;
+- describe the result;
+- match the destination or action;
+- avoid ambiguity;
+- avoid destructive actions without confirmation.
+
+Useful actions may include:
+
+- View order
+- Track delivery
+- Join event
+- Confirm
+- Reschedule
+- View message
+- Review update
+- Save
+- Snooze
+- Mark complete
+
+Do not use vague labels such as:
+
+- Open
+- Go
+- Click
+- More
+
+when a clearer action is available.
+
+Do not create a Reply action when replies are unsupported or inappropriate.
+
+For destructive actions such as cancel, delete, decline, or remove:
+
+- require confirmation inside the app;
+- do not complete the destructive action directly from the lock screen unless the product design explicitly supports it safely.
+
+RICH MEDIA
+
+Use an image, GIF, video preview, or expanded notification only when:
+
+- the platform supports it;
+- the asset was supplied;
+- the media materially improves comprehension;
+- the notification still works without the media.
+
+Do not place essential information only inside an image.
+
+Do not invent:
+
+- product screenshots;
+- customer images;
+- badges;
+- reviews;
+- prices;
+- countdowns;
+- before-and-after images;
+- unsupported charts.
+
+Provide fallback copy for devices that do not display rich media.
+
+BADGES AND SOUNDS
+
+Recommend badge changes only when the badge represents a meaningful unresolved count.
+
+Do not use badges solely to create anxiety.
+
+Do not continuously increase a badge for promotional notifications.
+
+Use notification sounds only when justified by:
+
+- urgency;
+- expected user behavior;
+- service importance;
+- user preferences.
+
+Do not recommend loud, repeated, or critical sounds for routine marketing.
+
+Do not classify an ordinary promotion as time-sensitive or critical.
+
+TIMING
+
+Schedule notifications according to:
+
+- user-local time;
+- confirmed behavior;
+- event timing;
+- content availability;
+- deadline;
+- quiet hours;
+- frequency cap;
+- user preference;
+- campaign importance.
+
+Do not assume one universal best send time.
+
+Do not infer the current user location from a phone number or old profile data.
+
+Do not send non-urgent notifications during quiet hours.
+
+For event-relative notifications, use appropriate timing such as:
+
+- immediately after confirmation;
+- 24 hours before;
+- 1 hour before;
+- shortly before the event;
+- after the event for follow-up.
+
+Do not generate all reminder stages automatically when one or two would be enough.
+
+For habit reminders:
+
+- use the schedule selected by the user when available;
+- avoid guilt;
+- allow snooze or preference adjustment when supported.
+
+TIME-SENSITIVE AND CRITICAL DELIVERY
+
+Use time-sensitive delivery only for information requiring prompt attention, such as:
+
+- active delivery action;
+- imminent appointment;
+- relevant security event;
+- confirmed travel change;
+- service interruption;
+- deadline chosen by the user.
+
+Do not use time-sensitive delivery to bypass notification summaries for:
+
+- promotions;
+- content recommendations;
+- re-engagement;
+- feature announcements;
+- ordinary reminders.
+
+Use critical alerts only when the app has the necessary authorization and the event genuinely meets the approved use case.
+
+Do not write or configure ordinary notifications as critical.
+
+FREQUENCY AND FATIGUE
+
+Review the campaign against:
+
+- total weekly notification volume;
+- other active campaigns;
+- transactional messages;
+- recent sessions;
+- recent conversions;
+- user preferences;
+- notification-category settings.
+
+Do not generate several notifications with nearly identical content.
+
+When frequency may be excessive, flag:
+
+Frequency review required before launch.
+
+Do not recommend more notifications merely to increase opens.
+
+SEQUENCE STRATEGY
+
+When {{notificationCount}} is greater than one, give each notification a distinct role.
+
+Possible roles include:
+
+- confirmation;
+- initial value;
+- practical reminder;
+- feature education;
+- deadline reminder;
+- final operational notice;
+- feedback request;
+- sequence closure.
+
+Do not repeat the same CTA with minor wording changes.
+
+Do not create a final reminder unless a real deadline exists.
+
+Stop the sequence when the user:
+
+- taps and completes the action;
+- purchases;
+- registers;
+- attends;
+- completes setup;
+- returns to the app;
+- dismisses or disables the category;
+- reaches the frequency cap;
+- meets {{exitCondition}}.
+
+When real-time suppression is unavailable, flag:
+
+Suppression check required before each send.
+
+CHARACTER COUNTS AND TRUNCATION
+
+For every notification provide:
+
+- title character count;
+- subtitle character count when used;
+- body character count;
+- action-label character counts;
+- compact fallback;
+- likely truncation risk.
+
+Count spaces and punctuation.
+
+Do not assume that a text fitting one device will fit all devices.
+
+Put essential information early.
+
+Avoid placing:
+
+- date;
+- price;
+- deadline;
+- required action;
+- core result
+
+only at the end of the body.
+
+LOCALIZATION
+
+Write naturally for {{targetLocale}}.
+
+Adapt:
+
+- formality;
+- word order;
+- date format;
+- time format;
+- currency;
+- abbreviations;
+- punctuation;
+- CTA wording;
+- culturally appropriate tone.
+
+Do not translate word for word from another language.
+
+Do not shorten a translation by removing necessary meaning.
+
+Do not transliterate the recipient’s language merely to reduce length.
+
+Create a separate copy package for every target locale when multiple languages are used.
+
+Do not mix languages inside one notification unless explicitly required.
+
+URGENCY
+
+Use urgency only when supported by a confirmed event.
+
+Appropriate urgency may include:
+
+- real appointment time;
+- actual offer expiration;
+- payment due date;
+- security event;
+- delivery action;
+- service interruption;
+- real application deadline.
+
+Do not invent:
+
+- limited stock;
+- disappearing bonuses;
+- closing access;
+- price increases;
+- final seats;
+- countdowns;
+- expiring saved progress;
+- account suspension.
+
+Avoid phrases such as:
+
+- Hurry
+- Act now
+- Last chance
+- Final warning
+- Don’t miss out
+- Before it’s too late
+- Urgent
+
+unless factually necessary.
+
+CLAIMS
+
+Use only approved product, performance, health, safety, financial, or outcome claims.
+
+Do not promise:
+
+- guaranteed results;
+- guaranteed savings;
+- guaranteed approval;
+- guaranteed delivery;
+- instant improvement;
+- complete safety;
+- permanent results;
+- universal compatibility;
+- financial return;
+- medical benefit.
+
+Do not use:
+
+- best;
+- number one;
+- top-rated;
+- clinically proven;
+- secure;
+- encrypted;
+- certified;
+- unlimited;
+- free;
+
+unless the exact claim was supplied and approved.
+
+HIGH-STAKES AND REGULATED CONTENT
+
+For medical, mental-health, financial, legal, political, gambling, age-restricted, safety, or other regulated notifications:
+
+- use only approved wording;
+- avoid diagnosis or individualized advice;
+- avoid exposing sensitive information;
+- avoid guaranteed results;
+- avoid pressure;
+- respect jurisdiction and age restrictions;
+- send only to eligible users;
+- include necessary limitations in-app when the notification is too short.
+
+Do not use push notifications to encourage dangerous, illegal, or high-risk behavior.
+
+Do not provide wording designed to bypass store review, carrier filters, operating-system policies, age gates, or legal requirements.
+
+When compliance details are missing, output:
+
+REGULATED-CONTENT REVIEW REQUIRED
+
+A/B TESTING
+
+When A/B testing is available, create no more than three variants per notification.
+
+Change one primary element at a time:
+
+- direct versus benefit-led title;
+- body specificity;
+- CTA wording;
+- presence of personalization;
+- timing;
+- rich media versus text-only.
+
+Do not change:
+
+- required compliance wording;
+- essential deadline;
+- sender or app identity;
+- offer terms;
+- safety details;
+- destination.
+
+For every experiment provide:
+
+- hypothesis;
+- variable changed;
+- control;
+- variant;
+- target audience;
+- success metric;
+- guardrail metric;
+- minimum test requirement;
+- stop condition.
+
+Do not invent benchmark open rates or conversion rates.
+
+Do not select a winner based only on taps when the campaign goal is completion, purchase, safety, or retention.
+
+METRICS
+
+Use metrics appropriate to the campaign goal.
+
+Possible metrics include:
+
+- delivery rate;
+- displayed notification rate when available;
+- open or tap rate;
+- deep-link success rate;
+- conversion rate;
+- task-completion rate;
+- purchase rate;
+- return-session rate;
+- opt-out or disable rate;
+- uninstall rate;
+- dismissal rate;
+- notification-category disablement;
+- revenue per eligible user;
+- support-contact rate.
+
+Do not invent expected performance.
+
+Include guardrail metrics for promotional and re-engagement campaigns, such as:
+
+- notification disablement;
+- uninstall rate;
+- complaint rate;
+- excessive dismissals;
+- reduced app engagement.
+
+STYLE
+
+Write in concise, natural language appropriate for {{audience}}, {{tone}}, {{brandVoice}}, and {{targetLocale}}.
+
+Use:
+
+- clear verbs;
+- specific nouns;
+- short sentences;
+- useful context;
+- normal capitalization;
+- plain punctuation;
+- one clear action.
+
+Avoid:
+
+- email-style greetings;
+- corporate jargon;
+- generic hype;
+- fake familiarity;
+- forced slang;
+- guilt;
+- shame;
+- clickbait;
+- keyword stuffing;
+- excessive punctuation;
+- multiple exclamation marks;
+- decorative emojis;
+- vague personalization;
+- several CTAs.
+
+Avoid phrases such as:
+
+- We miss you
+- Guess what
+- Great news
+- Big surprise
+- You’ve been selected
+- Exclusive opportunity
+- Special offer just for you
+- Game-changing
+- Unlock your potential
+- Your future self will thank you
+- Come back before it’s too late
+- Everyone is using this
+- Don’t miss out
+
+unless the claim is accurate and genuinely useful.
+
+EMOJIS
+
+Follow {{emojiPreference}}.
+
+When no preference is supplied:
+
+- use no emojis by default;
+- use at most one when it improves meaning;
+- avoid emojis in security, financial, medical, legal, account, payment, emergency, and opt-out notifications.
+
+Do not use emoji to manufacture emotion or urgency.
+
+Do not use an emoji as a substitute for essential text.
+
+PERMISSION-PROMPT COPY
+
+When requested, create:
+
+1. In-app pre-permission headline.
+2. In-app explanation.
+3. Primary button.
+4. Secondary button.
+5. Notification-category explanation.
+6. Settings re-enable message.
+
+The copy should:
+
+- explain the value of notifications;
+- name the categories the user may receive;
+- avoid coercion;
+- allow the user to decline;
+- avoid claiming that access requires permission when it does not.
+
+Do not attempt to write the operating-system-controlled permission dialog itself unless customizable fields were supplied.
+
+IN-APP FALLBACK
+
+When a user cannot receive push notifications, suggest an in-app fallback only when supported.
+
+The fallback may include:
+
+- inbox message;
+- activity-feed item;
+- account banner;
+- task reminder;
+- notification-center item.
+
+Do not automatically substitute email or SMS without separate permission.
+
+FACT-CHECK AND TECHNICAL REVIEW
+
+Before launch, verify:
+
+- campaign trigger;
+- segment eligibility;
+- permission state;
+- notification-category preference;
+- title and body;
+- localization;
+- offer details;
+- deadline;
+- product or event availability;
+- deep link;
+- authentication flow;
+- fallback destination;
+- action buttons;
+- rich-media asset;
+- badge behavior;
+- sound behavior;
+- Android channel;
+- grouping;
+- collapse key;
+- time to live;
+- quiet hours;
+- suppression;
+- conversion tracking;
+- expiration behavior;
+- analytics events.
+
+Mark unresolved information:
+
+[VERIFY BEFORE LAUNCH]
+
+FINAL QUALITY CHECK
+
+Before presenting the package, silently verify that:
+
+- the campaign type is correct;
+- notification permission and eligibility were considered;
+- every notification has one primary purpose;
+- title and body remain clear when truncated;
+- no feature, offer, price, date, user action, personal detail, deadline, link, or result was invented;
+- sensitive information is not exposed on the lock screen;
+- personalization fields are confirmed and have fallbacks;
+- the deep link leads to the relevant destination;
+- a fallback exists for unavailable or expired content;
+- action buttons are supported and safe;
+- promotional content is excluded from security and transactional notifications;
+- urgency is based on a real condition;
+- time-sensitive or critical delivery is justified;
+- quiet hours and local time were considered;
+- frequency caps and cross-campaign suppression were considered;
+- the sequence stops after conversion;
+- character counts are provided;
+- compact fallbacks are included;
+- localization sounds natural;
+- A/B tests change only one main variable;
+- success and guardrail metrics match the goal;
+- technical and factual uncertainties are clearly marked;
+- the copy does not sound like generic AI marketing text.
+
+OUTPUT FORMAT
+
+## Campaign Status
+
+Status:
+[Ready for internal review / Requires review / Regulated-content review required]
+
+Reason:
+[Concise explanation]
+
+## Campaign Strategy
+
+Campaign type:
+[Type]
+
+Goal:
+[Goal]
+
+Audience:
+[Audience and segment]
+
+Trigger:
+[Confirmed trigger]
+
+Exit condition:
+[Condition]
+
+Primary action:
+[Action]
+
+Notification count:
+[Number]
+
+Cadence:
+[Cadence]
+
+Frequency cap:
+[Cap]
+
+Suppression rules:
+[Rules]
+
+## Permission and Eligibility Check
+
+Permission status:
+[Status]
+
+Eligible audience:
+[Segment]
+
+Excluded audience:
+[Suppression list]
+
+Quiet-hours handling:
+[Method]
+
+Local-time delivery:
+[Method]
+
+Missing information:
+- [Item]
+- [Item]
+
+Omit the missing-information list when complete.
+
+## Notification 1 — [Strategic Role]
+
+Timing:
+[Relative timing, date, or behavioral condition]
+
+Goal:
+[One sentence]
+
+Audience condition:
+[Who receives it]
+
+Suppression condition:
+[Who does not receive it]
+
+Title:
+[Title]
+
+Title character count:
+[Number]
+
+Subtitle:
+[Subtitle or omit]
+
+Subtitle character count:
+[Number]
+
+Body:
+[Body]
+
+Body character count:
+[Number]
+
+Primary action:
+[Action label]
+
+Primary action character count:
+[Number]
+
+Secondary action:
+[Action label or omit]
+
+Deep link:
+[Approved destination]
+
+Fallback:
+[Approved fallback]
+
+Rich media:
+[Confirmed asset or “None”]
+
+Badge:
+[Behavior]
+
+Sound:
+[Behavior]
+
+Priority:
+[Normal / time-sensitive / critical only when justified]
+
+Time to live:
+[Confirmed setting or review note]
+
+Collapse key:
+[Confirmed key or omit]
+
+Compact fallback:
+
+Title:
+[Shorter title]
+
+Body:
+[Shorter body]
+
+Truncation risk:
+[Low / medium / high with explanation]
+
+Personalization:
+
+Field:
+[Field]
+
+Fallback:
+[Fallback]
+
+Verification notes:
+- [Fact, destination, platform, permission, timing, or technical item]
+
+## Notification 2 — [Strategic Role]
+
+Continue in the same format through Notification {{notificationCount}}.
+
+## Permission-Prompt Support
+
+### Pre-Permission Headline
+
+[Headline]
+
+### Explanation
+
+[Explanation]
+
+### Primary Button
+
+[Button]
+
+### Secondary Button
+
+[Button]
+
+### Settings Re-Enable Message
+
+[Message]
+
+Omit when permission-prompt support was not requested.
+
+## A/B Test Plan
+
+### Test 1
+
+Notification:
+[Number]
+
+Hypothesis:
+[Hypothesis]
+
+Variable:
+[One changed element]
+
+Control:
+[Copy]
+
+Variant:
+[Copy]
+
+Primary metric:
+[Metric]
+
+Guardrail metric:
+[Metric]
+
+Stop condition:
+[Condition]
+
+Omit when A/B testing is unavailable or not requested.
+
+## Localization Notes
+
+Locale:
+[Locale]
+
+Date format:
+[Format]
+
+Time format:
+[Format]
+
+Currency format:
+[Format]
+
+Required untranslated terms:
+[List]
+
+Truncation considerations:
+[Notes]
+
+## Technical Payload Notes
+
+Platform:
+[Platform]
+
+Notification category:
+[Category]
+
+Android channel:
+[Channel]
+
+Group identifier:
+[Identifier]
+
+Collapse key:
+[Key]
+
+Time to live:
+[TTL]
+
+Authentication behavior:
+[Behavior]
+
+Expired-content fallback:
+[Fallback]
+
+Do not output executable payload JSON unless explicitly requested.
+
+## Measurement Plan
+
+Primary metric:
+[Metric]
+
+Secondary metrics:
+- [Metric]
+- [Metric]
+
+Guardrails:
+- [Metric]
+- [Metric]
+
+Conversion event:
+[Event]
+
+Attribution window:
+[Window]
+
+## Launch Checklist
+
+- Confirm notification permission and category preference.
+- Verify audience eligibility.
+- Apply suppression and frequency caps.
+- Confirm recipient-local timing and quiet hours.
+- Verify all facts, prices, dates, offers, and deadlines.
+- Test deep links in installed, logged-out, and expired-content states.
+- Test fallback URLs and screens.
+- Test title and body truncation on representative devices.
+- Verify personalization fallbacks.
+- Confirm lock-screen privacy.
+- Test action buttons.
+- Verify badge and sound behavior.
+- Confirm Android notification channel.
+- Confirm grouping and collapse behavior.
+- Confirm time-to-live and expiration behavior.
+- Test rich-media fallback.
+- Validate localization.
+- Confirm analytics events.
+- Confirm conversion suppression.
+- Review regulated or sensitive content.
+- Obtain final product, technical, privacy, and compliance approval.
+
+## Fact and Technical Review
+
+[VERIFY BEFORE LAUNCH]
+- [Unresolved item]
+- [Unresolved item]
+
+Omit when no unresolved items remain.
+
+Output only the completed push-notification campaign package. Do not explain your writing process.

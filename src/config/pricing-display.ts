@@ -1,4 +1,5 @@
 import { planLimits, PLANS } from "@/config/plans";
+import { TEMPLATE_CATALOG_COUNTS } from "@/config/template-categories";
 
 export const pricingPlans = [
   {
@@ -13,7 +14,7 @@ export const pricingPlans = [
     features: [
       `Up to ${planLimits.free.maxSavedPrompts} saved prompts`,
       `${planLimits.free.maxGenerationsPerPeriod} generations per day`,
-      "8 core templates",
+      `${TEMPLATE_CATALOG_COUNTS.free} core templates`,
       "GPT-4o mini generation",
       "Personal prompt library",
     ],
@@ -30,7 +31,7 @@ export const pricingPlans = [
     features: [
       "100 generations per month",
       "Unlimited saved prompts",
-      "All templates, including Pro",
+      `All ${TEMPLATE_CATALOG_COUNTS.total} templates`,
       "GPT-4o generation",
       "Export to .md and .txt",
       "Email support",

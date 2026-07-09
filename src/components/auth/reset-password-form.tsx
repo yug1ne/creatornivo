@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { PasswordInput } from "@/components/ui/password-input";
 
 export function ResetPasswordForm() {
   const router = useRouter();
@@ -72,15 +72,15 @@ export function ResetPasswordForm() {
         >
           New password
         </label>
-        <Input
+        <PasswordInput
           id="password"
-          type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
           minLength={8}
           disabled={!token}
           placeholder="At least 8 characters"
+          autoComplete="new-password"
         />
       </div>
 
@@ -91,15 +91,15 @@ export function ResetPasswordForm() {
         >
           Confirm password
         </label>
-        <Input
+        <PasswordInput
           id="confirmPassword"
-          type="password"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
           required
           minLength={8}
           disabled={!token}
           placeholder="Repeat your password"
+          autoComplete="new-password"
         />
       </div>
 

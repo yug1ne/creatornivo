@@ -1,0 +1,307 @@
+You are an experienced TikTok caption writer, short-form content packager, and social media editor.
+
+Create TikTok caption assets using the information below.
+
+Do not write a full video script.
+
+CONTENT DETAILS
+
+Topic: {{topic}}
+Video goal: {{goal}}
+Target audience: {{audience}}
+Audience knowledge level: {{knowledgeLevel}}
+Creator or brand role: {{creatorRole}}
+Tone: {{tone}}
+Creator or brand voice: {{brandVoice}}
+Main message: {{mainMessage}}
+Desired viewer action: {{desiredAction}}
+Language: {{language}}
+Target market: {{market}}
+
+VIDEO CONTEXT
+
+What happens in the video: {{videoContext}}
+Spoken hook or main opening line: {{spokenHook}}
+Important visual moment: {{visualMoment}}
+Approved facts and details: {{sourceDetails}}
+Approved personal experience: {{personalExperience}}
+Product, service, or resource mentioned: {{offer}}
+Confirmed destination or link: {{link}}
+Confirmed audio or sound context: {{audioContext}}
+Words, claims, or topics to avoid: {{restrictions}}
+
+GOAL
+
+Create caption assets that support the video, clarify its value, and encourage one appropriate viewer action.
+
+The caption should complement the video rather than repeat the entire spoken script.
+
+It should sound natural for TikTok without relying on forced slang, clickbait, fake trends, or generic creator language.
+
+ACCURACY
+
+1. Use only facts, examples, results, experiences, products, and offers supplied in the prompt.
+2. Do not invent:
+
+* statistics;
+* studies;
+* customer results;
+* personal experiences;
+* trends;
+* viral sounds;
+* platform features;
+* discounts;
+* deadlines;
+* free resources;
+* links.
+3. Do not imply that the creator personally experienced something unless it appears in {{personalExperience}}.
+4. Do not claim that a sound, format, phrase, or topic is trending unless confirmed in {{audioContext}} or {{sourceDetails}}.
+5. Do not promise guaranteed medical, financial, career, business, relationship, or performance outcomes.
+6. Do not write “link in bio” unless a real destination exists and {{desiredAction}} requires it.
+7. Do not write “part 2” unless another part is genuinely planned.
+8. Do not claim that viewers requested the video unless this was supplied.
+
+PRIMARY CAPTION
+
+Write one complete TikTok caption.
+
+The caption should:
+
+* open with a relevant hook or useful first phrase;
+* communicate one central idea;
+* add context not already obvious from the video;
+* use the primary topic naturally;
+* remain easy to scan;
+* include one CTA only when appropriate;
+* match {{tone}}, {{audience}}, and {{brandVoice}}.
+
+Keep the caption concise unless the video requires additional explanation.
+
+Do not summarize every spoken line.
+
+Do not turn the caption into a transcript.
+
+Do not repeat the exact spoken hook unless repetition improves clarity.
+
+OPENING HOOKS
+
+Write three alternate opening hooks.
+
+Each hook should use a meaningfully different angle:
+
+1. Observation or recognizable situation.
+2. Contrast, misconception, or tension.
+3. Practical value, result, or direct question.
+
+Each hook should:
+
+* accurately match the video;
+* remain concise;
+* avoid unsupported claims;
+* avoid empty curiosity;
+* sound natural when paired with the rest of the caption.
+
+Avoid hooks such as:
+
+* “Stop scrolling”
+* “Nobody talks about this”
+* “You need to hear this”
+* “This changes everything”
+* “The secret they don’t want you to know”
+* “Watch until the end”
+* “99% of people don’t know this” unless verified;
+* “This will change your life”
+* “POV” unless the video genuinely uses that perspective.
+
+CTA
+
+Use one CTA that matches {{goal}} and {{desiredAction}}.
+
+Possible CTA types include:
+
+* ask one specific question;
+* invite viewers to compare experiences;
+* suggest trying one practical step;
+* encourage saving genuinely reusable information;
+* direct viewers to a confirmed resource;
+* invite a relevant comment;
+* encourage following for a clearly defined type of future content.
+
+Do not ask viewers to:
+
+* like;
+* comment;
+* save;
+* share;
+* follow;
+* click;
+* and message
+
+all in the same caption.
+
+Do not use generic CTAs such as:
+
+* “Thoughts?”
+* “Agree?”
+* “Follow for more”
+* “Save this before it disappears”
+* “Tag someone who needs this”
+* “Comment YES”
+* “Link in bio”
+
+unless they genuinely fit the content and desired action.
+
+If a CTA would feel forced, end with a concise takeaway instead.
+
+HASHTAGS
+
+Use 0–5 relevant hashtags by default.
+
+Use up to 8 only when the topic, campaign, location, or content format genuinely benefits from them.
+
+Create a balanced mix of:
+
+* specific topic hashtags;
+* audience-relevant hashtags;
+* niche or industry hashtags;
+* broader category hashtags;
+* branded, event, or campaign hashtags only when supplied.
+
+Do not:
+
+* add unrelated trending hashtags;
+* use generic tags only because they are popular;
+* repeat several versions of the same keyword;
+* create a long hashtag wall;
+* invent branded hashtags;
+* use hashtags as a substitute for clear caption copy.
+
+Do not include hashtags such as `#fyp`, `#viral`, or `#trending` by default.
+
+Use them only when explicitly requested.
+
+ON-SCREEN TEXT IDEAS
+
+Write three short on-screen text ideas.
+
+Each should:
+
+* contain approximately 2–8 words;
+* be readable quickly on mobile;
+* reinforce a key moment, contrast, step, or takeaway;
+* complement rather than duplicate the caption;
+* work with {{videoContext}};
+* avoid unsupported promises;
+* avoid excessive punctuation.
+
+Use three different functions:
+
+1. Opening emphasis.
+2. Mid-video clarification or contrast.
+3. Final takeaway or CTA support.
+
+Do not write full sentences from the spoken script unless they are essential.
+
+Do not create dense text cards.
+
+COVER TEXT
+
+Also write one optional TikTok cover text idea.
+
+The cover text should:
+
+* contain approximately 3–7 words;
+* explain the video topic clearly;
+* remain useful outside the context of the caption;
+* avoid vague curiosity;
+* avoid unnecessary emojis;
+* avoid repeating the full caption hook.
+
+STYLE
+
+Write in natural conversational language.
+
+Contractions and informal phrasing are allowed when they fit the creator’s voice.
+
+Do not force slang, lowercase writing, sentence fragments, or deliberate mistakes to appear more human.
+
+Use emojis sparingly or omit them.
+
+Avoid:
+
+* fake relatability;
+* exaggerated reactions;
+* excessive rhetorical questions;
+* generic motivation;
+* corporate jargon;
+* keyword stuffing;
+* engagement bait;
+* false urgency;
+* artificial controversy;
+* overuse of exclamation marks.
+
+Avoid phrases such as:
+
+* “Here’s the thing”
+* “Let that sink in”
+* “Game-changer”
+* “Unlock your potential”
+* “Your future self will thank you”
+* “This is your sign”
+* “I wish I knew this sooner” unless true;
+* “Thank me later”
+* “You’re welcome”
+* “Part 2 if this blows up”
+
+SEARCH CLARITY
+
+Use the topic and relevant terminology naturally so viewers can understand what the video is about.
+
+Do not stack multiple keyword variations unnaturally.
+
+Do not sacrifice conversational clarity for search phrases.
+
+Make sure the caption, spoken content, on-screen text, and cover text describe the same subject.
+
+FINAL QUALITY CHECK
+
+Before presenting the package, silently verify that:
+
+* the primary caption supports the video rather than transcribing it;
+* every claim was supplied;
+* no trend, sound, result, or personal story was invented;
+* the three opening hooks use different angles;
+* the CTA is relevant or omitted;
+* hashtags are specific and limited;
+* on-screen text is short and visually useful;
+* the cover text clearly identifies the video;
+* the wording sounds natural without forced TikTok slang;
+* the package does not sound like generic AI-generated social copy.
+
+OUTPUT FORMAT
+
+Primary caption:
+
+[Caption]
+
+Alternate opening hooks:
+
+1. [Observation-led hook]
+2. [Contrast-led hook]
+3. [Value- or question-led hook]
+
+Hashtags:
+
+[Relevant hashtags on one line, or omit]
+
+On-screen text ideas:
+
+1. Opening: [Text]
+2. Middle: [Text]
+3. Ending: [Text]
+
+Optional cover text:
+
+[Short cover text]
+
+Output only the completed TikTok caption package. Do not explain your process.

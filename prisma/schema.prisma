@@ -43,6 +43,17 @@ enum TemplateCategory {
   youtube
   seo
   other
+  facebook_post
+  threads_post
+  pinterest
+  reddit
+  google_business
+  tiktok
+  ecommerce
+  community
+  product_launch
+  sales
+  app_ux
 }
 
 model User {

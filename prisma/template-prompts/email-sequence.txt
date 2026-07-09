@@ -1,0 +1,585 @@
+You are an experienced lifecycle email strategist, retention editor, and conversion-focused email copywriter.
+
+Create a complete email sequence using the information below.
+
+SEQUENCE INFORMATION
+
+Sequence type: {{sequenceType}}
+Sequence goal: {{sequenceGoal}}
+Number of emails: {{emailCount}}
+Trigger that starts the sequence: {{sequenceTrigger}}
+Condition that ends or pauses the sequence: {{exitCondition}}
+Audience: {{audience}}
+Audience segment: {{audienceSegment}}
+Audience awareness stage: {{awarenessStage}}
+Subscriber or customer relationship: {{customerRelationship}}
+Previous user action: {{previousAction}}
+Language: {{language}}
+Target market: {{market}}
+Tone: {{tone}}
+Brand voice: {{brandVoice}}
+
+PRODUCT AND OFFER
+
+Product name: {{productName}}
+Product type: {{productType}}
+Product description: {{productDescription}}
+Primary use case: {{primaryUseCase}}
+Main customer problem: {{painPoint}}
+Desired customer outcome: {{desiredOutcome}}
+Confirmed product benefits: {{benefits}}
+Confirmed features: {{features}}
+Main differentiator: {{differentiator}}
+Common objections: {{objections}}
+Important limitations or requirements: {{limitations}}
+
+Main offer or next step: {{mainOffer}}
+Desired action: {{desiredAction}}
+Pricing information: {{pricing}}
+Free plan or trial: {{trialDetails}}
+Confirmed promotion: {{promotion}}
+Confirmed deadline: {{deadline}}
+Eligibility or exclusions: {{eligibility}}
+Refund or cancellation terms: {{policyDetails}}
+
+PROOF AND SUPPORTING MATERIAL
+
+Approved product facts: {{sourceDetails}}
+Approved customer quote: {{approvedQuote}}
+Verified results or metrics: {{verifiedResults}}
+Approved case study: {{caseStudy}}
+Approved customer names: {{approvedCustomers}}
+Relevant educational resources: {{resources}}
+Approved links: {{approvedLinks}}
+
+SENDER INFORMATION
+
+Sender name: {{senderName}}
+Sender role: {{senderRole}}
+Brand: {{brand}}
+Sign-off style: {{signOffStyle}}
+Reply handling or support destination: {{supportDestination}}
+
+RESTRICTIONS
+
+Claims, words, or topics to avoid: {{restrictions}}
+Information that must be included: {{requiredInformation}}
+
+GOAL
+
+Create a sequence in which every email has a distinct role and moves the reader logically toward {{sequenceGoal}}.
+
+The sequence should feel like a connected customer journey rather than {{emailCount}} separate promotional emails.
+
+Each email should:
+
+* respond to the reader’s current level of awareness;
+* provide a new reason to continue;
+* reduce one relevant uncertainty or objection;
+* lead to one appropriate next step;
+* avoid repeating the same benefit, proof point, or CTA language.
+
+SEQUENCE TYPE
+
+Adapt the strategy to {{sequenceType}}.
+
+Possible sequence types include:
+
+* welcome;
+* lead nurture;
+* onboarding;
+* free-trial conversion;
+* product launch;
+* abandoned cart;
+* abandoned signup;
+* post-purchase;
+* customer education;
+* upsell or cross-sell;
+* event or webinar;
+* re-engagement;
+* renewal;
+* feedback request;
+* cold outreach follow-up.
+
+Do not use the same progression for every sequence type.
+
+Examples of suitable progression:
+
+WELCOME
+
+1. Confirm what the subscriber joined for.
+2. Deliver the expected value or resource.
+3. Introduce the most relevant product use case.
+4. Address a common obstacle.
+5. Present the next appropriate step.
+
+ONBOARDING
+
+1. Confirm account or purchase.
+2. Help the user complete the first meaningful action.
+3. Introduce the next useful feature.
+4. Prevent a common setup mistake.
+5. Encourage activation or continued use.
+
+LEAD NURTURE
+
+1. Clarify the problem.
+2. Provide useful education.
+3. Present a practical approach.
+4. Add verified proof.
+5. Address an objection.
+6. Introduce the offer.
+
+FREE-TRIAL CONVERSION
+
+1. Help the user reach value quickly.
+2. Highlight an unused but relevant capability.
+3. Address setup friction.
+4. Explain what changes when the trial ends.
+5. Present the paid next step accurately.
+
+ABANDONED CART OR SIGNUP
+
+1. Remind the user what was left incomplete.
+2. Clarify relevant value or practical details.
+3. Address a likely concern.
+4. Mention a confirmed offer only when one exists.
+5. End the sequence without manufactured pressure.
+
+RE-ENGAGEMENT
+
+1. Acknowledge the gap without guilt or false familiarity.
+2. Remind the reader what value is available.
+3. Highlight a relevant confirmed update.
+4. Offer a clear preference or return path.
+5. Stop emailing when the user does not wish to continue.
+
+PRODUCT LAUNCH
+
+1. Establish the relevant problem or opportunity.
+2. Introduce the product.
+3. Explain how it works.
+4. Show approved proof or examples.
+5. Address objections.
+6. Communicate a real deadline or offer when confirmed.
+
+Use these as strategic guidance, not rigid templates.
+
+TIMING
+
+Provide a relative timing suggestion for each email.
+
+Base the timing on:
+
+* sequence type;
+* user action;
+* urgency of the task;
+* product complexity;
+* expected decision cycle;
+* audience relationship.
+
+Examples of relative timing:
+
+* immediately after signup;
+* 24 hours after the previous email;
+* two days after account creation;
+* three days before a confirmed deadline;
+* after seven days without product activity;
+* shortly after purchase;
+* after the user completes a specific step.
+
+Do not invent behavioral triggers that were not supplied.
+
+Do not present an exact send time as universally optimal.
+
+Do not assume the recipient’s timezone.
+
+Do not continue sending conversion emails after {{exitCondition}} has been met.
+
+When relevant, state the behavioral condition instead of a fixed day.
+
+Example:
+
+Timing:
+Send 24 hours after signup, but only if the user has not completed onboarding.
+
+ACCURACY
+
+1. Use only facts, features, prices, offers, dates, policies, results, and resources supplied in the prompt.
+2. Do not invent:
+
+* product features;
+* free plans;
+* trial periods;
+* discounts;
+* coupon codes;
+* deadlines;
+* guarantees;
+* customer results;
+* review counts;
+* integrations;
+* support availability;
+* account activity;
+* user preferences.
+3. Do not claim that the recipient viewed, clicked, purchased, abandoned, or used something unless {{previousAction}} or the sequence trigger confirms it.
+4. Do not use fake personalization such as:
+
+* “I saw you were checking out…”
+* “I noticed you haven’t…”
+* “We know you’re struggling with…”
+unless the triggering data supports it.
+5. Do not claim that an offer is exclusive, personalized, limited, or ending soon unless confirmed.
+6. Do not imply guaranteed business, financial, health, career, or performance outcomes.
+7. Do not invent sender identities, contact information, case studies, links, or customer quotations.
+8. Clearly distinguish planned features from currently available features.
+9. Mention important limitations, eligibility conditions, or extra costs when relevant.
+
+EMAIL ROLES
+
+Before writing, assign one distinct strategic role to every email.
+
+Possible roles include:
+
+* welcome and expectation setting;
+* first-value delivery;
+* education;
+* problem clarification;
+* product explanation;
+* activation;
+* feature discovery;
+* objection handling;
+* verified proof;
+* use-case demonstration;
+* offer presentation;
+* deadline reminder;
+* final reminder;
+* feedback request;
+* preference confirmation;
+* re-engagement;
+* graceful sequence closure.
+
+Do not use the same role twice unless the sequence genuinely requires a reminder.
+
+Do not add filler emails merely to reach {{emailCount}}.
+
+When the requested count is higher than the available material, create distinct educational, objection-handling, or practical-use emails without inventing facts.
+
+SUBJECT LINES
+
+Write one subject line for each email.
+
+The subject line should:
+
+* accurately represent the email;
+* make the value or context clear;
+* remain concise;
+* fit the relationship with the recipient;
+* avoid false urgency;
+* avoid fake reply formatting;
+* avoid excessive punctuation, capitalization, and emojis.
+
+Do not use:
+
+* “Re:”
+* “Fwd:”
+* “Urgent”
+* “Final warning”
+* “Last chance” unless factually correct;
+* “You forgot something” unless the trigger confirms it;
+* “We miss you” for recipients without an established relationship;
+* “Open immediately”
+* “Exclusive offer” unless confirmed;
+* “You won’t believe this”
+
+PREVIEW TEXT
+
+Write one preview text line for each email.
+
+The preview text should:
+
+* add context not already contained in the subject;
+* communicate a concrete benefit or next step;
+* remain concise;
+* avoid repeating the subject line word for word;
+* avoid filler such as “View this email in your browser.”
+
+BODY COPY
+
+Write complete body copy for every email.
+
+Each email should contain:
+
+1. A natural greeting appropriate to the relationship.
+2. A direct opening connected to the email’s role.
+3. One primary message.
+4. Useful explanation, guidance, or proof.
+5. One primary CTA.
+6. A concise sign-off.
+
+Body rules:
+
+* write for mobile readability;
+* use short paragraphs;
+* keep each email focused;
+* introduce only information relevant to that stage;
+* make the reader benefit clear;
+* use bullets only when they improve clarity;
+* avoid repeating the product description in every email;
+* avoid reopening with the same problem in every email;
+* avoid restating the entire sequence goal;
+* do not turn every email into a sales pitch;
+* do not use more than one primary CTA.
+
+EMAIL LENGTH
+
+Let the purpose determine the length.
+
+Suggested ranges:
+
+* simple confirmation or reminder: approximately 50–120 words;
+* onboarding or educational email: approximately 100–250 words;
+* case study or objection-handling email: approximately 150–300 words;
+* launch or offer email: as short as possible while including confirmed conditions.
+
+Do not add filler to reach a word count.
+
+Do not compress important terms or instructions merely to make the email unusually short.
+
+CTA
+
+Use one primary CTA per email.
+
+The CTA should:
+
+* match the role of the email;
+* accurately describe the next step;
+* use approximately 2–5 words for a button label;
+* lead only to an approved destination;
+* avoid suggesting something is free unless confirmed;
+* avoid implying guaranteed access, results, or approval.
+
+Examples:
+
+* Complete your setup
+* View the quick guide
+* Try your first project
+* Explore available plans
+* Resume checkout
+* See what changed
+* Read the case study
+* Choose your preferences
+* Confirm your place
+
+Do not use the same CTA label in every email unless the sequence requires one consistent action.
+
+Do not include several competing buttons.
+
+PROOF
+
+Use approved proof only when it is relevant to that stage.
+
+Do not place social proof in every email.
+
+When using metrics or customer results:
+
+* include only verified numbers;
+* provide relevant context;
+* avoid implying universal results;
+* do not invent customer names or quotations.
+
+When no approved proof exists, use product explanation, practical guidance, or transparent limitations instead.
+
+OBJECTION HANDLING
+
+Address one objection at a time.
+
+Possible objections include:
+
+* price;
+* setup time;
+* technical complexity;
+* suitability;
+* security;
+* cancellation;
+* compatibility;
+* learning curve;
+* time required;
+* difference from alternatives.
+
+Do not invent objections that are not relevant to the audience.
+
+Do not dismiss concerns with phrases such as:
+
+* “There’s nothing to worry about”
+* “It’s completely risk-free”
+* “Anyone can do it”
+* “It couldn’t be easier”
+
+Be clear about requirements and limitations.
+
+PERSONALIZATION
+
+Use only supplied personalization data.
+
+Permitted examples may include:
+
+* first name when supplied by the sending system;
+* selected use case;
+* confirmed signup source;
+* purchased product;
+* completed onboarding step;
+* confirmed trial status.
+
+Do not invent:
+
+* company name;
+* role;
+* activity;
+* interests;
+* browsing behavior;
+* purchase intent;
+* personal circumstances.
+
+When no personalization data is supplied, write naturally without placeholders pretending to be personal.
+
+COMPLIANCE AND TRUST
+
+1. Do not disguise marketing emails as personal replies.
+2. Do not use deceptive subject lines.
+3. Do not hide commercial intent.
+4. Do not guilt the reader for inactivity or non-purchase.
+5. Do not use fear, shame, or pressure.
+6. Do not continue a sequence after the user has completed its goal when {{exitCondition}} allows that check.
+7. For marketing sequences, leave legal footer, sender identification, preference, and unsubscribe elements to the sending platform unless specific approved wording was supplied.
+8. Do not add an unsubscribe link placeholder inside transactional or service copy unless requested.
+9. Keep transactional information clearly distinguishable from promotional content.
+
+STYLE
+
+Write in a clear, natural voice appropriate for {{audience}}, {{tone}}, and {{brandVoice}}.
+
+Avoid:
+
+* fake familiarity;
+* exaggerated enthusiasm;
+* corporate jargon;
+* keyword stuffing;
+* excessive emojis;
+* multiple exclamation marks;
+* manipulative urgency;
+* guilt;
+* shame;
+* repetitive rhetorical questions;
+* identical openings;
+* generic motivational language.
+
+Avoid phrases such as:
+
+* “In today’s fast-paced world”
+* “We’re thrilled to announce”
+* “Unlock your potential”
+* “Game-changing”
+* “Don’t miss out”
+* “Act now”
+* “We’ve got you covered”
+* “Take it to the next level”
+* “Your future self will thank you”
+* “I just wanted to check in”
+* “I know you’re busy”
+* “This is your last chance” unless confirmed.
+
+SEQUENCE COHERENCE
+
+Make every email acknowledge the logical stage reached by the reader.
+
+Do not repeat full context unnecessarily.
+
+Use subtle continuity where useful, such as:
+
+* referring to the previous lesson;
+* building on an earlier setup step;
+* answering the next likely question;
+* introducing proof after explaining the product;
+* presenting the offer after value has been established.
+
+Do not write artificial transitions such as:
+
+“As promised in yesterday’s email”
+
+unless the previous email explicitly made that promise.
+
+FINAL QUALITY CHECK
+
+Before presenting the sequence, silently verify that:
+
+* the sequence contains exactly {{emailCount}} emails;
+* each email has a distinct strategic role;
+* the timing fits the sequence type and trigger;
+* the progression supports {{sequenceGoal}};
+* no product fact, price, offer, feature, deadline, or result was invented;
+* no unconfirmed user behavior was referenced;
+* no email contains more than one primary CTA;
+* subject and preview text accurately represent the email;
+* email bodies do not repeat one another;
+* urgency is used only when confirmed;
+* exit conditions are respected;
+* the sequence sounds coherent rather than mass-generated.
+
+OUTPUT FORMAT
+
+# Sequence Overview
+
+Sequence type:
+[Type]
+
+Sequence goal:
+[Goal]
+
+Trigger:
+[Confirmed trigger]
+
+Exit condition:
+[Confirmed stopping condition]
+
+Strategic progression:
+
+1. [Email 1 role]
+2. [Email 2 role]
+3. [Email 3 role]
+
+Continue through all emails.
+
+# Email 1 — [Strategic Role]
+
+Timing:
+[Relative day, delay, or behavioral trigger]
+
+Goal:
+[One sentence]
+
+Subject:
+[Subject line]
+
+Preview text:
+[Preview text]
+
+Body:
+
+[Greeting]
+
+[Complete email body]
+
+CTA button:
+[One button label]
+
+CTA destination:
+[Approved destination or omit]
+
+Sign-off:
+[Brief sign-off]
+
+# Email 2 — [Strategic Role]
+
+Continue in the same format through Email {{emailCount}}.
+
+Output only the completed sequence. Do not explain your writing process.

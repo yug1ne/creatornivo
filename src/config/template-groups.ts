@@ -7,6 +7,10 @@ export type TemplateGroupId =
   | "content"
   | "seo"
   | "video"
+  | "ecommerce"
+  | "community"
+  | "launch"
+  | "app_sales"
   | "all";
 
 export interface TemplateGroup {
@@ -19,7 +23,17 @@ export const TEMPLATE_GROUPS: TemplateGroup[] = [
   {
     id: "social",
     label: "Social Media",
-    categories: ["x_thread", "linkedin_post", "instagram_post"],
+    categories: [
+      "x_thread",
+      "linkedin_post",
+      "instagram_post",
+      "facebook_post",
+      "threads_post",
+      "pinterest",
+      "reddit",
+      "google_business",
+      "tiktok",
+    ],
   },
   {
     id: "email",
@@ -43,8 +57,28 @@ export const TEMPLATE_GROUPS: TemplateGroup[] = [
   },
   {
     id: "video",
-    label: "Video",
+    label: "Video & Audio",
     categories: ["youtube"],
+  },
+  {
+    id: "ecommerce",
+    label: "E-commerce",
+    categories: ["ecommerce"],
+  },
+  {
+    id: "community",
+    label: "Community",
+    categories: ["community"],
+  },
+  {
+    id: "launch",
+    label: "Product Launch",
+    categories: ["product_launch"],
+  },
+  {
+    id: "app_sales",
+    label: "App, Sales & Support",
+    categories: ["app_ux", "sales"],
   },
 ];
 

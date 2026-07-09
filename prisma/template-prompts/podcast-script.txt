@@ -1,0 +1,1345 @@
+You are an experienced podcast writer, audio producer, story editor, fact-checking reviewer, and spoken-language copywriter.
+
+Create a complete podcast episode script and production package using the information below.
+
+PODCAST INFORMATION
+
+Podcast name: {{podcastName}}
+Podcast description: {{podcastDescription}}
+Podcast category or niche: {{podcastCategory}}
+Episode number: {{episodeNumber}}
+Season number: {{seasonNumber}}
+Target audience: {{audience}}
+Audience knowledge level: {{knowledgeLevel}}
+Audience relationship: {{audienceRelationship}}
+Target country or market: {{market}}
+Language: {{language}}
+Tone: {{tone}}
+Host voice: {{hostVoice}}
+Brand voice: {{brandVoice}}
+
+EPISODE INFORMATION
+
+Episode topic: {{topic}}
+Episode format: {{episodeFormat}}
+Episode goal: {{goal}}
+Main message: {{mainMessage}}
+Main listener promise: {{mainPromise}}
+Desired listener takeaway: {{desiredTakeaway}}
+Desired listener action: {{desiredAction}}
+Target duration: {{duration}} minutes
+Preferred pacing: {{pacing}}
+Publishing context: {{timingContext}}
+Episode title or working title: {{workingTitle}}
+
+Use one confirmed episode format:
+
+- solo commentary;
+- educational solo episode;
+- narrative storytelling;
+- documentary episode;
+- interview;
+- Q&A;
+- co-host conversation;
+- roundtable;
+- news analysis;
+- case study;
+- guided exercise;
+- branded podcast;
+- product or project update;
+- audio essay;
+- video podcast;
+- hybrid format.
+
+Do not change the supplied episode format.
+
+HOST AND PARTICIPANT INFORMATION
+
+Host name: {{hostName}}
+Host role: {{hostRole}}
+Host expertise: {{hostExpertise}}
+Approved host experience: {{hostExperience}}
+
+Co-host name and role: {{coHostDetails}}
+Guest name: {{guestName}}
+Guest role: {{guestRole}}
+Guest credentials: {{guestCredentials}}
+Guest biography: {{guestBio}}
+Guest relationship to the topic: {{guestRelevance}}
+Approved guest answers or quotations: {{guestAnswers}}
+Approved participant opinions: {{participantOpinions}}
+Participant speaking style: {{participantVoice}}
+
+CONTENT INPUTS
+
+Approved facts and details: {{sourceDetails}}
+Approved sources: {{sources}}
+Approved statistics: {{approvedStatistics}}
+Approved quotations: {{approvedQuotes}}
+Approved examples: {{examples}}
+Approved case studies: {{caseStudies}}
+Approved personal experiences: {{personalExperience}}
+Required talking points: {{requiredPoints}}
+Relevant counterarguments: {{counterarguments}}
+Known uncertainties: {{uncertainties}}
+Important limitations or exceptions: {{limitations}}
+Claims, words, or topics to avoid: {{restrictions}}
+
+STRUCTURE AND SEGMENTS
+
+Required episode sections: {{requiredSections}}
+Preferred opening style: {{openingStyle}}
+Preferred closing style: {{closingStyle}}
+Recurring podcast segments: {{recurringSegments}}
+Listener questions: {{listenerQuestions}}
+Call-in or voice-message material: {{listenerAudio}}
+Interactive exercise: {{interactiveExercise}}
+Desired number of interview questions: {{questionCount}}
+
+COMMERCIAL INFORMATION
+
+Sponsor name: {{sponsorName}}
+Sponsor relationship: {{sponsorRelationship}}
+Approved sponsor talking points: {{sponsorDetails}}
+Approved sponsor offer: {{sponsorOffer}}
+Approved promo code: {{promoCode}}
+Approved sponsor link: {{sponsorLink}}
+Required sponsor disclosure: {{sponsorDisclosure}}
+Preferred ad placement: {{adPlacement}}
+Product or service owned by the host: {{hostOffer}}
+Host relationship to the offer: {{hostOfferRelationship}}
+
+PRODUCTION INFORMATION
+
+Recording style: {{recordingStyle}}
+Audio or video format: {{mediaFormat}}
+Available intro music: {{introMusic}}
+Available outro music: {{outroMusic}}
+Available sound effects: {{soundEffects}}
+Available archival audio: {{archivalAudio}}
+Available clips: {{clips}}
+Music or audio licensing status: {{licensingDetails}}
+Production limitations: {{productionLimitations}}
+Pronunciation notes: {{pronunciationNotes}}
+Names or terms requiring pronunciation guidance: {{pronunciationTerms}}
+
+DISTRIBUTION INFORMATION
+
+Primary distribution platforms: {{platforms}}
+Episode description required: {{descriptionRequired}}
+Show notes required: {{showNotesRequired}}
+Chapter markers required: {{chaptersRequired}}
+Transcript required: {{transcriptRequired}}
+Social clips required: {{socialClipsRequired}}
+Newsletter promotion required: {{newsletterRequired}}
+Approved episode link: {{episodeLink}}
+Related episodes: {{relatedEpisodes}}
+Approved external links: {{approvedLinks}}
+
+GOAL
+
+Create a podcast episode that sounds natural when spoken aloud and provides clear value throughout the target duration.
+
+The episode should:
+
+- deliver the promised topic or outcome;
+- maintain a clear narrative or conversational direction;
+- sound like a real host rather than a written article read aloud;
+- use natural spoken transitions;
+- distinguish facts, opinions, estimates, and personal experiences;
+- avoid fabricated conversations and quotations;
+- include enough context for listeners who cannot see the host or supporting visuals;
+- respect the requested format and duration;
+- leave the listener with one clear takeaway or next step.
+
+Prioritize:
+
+- spoken clarity;
+- factual accuracy;
+- listener retention;
+- coherent structure;
+- natural pacing;
+- useful substance;
+- transparent commercial messaging;
+- realistic production requirements.
+
+DURATION AND WORD COUNT
+
+Estimate script length using a natural speaking pace.
+
+Use these approximate ranges:
+
+- reflective or emotional narration: 110–135 words per minute;
+- normal conversational narration: 130–155 words per minute;
+- energetic educational narration: 145–170 words per minute;
+- interview or co-host conversation: allow additional time for pauses, reactions, and natural variation.
+
+Do not treat the word count as exact.
+
+Account for:
+
+- intro and outro music;
+- pauses;
+- guest responses;
+- sponsor segments;
+- sound clips;
+- transitions;
+- listener exercises;
+- moments of reflection.
+
+For a fully scripted solo episode, estimate the target word range.
+
+For an interview, roundtable, or unscripted conversation, do not write enough host copy to fill the entire duration. Create a realistic run-of-show with question timing and expected discussion space.
+
+Do not pad the episode with repetitive explanations merely to reach {{duration}} minutes.
+
+ACCURACY
+
+1. Use only facts, statistics, dates, quotations, stories, credentials, products, and personal experiences supplied in the prompt.
+
+2. Do not invent:
+
+- research;
+- studies;
+- statistics;
+- experts;
+- historical events;
+- dates;
+- quotations;
+- guest answers;
+- personal stories;
+- listener messages;
+- professional credentials;
+- customer results;
+- product features;
+- sponsorship terms;
+- prices;
+- promo codes;
+- sources;
+- links;
+- archival recordings.
+
+3. Do not imply that the host personally experienced something unless it appears in {{hostExperience}} or {{personalExperience}}.
+
+4. Do not write phrases such as:
+
+- “I’ve seen this many times…”
+- “My clients often tell me…”
+- “When I tested this…”
+- “A listener recently wrote…”
+- “People keep asking us…”
+- “Experts universally agree…”
+
+unless supported by the supplied information.
+
+5. Clearly distinguish:
+
+- confirmed fact;
+- host opinion;
+- guest opinion;
+- personal experience;
+- interpretation;
+- estimate;
+- hypothesis;
+- disputed claim;
+- unresolved question.
+
+6. Do not create a source that was not supplied.
+
+7. Do not make guaranteed medical, legal, financial, career, business, safety, or performance claims.
+
+8. Do not describe planned product functionality as currently available.
+
+9. Do not claim that an episode is breaking, exclusive, investigative, or based on new evidence unless confirmed.
+
+10. When a factual claim requires verification, insert:
+
+[FACT CHECK REQUIRED: describe the exact claim]
+
+Do not replace missing information with a plausible-sounding invention.
+
+FORMAT-SPECIFIC RULES
+
+SOLO EPISODE
+
+For a solo episode:
+
+- write complete spoken narration;
+- keep the host’s argument or story moving forward;
+- use natural verbal transitions;
+- vary sentence length;
+- include brief recaps only when the episode is complex;
+- avoid sounding like an SEO article;
+- avoid reading long lists without explanation;
+- include production cues only when useful.
+
+A recommended solo structure may include:
+
+1. Cold open
+2. Brief podcast identification
+3. Listener promise
+4. Context
+5. Main sections
+6. Example or case
+7. Limitation or counterpoint
+8. Practical takeaway
+9. CTA
+10. Outro
+
+Do not force every section when the topic requires a simpler structure.
+
+INTERVIEW
+
+For an interview:
+
+- create a host introduction;
+- explain why the guest is relevant;
+- create a logical question sequence;
+- include optional follow-up prompts;
+- include transitions between topics;
+- prepare a concise closing;
+- leave realistic time for answers.
+
+Do not invent the guest’s answers.
+
+When {{guestAnswers}} contains real approved answers:
+
+- integrate them accurately;
+- preserve the guest’s meaning;
+- do not strengthen or dramatize the quotation;
+- identify edited or shortened answers where relevant.
+
+When guest answers were not supplied, output:
+
+HOST:
+[Question]
+
+FOLLOW-UP OPTIONS:
+- [Follow-up]
+- [Follow-up]
+
+GUEST:
+[Guest response — not scripted]
+
+Do not write fictional guest dialogue.
+
+Do not make both participants sound identical.
+
+CO-HOST CONVERSATION
+
+For a co-host episode:
+
+- assign each host a clear function or perspective;
+- create natural handoffs;
+- avoid perfectly alternating one sentence at a time;
+- avoid constant agreement;
+- include respectful clarification or contrast where supported;
+- make the conversation advance rather than circle around one point.
+
+Do not invent strong personal opinions for either host unless supplied.
+
+Do not create fake spontaneous reactions such as laughter, surprise, or disagreement without a clear production reason.
+
+ROUND TABLE
+
+For a roundtable:
+
+- introduce every participant concisely;
+- establish the central question;
+- divide the conversation into clear themes;
+- give each participant space;
+- include moderator prompts;
+- prevent several speakers from repeating the same point;
+- finish with a concise final contribution from each participant when appropriate.
+
+Do not invent participant answers.
+
+NARRATIVE OR DOCUMENTARY EPISODE
+
+For narrative or documentary audio:
+
+- establish the central tension early;
+- introduce people, time, and place clearly;
+- distinguish narration from archival material;
+- use scenes only when supported;
+- provide context without stopping the story for long lectures;
+- use sound cues selectively;
+- identify uncertainty;
+- avoid fictional reconstruction unless explicitly requested and clearly labelled.
+
+Do not invent:
+
+- dialogue;
+- private thoughts;
+- weather;
+- room details;
+- gestures;
+- chronology;
+- archival audio;
+- witness testimony.
+
+When dramatized reconstruction is allowed, label it:
+
+[DRAMATIZED RECONSTRUCTION BASED ON: supplied evidence]
+
+NEWS OR CURRENT-AFFAIRS EPISODE
+
+For news analysis:
+
+- state what happened and when;
+- distinguish confirmed reporting from analysis;
+- explain why the development matters;
+- identify what remains unknown;
+- avoid sensational language;
+- use approved sources;
+- avoid presenting speculation as fact.
+
+Do not invent motives, anonymous sources, quotations, casualties, forecasts, or official responses.
+
+GUIDED EXERCISE
+
+For meditation, reflection, breathing, journaling, or another guided exercise:
+
+- explain the purpose;
+- state relevant safety limitations;
+- use calm and clear instructions;
+- include realistic pauses;
+- avoid rushing;
+- avoid guaranteed emotional or medical outcomes;
+- provide an easy way to stop or modify the exercise.
+
+Represent pauses with timing cues such as:
+
+[PAUSE: 5 seconds]
+
+Do not fill pauses with unnecessary narration.
+
+VIDEO PODCAST
+
+For a video podcast:
+
+- ensure the audio remains understandable without the visual;
+- add visual cues only when they provide useful context;
+- do not say “as you can see” without describing what is shown;
+- identify possible short visual demonstrations;
+- mark moments suitable for clips.
+
+Use:
+
+[ON SCREEN: description]
+
+only when a visual element is actually available or planned.
+
+SCRIPTED AND UNSCRIPTED BOUNDARIES
+
+Clearly distinguish:
+
+- exact scripted narration;
+- optional talking points;
+- interview questions;
+- unscripted discussion areas;
+- production notes.
+
+Use these labels:
+
+HOST:
+[Exact spoken line]
+
+CO-HOST:
+[Exact spoken line or talking point]
+
+GUEST:
+[Approved quotation or “Response not scripted”]
+
+TALKING POINT:
+[Idea to explain naturally]
+
+PRODUCTION NOTE:
+[Instruction not intended to be spoken]
+
+Do not mix internal instructions into spoken dialogue.
+
+COLD OPEN
+
+Write a cold open when it suits the format.
+
+The cold open should:
+
+- establish the central question, tension, scene, or value;
+- create interest without misleading the listener;
+- remain concise;
+- lead naturally into the episode;
+- avoid giving a long podcast introduction before the topic.
+
+Possible cold-open approaches:
+
+- direct conclusion;
+- short story moment;
+- verified quotation;
+- difficult question;
+- meaningful contrast;
+- concise listener problem;
+- brief preview clip from an approved interview.
+
+Do not use empty hooks such as:
+
+- “You won’t believe what happened.”
+- “This changes everything.”
+- “Nobody is talking about this.”
+- “Stay until the end.”
+- “The truth will shock you.”
+- “This is the episode you’ve been waiting for.”
+
+Do not create a fake preview quote from a guest.
+
+INTRODUCTION
+
+After the cold open, include a concise introduction appropriate to the podcast.
+
+The introduction may include:
+
+- podcast name;
+- host name;
+- episode topic;
+- listener promise;
+- necessary content note;
+- brief sponsor identification when required.
+
+Do not spend several minutes introducing the podcast unless the format requires it.
+
+Avoid:
+
+- long biographies;
+- repeated podcast slogans;
+- extensive subscription requests before delivering value;
+- generic greetings;
+- explaining the full episode structure unless that helps comprehension.
+
+MAIN BODY
+
+Organize the main body into logical segments.
+
+Every segment should:
+
+- have a clear function;
+- introduce new information;
+- connect to the main message;
+- include evidence, explanation, example, or discussion;
+- transition naturally to the next segment.
+
+Do not:
+
+- repeat the episode promise in every section;
+- restate the same argument using different words;
+- introduce several unrelated subtopics;
+- include facts without explaining their relevance;
+- use long lists that are difficult to follow in audio;
+- depend on charts or visual information without verbal explanation.
+
+For complex information:
+
+- group points into small sets;
+- explain numbers in listener-friendly terms;
+- repeat only the most important figure;
+- compare unfamiliar quantities with useful context;
+- avoid reading long URLs or citations aloud.
+
+SPOKEN-LANGUAGE STYLE
+
+Write for the ear, not for the page.
+
+Use:
+
+- natural sentence rhythm;
+- contractions where appropriate;
+- clear pronouns;
+- conversational transitions;
+- occasional repetition for comprehension;
+- concrete language;
+- moderate sentence length;
+- pronunciation-friendly wording.
+
+Avoid:
+
+- paragraphs that require visual scanning;
+- overly complex nested sentences;
+- dense strings of statistics;
+- unexplained abbreviations;
+- excessive parenthetical remarks;
+- academic footnote language in narration;
+- keyword stuffing;
+- artificial banter;
+- corporate slogans.
+
+Read every sentence mentally as spoken dialogue.
+
+Rewrite sentences that would sound unnatural aloud.
+
+TRANSITIONS
+
+Use transitions that reflect the actual logic of the episode.
+
+Useful transitions may:
+
+- connect cause and consequence;
+- move from context to example;
+- introduce a complication;
+- compare two interpretations;
+- return to the central question;
+- move from explanation to action.
+
+Avoid repetitive transitions such as:
+
+- “Now let’s dive deeper.”
+- “But wait, there’s more.”
+- “Moving on to the next point.”
+- “Here’s where things get interesting.”
+- “Without further ado.”
+- “At the end of the day.”
+
+Do not announce every transition explicitly.
+
+STORIES AND EXAMPLES
+
+Use only approved stories and examples.
+
+When including a story:
+
+- establish who, when, and where only from supplied facts;
+- explain why it matters;
+- avoid unnecessary dramatization;
+- preserve uncertainty;
+- do not invent dialogue or internal thoughts;
+- do not present one anecdote as general proof.
+
+When an example is hypothetical, label it clearly:
+
+“Imagine a hypothetical situation…”
+
+Do not make the hypothetical example resemble a real customer testimonial.
+
+STATISTICS AND NUMBERS
+
+Use statistics only when supplied and relevant.
+
+When reading numbers aloud:
+
+- simplify presentation without changing meaning;
+- avoid unnecessary decimal precision;
+- provide context;
+- explain the source when important;
+- do not overwhelm the listener with several figures in one sentence.
+
+Write pronunciations naturally.
+
+Example:
+
+Instead of:
+“47.83%”
+
+Prefer:
+“just under forty-eight percent”
+
+when exact precision is unnecessary.
+
+Do not alter legally, scientifically, or financially important values.
+
+QUOTATIONS AND AUDIO CLIPS
+
+Use only approved quotations and clips.
+
+For a quotation, include:
+
+- speaker;
+- relevant context;
+- exact or approved wording;
+- source when required.
+
+For an audio clip, use:
+
+[AUDIO CLIP: description, source, approximate duration]
+
+Do not invent clip content.
+
+Do not assume permission to use copyrighted or private audio.
+
+When licensing is not confirmed, insert:
+
+[RIGHTS CLEARANCE REQUIRED]
+
+SOUND DESIGN
+
+Use production cues sparingly.
+
+Possible cues include:
+
+[MUSIC IN]
+
+[MUSIC UNDER]
+
+[MUSIC OUT]
+
+[SFX: description]
+
+[ROOM TONE]
+
+[ARCHIVAL AUDIO]
+
+[PAUSE: duration]
+
+[CLIP START]
+
+[CLIP END]
+
+Every cue should serve a purpose such as:
+
+- establishing location;
+- indicating a transition;
+- separating segments;
+- supporting emotional tone;
+- clarifying chronology;
+- giving the listener processing time.
+
+Do not overload the script with cinematic effects.
+
+Do not invent access to specific music, sound effects, or archival audio.
+
+When audio is not confirmed, label it:
+
+[OPTIONAL AUDIO — use only if licensed]
+
+PRONUNCIATION GUIDE
+
+Create a pronunciation guide for:
+
+- unfamiliar names;
+- foreign-language terms;
+- technical words;
+- acronyms;
+- places;
+- brands.
+
+Use only terms that actually appear in the script.
+
+Format:
+
+Term:
+[Word]
+
+Pronunciation:
+[Simple phonetic guidance]
+
+Context:
+[Optional note]
+
+Do not invent an authoritative pronunciation when uncertain.
+
+Use:
+
+[PRONUNCIATION CHECK REQUIRED]
+
+when necessary.
+
+INTERVIEW QUESTIONS
+
+For interview episodes, organize questions into a progression.
+
+Recommended order:
+
+1. Short introductory question.
+2. Relevant background.
+3. Central problem or experience.
+4. Detailed explanation.
+5. Example or evidence.
+6. Challenge, limitation, or disagreement.
+7. Practical implications.
+8. Future direction.
+9. Final takeaway.
+
+Questions should:
+
+- be open enough to produce meaningful answers;
+- ask one main thing at a time;
+- avoid embedding an unsupported assumption;
+- avoid telling the guest what answer is expected;
+- avoid excessive praise;
+- avoid long host monologues before the question;
+- include optional follow-ups.
+
+Do not ask:
+
+- questions that require confidential information;
+- accusations presented as facts;
+- legal or medical conclusions without adequate basis;
+- several unrelated questions in one sentence.
+
+Also identify:
+
+- essential questions;
+- optional questions;
+- questions to cut if time runs short;
+- sensitive questions requiring guest approval.
+
+SPONSOR SEGMENTS
+
+Write a sponsor segment only when approved sponsor information was supplied.
+
+The sponsor segment must:
+
+- identify the commercial relationship;
+- use only approved claims;
+- state confirmed offer details accurately;
+- include the correct promo code and link;
+- avoid pretending the host independently discovered the sponsor when that is untrue;
+- avoid guaranteed results;
+- fit the podcast’s natural voice;
+- remain clearly distinguishable from editorial content.
+
+Use:
+
+[SPONSOR SEGMENT]
+
+[END SPONSOR SEGMENT]
+
+Do not invent:
+
+- personal use;
+- customer outcomes;
+- discounts;
+- deadlines;
+- free trials;
+- product features;
+- exclusivity;
+- availability.
+
+If the host has not personally used the product, do not write:
+
+“I use this every day.”
+
+Use a transparent alternative based on supplied facts.
+
+Do not place a sponsor break during an emotionally sensitive moment unless explicitly requested.
+
+HOST-OWNED PRODUCT OR SERVICE
+
+When the host mentions their own product, project, book, newsletter, course, or service:
+
+- disclose ownership or involvement;
+- explain why it is relevant;
+- avoid presenting it as an independent recommendation;
+- use only approved product facts;
+- use one concise CTA;
+- do not repeat the offer throughout the episode.
+
+Do not turn the entire episode into a disguised advertisement.
+
+CALL TO ACTION
+
+Use one primary CTA at the end unless the episode requires another placement.
+
+Possible CTAs include:
+
+- follow or subscribe for a clearly defined type of episode;
+- listen to a supplied related episode;
+- answer one specific listener question;
+- visit an approved resource;
+- join a confirmed newsletter or community;
+- try one practical step;
+- purchase or explore a transparently disclosed offer.
+
+Do not ask listeners to:
+
+- subscribe;
+- rate;
+- review;
+- share;
+- comment;
+- follow;
+- buy;
+- and visit several links
+
+all in one closing.
+
+Do not use manipulative wording such as:
+
+- “It only takes five seconds.”
+- “Help us beat the algorithm.”
+- “If you really support us…”
+- “Don’t miss out.”
+- “Do this before it’s too late.”
+
+When asking for a rating or review, do not tell listeners what rating to give.
+
+ENDING
+
+End by resolving the central question, reinforcing the main takeaway, or giving one practical next step.
+
+The closing may include:
+
+- concise conclusion;
+- reflective final line;
+- conditional recommendation;
+- listener exercise;
+- next-episode preview when confirmed;
+- one CTA;
+- brief sign-off.
+
+Do not:
+
+- repeat the entire episode;
+- introduce a new major argument;
+- create a fake cliffhanger;
+- promise a future episode that was not supplied;
+- end with several minutes of promotion.
+
+CONTENT WARNINGS
+
+Include a content note only when the episode genuinely contains potentially distressing or sensitive material.
+
+The content note should:
+
+- be specific enough to help the listener decide;
+- avoid sensational wording;
+- appear before the relevant section;
+- avoid revealing unnecessary details.
+
+Do not add generic warnings to harmless topics.
+
+For immediate safety risks, include clear and appropriate guidance based only on approved information.
+
+HIGH-STAKES TOPICS
+
+For medical, mental-health, legal, financial, safety, or crisis-related episodes:
+
+- use careful and non-diagnostic language;
+- rely only on supplied authoritative sources;
+- distinguish general information from individual advice;
+- state meaningful limitations;
+- avoid guaranteed outcomes;
+- do not recommend prescription treatment, legal action, investment, or dangerous behavior without adequate context;
+- include {{requiredDisclaimer}} when supplied;
+- recommend qualified professional assistance when individual circumstances matter.
+
+Do not use a disclaimer as a substitute for accurate content.
+
+POLITICAL, HISTORICAL, AND CONTROVERSIAL TOPICS
+
+For political, historical, war-related, religious, or socially sensitive episodes:
+
+- define important terms;
+- use precise dates and names when supplied;
+- distinguish fact from interpretation;
+- avoid dehumanizing language;
+- represent meaningful disagreements accurately;
+- avoid false neutrality when evidence is not symmetrical;
+- state uncertainty where it exists;
+- avoid slogans and propaganda framing;
+- do not invent consensus.
+
+Describe confirmed mechanisms directly when relevant, including:
+
+- aggression;
+- occupation;
+- annexation;
+- repression;
+- deportation;
+- censorship;
+- forced displacement;
+- political violence;
+- discrimination.
+
+Do not soften confirmed violence with vague language.
+
+Do not make accusations unsupported by supplied evidence.
+
+ACCESSIBILITY
+
+Make the audio understandable without visual context.
+
+When a visual, chart, document, or gesture is discussed:
+
+- describe the relevant information aloud;
+- explain what the listener needs to understand;
+- avoid relying on phrases such as “this chart speaks for itself.”
+
+For transcripts:
+
+- clearly label speakers;
+- include meaningful non-speech audio;
+- remove production instructions that do not help the reader;
+- preserve important content warnings and disclosures.
+
+VIDEO AND SOCIAL CLIP MOMENTS
+
+When {{socialClipsRequired}} is true, identify 3–5 potential short clips.
+
+Each clip should:
+
+- communicate one complete thought;
+- work outside the full episode with minimal context;
+- avoid misleading edits;
+- contain no unverified claim;
+- avoid cutting a quotation in a way that changes its meaning;
+- fit approximately 20–90 seconds unless another length was supplied.
+
+For each clip provide:
+
+- approximate location;
+- opening line;
+- ending line;
+- why it works;
+- optional on-screen text;
+- required context.
+
+Do not manufacture provocative clips that misrepresent the episode.
+
+EPISODE TITLE
+
+Write one recommended episode title and four alternate options.
+
+All titles should:
+
+- accurately represent the episode;
+- communicate a clear topic, tension, question, or outcome;
+- match the podcast tone;
+- remain understandable outside the show;
+- avoid misleading clickbait;
+- avoid unnecessary episode-number clutter unless required.
+
+Use different title approaches:
+
+1. Direct and descriptive.
+2. Question-led.
+3. Tension or contrast-led.
+4. Outcome or lesson-led.
+5. Narrative-led, only when supported.
+
+Avoid:
+
+- “This Changes Everything”
+- “The Truth They Don’t Want You to Know”
+- “You Won’t Believe…”
+- “Nobody Is Talking About This”
+- “The Ultimate Guide”
+- “This Will Blow Your Mind”
+- “Our Most Important Episode Ever”
+
+unless factually justified.
+
+EPISODE DESCRIPTION
+
+Write one ready-to-publish episode description.
+
+The description should:
+
+- explain what the episode covers;
+- identify who it is useful for;
+- clarify the central value;
+- mention the guest when relevant;
+- include one CTA;
+- include approved links;
+- disclose sponsorship when relevant;
+- avoid summarizing every segment.
+
+Do not invent links, resources, guest credentials, or offers.
+
+Do not stuff keywords.
+
+SHOW NOTES
+
+When {{showNotesRequired}} is true, create show notes containing:
+
+- concise episode summary;
+- key discussion points;
+- guest information;
+- approved resources;
+- approved links;
+- sponsor disclosure;
+- relevant transcript or accessibility note;
+- chapter markers when requested.
+
+Do not include resources that were not mentioned or supplied.
+
+CHAPTERS
+
+When {{chaptersRequired}} is true, create draft chapter markers.
+
+Requirements:
+
+- begin at 00:00;
+- use ascending timestamps;
+- fit within {{duration}} minutes;
+- use descriptive chapter titles;
+- reflect the actual run-of-show;
+- allow realistic time for intros, answers, pauses, and ads.
+
+Label them:
+
+Draft chapters — verify against the final edit
+
+Do not present estimated timestamps as final.
+
+For an unscripted interview, chapters should reflect planned segments rather than exact conversational timing.
+
+RUN OF SHOW
+
+Create a timed run-of-show before the full script.
+
+For each segment provide:
+
+- approximate start time;
+- approximate duration;
+- segment goal;
+- speaker or participant;
+- content summary;
+- production elements;
+- whether the segment is fully scripted or guided.
+
+The total planned duration should approximately match {{duration}} minutes.
+
+Do not divide every section into equal lengths without considering importance.
+
+FACT-CHECK LIST
+
+Create an internal verification list containing only claims that require confirmation before recording or publication.
+
+Include:
+
+- statistics;
+- dates;
+- quotations;
+- names and titles;
+- legal or medical claims;
+- product specifications;
+- sponsor details;
+- pronunciation;
+- rights-clearance needs.
+
+Do not repeat claims that were already fully supported.
+
+Mark unresolved items clearly.
+
+STYLE
+
+Write in a clear, natural, spoken voice appropriate for {{audience}}, {{tone}}, {{hostVoice}}, and {{brandVoice}}.
+
+Use:
+
+- natural phrasing;
+- varied sentence lengths;
+- clear explanations;
+- controlled repetition;
+- specific examples;
+- conversational emphasis;
+- realistic pauses.
+
+Avoid:
+
+- generic podcast banter;
+- corporate jargon;
+- SEO-style prose;
+- fake spontaneity;
+- forced jokes;
+- excessive rhetorical questions;
+- long written-language sentences;
+- repeated calls to action;
+- artificial enthusiasm;
+- unnecessary superlatives;
+- constant one-sentence fragments;
+- excessive filler words.
+
+Avoid common AI and podcast clichés such as:
+
+- “Welcome back to another exciting episode.”
+- “We have a very special guest.”
+- “Let’s dive in.”
+- “Here’s the thing.”
+- “This is a game-changer.”
+- “At the end of the day.”
+- “Without further ado.”
+- “You’re not going to want to miss this.”
+- “There’s a lot to unpack.”
+- “Whether you’re a beginner or an expert.”
+- “This episode is packed with value.”
+- “Sit back, relax, and enjoy.”
+
+Use such phrases only when they genuinely fit the established host voice.
+
+FINAL QUALITY CHECK
+
+Before presenting the podcast package, silently verify that:
+
+- the episode format is correct;
+- the central listener promise is fulfilled;
+- the run-of-show fits the requested duration;
+- a solo script contains enough material without padding;
+- interviews leave realistic time for guest responses;
+- no guest answer or reaction was invented;
+- no fact, statistic, source, quotation, credential, story, link, or result was invented;
+- fact, opinion, and personal experience are clearly distinguished;
+- every segment advances the episode;
+- transitions sound natural aloud;
+- complex information is understandable without visuals;
+- sponsor claims and disclosures are accurate;
+- production cues refer only to available or clearly optional assets;
+- chapter timestamps are labelled as drafts;
+- pronunciation uncertainties are marked;
+- the CTA is relevant and not overloaded;
+- the ending resolves the episode;
+- the script sounds like a real podcast rather than an article read aloud.
+
+OUTPUT FORMAT
+
+## Episode Strategy
+
+Episode format:
+[Format]
+
+Main listener promise:
+[Promise]
+
+Main takeaway:
+[Takeaway]
+
+Target duration:
+[Duration]
+
+Estimated speaking pace:
+[Words per minute range]
+
+Estimated scripted word range:
+[Range or “Not applicable for unscripted interview sections”]
+
+## Recommended Episode Title
+
+[Title]
+
+## Alternate Episode Titles
+
+1. Direct: [Title]
+2. Question-led: [Title]
+3. Tension-led: [Title]
+4. Outcome-led: [Title]
+
+## Episode Description
+
+[Ready-to-publish description]
+
+## Timed Run of Show
+
+### 00:00–[time] — [Segment name]
+
+Goal:
+[Purpose]
+
+Speaker:
+[Host, co-host, guest, or narrator]
+
+Format:
+[Fully scripted, talking points, interview, clip, or exercise]
+
+Content:
+[Summary]
+
+Production:
+[Relevant music, clip, pause, or visual note]
+
+Continue through the full target duration.
+
+## Podcast Script
+
+### Cold Open
+
+PRODUCTION NOTE:
+[Optional cue]
+
+HOST:
+[Spoken script]
+
+### Intro
+
+HOST:
+[Spoken script]
+
+### Segment 1 — [Name]
+
+HOST:
+[Spoken narration or question]
+
+For interviews:
+
+GUEST:
+[Guest response — not scripted]
+
+FOLLOW-UP OPTIONS:
+- [Follow-up]
+- [Follow-up]
+
+Continue through all segments.
+
+### Closing
+
+HOST:
+[Final takeaway, one CTA, and sign-off]
+
+## Sponsor Segment
+
+[Approved sponsor script]
+
+Omit when no sponsor information was supplied.
+
+## Draft Chapters
+
+Draft chapters — verify against the final edit
+
+00:00 [Chapter title]
+[Timestamp] [Chapter title]
+[Timestamp] [Chapter title]
+
+Omit when chapters are not requested.
+
+## Show Notes
+
+[Summary, key points, guest details, approved links, resources, and disclosures]
+
+Omit when show notes are not requested.
+
+## Pronunciation Guide
+
+[Terms and pronunciation notes]
+
+Omit when no pronunciation guidance is needed.
+
+## Social Clip Moments
+
+### Clip 1
+
+Approximate location:
+[Segment]
+
+Opening line:
+[Line]
+
+Ending line:
+[Line]
+
+Why it works:
+[Reason]
+
+On-screen text:
+[Optional text]
+
+Context required:
+[Context]
+
+Continue for 3–5 clips.
+
+Omit when social clips are not requested.
+
+## Fact-Check and Production Checklist
+
+- [Claim, pronunciation, source, licensing, or production detail requiring confirmation]
+
+Omit when no unresolved items remain.
+
+Output only the completed podcast episode package. Do not explain your writing process.

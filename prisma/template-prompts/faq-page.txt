@@ -1,0 +1,169 @@
+You are an experienced UX writer, customer support editor, and SEO content specialist.
+Create a useful, accurate FAQ section for the following product:
+PRODUCT NAME: {{productName}}
+PRODUCT TYPE: {{productType}}
+SHORT PRODUCT DESCRIPTION: {{productDescription}}
+TARGET AUDIENCE: {{audience}}
+AUDIENCE KNOWLEDGE LEVEL: {{knowledgeLevel}}
+PRIMARY USE CASES: {{useCases}}
+KEY FEATURES: {{features}}
+HOW THE PRODUCT WORKS: {{howItWorks}}
+PRICING INFORMATION: {{pricing}}
+FREE TRIAL OR FREE PLAN: {{freeTrial}}
+SETUP OR ONBOARDING PROCESS: {{gettingStarted}}
+COMMON CUSTOMER CONCERNS: {{commonObjections}}
+LIMITATIONS OR REQUIREMENTS: {{limitations}}
+SUPPORT OPTIONS: {{supportOptions}}
+REFUND OR CANCELLATION POLICY: {{refundPolicy}}
+TARGET LANGUAGE: {{language}}
+BRAND TONE: {{tone}}
+GOAL
+Write an FAQ section that helps a potential customer understand the product, decide whether it fits their needs, get started, and resolve common concerns.
+The FAQ should reduce uncertainty without sounding promotional, defensive, or artificially reassuring.
+QUESTION SELECTION
+Create 8–10 useful question-and-answer pairs.
+Cover the most relevant topics from the following list:
+what the product is;
+who it is designed for;
+what problem it solves;
+how it works;
+key requirements;
+setup and getting started;
+pricing;
+free plan or trial availability;
+common objections or concerns;
+limitations;
+cancellation or refunds;
+security or privacy, when relevant;
+integrations or compatibility, when relevant;
+customer support.
+Do not force every topic into the FAQ if the supplied product information does not support it.
+Prioritize questions that a real potential customer would ask before signing up, purchasing, or contacting support.
+Avoid questions that merely repeat headings or marketing claims already explained elsewhere on the page.
+ACCURACY RULES
+
+
+Use only the product information supplied in the prompt.
+Do not invent prices, discounts, free trials, guarantees, features, integrations, certifications, response times, refund terms, customer numbers, or support channels.
+Do not assume the product has a feature simply because similar products usually offer it.
+If required information is missing, write a neutral answer that directs the user to check the current product details or contact support.
+Do not present estimates, planned features, or possible outcomes as confirmed facts.
+Do not promise guaranteed results.
+Clearly mention important limitations, requirements, exclusions, or extra costs when they are relevant.
+For medical, financial, legal, security, or safety-related products, avoid definitive claims and use appropriately careful language.
+QUESTION STYLE
+Write questions in natural language that real users might type into search engines, support chat, or a website search box.
+Use a mix of question patterns where natural, such as:
+
+
+“What is {{productName}}?”
+“How does {{productName}} work?”
+“Who is {{productName}} for?”
+“How much does {{productName}} cost?”
+“Do I need any technical experience?”
+“Can I cancel at any time?”
+“What happens if I need help?”
+Do not awkwardly insert the product name into every question.
+Do not stuff keywords into questions.
+Avoid overly formal wording such as:
+“What are the primary functionalities of…”
+“How may one commence utilization of…”
+“What advantages does the solution provide…”
+ANSWER STYLE
+
+
+Keep each answer as short as the question allows, usually 1–4 sentences.
+Answer the question directly in the first sentence.
+Add explanation, conditions, or next steps only when useful.
+Use clear, conversational language appropriate for {{audience}}.
+Explain technical terms in plain language.
+Be reassuring through clarity and honesty, not through exaggerated promises.
+Mention limitations or conditions openly when they affect the answer.
+Avoid repeating the same product description, benefit, or CTA in multiple answers.
+Do not begin every answer with the product name.
+Do not end every answer with “contact us,” “learn more,” or another generic CTA.
+Use contractions when they fit the selected language and tone.
+Avoid excessive enthusiasm, exclamation marks, and promotional adjectives.
+AVOID GENERIC AI LANGUAGE
+Do not use phrases such as:
+
+
+“In today’s fast-paced world”
+“Whether you’re a beginner or an expert”
+“The short answer is yes”
+“Absolutely!”
+“Rest assured”
+“We’ve got you covered”
+“Seamless experience”
+“Powerful solution”
+“Revolutionary platform”
+“Unlock the full potential”
+“Take your experience to the next level”
+“It’s important to note that”
+PRICING QUESTIONS
+When answering questions about pricing:
+use only the supplied pricing information;
+clearly distinguish between free, paid, recurring, one-time, and usage-based costs;
+mention additional charges only when confirmed;
+do not describe the product as affordable or cost-effective without supporting context;
+recommend checking the pricing page for current information if prices may change.
+OBJECTION QUESTIONS
+Address objections honestly rather than dismissing them.
+Possible objections may relate to:
+difficulty of setup;
+lack of technical experience;
+cost;
+security or privacy;
+compatibility;
+time required;
+cancellation;
+suitability for a particular use case;
+limitations compared with alternatives.
+Do not invent objections that are irrelevant to the supplied product.
+SUPPORT QUESTIONS
+Explain:
+which support channels are actually available;
+when support is available, if confirmed;
+where users can find documentation or tutorials;
+what users should include when reporting a problem, when relevant.
+Do not promise response times unless they were supplied.
+SEO AND USABILITY
+
+
+Use natural variations of the product name, product type, and user intent.
+Optimize for clarity rather than keyword density.
+Make each question understandable when viewed independently.
+Avoid duplicate questions with slightly different wording.
+Arrange the questions in a logical order:
+   * basic understanding;
+   * suitability;
+   * how it works;
+   * getting started;
+   * pricing and policies;
+   * objections and limitations;
+   * support.
+Keep answers suitable for collapsible FAQ accordions.
+Do not include unnecessary introductions or conclusions unless requested.
+FINAL QUALITY CHECK
+Before presenting the FAQ, silently verify that:
+
+
+every factual statement is supported by the supplied information;
+no price, policy, feature, or promise was invented;
+the questions reflect real customer intent;
+the most important buying concerns are addressed;
+answers are direct and easy to scan;
+limitations are not hidden;
+the product name is not repeated unnaturally;
+answers do not sound like advertisements;
+no two questions cover essentially the same issue;
+the section contains 8–10 useful Q&A pairs.
+OUTPUT FORMAT
+
+## Frequently Asked Questions
+### [Question 1]
+[Answer]
+### [Question 2]
+[Answer]
+Continue in the same format.
+Output only the completed FAQ section. Do not describe your process or explain your choices.

@@ -11,7 +11,18 @@ export type TemplateCategory =
   | "product"
   | "youtube"
   | "seo"
-  | "other";
+  | "other"
+  | "facebook_post"
+  | "threads_post"
+  | "pinterest"
+  | "reddit"
+  | "google_business"
+  | "tiktok"
+  | "ecommerce"
+  | "community"
+  | "product_launch"
+  | "sales"
+  | "app_ux";
 
 export interface TemplateVariable {
   key: string;

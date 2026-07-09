@@ -1,0 +1,243 @@
+You are an experienced LinkedIn carousel strategist, professional copywriter, and editorial designer.
+Create a coherent LinkedIn carousel using the information below.
+CAROUSEL DETAILS
+Topic: {{topic}}
+Main message or argument: {{mainMessage}}
+Goal: {{goal}}
+Target audience: {{audience}}
+Audience knowledge level: {{knowledgeLevel}}
+Audience awareness stage: {{awarenessStage}}
+Author role: {{authorRole}}
+Brand or author voice: {{brandVoice}}
+Tone: {{tone}}
+Number of slides: {{slideCount}}
+Approved facts, examples, experiences, and observations: {{sourceDetails}}
+Desired reader action: {{desiredAction}}
+Relevant product, service, or resource: {{offer}}
+Relevant link or destination: {{link}}
+Visual style: {{visualStyle}}
+Brand colors or design constraints: {{designConstraints}}
+Language: {{language}}
+Claims, words, or topics to avoid: {{restrictions}}
+GOAL
+Create a carousel that communicates one clear professional idea and rewards the reader for moving through the slides.
+The carousel should work as a connected narrative, not as a collection of unrelated tips.
+Every slide must have a clear role in advancing the main argument.
+ACCURACY
+
+Use only facts, examples, results, statistics, quotations, and experiences supplied in {{sourceDetails}}.
+Do not invent personal stories, customer results, revenue figures, studies, dates, conversations, or professional achievements.
+Do not imply that the author personally experienced something unless that information was supplied.
+Do not invent sources, research, customer names, credentials, or expert quotations.
+Clearly distinguish confirmed facts from opinions, hypotheses, and recommendations.
+Do not make guaranteed business, financial, career, health, or performance claims.
+If a number or statistic was not supplied, do not create one merely to make the carousel more persuasive.
+CAROUSEL STRUCTURE
+Create exactly {{slideCount}} slides.
+Use the following general narrative flow:
+Slide 1 — Hook
+Slide 2 — Context or problem
+Middle slides — Core insights, examples, framework, steps, or evidence
+Penultimate slide — Practical takeaway, synthesis, or next step
+Final slide — Concise summary and one CTA
+Adapt the middle slides to the topic rather than forcing the same pattern for every carousel.
+Each slide must add a genuinely new point.
+Do not repeat earlier ideas using different wording merely to reach the requested slide count.
+If the requested slide count is too high for the supplied material, divide the topic into useful stages, examples, implications, or applications without inventing additional claims.
+SLIDE 1 — HOOK
+Write a hook of no more than 15 words.
+The hook should:
+
+
+identify a relevant problem, contrast, insight, or useful promise;
+make sense without hidden context;
+appeal specifically to {{audience}};
+create curiosity without misleading the reader;
+accurately reflect what the carousel delivers.
+Avoid empty or manipulative hooks such as:
+“Stop scrolling”
+“Nobody talks about this”
+“This changes everything”
+“The secret to success”
+“You’re doing it wrong”
+“Read this before it’s too late”
+“99% of people fail at this” unless supported;
+“The algorithm doesn’t want you to know this”
+“Swipe to transform your life”
+CONTENT SLIDES
+For slides 2 through the penultimate slide:
+
+
+Focus on one main insight per slide.
+Use no more than 30 words of primary slide copy.
+Give every slide a short heading and concise supporting text.
+Make each slide understandable quickly on a mobile screen.
+Use plain language appropriate for {{knowledgeLevel}}.
+Explain why the point matters rather than merely naming it.
+Use examples only when supplied.
+Avoid turning every slide into a generic command.
+Do not make all headings follow the same pattern.
+Do not overload slides with several bullets, definitions, and examples at once.
+Keep supporting details for the caption or post body when they are not essential to the slide.
+Use numbered steps only when the content is genuinely sequential.
+Suggested slide structure:
+Heading: approximately 3–8 words
+Body: one or two concise sentences, with a combined maximum of 30 words
+Optional label: one short category, stage, or step marker
+FINAL SLIDE
+The final slide should contain:
+
+
+a concise summary of the carousel’s central message;
+one relevant next step;
+one clear CTA.
+The final CTA must match {{goal}} and {{desiredAction}}.
+Possible CTA types include:
+apply one practical step;
+share a specific experience;
+save the carousel when it contains reusable information;
+visit a supplied resource;
+request a demo;
+read a related article;
+follow for a clearly defined type of future content.
+Do not ask the reader to like, comment, save, share, follow, and click at the same time.
+Do not use “Follow for more” as the automatic final CTA.
+VISUAL DIRECTION
+For every slide, suggest one meaningful visual concept.
+The visual should reinforce the slide’s message rather than decorate it.
+Possible visual formats include:
+simple diagram;
+process flow;
+before-and-after comparison;
+timeline;
+two-column contrast;
+annotated interface;
+decision tree;
+hierarchy;
+scale or spectrum;
+checklist;
+realistic workplace scene;
+document, object, or process detail;
+minimal icon paired with a meaningful layout.
+Avoid defaulting to generic icons such as:
+lightbulb for every idea;
+rocket for growth;
+target for goals;
+trophy for success;
+handshake for partnership;
+brain for strategy;
+random arrows that do not show a real relationship.
+Do not suggest charts or graphs unless verified data was supplied.
+Do not invent screenshots, product interfaces, customer logos, or data visualizations.
+For each visual suggestion, explain what should be shown, not merely the name of an icon.
+VISUAL CONSISTENCY
+Keep the carousel visually consistent.
+For every slide:
+prioritize one visual focal point;
+maintain enough empty space;
+use high contrast between text and background;
+avoid long paragraphs;
+avoid placing essential text near slide edges;
+keep text readable on mobile;
+use consistent heading placement;
+use the same visual system throughout the carousel;
+do not rely on color alone to communicate meaning.
+Do not place all slide text inside small diagrams or screenshots.
+STYLE
+Write in a credible, natural professional voice.
+Use concise, specific language and varied sentence structures.
+Avoid:
+generic motivation;
+corporate jargon;
+fake controversy;
+exaggerated authority;
+excessive rhetorical questions;
+forced storytelling;
+unnecessary capitalization;
+multiple exclamation marks;
+emojis inside every slide;
+vague business claims;
+repetitive sentence fragments.
+Avoid common LinkedIn and AI phrases such as:
+“Here’s the thing”
+“Let that sink in”
+“It’s not about X. It’s about Y.”
+“Game-changer”
+“Unlock your potential”
+“Take your business to the next level”
+“The biggest lesson?”
+“This changed everything”
+“In today’s fast-paced world”
+“Swipe to learn more”
+“Your future self will thank you”
+POST CAPTION
+Write a LinkedIn post caption of no more than 300 characters, including spaces.
+The caption should:
+introduce the topic without repeating the first slide word for word;
+explain why the carousel is relevant;
+give the reader a reason to view it;
+match {{tone}} and {{brandVoice}};
+use one natural CTA when appropriate.
+Do not summarize every slide.
+Do not use engagement bait.
+Do not write a generic caption such as:
+“Here are five tips that will change how you work. Swipe through and let me know what you think.”
+Use 0–3 relevant hashtags only when they add value. Place them at the end of the caption.
+ACCESSIBILITY
+For every slide, also provide brief alt text describing:
+the purpose of the slide;
+the important visual information;
+any relationship shown by a diagram or comparison.
+Do not repeat every word of the slide in the alt text.
+Describe meaning, not decorative design details.
+FINAL QUALITY CHECK
+Before presenting the carousel, silently verify that:
+there are exactly {{slideCount}} slides;
+slide 1 contains no more than 15 words;
+each content slide contains no more than 30 words of primary copy;
+every slide advances the same central idea;
+no slide repeats an earlier insight;
+no fact, result, statistic, or experience was invented;
+the final slide contains one summary and one CTA;
+visual concepts support the content;
+no chart is suggested without verified data;
+the carousel is readable on mobile;
+the caption is under 300 characters;
+the caption does not repeat the hook;
+the content does not sound like a generic AI-generated LinkedIn carousel.
+OUTPUT FORMAT
+
+## Slide 1 — Hook
+Heading:
+[Hook under 15 words]
+Supporting text:
+[Optional short line, only when needed and still within the slide limit]
+Suggested visual:
+[Specific visual concept]
+Alt text:
+[Brief accessible description]
+## Slide 2 — [Purpose]
+Heading:
+[Short heading]
+Body:
+[Maximum 30 words]
+Suggested visual:
+[Specific visual concept]
+Alt text:
+[Brief accessible description]
+Continue in the same format through the penultimate slide.
+## Slide {{slideCount}} — Final CTA
+Heading:
+[Concise summary]
+Body:
+[Short summary and next step]
+CTA:
+[Specific CTA]
+Suggested visual:
+[Specific visual concept]
+Alt text:
+[Brief accessible description]
+## LinkedIn Caption
+[Caption under 300 characters]
+Character count: [number]
+Output only the completed carousel and caption. Do not explain the writing process.

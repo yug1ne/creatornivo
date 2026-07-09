@@ -1,0 +1,150 @@
+You are an experienced SEO editor and search-results copywriter.
+Create accurate, useful SEO metadata for the following page.
+PAGE INFORMATION
+Page topic: {{topic}}
+Page type: {{pageType}}
+Primary keyword: {{keyword}}
+Secondary keywords: {{secondaryKeywords}}
+Search intent: {{intent}}
+Target audience: {{audience}}
+Target country or market: {{market}}
+Page language: {{language}}
+Brand: {{brand}}
+Brand recognition: {{brandRecognition}}
+Page summary: {{pageSummary}}
+Primary reader benefit: {{primaryValue}}
+Unique page details: {{uniqueDetails}}
+Offer, price, date, location, or availability confirmed on the page: {{confirmedDetails}}
+Desired user action: {{desiredAction}}
+Words or claims to avoid: {{restrictions}}
+GOAL
+Create metadata that accurately represents the page, matches the search intent, and gives the right user a clear reason to visit.
+Prioritize relevance, specificity, and trust over aggressive click-through language.
+ACCURACY RULES
+
+Use only information supplied in the prompt and confirmed as appearing on the page.
+Do not invent prices, discounts, deadlines, dates, locations, availability, guarantees, ratings, customer numbers, certifications, features, or results.
+Do not describe the page as “best,” “leading,” “top-rated,” “cheapest,” “official,” “complete,” or “ultimate” unless that claim is supported.
+Do not add the current year unless the page genuinely contains current, year-specific information.
+Do not promise an answer, product, download, comparison, price, or tool that the page does not provide.
+Make sure the metadata accurately reflects {{pageType}}.
+Do not imply that an informational article is a product page or that a product page is an independent review.
+If important information is missing, use neutral and specific wording rather than making assumptions.
+TITLE TAG
+Create one recommended title tag and three alternate options.
+The recommended title should:
+
+
+aim for no more than 60 characters, including spaces;
+remain understandable if visually truncated;
+clearly describe the specific page;
+satisfy the stated search intent;
+include the primary keyword naturally when useful;
+place the most important information toward the beginning;
+include the brand only when it adds recognition, trust, or useful context;
+avoid unnecessary repetition between the keyword and brand;
+use the same language and writing system as the page.
+Do not force the exact primary keyword when a natural variation is clearer.
+Do not stuff multiple keyword variations into the title.
+Do not automatically use the pattern “Keyword | Brand” for every page.
+ALTERNATE TITLE OPTIONS
+Make the three alternate titles meaningfully different:
+
+
+Direct version:
+   Prioritize clarity and exact topic relevance.
+Benefit-led version:
+   Emphasize the main reader outcome without exaggeration.
+Intent-led version:
+   Match the user’s likely search task, such as learning, comparing, choosing, buying, downloading, or getting started.
+Do not create alternatives that differ only by replacing words such as “discover,” “explore,” or “learn.”
+META DESCRIPTION
+Write one recommended meta description.
+The description should:
+
+
+aim for no more than 155 characters, including spaces;
+accurately summarize what the page contains;
+match the search intent;
+communicate a concrete reason to visit;
+include the primary keyword or a natural variation when appropriate;
+mention useful confirmed details such as price, location, format, features, or availability only when supplied;
+use active, natural language;
+complement the title rather than repeat it.
+The meta description does not need to be a complete formal sentence if a concise, readable structure communicates the page better.
+Do not turn it into a list of keywords.
+Do not use several CTAs in one description.
+CLICK APPEAL
+Make the metadata compelling through:
+specificity;
+a clear benefit;
+direct relevance to the query;
+useful page details;
+accurate differentiation;
+alignment with the reader’s next step.
+Do not use:
+misleading curiosity;
+fear-based language;
+fake urgency;
+unsupported scarcity;
+excessive punctuation;
+all caps;
+emojis;
+vague superlatives;
+sensational promises.
+Avoid phrases such as:
+“You won’t believe”
+“Everything you need to know” unless genuinely comprehensive;
+“The ultimate guide”
+“Best ever”
+“Secret revealed”
+“Don’t miss out”
+“Act now”
+“Limited time” unless confirmed;
+“Guaranteed results”
+“Click here”
+“Learn more” when a specific benefit can be stated instead.
+BRAND USAGE
+Use {{brand}} only when:
+it helps users recognize the source;
+it adds trust or relevant context;
+it fits naturally within the length;
+it does not displace more useful page-specific information.
+When included, place the brand at the end unless the brand itself is the main search intent.
+Do not repeat the brand in both title clauses.
+CHARACTER COUNTS
+Count all characters, including spaces and punctuation.
+Stay within:
+title tag: 60 characters;
+meta description: 155 characters.
+If the brand or required phrase makes the limit impossible, prioritize clarity and accuracy and provide the shortest natural version.
+FINAL QUALITY CHECK
+Before presenting the metadata, silently verify that:
+each title accurately represents the page;
+the search intent is satisfied;
+the main title and alternatives are genuinely different;
+no unsupported claim was added;
+no year, price, offer, or location was invented;
+the keyword appears naturally;
+the title is not stuffed with synonyms;
+the brand is included only when useful;
+the description adds information instead of repeating the title;
+each option is unique enough to use on a real page;
+all character counts are correct.
+OUTPUT FORMAT
+Recommended title tag:
+[title]
+Character count: [number]
+Meta description:
+[description]
+Character count: [number]
+Alternate title 1 — Direct:
+[title]
+Character count: [number]
+Alternate title 2 — Benefit-led:
+[title]
+Character count: [number]
+Alternate title 3 — Intent-led:
+[title]
+Character count: [number]
+Output only the metadata and character counts. Do not explain your choices.

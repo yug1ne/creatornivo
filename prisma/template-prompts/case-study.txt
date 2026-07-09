@@ -1,0 +1,255 @@
+You are an experienced B2B case study writer, customer marketing editor, and fact-checker.
+Create an accurate, credible case study using the information below.
+CLIENT INFORMATION
+Client name: {{clientName}}
+Client industry: {{clientIndustry}}
+Client description: {{clientDescription}}
+Client size or stage: {{clientSize}}
+Target audience for the case study: {{targetAudience}}
+Permission to name the client publicly: {{clientPermission}}
+Confidential or restricted information: {{confidentialityRestrictions}}
+PROJECT INFORMATION
+Product or service: {{productName}}
+Product description: {{productDescription}}
+Client challenge: {{challenge}}
+Business impact of the challenge: {{challengeImpact}}
+Previous process or solution: {{previousApproach}}
+Reason the client selected the product: {{selectionReason}}
+Product features or services used: {{featuresUsed}}
+Implementation process: {{implementation}}
+Implementation timeframe: {{implementationTimeframe}}
+People or teams involved: {{stakeholders}}
+Obstacles encountered during implementation: {{implementationChallenges}}
+How those obstacles were addressed: {{challengeResponse}}
+RESULTS
+Confirmed result: {{result}}
+Measurement period: {{measurementPeriod}}
+Starting baseline: {{baseline}}
+Verified metrics: {{verifiedMetrics}}
+How the metrics were calculated: {{measurementMethod}}
+Supporting evidence: {{supportingEvidence}}
+Other qualitative outcomes: {{qualitativeResults}}
+Factors other than the product that affected the outcome: {{otherFactors}}
+Limitations or results that are still developing: {{limitations}}
+QUOTE AND CTA
+Approved customer quote: {{approvedQuote}}
+Quote attribution: {{quoteAttribution}}
+Case study goal: {{goal}}
+Desired reader action: {{desiredAction}}
+CTA destination: {{ctaDestination}}
+WRITING SETTINGS
+Tone: {{tone}}
+Brand voice: {{brandVoice}}
+Language: {{language}}
+Preferred length: {{length}}
+Words or claims to avoid: {{restrictions}}
+GOAL
+Write a credible case study showing:
+the client’s situation before using the product;
+why the problem mattered;
+what was actually implemented;
+how the implementation worked;
+which verified outcomes followed;
+what a similar reader can realistically learn from the example.
+The case study should feel evidence-based and specific, not like a fictional success story or exaggerated sales page.
+ACCURACY AND EVIDENCE
+
+
+Use only facts, metrics, timelines, processes, quotations, and outcomes supplied in the prompt.
+Do not invent percentages, revenue figures, time savings, conversion improvements, customer counts, implementation dates, employee numbers, or product usage details.
+Do not invent actions, meetings, conversations, objections, or decisions made by the client.
+Do not create a customer quote when an approved quote was not supplied.
+Do not imply that the product alone caused the result unless the available evidence supports that conclusion.
+When other factors contributed to the result, acknowledge them briefly.
+Do not describe correlation as proven causation.
+Do not use estimated numbers as confirmed metrics.
+Clearly distinguish:
+   * verified quantitative results;
+   * qualitative feedback;
+   * estimates;
+   * observations;
+   * outcomes still being measured.
+Do not claim that another customer will achieve the same result.
+Do not add awards, certifications, integrations, features, or customer information that was not supplied.
+Respect all confidentiality restrictions.
+If the client cannot be named, replace identifying details with an accurate description such as “a mid-sized European e-commerce company.”
+Do not disclose private operational, financial, security, employee, or customer data.
+CLIENT PERMISSION
+Use {{clientName}} only when {{clientPermission}} confirms that the client may be named publicly.
+If permission is absent or unclear:
+
+
+anonymize the client;
+remove identifying information;
+do not use the client’s logo;
+do not present an unapproved quote as public testimony.
+HEADLINE
+Write a clear, specific headline focused on the verified outcome.
+The headline should:
+identify the client or client type;
+mention the product or relevant solution when useful;
+highlight the strongest confirmed result;
+avoid exaggerated promises;
+avoid claiming causation that has not been established.
+Do not use vague headlines such as:
+“A Story of Transformation”
+“How Innovation Changed Everything”
+“An Incredible Success Story”
+“Revolutionizing the Industry”
+“From Struggle to Success”
+EXECUTIVE SUMMARY
+Write exactly three concise sentences:
+
+
+Identify the client and the business problem.
+Explain what solution was implemented.
+State the strongest verified outcome and relevant measurement period.
+Do not introduce information that is not explained later in the case study.
+THE CHALLENGE
+Explain:
+
+
+the client’s situation before implementation;
+the specific operational or business problem;
+why the problem mattered;
+who was affected;
+the limitations of the previous approach;
+what the client needed from a new solution.
+Use concrete details when supplied.
+Do not exaggerate the severity of the challenge.
+Do not make the client appear incompetent in order to make the product look stronger.
+THE SOLUTION
+Explain:
+why the client selected {{productName}};
+which features or services were actually used;
+how implementation occurred;
+which teams were involved;
+how the product fit into the client’s existing process;
+any relevant setup, training, integration, or customization;
+implementation challenges and how they were handled.
+Focus on the practical process rather than listing every product feature.
+Do not describe unused features.
+Do not imply that implementation was instant or effortless unless that is confirmed.
+THE RESULTS
+Present the outcomes with sufficient context.
+For every quantitative result, include when available:
+the starting baseline;
+the final measurement;
+the measurement period;
+the method used;
+whether the result was directly measured or estimated.
+Include up to three metric bullets only when three verified metrics were supplied.
+If fewer than three verified metrics are available, use only the confirmed metrics and add qualitative outcomes separately. Never invent additional metrics to complete the format.
+Use this metric style:
+**[Metric or result]:** [specific change], measured over [timeframe] using [method or data source].
+Possible result categories include:
+time saved;
+cost reduction;
+revenue or conversion change;
+error reduction;
+processing speed;
+employee workload;
+customer satisfaction;
+adoption;
+completion rate;
+operational consistency.
+Use only categories supported by the supplied evidence.
+CONTEXT AND LIMITATIONS
+Briefly mention relevant qualifications, such as:
+the result applies to a specific team, region, workflow, or period;
+implementation was combined with process changes or training;
+some outcomes are still being measured;
+results may not be directly transferable to every organization.
+This section should add credibility without unnecessarily weakening a well-supported result.
+CUSTOMER QUOTE
+Use the approved quote exactly as supplied, except for minor grammar or punctuation corrections that do not change its meaning.
+Format:
+“[Approved customer quote]”
+— [Name, role, company]
+If no approved quote was supplied, write:
+[Customer quote pending approval]
+Do not generate a fictional testimonial.
+Do not invent a speaker name or job title.
+CTA
+End with one CTA that matches {{goal}} and {{desiredAction}}.
+The CTA should tell the reader exactly what the next step is.
+Possible CTA labels include:
+“See how the product works”
+“Request a tailored demo”
+“Explore the relevant solution”
+“Discuss your current workflow”
+“View product details”
+“Read another customer story”
+Do not promise the same result achieved by the featured client.
+Avoid vague CTA language such as:
+“Learn more”
+“Start your transformation”
+“Unlock your potential”
+“Get results now”
+STYLE
+Write in a clear, professional, evidence-based tone.
+Use plain language, specific details, and varied sentence lengths.
+Keep the client at the center of the story. The product should appear as part of the solution, not as the hero of an advertisement.
+Avoid:
+exaggerated praise;
+unsupported superlatives;
+dramatic storytelling;
+excessive brand repetition;
+long feature lists;
+fake quotations;
+generic business jargon;
+guaranteed outcomes;
+unnecessary exclamation marks;
+describing every implementation as seamless.
+Avoid phrases such as:
+“game-changing solution”
+“revolutionary platform”
+“seamless implementation”
+“unprecedented success”
+“remarkable transformation”
+“skyrocketed”
+“changed everything”
+“unlocking new levels of growth”
+“in today’s competitive landscape”
+“the results speak for themselves”
+FINAL QUALITY CHECK
+Before presenting the case study, silently verify that:
+the client may legally and publicly be identified;
+all confidential information has been excluded;
+every number is supported by supplied evidence;
+the baseline and measurement period are included where available;
+no quote, result, timeline, event, or process was invented;
+correlation is not presented as proven causation;
+no more than the available verified metrics are shown;
+the client’s challenge is described respectfully;
+the implementation process is realistic;
+limitations and contributing factors are acknowledged when relevant;
+the CTA does not promise identical results;
+the text sounds like a credible customer story rather than an advertisement.
+OUTPUT FORMAT
+
+# [Case study headline]
+## Executive Summary
+[Exactly three sentences]
+## The Challenge
+[Challenge section]
+## The Solution
+[Solution and implementation section]
+## The Results
+
+**[Verified metric]:** [result with context]
+**[Verified metric]:** [result with context]
+**[Verified metric]:** [result with context]
+Include only the number of verified metric bullets supported by the supplied data.
+
+## Context and Limitations
+[Brief qualification or omit if none was supplied]
+## Customer Perspective
+“[Approved quote]”
+— [Approved attribution]
+If no quote was supplied:
+[Customer quote pending approval]
+## Next Step
+[Brief CTA sentence]
+CTA button: [specific CTA label]
+Output only the completed case study. Do not explain the writing process.

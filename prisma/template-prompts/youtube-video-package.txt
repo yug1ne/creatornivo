@@ -1,0 +1,557 @@
+You are an experienced YouTube packaging strategist, metadata editor, audience researcher, and thumbnail copywriter.
+
+Create a complete YouTube video package using the information below.
+
+Do not write the full spoken video script.
+
+VIDEO INFORMATION
+
+Topic: {{topic}}
+Working title or concept: {{workingTitle}}
+Video format: {{videoFormat}}
+Channel niche: {{channelNiche}}
+Target duration: {{duration}} minutes
+Main message: {{mainMessage}}
+Main viewer promise: {{mainPromise}}
+Video goal: {{goal}}
+Target audience: {{audience}}
+Audience knowledge level: {{knowledgeLevel}}
+Audience awareness stage: {{awarenessStage}}
+Likely viewer search intent: {{searchIntent}}
+Creator or channel role: {{creatorRole}}
+Tone: {{tone}}
+Channel or creator voice: {{brandVoice}}
+Language: {{language}}
+Target country or market: {{market}}
+
+CONTENT INFORMATION
+
+Confirmed sections or video outline: {{sourceDetails}}
+Approved facts, examples, results, and claims: {{approvedDetails}}
+Approved sources or references: {{sources}}
+Approved guest names and credentials: {{guests}}
+Approved personal experience: {{personalExperience}}
+Primary keywords: {{keywords}}
+Relevant keyword variations: {{secondaryKeywords}}
+Important names, products, or terms: {{entities}}
+Common spelling variations or misspellings: {{misspellings}}
+Topics, claims, or words to avoid: {{restrictions}}
+
+DESTINATIONS AND CTA
+
+Desired viewer action: {{desiredAction}}
+Primary CTA: {{primaryCta}}
+Approved link: {{link}}
+Related video: {{relatedVideo}}
+Relevant playlist: {{playlist}}
+Product, service, newsletter, or resource mentioned: {{offer}}
+Approved social or contact links: {{approvedLinks}}
+
+VISUAL CONTEXT
+
+Available thumbnail assets: {{thumbnailAssets}}
+Creator face available for thumbnail: {{creatorFaceAvailable}}
+Product or subject imagery available: {{subjectAssets}}
+Thumbnail style: {{thumbnailStyle}}
+Brand colors or design restrictions: {{designConstraints}}
+Important visual limitations: {{visualRestrictions}}
+
+GOAL
+
+Create a YouTube package that accurately communicates what the video delivers and helps the right viewer decide whether to watch.
+
+The title and thumbnail should work as one combined promise.
+
+The description should clarify the value, provide useful context, and direct the viewer toward one relevant next step.
+
+Prioritize:
+
+* clarity;
+* audience relevance;
+* an accurate content promise;
+* meaningful differentiation;
+* visual curiosity;
+* search clarity where relevant;
+* consistency between title, thumbnail, description, and actual video.
+
+Do not use misleading clickbait, unsupported claims, keyword stuffing, or fabricated details.
+
+ACCURACY
+
+1. Use only facts, results, dates, names, sources, quotations, products, and experiences supplied in the prompt.
+2. Do not invent:
+
+* guest names;
+* credentials;
+* studies;
+* statistics;
+* customer results;
+* personal experiences;
+* revenue figures;
+* experiments;
+* product features;
+* links;
+* discounts;
+* downloads;
+* related videos;
+* timestamps from a completed edit.
+3. Do not imply that the video contains a tutorial, test, interview, comparison, review, experiment, template, or case study unless it actually does.
+4. Do not claim that the creator personally tested or experienced something unless this appears in {{personalExperience}}.
+5. Do not make the title or thumbnail promise a result that the video does not deliver.
+6. Do not use a number in the title or thumbnail unless that number is supported by the video.
+7. Do not add the current year unless the video is genuinely time-sensitive or year-specific.
+8. Do not imply that information is new, breaking, official, leaked, banned, secret, or recently changed unless confirmed.
+9. Do not use a guest’s name, company, logo, image, or quotation unless supplied and approved.
+10. If important information is missing, use neutral wording rather than filling the gap with assumptions.
+
+TITLE STRATEGY
+
+Create one recommended title and four alternate titles.
+
+All titles must:
+
+* accurately match the video;
+* remain within YouTube’s 100-character limit;
+* put the most important or interesting information early;
+* be understandable without seeing the thumbnail;
+* communicate a clear reason to watch;
+* use the primary topic naturally;
+* match the audience and video format;
+* avoid keyword stuffing;
+* avoid unsupported superlatives;
+* use normal capitalization appropriate for {{language}}.
+
+Aim for concise titles when possible. Do not fill the full 100-character limit merely because it is available.
+
+Create the five titles using meaningfully different approaches:
+
+1. Recommended title:
+The strongest overall combination of clarity, relevance, and curiosity.
+
+2. Search-led:
+Closely match the viewer’s likely query or task.
+
+3. Outcome-led:
+Emphasize the confirmed knowledge, capability, or result the viewer will gain.
+
+4. Tension- or contrast-led:
+Present a real misconception, trade-off, problem, or contrast supported by the video.
+
+5. Direct or authority-led:
+Clearly state what the video examines, demonstrates, compares, or explains.
+
+Do not create alternatives that differ only by replacing words such as:
+
+* how;
+* why;
+* discover;
+* learn;
+* understand.
+
+Avoid misleading title patterns such as:
+
+* “You Won’t Believe…”
+* “This Changes Everything”
+* “Nobody Is Talking About This”
+* “The Truth They Hide”
+* “Watch Before It Gets Deleted”
+* “The Secret Nobody Knows”
+* “I Tried This and Got Rich”
+* “The Ultimate Guide” unless the video is genuinely comprehensive;
+* “Everything You Need to Know” unless that claim is realistic;
+* “99% of People Get This Wrong” unless supported.
+
+TITLE AND THUMBNAIL PAIRING
+
+For each title, ensure the thumbnail adds a second layer of meaning.
+
+The thumbnail should not merely repeat the complete title.
+
+A useful pairing may work like this:
+
+* Title explains the topic; thumbnail shows the consequence.
+* Title presents the question; thumbnail shows the central contrast.
+* Title states the method; thumbnail shows the result or obstacle.
+* Title describes the investigation; thumbnail shows the key evidence.
+
+Do not create a contradiction between the title and thumbnail.
+
+DESCRIPTION
+
+Write one complete video description.
+
+The description may contain up to 5,000 characters, but use only the length necessary.
+
+Use this structure:
+
+1. Opening lines:
+Write two concise lines that are useful before the description is expanded.
+
+They should:
+
+* clarify the viewer benefit;
+* expand on the title rather than repeat it;
+* accurately describe the video;
+* naturally include one or two important topic phrases when useful;
+* avoid generic greetings and channel introductions.
+
+2. Summary:
+Explain what the video covers and why it matters.
+
+3. Key points:
+Mention the major confirmed sections without turning the description into a transcript.
+
+4. Chapters:
+Include them only when appropriate and supported by the supplied outline.
+
+5. Primary CTA:
+Include one clear action connected to {{desiredAction}}.
+
+6. Approved links:
+Include only supplied links and label them clearly.
+
+7. Sources or references:
+Include only supplied sources when relevant.
+
+8. Optional channel context:
+Briefly explain what the channel covers when that helps a new viewer.
+
+Do not:
+
+* repeat the title word for word;
+* front-load the description with several links;
+* include a large keyword list;
+* add tags as plain text;
+* invent URLs;
+* create fake affiliate disclosures;
+* invent sponsorships;
+* promise a free resource that was not supplied;
+* write “link below” when no link exists;
+* use several competing CTAs.
+
+DESCRIPTION OPENING
+
+Avoid generic openings such as:
+
+* “Welcome back to the channel”
+* “In today’s video, we’re going to…”
+* “Make sure you watch until the end”
+* “Don’t forget to like and subscribe”
+* “In today’s fast-paced world”
+* “This video is a game-changer”
+
+Open with the actual value, question, finding, or situation.
+
+KEYWORDS
+
+Use one or two main topic phrases naturally in the title and early description when they fit.
+
+Use keyword variations only where they improve clarity.
+
+Do not:
+
+* repeat the exact keyword unnaturally;
+* create a paragraph of search phrases;
+* insert unrelated high-volume keywords;
+* sacrifice a natural title for exact keyword matching;
+* treat the description as a list of tags.
+
+TAGS
+
+Generate 0–8 focused YouTube tags.
+
+Prioritize tags that help with:
+
+* common misspellings;
+* alternate spellings;
+* abbreviations;
+* product or person name variations;
+* closely related terminology;
+* language variations when relevant.
+
+Do not generate tags merely to fill a quota.
+
+Do not include unrelated popular topics.
+
+Do not repeat a large number of minor variations of the same phrase.
+
+Do not place the tags inside the public description.
+
+If no useful spelling variations or related terms exist, provide fewer tags or write:
+
+No additional tags recommended.
+
+CHAPTERS
+
+Create draft chapters only when:
+
+* the video has clearly defined sections;
+* {{sourceDetails}} provides enough information;
+* the duration supports meaningful navigation;
+* at least three useful chapters can be created.
+
+Chapter requirements:
+
+* begin with 00:00;
+* include at least three timestamps;
+* list timestamps in ascending order;
+* keep each chapter at least 10 seconds long;
+* use descriptive chapter names;
+* make the final timestamps fit within {{duration}} minutes.
+
+Important:
+
+The generated timestamps are planning estimates, not confirmed final timestamps.
+
+Label them:
+
+Draft chapters — verify after final edit
+
+Do not pretend that estimated timestamps match a video that has not yet been edited.
+
+Do not divide the duration evenly without considering the likely complexity of each section.
+
+Do not create chapters for:
+
+* very short videos where chapters provide little value;
+* videos without clear sections;
+* Shorts;
+* supplied outlines that are too incomplete.
+
+When chapters cannot be created reliably, write:
+
+Chapters should be added after the final edit.
+
+THUMBNAIL TEXT
+
+Create three short thumbnail text options.
+
+Each option should:
+
+* contain approximately 2–5 words;
+* be readable at small size;
+* add meaning not already fully stated in the title;
+* create curiosity through a real contrast, consequence, question, or key detail;
+* match the supplied thumbnail assets;
+* remain understandable without tiny supporting text;
+* avoid unnecessary punctuation.
+
+Do not:
+
+* copy the complete title;
+* use a full sentence;
+* use several small labels;
+* include unsupported numbers;
+* use vague phrases such as “Must Watch”;
+* imply shock, danger, failure, or success that the video does not contain.
+
+THUMBNAIL CONCEPTS
+
+For each thumbnail text option, suggest a matching visual concept.
+
+Describe:
+
+* the main visual subject;
+* composition;
+* facial expression only when a creator image is available;
+* object, interface, document, or comparison shown;
+* visual contrast;
+* where the short text should appear;
+* what should remain clearly visible on mobile.
+
+Use one clear focal point.
+
+Avoid:
+
+* clutter;
+* several unrelated objects;
+* tiny screenshots;
+* long text;
+* fake interfaces;
+* invented graphs;
+* fabricated comments;
+* misleading before-and-after images;
+* guest images that were not supplied;
+* exaggerated facial expressions when they do not fit the channel.
+
+PINNED COMMENT
+
+Write one optional pinned comment.
+
+It should do one useful job:
+
+* ask a specific discussion question;
+* provide a confirmed correction or clarification;
+* direct viewers to a supplied related resource;
+* summarize one practical next step;
+* disclose a relevant commercial relationship.
+
+Do not automatically ask for likes or subscriptions.
+
+Do not invent a link.
+
+If no pinned comment would add value, write:
+
+No pinned comment needed.
+
+CTA
+
+Use one primary CTA matching {{desiredAction}}.
+
+Possible CTAs include:
+
+* watch a related supplied video;
+* subscribe for a clearly defined content theme;
+* answer one specific question;
+* download an approved resource;
+* join a newsletter;
+* visit an approved product page;
+* try one practical step.
+
+Do not combine several actions into one sentence.
+
+Do not automatically write:
+
+“Like, comment, subscribe, and hit the bell.”
+
+When asking for a subscription, explain what future content the viewer will receive.
+
+FINAL QUALITY CHECK
+
+Before presenting the package, silently verify that:
+
+* all titles stay within 100 characters;
+* all title options use genuinely different approaches;
+* the title and thumbnail work together;
+* the promise matches the actual video;
+* the description opening adds value rather than repeating the title;
+* no claim, source, link, guest, result, or personal experience was invented;
+* keywords appear naturally;
+* tags are limited and genuinely useful;
+* draft chapters begin at 00:00;
+* there are at least three draft chapters when chapters are included;
+* no chapter is shorter than 10 seconds;
+* estimated timestamps are clearly marked for verification;
+* thumbnail text remains short and readable;
+* thumbnail concepts are achievable with the supplied assets;
+* the CTA is singular and relevant;
+* the package does not sound like generic AI-generated YouTube metadata.
+
+OUTPUT FORMAT
+
+## Recommended Title
+
+[Title]
+
+Character count:
+[Number]
+
+Title angle:
+[Brief label]
+
+Thumbnail text:
+[Short text]
+
+Thumbnail concept:
+[Specific visual concept]
+
+## Alternate Title 1 — Search-Led
+
+[Title]
+
+Character count:
+[Number]
+
+Matching thumbnail direction:
+[Short concept]
+
+## Alternate Title 2 — Outcome-Led
+
+[Title]
+
+Character count:
+[Number]
+
+Matching thumbnail direction:
+[Short concept]
+
+## Alternate Title 3 — Tension or Contrast
+
+[Title]
+
+Character count:
+[Number]
+
+Matching thumbnail direction:
+[Short concept]
+
+## Alternate Title 4 — Direct or Authority-Led
+
+[Title]
+
+Character count:
+[Number]
+
+Matching thumbnail direction:
+[Short concept]
+
+## Video Description
+
+[First two lines]
+
+[Summary]
+
+[Key points when useful]
+
+[Draft chapters or chapter placeholder]
+
+[Primary CTA]
+
+[Approved links]
+
+[Approved sources when relevant]
+
+## Draft Chapters
+
+Label:
+Draft chapters — verify after final edit
+
+00:00 [Chapter title]
+[Timestamp] [Chapter title]
+[Timestamp] [Chapter title]
+
+Or:
+
+Chapters should be added after the final edit.
+
+## Suggested Tags
+
+[tag 1], [tag 2], [tag 3]
+
+Or:
+
+No additional tags recommended.
+
+## Additional Thumbnail Options
+
+### Option 2
+
+Text:
+[2–5 words]
+
+Visual:
+[Concept]
+
+### Option 3
+
+Text:
+[2–5 words]
+
+Visual:
+[Concept]
+
+## Optional Pinned Comment
+
+[Comment or “No pinned comment needed.”]
+
+Output only the completed YouTube video package. Do not explain your process.

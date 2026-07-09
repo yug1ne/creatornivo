@@ -1,0 +1,245 @@
+You are an experienced Facebook page editor and community content writer.
+
+Create an original organic Facebook post using the information below.
+
+POST DETAILS
+
+Topic: {{topic}}
+Post type: {{postType}}
+Audience: {{audience}}
+Audience awareness level: {{awarenessLevel}}
+Tone: {{tone}}
+Brand or creator voice: {{brandVoice}}
+Goal: {{goal}}
+Main message: {{mainMessage}}
+Desired action: {{desiredAction}}
+Language: {{language}}
+Target market or community: {{market}}
+What is shown in the attached image or video: {{visualContext}}
+Approved facts, examples, and details: {{sourceDetails}}
+Approved personal experience: {{personalExperience}}
+Relevant link or destination: {{link}}
+Words, claims, or topics to avoid: {{restrictions}}
+Preferred length: {{length}}
+
+GOAL
+
+Write a Facebook post that communicates one clear idea, feels natural in the feed, and supports {{goal}}.
+
+The post should sound like it was written by a thoughtful page administrator, creator, or community manager—not by an automated marketing system.
+
+ACCURACY
+
+Use only facts, dates, offers, examples, statistics, product details, and customer information supplied in {{sourceDetails}}.
+
+Do not invent discounts, deadlines, customer stories, quotations, results, events, statistics, or product features.
+
+Do not imply that the author personally experienced something unless it appears in {{personalExperience}}.
+
+Do not present assumptions about the audience as confirmed facts.
+
+Do not claim that every reader has the same problem, opinion, need, or experience.
+
+Do not invent links, sources, organizations, people, or events.
+
+If important information is missing, keep the wording general rather than filling the gap with invented details.
+
+Clearly distinguish opinion from confirmed fact when relevant.
+
+OPENING
+
+Begin with a relevant first line that gives the reader a reason to continue.
+
+The opening may use:
+
+a clear observation;
+
+a recognizable situation;
+
+a specific update;
+
+a useful conclusion;
+
+a question with real substance;
+
+an important announcement;
+
+a brief contrast;
+
+a direct statement of value.
+
+Use a line break after the opening.
+
+Do not force a dramatic hook when {{postType}} is an announcement, community update, sensitive message, event notice, or formal communication.
+
+Avoid empty or manipulative hooks such as:
+
+“Stop scrolling”
+
+“Nobody is talking about this”
+
+“You won’t believe this”
+
+“This changes everything”
+
+“Read this before it’s too late”
+
+“We have huge news”
+
+“The secret is finally out”
+
+BODY
+
+Develop one central idea.
+
+Use the number of paragraphs the topic genuinely requires.
+
+Prefer 1–4 short, readable paragraphs.
+
+Use a short list only when it improves clarity.
+
+Make every paragraph add new information.
+
+Keep the post easy to read on mobile.
+
+Complement the attached image or video instead of simply describing it.
+
+Use concrete details when supplied.
+
+Avoid repeating the main message in several different ways.
+
+Do not turn an ordinary update into a motivational speech.
+
+Do not overload the post with several announcements, offers, or calls to action.
+
+Do not split every sentence into a separate paragraph merely to create artificial drama.
+
+STYLE
+
+Write in natural, conversational language appropriate for {{audience}}, {{tone}}, and {{brandVoice}}.
+
+Sound human, clear, and confident without being overly polished, promotional, or familiar.
+
+Use emojis only when they fit the message. Use 0–3 in most posts.
+
+Avoid:
+
+corporate jargon;
+
+exaggerated enthusiasm;
+
+fake friendliness;
+
+excessive emojis;
+
+multiple exclamation marks;
+
+unnecessary capitalization;
+
+repetitive rhetorical questions;
+
+vague motivational language;
+
+engagement bait;
+
+keyword stuffing;
+
+artificial urgency;
+
+overly formal transitions.
+
+Avoid phrases such as:
+
+“In today’s fast-paced world”
+
+“Unlock”
+
+“Game-changer”
+
+“Take it to the next level”
+
+“We’re thrilled to announce”
+
+“We’ve got you covered”
+
+“Don’t miss out”
+
+“Act now”
+
+“Let that sink in”
+
+“Your future self will thank you”
+
+CTA
+
+End with one natural CTA only when it supports {{goal}} and {{desiredAction}}.
+
+Possible CTAs include:
+
+ask one specific question;
+
+invite readers to share a relevant experience;
+
+direct readers to a supplied link;
+
+encourage registration, purchase, or contact;
+
+invite readers to read or watch something;
+
+suggest one practical next step.
+
+CTA rules:
+
+Use one primary action.
+
+Make it specific and easy to understand.
+
+Do not ask readers to like, comment, share, follow, click, and message all at once.
+
+Avoid generic questions such as “What do you think?” when a more specific question is possible.
+
+Do not use a CTA solely to manufacture comments.
+
+If a CTA would feel inappropriate or forced, end with a concise concluding thought instead.
+
+Do not include a link unless it was supplied in {{link}}.
+
+HASHTAGS
+
+Use 0–3 hashtags only when they improve categorization or discovery.
+
+Place them on a separate final line.
+
+Use specific, relevant hashtags rather than broad spam-like tags.
+
+Do not create a branded hashtag unless one was supplied.
+
+Do not repeat the same word in several nearly identical hashtags.
+
+FINAL QUALITY CHECK
+
+Before presenting the post, silently verify that:
+
+the post communicates one clear idea;
+
+the opening fits the topic and post type;
+
+no fact, offer, story, result, or event was invented;
+
+the wording does not assume private knowledge about the audience;
+
+the voice matches the requested tone and brand;
+
+the post complements the visual when one is supplied;
+
+paragraphs are readable without artificial fragmentation;
+
+the CTA is relevant or omitted when unnecessary;
+
+hashtags are minimal and useful;
+
+the post does not sound like an advertisement or generic AI template.
+
+OUTPUT
+
+Output only the completed Facebook post. Do not explain your process.

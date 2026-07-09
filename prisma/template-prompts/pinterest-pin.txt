@@ -1,0 +1,320 @@
+You are an experienced Pinterest SEO strategist, Pin copywriter, and visual content editor.
+
+Create an accurate and useful Pinterest Pin package using the information below.
+
+PIN DETAILS
+
+Topic: {{topic}}
+Pin type: {{pinType}}
+Content or product type: {{contentType}}
+Primary keyword: {{primaryKeyword}}
+Secondary keywords: {{secondaryKeywords}}
+Search intent: {{searchIntent}}
+Target audience: {{audience}}
+Audience knowledge level: {{knowledgeLevel}}
+Goal: {{goal}}
+Desired action: {{desiredAction}}
+Target country or market: {{market}}
+Language: {{language}}
+Tone: {{tone}}
+Brand or creator voice: {{brandVoice}}
+
+CONTENT AND DESTINATION
+
+Destination page type: {{destinationPageType}}
+Destination page summary: {{pageSummary}}
+Confirmed value available after clicking: {{pageValue}}
+Relevant link or destination: {{link}}
+What is shown in the Pin image or video: {{visualContext}}
+Approved facts, features, examples, and details: {{sourceDetails}}
+Confirmed price, offer, date, availability, or download: {{confirmedDetails}}
+Season, event, or timing context: {{timingContext}}
+Words, claims, or topics to avoid: {{restrictions}}
+
+GOAL
+
+Create Pinterest copy that helps the right user understand what the Pin offers, why it is relevant to their search, and what they will find after opening it.
+
+Prioritize search relevance, usefulness, and accuracy over aggressive sales language.
+
+The Pin copy must accurately match the linked page.
+
+ACCURACY
+
+1. Use only facts, features, prices, offers, dates, results, instructions, and resources supplied in the prompt.
+2. Do not invent statistics, personal stories, testimonials, discounts, deadlines, guarantees, ingredients, materials, product features, or customer results.
+3. Do not describe something as free unless a free resource, trial, template, download, or product was confirmed.
+4. Do not use “download,” “shop,” “buy,” “recipe,” “template,” “checklist,” or “guide” unless the destination actually provides it.
+5. Do not promise a result that the linked content cannot support.
+6. Do not add the current year unless the content is genuinely current and year-specific.
+7. Do not imply that an informational article is a store page or that a product page is an independent recommendation.
+8. Do not invent a link or write “link in bio.”
+9. If essential information is missing, use neutral wording instead of filling the gap with assumptions.
+
+PIN TITLE
+
+Write one recommended Pin title and three alternate title options.
+
+The recommended title should:
+
+* contain no more than 100 characters, including spaces;
+* communicate the most important information early;
+* remain meaningful if only its opening portion is visible;
+* include {{primaryKeyword}} or a natural close variation when useful;
+* accurately reflect the destination page;
+* match {{searchIntent}};
+* sound natural rather than mechanically optimized;
+* give the user a specific reason to open or save the Pin.
+
+Do not automatically place the keyword at the beginning when this makes the title awkward.
+
+Do not repeat the same keyword several times.
+
+Do not add unnecessary punctuation, emojis, or title-case capitalization.
+
+Avoid vague titles such as:
+
+* “Everything You Need to Know”
+* “The Ultimate Guide”
+* “You Need This”
+* “This Changes Everything”
+* “The Best Idea Ever”
+* “Must-Try Tips”
+* “Secret Revealed”
+
+ALTERNATE TITLES
+
+Make the three alternate titles meaningfully different:
+
+1. Search-led:
+Closely match the likely query or task.
+
+2. Benefit-led:
+Emphasize the confirmed practical value.
+
+3. Format- or use-case-led:
+Clarify whether the destination contains a tutorial, product, recipe, checklist, article, inspiration, comparison, or another confirmed format.
+
+Do not create alternatives that differ only through words such as:
+
+* discover;
+* explore;
+* learn;
+* find out.
+
+PIN DESCRIPTION
+
+Write one useful Pin description.
+
+The description should:
+
+* contain 2–4 concise sentences;
+* explain what the user will find after opening the Pin;
+* use the primary keyword naturally;
+* include relevant secondary keywords only when they fit the meaning;
+* mention a specific feature, takeaway, use case, or benefit;
+* match the search intent and destination page;
+* include one soft CTA only when appropriate;
+* sound helpful rather than promotional.
+
+Do not attempt to use the full available character limit unless the content genuinely requires it.
+
+Do not turn the description into a list of keywords.
+
+Do not repeat the title word for word.
+
+Do not add hashtags by default.
+
+Possible soft CTAs include:
+
+* “See the full step-by-step process.”
+* “Save this idea for your next project.”
+* “View the complete comparison.”
+* “Explore the available options.”
+* “Read the full guide.”
+* “Check the confirmed product details.”
+
+Use only a CTA supported by {{goal}}, {{desiredAction}}, and the destination page.
+
+If a CTA would feel forced, finish with a useful descriptive sentence instead.
+
+KEYWORD USAGE
+
+Use keywords to clarify:
+
+* the topic;
+* content format;
+* intended audience;
+* use case;
+* style;
+* occasion;
+* problem being solved;
+* desired result;
+* relevant season or location.
+
+Do not:
+
+* repeat the exact keyword unnaturally;
+* stack keyword variations in one sentence;
+* add unrelated high-volume terms;
+* use trending keywords that do not match the content;
+* write for search engines at the expense of readability.
+
+BOARD NAME SUGGESTIONS
+
+Suggest three possible Pinterest board names.
+
+Each board name should:
+
+* represent a broader content category rather than only this single Pin;
+* be relevant to the target audience;
+* use natural search language;
+* be specific enough to distinguish the board;
+* remain useful for future related Pins.
+
+Do not imply that these boards already exist.
+
+Do not create three near-identical keyword variations.
+
+Use this label:
+
+Suggested board name
+
+ON-PIN TEXT
+
+Write one short text-overlay idea.
+
+The overlay should:
+
+* communicate the Pin’s central value quickly;
+* usually contain approximately 3–8 words;
+* remain readable on a mobile screen;
+* complement rather than repeat the title;
+* avoid clickbait;
+* avoid unsupported numbers and promises;
+* work with the supplied visual context.
+
+Do not place a long description or several keyword phrases inside the image.
+
+When appropriate, provide:
+
+Main overlay:
+[short phrase]
+
+Optional small supporting line:
+[very short context]
+
+VISUAL CONCEPT
+
+Suggest one practical Pin visual concept.
+
+Describe:
+
+* the main subject;
+* the composition;
+* where the overlay text could appear;
+* the visual hierarchy;
+* how the image communicates the topic or outcome.
+
+Do not suggest:
+
+* fake product interfaces;
+* invented before-and-after results;
+* fabricated testimonials;
+* unsupported graphs;
+* irrelevant stock photography;
+* excessive text;
+* decorative visuals unrelated to the Pin’s purpose.
+
+ALT TEXT
+
+Write brief alt text based only on {{visualContext}} and the proposed visual concept.
+
+The alt text should:
+
+* describe what is visibly shown;
+* explain meaningful visual relationships;
+* help a person understand the image without seeing it;
+* use clear, literal language;
+* remain concise;
+* avoid keyword stuffing;
+* avoid promotional claims;
+* avoid repeating the title and description.
+
+If the actual visual has not been supplied and cannot be reliably inferred, write:
+
+[Add alt text after the final Pin visual is selected]
+
+Do not invent visual details merely to complete this field.
+
+FINAL QUALITY CHECK
+
+Before presenting the Pin package, silently verify that:
+
+* the recommended title is no more than 100 characters;
+* the important topic is clear near the beginning;
+* the title and description match the destination page;
+* no product, result, offer, statistic, deadline, or resource was invented;
+* the primary keyword is used naturally;
+* the alternate titles use genuinely different approaches;
+* the description provides useful context rather than keyword repetition;
+* the board names represent reusable categories;
+* the overlay is short and readable;
+* the visual suggestion supports the content;
+* the alt text describes the visual rather than serving as advertising;
+* the CTA is relevant or omitted;
+* the package does not sound salesy or mechanically SEO-optimized.
+
+OUTPUT FORMAT
+
+Recommended Pin title:
+[Title]
+
+Character count:
+[Number]
+
+Pin description:
+[Description]
+
+Character count:
+[Number]
+
+Alternate title 1 — Search-led:
+[Title]
+
+Character count:
+[Number]
+
+Alternate title 2 — Benefit-led:
+[Title]
+
+Character count:
+[Number]
+
+Alternate title 3 — Format or use-case-led:
+[Title]
+
+Character count:
+[Number]
+
+Suggested board names:
+
+1. [Board name]
+2. [Board name]
+3. [Board name]
+
+On-Pin text:
+
+Main overlay:
+[Short text]
+
+Optional supporting line:
+[Text or omit]
+
+Visual concept:
+[Specific visual direction]
+
+Alt text:
+[Accessible description or placeholder]
+
+Output only the completed Pin package. Do not explain your process.

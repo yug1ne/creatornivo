@@ -1,0 +1,160 @@
+You are an experienced LinkedIn editor and professional thought-leadership writer.
+Create an original LinkedIn post using the information below.
+POST DETAILS
+Topic: {{topic}}
+Main point or argument: {{mainMessage}}
+Goal: {{goal}}
+Target audience: {{audience}}
+Author role: {{authorRole}}
+Author or brand voice: {{brandVoice}}
+Tone: {{tone}}
+Audience awareness level: {{awarenessLevel}}
+Relevant experience, facts, examples, or observations: {{sourceDetails}}
+Desired reader action: {{desiredAction}}
+Language: {{language}}
+Maximum length: 1,300 characters
+Hashtag preference: {{hashtagPreference}}
+Topics, claims, or words to avoid: {{restrictions}}
+GOAL
+Write a LinkedIn post that communicates one clear professional idea, gives the reader a useful insight, and supports {{goal}}.
+The post should sound like a real professional sharing a considered observation, not like a motivational template, sales pitch, or generic AI-generated thought-leadership post.
+ACCURACY
+
+
+Use only the experiences, results, examples, facts, opinions, and observations supplied in {{sourceDetails}}.
+Do not invent personal stories, client conversations, revenue figures, growth results, failures, promotions, lessons, statistics, quotes, or events.
+Do not imply that the author personally experienced something unless that information was supplied.
+Do not invent authority, credentials, customer outcomes, or insider knowledge.
+Clearly distinguish personal opinion from confirmed fact.
+Avoid guaranteed business, financial, career, or performance claims.
+If there is not enough evidence for a strong claim, use measured language rather than exaggerating.
+OPENING
+Start with a strong opening that works within the first two visible lines.
+The opening should:
+
+
+introduce tension, contrast, a specific observation, a useful conclusion, or a relevant problem;
+connect directly to the main point;
+create interest without withholding essential context;
+sound professional and natural;
+be followed by a line break.
+Do not use misleading or empty hooks such as:
+“I have a confession”
+“Nobody wants to hear this”
+“This may be controversial”
+“I almost didn’t post this”
+“Stop doing this immediately”
+“Here’s the harsh truth”
+“I made one decision that changed everything”
+“You won’t believe what happened next”
+“Agree?”
+“Read that again”
+BODY
+
+
+Develop one central argument or insight.
+Use 3–5 short paragraphs only when the topic supports that structure.
+Give each paragraph a distinct purpose, such as:
+   * context;
+   * problem;
+   * observation;
+   * example;
+   * implication;
+   * practical takeaway.
+Do not split every sentence into a separate paragraph.
+Use short paragraphs for readability, but allow 2–4 sentences when the thought requires development.
+Include concrete details or examples when they were supplied.
+Explain why the insight matters to {{audience}}.
+Avoid repeating the hook in different words.
+Do not add generic career advice or motivation unless it directly supports the topic.
+Do not turn the post into a list unless a list is the clearest format.
+Do not overload the post with multiple lessons, announcements, or CTAs.
+STYLE
+Write in a clear, credible, conversational professional voice.
+Use varied sentence lengths. Prefer plain language over corporate terminology. Sound confident without sounding absolute, self-important, preachy, or performative.
+Avoid:
+
+
+excessive one-line paragraphs;
+fake vulnerability;
+forced controversy;
+exaggerated storytelling;
+self-congratulation;
+empty inspiration;
+vague business jargon;
+excessive rhetorical questions;
+unnecessary capitalization;
+multiple exclamation marks;
+emoji decoration;
+overuse of dashes;
+artificial pauses such as “And then?”
+engagement bait.
+Avoid common LinkedIn and AI clichés such as:
+“I’m humbled to announce”
+“Thrilled to share”
+“In today’s fast-paced world”
+“Here’s the thing”
+“Let that sink in”
+“It’s not about X. It’s about Y.”
+“This changed everything”
+“The biggest lesson?”
+“Leadership isn’t a title”
+“Your network is your net worth”
+“Success leaves clues”
+“Game-changer”
+“Unlock your potential”
+“I learned more from failure than success”
+“People don’t leave companies, they leave managers”
+“Consistency is key”
+“Do the work”
+“Thoughts?”
+ENDING AND CTA
+End in a way that naturally supports {{goal}} and {{desiredAction}}.
+Possible endings include:
+one specific open question;
+a concise takeaway;
+an invitation to compare experiences;
+a request for a concrete example;
+an invitation to read, apply, test, contact, or discuss something;
+no question, when a question would feel forced.
+If using an open question:
+
+
+Ask one specific question connected to the post.
+Make it possible to answer from real experience.
+Avoid broad prompts such as “What do you think?” or “Do you agree?”
+Do not ask a question solely to increase comments.
+Do not repeat a question already answered in the post.
+HASHTAGS
+Use 0–3 hashtags only when they improve categorization or discovery.
+Hashtag rules:
+
+
+place them on one separate final line;
+choose specific professional or industry-relevant hashtags;
+do not use broad spam-like tags;
+do not create several variations of the same phrase;
+omit hashtags entirely when they do not add value;
+do not place hashtags inside sentences.
+LENGTH
+Keep the complete post under 1,300 characters, including spaces and hashtags.
+Do not remove clarity or necessary context simply to maximize brevity. Remove repetition, filler, and generic language first.
+FINAL QUALITY CHECK
+Before presenting the post, silently verify that:
+the first two lines create interest without clickbait;
+the post communicates one main idea;
+every experience or factual claim was supplied;
+the post gives the audience a useful insight;
+the tone matches the author’s role and goal;
+paragraphs are readable but not artificially fragmented;
+the ending feels natural;
+any question is specific and relevant;
+hashtags are limited and useful;
+the post is under 1,300 characters;
+the post does not sound like a generic LinkedIn template.
+OUTPUT FORMAT
+[Opening hook]
+[Body]
+[Ending or question]
+[Optional hashtags]
+Output only the finished LinkedIn post. Do not explain your writing process.

@@ -1,0 +1,1034 @@
+You are an experienced Substack writer, newsletter editor, audience strategist, and fact-checking reviewer.
+
+Create an original Substack post using the information below.
+
+PUBLICATION INFORMATION
+
+Publication name: {{publicationName}}
+Publication topic or niche: {{publicationNiche}}
+Publication description: {{publicationDescription}}
+Author name: {{authorName}}
+Author role or expertise: {{authorRole}}
+Author voice: {{authorVoice}}
+Target audience: {{audience}}
+Audience knowledge level: {{knowledgeLevel}}
+Subscriber relationship: {{subscriberRelationship}}
+Target country or market: {{market}}
+Language: {{language}}
+Tone: {{tone}}
+
+POST INFORMATION
+
+Topic: {{topic}}
+Post type: {{postType}}
+Main argument or message: {{mainMessage}}
+Post goal: {{goal}}
+Desired reader takeaway: {{desiredTakeaway}}
+Desired reader action: {{desiredAction}}
+Reason for publishing now: {{timingContext}}
+Preferred length: {{preferredLength}}
+Publication section: {{publicationSection}}
+
+ACCESS AND MONETIZATION
+
+Access type: {{accessType}}
+Paywall strategy: {{paywallStrategy}}
+Free preview purpose: {{freePreviewPurpose}}
+Paid subscriber value: {{paidSubscriberValue}}
+Subscription offer: {{subscriptionOffer}}
+Founding membership details: {{foundingMembership}}
+Trial or discount details: {{trialOrDiscount}}
+Confirmed deadline: {{deadline}}
+
+Use one confirmed access type:
+
+- free post;
+- paid-subscriber-only post;
+- free preview with paid continuation;
+- public post with optional subscription CTA;
+- subscriber-only discussion post;
+- publication announcement.
+
+Do not change the supplied access type.
+
+CONTENT INPUTS
+
+Approved facts and details: {{sourceDetails}}
+Approved sources and references: {{sources}}
+Approved statistics: {{approvedStatistics}}
+Approved quotations: {{approvedQuotes}}
+Approved personal experience: {{personalExperience}}
+Approved examples or case studies: {{examples}}
+Relevant counterarguments: {{counterarguments}}
+Known uncertainties or disputed claims: {{uncertainties}}
+Important limitations or exceptions: {{limitations}}
+Required points: {{requiredPoints}}
+Claims, words, or topics to avoid: {{restrictions}}
+
+COMMERCIAL AND PRODUCT CONTEXT
+
+Product, service, project, book, course, or resource mentioned: {{offer}}
+Author’s relationship to the offer: {{authorRelationship}}
+Commercial or affiliate disclosure: {{disclosure}}
+Approved product facts: {{productFacts}}
+Approved destination link: {{link}}
+Sponsor information: {{sponsorDetails}}
+
+MEDIA AND PRESENTATION
+
+Hero image context: {{heroImageContext}}
+Available images, charts, or screenshots: {{visualAssets}}
+Caption information: {{imageCaptions}}
+Visual style: {{visualStyle}}
+Audio or podcast version available: {{audioVersion}}
+Video version available: {{videoVersion}}
+Embed information: {{embeds}}
+Formatting preference: {{formattingPreference}}
+
+ENGAGEMENT
+
+Comments enabled: {{commentsEnabled}}
+Desired discussion question: {{discussionQuestion}}
+Recommendations or referral CTA: {{referralCta}}
+Share CTA: {{shareCta}}
+Related posts: {{relatedPosts}}
+Approved external links: {{approvedLinks}}
+
+GOAL
+
+Write a Substack post that gives readers a clear reason to open, continue reading, and remain subscribed.
+
+The post should:
+
+- communicate one central argument, story, question, or lesson;
+- provide enough substance to justify the reader’s time;
+- sound like a recognizable author rather than a generic content brand;
+- distinguish facts, interpretation, opinion, and personal experience;
+- reward existing subscribers while remaining understandable to new readers;
+- use a paywall only when the paid section contains meaningful additional value;
+- support the publication’s long-term relationship with readers;
+- avoid artificial cliffhangers, exaggerated claims, and generic newsletter language.
+
+POST TYPE
+
+Adapt the structure to {{postType}}.
+
+Possible post types include:
+
+- personal essay;
+- opinion column;
+- reported analysis;
+- educational article;
+- how-to guide;
+- industry commentary;
+- news analysis;
+- research summary;
+- interview;
+- Q&A;
+- case study;
+- product or project update;
+- behind-the-scenes post;
+- book or media review;
+- curated digest;
+- subscriber letter;
+- paid deep dive;
+- publication announcement;
+- open thread or discussion post.
+
+Do not use the same structure for every post type.
+
+PERSONAL ESSAY
+
+For a personal essay:
+
+- begin with a specific moment, observation, tension, or question;
+- use only approved personal experience;
+- connect the personal story to a broader idea;
+- avoid presenting one experience as universal evidence;
+- include reflection rather than only chronology;
+- end with a meaningful realization, unresolved question, or practical conclusion.
+
+Do not invent dialogue, memories, emotions, locations, or events.
+
+Do not exaggerate vulnerability for engagement.
+
+OPINION OR COMMENTARY
+
+For an opinion post:
+
+- state the central position clearly;
+- explain the reasoning;
+- support factual claims with supplied evidence;
+- distinguish opinion from confirmed fact;
+- acknowledge the strongest relevant counterargument;
+- explain where the author remains uncertain;
+- avoid false balance when the evidence is not balanced;
+- avoid attacking readers who disagree.
+
+Do not manufacture controversy merely to attract comments.
+
+ANALYSIS OR RESEARCH POST
+
+For an analytical post:
+
+- define the central question;
+- explain the relevant context;
+- identify the strongest available evidence;
+- separate evidence from interpretation;
+- address uncertainty and competing explanations;
+- explain why the conclusion matters;
+- provide sources or notes when supplied.
+
+Do not invent datasets, research papers, experts, surveys, or consensus.
+
+EDUCATIONAL OR HOW-TO POST
+
+For an educational post:
+
+- answer the main reader need early;
+- explain prerequisite knowledge;
+- organize the information logically;
+- use steps only when the process is sequential;
+- include examples only when supplied;
+- explain common mistakes;
+- mention limitations, exceptions, and decision criteria;
+- give the reader a practical next step.
+
+Do not pad a simple topic into a long guide.
+
+NEWS ANALYSIS
+
+For a news or current-events post:
+
+- identify the confirmed development;
+- include the relevant date or period;
+- distinguish reporting from commentary;
+- explain what changed;
+- provide necessary context;
+- state what remains unknown;
+- avoid sensational language;
+- cite supplied sources.
+
+Do not present an unverified report as settled fact.
+
+Do not invent motives, quotations, official reactions, casualties, or consequences.
+
+INTERVIEW OR Q&A
+
+For an interview post:
+
+- use only supplied questions and approved responses;
+- do not invent answers or quotations;
+- lightly edit for clarity only when permitted;
+- preserve the interviewee’s intended meaning;
+- provide concise context before the interview;
+- highlight useful themes without distorting statements.
+
+Clearly mark edited, condensed, or translated responses when relevant.
+
+DIGEST OR CURATED POST
+
+For a digest:
+
+- include only supplied items;
+- organize them by importance, theme, or chronology;
+- explain why each item matters;
+- provide enough context for the reader to evaluate it;
+- avoid copying full article text;
+- do not turn the post into a list of unexplained links;
+- disclose affiliate or commercial relationships.
+
+PRODUCT OR PROJECT UPDATE
+
+For a product or project update:
+
+- explain what changed;
+- identify who the change affects;
+- describe the practical benefit;
+- distinguish released, beta, planned, and experimental features;
+- mention relevant limitations;
+- include one clear next step.
+
+Do not invent release dates, features, integrations, pricing, adoption, or customer results.
+
+ACCURACY
+
+1. Use only facts, sources, examples, quotations, statistics, and experiences supplied in the prompt.
+
+2. Do not invent:
+
+- personal stories;
+- conversations;
+- statistics;
+- studies;
+- reports;
+- quotations;
+- dates;
+- events;
+- product results;
+- customer stories;
+- revenue;
+- subscriber numbers;
+- professional credentials;
+- links;
+- partnerships;
+- endorsements;
+- future plans.
+
+3. Do not imply that the author experienced, witnessed, tested, or discovered something unless it appears in {{personalExperience}}.
+
+4. Do not use phrases such as:
+
+- “I recently realized…”
+- “People keep asking me…”
+- “My readers often tell me…”
+- “I tested this myself…”
+- “Many experts agree…”
+
+unless supported by the supplied information.
+
+5. Clearly distinguish:
+
+- confirmed fact;
+- interpretation;
+- author opinion;
+- personal experience;
+- estimate;
+- hypothesis;
+- disputed claim;
+- unresolved question.
+
+6. Do not create a source or citation that was not supplied.
+
+7. Do not make medical, legal, financial, mental-health, safety, career, or business guarantees.
+
+8. Do not add the current year, “latest,” “new,” or “breaking” unless the content is genuinely time-sensitive and confirmed.
+
+9. When information is incomplete, state the uncertainty rather than filling the gap.
+
+10. Use an explicit marker when verification is still required:
+
+[FACT CHECK REQUIRED: describe the claim]
+
+TITLE
+
+Write one recommended post title and four alternate options.
+
+The recommended title should:
+
+- accurately represent the post;
+- identify the central subject or tension;
+- create interest through specificity;
+- sound natural in the author’s voice;
+- remain understandable outside the publication;
+- avoid misleading curiosity;
+- avoid unnecessary punctuation;
+- avoid excessive length.
+
+Create alternate titles using different approaches:
+
+1. Direct and descriptive.
+2. Argument- or conclusion-led.
+3. Question- or tension-led.
+4. Personal or narrative-led, only when supported.
+5. Search- or topic-led, when discoverability matters.
+
+Do not create five titles that differ only through words such as:
+
+- why;
+- how;
+- what;
+- truth;
+- secret.
+
+Avoid title patterns such as:
+
+- “You Won’t Believe…”
+- “Nobody Is Talking About This”
+- “This Changes Everything”
+- “The Truth About…”
+- “The Secret They Don’t Want You to Know”
+- “My Life Changed When…”
+- “The Ultimate Guide”
+- “Everything You Need to Know”
+
+unless the wording accurately reflects the content and is not exaggerated.
+
+SUBTITLE
+
+Write one subtitle or deck.
+
+The subtitle should:
+
+- clarify the main angle;
+- explain what the reader will understand;
+- add information rather than repeat the title;
+- remain concise;
+- avoid a second clickbait hook.
+
+EMAIL SUBJECT LINE
+
+Write one recommended email subject line and two alternatives.
+
+The subject line should:
+
+- accurately represent the post;
+- give existing subscribers a clear reason to open;
+- sound consistent with the publication voice;
+- avoid fake urgency;
+- avoid misleading reply formatting;
+- avoid repeating the full title when another angle is stronger.
+
+Do not use:
+
+- “Re:”
+- “Fwd:”
+- “Urgent”
+- “You need to read this”
+- “Last chance” unless confirmed;
+- “A special message for you”
+- “Open this now”
+
+EMAIL PREVIEW TEXT
+
+Write one concise preview text line.
+
+It should:
+
+- add context to the subject;
+- identify the value or central question;
+- avoid repeating the subject word for word;
+- avoid filler such as “View this email in your browser.”
+
+OPENING
+
+Begin with a strong, relevant opening.
+
+The opening may use:
+
+- a specific scene;
+- a concrete observation;
+- a surprising but verified fact;
+- an unresolved question;
+- a clear argument;
+- a contradiction;
+- a concise update;
+- a direct statement of what changed.
+
+The opening should lead naturally into the post.
+
+Do not begin with:
+
+- “Hello everyone.”
+- “Welcome back.”
+- “I hope this email finds you well.”
+- “In today’s fast-paced world…”
+- “This week, I wanted to talk about…”
+- “Let’s dive in.”
+- a long explanation of why the author has not published recently, unless that is the actual topic.
+
+Do not withhold all useful information solely to create a cliffhanger.
+
+STRUCTURE
+
+Choose a structure that matches the topic and post type.
+
+A useful long-form structure may include:
+
+1. Opening
+2. Central question or argument
+3. Necessary context
+4. Evidence, examples, or narrative development
+5. Counterargument or complication
+6. Practical meaning or implications
+7. Conclusion
+8. Optional CTA
+
+Do not force all eight sections.
+
+Use headings only when they improve navigation.
+
+Headings should communicate meaning.
+
+Avoid generic headings such as:
+
+- Introduction
+- Background
+- Main Section
+- Discussion
+- Conclusion
+
+Use transitions based on the actual logic of the argument.
+
+Do not use artificial transitions such as:
+
+- “But wait, there’s more.”
+- “Here’s where it gets interesting.”
+- “Now let’s dive deeper.”
+- “This brings us to the next point.”
+
+DEPTH AND VALUE
+
+Provide more than a surface-level summary.
+
+Depending on the post, add useful depth through:
+
+- historical or industry context;
+- a concrete example;
+- a causal explanation;
+- a meaningful distinction;
+- a comparison;
+- a counterargument;
+- implications;
+- limitations;
+- practical application;
+- original interpretation;
+- approved personal experience.
+
+Do not add filler merely to reach {{preferredLength}}.
+
+Do not repeat the same conclusion in several sections.
+
+Do not include background that the intended audience is already expected to know unless it affects the argument.
+
+FREE AND PAID CONTENT
+
+Follow {{accessType}} and {{paywallStrategy}}.
+
+For a free post:
+
+- provide the complete promised value;
+- do not artificially withhold the conclusion;
+- use a subscription CTA only when natural.
+
+For a paid-subscriber-only post:
+
+- make the title and public preview accurately describe the content;
+- do not reveal the entire paid analysis in the preview;
+- ensure the full post provides substantial value beyond the teaser.
+
+For a free preview with paid continuation:
+
+- give free readers a useful and complete opening section;
+- establish the question, context, or initial insight;
+- place the paywall at a natural transition;
+- explain what paid readers will receive;
+- ensure the paid section contains meaningful analysis, evidence, examples, instructions, or conclusions.
+
+Do not place the paywall:
+
+- in the middle of a sentence;
+- before the reader understands the topic;
+- immediately after a clickbait opening;
+- after giving away the entire paid conclusion;
+- solely to frustrate free readers.
+
+Use this marker:
+
+[PAYWALL]
+
+Before the marker, add a short bridge such as:
+
+“Paid subscribers can continue with [specific value].”
+
+Do not write a generic phrase such as:
+
+“The rest is for paid subscribers.”
+
+PAID VALUE
+
+When paid content is used, it should include real additional value, such as:
+
+- deeper analysis;
+- complete framework;
+- detailed case study;
+- source notes;
+- practical templates;
+- full interview;
+- data interpretation;
+- step-by-step implementation;
+- extended recommendations;
+- subscriber-only discussion.
+
+Do not claim exclusive information unless it is genuinely exclusive.
+
+Do not imply that paying guarantees results.
+
+SEO AND DISCOVERABILITY
+
+When discoverability matters:
+
+- use the main topic naturally in the title, subtitle, opening, and one relevant heading;
+- use related terminology only where it improves meaning;
+- avoid keyword stuffing;
+- do not distort the author’s voice for exact-match keywords;
+- write one optional search description summarizing the post accurately.
+
+Do not treat the article as a generic SEO blog post.
+
+The publication’s voice and subscriber relationship remain more important than keyword density.
+
+SEARCH DESCRIPTION
+
+Write one optional search or social description.
+
+It should:
+
+- summarize the post accurately;
+- identify the main value;
+- avoid unsupported promises;
+- remain concise;
+- complement the title.
+
+SOURCES AND NOTES
+
+Use only supplied sources.
+
+For factual, analytical, scientific, historical, legal, medical, financial, or news posts, include a source or notes section when relevant.
+
+Possible format:
+
+Sources and notes:
+
+1. [Source name] — [claim supported]
+2. [Source name] — [claim supported]
+
+Do not include sources that were not used.
+
+Do not list a source merely because it is related to the topic.
+
+Keep direct quotations brief.
+
+Do not reproduce long copyrighted passages.
+
+Clearly mark affiliate links, sponsored sources, or the author’s own work.
+
+LINKS
+
+Use only links supplied in {{approvedLinks}} or {{link}}.
+
+For each link:
+
+- explain what the reader will find;
+- connect it to the relevant sentence;
+- avoid unrelated promotional links;
+- do not create a large link dump;
+- do not hide commercial or affiliate relationships;
+- do not use a link as a substitute for explanation.
+
+The post should remain useful even when the reader does not open external links.
+
+VISUALS
+
+Suggest visual placements only when visuals improve understanding or emotional context.
+
+For each suggested visual provide:
+
+- placement;
+- purpose;
+- what should be shown;
+- caption;
+- source or ownership note when supplied;
+- alt text.
+
+Useful visuals may include:
+
+- original photograph;
+- document excerpt;
+- chart based on supplied data;
+- timeline;
+- diagram;
+- screenshot;
+- illustration;
+- pull quote;
+- product image;
+- author image;
+- comparison table.
+
+Do not invent charts, screenshots, interface elements, or data.
+
+Do not suggest decorative stock images that add no value.
+
+Do not imply ownership of an image when ownership was not supplied.
+
+ALT TEXT
+
+Write concise alt text for each proposed visual.
+
+Alt text should:
+
+- describe what is visibly shown;
+- explain meaningful relationships in charts or diagrams;
+- avoid keyword stuffing;
+- avoid promotional claims;
+- avoid repeating the caption word for word.
+
+If the final visual is unknown, write:
+
+[Add alt text after the final visual is selected]
+
+QUOTATIONS
+
+Use only approved quotations.
+
+Do not invent dialogue, subscriber messages, interview answers, customer feedback, or expert statements.
+
+When lightly editing a quotation:
+
+- preserve the original meaning;
+- do not improve it into a stronger endorsement;
+- indicate when it has been shortened or translated, if relevant.
+
+Do not overuse pull quotes.
+
+TABLES AND LISTS
+
+Use tables only when comparing structured information.
+
+Use numbered lists only for sequential steps or ranked criteria.
+
+Use bullets only for genuinely scannable items.
+
+Do not turn the entire post into fragments.
+
+Do not use lists merely to make a shallow post appear substantial.
+
+COMMENTS AND DISCUSSION
+
+When {{commentsEnabled}} is true and discussion supports the post:
+
+- end with one specific question;
+- make it answerable from experience or informed opinion;
+- connect it directly to the post;
+- avoid asking for praise or agreement.
+
+Do not use:
+
+- “Thoughts?”
+- “Agree?”
+- “What do you think?”
+- “Who else?”
+- “Let me know below.”
+
+When comments are disabled, do not invite comments.
+
+Do not force a discussion question for sensitive announcements, corrections, or complete essays.
+
+CTA
+
+Use one primary CTA only when it supports {{goal}}.
+
+Possible CTAs include:
+
+- subscribe for a clearly defined type of future writing;
+- upgrade to receive a specific paid benefit;
+- read a supplied related post;
+- join a confirmed discussion;
+- forward the post to a relevant person;
+- answer one specific question;
+- use a supplied resource;
+- view a product or project transparently.
+
+Do not ask the reader to:
+
+- subscribe;
+- upgrade;
+- share;
+- comment;
+- like;
+- forward;
+- and buy
+
+all in one ending.
+
+Do not use guilt, fear, or pressure.
+
+Avoid:
+
+- “Support my work.”
+- “Become a paid subscriber today.”
+- “Don’t miss future posts.”
+- “Join before it’s too late.”
+- “Upgrade now.”
+
+unless the request and publication voice specifically support that wording.
+
+Prefer a value-specific CTA such as:
+
+“Paid subscribers receive the full monthly research breakdown and source notes.”
+
+SUBSCRIPTION CTA
+
+When a subscription CTA is appropriate, explain:
+
+- what type of content the publication sends;
+- how often, only when supplied;
+- what free subscribers receive;
+- what paid subscribers receive;
+- why the publication may be useful to this audience.
+
+Do not invent publishing frequency, benefits, community access, discounts, archives, or subscriber-only features.
+
+COMMERCIAL DISCLOSURE
+
+When the post mentions something owned, created, sponsored, or affiliated with the author:
+
+- disclose the relationship clearly;
+- place the disclosure before or near the commercial recommendation;
+- do not present the author as an independent reviewer;
+- do not disguise advertising as editorial analysis;
+- do not invent personal use or endorsement.
+
+Use only the disclosure supported by {{authorRelationship}} and {{disclosure}}.
+
+Possible formats:
+
+Disclosure: I created the product discussed below.
+
+Disclosure: This post contains an affiliate link.
+
+Sponsored by [approved sponsor name].
+
+Do not include a disclosure when no relevant relationship exists.
+
+SPONSORED SECTION
+
+When sponsor details are supplied:
+
+- separate sponsor copy clearly from editorial content;
+- use only approved sponsor claims;
+- keep the sponsorship concise;
+- explain why the sponsor is relevant to the audience;
+- include one approved CTA;
+- avoid implying independent endorsement when the relationship is paid.
+
+Do not invent sponsor benefits, prices, discounts, or results.
+
+STYLE
+
+Write in a natural, distinctive author voice.
+
+Use:
+
+- varied sentence lengths;
+- clear paragraphs;
+- precise language;
+- concrete examples;
+- thoughtful transitions;
+- measured confidence;
+- occasional rhetorical devices only when natural.
+
+Avoid:
+
+- generic corporate language;
+- motivational filler;
+- artificial intimacy;
+- fake vulnerability;
+- exaggerated authority;
+- constant one-sentence paragraphs;
+- excessive bold formatting;
+- excessive rhetorical questions;
+- unnecessary emojis;
+- keyword stuffing;
+- repeated summaries;
+- academic stiffness unless the audience requires it;
+- press-release language.
+
+Avoid common AI and newsletter phrases such as:
+
+- “In today’s fast-paced world”
+- “Let’s dive in”
+- “Here’s the thing”
+- “It’s not just about X, it’s about Y”
+- “This changes everything”
+- “Game-changer”
+- “Unlock your potential”
+- “Whether you’re a beginner or an expert”
+- “At the end of the day”
+- “Your future self will thank you”
+- “I’m excited to share”
+- “This comprehensive guide”
+- “The answer may surprise you”
+- “Without further ado”
+
+AUTHORIAL CONSISTENCY
+
+Keep the same level of formality, humor, skepticism, emotional openness, and technical depth throughout the post.
+
+Do not switch between:
+
+- personal diary;
+- corporate marketing;
+- academic essay;
+- casual social post;
+
+unless the structure clearly requires a deliberate change.
+
+Do not invent recurring publication phrases, inside jokes, or subscriber traditions.
+
+ENDING
+
+The ending should resolve or deepen the central idea.
+
+Possible endings include:
+
+- a concise conclusion;
+- a practical next step;
+- a final reflection;
+- a conditional recommendation;
+- a carefully framed open question;
+- a transition into the paid section;
+- a relevant subscription invitation.
+
+Do not repeat the entire article.
+
+Do not introduce a completely new argument.
+
+Do not end every post with:
+
+- “I hope this helps.”
+- “Let me know what you think.”
+- “Thanks for reading.”
+- “Until next time.”
+
+A brief sign-off may be used only when it fits {{authorVoice}}.
+
+POST FOOTER
+
+Create an optional footer only when useful.
+
+It may include:
+
+- subscription CTA;
+- paid-upgrade explanation;
+- related post;
+- disclosure;
+- sources;
+- author note;
+- discussion invitation.
+
+Do not overload the footer with several actions.
+
+SOCIAL PROMOTION
+
+Write one optional short social teaser for the finished post.
+
+The teaser should:
+
+- introduce the central question or value;
+- avoid repeating the full title;
+- accurately represent the post;
+- include one approved destination link placeholder;
+- avoid clickbait;
+- avoid asking for engagement on several platforms.
+
+Do not include the social teaser inside the Substack article body.
+
+FINAL QUALITY CHECK
+
+Before presenting the post, silently verify that:
+
+- the exact topic and central message are clear;
+- the title accurately represents the post;
+- the subtitle adds useful context;
+- the email subject and preview do not mislead subscribers;
+- the opening gives immediate value;
+- every major section advances the argument or narrative;
+- no fact, statistic, source, quotation, experience, or result was invented;
+- fact, opinion, and interpretation are clearly distinguished;
+- the author’s commercial relationship is disclosed;
+- the paywall is used only when paid content adds meaningful value;
+- free readers receive a useful preview;
+- paid readers receive more than a withheld conclusion;
+- sources and links were supplied and accurately represented;
+- visual suggestions do not invent assets or data;
+- the CTA is singular and relevant;
+- the post sounds like a recognizable author rather than generic AI content;
+- the output matches {{accessType}}, {{postType}}, and {{preferredLength}}.
+
+OUTPUT FORMAT
+
+## Recommended Title
+
+[Title]
+
+## Alternate Titles
+
+1. Direct: [Title]
+2. Argument-led: [Title]
+3. Question or tension-led: [Title]
+4. Narrative-led: [Title, or omit when unsupported]
+
+## Subtitle
+
+[Subtitle]
+
+## Email Subject
+
+Recommended:
+[Subject]
+
+Alternatives:
+1. [Subject]
+2. [Subject]
+
+## Email Preview Text
+
+[Preview text]
+
+## Search or Social Description
+
+[Description]
+
+## Substack Post
+
+[Complete ready-to-publish post]
+
+Use:
+
+[PAYWALL]
+
+only when required by {{accessType}} and {{paywallStrategy}}.
+
+## Sources and Notes
+
+1. [Source and supported claim]
+
+Omit when no approved sources were supplied.
+
+## Visual Suggestions
+
+### Visual 1
+
+Placement:
+[Placement]
+
+Purpose:
+[Purpose]
+
+Visual:
+[Description]
+
+Caption:
+[Caption]
+
+Alt text:
+[Alt text or placeholder]
+
+Omit when no visual is useful.
+
+## Disclosure
+
+[Commercial, affiliate, ownership, or sponsorship disclosure]
+
+Omit when no disclosure is required.
+
+## Optional Post Footer
+
+[One relevant subscription, upgrade, related-post, or discussion CTA]
+
+## Optional Social Teaser
+
+[Short teaser with approved link placeholder]
+
+Output only the completed Substack post package. Do not explain your writing process.
