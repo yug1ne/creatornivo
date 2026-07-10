@@ -43,6 +43,19 @@
 
 **Параллельно (blockers для Live, без перескакивания):** этапы 1–2 auth incident (мониторинг), Paddle Live onboarding (8), controlled purchase/refund test (9), legal review (7).
 
+## Priorities before Live Paddle
+
+Что закрыть **до** перехода на Live Paddle (порядок = приоритет):
+
+1. **Production smoke** — `prisma migrate deploy` + `db seed` + smoke на проде (auth, generate, templates, emails).
+2. **Sandbox Pro E2E** — checkout → webhook → Pro confirmation email → квота 100/мес → Customer Portal → cancel at period end.
+3. **Legal owner review** — ToS / Privacy / Refund Policy.
+4. **Live Paddle prep** — отдельные Live Product/Price, API keys, webhook, domain approval (не смешивать с Sandbox).
+5. **Controlled Live purchase + refund** — одна реальная покупка малой суммой и возврат.
+6. **Monitoring check** — Sentry + `GET /api/health` на production.
+
+**Отложено / не блокер для Live:** branded invoice/receipt (Backlog LOW), custom templates, analytics/SEO, stress-тест генераций.
+
 ### Что сделано по UX (аудит, 4 итерации, 2026-07-07)
 
 | Область | Улучшения |
