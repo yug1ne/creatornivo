@@ -1,0 +1,7 @@
+﻿exit: 0
+FOUND blog editor in chat_history.jsonl
+FOUND secondarySearchIntent in chat_history.jsonl size=167212
+FOUND blog editor in updates.jsonl
+FOUND secondarySearchIntent in updates.jsonl size=2167849
+FOUND blog editor in call-5878d650-4f0d-4df2-9f5c-6892401f7142-22.log
+
