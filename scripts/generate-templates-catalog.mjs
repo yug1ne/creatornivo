@@ -21,26 +21,45 @@ function extractVars(prompt) {
   return [...set];
 }
 
+/** Full Blog Article form schema (all prompt placeholders + UX metadata). */
+const blogArticleFormPath = path.join(
+  root,
+  "src",
+  "config",
+  "template-forms",
+  "blog-article-variables.json",
+);
+
+function loadBlogArticleVariables() {
+  if (!fs.existsSync(blogArticleFormPath)) {
+    console.error(
+      "missing blog article form schema — run: node scripts/build-blog-article-form.mjs",
+    );
+    process.exit(1);
+  }
+  const data = JSON.parse(fs.readFileSync(blogArticleFormPath, "utf8"));
+  if (!Array.isArray(data.variables) || data.variables.length === 0) {
+    console.error("blog-article-variables.json has no variables");
+    process.exit(1);
+  }
+  // Full `help` stays in blog-article-variables.json for the guide page only —
+  // keep catalog/DB lean for generate form load times.
+  return data.variables.map((v) => ({
+    key: v.key,
+    label: v.label,
+    placeholder: v.placeholder,
+    required: Boolean(v.required),
+    type: v.type || "text",
+    group: v.group,
+    groupTitle: v.groupTitle,
+    hint: v.hint,
+    options: v.options,
+    fullWidth: Boolean(v.fullWidth),
+  }));
+}
+
 const curated = {
-  "blog-article": {
-    required: ["topic", "primaryKeyword", "audience", "language"],
-    optional: [
-      "workingTitle",
-      "articleType",
-      "secondaryKeywords",
-      "knowledgeLevel",
-      "searchIntent",
-      "brandVoice",
-      "tone",
-      "preferredLength",
-      "painPoint",
-      "primaryQuestion",
-      "expectedReaderAction",
-      "sources",
-      "sourceDetails",
-      "market",
-    ],
-  },
+  // blog-article uses loadBlogArticleVariables() — full schema, not curated subset
   "cold-email-outreach": {
     required: ["recipientRole", "yourOffer", "painPoint", "tone"],
     optional: [
@@ -376,6 +395,33 @@ const placeholders = {
 };
 
 function buildVars(slug, prompt) {
+  if (slug === "blog-article") {
+    const formVars = loadBlogArticleVariables();
+    const promptKeys = new Set(extractVars(prompt));
+    const filtered = formVars.filter((v) => promptKeys.has(v.key));
+    const missing = [...promptKeys].filter(
+      (k) => !filtered.some((v) => v.key === k),
+    );
+    if (missing.length) {
+      console.warn(
+        "blog-article form schema missing keys:",
+        missing.join(", "),
+      );
+      for (const key of missing) {
+        filtered.push({
+          key,
+          label: humanize(key),
+          placeholder: "Optional — leave blank if unknown",
+          required: false,
+          type: "text",
+          group: "other",
+          groupTitle: "Other",
+        });
+      }
+    }
+    return filtered;
+  }
+
   const c = curated[slug];
   if (!c) return [];
   const allKeys = extractVars(prompt);

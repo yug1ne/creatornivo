@@ -14,7 +14,6 @@ import { MODEL_BY_PLAN } from "@/lib/ai/provider";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import {
   buildDefaultValues,
   validateVariableValues,
@@ -34,6 +33,8 @@ import type { TemplateListItem } from "@/types/template";
 
 import { GenerationResult } from "./generation-result";
 import { PromptPreview } from "./prompt-preview";
+import { TemplateHelpButton } from "./template-help-button";
+import { TemplateParametersForm } from "./template-parameters-form";
 import { TemplatePicker } from "./template-picker";
 import { UsageBanner } from "./usage-banner";
 
@@ -359,47 +360,25 @@ export function GenerateWorkspace({
 
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-sm">Parameters</CardTitle>
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <CardTitle className="text-sm">Parameters</CardTitle>
+                    <TemplateHelpButton templateSlug={selected.slug} />
+                  </div>
                 </CardHeader>
                 <CardContent className="pt-0">
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    {selected.variables.map((variable) => (
-                      <div
-                        key={variable.key}
-                        className={
-                          selected.variables.length % 2 !== 0 &&
-                          variable.key === selected.variables.at(-1)?.key
-                            ? "sm:col-span-2"
-                            : ""
-                        }
-                      >
-                        <label
-                          htmlFor={variable.key}
-                          className="mb-1.5 block text-sm font-medium text-foreground"
-                        >
-                          {variable.label}
-                          {variable.required && (
-                            <span className="text-destructive"> *</span>
-                          )}
-                        </label>
-                        <Input
-                          id={variable.key}
-                          type="text"
-                          value={values[variable.key] ?? ""}
-                          onChange={(e) => {
-                            if (!inFlightRef.current) {
-                              requestIdRef.current = null;
-                            }
-                            setValues((prev) => ({
-                              ...prev,
-                              [variable.key]: e.target.value,
-                            }));
-                          }}
-                          placeholder={variable.placeholder}
-                        />
-                      </div>
-                    ))}
-                  </div>
+                  <TemplateParametersForm
+                    variables={selected.variables}
+                    values={values}
+                    onChange={(key, value) => {
+                      if (!inFlightRef.current) {
+                        requestIdRef.current = null;
+                      }
+                      setValues((prev) => ({
+                        ...prev,
+                        [key]: value,
+                      }));
+                    }}
+                  />
                 </CardContent>
               </Card>
 

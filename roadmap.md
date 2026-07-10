@@ -26,7 +26,7 @@
 
 ## Текущие приоритеты (Июль 2026)
 
-> **Сдвиг фокуса:** технический фундамент и базовый UX/email закрыты в значительной степени. Текущий приоритет — **тестирование**, оставшиеся мелкие UX-улучшения, подготовка к привлечению пользователей и blockers для Live.
+> **Сдвиг фокуса:** технический фундамент и базовый UX/email закрыты в значительной степени. **Day 1 production smoke — DONE (2026-07-10).** Текущий приоритет — оставшиеся мелкие UX-улучшения, подготовка к привлечению пользователей, Sandbox Pro E2E и blockers для Live.
 
 | Приоритет | Задача | Статус / ожидаемый результат |
 |-----------|--------|------------------------------|
@@ -36,23 +36,35 @@
 
 | Приоритет | Задача | Ожидаемый результат |
 |-----------|--------|----------------------|
-| **1** | Ручное тестирование + smoke после деплоя | Register → generate → save → quota emails; Pro checkout (Sandbox); sign out modal; locked templates на `/generate` и `/templates`. |
+| ~~**1**~~ | ~~Ручное тестирование + smoke после деплоя~~ | **DONE (Day 1, 2026-07-10)** — Production smoke completed successfully. См. заметку Day 1 ниже. |
 | **2** | Мелкие UX-остатки | Library empty/error states, Settings friction, branded error/404 (часть этапа 10). |
 | **3** | Подготовка к привлечению пользователей | Early Access messaging, onboarding metrics, готовность support mailbox. |
 | ~~**4** (product)~~ | ~~Platform expansion — очереди 1–3~~ | **DONE (2026-07-09)** — 45 templates seeded (15 Free / 30 Pro); improved prompts for original 15; public counts updated. |
 
 **Параллельно (blockers для Live, без перескакивания):** этапы 1–2 auth incident (мониторинг), Paddle Live onboarding (8), controlled purchase/refund test (9), legal review (7).
 
+### Day 1 — Production smoke + deploy → **DONE** (2026-07-10)
+
+**Статус:** ✅ Production smoke completed successfully.
+
+**Проверено:**
+- `/api/health` OK
+- Sentry без новых ошибок
+- Onboarding tour + Early Access banner работают
+- Templates (45 шт, разделение Free/Pro) OK
+- Emails в новом стиле
+- Auth + password toggle OK
+
 ## Priorities before Live Paddle
 
 Что закрыть **до** перехода на Live Paddle (порядок = приоритет):
 
-1. **Production smoke** — `prisma migrate deploy` + `db seed` + smoke на проде (auth, generate, templates, emails).
+1. ~~**Production smoke**~~ — **DONE (Day 1, 2026-07-10)** — smoke на проде: health, Sentry, auth, templates, emails, onboarding/EA banner.
 2. **Sandbox Pro E2E** — checkout → webhook → Pro confirmation email → квота 100/мес → Customer Portal → cancel at period end.
 3. **Legal owner review** — ToS / Privacy / Refund Policy.
 4. **Live Paddle prep** — отдельные Live Product/Price, API keys, webhook, domain approval (не смешивать с Sandbox).
 5. **Controlled Live purchase + refund** — одна реальная покупка малой суммой и возврат.
-6. **Monitoring check** — Sentry + `GET /api/health` на production.
+6. ~~**Monitoring check**~~ — **DONE (Day 1, 2026-07-10)** — Sentry без новых ошибок; `GET /api/health` OK на production.
 
 **Отложено / не блокер для Live:** branded invoice/receipt (Backlog LOW), custom templates, analytics/SEO, stress-тест генераций.
 
@@ -131,7 +143,7 @@ Product taxonomy → `TemplateCategory` enum + `template-groups.ts`
 
 1. `npx prisma migrate deploy` (new TemplateCategory values)
 2. `npx prisma db seed` (45 upserts)
-3. Smoke: `/templates` shows 45; Free user can open free templates; Pro lock on packages
+3. Smoke: `/templates` shows 45; Free user can open free templates; Pro lock on packages — **PASS (Day 1, 2026-07-10)**
 4. Smoke: generate LinkedIn Post + one new free (e.g. Facebook Post) → save
 5. Landing/pricing: counts 15 free / 45 total (no stale «15 templates» / «8 core»)
 
@@ -214,6 +226,14 @@ Product taxonomy → `TemplateCategory` enum + `template-groups.ts`
 - New enum values + UI groups/categories; Free 15 / Pro 30 distribution.
 - Landing + pricing use `TEMPLATE_CATALOG_COUNTS` (no hardcoded stale counts).
 - Production: migrate `20260716100000_expand_template_categories` + `prisma db seed`.
+
+**Заметка (Day 1, 2026-07-10):** Production smoke + deploy → **DONE**.
+- ✅ Production smoke completed successfully.
+- `/api/health` OK; Sentry без новых ошибок.
+- Onboarding tour + Early Access banner работают.
+- Templates: 45 шт, Free/Pro разделение OK.
+- Emails в новом стиле; Auth + password toggle OK.
+- Следующий фокус перед Live: Sandbox Pro E2E, legal review, Paddle Live prep.
 
 **Заметка (2026-07-06):** ~~Временный development banner~~ → заменён Early Access banner (2026-07-07).
 

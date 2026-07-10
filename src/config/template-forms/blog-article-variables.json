@@ -1,0 +1,4434 @@
+{
+  "slug": "blog-article",
+  "title": "Blog Article",
+  "version": 1,
+  "generatedAt": "2026-07-10T11:50:23.323Z",
+  "fieldCount": 235,
+  "requiredKeys": [
+    "topic",
+    "primaryKeyword",
+    "audience",
+    "language"
+  ],
+  "groups": [
+    {
+      "id": "essentials",
+      "title": "Essentials",
+      "description": "Fill these first — enough for a solid draft.",
+      "defaultOpen": true
+    },
+    {
+      "id": "article",
+      "title": "Article information",
+      "description": "Type, goals, length, tone, and publication context.",
+      "defaultOpen": true
+    },
+    {
+      "id": "website",
+      "title": "Website & brand",
+      "description": "Where the article will live and how the site converts.",
+      "defaultOpen": false
+    },
+    {
+      "id": "author",
+      "title": "Author & experts",
+      "description": "Only real people and credentials you can verify.",
+      "defaultOpen": false
+    },
+    {
+      "id": "audience",
+      "title": "Audience",
+      "description": "Who reads this, what they need, and what confuses them.",
+      "defaultOpen": true
+    },
+    {
+      "id": "search_intent",
+      "title": "Search intent",
+      "description": "What the reader expects after searching.",
+      "defaultOpen": true
+    },
+    {
+      "id": "keywords",
+      "title": "Keywords & SEO inputs",
+      "description": "Use real keyword data only — never invent metrics.",
+      "defaultOpen": false
+    },
+    {
+      "id": "serp",
+      "title": "SERP & competition",
+      "description": "What already ranks and how you will differ.",
+      "defaultOpen": false
+    },
+    {
+      "id": "sources",
+      "title": "Sources",
+      "description": "Approved materials the model may cite.",
+      "defaultOpen": false
+    },
+    {
+      "id": "research",
+      "title": "Research requirements",
+      "description": "What must be verified before publishing.",
+      "defaultOpen": false
+    },
+    {
+      "id": "facts",
+      "title": "Facts & claims",
+      "description": "Approved facts only — leave blank if unknown.",
+      "defaultOpen": false
+    },
+    {
+      "id": "monetization",
+      "title": "Monetization & disclosure",
+      "description": "Affiliate, sponsor, and commercial relationships.",
+      "defaultOpen": false
+    },
+    {
+      "id": "cta",
+      "title": "Calls to action",
+      "description": "Primary and secondary next steps for the reader.",
+      "defaultOpen": false
+    },
+    {
+      "id": "high_stakes",
+      "title": "High-stakes / YMYL",
+      "description": "Medical, legal, financial, or safety-sensitive topics.",
+      "defaultOpen": false
+    },
+    {
+      "id": "visuals",
+      "title": "Visuals",
+      "description": "Images, charts, and licensing constraints.",
+      "defaultOpen": false
+    },
+    {
+      "id": "localization_extra",
+      "title": "RTL & localization extras",
+      "description": "Right-to-left and locale-specific notes.",
+      "defaultOpen": false
+    },
+    {
+      "id": "freshness",
+      "title": "Freshness & updates",
+      "description": "Review dates and changeable information.",
+      "defaultOpen": false
+    },
+    {
+      "id": "canonical",
+      "title": "Canonical & syndication",
+      "description": "Duplicate pages and republishing plans.",
+      "defaultOpen": false
+    },
+    {
+      "id": "structured_data",
+      "title": "Structured data",
+      "description": "Schema recommendations only — not code unless requested.",
+      "defaultOpen": false
+    },
+    {
+      "id": "performance",
+      "title": "Performance metrics",
+      "description": "How you will measure success after publish.",
+      "defaultOpen": false
+    }
+  ],
+  "variables": [
+    {
+      "key": "topic",
+      "label": "Topic",
+      "placeholder": "How solo founders build a weekly content system",
+      "required": true,
+      "type": "text",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "The subject the article is about — the reader’s real problem or question.",
+      "help": {
+        "what": "Working topic for the article.",
+        "why": "Anchors the whole piece so the model answers one clear subject.",
+        "example": "How solo founders build a weekly content system without a marketing team",
+        "avoid": "Vague topics like “content marketing” or multiple unrelated themes."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "primaryKeyword",
+      "label": "Primary Keyword",
+      "placeholder": "content system for solo founders",
+      "required": true,
+      "type": "text",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Main keyword — use naturally, no stuffing.",
+      "help": {
+        "what": "Primary target keyword or phrase.",
+        "why": "Guides title, H1, and topical focus without keyword stuffing.",
+        "example": "content system for solo founders",
+        "avoid": "Invented search volume or ranking claims."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "audience",
+      "label": "Audience",
+      "placeholder": "solo founders publishing weekly without a content team",
+      "required": true,
+      "type": "text",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Primary reader — be specific.",
+      "help": {
+        "what": "Primary audience description.",
+        "why": "Tone, depth, and examples depend on who reads.",
+        "example": "Solo SaaS founders who write their own marketing",
+        "avoid": "Everyone / general audience without constraints."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "language",
+      "label": "Language",
+      "placeholder": "English",
+      "required": true,
+      "type": "text",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Language of the article body.",
+      "help": {
+        "what": "Output language.",
+        "why": "All copy and metadata should match this language.",
+        "example": "English",
+        "avoid": "Mixing languages unless localization is intentional."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "articleType",
+      "label": "Article Type",
+      "placeholder": "how-to guide",
+      "required": false,
+      "type": "select",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Pick one confirmed format from the list.",
+      "help": {
+        "what": "The editorial format of the piece.",
+        "why": "Structure and depth depend on type (how-to vs comparison vs news).",
+        "example": "how-to guide",
+        "avoid": "Changing type only because another format “ranks better.”"
+      },
+      "options": [
+        "informational article",
+        "educational article",
+        "how-to guide",
+        "step-by-step tutorial",
+        "beginner’s guide",
+        "advanced guide",
+        "ultimate guide",
+        "pillar page",
+        "supporting cluster article",
+        "list article",
+        "checklist",
+        "comparison article",
+        "alternatives article",
+        "product review",
+        "service review",
+        "buying guide",
+        "recommendation article",
+        "case study",
+        "original research article",
+        "data analysis",
+        "trend analysis",
+        "news article",
+        "news analysis",
+        "opinion article",
+        "thought-leadership article",
+        "interview article",
+        "expert roundup",
+        "FAQ article",
+        "glossary article",
+        "definition article",
+        "troubleshooting guide",
+        "template article",
+        "resource collection",
+        "industry report",
+        "event recap",
+        "company blog update",
+        "customer-education article",
+        "product-led educational article",
+        "sponsored article",
+        "affiliate article",
+        "custom confirmed type"
+      ],
+      "fullWidth": false
+    },
+    {
+      "key": "searchIntent",
+      "label": "Search Intent",
+      "placeholder": "informational",
+      "required": false,
+      "type": "select",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Primary intent — do not force a sale on pure info queries.",
+      "help": {
+        "what": "Primary search intent.",
+        "why": "Controls whether the article teaches, compares, or transacts.",
+        "example": "informational",
+        "avoid": "Treating every query as a chance to sell."
+      },
+      "options": [
+        "informational",
+        "navigational",
+        "commercial investigation",
+        "transactional",
+        "local",
+        "troubleshooting",
+        "comparison",
+        "educational",
+        "news or freshness-driven",
+        "mixed intent"
+      ],
+      "fullWidth": false
+    },
+    {
+      "key": "tone",
+      "label": "Tone",
+      "placeholder": "clear, practical, honest",
+      "required": false,
+      "type": "text",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "How the writing should sound.",
+      "help": {
+        "what": "Tone — a parameter from the Blog Article brief (Article information).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([tone]) so nothing is invented.",
+        "example": "clear, practical, honest",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for tone."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "brandVoice",
+      "label": "Brand Voice",
+      "placeholder": "honest Early Access product voice — no hype",
+      "required": false,
+      "type": "text",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Brand personality constraints.",
+      "help": {
+        "what": "Brand Voice — a parameter from the Blog Article brief (Article information).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([brandVoice]) so nothing is invented.",
+        "example": "honest Early Access product voice — no hype",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for brand voice."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "primaryQuestion",
+      "label": "Primary Question",
+      "placeholder": "How do I publish consistently without a team?",
+      "required": false,
+      "type": "text",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "The question the article should answer early.",
+      "help": {
+        "what": "Primary Question — a parameter from the Blog Article brief (Audience).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([primaryQuestion]) so nothing is invented.",
+        "example": "How do I publish consistently without a team?",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for primary question."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "painPoint",
+      "label": "Pain Point",
+      "placeholder": "staring at a blank page every week",
+      "required": false,
+      "type": "text",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Main problem the article helps with.",
+      "help": {
+        "what": "Pain Point — a parameter from the Blog Article brief (Audience).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([painPoint]) so nothing is invented.",
+        "example": "staring at a blank page every week",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for pain point."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "preferredLength",
+      "label": "Preferred Length",
+      "placeholder": "1500–2000 words",
+      "required": false,
+      "type": "text",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Target length; model should not pad with filler.",
+      "help": {
+        "what": "Preferred Length — a parameter from the Blog Article brief (Article information).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([preferredLength]) so nothing is invented.",
+        "example": "1500–2000 words",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for preferred length."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "sources",
+      "label": "Sources",
+      "placeholder": "Title + URL for each approved source",
+      "required": false,
+      "type": "textarea",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Only sources the model may use.",
+      "help": {
+        "what": "Approved sources list.",
+        "why": "Prevents invented citations and weak references.",
+        "example": "Google Search Central — Creating helpful content — https://…",
+        "avoid": "Vague “studies show” without a real source."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "sourceDetails",
+      "label": "Source Details",
+      "placeholder": "Approved facts the model may state as true",
+      "required": false,
+      "type": "textarea",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Facts only — no guesses.",
+      "help": {
+        "what": "Source Details — a parameter from the Blog Article brief (Facts & claims).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([sourceDetails]) so nothing is invented.",
+        "example": "Approved facts the model may state as true",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for source details."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "articleGoal",
+      "label": "Article Goal",
+      "placeholder": "Help readers set up a repeatable weekly content workflow",
+      "required": false,
+      "type": "text",
+      "group": "article",
+      "groupTitle": "Article information",
+      "hint": "What success looks like for this article.",
+      "help": {
+        "what": "Business or editorial goal of the article.",
+        "why": "Shapes CTAs and depth without forcing a sale.",
+        "example": "Educate free users so they publish consistently",
+        "avoid": "Goals that only make sense if the reader buys something."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "contentOwner",
+      "label": "Content Owner",
+      "placeholder": "Content lead / your name",
+      "required": false,
+      "type": "text",
+      "group": "article",
+      "groupTitle": "Article information",
+      "hint": "Content Owner — a parameter from the Blog Article brief (Article information).",
+      "help": {
+        "what": "Content Owner — a parameter from the Blog Article brief (Article information).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([contentOwner]) so nothing is invented.",
+        "example": "Content lead / your name",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for content owner."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "maximumLength",
+      "label": "Maximum Length",
+      "placeholder": "2500 words",
+      "required": false,
+      "type": "text",
+      "group": "article",
+      "groupTitle": "Article information",
+      "hint": "Maximum Length — a parameter from the Blog Article brief (Article information).",
+      "help": {
+        "what": "Maximum Length — a parameter from the Blog Article brief (Article information).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([maximumLength]) so nothing is invented.",
+        "example": "2500 words",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for maximum length."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "minimumLength",
+      "label": "Minimum Length",
+      "placeholder": "1200 words",
+      "required": false,
+      "type": "text",
+      "group": "article",
+      "groupTitle": "Article information",
+      "hint": "Minimum Length — a parameter from the Blog Article brief (Article information).",
+      "help": {
+        "what": "Minimum Length — a parameter from the Blog Article brief (Article information).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([minimumLength]) so nothing is invented.",
+        "example": "1200 words",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for minimum length."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "pointOfView",
+      "label": "Point Of View",
+      "placeholder": "second person",
+      "required": false,
+      "type": "select",
+      "group": "article",
+      "groupTitle": "Article information",
+      "hint": "Point Of View — a parameter from the Blog Article brief (Article information).",
+      "help": {
+        "what": "Point Of View — a parameter from the Blog Article brief (Article information).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([pointOfView]) so nothing is invented.",
+        "example": "second person",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for point of view."
+      },
+      "options": [
+        "first person",
+        "second person",
+        "third person",
+        "mixed (define)"
+      ],
+      "fullWidth": false
+    },
+    {
+      "key": "publicationDate",
+      "label": "Publication Date",
+      "placeholder": "2026-07-15 or TBD",
+      "required": false,
+      "type": "text",
+      "group": "article",
+      "groupTitle": "Article information",
+      "hint": "Publication Date — a parameter from the Blog Article brief (Article information).",
+      "help": {
+        "what": "Publication Date — a parameter from the Blog Article brief (Article information).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([publicationDate]) so nothing is invented.",
+        "example": "2026-07-15 or TBD",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for publication date."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "publicationStatus",
+      "label": "Publication Status",
+      "placeholder": "internal draft",
+      "required": false,
+      "type": "select",
+      "group": "article",
+      "groupTitle": "Article information",
+      "hint": "Publication Status — a parameter from the Blog Article brief (Article information).",
+      "help": {
+        "what": "Publication Status — a parameter from the Blog Article brief (Article information).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([publicationStatus]) so nothing is invented.",
+        "example": "internal draft",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for publication status."
+      },
+      "options": [
+        "internal draft",
+        "ready for editorial review",
+        "ready for expert review",
+        "scheduled",
+        "published"
+      ],
+      "fullWidth": false
+    },
+    {
+      "key": "readerOutcome",
+      "label": "Reader Outcome",
+      "placeholder": "A simple checklist they can run every Monday",
+      "required": false,
+      "type": "text",
+      "group": "article",
+      "groupTitle": "Article information",
+      "hint": "Primary change for the reader after reading.",
+      "help": {
+        "what": "Main reader outcome.",
+        "why": "Keeps the article useful even without conversion.",
+        "example": "They can run a 60-minute weekly content block",
+        "avoid": "Outcomes you cannot support with the facts you provide."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "readingLevel",
+      "label": "Reading Level",
+      "placeholder": "general professional",
+      "required": false,
+      "type": "select",
+      "group": "article",
+      "groupTitle": "Article information",
+      "hint": "Reading Level — a parameter from the Blog Article brief (Article information).",
+      "help": {
+        "what": "Reading Level — a parameter from the Blog Article brief (Article information).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([readingLevel]) so nothing is invented.",
+        "example": "general professional",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for reading level."
+      },
+      "options": [
+        "plain language (grade 6–8)",
+        "general professional",
+        "expert / technical",
+        "mixed (define sections)"
+      ],
+      "fullWidth": false
+    },
+    {
+      "key": "secondaryOutcome",
+      "label": "Secondary Outcome",
+      "placeholder": "Know when to upgrade tooling vs process",
+      "required": false,
+      "type": "text",
+      "group": "article",
+      "groupTitle": "Article information",
+      "hint": "Optional secondary benefit.",
+      "help": {
+        "what": "Secondary Outcome — a parameter from the Blog Article brief (Article information).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([secondaryOutcome]) so nothing is invented.",
+        "example": "Know when to upgrade tooling vs process",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for secondary outcome."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "targetLocale",
+      "label": "Target Locale",
+      "placeholder": "en-US",
+      "required": false,
+      "type": "text",
+      "group": "article",
+      "groupTitle": "Article information",
+      "hint": "Locale for spelling, dates, currency (e.g. en-US, en-GB).",
+      "help": {
+        "what": "Target Locale — a parameter from the Blog Article brief (Article information).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([targetLocale]) so nothing is invented.",
+        "example": "en-US",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for target locale."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "updateFrequency",
+      "label": "Update Frequency",
+      "placeholder": "quarterly review",
+      "required": false,
+      "type": "select",
+      "group": "article",
+      "groupTitle": "Article information",
+      "hint": "Update Frequency — a parameter from the Blog Article brief (Article information).",
+      "help": {
+        "what": "Update Frequency — a parameter from the Blog Article brief (Article information).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([updateFrequency]) so nothing is invented.",
+        "example": "quarterly review",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for update frequency."
+      },
+      "options": [
+        "one-time",
+        "quarterly review",
+        "when product changes",
+        "when regulations change",
+        "continuous evergreen"
+      ],
+      "fullWidth": false
+    },
+    {
+      "key": "workingTitle",
+      "label": "Working Title",
+      "placeholder": "How to build a content system as a solo founder",
+      "required": false,
+      "type": "text",
+      "group": "article",
+      "groupTitle": "Article information",
+      "hint": "Draft title — may be refined in the package output.",
+      "help": {
+        "what": "A working title, not necessarily final SEO title.",
+        "why": "Guides framing and H1 suggestions.",
+        "example": "How to Build a Content System as a Solo Founder",
+        "avoid": "Clickbait or keyword stuffing in the working title."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "brandPositioning",
+      "label": "Brand Positioning",
+      "placeholder": "Honest Early Access tool — real limits, no fake social proof",
+      "required": false,
+      "type": "textarea",
+      "group": "website",
+      "groupTitle": "Website & brand",
+      "hint": "Brand Positioning — a parameter from the Blog Article brief (Website & brand).",
+      "help": {
+        "what": "Brand Positioning — a parameter from the Blog Article brief (Website & brand).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([brandPositioning]) so nothing is invented.",
+        "example": "Honest Early Access tool — real limits, no fake social proof",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for brand positioning."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "businessModel",
+      "label": "Business Model",
+      "placeholder": "subscription SaaS (Free + Pro)",
+      "required": false,
+      "type": "text",
+      "group": "website",
+      "groupTitle": "Website & brand",
+      "hint": "Business Model — a parameter from the Blog Article brief (Website & brand).",
+      "help": {
+        "what": "Business Model — a parameter from the Blog Article brief (Website & brand).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([businessModel]) so nothing is invented.",
+        "example": "subscription SaaS (Free + Pro)",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for business model."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "categoryPage",
+      "label": "Category Page",
+      "placeholder": "URL of the category this belongs to",
+      "required": false,
+      "type": "text",
+      "group": "website",
+      "groupTitle": "Website & brand",
+      "hint": "Category Page — a parameter from the Blog Article brief (Website & brand).",
+      "help": {
+        "what": "Category Page — a parameter from the Blog Article brief (Website & brand).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([categoryPage]) so nothing is invented.",
+        "example": "URL of the category this belongs to",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for category page."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "cms",
+      "label": "Cms",
+      "placeholder": "Next.js blog / Webflow / WordPress",
+      "required": false,
+      "type": "text",
+      "group": "website",
+      "groupTitle": "Website & brand",
+      "hint": "Cms — a parameter from the Blog Article brief (Website & brand).",
+      "help": {
+        "what": "Cms — a parameter from the Blog Article brief (Website & brand).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([cms]) so nothing is invented.",
+        "example": "Next.js blog / Webflow / WordPress",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for cms."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "cmsLimitations",
+      "label": "Cms Limitations",
+      "placeholder": "No custom schema fields; H2/H3 only",
+      "required": false,
+      "type": "textarea",
+      "group": "website",
+      "groupTitle": "Website & brand",
+      "hint": "Cms Limitations — a parameter from the Blog Article brief (Website & brand).",
+      "help": {
+        "what": "Cms Limitations — a parameter from the Blog Article brief (Website & brand).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([cmsLimitations]) so nothing is invented.",
+        "example": "No custom schema fields; H2/H3 only",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for cms limitations."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "editorialStandards",
+      "label": "Editorial Standards",
+      "placeholder": "No invented stats; disclose Beta status; people-first SEO",
+      "required": false,
+      "type": "textarea",
+      "group": "website",
+      "groupTitle": "Website & brand",
+      "hint": "Editorial Standards — a parameter from the Blog Article brief (Website & brand).",
+      "help": {
+        "what": "Editorial Standards — a parameter from the Blog Article brief (Website & brand).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([editorialStandards]) so nothing is invented.",
+        "example": "No invented stats; disclose Beta status; people-first SEO",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for editorial standards."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "excludedTopics",
+      "label": "Excluded Topics",
+      "placeholder": "Topics you will not cover (e.g. medical advice)",
+      "required": false,
+      "type": "textarea",
+      "group": "website",
+      "groupTitle": "Website & brand",
+      "hint": "Excluded Topics — a parameter from the Blog Article brief (Website & brand).",
+      "help": {
+        "what": "Excluded Topics — a parameter from the Blog Article brief (Website & brand).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([excludedTopics]) so nothing is invented.",
+        "example": "Topics you will not cover (e.g. medical advice)",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for excluded topics."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "existingArticles",
+      "label": "Existing Articles",
+      "placeholder": "List URLs or titles of related posts already live",
+      "required": false,
+      "type": "textarea",
+      "group": "website",
+      "groupTitle": "Website & brand",
+      "hint": "Existing Articles — a parameter from the Blog Article brief (Website & brand).",
+      "help": {
+        "what": "Existing Articles — a parameter from the Blog Article brief (Website & brand).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([existingArticles]) so nothing is invented.",
+        "example": "List URLs or titles of related posts already live",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for existing articles."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "market",
+      "label": "Market",
+      "placeholder": "English-speaking solo founders and marketers",
+      "required": false,
+      "type": "text",
+      "group": "website",
+      "groupTitle": "Website & brand",
+      "hint": "Market — a parameter from the Blog Article brief (Website & brand).",
+      "help": {
+        "what": "Market — a parameter from the Blog Article brief (Website & brand).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([market]) so nothing is invented.",
+        "example": "English-speaking solo founders and marketers",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for market."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "pillarPage",
+      "label": "Pillar Page",
+      "placeholder": "URL of the pillar page if any",
+      "required": false,
+      "type": "text",
+      "group": "website",
+      "groupTitle": "Website & brand",
+      "hint": "Pillar Page — a parameter from the Blog Article brief (Website & brand).",
+      "help": {
+        "what": "Pillar Page — a parameter from the Blog Article brief (Website & brand).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([pillarPage]) so nothing is invented.",
+        "example": "URL of the pillar page if any",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for pillar page."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "secondaryWebsiteGoal",
+      "label": "Secondary Website Goal",
+      "placeholder": "subscribe to product updates",
+      "required": false,
+      "type": "text",
+      "group": "website",
+      "groupTitle": "Website & brand",
+      "hint": "Secondary Website Goal — a parameter from the Blog Article brief (Website & brand).",
+      "help": {
+        "what": "Secondary Website Goal — a parameter from the Blog Article brief (Website & brand).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([secondaryWebsiteGoal]) so nothing is invented.",
+        "example": "subscribe to product updates",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for secondary website goal."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "styleGuide",
+      "label": "Style Guide",
+      "placeholder": "Active voice, short paragraphs, no AI clichés",
+      "required": false,
+      "type": "textarea",
+      "group": "website",
+      "groupTitle": "Website & brand",
+      "hint": "Style Guide — a parameter from the Blog Article brief (Website & brand).",
+      "help": {
+        "what": "Style Guide — a parameter from the Blog Article brief (Website & brand).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([styleGuide]) so nothing is invented.",
+        "example": "Active voice, short paragraphs, no AI clichés",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for style guide."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "targetCountries",
+      "label": "Target Countries",
+      "placeholder": "US, UK, EU (English)",
+      "required": false,
+      "type": "text",
+      "group": "website",
+      "groupTitle": "Website & brand",
+      "hint": "Target Countries — a parameter from the Blog Article brief (Website & brand).",
+      "help": {
+        "what": "Target Countries — a parameter from the Blog Article brief (Website & brand).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([targetCountries]) so nothing is invented.",
+        "example": "US, UK, EU (English)",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for target countries."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "topicCluster",
+      "label": "Topic Cluster",
+      "placeholder": "Pillar + supporting cluster map",
+      "required": false,
+      "type": "textarea",
+      "group": "website",
+      "groupTitle": "Website & brand",
+      "hint": "Topic Cluster — a parameter from the Blog Article brief (Website & brand).",
+      "help": {
+        "what": "Topic Cluster — a parameter from the Blog Article brief (Website & brand).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([topicCluster]) so nothing is invented.",
+        "example": "Pillar + supporting cluster map",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for topic cluster."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "websiteCategories",
+      "label": "Website Categories",
+      "placeholder": "Guides, Product, Productivity",
+      "required": false,
+      "type": "text",
+      "group": "website",
+      "groupTitle": "Website & brand",
+      "hint": "Website Categories — a parameter from the Blog Article brief (Website & brand).",
+      "help": {
+        "what": "Website Categories — a parameter from the Blog Article brief (Website & brand).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([websiteCategories]) so nothing is invented.",
+        "example": "Guides, Product, Productivity",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for website categories."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "websiteDescription",
+      "label": "Website Description",
+      "placeholder": "AI templates for creators and marketers — Early Access, honest limits",
+      "required": false,
+      "type": "textarea",
+      "group": "website",
+      "groupTitle": "Website & brand",
+      "hint": "Website Description — a parameter from the Blog Article brief (Website & brand).",
+      "help": {
+        "what": "Website Description — a parameter from the Blog Article brief (Website & brand).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([websiteDescription]) so nothing is invented.",
+        "example": "AI templates for creators and marketers — Early Access, honest limits",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for website description."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "websiteExpertise",
+      "label": "Website Expertise",
+      "placeholder": "What the site is genuinely known for",
+      "required": false,
+      "type": "textarea",
+      "group": "website",
+      "groupTitle": "Website & brand",
+      "hint": "Website Expertise — a parameter from the Blog Article brief (Website & brand).",
+      "help": {
+        "what": "Website Expertise — a parameter from the Blog Article brief (Website & brand).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([websiteExpertise]) so nothing is invented.",
+        "example": "What the site is genuinely known for",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for website expertise."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "websiteGoal",
+      "label": "Website Goal",
+      "placeholder": "start free account / understand product fit",
+      "required": false,
+      "type": "text",
+      "group": "website",
+      "groupTitle": "Website & brand",
+      "hint": "Website Goal — a parameter from the Blog Article brief (Website & brand).",
+      "help": {
+        "what": "Website Goal — a parameter from the Blog Article brief (Website & brand).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([websiteGoal]) so nothing is invented.",
+        "example": "start free account / understand product fit",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for website goal."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "websiteName",
+      "label": "Website Name",
+      "placeholder": "Creatornivo",
+      "required": false,
+      "type": "text",
+      "group": "website",
+      "groupTitle": "Website & brand",
+      "hint": "Website Name — a parameter from the Blog Article brief (Website & brand).",
+      "help": {
+        "what": "Website Name — a parameter from the Blog Article brief (Website & brand).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([websiteName]) so nothing is invented.",
+        "example": "Creatornivo",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for website name."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "websiteTopic",
+      "label": "Website Topic",
+      "placeholder": "content generation workflows for indie founders",
+      "required": false,
+      "type": "text",
+      "group": "website",
+      "groupTitle": "Website & brand",
+      "hint": "Website Topic — a parameter from the Blog Article brief (Website & brand).",
+      "help": {
+        "what": "Website Topic — a parameter from the Blog Article brief (Website & brand).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([websiteTopic]) so nothing is invented.",
+        "example": "content generation workflows for indie founders",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for website topic."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "websiteType",
+      "label": "Website Type",
+      "placeholder": "SaaS product blog / content marketing site",
+      "required": false,
+      "type": "text",
+      "group": "website",
+      "groupTitle": "Website & brand",
+      "hint": "Website Type — a parameter from the Blog Article brief (Website & brand).",
+      "help": {
+        "what": "Website Type — a parameter from the Blog Article brief (Website & brand).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([websiteType]) so nothing is invented.",
+        "example": "SaaS product blog / content marketing site",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for website type."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "websiteUrl",
+      "label": "Website Url",
+      "placeholder": "https://www.creatornivo.com",
+      "required": false,
+      "type": "text",
+      "group": "website",
+      "groupTitle": "Website & brand",
+      "hint": "Website Url — a parameter from the Blog Article brief (Website & brand).",
+      "help": {
+        "what": "Website Url — a parameter from the Blog Article brief (Website & brand).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([websiteUrl]) so nothing is invented.",
+        "example": "https://www.creatornivo.com",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for website url."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "authorBio",
+      "label": "Author Bio",
+      "placeholder": "Short true bio — no invented credentials",
+      "required": false,
+      "type": "textarea",
+      "group": "author",
+      "groupTitle": "Author & experts",
+      "hint": "Author Bio — a parameter from the Blog Article brief (Author & experts).",
+      "help": {
+        "what": "Author Bio — a parameter from the Blog Article brief (Author & experts).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([authorBio]) so nothing is invented.",
+        "example": "Short true bio — no invented credentials",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for author bio."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "authorCredentials",
+      "label": "Author Credentials",
+      "placeholder": "Only verifiable credentials",
+      "required": false,
+      "type": "textarea",
+      "group": "author",
+      "groupTitle": "Author & experts",
+      "hint": "Author Credentials — a parameter from the Blog Article brief (Author & experts).",
+      "help": {
+        "what": "Author Credentials — a parameter from the Blog Article brief (Author & experts).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([authorCredentials]) so nothing is invented.",
+        "example": "Only verifiable credentials",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for author credentials."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "authorExperience",
+      "label": "Author Experience",
+      "placeholder": "Relevant real experience with the topic",
+      "required": false,
+      "type": "textarea",
+      "group": "author",
+      "groupTitle": "Author & experts",
+      "hint": "Author Experience — a parameter from the Blog Article brief (Author & experts).",
+      "help": {
+        "what": "Author Experience — a parameter from the Blog Article brief (Author & experts).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([authorExperience]) so nothing is invented.",
+        "example": "Relevant real experience with the topic",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for author experience."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "authorName",
+      "label": "Author Name",
+      "placeholder": "Only a real author name you control",
+      "required": false,
+      "type": "text",
+      "group": "author",
+      "groupTitle": "Author & experts",
+      "hint": "Leave blank rather than inventing an author.",
+      "help": {
+        "what": "Author Name — a parameter from the Blog Article brief (Author & experts).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([authorName]) so nothing is invented.",
+        "example": "Only a real author name you control",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for author name."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "authorProfileUrl",
+      "label": "Author Profile Url",
+      "placeholder": "https://…",
+      "required": false,
+      "type": "text",
+      "group": "author",
+      "groupTitle": "Author & experts",
+      "hint": "Author Profile Url — a parameter from the Blog Article brief (Author & experts).",
+      "help": {
+        "what": "Author Profile Url — a parameter from the Blog Article brief (Author & experts).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([authorProfileUrl]) so nothing is invented.",
+        "example": "https://…",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for author profile url."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "authorRelationship",
+      "label": "Author Relationship",
+      "placeholder": "e.g. product founder writing about own workflow",
+      "required": false,
+      "type": "textarea",
+      "group": "author",
+      "groupTitle": "Author & experts",
+      "hint": "Author Relationship — a parameter from the Blog Article brief (Author & experts).",
+      "help": {
+        "what": "Author Relationship — a parameter from the Blog Article brief (Author & experts).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([authorRelationship]) so nothing is invented.",
+        "example": "e.g. product founder writing about own workflow",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for author relationship."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "authorRole",
+      "label": "Author Role",
+      "placeholder": "Founder / Content lead",
+      "required": false,
+      "type": "text",
+      "group": "author",
+      "groupTitle": "Author & experts",
+      "hint": "Author Role — a parameter from the Blog Article brief (Author & experts).",
+      "help": {
+        "what": "Author Role — a parameter from the Blog Article brief (Author & experts).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([authorRole]) so nothing is invented.",
+        "example": "Founder / Content lead",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for author role."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "correctionPolicyUrl",
+      "label": "Correction Policy Url",
+      "placeholder": "https://…/corrections",
+      "required": false,
+      "type": "text",
+      "group": "author",
+      "groupTitle": "Author & experts",
+      "hint": "Correction Policy Url — a parameter from the Blog Article brief (Author & experts).",
+      "help": {
+        "what": "Correction Policy Url — a parameter from the Blog Article brief (Author & experts).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([correctionPolicyUrl]) so nothing is invented.",
+        "example": "https://…/corrections",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for correction policy url."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "editorialPolicyUrl",
+      "label": "Editorial Policy Url",
+      "placeholder": "https://…/editorial-policy",
+      "required": false,
+      "type": "text",
+      "group": "author",
+      "groupTitle": "Author & experts",
+      "hint": "Editorial Policy Url — a parameter from the Blog Article brief (Author & experts).",
+      "help": {
+        "what": "Editorial Policy Url — a parameter from the Blog Article brief (Author & experts).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([editorialPolicyUrl]) so nothing is invented.",
+        "example": "https://…/editorial-policy",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for editorial policy url."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "editorialReviewer",
+      "label": "Editorial Reviewer",
+      "placeholder": "Name if known",
+      "required": false,
+      "type": "text",
+      "group": "author",
+      "groupTitle": "Author & experts",
+      "hint": "Editorial Reviewer — a parameter from the Blog Article brief (Author & experts).",
+      "help": {
+        "what": "Editorial Reviewer — a parameter from the Blog Article brief (Author & experts).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([editorialReviewer]) so nothing is invented.",
+        "example": "Name if known",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for editorial reviewer."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "expertCredentials",
+      "label": "Expert Credentials",
+      "placeholder": "Verifiable only",
+      "required": false,
+      "type": "textarea",
+      "group": "author",
+      "groupTitle": "Author & experts",
+      "hint": "Expert Credentials — a parameter from the Blog Article brief (Author & experts).",
+      "help": {
+        "what": "Expert Credentials — a parameter from the Blog Article brief (Author & experts).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([expertCredentials]) so nothing is invented.",
+        "example": "Verifiable only",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for expert credentials."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "expertName",
+      "label": "Expert Name",
+      "placeholder": "Real SME name or leave blank",
+      "required": false,
+      "type": "text",
+      "group": "author",
+      "groupTitle": "Author & experts",
+      "hint": "Expert Name — a parameter from the Blog Article brief (Author & experts).",
+      "help": {
+        "what": "Expert Name — a parameter from the Blog Article brief (Author & experts).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([expertName]) so nothing is invented.",
+        "example": "Real SME name or leave blank",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for expert name."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "expertReview",
+      "label": "Expert Review",
+      "placeholder": "no",
+      "required": false,
+      "type": "select",
+      "group": "author",
+      "groupTitle": "Author & experts",
+      "hint": "Expert Review — a parameter from the Blog Article brief (Author & experts).",
+      "help": {
+        "what": "Expert Review — a parameter from the Blog Article brief (Author & experts).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([expertReview]) so nothing is invented.",
+        "example": "no",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for expert review."
+      },
+      "options": [
+        "yes",
+        "no",
+        "unknown / not applicable"
+      ],
+      "fullWidth": false
+    },
+    {
+      "key": "expertTitle",
+      "label": "Expert Title",
+      "placeholder": "Title if expert review is real",
+      "required": false,
+      "type": "text",
+      "group": "author",
+      "groupTitle": "Author & experts",
+      "hint": "Expert Title — a parameter from the Blog Article brief (Author & experts).",
+      "help": {
+        "what": "Expert Title — a parameter from the Blog Article brief (Author & experts).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([expertTitle]) so nothing is invented.",
+        "example": "Title if expert review is real",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for expert title."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "factChecker",
+      "label": "Fact Checker",
+      "placeholder": "Name if known",
+      "required": false,
+      "type": "text",
+      "group": "author",
+      "groupTitle": "Author & experts",
+      "hint": "Fact Checker — a parameter from the Blog Article brief (Author & experts).",
+      "help": {
+        "what": "Fact Checker — a parameter from the Blog Article brief (Author & experts).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([factChecker]) so nothing is invented.",
+        "example": "Name if known",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for fact checker."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "financialReview",
+      "label": "Financial Review",
+      "placeholder": "no",
+      "required": false,
+      "type": "select",
+      "group": "author",
+      "groupTitle": "Author & experts",
+      "hint": "Financial Review — a parameter from the Blog Article brief (Author & experts).",
+      "help": {
+        "what": "Financial Review — a parameter from the Blog Article brief (Author & experts).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([financialReview]) so nothing is invented.",
+        "example": "no",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for financial review."
+      },
+      "options": [
+        "yes",
+        "no",
+        "unknown / not applicable"
+      ],
+      "fullWidth": false
+    },
+    {
+      "key": "legalReview",
+      "label": "Legal Review",
+      "placeholder": "no",
+      "required": false,
+      "type": "select",
+      "group": "author",
+      "groupTitle": "Author & experts",
+      "hint": "Legal Review — a parameter from the Blog Article brief (Author & experts).",
+      "help": {
+        "what": "Legal Review — a parameter from the Blog Article brief (Author & experts).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([legalReview]) so nothing is invented.",
+        "example": "no",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for legal review."
+      },
+      "options": [
+        "yes",
+        "no",
+        "unknown / not applicable"
+      ],
+      "fullWidth": false
+    },
+    {
+      "key": "medicalReview",
+      "label": "Medical Review",
+      "placeholder": "no",
+      "required": false,
+      "type": "select",
+      "group": "author",
+      "groupTitle": "Author & experts",
+      "hint": "Medical Review — a parameter from the Blog Article brief (Author & experts).",
+      "help": {
+        "what": "Medical Review — a parameter from the Blog Article brief (Author & experts).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([medicalReview]) so nothing is invented.",
+        "example": "no",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for medical review."
+      },
+      "options": [
+        "yes",
+        "no",
+        "unknown / not applicable"
+      ],
+      "fullWidth": false
+    },
+    {
+      "key": "personalExperience",
+      "label": "Personal Experience",
+      "placeholder": "Approved first-hand experience only — or leave blank",
+      "required": false,
+      "type": "textarea",
+      "group": "author",
+      "groupTitle": "Author & experts",
+      "hint": "Model must not invent personal stories.",
+      "help": {
+        "what": "Personal Experience — a parameter from the Blog Article brief (Author & experts).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([personalExperience]) so nothing is invented.",
+        "example": "Approved first-hand experience only — or leave blank",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for personal experience."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "accessibilityNeeds",
+      "label": "Accessibility Needs",
+      "placeholder": "e.g. plain language, no color-only cues",
+      "required": false,
+      "type": "textarea",
+      "group": "audience",
+      "groupTitle": "Audience",
+      "hint": "Accessibility Needs — a parameter from the Blog Article brief (Audience).",
+      "help": {
+        "what": "Accessibility Needs — a parameter from the Blog Article brief (Audience).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([accessibilityNeeds]) so nothing is invented.",
+        "example": "e.g. plain language, no color-only cues",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for accessibility needs."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "audienceAge",
+      "label": "Audience Age",
+      "placeholder": "25–45 (optional)",
+      "required": false,
+      "type": "text",
+      "group": "audience",
+      "groupTitle": "Audience",
+      "hint": "Audience Age — a parameter from the Blog Article brief (Audience).",
+      "help": {
+        "what": "Audience Age — a parameter from the Blog Article brief (Audience).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([audienceAge]) so nothing is invented.",
+        "example": "25–45 (optional)",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for audience age."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "audienceLanguage",
+      "label": "Audience Language",
+      "placeholder": "English",
+      "required": false,
+      "type": "text",
+      "group": "audience",
+      "groupTitle": "Audience",
+      "hint": "Audience Language — a parameter from the Blog Article brief (Audience).",
+      "help": {
+        "what": "Audience Language — a parameter from the Blog Article brief (Audience).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([audienceLanguage]) so nothing is invented.",
+        "example": "English",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for audience language."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "audienceLocation",
+      "label": "Audience Location",
+      "placeholder": "Remote / US & Europe",
+      "required": false,
+      "type": "text",
+      "group": "audience",
+      "groupTitle": "Audience",
+      "hint": "Audience Location — a parameter from the Blog Article brief (Audience).",
+      "help": {
+        "what": "Audience Location — a parameter from the Blog Article brief (Audience).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([audienceLocation]) so nothing is invented.",
+        "example": "Remote / US & Europe",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for audience location."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "audienceRole",
+      "label": "Audience Role",
+      "placeholder": "founder, marketer, creator",
+      "required": false,
+      "type": "text",
+      "group": "audience",
+      "groupTitle": "Audience",
+      "hint": "Audience Role — a parameter from the Blog Article brief (Audience).",
+      "help": {
+        "what": "Audience Role — a parameter from the Blog Article brief (Audience).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([audienceRole]) so nothing is invented.",
+        "example": "founder, marketer, creator",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for audience role."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "awarenessStage",
+      "label": "Awareness Stage",
+      "placeholder": "problem-aware",
+      "required": false,
+      "type": "select",
+      "group": "audience",
+      "groupTitle": "Audience",
+      "hint": "Awareness Stage — a parameter from the Blog Article brief (Audience).",
+      "help": {
+        "what": "Awareness Stage — a parameter from the Blog Article brief (Audience).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([awarenessStage]) so nothing is invented.",
+        "example": "problem-aware",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for awareness stage."
+      },
+      "options": [
+        "unaware",
+        "problem-aware",
+        "solution-aware",
+        "product-aware",
+        "most aware"
+      ],
+      "fullWidth": false
+    },
+    {
+      "key": "concerns",
+      "label": "Concerns",
+      "placeholder": "Fears or doubts they have",
+      "required": false,
+      "type": "textarea",
+      "group": "audience",
+      "groupTitle": "Audience",
+      "hint": "Concerns — a parameter from the Blog Article brief (Audience).",
+      "help": {
+        "what": "Concerns — a parameter from the Blog Article brief (Audience).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([concerns]) so nothing is invented.",
+        "example": "Fears or doubts they have",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for concerns."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "culturalContext",
+      "label": "Cultural Context",
+      "placeholder": "Region-specific norms if relevant",
+      "required": false,
+      "type": "textarea",
+      "group": "audience",
+      "groupTitle": "Audience",
+      "hint": "Cultural Context — a parameter from the Blog Article brief (Audience).",
+      "help": {
+        "what": "Cultural Context — a parameter from the Blog Article brief (Audience).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([culturalContext]) so nothing is invented.",
+        "example": "Region-specific norms if relevant",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for cultural context."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "desiredOutcome",
+      "label": "Desired Outcome",
+      "placeholder": "A weekly system they can stick to",
+      "required": false,
+      "type": "text",
+      "group": "audience",
+      "groupTitle": "Audience",
+      "hint": "Desired Outcome — a parameter from the Blog Article brief (Audience).",
+      "help": {
+        "what": "Desired Outcome — a parameter from the Blog Article brief (Audience).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([desiredOutcome]) so nothing is invented.",
+        "example": "A weekly system they can stick to",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for desired outcome."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "excludedAudience",
+      "label": "Excluded Audience",
+      "placeholder": "Who this is NOT for",
+      "required": false,
+      "type": "text",
+      "group": "audience",
+      "groupTitle": "Audience",
+      "hint": "Excluded Audience — a parameter from the Blog Article brief (Audience).",
+      "help": {
+        "what": "Excluded Audience — a parameter from the Blog Article brief (Audience).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([excludedAudience]) so nothing is invented.",
+        "example": "Who this is NOT for",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for excluded audience."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "knowledgeLevel",
+      "label": "Knowledge Level",
+      "placeholder": "beginner to intermediate",
+      "required": false,
+      "type": "select",
+      "group": "audience",
+      "groupTitle": "Audience",
+      "hint": "Knowledge Level — a parameter from the Blog Article brief (Audience).",
+      "help": {
+        "what": "Knowledge Level — a parameter from the Blog Article brief (Audience).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([knowledgeLevel]) so nothing is invented.",
+        "example": "beginner to intermediate",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for knowledge level."
+      },
+      "options": [
+        "beginner",
+        "intermediate",
+        "advanced",
+        "mixed beginner–intermediate",
+        "mixed intermediate–advanced"
+      ],
+      "fullWidth": false
+    },
+    {
+      "key": "misconceptions",
+      "label": "Misconceptions",
+      "placeholder": "Common wrong beliefs to correct carefully",
+      "required": false,
+      "type": "textarea",
+      "group": "audience",
+      "groupTitle": "Audience",
+      "hint": "Misconceptions — a parameter from the Blog Article brief (Audience).",
+      "help": {
+        "what": "Misconceptions — a parameter from the Blog Article brief (Audience).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([misconceptions]) so nothing is invented.",
+        "example": "Common wrong beliefs to correct carefully",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for misconceptions."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "objections",
+      "label": "Objections",
+      "placeholder": "Why they might reject advice or tools",
+      "required": false,
+      "type": "textarea",
+      "group": "audience",
+      "groupTitle": "Audience",
+      "hint": "Objections — a parameter from the Blog Article brief (Audience).",
+      "help": {
+        "what": "Objections — a parameter from the Blog Article brief (Audience).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([objections]) so nothing is invented.",
+        "example": "Why they might reject advice or tools",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for objections."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "purchaseStage",
+      "label": "Purchase Stage",
+      "placeholder": "not shopping",
+      "required": false,
+      "type": "select",
+      "group": "audience",
+      "groupTitle": "Audience",
+      "hint": "Purchase Stage — a parameter from the Blog Article brief (Audience).",
+      "help": {
+        "what": "Purchase Stage — a parameter from the Blog Article brief (Audience).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([purchaseStage]) so nothing is invented.",
+        "example": "not shopping",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for purchase stage."
+      },
+      "options": [
+        "not shopping",
+        "awareness",
+        "consideration",
+        "decision",
+        "post-purchase education"
+      ],
+      "fullWidth": false
+    },
+    {
+      "key": "secondaryAudience",
+      "label": "Secondary Audience",
+      "placeholder": "freelance marketers supporting founders",
+      "required": false,
+      "type": "text",
+      "group": "audience",
+      "groupTitle": "Audience",
+      "hint": "Secondary Audience — a parameter from the Blog Article brief (Audience).",
+      "help": {
+        "what": "Secondary Audience — a parameter from the Blog Article brief (Audience).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([secondaryAudience]) so nothing is invented.",
+        "example": "freelance marketers supporting founders",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for secondary audience."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "secondaryPainPoints",
+      "label": "Secondary Pain Points",
+      "placeholder": "Other related frustrations",
+      "required": false,
+      "type": "textarea",
+      "group": "audience",
+      "groupTitle": "Audience",
+      "hint": "Secondary Pain Points — a parameter from the Blog Article brief (Audience).",
+      "help": {
+        "what": "Secondary Pain Points — a parameter from the Blog Article brief (Audience).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([secondaryPainPoints]) so nothing is invented.",
+        "example": "Other related frustrations",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for secondary pain points."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "secondaryQuestions",
+      "label": "Secondary Questions",
+      "placeholder": "Follow-up questions to cover",
+      "required": false,
+      "type": "textarea",
+      "group": "audience",
+      "groupTitle": "Audience",
+      "hint": "Secondary Questions — a parameter from the Blog Article brief (Audience).",
+      "help": {
+        "what": "Secondary Questions — a parameter from the Blog Article brief (Audience).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([secondaryQuestions]) so nothing is invented.",
+        "example": "Follow-up questions to cover",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for secondary questions."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "commercialInvestigation",
+      "label": "Commercial Investigation",
+      "placeholder": "no",
+      "required": false,
+      "type": "select",
+      "group": "search_intent",
+      "groupTitle": "Search intent",
+      "hint": "Commercial Investigation — a parameter from the Blog Article brief (Search intent).",
+      "help": {
+        "what": "Commercial Investigation — a parameter from the Blog Article brief (Search intent).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([commercialInvestigation]) so nothing is invented.",
+        "example": "no",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for commercial investigation."
+      },
+      "options": [
+        "yes",
+        "no",
+        "unknown / not applicable"
+      ],
+      "fullWidth": false
+    },
+    {
+      "key": "decisionSupportRequired",
+      "label": "Decision Support Required",
+      "placeholder": "no",
+      "required": false,
+      "type": "select",
+      "group": "search_intent",
+      "groupTitle": "Search intent",
+      "hint": "Decision Support Required — a parameter from the Blog Article brief (Search intent).",
+      "help": {
+        "what": "Decision Support Required — a parameter from the Blog Article brief (Search intent).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([decisionSupportRequired]) so nothing is invented.",
+        "example": "no",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for decision support required."
+      },
+      "options": [
+        "yes",
+        "no",
+        "unknown / not applicable"
+      ],
+      "fullWidth": false
+    },
+    {
+      "key": "expectedReaderAction",
+      "label": "Expected Reader Action",
+      "placeholder": "try a simple weekly content checklist",
+      "required": false,
+      "type": "text",
+      "group": "search_intent",
+      "groupTitle": "Search intent",
+      "hint": "Expected Reader Action — a parameter from the Blog Article brief (Search intent).",
+      "help": {
+        "what": "Expected Reader Action — a parameter from the Blog Article brief (Search intent).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([expectedReaderAction]) so nothing is invented.",
+        "example": "try a simple weekly content checklist",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for expected reader action."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "freshnessSensitivity",
+      "label": "Freshness Sensitivity",
+      "placeholder": "medium",
+      "required": false,
+      "type": "select",
+      "group": "search_intent",
+      "groupTitle": "Search intent",
+      "hint": "Freshness Sensitivity — a parameter from the Blog Article brief (Search intent).",
+      "help": {
+        "what": "Freshness Sensitivity — a parameter from the Blog Article brief (Search intent).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([freshnessSensitivity]) so nothing is invented.",
+        "example": "medium",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for freshness sensitivity."
+      },
+      "options": [
+        "low",
+        "medium",
+        "high",
+        "news-critical"
+      ],
+      "fullWidth": false
+    },
+    {
+      "key": "immediateAnswerRequired",
+      "label": "Immediate Answer Required",
+      "placeholder": "yes",
+      "required": false,
+      "type": "select",
+      "group": "search_intent",
+      "groupTitle": "Search intent",
+      "hint": "Immediate Answer Required — a parameter from the Blog Article brief (Search intent).",
+      "help": {
+        "what": "Immediate Answer Required — a parameter from the Blog Article brief (Search intent).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([immediateAnswerRequired]) so nothing is invented.",
+        "example": "yes",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for immediate answer required."
+      },
+      "options": [
+        "yes",
+        "no",
+        "unknown / not applicable"
+      ],
+      "fullWidth": false
+    },
+    {
+      "key": "localIntent",
+      "label": "Local Intent",
+      "placeholder": "no",
+      "required": false,
+      "type": "select",
+      "group": "search_intent",
+      "groupTitle": "Search intent",
+      "hint": "Local Intent — a parameter from the Blog Article brief (Search intent).",
+      "help": {
+        "what": "Local Intent — a parameter from the Blog Article brief (Search intent).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([localIntent]) so nothing is invented.",
+        "example": "no",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for local intent."
+      },
+      "options": [
+        "yes",
+        "no",
+        "unknown / not applicable"
+      ],
+      "fullWidth": false
+    },
+    {
+      "key": "searchJourneyStage",
+      "label": "Search Journey Stage",
+      "placeholder": "learn basics",
+      "required": false,
+      "type": "select",
+      "group": "search_intent",
+      "groupTitle": "Search intent",
+      "hint": "Search Journey Stage — a parameter from the Blog Article brief (Search intent).",
+      "help": {
+        "what": "Search Journey Stage — a parameter from the Blog Article brief (Search intent).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([searchJourneyStage]) so nothing is invented.",
+        "example": "learn basics",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for search journey stage."
+      },
+      "options": [
+        "discover problem",
+        "learn basics",
+        "compare approaches",
+        "choose a tool",
+        "implement / troubleshoot"
+      ],
+      "fullWidth": false
+    },
+    {
+      "key": "secondarySearchIntent",
+      "label": "Secondary Search Intent",
+      "placeholder": "educational",
+      "required": false,
+      "type": "select",
+      "group": "search_intent",
+      "groupTitle": "Search intent",
+      "hint": "Secondary Search Intent — a parameter from the Blog Article brief (Search intent).",
+      "help": {
+        "what": "Secondary Search Intent — a parameter from the Blog Article brief (Search intent).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([secondarySearchIntent]) so nothing is invented.",
+        "example": "educational",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for secondary search intent."
+      },
+      "options": [
+        "informational",
+        "navigational",
+        "commercial investigation",
+        "transactional",
+        "local",
+        "troubleshooting",
+        "comparison",
+        "educational",
+        "news or freshness-driven",
+        "mixed intent"
+      ],
+      "fullWidth": false
+    },
+    {
+      "key": "transactionalSupport",
+      "label": "Transactional Support",
+      "placeholder": "no",
+      "required": false,
+      "type": "select",
+      "group": "search_intent",
+      "groupTitle": "Search intent",
+      "hint": "Transactional Support — a parameter from the Blog Article brief (Search intent).",
+      "help": {
+        "what": "Transactional Support — a parameter from the Blog Article brief (Search intent).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([transactionalSupport]) so nothing is invented.",
+        "example": "no",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for transactional support."
+      },
+      "options": [
+        "yes",
+        "no",
+        "unknown / not applicable"
+      ],
+      "fullWidth": false
+    },
+    {
+      "key": "brandKeywords",
+      "label": "Brand Keywords",
+      "placeholder": "Creatornivo (if appropriate)",
+      "required": false,
+      "type": "text",
+      "group": "keywords",
+      "groupTitle": "Keywords & SEO inputs",
+      "hint": "Brand Keywords — a parameter from the Blog Article brief (Keywords & SEO inputs).",
+      "help": {
+        "what": "Brand Keywords — a parameter from the Blog Article brief (Keywords & SEO inputs).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([brandKeywords]) so nothing is invented.",
+        "example": "Creatornivo (if appropriate)",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for brand keywords."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "cannibalizationConcerns",
+      "label": "Cannibalization Concerns",
+      "placeholder": "Other pages targeting the same keyword",
+      "required": false,
+      "type": "textarea",
+      "group": "keywords",
+      "groupTitle": "Keywords & SEO inputs",
+      "hint": "Cannibalization Concerns — a parameter from the Blog Article brief (Keywords & SEO inputs).",
+      "help": {
+        "what": "Cannibalization Concerns — a parameter from the Blog Article brief (Keywords & SEO inputs).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([cannibalizationConcerns]) so nothing is invented.",
+        "example": "Other pages targeting the same keyword",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for cannibalization concerns."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "competitorKeywords",
+      "label": "Competitor Keywords",
+      "placeholder": "Only if comparison is intentional and fair",
+      "required": false,
+      "type": "text",
+      "group": "keywords",
+      "groupTitle": "Keywords & SEO inputs",
+      "hint": "Competitor Keywords — a parameter from the Blog Article brief (Keywords & SEO inputs).",
+      "help": {
+        "what": "Competitor Keywords — a parameter from the Blog Article brief (Keywords & SEO inputs).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([competitorKeywords]) so nothing is invented.",
+        "example": "Only if comparison is intentional and fair",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for competitor keywords."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "industryTerminology",
+      "label": "Industry Terminology",
+      "placeholder": "ICP, CAC only if audience knows them",
+      "required": false,
+      "type": "text",
+      "group": "keywords",
+      "groupTitle": "Keywords & SEO inputs",
+      "hint": "Industry Terminology — a parameter from the Blog Article brief (Keywords & SEO inputs).",
+      "help": {
+        "what": "Industry Terminology — a parameter from the Blog Article brief (Keywords & SEO inputs).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([industryTerminology]) so nothing is invented.",
+        "example": "ICP, CAC only if audience knows them",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for industry terminology."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "keywordDifficultyData",
+      "label": "Keyword Difficulty Data",
+      "placeholder": "Only real KD data — or leave blank",
+      "required": false,
+      "type": "text",
+      "group": "keywords",
+      "groupTitle": "Keywords & SEO inputs",
+      "hint": "Keyword Difficulty Data — a parameter from the Blog Article brief (Keywords & SEO inputs).",
+      "help": {
+        "what": "Keyword Difficulty Data — a parameter from the Blog Article brief (Keywords & SEO inputs).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([keywordDifficultyData]) so nothing is invented.",
+        "example": "Only real KD data — or leave blank",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for keyword difficulty data."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "keywordsToAvoid",
+      "label": "Keywords To Avoid",
+      "placeholder": "Words or competitor brands to skip",
+      "required": false,
+      "type": "text",
+      "group": "keywords",
+      "groupTitle": "Keywords & SEO inputs",
+      "hint": "Keywords To Avoid — a parameter from the Blog Article brief (Keywords & SEO inputs).",
+      "help": {
+        "what": "Keywords To Avoid — a parameter from the Blog Article brief (Keywords & SEO inputs).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([keywordsToAvoid]) so nothing is invented.",
+        "example": "Words or competitor brands to skip",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for keywords to avoid."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "localizedKeywords",
+      "label": "Localized Keywords",
+      "placeholder": "locale variants if any",
+      "required": false,
+      "type": "text",
+      "group": "keywords",
+      "groupTitle": "Keywords & SEO inputs",
+      "hint": "Localized Keywords — a parameter from the Blog Article brief (Keywords & SEO inputs).",
+      "help": {
+        "what": "Localized Keywords — a parameter from the Blog Article brief (Keywords & SEO inputs).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([localizedKeywords]) so nothing is invented.",
+        "example": "locale variants if any",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for localized keywords."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "longTailKeywords",
+      "label": "Long Tail Keywords",
+      "placeholder": "how to plan content as a solo founder",
+      "required": false,
+      "type": "text",
+      "group": "keywords",
+      "groupTitle": "Keywords & SEO inputs",
+      "hint": "Long Tail Keywords — a parameter from the Blog Article brief (Keywords & SEO inputs).",
+      "help": {
+        "what": "Long Tail Keywords — a parameter from the Blog Article brief (Keywords & SEO inputs).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([longTailKeywords]) so nothing is invented.",
+        "example": "how to plan content as a solo founder",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for long tail keywords."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "paaData",
+      "label": "Paa Data",
+      "placeholder": "Real People Also Ask questions only",
+      "required": false,
+      "type": "textarea",
+      "group": "keywords",
+      "groupTitle": "Keywords & SEO inputs",
+      "hint": "Paa Data — a parameter from the Blog Article brief (Keywords & SEO inputs).",
+      "help": {
+        "what": "Paa Data — a parameter from the Blog Article brief (Keywords & SEO inputs).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([paaData]) so nothing is invented.",
+        "example": "Real People Also Ask questions only",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for paa data."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "questionKeywords",
+      "label": "Question Keywords",
+      "placeholder": "how often should founders publish?",
+      "required": false,
+      "type": "text",
+      "group": "keywords",
+      "groupTitle": "Keywords & SEO inputs",
+      "hint": "Question Keywords — a parameter from the Blog Article brief (Keywords & SEO inputs).",
+      "help": {
+        "what": "Question Keywords — a parameter from the Blog Article brief (Keywords & SEO inputs).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([questionKeywords]) so nothing is invented.",
+        "example": "how often should founders publish?",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for question keywords."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "rankingData",
+      "label": "Ranking Data",
+      "placeholder": "Current rankings if known — no inventions",
+      "required": false,
+      "type": "textarea",
+      "group": "keywords",
+      "groupTitle": "Keywords & SEO inputs",
+      "hint": "Ranking Data — a parameter from the Blog Article brief (Keywords & SEO inputs).",
+      "help": {
+        "what": "Ranking Data — a parameter from the Blog Article brief (Keywords & SEO inputs).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([rankingData]) so nothing is invented.",
+        "example": "Current rankings if known — no inventions",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for ranking data."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "relatedEntities",
+      "label": "Related Entities",
+      "placeholder": "LinkedIn, newsletter, SEO, CMS",
+      "required": false,
+      "type": "text",
+      "group": "keywords",
+      "groupTitle": "Keywords & SEO inputs",
+      "hint": "Related Entities — a parameter from the Blog Article brief (Keywords & SEO inputs).",
+      "help": {
+        "what": "Related Entities — a parameter from the Blog Article brief (Keywords & SEO inputs).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([relatedEntities]) so nothing is invented.",
+        "example": "LinkedIn, newsletter, SEO, CMS",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for related entities."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "relatedSearches",
+      "label": "Related Searches",
+      "placeholder": "Real related searches only",
+      "required": false,
+      "type": "textarea",
+      "group": "keywords",
+      "groupTitle": "Keywords & SEO inputs",
+      "hint": "Related Searches — a parameter from the Blog Article brief (Keywords & SEO inputs).",
+      "help": {
+        "what": "Related Searches — a parameter from the Blog Article brief (Keywords & SEO inputs).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([relatedSearches]) so nothing is invented.",
+        "example": "Real related searches only",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for related searches."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "requiredTerminology",
+      "label": "Required Terminology",
+      "placeholder": "Terms that must appear exactly as written",
+      "required": false,
+      "type": "text",
+      "group": "keywords",
+      "groupTitle": "Keywords & SEO inputs",
+      "hint": "Required Terminology — a parameter from the Blog Article brief (Keywords & SEO inputs).",
+      "help": {
+        "what": "Required Terminology — a parameter from the Blog Article brief (Keywords & SEO inputs).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([requiredTerminology]) so nothing is invented.",
+        "example": "Terms that must appear exactly as written",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for required terminology."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "searchConsoleData",
+      "label": "Search Console Data",
+      "placeholder": "GSC queries/positions if available",
+      "required": false,
+      "type": "textarea",
+      "group": "keywords",
+      "groupTitle": "Keywords & SEO inputs",
+      "hint": "Search Console Data — a parameter from the Blog Article brief (Keywords & SEO inputs).",
+      "help": {
+        "what": "Search Console Data — a parameter from the Blog Article brief (Keywords & SEO inputs).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([searchConsoleData]) so nothing is invented.",
+        "example": "GSC queries/positions if available",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for search console data."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "searchVolumeData",
+      "label": "Search Volume Data",
+      "placeholder": "Only real measured data — or leave blank",
+      "required": false,
+      "type": "text",
+      "group": "keywords",
+      "groupTitle": "Keywords & SEO inputs",
+      "hint": "Do not invent volumes.",
+      "help": {
+        "what": "Search Volume Data — a parameter from the Blog Article brief (Keywords & SEO inputs).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([searchVolumeData]) so nothing is invented.",
+        "example": "Only real measured data — or leave blank",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for search volume data."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "secondaryKeywords",
+      "label": "Secondary Keywords",
+      "placeholder": "weekly content workflow, founder content plan",
+      "required": false,
+      "type": "text",
+      "group": "keywords",
+      "groupTitle": "Keywords & SEO inputs",
+      "hint": "Secondary Keywords — a parameter from the Blog Article brief (Keywords & SEO inputs).",
+      "help": {
+        "what": "Secondary Keywords — a parameter from the Blog Article brief (Keywords & SEO inputs).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([secondaryKeywords]) so nothing is invented.",
+        "example": "weekly content workflow, founder content plan",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for secondary keywords."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "serpFeatures",
+      "label": "Serp Features",
+      "placeholder": "PAA, featured snippet, video, etc.",
+      "required": false,
+      "type": "text",
+      "group": "keywords",
+      "groupTitle": "Keywords & SEO inputs",
+      "hint": "Serp Features — a parameter from the Blog Article brief (Keywords & SEO inputs).",
+      "help": {
+        "what": "Serp Features — a parameter from the Blog Article brief (Keywords & SEO inputs).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([serpFeatures]) so nothing is invented.",
+        "example": "PAA, featured snippet, video, etc.",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for serp features."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "synonyms",
+      "label": "Synonyms",
+      "placeholder": "content system, publishing routine",
+      "required": false,
+      "type": "text",
+      "group": "keywords",
+      "groupTitle": "Keywords & SEO inputs",
+      "hint": "Synonyms — a parameter from the Blog Article brief (Keywords & SEO inputs).",
+      "help": {
+        "what": "Synonyms — a parameter from the Blog Article brief (Keywords & SEO inputs).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([synonyms]) so nothing is invented.",
+        "example": "content system, publishing routine",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for synonyms."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "targetTopicCluster",
+      "label": "Target Topic Cluster",
+      "placeholder": "Founder content systems",
+      "required": false,
+      "type": "text",
+      "group": "keywords",
+      "groupTitle": "Keywords & SEO inputs",
+      "hint": "Target Topic Cluster — a parameter from the Blog Article brief (Keywords & SEO inputs).",
+      "help": {
+        "what": "Target Topic Cluster — a parameter from the Blog Article brief (Keywords & SEO inputs).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([targetTopicCluster]) so nothing is invented.",
+        "example": "Founder content systems",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for target topic cluster."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "competitorArticles",
+      "label": "Competitor Articles",
+      "placeholder": "URLs of competing articles you reviewed",
+      "required": false,
+      "type": "textarea",
+      "group": "serp",
+      "groupTitle": "SERP & competition",
+      "hint": "Competitor Articles — a parameter from the Blog Article brief (SERP & competition).",
+      "help": {
+        "what": "Competitor Articles — a parameter from the Blog Article brief (SERP & competition).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([competitorArticles]) so nothing is invented.",
+        "example": "URLs of competing articles you reviewed",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for competitor articles."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "competitorStrengths",
+      "label": "Competitor Strengths",
+      "placeholder": "What they do well for the reader",
+      "required": false,
+      "type": "textarea",
+      "group": "serp",
+      "groupTitle": "SERP & competition",
+      "hint": "Competitor Strengths — a parameter from the Blog Article brief (SERP & competition).",
+      "help": {
+        "what": "Competitor Strengths — a parameter from the Blog Article brief (SERP & competition).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([competitorStrengths]) so nothing is invented.",
+        "example": "What they do well for the reader",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for competitor strengths."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "competitorWeaknesses",
+      "label": "Competitor Weaknesses",
+      "placeholder": "Gaps you can fill honestly",
+      "required": false,
+      "type": "textarea",
+      "group": "serp",
+      "groupTitle": "SERP & competition",
+      "hint": "Competitor Weaknesses — a parameter from the Blog Article brief (SERP & competition).",
+      "help": {
+        "what": "Competitor Weaknesses — a parameter from the Blog Article brief (SERP & competition).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([competitorWeaknesses]) so nothing is invented.",
+        "example": "Gaps you can fill honestly",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for competitor weaknesses."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "contentGaps",
+      "label": "Content Gaps",
+      "placeholder": "Missing angles, examples, or steps",
+      "required": false,
+      "type": "textarea",
+      "group": "serp",
+      "groupTitle": "SERP & competition",
+      "hint": "Content Gaps — a parameter from the Blog Article brief (SERP & competition).",
+      "help": {
+        "what": "Content Gaps — a parameter from the Blog Article brief (SERP & competition).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([contentGaps]) so nothing is invented.",
+        "example": "Missing angles, examples, or steps",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for content gaps."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "differentiation",
+      "label": "Differentiation",
+      "placeholder": "Your unique angle without inventing proof",
+      "required": false,
+      "type": "textarea",
+      "group": "serp",
+      "groupTitle": "SERP & competition",
+      "hint": "Differentiation — a parameter from the Blog Article brief (SERP & competition).",
+      "help": {
+        "what": "Differentiation — a parameter from the Blog Article brief (SERP & competition).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([differentiation]) so nothing is invented.",
+        "example": "Your unique angle without inventing proof",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for differentiation."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "firstHandEvidence",
+      "label": "First Hand Evidence",
+      "placeholder": "Tests or experience you can stand behind",
+      "required": false,
+      "type": "textarea",
+      "group": "serp",
+      "groupTitle": "SERP & competition",
+      "hint": "First Hand Evidence — a parameter from the Blog Article brief (SERP & competition).",
+      "help": {
+        "what": "First Hand Evidence — a parameter from the Blog Article brief (SERP & competition).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([firstHandEvidence]) so nothing is invented.",
+        "example": "Tests or experience you can stand behind",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for first hand evidence."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "originalData",
+      "label": "Original Data",
+      "placeholder": "Datasets or numbers you own — only if real",
+      "required": false,
+      "type": "textarea",
+      "group": "serp",
+      "groupTitle": "SERP & competition",
+      "hint": "Original Data — a parameter from the Blog Article brief (SERP & competition).",
+      "help": {
+        "what": "Original Data — a parameter from the Blog Article brief (SERP & competition).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([originalData]) so nothing is invented.",
+        "example": "Datasets or numbers you own — only if real",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for original data."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "serpFormat",
+      "label": "Serp Format",
+      "placeholder": "long how-to with checklist + FAQ",
+      "required": false,
+      "type": "text",
+      "group": "serp",
+      "groupTitle": "SERP & competition",
+      "hint": "Serp Format — a parameter from the Blog Article brief (SERP & competition).",
+      "help": {
+        "what": "Serp Format — a parameter from the Blog Article brief (SERP & competition).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([serpFormat]) so nothing is invented.",
+        "example": "long how-to with checklist + FAQ",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for serp format."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "serpIntent",
+      "label": "Serp Intent",
+      "placeholder": "informational how-to",
+      "required": false,
+      "type": "text",
+      "group": "serp",
+      "groupTitle": "SERP & competition",
+      "hint": "Serp Intent — a parameter from the Blog Article brief (SERP & competition).",
+      "help": {
+        "what": "Serp Intent — a parameter from the Blog Article brief (SERP & competition).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([serpIntent]) so nothing is invented.",
+        "example": "informational how-to",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for serp intent."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "serpLength",
+      "label": "Serp Length",
+      "placeholder": "~1800 words average",
+      "required": false,
+      "type": "text",
+      "group": "serp",
+      "groupTitle": "SERP & competition",
+      "hint": "Serp Length — a parameter from the Blog Article brief (SERP & competition).",
+      "help": {
+        "what": "Serp Length — a parameter from the Blog Article brief (SERP & competition).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([serpLength]) so nothing is invented.",
+        "example": "~1800 words average",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for serp length."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "targetSerp",
+      "label": "Target Serp",
+      "placeholder": "Google US desktop / mobile",
+      "required": false,
+      "type": "text",
+      "group": "serp",
+      "groupTitle": "SERP & competition",
+      "hint": "Target Serp — a parameter from the Blog Article brief (SERP & competition).",
+      "help": {
+        "what": "Target Serp — a parameter from the Blog Article brief (SERP & competition).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([targetSerp]) so nothing is invented.",
+        "example": "Google US desktop / mobile",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for target serp."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "uniqueInformation",
+      "label": "Unique Information",
+      "placeholder": "Original insights you actually have",
+      "required": false,
+      "type": "textarea",
+      "group": "serp",
+      "groupTitle": "SERP & competition",
+      "hint": "Unique Information — a parameter from the Blog Article brief (SERP & competition).",
+      "help": {
+        "what": "Unique Information — a parameter from the Blog Article brief (SERP & competition).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([uniqueInformation]) so nothing is invented.",
+        "example": "Original insights you actually have",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for unique information."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "academicSources",
+      "label": "Academic Sources",
+      "placeholder": "Peer-reviewed if any",
+      "required": false,
+      "type": "textarea",
+      "group": "sources",
+      "groupTitle": "Sources",
+      "hint": "Academic Sources — a parameter from the Blog Article brief (Sources).",
+      "help": {
+        "what": "Academic Sources — a parameter from the Blog Article brief (Sources).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([academicSources]) so nothing is invented.",
+        "example": "Peer-reviewed if any",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for academic sources."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "approvedCaseStudies",
+      "label": "Approved Case Studies",
+      "placeholder": "Real case studies only",
+      "required": false,
+      "type": "textarea",
+      "group": "sources",
+      "groupTitle": "Sources",
+      "hint": "Approved Case Studies — a parameter from the Blog Article brief (Sources).",
+      "help": {
+        "what": "Approved Case Studies — a parameter from the Blog Article brief (Sources).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([approvedCaseStudies]) so nothing is invented.",
+        "example": "Real case studies only",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for approved case studies."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "approvedDefinitions",
+      "label": "Approved Definitions",
+      "placeholder": "Official definitions",
+      "required": false,
+      "type": "textarea",
+      "group": "sources",
+      "groupTitle": "Sources",
+      "hint": "Approved Definitions — a parameter from the Blog Article brief (Sources).",
+      "help": {
+        "what": "Approved Definitions — a parameter from the Blog Article brief (Sources).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([approvedDefinitions]) so nothing is invented.",
+        "example": "Official definitions",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for approved definitions."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "approvedExamples",
+      "label": "Approved Examples",
+      "placeholder": "Approved examples",
+      "required": false,
+      "type": "textarea",
+      "group": "sources",
+      "groupTitle": "Sources",
+      "hint": "Approved Examples — a parameter from the Blog Article brief (Sources).",
+      "help": {
+        "what": "Approved Examples — a parameter from the Blog Article brief (Sources).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([approvedExamples]) so nothing is invented.",
+        "example": "Approved examples",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for approved examples."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "approvedQuotes",
+      "label": "Approved Quotes",
+      "placeholder": "Exact quotes + attribution",
+      "required": false,
+      "type": "textarea",
+      "group": "sources",
+      "groupTitle": "Sources",
+      "hint": "Approved Quotes — a parameter from the Blog Article brief (Sources).",
+      "help": {
+        "what": "Approved Quotes — a parameter from the Blog Article brief (Sources).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([approvedQuotes]) so nothing is invented.",
+        "example": "Exact quotes + attribution",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for approved quotes."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "approvedStatistics",
+      "label": "Approved Statistics",
+      "placeholder": "Numbers + source + date only if verified",
+      "required": false,
+      "type": "textarea",
+      "group": "sources",
+      "groupTitle": "Sources",
+      "hint": "Approved Statistics — a parameter from the Blog Article brief (Sources).",
+      "help": {
+        "what": "Approved Statistics — a parameter from the Blog Article brief (Sources).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([approvedStatistics]) so nothing is invented.",
+        "example": "Numbers + source + date only if verified",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for approved statistics."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "archiveLinks",
+      "label": "Archive Links",
+      "placeholder": "unknown / not applicable",
+      "required": false,
+      "type": "select",
+      "group": "sources",
+      "groupTitle": "Sources",
+      "hint": "Archive Links — a parameter from the Blog Article brief (Sources).",
+      "help": {
+        "what": "Archive Links — a parameter from the Blog Article brief (Sources).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([archiveLinks]) so nothing is invented.",
+        "example": "unknown / not applicable",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for archive links."
+      },
+      "options": [
+        "yes",
+        "no",
+        "unknown / not applicable"
+      ],
+      "fullWidth": false
+    },
+    {
+      "key": "booksReports",
+      "label": "Books Reports",
+      "placeholder": "Books or long reports",
+      "required": false,
+      "type": "textarea",
+      "group": "sources",
+      "groupTitle": "Sources",
+      "hint": "Books Reports — a parameter from the Blog Article brief (Sources).",
+      "help": {
+        "what": "Books Reports — a parameter from the Blog Article brief (Sources).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([booksReports]) so nothing is invented.",
+        "example": "Books or long reports",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for books reports."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "citationStyle",
+      "label": "Citation Style",
+      "placeholder": "inline links",
+      "required": false,
+      "type": "select",
+      "group": "sources",
+      "groupTitle": "Sources",
+      "hint": "Citation Style — a parameter from the Blog Article brief (Sources).",
+      "help": {
+        "what": "Citation Style — a parameter from the Blog Article brief (Sources).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([citationStyle]) so nothing is invented.",
+        "example": "inline links",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for citation style."
+      },
+      "options": [
+        "inline links",
+        "APA-style references",
+        "numbered footnotes",
+        "end list of sources",
+        "publisher house style"
+      ],
+      "fullWidth": false
+    },
+    {
+      "key": "companyDocumentation",
+      "label": "Company Documentation",
+      "placeholder": "Your product docs",
+      "required": false,
+      "type": "textarea",
+      "group": "sources",
+      "groupTitle": "Sources",
+      "hint": "Company Documentation — a parameter from the Blog Article brief (Sources).",
+      "help": {
+        "what": "Company Documentation — a parameter from the Blog Article brief (Sources).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([companyDocumentation]) so nothing is invented.",
+        "example": "Your product docs",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for company documentation."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "externalLinkPolicy",
+      "label": "External Link Policy",
+      "placeholder": "nofollow affiliates / open in new tab / etc.",
+      "required": false,
+      "type": "text",
+      "group": "sources",
+      "groupTitle": "Sources",
+      "hint": "External Link Policy — a parameter from the Blog Article brief (Sources).",
+      "help": {
+        "what": "External Link Policy — a parameter from the Blog Article brief (Sources).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([externalLinkPolicy]) so nothing is invented.",
+        "example": "nofollow affiliates / open in new tab / etc.",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for external link policy."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "governmentSources",
+      "label": "Government Sources",
+      "placeholder": "Official gov sources",
+      "required": false,
+      "type": "textarea",
+      "group": "sources",
+      "groupTitle": "Sources",
+      "hint": "Government Sources — a parameter from the Blog Article brief (Sources).",
+      "help": {
+        "what": "Government Sources — a parameter from the Blog Article brief (Sources).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([governmentSources]) so nothing is invented.",
+        "example": "Official gov sources",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for government sources."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "industrySources",
+      "label": "Industry Sources",
+      "placeholder": "Industry reports",
+      "required": false,
+      "type": "textarea",
+      "group": "sources",
+      "groupTitle": "Sources",
+      "hint": "Industry Sources — a parameter from the Blog Article brief (Sources).",
+      "help": {
+        "what": "Industry Sources — a parameter from the Blog Article brief (Sources).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([industrySources]) so nothing is invented.",
+        "example": "Industry reports",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for industry sources."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "interviews",
+      "label": "Interviews",
+      "placeholder": "Approved interview notes",
+      "required": false,
+      "type": "textarea",
+      "group": "sources",
+      "groupTitle": "Sources",
+      "hint": "Interviews — a parameter from the Blog Article brief (Sources).",
+      "help": {
+        "what": "Interviews — a parameter from the Blog Article brief (Sources).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([interviews]) so nothing is invented.",
+        "example": "Approved interview notes",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for interviews."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "maximumSourceAge",
+      "label": "Maximum Source Age",
+      "placeholder": "2 years for stats; evergreen OK for concepts",
+      "required": false,
+      "type": "text",
+      "group": "sources",
+      "groupTitle": "Sources",
+      "hint": "Maximum Source Age — a parameter from the Blog Article brief (Sources).",
+      "help": {
+        "what": "Maximum Source Age — a parameter from the Blog Article brief (Sources).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([maximumSourceAge]) so nothing is invented.",
+        "example": "2 years for stats; evergreen OK for concepts",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for maximum source age."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "paywalledSources",
+      "label": "Paywalled Sources",
+      "placeholder": "no",
+      "required": false,
+      "type": "select",
+      "group": "sources",
+      "groupTitle": "Sources",
+      "hint": "Paywalled Sources — a parameter from the Blog Article brief (Sources).",
+      "help": {
+        "what": "Paywalled Sources — a parameter from the Blog Article brief (Sources).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([paywalledSources]) so nothing is invented.",
+        "example": "no",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for paywalled sources."
+      },
+      "options": [
+        "yes",
+        "no",
+        "unknown / not applicable"
+      ],
+      "fullWidth": false
+    },
+    {
+      "key": "primarySources",
+      "label": "Primary Sources",
+      "placeholder": "Primary / original sources",
+      "required": false,
+      "type": "textarea",
+      "group": "sources",
+      "groupTitle": "Sources",
+      "hint": "Primary Sources — a parameter from the Blog Article brief (Sources).",
+      "help": {
+        "what": "Primary Sources — a parameter from the Blog Article brief (Sources).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([primarySources]) so nothing is invented.",
+        "example": "Primary / original sources",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for primary sources."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "productDocumentation",
+      "label": "Product Documentation",
+      "placeholder": "Feature docs / changelog",
+      "required": false,
+      "type": "textarea",
+      "group": "sources",
+      "groupTitle": "Sources",
+      "hint": "Product Documentation — a parameter from the Blog Article brief (Sources).",
+      "help": {
+        "what": "Product Documentation — a parameter from the Blog Article brief (Sources).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([productDocumentation]) so nothing is invented.",
+        "example": "Feature docs / changelog",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for product documentation."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "prohibitedSources",
+      "label": "Prohibited Sources",
+      "placeholder": "Sources that must not be used",
+      "required": false,
+      "type": "textarea",
+      "group": "sources",
+      "groupTitle": "Sources",
+      "hint": "Prohibited Sources — a parameter from the Blog Article brief (Sources).",
+      "help": {
+        "what": "Prohibited Sources — a parameter from the Blog Article brief (Sources).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([prohibitedSources]) so nothing is invented.",
+        "example": "Sources that must not be used",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for prohibited sources."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "requiredSources",
+      "label": "Required Sources",
+      "placeholder": "Must-include sources",
+      "required": false,
+      "type": "textarea",
+      "group": "sources",
+      "groupTitle": "Sources",
+      "hint": "Required Sources — a parameter from the Blog Article brief (Sources).",
+      "help": {
+        "what": "Required Sources — a parameter from the Blog Article brief (Sources).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([requiredSources]) so nothing is invented.",
+        "example": "Must-include sources",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for required sources."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "sourceDateRequirements",
+      "label": "Source Date Requirements",
+      "placeholder": "e.g. prefer sources after 2024",
+      "required": false,
+      "type": "text",
+      "group": "sources",
+      "groupTitle": "Sources",
+      "hint": "Source Date Requirements — a parameter from the Blog Article brief (Sources).",
+      "help": {
+        "what": "Source Date Requirements — a parameter from the Blog Article brief (Sources).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([sourceDateRequirements]) so nothing is invented.",
+        "example": "e.g. prefer sources after 2024",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for source date requirements."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "currentCheckRequired",
+      "label": "Current Check Required",
+      "placeholder": "yes",
+      "required": false,
+      "type": "select",
+      "group": "research",
+      "groupTitle": "Research requirements",
+      "hint": "Current Check Required — a parameter from the Blog Article brief (Research requirements).",
+      "help": {
+        "what": "Current Check Required — a parameter from the Blog Article brief (Research requirements).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([currentCheckRequired]) so nothing is invented.",
+        "example": "yes",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for current check required."
+      },
+      "options": [
+        "yes",
+        "no",
+        "unknown / not applicable"
+      ],
+      "fullWidth": false
+    },
+    {
+      "key": "dataAnalysisRequired",
+      "label": "Data Analysis Required",
+      "placeholder": "no",
+      "required": false,
+      "type": "select",
+      "group": "research",
+      "groupTitle": "Research requirements",
+      "hint": "Data Analysis Required — a parameter from the Blog Article brief (Research requirements).",
+      "help": {
+        "what": "Data Analysis Required — a parameter from the Blog Article brief (Research requirements).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([dataAnalysisRequired]) so nothing is invented.",
+        "example": "no",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for data analysis required."
+      },
+      "options": [
+        "yes",
+        "no",
+        "unknown / not applicable"
+      ],
+      "fullWidth": false
+    },
+    {
+      "key": "expertInterviewRequired",
+      "label": "Expert Interview Required",
+      "placeholder": "no",
+      "required": false,
+      "type": "select",
+      "group": "research",
+      "groupTitle": "Research requirements",
+      "hint": "Expert Interview Required — a parameter from the Blog Article brief (Research requirements).",
+      "help": {
+        "what": "Expert Interview Required — a parameter from the Blog Article brief (Research requirements).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([expertInterviewRequired]) so nothing is invented.",
+        "example": "no",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for expert interview required."
+      },
+      "options": [
+        "yes",
+        "no",
+        "unknown / not applicable"
+      ],
+      "fullWidth": false
+    },
+    {
+      "key": "financialVerificationRequired",
+      "label": "Financial Verification Required",
+      "placeholder": "no",
+      "required": false,
+      "type": "select",
+      "group": "research",
+      "groupTitle": "Research requirements",
+      "hint": "Financial Verification Required — a parameter from the Blog Article brief (Research requirements).",
+      "help": {
+        "what": "Financial Verification Required — a parameter from the Blog Article brief (Research requirements).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([financialVerificationRequired]) so nothing is invented.",
+        "example": "no",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for financial verification required."
+      },
+      "options": [
+        "yes",
+        "no",
+        "unknown / not applicable"
+      ],
+      "fullWidth": false
+    },
+    {
+      "key": "internetAccess",
+      "label": "Internet Access",
+      "placeholder": "no",
+      "required": false,
+      "type": "select",
+      "group": "research",
+      "groupTitle": "Research requirements",
+      "hint": "If no, model must mark current claims as needing verification.",
+      "help": {
+        "what": "Internet Access — a parameter from the Blog Article brief (Research requirements).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([internetAccess]) so nothing is invented.",
+        "example": "no",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for internet access."
+      },
+      "options": [
+        "yes",
+        "no",
+        "unknown / not applicable"
+      ],
+      "fullWidth": false
+    },
+    {
+      "key": "legalVerificationRequired",
+      "label": "Legal Verification Required",
+      "placeholder": "no",
+      "required": false,
+      "type": "select",
+      "group": "research",
+      "groupTitle": "Research requirements",
+      "hint": "Legal Verification Required — a parameter from the Blog Article brief (Research requirements).",
+      "help": {
+        "what": "Legal Verification Required — a parameter from the Blog Article brief (Research requirements).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([legalVerificationRequired]) so nothing is invented.",
+        "example": "no",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for legal verification required."
+      },
+      "options": [
+        "yes",
+        "no",
+        "unknown / not applicable"
+      ],
+      "fullWidth": false
+    },
+    {
+      "key": "medicalVerificationRequired",
+      "label": "Medical Verification Required",
+      "placeholder": "no",
+      "required": false,
+      "type": "select",
+      "group": "research",
+      "groupTitle": "Research requirements",
+      "hint": "Medical Verification Required — a parameter from the Blog Article brief (Research requirements).",
+      "help": {
+        "what": "Medical Verification Required — a parameter from the Blog Article brief (Research requirements).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([medicalVerificationRequired]) so nothing is invented.",
+        "example": "no",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for medical verification required."
+      },
+      "options": [
+        "yes",
+        "no",
+        "unknown / not applicable"
+      ],
+      "fullWidth": false
+    },
+    {
+      "key": "productTestingRequired",
+      "label": "Product Testing Required",
+      "placeholder": "no",
+      "required": false,
+      "type": "select",
+      "group": "research",
+      "groupTitle": "Research requirements",
+      "hint": "Product Testing Required — a parameter from the Blog Article brief (Research requirements).",
+      "help": {
+        "what": "Product Testing Required — a parameter from the Blog Article brief (Research requirements).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([productTestingRequired]) so nothing is invented.",
+        "example": "no",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for product testing required."
+      },
+      "options": [
+        "yes",
+        "no",
+        "unknown / not applicable"
+      ],
+      "fullWidth": false
+    },
+    {
+      "key": "regionalVerificationRequired",
+      "label": "Regional Verification Required",
+      "placeholder": "no",
+      "required": false,
+      "type": "select",
+      "group": "research",
+      "groupTitle": "Research requirements",
+      "hint": "Regional Verification Required — a parameter from the Blog Article brief (Research requirements).",
+      "help": {
+        "what": "Regional Verification Required — a parameter from the Blog Article brief (Research requirements).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([regionalVerificationRequired]) so nothing is invented.",
+        "example": "no",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for regional verification required."
+      },
+      "options": [
+        "yes",
+        "no",
+        "unknown / not applicable"
+      ],
+      "fullWidth": false
+    },
+    {
+      "key": "researchRequired",
+      "label": "Research Required",
+      "placeholder": "no",
+      "required": false,
+      "type": "select",
+      "group": "research",
+      "groupTitle": "Research requirements",
+      "hint": "Research Required — a parameter from the Blog Article brief (Research requirements).",
+      "help": {
+        "what": "Research Required — a parameter from the Blog Article brief (Research requirements).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([researchRequired]) so nothing is invented.",
+        "example": "no",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for research required."
+      },
+      "options": [
+        "yes",
+        "no",
+        "unknown / not applicable"
+      ],
+      "fullWidth": false
+    },
+    {
+      "key": "approvedClaims",
+      "label": "Approved Claims",
+      "placeholder": "Claims you authorize",
+      "required": false,
+      "type": "textarea",
+      "group": "facts",
+      "groupTitle": "Facts & claims",
+      "hint": "Approved Claims — a parameter from the Blog Article brief (Facts & claims).",
+      "help": {
+        "what": "Approved Claims — a parameter from the Blog Article brief (Facts & claims).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([approvedClaims]) so nothing is invented.",
+        "example": "Claims you authorize",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for approved claims."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "approvedComparisons",
+      "label": "Approved Comparisons",
+      "placeholder": "Fair comparison points you verified",
+      "required": false,
+      "type": "textarea",
+      "group": "facts",
+      "groupTitle": "Facts & claims",
+      "hint": "Approved Comparisons — a parameter from the Blog Article brief (Facts & claims).",
+      "help": {
+        "what": "Approved Comparisons — a parameter from the Blog Article brief (Facts & claims).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([approvedComparisons]) so nothing is invented.",
+        "example": "Fair comparison points you verified",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for approved comparisons."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "approvedDates",
+      "label": "Approved Dates",
+      "placeholder": "Confirmed dates",
+      "required": false,
+      "type": "text",
+      "group": "facts",
+      "groupTitle": "Facts & claims",
+      "hint": "Approved Dates — a parameter from the Blog Article brief (Facts & claims).",
+      "help": {
+        "what": "Approved Dates — a parameter from the Blog Article brief (Facts & claims).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([approvedDates]) so nothing is invented.",
+        "example": "Confirmed dates",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for approved dates."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "approvedFeedback",
+      "label": "Approved Feedback",
+      "placeholder": "Real customer feedback",
+      "required": false,
+      "type": "textarea",
+      "group": "facts",
+      "groupTitle": "Facts & claims",
+      "hint": "Approved Feedback — a parameter from the Blog Article brief (Facts & claims).",
+      "help": {
+        "what": "Approved Feedback — a parameter from the Blog Article brief (Facts & claims).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([approvedFeedback]) so nothing is invented.",
+        "example": "Real customer feedback",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for approved feedback."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "approvedFinancialInformation",
+      "label": "Approved Financial Information",
+      "placeholder": "Optional — leave blank if unknown",
+      "required": false,
+      "type": "textarea",
+      "group": "facts",
+      "groupTitle": "Facts & claims",
+      "hint": "Approved Financial Information — a parameter from the Blog Article brief (Facts & claims).",
+      "help": {
+        "what": "Approved Financial Information — a parameter from the Blog Article brief (Facts & claims).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([approvedFinancialInformation]) so nothing is invented.",
+        "example": "A short, factual value for approved financial information that you can defend if asked.",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for approved financial information."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "approvedMedicalInformation",
+      "label": "Approved Medical Information",
+      "placeholder": "Optional — leave blank if unknown",
+      "required": false,
+      "type": "textarea",
+      "group": "facts",
+      "groupTitle": "Facts & claims",
+      "hint": "Approved Medical Information — a parameter from the Blog Article brief (Facts & claims).",
+      "help": {
+        "what": "Approved Medical Information — a parameter from the Blog Article brief (Facts & claims).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([approvedMedicalInformation]) so nothing is invented.",
+        "example": "A short, factual value for approved medical information that you can defend if asked.",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for approved medical information."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "approvedOutcomes",
+      "label": "Approved Outcomes",
+      "placeholder": "Real outcomes only — no invented case results",
+      "required": false,
+      "type": "textarea",
+      "group": "facts",
+      "groupTitle": "Facts & claims",
+      "hint": "Approved Outcomes — a parameter from the Blog Article brief (Facts & claims).",
+      "help": {
+        "what": "Approved Outcomes — a parameter from the Blog Article brief (Facts & claims).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([approvedOutcomes]) so nothing is invented.",
+        "example": "Real outcomes only — no invented case results",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for approved outcomes."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "approvedPricing",
+      "label": "Approved Pricing",
+      "placeholder": "Prices only if current and approved",
+      "required": false,
+      "type": "text",
+      "group": "facts",
+      "groupTitle": "Facts & claims",
+      "hint": "Approved Pricing — a parameter from the Blog Article brief (Facts & claims).",
+      "help": {
+        "what": "Approved Pricing — a parameter from the Blog Article brief (Facts & claims).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([approvedPricing]) so nothing is invented.",
+        "example": "Prices only if current and approved",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for approved pricing."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "approvedRegulations",
+      "label": "Approved Regulations",
+      "placeholder": "Optional — leave blank if unknown",
+      "required": false,
+      "type": "textarea",
+      "group": "facts",
+      "groupTitle": "Facts & claims",
+      "hint": "Approved Regulations — a parameter from the Blog Article brief (Facts & claims).",
+      "help": {
+        "what": "Approved Regulations — a parameter from the Blog Article brief (Facts & claims).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([approvedRegulations]) so nothing is invented.",
+        "example": "A short, factual value for approved regulations that you can defend if asked.",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for approved regulations."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "approvedTestimonials",
+      "label": "Approved Testimonials",
+      "placeholder": "Only real, approved testimonials",
+      "required": false,
+      "type": "textarea",
+      "group": "facts",
+      "groupTitle": "Facts & claims",
+      "hint": "Approved Testimonials — a parameter from the Blog Article brief (Facts & claims).",
+      "help": {
+        "what": "Approved Testimonials — a parameter from the Blog Article brief (Facts & claims).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([approvedTestimonials]) so nothing is invented.",
+        "example": "Only real, approved testimonials",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for approved testimonials."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "confidentialInformation",
+      "label": "Confidential Information",
+      "placeholder": "Do not publish — keep out of the article",
+      "required": false,
+      "type": "textarea",
+      "group": "facts",
+      "groupTitle": "Facts & claims",
+      "hint": "Confidential Information — a parameter from the Blog Article brief (Facts & claims).",
+      "help": {
+        "what": "Confidential Information — a parameter from the Blog Article brief (Facts & claims).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([confidentialInformation]) so nothing is invented.",
+        "example": "Do not publish — keep out of the article",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for confidential information."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "conflictingEvidence",
+      "label": "Conflicting Evidence",
+      "placeholder": "Where sources disagree",
+      "required": false,
+      "type": "textarea",
+      "group": "facts",
+      "groupTitle": "Facts & claims",
+      "hint": "Conflicting Evidence — a parameter from the Blog Article brief (Facts & claims).",
+      "help": {
+        "what": "Conflicting Evidence — a parameter from the Blog Article brief (Facts & claims).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([conflictingEvidence]) so nothing is invented.",
+        "example": "Where sources disagree",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for conflicting evidence."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "productFacts",
+      "label": "Product Facts",
+      "placeholder": "Real product facts",
+      "required": false,
+      "type": "textarea",
+      "group": "facts",
+      "groupTitle": "Facts & claims",
+      "hint": "Product Facts — a parameter from the Blog Article brief (Facts & claims).",
+      "help": {
+        "what": "Product Facts — a parameter from the Blog Article brief (Facts & claims).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([productFacts]) so nothing is invented.",
+        "example": "Real product facts",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for product facts."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "requiredDisclaimers",
+      "label": "Required Disclaimers",
+      "placeholder": "Required legal/medical/financial disclaimers",
+      "required": false,
+      "type": "textarea",
+      "group": "facts",
+      "groupTitle": "Facts & claims",
+      "hint": "Required Disclaimers — a parameter from the Blog Article brief (Facts & claims).",
+      "help": {
+        "what": "Required Disclaimers — a parameter from the Blog Article brief (Facts & claims).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([requiredDisclaimers]) so nothing is invented.",
+        "example": "Required legal/medical/financial disclaimers",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for required disclaimers."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "restrictions",
+      "label": "Restrictions",
+      "placeholder": "Claims marketing forbids",
+      "required": false,
+      "type": "textarea",
+      "group": "facts",
+      "groupTitle": "Facts & claims",
+      "hint": "Restrictions — a parameter from the Blog Article brief (Facts & claims).",
+      "help": {
+        "what": "Restrictions — a parameter from the Blog Article brief (Facts & claims).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([restrictions]) so nothing is invented.",
+        "example": "Claims marketing forbids",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for restrictions."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "uncertainties",
+      "label": "Uncertainties",
+      "placeholder": "Known unknowns to disclose",
+      "required": false,
+      "type": "textarea",
+      "group": "facts",
+      "groupTitle": "Facts & claims",
+      "hint": "Uncertainties — a parameter from the Blog Article brief (Facts & claims).",
+      "help": {
+        "what": "Uncertainties — a parameter from the Blog Article brief (Facts & claims).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([uncertainties]) so nothing is invented.",
+        "example": "Known unknowns to disclose",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for uncertainties."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "unverifiedDetails",
+      "label": "Unverified Details",
+      "placeholder": "Items that need fact-check before publish",
+      "required": false,
+      "type": "textarea",
+      "group": "facts",
+      "groupTitle": "Facts & claims",
+      "hint": "Unverified Details — a parameter from the Blog Article brief (Facts & claims).",
+      "help": {
+        "what": "Unverified Details — a parameter from the Blog Article brief (Facts & claims).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([unverifiedDetails]) so nothing is invented.",
+        "example": "Items that need fact-check before publish",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for unverified details."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "affiliateLinks",
+      "label": "Affiliate Links",
+      "placeholder": "no",
+      "required": false,
+      "type": "select",
+      "group": "monetization",
+      "groupTitle": "Monetization & disclosure",
+      "hint": "Affiliate Links — a parameter from the Blog Article brief (Monetization & disclosure).",
+      "help": {
+        "what": "Affiliate Links — a parameter from the Blog Article brief (Monetization & disclosure).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([affiliateLinks]) so nothing is invented.",
+        "example": "no",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for affiliate links."
+      },
+      "options": [
+        "yes",
+        "no",
+        "unknown / not applicable"
+      ],
+      "fullWidth": false
+    },
+    {
+      "key": "affiliatePartners",
+      "label": "Affiliate Partners",
+      "placeholder": "Partner names if any",
+      "required": false,
+      "type": "text",
+      "group": "monetization",
+      "groupTitle": "Monetization & disclosure",
+      "hint": "Affiliate Partners — a parameter from the Blog Article brief (Monetization & disclosure).",
+      "help": {
+        "what": "Affiliate Partners — a parameter from the Blog Article brief (Monetization & disclosure).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([affiliatePartners]) so nothing is invented.",
+        "example": "Partner names if any",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for affiliate partners."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "commercialDisclosure",
+      "label": "Commercial Disclosure",
+      "placeholder": "Disclosure text if affiliate/sponsor/ownership exists",
+      "required": false,
+      "type": "textarea",
+      "group": "monetization",
+      "groupTitle": "Monetization & disclosure",
+      "hint": "Commercial Disclosure — a parameter from the Blog Article brief (Monetization & disclosure).",
+      "help": {
+        "what": "Commercial Disclosure — a parameter from the Blog Article brief (Monetization & disclosure).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([commercialDisclosure]) so nothing is invented.",
+        "example": "Disclosure text if affiliate/sponsor/ownership exists",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for commercial disclosure."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "commissionStructure",
+      "label": "Commission Structure",
+      "placeholder": "Only if relevant and true",
+      "required": false,
+      "type": "text",
+      "group": "monetization",
+      "groupTitle": "Monetization & disclosure",
+      "hint": "Commission Structure — a parameter from the Blog Article brief (Monetization & disclosure).",
+      "help": {
+        "what": "Commission Structure — a parameter from the Blog Article brief (Monetization & disclosure).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([commissionStructure]) so nothing is invented.",
+        "example": "Only if relevant and true",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for commission structure."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "displayAdvertising",
+      "label": "Display Advertising",
+      "placeholder": "no",
+      "required": false,
+      "type": "select",
+      "group": "monetization",
+      "groupTitle": "Monetization & disclosure",
+      "hint": "Display Advertising — a parameter from the Blog Article brief (Monetization & disclosure).",
+      "help": {
+        "what": "Display Advertising — a parameter from the Blog Article brief (Monetization & disclosure).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([displayAdvertising]) so nothing is invented.",
+        "example": "no",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for display advertising."
+      },
+      "options": [
+        "yes",
+        "no",
+        "unknown / not applicable"
+      ],
+      "fullWidth": false
+    },
+    {
+      "key": "leadGenerationGoal",
+      "label": "Lead Generation Goal",
+      "placeholder": "newsletter / demo / none",
+      "required": false,
+      "type": "text",
+      "group": "monetization",
+      "groupTitle": "Monetization & disclosure",
+      "hint": "Lead Generation Goal — a parameter from the Blog Article brief (Monetization & disclosure).",
+      "help": {
+        "what": "Lead Generation Goal — a parameter from the Blog Article brief (Monetization & disclosure).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([leadGenerationGoal]) so nothing is invented.",
+        "example": "newsletter / demo / none",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for lead generation goal."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "monetizationModel",
+      "label": "Monetization Model",
+      "placeholder": "subscription / affiliate / ads / none",
+      "required": false,
+      "type": "text",
+      "group": "monetization",
+      "groupTitle": "Monetization & disclosure",
+      "hint": "Monetization Model — a parameter from the Blog Article brief (Monetization & disclosure).",
+      "help": {
+        "what": "Monetization Model — a parameter from the Blog Article brief (Monetization & disclosure).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([monetizationModel]) so nothing is invented.",
+        "example": "subscription / affiliate / ads / none",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for monetization model."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "ownedProduct",
+      "label": "Owned Product",
+      "placeholder": "yes",
+      "required": false,
+      "type": "select",
+      "group": "monetization",
+      "groupTitle": "Monetization & disclosure",
+      "hint": "Owned Product — a parameter from the Blog Article brief (Monetization & disclosure).",
+      "help": {
+        "what": "Owned Product — a parameter from the Blog Article brief (Monetization & disclosure).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([ownedProduct]) so nothing is invented.",
+        "example": "yes",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for owned product."
+      },
+      "options": [
+        "yes",
+        "no",
+        "unknown / not applicable"
+      ],
+      "fullWidth": false
+    },
+    {
+      "key": "paidPlacement",
+      "label": "Paid Placement",
+      "placeholder": "no",
+      "required": false,
+      "type": "select",
+      "group": "monetization",
+      "groupTitle": "Monetization & disclosure",
+      "hint": "Paid Placement — a parameter from the Blog Article brief (Monetization & disclosure).",
+      "help": {
+        "what": "Paid Placement — a parameter from the Blog Article brief (Monetization & disclosure).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([paidPlacement]) so nothing is invented.",
+        "example": "no",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for paid placement."
+      },
+      "options": [
+        "yes",
+        "no",
+        "unknown / not applicable"
+      ],
+      "fullWidth": false
+    },
+    {
+      "key": "sponsoredContent",
+      "label": "Sponsored Content",
+      "placeholder": "no",
+      "required": false,
+      "type": "select",
+      "group": "monetization",
+      "groupTitle": "Monetization & disclosure",
+      "hint": "Sponsored Content — a parameter from the Blog Article brief (Monetization & disclosure).",
+      "help": {
+        "what": "Sponsored Content — a parameter from the Blog Article brief (Monetization & disclosure).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([sponsoredContent]) so nothing is invented.",
+        "example": "no",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for sponsored content."
+      },
+      "options": [
+        "yes",
+        "no",
+        "unknown / not applicable"
+      ],
+      "fullWidth": false
+    },
+    {
+      "key": "sponsorName",
+      "label": "Sponsor Name",
+      "placeholder": "Sponsor if applicable",
+      "required": false,
+      "type": "text",
+      "group": "monetization",
+      "groupTitle": "Monetization & disclosure",
+      "hint": "Sponsor Name — a parameter from the Blog Article brief (Monetization & disclosure).",
+      "help": {
+        "what": "Sponsor Name — a parameter from the Blog Article brief (Monetization & disclosure).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([sponsorName]) so nothing is invented.",
+        "example": "Sponsor if applicable",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for sponsor name."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "consultationCta",
+      "label": "Consultation Cta",
+      "placeholder": "Book a call — only if offered",
+      "required": false,
+      "type": "text",
+      "group": "cta",
+      "groupTitle": "Calls to action",
+      "hint": "Consultation Cta — a parameter from the Blog Article brief (Calls to action).",
+      "help": {
+        "what": "Consultation Cta — a parameter from the Blog Article brief (Calls to action).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([consultationCta]) so nothing is invented.",
+        "example": "Book a call — only if offered",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for consultation cta."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "ctaDestination",
+      "label": "Cta Destination",
+      "placeholder": "https://www.creatornivo.com/register",
+      "required": false,
+      "type": "text",
+      "group": "cta",
+      "groupTitle": "Calls to action",
+      "hint": "Cta Destination — a parameter from the Blog Article brief (Calls to action).",
+      "help": {
+        "what": "Cta Destination — a parameter from the Blog Article brief (Calls to action).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([ctaDestination]) so nothing is invented.",
+        "example": "https://www.creatornivo.com/register",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for cta destination."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "ctaRestrictions",
+      "label": "Cta Restrictions",
+      "placeholder": "What CTAs are not allowed",
+      "required": false,
+      "type": "textarea",
+      "group": "cta",
+      "groupTitle": "Calls to action",
+      "hint": "Cta Restrictions — a parameter from the Blog Article brief (Calls to action).",
+      "help": {
+        "what": "Cta Restrictions — a parameter from the Blog Article brief (Calls to action).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([ctaRestrictions]) so nothing is invented.",
+        "example": "What CTAs are not allowed",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for cta restrictions."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "leadMagnet",
+      "label": "Lead Magnet",
+      "placeholder": "Checklist PDF if real",
+      "required": false,
+      "type": "text",
+      "group": "cta",
+      "groupTitle": "Calls to action",
+      "hint": "Lead Magnet — a parameter from the Blog Article brief (Calls to action).",
+      "help": {
+        "what": "Lead Magnet — a parameter from the Blog Article brief (Calls to action).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([leadMagnet]) so nothing is invented.",
+        "example": "Checklist PDF if real",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for lead magnet."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "newsletter",
+      "label": "Newsletter",
+      "placeholder": "Product updates list if real",
+      "required": false,
+      "type": "text",
+      "group": "cta",
+      "groupTitle": "Calls to action",
+      "hint": "Newsletter — a parameter from the Blog Article brief (Calls to action).",
+      "help": {
+        "what": "Newsletter — a parameter from the Blog Article brief (Calls to action).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([newsletter]) so nothing is invented.",
+        "example": "Product updates list if real",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for newsletter."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "primaryCta",
+      "label": "Primary Cta",
+      "placeholder": "Try the free plan",
+      "required": false,
+      "type": "text",
+      "group": "cta",
+      "groupTitle": "Calls to action",
+      "hint": "Must not withhold the main answer to force the CTA.",
+      "help": {
+        "what": "Primary Cta — a parameter from the Blog Article brief (Calls to action).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([primaryCta]) so nothing is invented.",
+        "example": "Try the free plan",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for primary cta."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "productCta",
+      "label": "Product Cta",
+      "placeholder": "Open Blog Article template",
+      "required": false,
+      "type": "text",
+      "group": "cta",
+      "groupTitle": "Calls to action",
+      "hint": "Product Cta — a parameter from the Blog Article brief (Calls to action).",
+      "help": {
+        "what": "Product Cta — a parameter from the Blog Article brief (Calls to action).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([productCta]) so nothing is invented.",
+        "example": "Open Blog Article template",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for product cta."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "secondaryCta",
+      "label": "Secondary Cta",
+      "placeholder": "Read related guide",
+      "required": false,
+      "type": "text",
+      "group": "cta",
+      "groupTitle": "Calls to action",
+      "hint": "Secondary Cta — a parameter from the Blog Article brief (Calls to action).",
+      "help": {
+        "what": "Secondary Cta — a parameter from the Blog Article brief (Calls to action).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([secondaryCta]) so nothing is invented.",
+        "example": "Read related guide",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for secondary cta."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "emergencyInformation",
+      "label": "Emergency Information",
+      "placeholder": "Emergency resources if YMYL",
+      "required": false,
+      "type": "textarea",
+      "group": "high_stakes",
+      "groupTitle": "High-stakes / YMYL",
+      "hint": "Emergency Information — a parameter from the Blog Article brief (High-stakes / YMYL).",
+      "help": {
+        "what": "Emergency Information — a parameter from the Blog Article brief (High-stakes / YMYL).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([emergencyInformation]) so nothing is invented.",
+        "example": "Emergency resources if YMYL",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for emergency information."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "highStakesCategory",
+      "label": "High Stakes Category",
+      "placeholder": "none",
+      "required": false,
+      "type": "select",
+      "group": "high_stakes",
+      "groupTitle": "High-stakes / YMYL",
+      "hint": "High Stakes Category — a parameter from the Blog Article brief (High-stakes / YMYL).",
+      "help": {
+        "what": "High Stakes Category — a parameter from the Blog Article brief (High-stakes / YMYL).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([highStakesCategory]) so nothing is invented.",
+        "example": "none",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for high stakes category."
+      },
+      "options": [
+        "none",
+        "medical / health",
+        "legal",
+        "financial",
+        "safety",
+        "other regulated"
+      ],
+      "fullWidth": false
+    },
+    {
+      "key": "jurisdiction",
+      "label": "Jurisdiction",
+      "placeholder": "e.g. US / EU / not applicable",
+      "required": false,
+      "type": "text",
+      "group": "high_stakes",
+      "groupTitle": "High-stakes / YMYL",
+      "hint": "Jurisdiction — a parameter from the Blog Article brief (High-stakes / YMYL).",
+      "help": {
+        "what": "Jurisdiction — a parameter from the Blog Article brief (High-stakes / YMYL).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([jurisdiction]) so nothing is invented.",
+        "example": "e.g. US / EU / not applicable",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for jurisdiction."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "professionalResources",
+      "label": "Professional Resources",
+      "placeholder": "Links to licensed professionals / hotlines",
+      "required": false,
+      "type": "textarea",
+      "group": "high_stakes",
+      "groupTitle": "High-stakes / YMYL",
+      "hint": "Professional Resources — a parameter from the Blog Article brief (High-stakes / YMYL).",
+      "help": {
+        "what": "Professional Resources — a parameter from the Blog Article brief (High-stakes / YMYL).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([professionalResources]) so nothing is invented.",
+        "example": "Links to licensed professionals / hotlines",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for professional resources."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "professionalReviewRequired",
+      "label": "Professional Review Required",
+      "placeholder": "no",
+      "required": false,
+      "type": "select",
+      "group": "high_stakes",
+      "groupTitle": "High-stakes / YMYL",
+      "hint": "Professional Review Required — a parameter from the Blog Article brief (High-stakes / YMYL).",
+      "help": {
+        "what": "Professional Review Required — a parameter from the Blog Article brief (High-stakes / YMYL).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([professionalReviewRequired]) so nothing is invented.",
+        "example": "no",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for professional review required."
+      },
+      "options": [
+        "yes",
+        "no",
+        "unknown / not applicable"
+      ],
+      "fullWidth": false
+    },
+    {
+      "key": "safetyWording",
+      "label": "Safety Wording",
+      "placeholder": "Required safety language",
+      "required": false,
+      "type": "textarea",
+      "group": "high_stakes",
+      "groupTitle": "High-stakes / YMYL",
+      "hint": "Safety Wording — a parameter from the Blog Article brief (High-stakes / YMYL).",
+      "help": {
+        "what": "Safety Wording — a parameter from the Blog Article brief (High-stakes / YMYL).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([safetyWording]) so nothing is invented.",
+        "example": "Required safety language",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for safety wording."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "aiImagesAllowed",
+      "label": "Ai Images Allowed",
+      "placeholder": "unknown / not applicable",
+      "required": false,
+      "type": "select",
+      "group": "visuals",
+      "groupTitle": "Visuals",
+      "hint": "Ai Images Allowed — a parameter from the Blog Article brief (Visuals).",
+      "help": {
+        "what": "Ai Images Allowed — a parameter from the Blog Article brief (Visuals).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([aiImagesAllowed]) so nothing is invented.",
+        "example": "unknown / not applicable",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for ai images allowed."
+      },
+      "options": [
+        "yes",
+        "no",
+        "unknown / not applicable"
+      ],
+      "fullWidth": false
+    },
+    {
+      "key": "articleImages",
+      "label": "Article Images",
+      "placeholder": "List available images",
+      "required": false,
+      "type": "textarea",
+      "group": "visuals",
+      "groupTitle": "Visuals",
+      "hint": "Article Images — a parameter from the Blog Article brief (Visuals).",
+      "help": {
+        "what": "Article Images — a parameter from the Blog Article brief (Visuals).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([articleImages]) so nothing is invented.",
+        "example": "List available images",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for article images."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "charts",
+      "label": "Charts",
+      "placeholder": "Chart data sources if any",
+      "required": false,
+      "type": "textarea",
+      "group": "visuals",
+      "groupTitle": "Visuals",
+      "hint": "Charts — a parameter from the Blog Article brief (Visuals).",
+      "help": {
+        "what": "Charts — a parameter from the Blog Article brief (Visuals).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([charts]) so nothing is invented.",
+        "example": "Chart data sources if any",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for charts."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "diagrams",
+      "label": "Diagrams",
+      "placeholder": "Diagram needs",
+      "required": false,
+      "type": "textarea",
+      "group": "visuals",
+      "groupTitle": "Visuals",
+      "hint": "Diagrams — a parameter from the Blog Article brief (Visuals).",
+      "help": {
+        "what": "Diagrams — a parameter from the Blog Article brief (Visuals).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([diagrams]) so nothing is invented.",
+        "example": "Diagram needs",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for diagrams."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "heroImage",
+      "label": "Hero Image",
+      "placeholder": "Available asset or “required”",
+      "required": false,
+      "type": "text",
+      "group": "visuals",
+      "groupTitle": "Visuals",
+      "hint": "Hero Image — a parameter from the Blog Article brief (Visuals).",
+      "help": {
+        "what": "Hero Image — a parameter from the Blog Article brief (Visuals).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([heroImage]) so nothing is invented.",
+        "example": "Available asset or “required”",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for hero image."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "imageCredits",
+      "label": "Image Credits",
+      "placeholder": "Credit lines",
+      "required": false,
+      "type": "textarea",
+      "group": "visuals",
+      "groupTitle": "Visuals",
+      "hint": "Image Credits — a parameter from the Blog Article brief (Visuals).",
+      "help": {
+        "what": "Image Credits — a parameter from the Blog Article brief (Visuals).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([imageCredits]) so nothing is invented.",
+        "example": "Credit lines",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for image credits."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "imageLicensing",
+      "label": "Image Licensing",
+      "placeholder": "License status for each asset",
+      "required": false,
+      "type": "textarea",
+      "group": "visuals",
+      "groupTitle": "Visuals",
+      "hint": "Image Licensing — a parameter from the Blog Article brief (Visuals).",
+      "help": {
+        "what": "Image Licensing — a parameter from the Blog Article brief (Visuals).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([imageLicensing]) so nothing is invented.",
+        "example": "License status for each asset",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for image licensing."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "originalPhotography",
+      "label": "Original Photography",
+      "placeholder": "Original photos available?",
+      "required": false,
+      "type": "textarea",
+      "group": "visuals",
+      "groupTitle": "Visuals",
+      "hint": "Original Photography — a parameter from the Blog Article brief (Visuals).",
+      "help": {
+        "what": "Original Photography — a parameter from the Blog Article brief (Visuals).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([originalPhotography]) so nothing is invented.",
+        "example": "Original photos available?",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for original photography."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "screenshots",
+      "label": "Screenshots",
+      "placeholder": "Product screenshots available?",
+      "required": false,
+      "type": "textarea",
+      "group": "visuals",
+      "groupTitle": "Visuals",
+      "hint": "Screenshots — a parameter from the Blog Article brief (Visuals).",
+      "help": {
+        "what": "Screenshots — a parameter from the Blog Article brief (Visuals).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([screenshots]) so nothing is invented.",
+        "example": "Product screenshots available?",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for screenshots."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "stockImagesAllowed",
+      "label": "Stock Images Allowed",
+      "placeholder": "yes",
+      "required": false,
+      "type": "select",
+      "group": "visuals",
+      "groupTitle": "Visuals",
+      "hint": "Stock Images Allowed — a parameter from the Blog Article brief (Visuals).",
+      "help": {
+        "what": "Stock Images Allowed — a parameter from the Blog Article brief (Visuals).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([stockImagesAllowed]) so nothing is invented.",
+        "example": "yes",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for stock images allowed."
+      },
+      "options": [
+        "yes",
+        "no",
+        "unknown / not applicable"
+      ],
+      "fullWidth": false
+    },
+    {
+      "key": "video",
+      "label": "Video",
+      "placeholder": "Embed or none",
+      "required": false,
+      "type": "text",
+      "group": "visuals",
+      "groupTitle": "Visuals",
+      "hint": "Video — a parameter from the Blog Article brief (Visuals).",
+      "help": {
+        "what": "Video — a parameter from the Blog Article brief (Visuals).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([video]) so nothing is invented.",
+        "example": "Embed or none",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for video."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "visualRestrictions",
+      "label": "Visual Restrictions",
+      "placeholder": "Do not use logos / faces / etc.",
+      "required": false,
+      "type": "textarea",
+      "group": "visuals",
+      "groupTitle": "Visuals",
+      "hint": "Visual Restrictions — a parameter from the Blog Article brief (Visuals).",
+      "help": {
+        "what": "Visual Restrictions — a parameter from the Blog Article brief (Visuals).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([visualRestrictions]) so nothing is invented.",
+        "example": "Do not use logos / faces / etc.",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for visual restrictions."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "visualStyle",
+      "label": "Visual Style",
+      "placeholder": "simple diagrams, no stock clichés",
+      "required": false,
+      "type": "text",
+      "group": "visuals",
+      "groupTitle": "Visuals",
+      "hint": "Visual Style — a parameter from the Blog Article brief (Visuals).",
+      "help": {
+        "what": "Visual Style — a parameter from the Blog Article brief (Visuals).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([visualStyle]) so nothing is invented.",
+        "example": "simple diagrams, no stock clichés",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for visual style."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "rtlSupport",
+      "label": "Rtl Support",
+      "placeholder": "no",
+      "required": false,
+      "type": "select",
+      "group": "localization_extra",
+      "groupTitle": "RTL & localization extras",
+      "hint": "Rtl Support — a parameter from the Blog Article brief (RTL & localization extras).",
+      "help": {
+        "what": "Rtl Support — a parameter from the Blog Article brief (RTL & localization extras).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([rtlSupport]) so nothing is invented.",
+        "example": "no",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for rtl support."
+      },
+      "options": [
+        "yes",
+        "no",
+        "unknown / not applicable"
+      ],
+      "fullWidth": false
+    },
+    {
+      "key": "archivePolicy",
+      "label": "Archive Policy",
+      "placeholder": "What happens when outdated",
+      "required": false,
+      "type": "text",
+      "group": "freshness",
+      "groupTitle": "Freshness & updates",
+      "hint": "Archive Policy — a parameter from the Blog Article brief (Freshness & updates).",
+      "help": {
+        "what": "Archive Policy — a parameter from the Blog Article brief (Freshness & updates).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([archivePolicy]) so nothing is invented.",
+        "example": "What happens when outdated",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for archive policy."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "changeableInformation",
+      "label": "Changeable Information",
+      "placeholder": "Prices, laws, product features that age fast",
+      "required": false,
+      "type": "textarea",
+      "group": "freshness",
+      "groupTitle": "Freshness & updates",
+      "hint": "Changeable Information — a parameter from the Blog Article brief (Freshness & updates).",
+      "help": {
+        "what": "Changeable Information — a parameter from the Blog Article brief (Freshness & updates).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([changeableInformation]) so nothing is invented.",
+        "example": "Prices, laws, product features that age fast",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for changeable information."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "lastReviewedDate",
+      "label": "Last Reviewed Date",
+      "placeholder": "YYYY-MM-DD",
+      "required": false,
+      "type": "text",
+      "group": "freshness",
+      "groupTitle": "Freshness & updates",
+      "hint": "Last Reviewed Date — a parameter from the Blog Article brief (Freshness & updates).",
+      "help": {
+        "what": "Last Reviewed Date — a parameter from the Blog Article brief (Freshness & updates).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([lastReviewedDate]) so nothing is invented.",
+        "example": "YYYY-MM-DD",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for last reviewed date."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "nextReviewDate",
+      "label": "Next Review Date",
+      "placeholder": "YYYY-MM-DD or +3 months",
+      "required": false,
+      "type": "text",
+      "group": "freshness",
+      "groupTitle": "Freshness & updates",
+      "hint": "Next Review Date — a parameter from the Blog Article brief (Freshness & updates).",
+      "help": {
+        "what": "Next Review Date — a parameter from the Blog Article brief (Freshness & updates).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([nextReviewDate]) so nothing is invented.",
+        "example": "YYYY-MM-DD or +3 months",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for next review date."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "updateOwner",
+      "label": "Update Owner",
+      "placeholder": "Who owns updates",
+      "required": false,
+      "type": "text",
+      "group": "freshness",
+      "groupTitle": "Freshness & updates",
+      "hint": "Update Owner — a parameter from the Blog Article brief (Freshness & updates).",
+      "help": {
+        "what": "Update Owner — a parameter from the Blog Article brief (Freshness & updates).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([updateOwner]) so nothing is invented.",
+        "example": "Who owns updates",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for update owner."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "canonicalPolicy",
+      "label": "Canonical Policy",
+      "placeholder": "Original on this site; nofollow syndicated copies",
+      "required": false,
+      "type": "text",
+      "group": "canonical",
+      "groupTitle": "Canonical & syndication",
+      "hint": "Canonical Policy — a parameter from the Blog Article brief (Canonical & syndication).",
+      "help": {
+        "what": "Canonical Policy — a parameter from the Blog Article brief (Canonical & syndication).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([canonicalPolicy]) so nothing is invented.",
+        "example": "Original on this site; nofollow syndicated copies",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for canonical policy."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "canonicalUrl",
+      "label": "Canonical Url",
+      "placeholder": "https://…/final-slug",
+      "required": false,
+      "type": "text",
+      "group": "canonical",
+      "groupTitle": "Canonical & syndication",
+      "hint": "Canonical Url — a parameter from the Blog Article brief (Canonical & syndication).",
+      "help": {
+        "what": "Canonical Url — a parameter from the Blog Article brief (Canonical & syndication).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([canonicalUrl]) so nothing is invented.",
+        "example": "https://…/final-slug",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for canonical url."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "duplicatePages",
+      "label": "Duplicate Pages",
+      "placeholder": "Other URLs that cover the same topic",
+      "required": false,
+      "type": "textarea",
+      "group": "canonical",
+      "groupTitle": "Canonical & syndication",
+      "hint": "Duplicate Pages — a parameter from the Blog Article brief (Canonical & syndication).",
+      "help": {
+        "what": "Duplicate Pages — a parameter from the Blog Article brief (Canonical & syndication).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([duplicatePages]) so nothing is invented.",
+        "example": "Other URLs that cover the same topic",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for duplicate pages."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "republishingPartners",
+      "label": "Republishing Partners",
+      "placeholder": "Partners if any",
+      "required": false,
+      "type": "text",
+      "group": "canonical",
+      "groupTitle": "Canonical & syndication",
+      "hint": "Republishing Partners — a parameter from the Blog Article brief (Canonical & syndication).",
+      "help": {
+        "what": "Republishing Partners — a parameter from the Blog Article brief (Canonical & syndication).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([republishingPartners]) so nothing is invented.",
+        "example": "Partners if any",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for republishing partners."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "syndication",
+      "label": "Syndication",
+      "placeholder": "no",
+      "required": false,
+      "type": "select",
+      "group": "canonical",
+      "groupTitle": "Canonical & syndication",
+      "hint": "Syndication — a parameter from the Blog Article brief (Canonical & syndication).",
+      "help": {
+        "what": "Syndication — a parameter from the Blog Article brief (Canonical & syndication).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([syndication]) so nothing is invented.",
+        "example": "no",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for syndication."
+      },
+      "options": [
+        "yes",
+        "no",
+        "unknown / not applicable"
+      ],
+      "fullWidth": false
+    },
+    {
+      "key": "schemaImplementation",
+      "label": "Schema Implementation",
+      "placeholder": "CMS field / GTM / developer ticket",
+      "required": false,
+      "type": "text",
+      "group": "structured_data",
+      "groupTitle": "Structured data",
+      "hint": "Schema Implementation — a parameter from the Blog Article brief (Structured data).",
+      "help": {
+        "what": "Schema Implementation — a parameter from the Blog Article brief (Structured data).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([schemaImplementation]) so nothing is invented.",
+        "example": "CMS field / GTM / developer ticket",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for schema implementation."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "schemaSupport",
+      "label": "Schema Support",
+      "placeholder": "What the CMS can actually emit",
+      "required": false,
+      "type": "text",
+      "group": "structured_data",
+      "groupTitle": "Structured data",
+      "hint": "Schema Support — a parameter from the Blog Article brief (Structured data).",
+      "help": {
+        "what": "Schema Support — a parameter from the Blog Article brief (Structured data).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([schemaSupport]) so nothing is invented.",
+        "example": "What the CMS can actually emit",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for schema support."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "schemaTypes",
+      "label": "Schema Types",
+      "placeholder": "Article / BlogPosting / FAQPage / none",
+      "required": false,
+      "type": "text",
+      "group": "structured_data",
+      "groupTitle": "Structured data",
+      "hint": "Schema Types — a parameter from the Blog Article brief (Structured data).",
+      "help": {
+        "what": "Schema Types — a parameter from the Blog Article brief (Structured data).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([schemaTypes]) so nothing is invented.",
+        "example": "Article / BlogPosting / FAQPage / none",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for schema types."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "structuredDataRequested",
+      "label": "Structured Data Requested",
+      "placeholder": "yes",
+      "required": false,
+      "type": "select",
+      "group": "structured_data",
+      "groupTitle": "Structured data",
+      "hint": "Structured Data Requested — a parameter from the Blog Article brief (Structured data).",
+      "help": {
+        "what": "Structured Data Requested — a parameter from the Blog Article brief (Structured data).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([structuredDataRequested]) so nothing is invented.",
+        "example": "yes",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for structured data requested."
+      },
+      "options": [
+        "yes",
+        "no",
+        "unknown / not applicable"
+      ],
+      "fullWidth": false
+    },
+    {
+      "key": "analyticsLimitations",
+      "label": "Analytics Limitations",
+      "placeholder": "Attribution gaps, cookie limits, etc.",
+      "required": false,
+      "type": "textarea",
+      "group": "performance",
+      "groupTitle": "Performance metrics",
+      "hint": "Analytics Limitations — a parameter from the Blog Article brief (Performance metrics).",
+      "help": {
+        "what": "Analytics Limitations — a parameter from the Blog Article brief (Performance metrics).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([analyticsLimitations]) so nothing is invented.",
+        "example": "Attribution gaps, cookie limits, etc.",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for analytics limitations."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "businessMetrics",
+      "label": "Business Metrics",
+      "placeholder": "qualified signups attributed",
+      "required": false,
+      "type": "text",
+      "group": "performance",
+      "groupTitle": "Performance metrics",
+      "hint": "Business Metrics — a parameter from the Blog Article brief (Performance metrics).",
+      "help": {
+        "what": "Business Metrics — a parameter from the Blog Article brief (Performance metrics).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([businessMetrics]) so nothing is invented.",
+        "example": "qualified signups attributed",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for business metrics."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "conversionMetric",
+      "label": "Conversion Metric",
+      "placeholder": "register starts from article CTA",
+      "required": false,
+      "type": "text",
+      "group": "performance",
+      "groupTitle": "Performance metrics",
+      "hint": "Conversion Metric — a parameter from the Blog Article brief (Performance metrics).",
+      "help": {
+        "what": "Conversion Metric — a parameter from the Blog Article brief (Performance metrics).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([conversionMetric]) so nothing is invented.",
+        "example": "register starts from article CTA",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for conversion metric."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "engagementMetrics",
+      "label": "Engagement Metrics",
+      "placeholder": "comments, shares if tracked",
+      "required": false,
+      "type": "text",
+      "group": "performance",
+      "groupTitle": "Performance metrics",
+      "hint": "Engagement Metrics — a parameter from the Blog Article brief (Performance metrics).",
+      "help": {
+        "what": "Engagement Metrics — a parameter from the Blog Article brief (Performance metrics).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([engagementMetrics]) so nothing is invented.",
+        "example": "comments, shares if tracked",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for engagement metrics."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "guardrailMetrics",
+      "label": "Guardrail Metrics",
+      "placeholder": "bounce, support tickets, refunds from claims",
+      "required": false,
+      "type": "text",
+      "group": "performance",
+      "groupTitle": "Performance metrics",
+      "hint": "Guardrail Metrics — a parameter from the Blog Article brief (Performance metrics).",
+      "help": {
+        "what": "Guardrail Metrics — a parameter from the Blog Article brief (Performance metrics).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([guardrailMetrics]) so nothing is invented.",
+        "example": "bounce, support tickets, refunds from claims",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for guardrail metrics."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "measurementPeriod",
+      "label": "Measurement Period",
+      "placeholder": "30 / 90 days post-publish",
+      "required": false,
+      "type": "text",
+      "group": "performance",
+      "groupTitle": "Performance metrics",
+      "hint": "Measurement Period — a parameter from the Blog Article brief (Performance metrics).",
+      "help": {
+        "what": "Measurement Period — a parameter from the Blog Article brief (Performance metrics).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([measurementPeriod]) so nothing is invented.",
+        "example": "30 / 90 days post-publish",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for measurement period."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "primaryMetric",
+      "label": "Primary Metric",
+      "placeholder": "organic clicks / time on page / saves",
+      "required": false,
+      "type": "text",
+      "group": "performance",
+      "groupTitle": "Performance metrics",
+      "hint": "Primary Metric — a parameter from the Blog Article brief (Performance metrics).",
+      "help": {
+        "what": "Primary Metric — a parameter from the Blog Article brief (Performance metrics).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([primaryMetric]) so nothing is invented.",
+        "example": "organic clicks / time on page / saves",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for primary metric."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "searchMetrics",
+      "label": "Search Metrics",
+      "placeholder": "impressions, average position",
+      "required": false,
+      "type": "text",
+      "group": "performance",
+      "groupTitle": "Performance metrics",
+      "hint": "Search Metrics — a parameter from the Blog Article brief (Performance metrics).",
+      "help": {
+        "what": "Search Metrics — a parameter from the Blog Article brief (Performance metrics).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([searchMetrics]) so nothing is invented.",
+        "example": "impressions, average position",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for search metrics."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "secondaryMetrics",
+      "label": "Secondary Metrics",
+      "placeholder": "scroll depth, newsletter signups",
+      "required": false,
+      "type": "text",
+      "group": "performance",
+      "groupTitle": "Performance metrics",
+      "hint": "Secondary Metrics — a parameter from the Blog Article brief (Performance metrics).",
+      "help": {
+        "what": "Secondary Metrics — a parameter from the Blog Article brief (Performance metrics).",
+        "why": "When provided, the model uses this instead of guessing. Empty fields stay unset ([secondaryMetrics]) so nothing is invented.",
+        "example": "scroll depth, newsletter signups",
+        "avoid": "Invented data, competitor copy, or details you cannot verify for secondary metrics."
+      },
+      "fullWidth": false
+    }
+  ]
+}
