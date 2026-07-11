@@ -11,42 +11,42 @@
     "title": "Cold Email Outreach",
     "category": "email",
     "plan": "free",
-    "vars": 13
+    "vars": 400
   },
   {
     "slug": "facebook-post",
     "title": "Facebook Post",
     "category": "facebook_post",
     "plan": "free",
-    "vars": 14
+    "vars": 376
   },
   {
     "slug": "faq-page",
     "title": "FAQ Page",
     "category": "seo",
     "plan": "free",
-    "vars": 13
+    "vars": 223
   },
   {
     "slug": "google-business-profile-post",
     "title": "Google Business Profile Post",
     "category": "google_business",
     "plan": "free",
-    "vars": 13
+    "vars": 423
   },
   {
     "slug": "instagram-post",
     "title": "Instagram Post",
     "category": "instagram_post",
     "plan": "free",
-    "vars": 10
+    "vars": 485
   },
   {
     "slug": "linkedin-post",
     "title": "LinkedIn Post",
     "category": "linkedin_post",
     "plan": "free",
-    "vars": 10
+    "vars": 646
   },
   {
     "slug": "newsletter",

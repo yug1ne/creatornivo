@@ -21,29 +21,93 @@ function extractVars(prompt) {
   return [...set];
 }
 
-/** Full Blog Article form schema (all prompt placeholders + UX metadata). */
-const blogArticleFormPath = path.join(
-  root,
-  "src",
-  "config",
-  "template-forms",
-  "blog-article-variables.json",
-);
+/** Full form schemas (all prompt placeholders + UX metadata). */
+const FULL_FORM_SCHEMAS = {
+  "blog-article": {
+    path: path.join(
+      root,
+      "src",
+      "config",
+      "template-forms",
+      "blog-article-variables.json",
+    ),
+    buildHint: "node scripts/build-blog-article-form.mjs",
+  },
+  "cold-email-outreach": {
+    path: path.join(
+      root,
+      "src",
+      "config",
+      "template-forms",
+      "cold-email-outreach-variables.json",
+    ),
+    buildHint: "node scripts/build-cold-email-outreach-form.mjs",
+  },
+  "facebook-post": {
+    path: path.join(
+      root,
+      "src",
+      "config",
+      "template-forms",
+      "facebook-post-variables.json",
+    ),
+    buildHint: "node scripts/build-facebook-post-form.mjs",
+  },
+  "faq-page": {
+    path: path.join(
+      root,
+      "src",
+      "config",
+      "template-forms",
+      "faq-page-variables.json",
+    ),
+    buildHint: "node scripts/build-faq-page-form.mjs",
+  },
+  "google-business-profile-post": {
+    path: path.join(
+      root,
+      "src",
+      "config",
+      "template-forms",
+      "google-business-profile-post-variables.json",
+    ),
+    buildHint: "node scripts/build-google-business-profile-post-form.mjs",
+  },
+  "instagram-post": {
+    path: path.join(
+      root,
+      "src",
+      "config",
+      "template-forms",
+      "instagram-post-variables.json",
+    ),
+    buildHint: "node scripts/build-instagram-post-form.mjs",
+  },
+  "linkedin-post": {
+    path: path.join(
+      root,
+      "src",
+      "config",
+      "template-forms",
+      "linkedin-post-variables.json",
+    ),
+    buildHint: "node scripts/build-linkedin-post-form.mjs",
+  },
+};
 
-function loadBlogArticleVariables() {
-  if (!fs.existsSync(blogArticleFormPath)) {
-    console.error(
-      "missing blog article form schema — run: node scripts/build-blog-article-form.mjs",
-    );
+function loadFullFormVariables(slug) {
+  const conf = FULL_FORM_SCHEMAS[slug];
+  if (!conf) return null;
+  if (!fs.existsSync(conf.path)) {
+    console.error(`missing form schema for ${slug} — run: ${conf.buildHint}`);
     process.exit(1);
   }
-  const data = JSON.parse(fs.readFileSync(blogArticleFormPath, "utf8"));
+  const data = JSON.parse(fs.readFileSync(conf.path, "utf8"));
   if (!Array.isArray(data.variables) || data.variables.length === 0) {
-    console.error("blog-article-variables.json has no variables");
+    console.error(`${path.basename(conf.path)} has no variables`);
     process.exit(1);
   }
-  // Full `help` stays in blog-article-variables.json for the guide page only —
-  // keep catalog/DB lean for generate form load times.
+  // Full `help` stays in JSON for the guide page only — keep catalog/DB lean.
   return data.variables.map((v) => ({
     key: v.key,
     label: v.label,
@@ -59,59 +123,7 @@ function loadBlogArticleVariables() {
 }
 
 const curated = {
-  // blog-article uses loadBlogArticleVariables() — full schema, not curated subset
-  "cold-email-outreach": {
-    required: ["recipientRole", "yourOffer", "painPoint", "tone"],
-    optional: [
-      "recipientName",
-      "companyName",
-      "industry",
-      "specificObservation",
-      "specificBenefit",
-      "desiredNextStep",
-      "proof",
-      "senderName",
-      "language",
-    ],
-  },
-  "faq-page": {
-    required: ["productName", "productType", "audience", "productDescription"],
-    optional: [
-      "useCases",
-      "features",
-      "pricing",
-      "freeTrial",
-      "commonObjections",
-      "limitations",
-      "supportOptions",
-      "tone",
-      "language",
-    ],
-  },
-  "instagram-post": {
-    required: ["topic", "tone", "audience"],
-    optional: [
-      "mainMessage",
-      "postGoal",
-      "brandVoice",
-      "desiredAction",
-      "visualContext",
-      "sourceDetails",
-      "language",
-    ],
-  },
-  "linkedin-post": {
-    required: ["topic", "tone", "goal"],
-    optional: [
-      "mainMessage",
-      "audience",
-      "authorRole",
-      "brandVoice",
-      "sourceDetails",
-      "desiredAction",
-      "language",
-    ],
-  },
+  // full-form templates use loadFullFormVariables() via FULL_FORM_SCHEMAS
   newsletter: {
     required: ["topic", "brand", "goal", "tone"],
     optional: [
@@ -257,7 +269,7 @@ const meta = {
   "instagram-post": {
     title: "Instagram Post",
     description:
-      "Caption with a scroll-stopping opener, useful body, and intentional CTA",
+      "Instagram-native post package: caption, format, media, CTAs — no fake engagement or invented stories",
     category: "instagram_post",
     requiredPlan: "free",
   },
@@ -271,7 +283,7 @@ const meta = {
   "cold-email-outreach": {
     title: "Cold Email Outreach",
     description:
-      "Concise B2B outreach under 120 words with a low-friction ask",
+      "Permission-aware B2B cold email package: sequence, personalization, compliance, and deliverability checks",
     category: "email",
     requiredPlan: "free",
   },
@@ -292,7 +304,7 @@ const meta = {
   "faq-page": {
     title: "FAQ Page",
     description:
-      "Useful FAQ answers that reduce support load and cover real objections",
+      "User-centered FAQ package: real questions, verified policies, plan/region limits, support routes",
     category: "seo",
     requiredPlan: "free",
   },
@@ -395,18 +407,15 @@ const placeholders = {
 };
 
 function buildVars(slug, prompt) {
-  if (slug === "blog-article") {
-    const formVars = loadBlogArticleVariables();
+  const fullForm = loadFullFormVariables(slug);
+  if (fullForm) {
     const promptKeys = new Set(extractVars(prompt));
-    const filtered = formVars.filter((v) => promptKeys.has(v.key));
+    const filtered = fullForm.filter((v) => promptKeys.has(v.key));
     const missing = [...promptKeys].filter(
       (k) => !filtered.some((v) => v.key === k),
     );
     if (missing.length) {
-      console.warn(
-        "blog-article form schema missing keys:",
-        missing.join(", "),
-      );
+      console.warn(`${slug} form schema missing keys:`, missing.join(", "));
       for (const key of missing) {
         filtered.push({
           key,
@@ -482,6 +491,12 @@ const { getNewTemplates } = await import(newModulePath);
 newTemplates.push(...getNewTemplates({ t, v }));
 
 const all = [...existing, ...newTemplates];
+// Apply full form schemas (including templates defined in new-templates-data.mjs)
+for (const tpl of all) {
+  if (FULL_FORM_SCHEMAS[tpl.slug]) {
+    tpl.variables = buildVars(tpl.slug, tpl.prompt);
+  }
+}
 all.sort((a, b) => {
   if (a.requiredPlan !== b.requiredPlan) {
     return a.requiredPlan === "free" ? -1 : 1;
