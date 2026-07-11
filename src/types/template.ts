@@ -40,6 +40,8 @@ export interface TemplateFieldShowWhenClause {
   equals?: string | string[];
   /** Visible when the controlling field is not this value (or not any of these). */
   notEquals?: string | string[];
+  /** Visible when the controlling field contains a valid HTTP(S) URL. */
+  isValidUrl?: boolean;
 }
 
 /**
@@ -58,6 +60,8 @@ export interface TemplateVariable {
   required: boolean;
   /** Field control type. Defaults to text when omitted. */
   type?: TemplateFieldType;
+  /** Optional semantic validation/rendering format for text fields. */
+  format?: "url";
   /** Group id for collapsible form sections. */
   group?: string;
   /** Display title for the group (catalog convenience). */
@@ -72,6 +76,12 @@ export interface TemplateVariable {
   fullWidth?: boolean;
   /** Initial value for the generate form (select defaults, etc.). */
   defaultValue?: string;
+  /** Maximum accepted string length for the field value. */
+  maxLength?: number;
+  /** Minimum accepted numeric value when type is number. */
+  min?: number;
+  /** Maximum accepted numeric value when type is number. */
+  max?: number;
   /** Hide until another field matches this condition. */
   showWhen?: TemplateFieldShowWhen;
 }

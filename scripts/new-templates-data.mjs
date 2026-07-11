@@ -28,7 +28,7 @@ export function getNewTemplates({ t, v }) {
       slug: "facebook-post",
       title: "Facebook Post",
       description:
-        "Publication-ready Facebook post package for Pages, Groups, and Events — facts only, no fake engagement",
+        "Generate conversational Facebook posts with goal-driven messaging, optional link guidance, disclosure handling, variants, and a visual concept.",
       category: "facebook_post",
       requiredPlan: "free",
       // Variables replaced by full form schema in generate-templates-catalog.mjs

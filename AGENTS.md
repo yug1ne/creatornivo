@@ -185,4 +185,24 @@ Creatornivo — честный Early Access продукт.
 ---
 
 **Это живой документ.** При необходимости я буду обновлять его вместе с тобой по мере продвижения по roadmap.
+## Template form and Help rules
+
+When working on Creatornivo templates, the finished main prompt is the source of truth.
+
+1. Before changing a template form or Help article, read the full prompt in `prisma/template-prompts/<slug>.txt`.
+2. Do not rewrite, shorten, improve, restructure, or add requirements to an existing finished prompt while creating form fields or Help content.
+3. Every `{{variable}}` used by the prompt must be represented by a form field.
+4. Do not add form fields that are not used in the prompt unless the task explicitly asks for it and the reason is documented.
+5. Do not remove prompt parameters.
+6. Do not change template IDs or slugs unless the task explicitly requires a migration plan.
+7. Every field needs a label, supported field type, required/optional setting, realistic placeholder, and short helper text.
+8. Every migrated template needs a Help article.
+9. The Help article must explain every field: what it is, why it matters, what to write, an example good value, and what to avoid.
+10. The Help button or `?` link must route to the Help article for the current template slug.
+11. Work in batches of no more than 3-5 templates.
+12. Template form and Help tasks must not change Prisma, auth, Paddle, checkout, webhooks, prices, environment variables, or database migrations.
+
+Detailed standard: `docs/template-form-standard.md`.
+Migration status: `docs/template-migration-status.md`.
+
 <!-- END:nextjs-agent-rules -->

@@ -50,6 +50,7 @@ function FieldControl({
         id={commonId}
         value={value}
         rows={3}
+        maxLength={variable.maxLength}
         placeholder={variable.placeholder}
         onChange={(e) => onChange(e.target.value)}
       />
@@ -62,6 +63,8 @@ function FieldControl({
         id={commonId}
         type="number"
         value={value}
+        min={variable.min}
+        max={variable.max}
         placeholder={variable.placeholder}
         onChange={(e) => onChange(e.target.value)}
       />
@@ -71,8 +74,9 @@ function FieldControl({
   return (
     <Input
       id={commonId}
-      type="text"
+      type={variable.format === "url" ? "url" : "text"}
       value={value}
+      maxLength={variable.maxLength}
       placeholder={variable.placeholder}
       onChange={(e) => onChange(e.target.value)}
     />

@@ -55,11 +55,28 @@ function parseShowWhenClause(
     if (list.length) result.notEquals = list;
   }
 
-  if (result.equals === undefined && result.notEquals === undefined) {
+  if (s.isValidUrl === true) {
+    result.isValidUrl = true;
+  }
+
+  if (
+    result.equals === undefined &&
+    result.notEquals === undefined &&
+    result.isValidUrl !== true
+  ) {
     return undefined;
   }
 
   return result;
+}
+
+function isHttpUrl(value: string): boolean {
+  try {
+    const url = new URL(value);
+    return url.protocol === "http:" || url.protocol === "https:";
+  } catch {
+    return false;
+  }
 }
 
 function parseShowWhen(raw: unknown): TemplateFieldShowWhen | undefined {
@@ -93,6 +110,10 @@ function clauseMatches(
       ? clause.notEquals
       : [clause.notEquals];
     if (list.includes(current)) return false;
+  }
+
+  if (clause.isValidUrl === true && !isHttpUrl(current)) {
+    return false;
   }
 
   return true;
@@ -147,6 +168,7 @@ export function parseTemplateVariables(raw: unknown): TemplateVariable[] {
           typeof item.placeholder === "string" ? item.placeholder : undefined,
         required: Boolean(item.required ?? false),
         type,
+        format: item.format === "url" ? "url" : undefined,
         group: typeof item.group === "string" ? item.group : undefined,
         groupTitle:
           typeof item.groupTitle === "string" ? item.groupTitle : undefined,
@@ -156,6 +178,18 @@ export function parseTemplateVariables(raw: unknown): TemplateVariable[] {
         fullWidth: item.fullWidth === true,
         defaultValue:
           typeof item.defaultValue === "string" ? item.defaultValue : undefined,
+        maxLength:
+          typeof item.maxLength === "number" && Number.isFinite(item.maxLength)
+            ? item.maxLength
+            : undefined,
+        min:
+          typeof item.min === "number" && Number.isFinite(item.min)
+            ? item.min
+            : undefined,
+        max:
+          typeof item.max === "number" && Number.isFinite(item.max)
+            ? item.max
+            : undefined,
         showWhen: parseShowWhen(item.showWhen),
       } satisfies TemplateVariable;
     });
@@ -167,7 +201,7 @@ export function fillPromptTemplate(
 ): string {
   return prompt.replace(/\{\{(\w+)\}\}/g, (_, key: string) => {
     const value = values[key]?.trim();
-    return value || `[${key}]`;
+    return value || "";
   });
 }
 
@@ -177,8 +211,41 @@ export function validateVariableValues(
 ): string | null {
   for (const variable of variables) {
     if (!isTemplateFieldVisible(variable, values)) continue;
-    if (variable.required && !values[variable.key]?.trim()) {
+    const value = values[variable.key]?.trim() ?? "";
+
+    if (variable.required && !value) {
       return `Field "${variable.label}" is required`;
+    }
+
+    if (!value) continue;
+
+    if (variable.maxLength !== undefined && value.length > variable.maxLength) {
+      return `Field "${variable.label}" must be ${variable.maxLength} characters or fewer`;
+    }
+
+    if (
+      variable.type === "select" &&
+      variable.options?.length &&
+      !variable.options.includes(value)
+    ) {
+      return `Field "${variable.label}" must use one of the available options`;
+    }
+
+    if (variable.format === "url" && !isHttpUrl(value)) {
+      return `Field "${variable.label}" must be a valid URL`;
+    }
+
+    if (variable.type === "number") {
+      const numericValue = Number(value);
+      if (!Number.isFinite(numericValue)) {
+        return `Field "${variable.label}" must be a number`;
+      }
+      if (variable.min !== undefined && numericValue < variable.min) {
+        return `Field "${variable.label}" must be at least ${variable.min}`;
+      }
+      if (variable.max !== undefined && numericValue > variable.max) {
+        return `Field "${variable.label}" must be at most ${variable.max}`;
+      }
     }
   }
 
