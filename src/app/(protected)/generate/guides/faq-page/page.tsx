@@ -10,7 +10,7 @@ import { requireSession } from "@/lib/auth/session";
 export const metadata: Metadata = {
   title: "FAQ Page field guide",
   description:
-    "How to fill every FAQ Page parameter — product facts, real questions, policies, and support routes.",
+    "How to fill FAQ Page fields — questions, confirmed facts, SEO notes, structured data, and accuracy controls.",
 };
 
 export default async function FaqPageGuidePage() {
@@ -20,12 +20,12 @@ export default async function FaqPageGuidePage() {
     <TemplateFieldGuide
       title="FAQ Page — field guide"
       templateSlug="faq-page"
-      intro="How to fill the FAQ Page form. Empty optional fields are fine — the model will not invent prices, refunds, features, or “frequently asked” questions without evidence. Prefer support tickets and real user wording over keyword bait."
+      intro="How to fill the FAQ Page form (42 fields). Empty optional sections are fine — the model will not invent prices, policies, reviews, or rich-result guarantees. Seven Essentials fields are enough for a solid first draft."
       quickStart={[
-        "Fill Product name, Product type, Product description, Audience, Language, and Tone.",
-        "Add FAQ page type and primary purpose so answers match the right context (billing vs product vs privacy).",
-        "Paste real questions from tickets/search when you have them — never invent frequency claims.",
-        "Expand Approved facts with only verified policy and product details; leave blanks instead of guessing.",
+        "Fill FAQ subject, Brand, Page type, Primary goal, Target audience, Must-answer questions, and Confirmed facts.",
+        "Paste only approved answer notes — leave blanks instead of guessing limits or policies.",
+        "Open Question Architecture for real support questions, categories, and journey stages (one option per line).",
+        "Conditional fields appear for CTA wording/destination, JSON-LD URL, regulated jurisdiction, and support escalation.",
       ]}
       groups={faqPageFormGroups}
       variables={faqPageFormVariables}

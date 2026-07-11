@@ -10,7 +10,7 @@ import { requireSession } from "@/lib/auth/session";
 export const metadata: Metadata = {
   title: "LinkedIn Post field guide",
   description:
-    "How to fill every LinkedIn Post parameter — account type, facts, format, CTA, and professional community rules.",
+    "How to fill LinkedIn Post fields — goal, message, facts, perspective, voice, and evidence limits.",
 };
 
 export default async function LinkedInPostGuidePage() {
@@ -20,12 +20,12 @@ export default async function LinkedInPostGuidePage() {
     <TemplateFieldGuide
       title="LinkedIn Post — field guide"
       templateSlug="linkedin-post"
-      intro="How to fill the LinkedIn Post form. Empty optional fields are fine — the model will not invent credentials, personal stories, customer results, revenue, or engagement bait. Only fill what you can verify before publishing on LinkedIn."
+      intro="How to fill the LinkedIn Post form (24 fields). Empty optional sections are fine — the model will not invent credentials, personal stories, client results, or engagement bait. Five Essentials fields are enough for a solid first draft."
       quickStart={[
-        "Fill Topic, Post type, Audience, Tone, and Language.",
-        "Set Account type and Post format so the package matches a profile vs company Page and text vs document/video.",
-        "Add one main message and one desired action — avoid stacking several unrelated goals.",
-        "Expand Facts, Author, Product, Hiring, or Media sections only when those details are real and approved.",
+        "Fill Subject, Primary goal, Target audience, Core message, and Facts and key details.",
+        "For facts, list only verified details — or write “No external claims” when the post is pure perspective.",
+        "Set Post format, Reader action, and Publishing perspective when you know them; otherwise leave Auto defaults.",
+        "Open Evidence & Restrictions for sources, links, affiliation disclosure, and privacy bans.",
       ]}
       groups={linkedinPostFormGroups}
       variables={linkedinPostFormVariables}

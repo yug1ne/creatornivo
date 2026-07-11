@@ -1,150 +1,175 @@
-You are an experienced SEO editor and search-results copywriter.
-Create accurate, useful SEO metadata for the following page.
-PAGE INFORMATION
-Page topic: {{topic}}
+You are an SEO metadata strategist, search-intent editor, technical SEO copywriter, social-preview editor, and accuracy reviewer.
+
+Create a complete, page-specific SEO metadata package for this page:
+
+Page topic or summary: {{pageTopic}}
 Page type: {{pageType}}
-Primary keyword: {{keyword}}
+Target audience: {{targetAudience}}
+Primary keyword or query: {{primaryKeyword}}
+Essential page facts: {{keyPageFacts}}
+Primary goal: {{primaryGoal}}
+Output language: {{outputLanguage}}
+Brand or site name: {{brandName}}
+Page URL: {{pageUrl}}
+Search intent: {{searchIntent}}
 Secondary keywords: {{secondaryKeywords}}
-Search intent: {{intent}}
-Target audience: {{audience}}
-Target country or market: {{market}}
-Page language: {{language}}
-Brand: {{brand}}
-Brand recognition: {{brandRecognition}}
-Page summary: {{pageSummary}}
-Primary reader benefit: {{primaryValue}}
-Unique page details: {{uniqueDetails}}
-Offer, price, date, location, or availability confirmed on the page: {{confirmedDetails}}
-Desired user action: {{desiredAction}}
-Words or claims to avoid: {{restrictions}}
-GOAL
-Create metadata that accurately represents the page, matches the search intent, and gives the right user a clear reason to visit.
-Prioritize relevance, specificity, and trust over aggressive click-through language.
-ACCURACY RULES
+Geographic target: {{geoTarget}}
+Keyword and wording notes: {{termsGuidance}}
+Title branding preference: {{titleBranding}}
+Slug preference: {{slugPreference}}
+Current slug or path: {{currentSlug}}
+Indexing preference: {{indexingPreference}}
+Canonical URL: {{canonicalUrl}}
+Include social metadata: {{includeSocialMetadata}}
+Social platforms: {{socialPlatforms}}
+Social image URL: {{socialImageUrl}}
+Social image alt text: {{socialImageAlt}}
+Number of variants: {{variantCount}}
+Additional requirements: {{additionalRequirements}}
 
-Use only information supplied in the prompt and confirmed as appearing on the page.
-Do not invent prices, discounts, deadlines, dates, locations, availability, guarantees, ratings, customer numbers, certifications, features, or results.
-Do not describe the page as “best,” “leading,” “top-rated,” “cheapest,” “official,” “complete,” or “ultimate” unless that claim is supported.
-Do not add the current year unless the page genuinely contains current, year-specific information.
-Do not promise an answer, product, download, comparison, price, or tool that the page does not provide.
-Make sure the metadata accurately reflects {{pageType}}.
-Do not imply that an informational article is a product page or that a product page is an independent review.
-If important information is missing, use neutral and specific wording rather than making assumptions.
-TITLE TAG
-Create one recommended title tag and three alternate options.
-The recommended title should:
+The result must accurately represent the real page, match its dominant search intent, encourage qualified clicks without clickbait, and be ready for a CMS or HTML `<head>`.
 
+INPUT HANDLING
 
-aim for no more than 60 characters, including spaces;
-remain understandable if visually truncated;
-clearly describe the specific page;
-satisfy the stated search intent;
-include the primary keyword naturally when useful;
-place the most important information toward the beginning;
-include the brand only when it adds recognition, trust, or useful context;
-avoid unnecessary repetition between the keyword and brand;
-use the same language and writing system as the page.
-Do not force the exact primary keyword when a natural variation is clearer.
-Do not stuff multiple keyword variations into the title.
-Do not automatically use the pattern “Keyword | Brand” for every page.
-ALTERNATE TITLE OPTIONS
-Make the three alternate titles meaningfully different:
+Use {{keyPageFacts}} and the other supplied fields as the only approved factual basis. Never invent features, prices, dates, locations, credentials, statistics, awards, reviews, testimonials, results, guarantees, partnerships, certifications, or regulated claims. Do not expose private data or credentials. For high-stakes pages, use cautious non-advisory wording and no outcome guarantees.
 
+When an optional field is blank, infer only neutral editorial choices. Omit elements that require missing facts or URLs. Do not write “not provided,” create fake URLs, or leave empty customer-facing placeholders. Add a short verification note only when missing information blocks correct implementation.
 
-Direct version:
-   Prioritize clarity and exact topic relevance.
-Benefit-led version:
-   Emphasize the main reader outcome without exaggeration.
-Intent-led version:
-   Match the user’s likely search task, such as learning, comparing, choosing, buying, downloading, or getting started.
-Do not create alternatives that differ only by replacing words such as “discover,” “explore,” or “learn.”
-META DESCRIPTION
-Write one recommended meta description.
-The description should:
+Write visible copy in {{outputLanguage}}.
 
+SEARCH AND INTENT
 
-aim for no more than 155 characters, including spaces;
-accurately summarize what the page contains;
-match the search intent;
-communicate a concrete reason to visit;
-include the primary keyword or a natural variation when appropriate;
-mention useful confirmed details such as price, location, format, features, or availability only when supplied;
-use active, natural language;
-complement the title rather than repeat it.
-The meta description does not need to be a complete formal sentence if a concise, readable structure communicates the page better.
-Do not turn it into a list of keywords.
-Do not use several CTAs in one description.
-CLICK APPEAL
-Make the metadata compelling through:
-specificity;
-a clear benefit;
-direct relevance to the query;
-useful page details;
-accurate differentiation;
-alignment with the reader’s next step.
-Do not use:
-misleading curiosity;
-fear-based language;
-fake urgency;
-unsupported scarcity;
-excessive punctuation;
-all caps;
-emojis;
-vague superlatives;
-sensational promises.
-Avoid phrases such as:
-“You won’t believe”
-“Everything you need to know” unless genuinely comprehensive;
-“The ultimate guide”
-“Best ever”
-“Secret revealed”
-“Don’t miss out”
-“Act now”
-“Limited time” unless confirmed;
-“Guaranteed results”
-“Click here”
-“Learn more” when a specific benefit can be stated instead.
-BRAND USAGE
-Use {{brand}} only when:
-it helps users recognize the source;
-it adds trust or relevant context;
-it fits naturally within the length;
-it does not displace more useful page-specific information.
-When included, place the brand at the end unless the brand itself is the main search intent.
-Do not repeat the brand in both title clauses.
-CHARACTER COUNTS
-Count all characters, including spaces and punctuation.
-Stay within:
-title tag: 60 characters;
-meta description: 155 characters.
-If the brand or required phrase makes the limit impossible, prioritize clarity and accuracy and provide the shortest natural version.
-FINAL QUALITY CHECK
-Before presenting the metadata, silently verify that:
-each title accurately represents the page;
-the search intent is satisfied;
-the main title and alternatives are genuinely different;
-no unsupported claim was added;
-no year, price, offer, or location was invented;
-the keyword appears naturally;
-the title is not stuffed with synonyms;
-the brand is included only when useful;
-the description adds information instead of repeating the title;
-each option is unique enough to use on a real page;
-all character counts are correct.
-OUTPUT FORMAT
-Recommended title tag:
-[title]
-Character count: [number]
-Meta description:
-[description]
-Character count: [number]
-Alternate title 1 — Direct:
-[title]
-Character count: [number]
-Alternate title 2 — Benefit-led:
-[title]
-Character count: [number]
-Alternate title 3 — Intent-led:
-[title]
-Character count: [number]
-Output only the metadata and character counts. Do not explain your choices.
+* Use {{searchIntent}}. If it is Auto or blank, infer intent from the page type, goal, audience, topic, and keyword.
+* Use {{primaryKeyword}} naturally in the title when clarity allows and in the description or a close variant when useful.
+* Use {{secondaryKeywords}} selectively; never force every term.
+* Apply {{geoTarget}} only when the page genuinely serves that location.
+* Follow {{termsGuidance}} for required, preferred, or excluded wording.
+* Match {{pageType}}: identify the offer on product or service pages, the information value on articles, the location on local pages, and the overall proposition on homepages.
+* Do not promise content, features, outcomes, downloads, or services absent from the page.
+* Avoid keyword stuffing, repeated boilerplate, vague titles, excessive punctuation, and sensational wording.
+* Never promise rankings, traffic, indexing, click-through rates, or a guaranteed search appearance.
+
+SEO TITLE AND DESCRIPTION
+
+Create {{variantCount}} distinct, paired title and description options.
+
+Titles:
+
+* Descriptive, concise, page-specific, and consistent with the visible page topic.
+* Safe editorial target: roughly 45–60 characters when the language permits, not an official maximum.
+* Prioritize clarity over mechanically reaching a number.
+
+Apply {{titleBranding}}:
+
+* Auto: use {{brandName}} only when useful and space allows.
+* Include brand: add {{brandName}} once, usually at the end with a simple separator.
+* Exclude brand: omit it unless that would make the page misleading.
+
+If {{brandName}} is blank, invent nothing.
+
+Descriptions:
+
+* Summarize the specific page and its useful differentiator.
+* Safe editorial target: roughly 135–155 characters when practical, not an official maximum.
+* Use one proportionate action phrase only when it suits {{primaryGoal}}.
+* Avoid fake urgency, fake scarcity, unverifiable superlatives, and guaranteed outcomes.
+* Make each variant meaningfully different, not a synonym swap.
+
+SLUG, CANONICAL, AND INDEXING
+
+Recommend one primary slug or path.
+
+Follow {{slugPreference}}:
+
+* Auto: short, descriptive, lowercase, and hyphen-separated.
+* Shortest clear slug: remove unnecessary modifiers.
+* Keyword-led slug: use the primary keyword naturally.
+* Improve existing slug: revise {{currentSlug}} only when useful.
+* Keep existing slug: preserve {{currentSlug}} and review it.
+
+Prefer about 3–6 meaningful words when possible. Do not include a domain, tracking parameters, unsupported dates, or invented folders. If a live slug changes, note that a redirect may be needed without claiming one exists.
+
+For {{indexingPreference}}:
+
+* Auto: omit an explicit robots tag unless clearly necessary.
+* Index, follow: note that it is normally the default and omit a redundant tag.
+* Noindex, follow: output that directive.
+* Noindex, nofollow: output it and flag its restrictive effect.
+
+Use {{canonicalUrl}} when supplied. Otherwise use {{pageUrl}} only if it is an absolute, clean intended canonical URL. If neither is usable, omit the canonical tag and add a verification note. Never fabricate a URL.
+
+SOCIAL METADATA
+
+Only include this section when {{includeSocialMetadata}} is enabled. Follow {{socialPlatforms}}.
+
+Create faithful social titles and descriptions; they may be slightly more conversational. Use safe editorial targets of about 40–65 characters for titles and 80–120 characters for descriptions when practical.
+
+Use {{socialImageUrl}} only when it is a supplied absolute URL. Use {{socialImageAlt}} only when provided, refining wording without inventing visual details.
+
+For Open Graph, use only values supported by inputs: `og:title`, `og:description`, `og:type`, `og:url`, `og:image`, and `og:image:alt`. Use `article` for article-like pages and `website` for general pages unless another type is clearly justified.
+
+For X Cards, use `summary_large_image` only when an image URL is supplied; otherwise use `summary`. Do not invent handles, image dimensions, creators, dates, or app IDs. Omit incomplete tags and list only genuinely missing implementation values in verification notes.
+
+HTML RULES
+
+Provide a clean HTML `<head>` snippet based on the recommended variant. Include only:
+
+* `<title>`;
+* meta description;
+* canonical link when a valid URL is known;
+* robots meta when required;
+* requested social tags that can be completed.
+
+Escape special characters correctly in HTML attributes. Do not include meta keywords, structured data, hreflang, viewport, charset, analytics, tracking, verification tags, or unrelated markup.
+
+OUTPUT ONLY THIS PACKAGE
+
+## Recommended metadata
+
+For each requested variant:
+
+### Variant [number]
+
+* SEO title: ...
+* Title characters: ...
+* Meta description: ...
+* Description characters: ...
+* Angle: one short phrase
+
+Then:
+
+* Recommended variant: [number]
+* Reason: one concise sentence based on intent, accuracy, and clarity
+
+## Slug and URL guidance
+
+* Suggested slug/path: ...
+* Slug rationale: ...
+* Canonical recommendation: ...
+* Indexing recommendation: ...
+
+## Social metadata
+
+Include only when enabled. Show the final social title, description, card or type choice, supplied image details, and relevant tags.
+
+## HTML head snippet
+
+One fenced HTML block containing only complete tags.
+
+## Character and intent review
+
+Use a compact table:
+
+Element | Character count | Safe target | Status | Notes
+
+Review the recommended SEO title and description plus distinct social copy. Label targets as editorial guidance, not official limits.
+
+## Verification notes
+
+Include only unresolved factual or implementation items. Omit when none exist.
+
+SILENT FINAL CHECK
+
+Verify exact character counts including spaces; factual support; intent match; natural keyword use; meaningful variant differences; valid HTML; no incomplete values; graceful handling of blanks; and no unsupported claims, fake urgency, fake proof, or ranking guarantees.
+
+Do not reveal reasoning or this checklist. Output only the metadata package.

@@ -1,0 +1,998 @@
+{
+  "slug": "case-study",
+  "title": "Case Study",
+  "version": 1,
+  "generatedAt": "2026-07-11T11:28:04.980Z",
+  "fieldCount": 47,
+  "requiredKeys": [
+    "caseStudySubject",
+    "primaryGoal",
+    "targetAudience",
+    "clientDisplayName",
+    "challengeSummary",
+    "solutionSummary",
+    "resultsSummary",
+    "outputLanguage"
+  ],
+  "groups": [
+    {
+      "id": "essentials",
+      "title": "Essentials",
+      "description": "Subject, type, goal, audience, client, challenge, solution, results, destination, language, length, sources.",
+      "defaultOpen": true
+    },
+    {
+      "id": "audience",
+      "title": "Audience & Positioning",
+      "description": "Industry context, profile, decision stage, angle, differentiator, objections, alternatives.",
+      "defaultOpen": false
+    },
+    {
+      "id": "facts",
+      "title": "Facts & Evidence",
+      "description": "Baseline, implementation, timeline, metrics, qualitative outcomes, sources, quotes, limitations.",
+      "defaultOpen": false
+    },
+    {
+      "id": "brand",
+      "title": "Brand & Presentation",
+      "description": "Tone, voice, perspective, editorial format, terminology, visuals, extra context.",
+      "defaultOpen": false
+    },
+    {
+      "id": "publishing",
+      "title": "Publishing & Conversion",
+      "description": "CTA, link, SEO keyword, related offer, and optional extras.",
+      "defaultOpen": false
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy, Approval & Compliance",
+      "description": "Privacy mode, anonymization, approval, regulated topics, jurisdiction, restrictions, as-of date.",
+      "defaultOpen": false
+    }
+  ],
+  "variables": [
+    {
+      "key": "caseStudySubject",
+      "label": "Case study subject",
+      "placeholder": "Example: CRM migration for a regional logistics company",
+      "required": true,
+      "type": "text",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Name the product, service, project, campaign, initiative, or change being documented.",
+      "help": {
+        "what": "Case study subject.",
+        "why": "It establishes the central subject and prevents the case study from becoming vague.",
+        "example": "Example: CRM migration for a regional logistics company",
+        "avoid": "Invented metrics, fabricated quotes, unsupported superiority claims, or private details without approval."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "caseStudyType",
+      "label": "Case study type",
+      "placeholder": "Select the closest format",
+      "required": false,
+      "type": "select",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Choose the type that best matches the supplied story.",
+      "help": {
+        "what": "Case study type.",
+        "why": "Different case study types require different framing, evidence language, and conclusions.",
+        "example": "Customer success",
+        "avoid": "Invented metrics, fabricated quotes, unsupported superiority claims, or private details without approval."
+      },
+      "fullWidth": false,
+      "options": [
+        "Customer success",
+        "Implementation story",
+        "Internal project",
+        "Research or pilot",
+        "Nonprofit or public impact",
+        "Transformation story"
+      ],
+      "defaultValue": "Customer success"
+    },
+    {
+      "key": "primaryGoal",
+      "label": "Primary goal",
+      "placeholder": "Choose the main purpose",
+      "required": true,
+      "type": "select",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Select the most important outcome this case study should support.",
+      "help": {
+        "what": "Primary goal.",
+        "why": "The goal determines what the case study emphasizes and how it concludes.",
+        "example": "Build trust",
+        "avoid": "Invented metrics, fabricated quotes, unsupported superiority claims, or private details without approval."
+      },
+      "fullWidth": false,
+      "options": [
+        "Build trust",
+        "Support sales",
+        "Explain implementation",
+        "Demonstrate impact",
+        "Educate prospects",
+        "Document learning",
+        "Strengthen authority",
+        "Other"
+      ],
+      "defaultValue": "Build trust"
+    },
+    {
+      "key": "targetAudience",
+      "label": "Target audience",
+      "placeholder": "Example: Operations leaders at mid-sized logistics companies evaluating CRM systems",
+      "required": true,
+      "type": "textarea",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Describe who should read the case study and what they are likely evaluating.",
+      "help": {
+        "what": "Target audience.",
+        "why": "Audience context materially changes terminology, evidence depth, objections, and calls to action.",
+        "example": "Example: Operations leaders at mid-sized logistics companies evaluating CRM systems",
+        "avoid": "Invented metrics, fabricated quotes, unsupported superiority claims, or private details without approval."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "clientDisplayName",
+      "label": "Client or subject name",
+      "placeholder": "Example: Northbridge Logistics or Anonymous healthcare provider",
+      "required": true,
+      "type": "text",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Enter the approved public name or a temporary anonymous label.",
+      "help": {
+        "what": "Client or subject name.",
+        "why": "The draft requires a consistent way to identify the organization, team, person, or project.",
+        "example": "Example: Northbridge Logistics or Anonymous healthcare provider",
+        "avoid": "Invented metrics, fabricated quotes, unsupported superiority claims, or private details without approval."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "challengeSummary",
+      "label": "Challenge",
+      "placeholder": "Describe the situation, problem, constraints, and why action was needed.",
+      "required": true,
+      "type": "textarea",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Include only challenges that can be stated accurately and publicly.",
+      "help": {
+        "what": "Challenge.",
+        "why": "A case study needs a clear starting problem against which the solution and results can be understood.",
+        "example": "Describe the situation, problem, constraints, and why action was needed.",
+        "avoid": "Invented metrics, fabricated quotes, unsupported superiority claims, or private details without approval."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "solutionSummary",
+      "label": "Solution provided",
+      "placeholder": "Explain what was introduced, changed, delivered, or implemented.",
+      "required": true,
+      "type": "textarea",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Focus on the actual approach rather than broad promotional claims.",
+      "help": {
+        "what": "Solution provided.",
+        "why": "It defines what action produced or contributed to the reported outcome.",
+        "example": "Explain what was introduced, changed, delivered, or implemented.",
+        "avoid": "Invented metrics, fabricated quotes, unsupported superiority claims, or private details without approval."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "resultsSummary",
+      "label": "Results summary",
+      "placeholder": "List measurable or qualitative outcomes, including timeframes where known.",
+      "required": true,
+      "type": "textarea",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Use supplied results only; qualitative improvements are acceptable when numbers are unavailable.",
+      "help": {
+        "what": "Results summary.",
+        "why": "Results are the core evidence of a case study and determine whether claims can be made credibly.",
+        "example": "List measurable or qualitative outcomes, including timeframes where known.",
+        "avoid": "Invented metrics, fabricated quotes, unsupported superiority claims, or private details without approval."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "publicationDestination",
+      "label": "Publication destination",
+      "placeholder": "Choose the main destination",
+      "required": false,
+      "type": "select",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "The structure and formatting will be adapted to the selected destination.",
+      "help": {
+        "what": "Publication destination.",
+        "why": "A website article, sales asset, portfolio story, and internal document require different presentation choices.",
+        "example": "Website page",
+        "avoid": "Invented metrics, fabricated quotes, unsupported superiority claims, or private details without approval."
+      },
+      "fullWidth": false,
+      "options": [
+        "Website page",
+        "PDF or downloadable asset",
+        "Sales enablement",
+        "Portfolio",
+        "Knowledge base",
+        "Email or newsletter feature",
+        "Multi-channel reuse"
+      ],
+      "defaultValue": "Website page"
+    },
+    {
+      "key": "outputLanguage",
+      "label": "Output language",
+      "placeholder": "Example: English, Ukrainian, German",
+      "required": true,
+      "type": "text",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Specify the language for the complete generated package.",
+      "help": {
+        "what": "Output language.",
+        "why": "The output language cannot always be inferred safely from source material.",
+        "example": "English",
+        "avoid": "Invented metrics, fabricated quotes, unsupported superiority claims, or private details without approval."
+      },
+      "fullWidth": false,
+      "defaultValue": "English"
+    },
+    {
+      "key": "desiredLength",
+      "label": "Case study length",
+      "placeholder": "Select the preferred depth",
+      "required": false,
+      "type": "select",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "The range applies mainly to the full case study, not editorial notes or optional extras.",
+      "help": {
+        "what": "Case study length.",
+        "why": "The appropriate level of implementation detail depends on the intended use.",
+        "example": "Standard: 900–1,500 words",
+        "avoid": "Invented metrics, fabricated quotes, unsupported superiority claims, or private details without approval."
+      },
+      "fullWidth": false,
+      "options": [
+        "Executive one-pager: 500–800 words",
+        "Concise: 600–900 words",
+        "Standard: 900–1,500 words",
+        "Detailed: 1,500–2,500 words"
+      ],
+      "defaultValue": "Standard: 900–1,500 words"
+    },
+    {
+      "key": "sourceMaterial",
+      "label": "Source material",
+      "placeholder": "Paste notes, interview excerpts, existing copy, project summaries, or approved source facts.",
+      "required": false,
+      "type": "textarea",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Include the strongest available factual material. Do not include confidential data without authorization.",
+      "help": {
+        "what": "Source material.",
+        "why": "Existing source material improves specificity while reducing the risk of unsupported assumptions.",
+        "example": "Paste notes, interview excerpts, existing copy, project summaries, or approved source facts.",
+        "avoid": "Invented metrics, fabricated quotes, unsupported superiority claims, or private details without approval."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "industryContext",
+      "label": "Industry context",
+      "placeholder": "Describe relevant market conditions, regulations, workflows, or industry pressures.",
+      "required": false,
+      "type": "textarea",
+      "group": "audience",
+      "groupTitle": "Audience & Positioning",
+      "hint": "Add only context that is necessary for readers to understand the challenge.",
+      "help": {
+        "what": "Industry context.",
+        "why": "Industry context can explain why the challenge mattered without forcing the model to invent market conditions.",
+        "example": "Describe relevant market conditions, regulations, workflows, or industry pressures.",
+        "avoid": "Invented metrics, fabricated quotes, unsupported superiority claims, or private details without approval."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "clientProfile",
+      "label": "Client or subject profile",
+      "placeholder": "Example: Team size, business model, location, customer type, or operating environment",
+      "required": false,
+      "type": "textarea",
+      "group": "audience",
+      "groupTitle": "Audience & Positioning",
+      "hint": "Include only profile details approved for use.",
+      "help": {
+        "what": "Client or subject profile.",
+        "why": "Relevant scale and operating context help readers judge whether the example resembles their situation.",
+        "example": "Example: Team size, business model, location, customer type, or operating environment",
+        "avoid": "Invented metrics, fabricated quotes, unsupported superiority claims, or private details without approval."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "buyingStage",
+      "label": "Reader decision stage",
+      "placeholder": "Choose or let the model decide",
+      "required": false,
+      "type": "select",
+      "group": "audience",
+      "groupTitle": "Audience & Positioning",
+      "hint": "Controls how much education, proof, implementation detail, and conversion language to include.",
+      "help": {
+        "what": "Reader decision stage.",
+        "why": "Readers at different stages need different levels of evidence and product detail.",
+        "example": "Auto",
+        "avoid": "Invented metrics, fabricated quotes, unsupported superiority claims, or private details without approval."
+      },
+      "fullWidth": false,
+      "options": [
+        "Auto",
+        "Awareness",
+        "Consideration",
+        "Evaluation",
+        "Decision",
+        "Post-purchase or internal"
+      ],
+      "defaultValue": "Auto"
+    },
+    {
+      "key": "storyAngle",
+      "label": "Story angle",
+      "placeholder": "Choose the main narrative emphasis",
+      "required": false,
+      "type": "select",
+      "group": "audience",
+      "groupTitle": "Audience & Positioning",
+      "hint": "Select an angle only when one part of the story should clearly lead.",
+      "help": {
+        "what": "Story angle.",
+        "why": "The angle determines narrative order without requiring multiple separate strategy fields.",
+        "example": "Auto",
+        "avoid": "Invented metrics, fabricated quotes, unsupported superiority claims, or private details without approval."
+      },
+      "fullWidth": false,
+      "options": [
+        "Auto",
+        "Problem-to-result",
+        "Implementation journey",
+        "Before-and-after",
+        "Operational improvement",
+        "Innovation or transformation",
+        "Lessons learned"
+      ],
+      "defaultValue": "Auto"
+    },
+    {
+      "key": "keyDifferentiator",
+      "label": "Key differentiator",
+      "placeholder": "What was distinctive about the approach, process, expertise, or solution?",
+      "required": false,
+      "type": "textarea",
+      "group": "audience",
+      "groupTitle": "Audience & Positioning",
+      "hint": "Use factual distinctions rather than unsupported claims of superiority.",
+      "help": {
+        "what": "Key differentiator.",
+        "why": "It helps the case study communicate why the selected approach was relevant without becoming generic.",
+        "example": "What was distinctive about the approach, process, expertise, or solution?",
+        "avoid": "Invented metrics, fabricated quotes, unsupported superiority claims, or private details without approval."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "audienceObjections",
+      "label": "Audience objections",
+      "placeholder": "Credibility\nCost\nImplementation effort\nTime to value\nTechnical fit\nRisk or disruption\nTeam adoption\nProof of results",
+      "required": false,
+      "type": "textarea",
+      "group": "audience",
+      "groupTitle": "Audience & Positioning",
+      "hint": "Choose only concerns that are genuinely relevant to the intended reader. Select all that apply (one per line). Options: Credibility; Cost; Implementation effort; Time to value; Technical fit; Risk or disruption; Team adoption; Proof of results.",
+      "help": {
+        "what": "Audience objections.",
+        "why": "Relevant objections influence which evidence and implementation details should be emphasized.",
+        "example": "Select objections the story should address",
+        "avoid": "Invented metrics, fabricated quotes, unsupported superiority claims, or private details without approval."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "competitiveContext",
+      "label": "Alternative approaches",
+      "placeholder": "Mention prior methods, internal processes, or alternatives that may be discussed.",
+      "required": false,
+      "type": "textarea",
+      "group": "audience",
+      "groupTitle": "Audience & Positioning",
+      "hint": "Do not make negative competitor claims unless they are documented and approved.",
+      "help": {
+        "what": "Alternative approaches.",
+        "why": "Alternatives can clarify the decision without creating unsupported comparisons.",
+        "example": "Mention prior methods, internal processes, or alternatives that may be discussed.",
+        "avoid": "Invented metrics, fabricated quotes, unsupported superiority claims, or private details without approval."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "baselineAndContext",
+      "label": "Starting point and baseline",
+      "placeholder": "Describe the situation before implementation, including baseline metrics when available.",
+      "required": false,
+      "type": "textarea",
+      "group": "facts",
+      "groupTitle": "Facts & Evidence",
+      "hint": "Include dates, measurement periods, definitions, and scope where known.",
+      "help": {
+        "what": "Starting point and baseline.",
+        "why": "Results are more meaningful when readers can understand the initial condition and measurement basis.",
+        "example": "Describe the situation before implementation, including baseline metrics when available.",
+        "avoid": "Invented metrics, fabricated quotes, unsupported superiority claims, or private details without approval."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "implementationDetails",
+      "label": "Implementation details",
+      "placeholder": "Describe major phases, decisions, integrations, activities, or process changes.",
+      "required": false,
+      "type": "textarea",
+      "group": "facts",
+      "groupTitle": "Facts & Evidence",
+      "hint": "Include enough detail to explain how the solution was applied.",
+      "help": {
+        "what": "Implementation details.",
+        "why": "It distinguishes a credible case study from a simple testimonial or promotional claim.",
+        "example": "Describe major phases, decisions, integrations, activities, or process changes.",
+        "avoid": "Invented metrics, fabricated quotes, unsupported superiority claims, or private details without approval."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "implementationTimeline",
+      "label": "Timeline",
+      "placeholder": "Example: Discovery in January, rollout over eight weeks, results measured after six months",
+      "required": false,
+      "type": "textarea",
+      "group": "facts",
+      "groupTitle": "Facts & Evidence",
+      "hint": "Include only confirmed dates, durations, and milestones.",
+      "help": {
+        "what": "Timeline.",
+        "why": "Timeframes help readers interpret implementation effort and reported outcomes accurately.",
+        "example": "Example: Discovery in January, rollout over eight weeks, results measured after six months",
+        "avoid": "Invented metrics, fabricated quotes, unsupported superiority claims, or private details without approval."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "measurableResults",
+      "label": "Measurable results",
+      "placeholder": "List metrics with values, periods, units, baselines, and measurement methods when known.",
+      "required": false,
+      "type": "textarea",
+      "group": "facts",
+      "groupTitle": "Facts & Evidence",
+      "hint": "Do not estimate missing percentages or convert qualitative statements into numbers.",
+      "help": {
+        "what": "Measurable results.",
+        "why": "Structured metric input supports accurate results sections and prevents invented performance figures.",
+        "example": "List metrics with values, periods, units, baselines, and measurement methods when known.",
+        "avoid": "Invented metrics, fabricated quotes, unsupported superiority claims, or private details without approval."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "qualitativeOutcomes",
+      "label": "Qualitative outcomes",
+      "placeholder": "Example: Easier onboarding, fewer handoff problems, stronger team confidence",
+      "required": false,
+      "type": "textarea",
+      "group": "facts",
+      "groupTitle": "Facts & Evidence",
+      "hint": "Describe observable non-numeric changes without presenting them as measured statistics.",
+      "help": {
+        "what": "Qualitative outcomes.",
+        "why": "Many valid outcomes are important but cannot be represented by a reliable metric.",
+        "example": "Example: Easier onboarding, fewer handoff problems, stronger team confidence",
+        "avoid": "Invented metrics, fabricated quotes, unsupported superiority claims, or private details without approval."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "evidenceAndSources",
+      "label": "Evidence and sources",
+      "placeholder": "List reports, analytics, interviews, documents, surveys, or approved source links.",
+      "required": false,
+      "type": "textarea",
+      "group": "facts",
+      "groupTitle": "Facts & Evidence",
+      "hint": "Identify what supports each important result or factual claim.",
+      "help": {
+        "what": "Evidence and sources.",
+        "why": "Case-study claims require a clear evidence trail even when public citations are not displayed.",
+        "example": "List reports, analytics, interviews, documents, surveys, or approved source links.",
+        "avoid": "Invented metrics, fabricated quotes, unsupported superiority claims, or private details without approval."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "approvedQuotes",
+      "label": "Approved quotations",
+      "placeholder": "Paste approved quotes with speaker name, role, and organization where permitted.",
+      "required": false,
+      "type": "textarea",
+      "group": "facts",
+      "groupTitle": "Facts & Evidence",
+      "hint": "Only supplied quotations may be used as direct quotes.",
+      "help": {
+        "what": "Approved quotations.",
+        "why": "Direct quotations must never be generated or attributed without approved source wording.",
+        "example": "Paste approved quotes with speaker name, role, and organization where permitted.",
+        "avoid": "Invented metrics, fabricated quotes, unsupported superiority claims, or private details without approval."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "limitationsAndCaveats",
+      "label": "Limitations and caveats",
+      "placeholder": "Note data limits, external factors, incomplete measurements, or results that may not generalize.",
+      "required": false,
+      "type": "textarea",
+      "group": "facts",
+      "groupTitle": "Facts & Evidence",
+      "hint": "Include anything readers need to interpret the outcome fairly.",
+      "help": {
+        "what": "Limitations and caveats.",
+        "why": "Transparent limitations improve credibility and reduce misleading causal claims.",
+        "example": "Note data limits, external factors, incomplete measurements, or results that may not generalize.",
+        "avoid": "Invented metrics, fabricated quotes, unsupported superiority claims, or private details without approval."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "tone",
+      "label": "Tone",
+      "placeholder": "Select the preferred tone",
+      "required": false,
+      "type": "select",
+      "group": "brand",
+      "groupTitle": "Brand & Presentation",
+      "hint": "The tone affects delivery but never overrides accuracy or evidence requirements.",
+      "help": {
+        "what": "Tone.",
+        "why": "Tone changes how the same evidence is presented to different audiences.",
+        "example": "Clear and credible",
+        "avoid": "Invented metrics, fabricated quotes, unsupported superiority claims, or private details without approval."
+      },
+      "fullWidth": false,
+      "options": [
+        "Clear and credible",
+        "Executive and concise",
+        "Technical and precise",
+        "Warm and human",
+        "Editorial and analytical",
+        "Bold but evidence-led",
+        "Plain and practical",
+        "Match brand voice"
+      ],
+      "defaultValue": "Clear and credible"
+    },
+    {
+      "key": "brandVoice",
+      "label": "Brand voice",
+      "placeholder": "Describe preferred voice, sentence style, formality, and examples of wording to follow.",
+      "required": false,
+      "type": "textarea",
+      "group": "brand",
+      "groupTitle": "Brand & Presentation",
+      "hint": "Leave blank for a natural, professional, evidence-led voice.",
+      "help": {
+        "what": "Brand voice.",
+        "why": "Specific brand guidance improves consistency without forcing several separate style fields.",
+        "example": "Describe preferred voice, sentence style, formality, and examples of wording to follow.",
+        "avoid": "Invented metrics, fabricated quotes, unsupported superiority claims, or private details without approval."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "narrativePerspective",
+      "label": "Narrative perspective",
+      "placeholder": "Choose how the story should be told",
+      "required": false,
+      "type": "select",
+      "group": "brand",
+      "groupTitle": "Brand & Presentation",
+      "hint": "Interview-led output still uses only supplied and approved quotations.",
+      "help": {
+        "what": "Narrative perspective.",
+        "why": "Perspective materially affects voice, attribution, and the relationship between narrator and subject.",
+        "example": "Third-person",
+        "avoid": "Invented metrics, fabricated quotes, unsupported superiority claims, or private details without approval."
+      },
+      "fullWidth": false,
+      "options": [
+        "Third-person",
+        "First-person plural",
+        "Interview-led",
+        "Auto"
+      ],
+      "defaultValue": "Third-person"
+    },
+    {
+      "key": "outputStyle",
+      "label": "Editorial format",
+      "placeholder": "Select the presentation style",
+      "required": false,
+      "type": "select",
+      "group": "brand",
+      "groupTitle": "Brand & Presentation",
+      "hint": "Choose the structure that best suits the destination and reader.",
+      "help": {
+        "what": "Editorial format.",
+        "why": "A technical implementation report and a human-centered transformation story should not share an identical structure.",
+        "example": "Balanced narrative",
+        "avoid": "Invented metrics, fabricated quotes, unsupported superiority claims, or private details without approval."
+      },
+      "fullWidth": false,
+      "options": [
+        "Balanced narrative",
+        "Executive brief",
+        "Detailed implementation story",
+        "Data-led report",
+        "Human-centered story",
+        "Auto"
+      ],
+      "defaultValue": "Balanced narrative"
+    },
+    {
+      "key": "terminologyPreferences",
+      "label": "Terminology preferences",
+      "placeholder": "List preferred terms, capitalization, product names, and wording to avoid.",
+      "required": false,
+      "type": "textarea",
+      "group": "brand",
+      "groupTitle": "Brand & Presentation",
+      "hint": "Use this for brand terminology rather than general writing instructions.",
+      "help": {
+        "what": "Terminology preferences.",
+        "why": "Accurate names and approved terminology are important in client-facing business content.",
+        "example": "List preferred terms, capitalization, product names, and wording to avoid.",
+        "avoid": "Invented metrics, fabricated quotes, unsupported superiority claims, or private details without approval."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "visualEvidenceAvailable",
+      "label": "Available visual evidence",
+      "placeholder": "Example: Dashboard screenshots, process photos, charts, diagrams, before-and-after interface views",
+      "required": false,
+      "type": "textarea",
+      "group": "brand",
+      "groupTitle": "Brand & Presentation",
+      "hint": "List real assets that may support visual callout recommendations.",
+      "help": {
+        "what": "Available visual evidence.",
+        "why": "Visual recommendations should be based on assets that actually exist.",
+        "example": "Example: Dashboard screenshots, process photos, charts, diagrams, before-and-after interface views",
+        "avoid": "Invented metrics, fabricated quotes, unsupported superiority claims, or private details without approval."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "additionalContext",
+      "label": "Additional context",
+      "placeholder": "Add any relevant requirement not covered elsewhere.",
+      "required": false,
+      "type": "textarea",
+      "group": "brand",
+      "groupTitle": "Brand & Presentation",
+      "hint": "Use one place for important miscellaneous context, exclusions, or preferences.",
+      "help": {
+        "what": "Additional context.",
+        "why": "It captures meaningful exceptions without creating several low-value specialist fields.",
+        "example": "Add any relevant requirement not covered elsewhere.",
+        "avoid": "Invented metrics, fabricated quotes, unsupported superiority claims, or private details without approval."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "ctaGoal",
+      "label": "Call-to-action goal",
+      "placeholder": "Choose the preferred next step",
+      "required": false,
+      "type": "select",
+      "group": "publishing",
+      "groupTitle": "Publishing & Conversion",
+      "hint": "Use one proportional action that fits the case study and reader stage.",
+      "help": {
+        "what": "Call-to-action goal.",
+        "why": "The closing action should reflect the actual conversion goal rather than a generic sales request.",
+        "example": "Auto",
+        "avoid": "Invented metrics, fabricated quotes, unsupported superiority claims, or private details without approval."
+      },
+      "fullWidth": false,
+      "options": [
+        "Auto",
+        "Book a demo or consultation",
+        "Contact sales or team",
+        "Start a trial or application",
+        "Download a resource",
+        "View related work",
+        "No CTA"
+      ],
+      "defaultValue": "Auto"
+    },
+    {
+      "key": "ctaLink",
+      "label": "CTA destination",
+      "placeholder": "https://example.com/next-step",
+      "required": false,
+      "type": "text",
+      "group": "publishing",
+      "groupTitle": "Publishing & Conversion",
+      "hint": "Enter the real destination. The model must not invent a URL.",
+      "help": {
+        "what": "CTA destination.",
+        "why": "A usable CTA requires an accurate destination when one is available.",
+        "example": "https://example.com/next-step",
+        "avoid": "Invented metrics, fabricated quotes, unsupported superiority claims, or private details without approval."
+      },
+      "fullWidth": false,
+      "showWhen": {
+        "key": "ctaGoal",
+        "notEquals": "No CTA"
+      }
+    },
+    {
+      "key": "ctaText",
+      "label": "Preferred CTA wording",
+      "placeholder": "Example: See how the workflow could fit your team",
+      "required": false,
+      "type": "text",
+      "group": "publishing",
+      "groupTitle": "Publishing & Conversion",
+      "hint": "Leave blank for an automatically written, non-aggressive CTA.",
+      "help": {
+        "what": "Preferred CTA wording.",
+        "why": "Some brands require approved action wording or a specific conversion phrase.",
+        "example": "Example: See how the workflow could fit your team",
+        "avoid": "Invented metrics, fabricated quotes, unsupported superiority claims, or private details without approval."
+      },
+      "fullWidth": false,
+      "showWhen": {
+        "key": "ctaGoal",
+        "notEquals": "No CTA"
+      }
+    },
+    {
+      "key": "seoKeyword",
+      "label": "Primary SEO keyword",
+      "placeholder": "Example: logistics CRM implementation case study",
+      "required": false,
+      "type": "text",
+      "group": "publishing",
+      "groupTitle": "Publishing & Conversion",
+      "hint": "Use only when the case study will be published on a discoverable web page.",
+      "help": {
+        "what": "Primary SEO keyword.",
+        "why": "A supplied search phrase can guide metadata and headings without turning the case study into keyword-stuffed copy.",
+        "example": "Example: logistics CRM implementation case study",
+        "avoid": "Invented metrics, fabricated quotes, unsupported superiority claims, or private details without approval."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "conversionOffer",
+      "label": "Related offer",
+      "placeholder": "Describe the service, product, consultation, resource, or next step connected to the CTA.",
+      "required": false,
+      "type": "textarea",
+      "group": "publishing",
+      "groupTitle": "Publishing & Conversion",
+      "hint": "Include only real offer details and avoid unsupported promises.",
+      "help": {
+        "what": "Related offer.",
+        "why": "The CTA should connect naturally to an actual offer rather than introduce an invented service.",
+        "example": "Describe the service, product, consultation, resource, or next step connected to the CTA.",
+        "avoid": "Invented metrics, fabricated quotes, unsupported superiority claims, or private details without approval."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "optionalExtras",
+      "label": "Optional output extras",
+      "placeholder": "SEO metadata\nVisual callouts\nSocial teaser\nOne-page summary\nSales slide summary\nPull quotes",
+      "required": false,
+      "type": "textarea",
+      "group": "publishing",
+      "groupTitle": "Publishing & Conversion",
+      "hint": "Choose only assets that will be used with the case study. Select all that apply (one per line). Options: SEO metadata; Visual callouts; Social teaser; One-page summary; Sales slide summary; Pull quotes.",
+      "help": {
+        "what": "Optional output extras.",
+        "why": "It allows useful repurposing without adding every possible asset to every output.",
+        "example": "Select reusable assets to include",
+        "avoid": "Invented metrics, fabricated quotes, unsupported superiority claims, or private details without approval."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "privacyMode",
+      "label": "Privacy mode",
+      "placeholder": "Choose how identities should appear",
+      "required": false,
+      "type": "select",
+      "group": "privacy",
+      "groupTitle": "Privacy, Approval & Compliance",
+      "hint": "Select anonymization when public use of names or identifying details is not approved.",
+      "help": {
+        "what": "Privacy mode.",
+        "why": "Case studies frequently contain client, employee, project, or commercially sensitive identities.",
+        "example": "Use supplied names",
+        "avoid": "Invented metrics, fabricated quotes, unsupported superiority claims, or private details without approval."
+      },
+      "fullWidth": false,
+      "options": [
+        "Use supplied names",
+        "Anonymize organization",
+        "Anonymize people only",
+        "Fully anonymized"
+      ],
+      "defaultValue": "Use supplied names"
+    },
+    {
+      "key": "anonymizationDetails",
+      "label": "Anonymization instructions",
+      "placeholder": "Specify replacement labels and details that must be generalized, removed, or preserved.",
+      "required": false,
+      "type": "textarea",
+      "group": "privacy",
+      "groupTitle": "Privacy, Approval & Compliance",
+      "hint": "Do not include clues that would unintentionally identify the subject.",
+      "help": {
+        "what": "Anonymization instructions.",
+        "why": "Different anonymization workflows require explicit control over what remains identifiable.",
+        "example": "Specify replacement labels and details that must be generalized, removed, or preserved.",
+        "avoid": "Invented metrics, fabricated quotes, unsupported superiority claims, or private details without approval."
+      },
+      "fullWidth": true,
+      "showWhen": {
+        "key": "privacyMode",
+        "equals": [
+          "Anonymize organization",
+          "Anonymize people only",
+          "Fully anonymized"
+        ]
+      }
+    },
+    {
+      "key": "approvalStatus",
+      "label": "Approval status",
+      "placeholder": "Select the current approval level",
+      "required": false,
+      "type": "select",
+      "group": "privacy",
+      "groupTitle": "Privacy, Approval & Compliance",
+      "hint": "The output will distinguish draft material from content approved for publication.",
+      "help": {
+        "what": "Approval status.",
+        "why": "The model must not imply that facts, quotes, or publication rights have been approved when they have not.",
+        "example": "Draft—approval pending",
+        "avoid": "Invented metrics, fabricated quotes, unsupported superiority claims, or private details without approval."
+      },
+      "fullWidth": false,
+      "options": [
+        "Draft—approval pending",
+        "Facts approved",
+        "Quotes approved",
+        "Fully approved for publication",
+        "Internal use only"
+      ],
+      "defaultValue": "Draft—approval pending"
+    },
+    {
+      "key": "regulatedTopic",
+      "label": "Regulated or sensitive topic",
+      "placeholder": "Select only when relevant",
+      "required": false,
+      "type": "select",
+      "group": "privacy",
+      "groupTitle": "Privacy, Approval & Compliance",
+      "hint": "Used to apply cautious language and identify claims requiring authoritative review.",
+      "help": {
+        "what": "Regulated or sensitive topic.",
+        "why": "High-stakes case studies require stronger qualification and jurisdiction-aware review.",
+        "example": "None",
+        "avoid": "Invented metrics, fabricated quotes, unsupported superiority claims, or private details without approval."
+      },
+      "fullWidth": false,
+      "options": [
+        "None",
+        "Health or medical",
+        "Legal",
+        "Financial or investment",
+        "Insurance",
+        "Employment or HR",
+        "Safety or security",
+        "Political or public affairs",
+        "Children or education",
+        "Other regulated area"
+      ],
+      "defaultValue": "None"
+    },
+    {
+      "key": "jurisdiction",
+      "label": "Relevant jurisdiction",
+      "placeholder": "Example: United Kingdom, California, European Union",
+      "required": false,
+      "type": "text",
+      "group": "privacy",
+      "groupTitle": "Privacy, Approval & Compliance",
+      "hint": "Specify the country, state, region, or regulatory environment that may affect claims.",
+      "help": {
+        "what": "Relevant jurisdiction.",
+        "why": "Legal, financial, medical, employment, and similar requirements can differ by jurisdiction.",
+        "example": "Example: United Kingdom, California, European Union",
+        "avoid": "Invented metrics, fabricated quotes, unsupported superiority claims, or private details without approval."
+      },
+      "fullWidth": false,
+      "showWhen": {
+        "key": "regulatedTopic",
+        "notEquals": "None"
+      }
+    },
+    {
+      "key": "restrictionsAndDisclosures",
+      "label": "Restrictions and disclosures",
+      "placeholder": "List prohibited claims, required disclosures, relationship disclosures, or confidentiality limits.",
+      "required": false,
+      "type": "textarea",
+      "group": "privacy",
+      "groupTitle": "Privacy, Approval & Compliance",
+      "hint": "Include only applicable restrictions rather than generic legal language.",
+      "help": {
+        "what": "Restrictions and disclosures.",
+        "why": "The case study may require specific claim exclusions, commercial disclosures, or confidentiality protections.",
+        "example": "List prohibited claims, required disclosures, relationship disclosures, or confidentiality limits.",
+        "avoid": "Invented metrics, fabricated quotes, unsupported superiority claims, or private details without approval."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "asOfDate",
+      "label": "Information current as of",
+      "placeholder": "YYYY-MM-DD",
+      "required": false,
+      "type": "text",
+      "group": "privacy",
+      "groupTitle": "Privacy, Approval & Compliance",
+      "hint": "Useful when results, product capabilities, team details, or project status may change.",
+      "help": {
+        "what": "Information current as of.",
+        "why": "A factual cutoff prevents changing results or capabilities from being presented as permanently current.",
+        "example": "YYYY-MM-DD",
+        "avoid": "Invented metrics, fabricated quotes, unsupported superiority claims, or private details without approval."
+      },
+      "fullWidth": false
+    }
+  ]
+}

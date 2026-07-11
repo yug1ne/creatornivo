@@ -1,0 +1,542 @@
+{
+  "slug": "seo-meta-tags",
+  "title": "SEO Meta Tags",
+  "version": 1,
+  "generatedAt": "2026-07-11T11:10:32.123Z",
+  "fieldCount": 24,
+  "requiredKeys": [
+    "pageTopic",
+    "pageType",
+    "targetAudience",
+    "primaryKeyword",
+    "keyPageFacts"
+  ],
+  "groups": [
+    {
+      "id": "essentials",
+      "title": "Essentials",
+      "description": "Page summary, type, audience, primary keyword, facts, goal, language, brand, URL.",
+      "defaultOpen": true
+    },
+    {
+      "id": "search",
+      "title": "Search Focus",
+      "description": "Intent, supporting keywords, geography, and wording restrictions.",
+      "defaultOpen": false
+    },
+    {
+      "id": "technical",
+      "title": "Technical Settings",
+      "description": "Title branding, slug handling, indexing, and canonical URL.",
+      "defaultOpen": false
+    },
+    {
+      "id": "social",
+      "title": "Social Preview",
+      "description": "Optional Open Graph / X Card metadata and preview image.",
+      "defaultOpen": false
+    },
+    {
+      "id": "output",
+      "title": "Output Options",
+      "description": "Number of variants and special requirements.",
+      "defaultOpen": false
+    }
+  ],
+  "variables": [
+    {
+      "key": "pageTopic",
+      "label": "Page topic or summary",
+      "placeholder": "Describe what the page contains, offers, or explains.",
+      "required": true,
+      "type": "textarea",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Summarize the real page content so the metadata accurately represents it.",
+      "help": {
+        "what": "Page topic or summary.",
+        "why": "The model must understand the actual page before it can write accurate metadata.",
+        "example": "Simple online invoice generator for freelancers",
+        "avoid": "Metadata that describes content not on the page."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "pageType",
+      "label": "Page type",
+      "placeholder": "Select the closest page type.",
+      "required": true,
+      "type": "select",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Page type changes the title structure, description focus, slug, and social metadata.",
+      "help": {
+        "what": "Page type.",
+        "why": "Different page types require different metadata priorities and search-intent treatment.",
+        "example": "Service page",
+        "avoid": "Invented page facts, fake rankings, keyword stuffing, or fabricated URLs."
+      },
+      "fullWidth": false,
+      "options": [
+        "Homepage",
+        "Service page",
+        "Product page",
+        "Category page",
+        "Article or blog post",
+        "Landing page",
+        "Local page",
+        "Event page",
+        "App or online tool",
+        "Other"
+      ],
+      "defaultValue": "Service page"
+    },
+    {
+      "key": "targetAudience",
+      "label": "Target audience",
+      "placeholder": "Example: Small business owners looking for simple invoicing software",
+      "required": true,
+      "type": "text",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Describe the people most likely to search for and benefit from this page.",
+      "help": {
+        "what": "Target audience.",
+        "why": "Audience context determines which benefits, terms, and intent signals should be emphasized.",
+        "example": "Example: Small business owners looking for simple invoicing software",
+        "avoid": "Invented page facts, fake rankings, keyword stuffing, or fabricated URLs."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "primaryKeyword",
+      "label": "Primary keyword or query",
+      "placeholder": "Example: online invoice generator",
+      "required": true,
+      "type": "text",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Enter the main phrase the page should naturally target.",
+      "help": {
+        "what": "Primary keyword or query.",
+        "why": "The primary query anchors the title, description, and slug without requiring keyword stuffing.",
+        "example": "online invoice generator",
+        "avoid": "Keyword stuffing or unrelated head terms."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "keyPageFacts",
+      "label": "Essential page facts",
+      "placeholder": "List real features, benefits, locations, prices, dates, or other facts that may be mentioned.",
+      "required": true,
+      "type": "textarea",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Only provide facts that are accurate and publicly supported by the page.",
+      "help": {
+        "what": "Essential page facts.",
+        "why": "It supplies the factual basis and prevents the model from inventing claims or page details.",
+        "example": "Free plan, PDF export, no invented features",
+        "avoid": "Unverified prices, rankings, or guarantees."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "primaryGoal",
+      "label": "Primary page goal",
+      "placeholder": "Select the page’s main goal.",
+      "required": false,
+      "type": "select",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "The goal influences the description angle and the strength of any action phrase.",
+      "help": {
+        "what": "Primary page goal.",
+        "why": "Pages targeting the same keyword may require different metadata depending on their conversion purpose.",
+        "example": "Improve qualified organic clicks",
+        "avoid": "Invented page facts, fake rankings, keyword stuffing, or fabricated URLs."
+      },
+      "fullWidth": false,
+      "options": [
+        "Improve qualified organic clicks",
+        "Generate leads or sign-ups",
+        "Support product sales",
+        "Inform or educate",
+        "Promote local discovery",
+        "Drive event registration",
+        "Encourage app or tool use",
+        "Auto"
+      ],
+      "defaultValue": "Improve qualified organic clicks"
+    },
+    {
+      "key": "outputLanguage",
+      "label": "Output language",
+      "placeholder": "Example: English, Ukrainian, Spanish",
+      "required": false,
+      "type": "text",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Metadata will be written in this language and writing system.",
+      "help": {
+        "what": "Output language.",
+        "why": "The output language cannot always be safely inferred from a short topic or keyword.",
+        "example": "English",
+        "avoid": "Invented page facts, fake rankings, keyword stuffing, or fabricated URLs."
+      },
+      "fullWidth": false,
+      "defaultValue": "English"
+    },
+    {
+      "key": "brandName",
+      "label": "Brand or site name",
+      "placeholder": "Example: Creatornivo",
+      "required": false,
+      "type": "text",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Used only when brand inclusion improves recognition or is explicitly requested.",
+      "help": {
+        "what": "Brand or site name.",
+        "why": "Brand names cannot be invented and may materially affect title length and structure.",
+        "example": "Example: Creatornivo",
+        "avoid": "Invented page facts, fake rankings, keyword stuffing, or fabricated URLs."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "pageUrl",
+      "label": "Page URL",
+      "placeholder": "https://example.com/page",
+      "required": false,
+      "type": "text",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Used for canonical and social tags when it is the intended public URL.",
+      "help": {
+        "what": "Page URL.",
+        "why": "A real URL enables implementation-ready canonical and social metadata without fabrication.",
+        "example": "https://example.com/page",
+        "avoid": "Invented page facts, fake rankings, keyword stuffing, or fabricated URLs."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "searchIntent",
+      "label": "Search intent",
+      "placeholder": "Let the model infer intent or choose one.",
+      "required": false,
+      "type": "select",
+      "group": "search",
+      "groupTitle": "Search Focus",
+      "hint": "Use Auto unless the page deliberately targets a particular stage of the search journey.",
+      "help": {
+        "what": "Search intent.",
+        "why": "Explicit intent can prevent informational and commercial pages from receiving the wrong metadata angle.",
+        "example": "Auto",
+        "avoid": "Invented page facts, fake rankings, keyword stuffing, or fabricated URLs."
+      },
+      "fullWidth": false,
+      "options": [
+        "Auto",
+        "Informational",
+        "Commercial research",
+        "Transactional",
+        "Navigational",
+        "Local"
+      ],
+      "defaultValue": "Auto"
+    },
+    {
+      "key": "secondaryKeywords",
+      "label": "Supporting keywords",
+      "placeholder": "Add closely related phrases, one per line or separated by commas.",
+      "required": false,
+      "type": "textarea",
+      "group": "search",
+      "groupTitle": "Search Focus",
+      "hint": "Only include relevant phrases that may naturally support the primary topic.",
+      "help": {
+        "what": "Supporting keywords.",
+        "why": "Supporting phrases can improve topical coverage when used selectively.",
+        "example": "Add closely related phrases, one per line or separated by commas.",
+        "avoid": "Invented page facts, fake rankings, keyword stuffing, or fabricated URLs."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "geoTarget",
+      "label": "Geographic target",
+      "placeholder": "Example: Toronto, Canada or nationwide United Kingdom",
+      "required": false,
+      "type": "text",
+      "group": "search",
+      "groupTitle": "Search Focus",
+      "hint": "Complete this only when location materially affects the page or search intent.",
+      "help": {
+        "what": "Geographic target.",
+        "why": "Local relevance must come from the user rather than being inferred or invented.",
+        "example": "Example: Toronto, Canada or nationwide United Kingdom",
+        "avoid": "Invented page facts, fake rankings, keyword stuffing, or fabricated URLs."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "termsGuidance",
+      "label": "Keyword and wording notes",
+      "placeholder": "List required terms, preferred wording, or phrases that must not appear.",
+      "required": false,
+      "type": "textarea",
+      "group": "search",
+      "groupTitle": "Search Focus",
+      "hint": "Combine important inclusion and exclusion instructions in one place.",
+      "help": {
+        "what": "Keyword and wording notes.",
+        "why": "It captures material language restrictions without creating several overlapping fields.",
+        "example": "List required terms, preferred wording, or phrases that must not appear.",
+        "avoid": "Invented page facts, fake rankings, keyword stuffing, or fabricated URLs."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "titleBranding",
+      "label": "Brand in SEO title",
+      "placeholder": "Choose how the brand should be handled.",
+      "required": false,
+      "type": "select",
+      "group": "technical",
+      "groupTitle": "Technical Settings",
+      "hint": "Auto includes the brand only when useful and space allows.",
+      "help": {
+        "what": "Brand in SEO title.",
+        "why": "Brand inclusion affects title clarity, distinctiveness, and available length.",
+        "example": "Auto",
+        "avoid": "Invented page facts, fake rankings, keyword stuffing, or fabricated URLs."
+      },
+      "fullWidth": false,
+      "options": [
+        "Auto",
+        "Include brand",
+        "Exclude brand"
+      ],
+      "defaultValue": "Auto"
+    },
+    {
+      "key": "slugPreference",
+      "label": "Slug preference",
+      "placeholder": "Select how the URL path should be handled.",
+      "required": false,
+      "type": "select",
+      "group": "technical",
+      "groupTitle": "Technical Settings",
+      "hint": "Choose whether to create, shorten, revise, or preserve the current slug.",
+      "help": {
+        "what": "Slug preference.",
+        "why": "Slug recommendations differ significantly between new and already published pages.",
+        "example": "Auto",
+        "avoid": "Invented page facts, fake rankings, keyword stuffing, or fabricated URLs."
+      },
+      "fullWidth": false,
+      "options": [
+        "Auto",
+        "Shortest clear slug",
+        "Keyword-led slug",
+        "Improve existing slug",
+        "Keep existing slug"
+      ],
+      "defaultValue": "Auto"
+    },
+    {
+      "key": "currentSlug",
+      "label": "Current slug or path",
+      "placeholder": "Example: /services/online-invoice-generator",
+      "required": false,
+      "type": "text",
+      "group": "technical",
+      "groupTitle": "Technical Settings",
+      "hint": "Enter the existing path so it can be reviewed or preserved.",
+      "help": {
+        "what": "Current slug or path.",
+        "why": "The current path is necessary only when the user wants it reviewed or retained.",
+        "example": "Example: /services/online-invoice-generator",
+        "avoid": "Invented page facts, fake rankings, keyword stuffing, or fabricated URLs."
+      },
+      "fullWidth": false,
+      "showWhen": {
+        "key": "slugPreference",
+        "equals": [
+          "Improve existing slug",
+          "Keep existing slug"
+        ]
+      }
+    },
+    {
+      "key": "indexingPreference",
+      "label": "Indexing preference",
+      "placeholder": "Use Auto unless you know the page should be restricted.",
+      "required": false,
+      "type": "select",
+      "group": "technical",
+      "groupTitle": "Technical Settings",
+      "hint": "Controls whether a robots meta recommendation is included.",
+      "help": {
+        "what": "Indexing preference.",
+        "why": "Indexing directives can materially change page visibility and should not be guessed casually.",
+        "example": "Auto",
+        "avoid": "Invented page facts, fake rankings, keyword stuffing, or fabricated URLs."
+      },
+      "fullWidth": false,
+      "options": [
+        "Auto",
+        "Index, follow",
+        "Noindex, follow",
+        "Noindex, nofollow"
+      ],
+      "defaultValue": "Auto"
+    },
+    {
+      "key": "canonicalUrl",
+      "label": "Canonical URL",
+      "placeholder": "https://example.com/preferred-page",
+      "required": false,
+      "type": "text",
+      "group": "technical",
+      "groupTitle": "Technical Settings",
+      "hint": "Complete this when the preferred canonical differs from or must override the page URL.",
+      "help": {
+        "what": "Canonical URL.",
+        "why": "Canonical URLs are technical factual values that must never be fabricated.",
+        "example": "https://example.com/preferred-page",
+        "avoid": "Invented page facts, fake rankings, keyword stuffing, or fabricated URLs."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "includeSocialMetadata",
+      "label": "Include social metadata",
+      "placeholder": "Blank",
+      "required": false,
+      "type": "select",
+      "group": "social",
+      "groupTitle": "Social Preview",
+      "hint": "Enable this to generate Open Graph or X Card preview metadata.",
+      "help": {
+        "what": "Include social metadata.",
+        "why": "Social tags are valuable for some pages but unnecessary for users who only need search metadata.",
+        "example": "Off",
+        "avoid": "Inventing social image URLs."
+      },
+      "fullWidth": false,
+      "options": [
+        "Off",
+        "On"
+      ],
+      "defaultValue": "Off"
+    },
+    {
+      "key": "socialPlatforms",
+      "label": "Social metadata platforms",
+      "placeholder": "Open Graph\nX Card",
+      "required": false,
+      "type": "textarea",
+      "group": "social",
+      "groupTitle": "Social Preview",
+      "hint": "Open Graph supports broad social sharing; X Card adds X-specific tags. Select all that apply (one per line). Options: Open Graph; X Card.",
+      "help": {
+        "what": "Social metadata platforms.",
+        "why": "The selected platforms determine which social tags should be generated.",
+        "example": "Open Graph\nX Card",
+        "avoid": "Requesting formats you will not implement."
+      },
+      "fullWidth": true,
+      "defaultValue": "Open Graph",
+      "showWhen": {
+        "key": "includeSocialMetadata",
+        "equals": "On"
+      }
+    },
+    {
+      "key": "socialImageUrl",
+      "label": "Social preview image URL",
+      "placeholder": "https://example.com/images/page-preview.jpg",
+      "required": false,
+      "type": "text",
+      "group": "social",
+      "groupTitle": "Social Preview",
+      "hint": "Use an absolute public image URL; the model will not invent one.",
+      "help": {
+        "what": "Social preview image URL.",
+        "why": "Social preview images require an actual hosted URL rather than a generated filename.",
+        "example": "https://example.com/images/page-preview.jpg",
+        "avoid": "Invented page facts, fake rankings, keyword stuffing, or fabricated URLs."
+      },
+      "fullWidth": false,
+      "showWhen": {
+        "key": "includeSocialMetadata",
+        "equals": "On"
+      }
+    },
+    {
+      "key": "socialImageAlt",
+      "label": "Social image description",
+      "placeholder": "Describe what is visibly shown in the social preview image.",
+      "required": false,
+      "type": "text",
+      "group": "social",
+      "groupTitle": "Social Preview",
+      "hint": "Describe only real visible content and avoid keyword stuffing.",
+      "help": {
+        "what": "Social image description.",
+        "why": "A supplied image description supports accurate and accessible social metadata.",
+        "example": "Describe what is visibly shown in the social preview image.",
+        "avoid": "Invented page facts, fake rankings, keyword stuffing, or fabricated URLs."
+      },
+      "fullWidth": false,
+      "showWhen": {
+        "key": "includeSocialMetadata",
+        "equals": "On"
+      }
+    },
+    {
+      "key": "variantCount",
+      "label": "Number of variants",
+      "placeholder": "Choose how many title and description pairs to generate.",
+      "required": false,
+      "type": "select",
+      "group": "output",
+      "groupTitle": "Output Options",
+      "hint": "More variants provide alternative angles without changing the factual basis.",
+      "help": {
+        "what": "Number of variants.",
+        "why": "Users may need either one final answer or several options for review.",
+        "example": "3",
+        "avoid": "Invented page facts, fake rankings, keyword stuffing, or fabricated URLs."
+      },
+      "fullWidth": false,
+      "options": [
+        "1",
+        "2",
+        "3"
+      ],
+      "defaultValue": "3"
+    },
+    {
+      "key": "additionalRequirements",
+      "label": "Additional requirements",
+      "placeholder": "Add any final content, formatting, CMS, or implementation requirements.",
+      "required": false,
+      "type": "textarea",
+      "group": "output",
+      "groupTitle": "Output Options",
+      "hint": "Use this only for important instructions not already covered above.",
+      "help": {
+        "what": "Additional requirements.",
+        "why": "It accommodates legitimate edge cases without expanding the permanent form.",
+        "example": "Add any final content, formatting, CMS, or implementation requirements.",
+        "avoid": "Invented page facts, fake rankings, keyword stuffing, or fabricated URLs."
+      },
+      "fullWidth": true
+    }
+  ]
+}

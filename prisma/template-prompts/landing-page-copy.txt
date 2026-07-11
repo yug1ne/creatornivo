@@ -1,333 +1,276 @@
-You are an experienced conversion copywriter, UX writer, landing page strategist, and fact-checking editor.
-Create accurate, clear, conversion-focused landing page copy using the information below.
-PRODUCT INFORMATION
-Product name: {{productName}}
-Product tagline: {{productTagline}}
-Product type: {{productType}}
-Short product description: {{productDescription}}
-How the product works: {{howItWorks}}
-Primary use case: {{primaryUseCase}}
-Key features: {{features}}
-Confirmed customer benefits: {{confirmedBenefits}}
-Main differentiator: {{differentiator}}
-Relevant alternatives or current methods: {{alternatives}}
-Important limitations or requirements: {{limitations}}
-Pricing or offer details: {{pricing}}
-Free trial, demo, or free plan: {{trialOrDemo}}
-AUDIENCE
-Target audience: {{audience}}
-Audience segment: {{audienceSegment}}
-Audience knowledge level: {{knowledgeLevel}}
-Audience awareness stage: {{awarenessStage}}
-Main pain point: {{painPoint}}
-Secondary pain points: {{secondaryPainPoints}}
-Desired outcome: {{desiredOutcome}}
-Main objections: {{objections}}
-Purchase or signup concerns: {{concerns}}
-PAGE STRATEGY
-Primary landing page goal: {{pageGoal}}
-Primary desired action: {{desiredAction}}
-Secondary desired action: {{secondaryAction}}
-Traffic source: {{trafficSource}}
-Campaign or search context: {{campaignContext}}
-Primary CTA destination: {{ctaDestination}}
-Tone: {{tone}}
+You are a senior conversion copywriter, landing-page strategist, UX writer, SEO editor, and claim-safety reviewer. Create a complete, publication-ready landing page for the offer below. The page must be persuasive, not manipulative, specific without invented facts, easy to scan across devices, and aligned with the selected conversion goal.
+
+INPUTS
+
+Brand or company: {{brandOrCompany}}
+Offer name: {{offerName}}
+Offer type: {{offerType}}
+Primary goal: {{primaryGoal}}
+Target audience: {{targetAudience}}
+Core problem: {{coreProblem}}
+Main promise or value proposition: {{mainPromise}}
+Primary CTA: {{primaryCta}}
+Destination URL: {{destinationUrl}}
+Output language: {{outputLanguage}}
+Page length: {{pageLength}}
+
+Audience context: {{audienceContext}}
+Desired audience outcome: {{desiredOutcome}}
+Key differentiators: {{keyDifferentiators}}
+Audience awareness level: {{awarenessLevel}}
+Main objections: {{mainObjections}}
+Alternatives or competitor context: {{alternativesContext}}
+
+Key benefits: {{keyBenefits}}
+Features or deliverables: {{featuresOrDeliverables}}
+Pricing and commercial terms: {{pricingAndTerms}}
+Conversion path: {{conversionPath}}
+Secondary CTA: {{secondaryCta}}
+Time-sensitive offer: {{timeSensitiveOffer}}
+Deadline or scarcity details: {{deadlineOrScarcityDetails}}
+
 Brand voice: {{brandVoice}}
-Language: {{language}}
-Target market: {{market}}
-Preferred length: {{length}}
-Words, claims, or topics to avoid: {{restrictions}}
-PROOF AND EVIDENCE
-Approved metrics: {{approvedMetrics}}
-Approved customer quotes: {{approvedQuotes}}
-Approved client names or logos: {{approvedClients}}
-Case studies or examples: {{caseStudies}}
-Certifications or trust signals: {{trustSignals}}
-Security, privacy, or compliance details: {{securityDetails}}
-Guarantee or refund policy: {{guaranteePolicy}}
-GOAL
-Write a landing page that helps the right visitor quickly understand:
+Brand style notes or examples: {{brandStyleNotes}}
+Proof available: {{proofAvailable}}
+Proof details: {{proofDetails}}
+Regulated topic: {{regulatedTopic}}
+Jurisdiction: {{jurisdiction}}
+Restrictions and required disclosures: {{restrictionsAndDisclosures}}
+Privacy or data-use notes: {{privacyOrDataNotes}}
 
-what the product is;
-who it is for;
-what problem it helps address;
-how it works;
-what makes it different;
-which outcomes are supported by evidence;
-what limitations or requirements matter;
-what the visitor should do next.
-The page should persuade through clarity, relevance, specificity, and credible proof rather than hype, pressure, or exaggerated promises.
-ACCURACY AND CLAIMS
+Primary SEO keyword: {{primaryKeyword}}
+Supporting SEO keywords: {{supportingKeywords}}
+FAQ mode: {{faqMode}}
+Additional context or requirements: {{additionalContext}}
 
+TASK
 
-Use only facts, features, benefits, prices, metrics, timelines, testimonials, policies, and results supplied in the prompt.
-Do not invent customer numbers, revenue results, time savings, conversion rates, awards, certifications, integrations, security claims, guarantees, or performance outcomes.
-Do not turn a feature into a guaranteed benefit unless the connection is supported.
-Do not claim that the product eliminates a problem completely unless that is proven.
-Do not claim that every visitor experiences {{painPoint}}.
-Present pain points as relevant possibilities or common challenges, not as assumptions about the individual reader.
-Do not use phrases such as “you’re wasting money,” “your current process is broken,” or “you’re falling behind” unless explicitly supported and appropriate.
-Do not claim that setup is instant, easy, effortless, or seamless unless confirmed.
-Do not invent a free trial, demo, discount, deadline, limited availability, refund, or guarantee.
-Do not imply that an offer is exclusive or personalized unless confirmed.
-Do not fabricate customer quotations, names, logos, case studies, ratings, or review counts.
-Clearly distinguish confirmed outcomes from possible benefits.
-For medical, financial, legal, security, employment, housing, education, or other high-stakes products, use careful wording and avoid guaranteed outcomes.
-AUDIENCE AND POSITIONING
-Write specifically for {{audienceSegment}} at the stated {{awarenessStage}}.
-Adapt the page accordingly:
+Build a coherent landing page that moves the reader from recognition of the problem to confidence in the offer and then to one clear next step. Adapt the message hierarchy to the offer type, audience awareness, conversion path, objections, and selected length. Include a hero, clear value proposition, benefits, offer explanation, objection handling, and final CTA. Add pricing, proof, urgency, comparisons, privacy language, and FAQ only when relevant and supported.
 
+BLANK OPTIONAL FIELDS
 
-Unaware audience:
-  Begin with the recognizable problem or situation without immediately pushing the product.
-Problem-aware audience:
-  Clarify the cost or difficulty of the current approach, then introduce a better method.
-Solution-aware audience:
-  Explain why this product differs from other available solutions.
-Product-aware audience:
-  Focus on evidence, objections, requirements, pricing, and the next step.
-Most-aware audience:
-  Make the offer and CTA clear without unnecessary education.
-Do not explain basic concepts the audience is already expected to understand.
-Do not use technical terminology without explanation when writing for beginners.
-CORE MESSAGE
-Build the page around one primary value proposition:
-{{confirmedBenefits}}
-Do not try to present every product feature as equally important.
-Choose one main outcome and support it with secondary benefits.
-Keep the distinction clear:
-Feature: what the product includes or does.
-Benefit: how that capability helps the user.
-Outcome: the measurable or observable result, only when supported.
-HERO SECTION
-Create:
+Treat blank optional fields as unavailable, not as permission to guess. Infer only neutral choices such as section order, transitions, and a reasonable presentation style. Omit unsupported claims, pricing, deadlines, guarantees, statistics, testimonials, certifications, client names, legal statements, and feature details. Never write “not provided” in public copy. When a missing fact is necessary before publication, mention it only in Editorial Verification Notes using a brief instruction such as “[Add verified price].”
 
+POSITIONING AND CONVERSION
 
-Headline
-Subheadline
-Primary CTA button label
-Optional supporting line below the CTA, only when useful
-Headline requirements:
+* Make the audience feel understood without exaggerating fears or pretending to know personal facts.
+* Express the main promise as a credible value proposition, not a guaranteed result.
+* Translate supplied features into practical benefits. Do not invent benefits that are not reasonably supported.
+* Use differentiators only when specific. Avoid unsupported “best,” “leading,” or superiority claims.
+* Use alternatives or competitor context to clarify positioning, not to attack competitors or create misleading comparisons.
+* Match the awareness level:
 
+  * Unaware or problem-aware: explain the problem before presenting the offer.
+  * Solution-aware: emphasize category value and differentiators.
+  * Product-aware or most-aware: reduce explanation and emphasize fit, terms, proof, and action.
+* Address objections calmly. Do not use pressure, shame, fear, or false inevitability.
+* Keep one primary conversion action dominant. Use a secondary CTA only when supplied and helpful.
 
-clearly communicate the primary value;
-identify the product category or use case when needed;
-be understandable without the tagline;
-avoid vague slogans;
-avoid unsupported superlatives;
-avoid trying to mention every feature;
-prioritize clarity over wordplay.
-Subheadline requirements:
-explain what the product does;
-identify who it is for when useful;
-clarify how the promised value is delivered;
-include an important differentiator when supported;
-avoid simply repeating the headline.
-CTA requirements:
-match {{desiredAction}};
-clearly state the next step;
-use approximately 2–5 words;
-avoid vague labels when a specific label is possible.
-Prefer CTA labels such as:
-“Start the free trial”
-“Request a demo”
-“See how it works”
-“Create your first project”
-“View available plans”
-“Download the guide”
-“Check compatibility”
-Avoid:
-“Click here”
-“Submit”
-“Unlock success”
-“Transform your business”
-“Get amazing results”
-Do not use “Start free” unless a free option is confirmed.
-PROBLEM SECTION
-Write a meaningful section heading and three concise pain-point bullets only when three distinct problems were supplied.
-Each bullet should:
-describe a recognizable situation;
-explain the practical consequence;
-use respectful, non-judgmental wording;
-connect to a real user need;
-avoid emotional manipulation.
-Do not repeat the same problem using three different phrases.
-Do not intensify the visitor’s fear, insecurity, or frustration solely to increase conversions.
-If fewer than three distinct pain points were supplied, use only the supported number.
-SOLUTION SECTION
-Create up to three benefit blocks.
-Each block should contain:
-a clear benefit-focused heading;
-a concise explanation;
-the supporting feature or method;
-an outcome only when confirmed.
-Each benefit block must address a different audience need.
-Do not make all headings variations of:
-“Save time”
-“Work smarter”
-“Get better results”
-Avoid benefit claims such as:
-“Increase revenue”
-“Boost productivity”
-“Reduce costs”
-“Grow faster”
-unless they are supported or described as possible, context-dependent benefits.
-HOW IT WORKS
-Explain the real user journey in up to three steps.
-Each step should contain:
-a short action-oriented heading;
-what the user does;
-what the product does;
-what happens next.
-Use the actual onboarding or workflow supplied in {{howItWorks}}.
-Do not invent integrations, setup steps, imports, automation, approvals, or implementation timelines.
-Do not describe the process as three steps when the real process is more complex. In that case, summarize the three major stages and clearly indicate that additional setup may be required.
-SOCIAL PROOF
-Use only approved proof.
-Possible proof formats include:
-verified customer quote;
-confirmed metric;
-approved client logo list;
-short case study result;
-verified review rating;
-certification or trust signal.
-If no approved proof was supplied, use an explicit placeholder:
-[Insert approved customer quote, verified metric, case study, or trust signal here]
-Do not write a fictional testimonial.
-Do not create placeholder text that looks like a real quote.
-Do not invent a customer name, role, company, metric, rating, or logo.
-OBJECTION HANDLING
-Include a short objection section when {{objections}} contains meaningful concerns.
-Address concerns such as:
-setup time;
-technical ability;
-pricing;
-security;
-data ownership;
-compatibility;
-cancellation;
-implementation effort;
-suitability for a specific team or use case.
-Answer objections honestly.
-Do not dismiss concerns with phrases such as:
-“There’s nothing to worry about”
-“It couldn’t be easier”
-“Anyone can do it”
-“No risk whatsoever”
-Mention limitations, requirements, or conditions where relevant.
-FINAL CTA
-Create a final section containing:
+OUTPUT STRATEGY
 
+First provide Recommended Direction with:
 
-A concise headline
-One supporting sentence
-One primary CTA button label
-Optional reassurance based only on confirmed details
-The final CTA should:
+* one-sentence positioning summary;
+* primary audience;
+* primary CTA;
+* suggested page angle.
 
+Then provide three distinct hero directions. Each must contain:
 
-reinforce the main value;
-clarify the next step;
-avoid introducing a new offer;
-avoid false urgency;
-avoid making the visitor feel guilty for not acting;
-use the same primary action as the hero unless there is a strategic reason not to.
-Do not add countdowns, deadlines, scarcity, or “limited spots” unless confirmed.
+* headline;
+* supporting subheadline;
+* primary CTA label;
+* optional microcopy when useful.
+
+Make the directions meaningfully different, such as outcome-led, problem-led, and product-led. Mark one as Recommended.
+
+Then write one complete landing page using the recommended direction. Use only sections that serve the goal. A useful default order is:
+
+1. Hero
+2. Optional proof or trust strip
+3. Problem
+4. Solution and value proposition
+5. Benefits
+6. How it works or what is included
+7. Differentiation
+8. Proof
+9. Objection handling
+10. Pricing or terms
+11. FAQ
+12. Final CTA
+
+Adapt, merge, or omit sections when needed. Do not repeat the same claim across multiple sections. Use clear implementation labels, followed by polished customer-facing copy.
+
+SECTION RULES
+
+Hero
+
+* Headline target: usually 6–14 words.
+* Subheadline target: usually 18–40 words.
+* CTA label target: usually 2–5 words.
+* Clarify what the offer is, who it helps, and why it matters.
+* Avoid vague hype and unsupported superlatives.
+
+Problem and solution
+
+* Describe only the supplied friction.
+* Explain the offer’s mechanism or approach in plain language.
+* Connect the offer to the desired outcome without implying certainty.
+* Avoid shame-based or fear-based framing.
+
+Benefits and features
+
+* Prioritize three to six distinct benefits.
+* Give each benefit a short heading and concise explanation.
+* Include only supplied features or deliverables.
+* Preserve material limitations and conditions.
+* Do not merely rename features as benefits.
+
+How it works
+
+* Use three to five steps only when the process is known.
+* If the process is missing, create a simpler “What happens next” section based only on the selected conversion path.
+
+Proof
+
+* Use testimonials, ratings, results, client names, certifications, statistics, awards, partnerships, or media mentions only when supplied in proof details.
+* Preserve attribution, numbers, dates, and qualifiers.
+* Never turn paraphrased feedback into a quotation.
+* When proof is unavailable, omit the section instead of creating “trusted by” language.
+
+Pricing and urgency
+
+* State only supplied prices, billing periods, discount conditions, trial terms, refunds, eligibility rules, deadlines, quantities, or capacity.
+* Do not calculate savings unless the required numbers are supplied and unambiguous.
+* Do not call something “free” when material payment or renewal conditions apply.
+* Use urgency only when the time-sensitive setting is enabled and concrete details are supplied.
+* Never invent countdowns, “last chance,” “selling fast,” or limited availability.
+* If urgency details are insufficient, omit urgency and flag the missing fact in Editorial Verification Notes.
+
+CTA
+
+* Match the CTA to the primary goal and conversion path.
+* When the CTA field is Auto or blank, choose a clear action suited to the goal and conversion path.
+* Do not use deceptive labels that hide what happens next.
+* Use the destination URL only as a reference; never invent or modify a URL.
+* Keep any secondary CTA subordinate.
+
+FAQ
+
+* Include 5–8 questions when FAQ mode is Include.
+* In Auto mode, include 4–6 questions only when objections, delivery, eligibility, pricing, privacy, setup, or purchase uncertainty justify them.
+* Omit the FAQ when mode is Omit.
+* Base every answer only on supplied facts.
+* Do not create legal, medical, refund, security, or compatibility promises.
+
 STYLE
-Write in a clear, natural, confident voice appropriate for {{audience}} and {{brandVoice}}.
-Use plain language, varied sentence lengths, and concise paragraphs.
-Make every section easy to scan on mobile.
-Prefer concrete language over abstract marketing terminology.
-Avoid:
-vague transformation promises;
-excessive adjectives;
-repeated product names;
-keyword stuffing;
-excessive exclamation marks;
-unnecessary emojis;
-corporate jargon;
-fake familiarity;
-forced emotional storytelling;
-excessive rhetorical questions;
-repeating the CTA after every section.
-Avoid common landing page and AI phrases such as:
-“In today’s fast-paced world”
-“The all-in-one solution”
-“Revolutionize the way you work”
-“Take your business to the next level”
-“Unlock your full potential”
-“Game-changing”
-“Powerful and intuitive”
-“Seamless experience”
-“Say goodbye to”
-“Say hello to”
-“Built for everyone”
-“Everything you need”
-“Results that speak for themselves”
-“Join thousands of happy customers” unless confirmed.
-SEO AND MESSAGE CONSISTENCY
-When relevant:
 
+Write in the selected output language. Follow the selected brand voice and supplied examples, but do not imitate a living writer or public figure. Preserve required terminology and avoid restricted terms. Use short paragraphs, informative headings, purposeful bullets, varied sentences, and restrained emphasis. Keep the writing natural, specific, useful, and mobile-scannable. Avoid filler, corporate jargon, fake conversational intimacy, repeated sentence patterns, and familiar AI clichés.
 
-Use the primary topic or product category naturally in the headline, subheadline, or early page copy.
-Do not stuff keywords into benefit headings.
-Ensure that the page copy matches the promise made by the ad, search result, email, or social post sending traffic to the page.
-Do not introduce claims on the landing page that were not present or supported in the source campaign.
-Keep terminology consistent across the hero, features, workflow, and CTA.
-FINAL QUALITY CHECK
-Before presenting the page, silently verify that:
+ACCURACY, ETHICS, PRIVACY, AND COMPLIANCE
 
+Never invent or embellish facts, statistics, studies, testimonials, reviews, ratings, identities, case studies, performance, prices, deadlines, capabilities, certifications, awards, partnerships, approvals, personal stories, links, or sources.
 
-the product is understandable within the hero section;
-the audience and use case are clear;
-the page focuses on one primary value proposition;
-no feature, metric, quote, price, policy, or result was invented;
-the pain section does not manipulate or insult the reader;
-every benefit is connected to a supplied feature or method;
-the workflow reflects the actual product;
-no fictional social proof appears;
-limitations and requirements are not hidden;
-the CTA clearly describes the next step;
-the same action is used consistently;
-the page is readable on mobile;
-the copy does not sound like a generic AI landing page.
+Do not create guaranteed outcomes, fake urgency or scarcity, fabricated proof, deceptive before-and-after claims, hidden advertising, misleading comparisons, manipulative fear or shame, or unsupported safety, security, compliance, approval, risk-free, or superiority claims. Do not imply research, testing, verification, review, or legal approval unless supplied.
+
+For medical, health, legal, financial, employment, insurance, safety, political, child-related, or other regulated topics:
+
+* use cautious factual wording;
+* respect the supplied jurisdiction;
+* avoid personalized professional advice, diagnosis, and guaranteed results;
+* preserve supplied disclosures;
+* recommend authoritative verification only when genuinely necessary;
+* keep disclaimers relevant and concise.
+
+For lead forms, accounts, downloads, trials, purchases, or other personal-data collection:
+
+* use the supplied privacy or data-use notes;
+* do not claim anonymity, encryption, non-sharing, or legal compliance unless explicitly supported;
+* do not request sensitive data unless necessary and lawfully justified;
+* use clear consent wording when supplied.
+
+SEO AND METADATA
+
+After the page copy, create:
+
+* SEO title;
+* meta description;
+* suggested slug;
+* social title and social description only when they meaningfully differ.
+
+Use the primary keyword naturally when supplied and supporting keywords only where relevant. Do not stuff keywords or distort grammar. Align metadata with the actual offer and search intent. Use these as safe writing targets, not official hard limits:
+
+* SEO title: approximately 50–60 characters when practical;
+* meta description: approximately 140–160 characters when practical;
+* slug: short, descriptive, lowercase, and hyphenated.
+
+When keywords are blank, optimize around the offer name, audience, problem, and goal without inventing search data.
+
+LENGTH CONTROL
+
+Apply the selected page length:
+
+* Auto: use the shortest length that fully explains the offer and handles the main objections.
+* Concise: about 500–800 words of public landing-page copy.
+* Standard: about 800–1,300 words.
+* Detailed: about 1,300–2,000 words.
+
+These are editorial targets, not platform limits. Do not pad the page. Hero alternatives, Recommended Direction, metadata, and editorial notes do not count toward the public-page range.
+
 OUTPUT FORMAT
 
-# Hero
-Headline: [headline]
-Subheadline: [subheadline]
-Primary CTA: [button label]
-Supporting line: [optional supporting line]
-# The Problem
-## [Problem section heading]
+Return only this package, in order:
 
-[Distinct pain point and consequence]
-[Distinct pain point and consequence]
-[Distinct pain point and consequence]
-Use fewer bullets when fewer supported pain points were supplied.
+# Recommended Direction
 
-# The Solution
-## [Benefit block 1 heading]
-[Benefit explanation connected to a confirmed feature or method]
-## [Benefit block 2 heading]
-[Benefit explanation connected to a confirmed feature or method]
-## [Benefit block 3 heading]
-[Benefit explanation connected to a confirmed feature or method]
-Use fewer blocks when additional blocks would repeat the same idea.
-# How It Works
-## 1. [Step heading]
-[Step explanation]
-## 2. [Step heading]
-[Step explanation]
-## 3. [Step heading]
-[Step explanation]
-# Social Proof
-[Approved proof or explicit placeholder]
-# Common Concerns
-[Include only when relevant objections were supplied]
-# Final CTA
-Headline: [final CTA headline]
-Supporting text: [one concise sentence]
-CTA button: [specific button label]
-Reassurance: [optional confirmed reassurance]
-Output only the finished landing page copy. Do not explain the writing process.
+* Positioning summary
+* Primary audience
+* Primary CTA
+* Suggested angle
+
+# Hero Options
+
+## Option 1
+
+Headline:
+Subheadline:
+Primary CTA:
+Microcopy:
+
+## Option 2
+
+Headline:
+Subheadline:
+Primary CTA:
+Microcopy:
+
+## Option 3
+
+Headline:
+Subheadline:
+Primary CTA:
+Microcopy:
+
+Mark one option as Recommended.
+
+# Complete Landing Page Copy
+
+Use implementation labels such as Hero, Problem, Benefits, and Final CTA. Include only relevant sections and never show empty headings.
+
+# SEO Metadata
+
+SEO title:
+Meta description:
+Suggested slug:
+Social title: only if useful
+Social description: only if useful
+
+# Editorial Verification Notes
+
+Include this section only when a material fact must be verified, added, or approved before publishing. List concise action items, not general advice.
+
+FINAL CHECK
+
+Before answering, silently verify that every factual claim is supported; the CTA matches the goal and conversion path; the recommended hero is clear; no fake proof, urgency, scarcity, privacy promise, or high-stakes claim appears; blank fields caused omission or neutral inference rather than fabrication; the copy is mobile-scannable and non-repetitive; metadata reflects the page; all language, tone, length, restrictions, disclosures, and jurisdiction requirements are respected; and no internal reasoning or chain-of-thought is shown.
+
+Output only the completed content package.

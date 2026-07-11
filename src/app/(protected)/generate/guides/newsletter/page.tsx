@@ -10,7 +10,7 @@ import { requireSession } from "@/lib/auth/session";
 export const metadata: Metadata = {
   title: "Newsletter field guide",
   description:
-    "How to fill every Newsletter parameter — goal, type, message, CTA, and accuracy rules.",
+    "How to fill Newsletter fields — topic, takeaway, facts, structure, brand delivery, and compliance.",
 };
 
 export default async function NewsletterGuidePage() {
@@ -20,12 +20,12 @@ export default async function NewsletterGuidePage() {
     <TemplateFieldGuide
       title="Newsletter — field guide"
       templateSlug="newsletter"
-      intro="How to fill the Newsletter form. Empty optional fields are fine — the model will not invent statistics, testimonials, product features, or fake urgency. Only fill what you can verify before sending."
+      intro="How to fill the Newsletter form (30 fields). Empty optional sections are fine — the model will not invent stats, links, personalisation, or fake urgency. Six Essentials fields are enough for a solid first issue package."
       quickStart={[
-        "Fill Topic, Goal, Target audience, Newsletter type, Brand name, Tone, and Language.",
-        "Add one main message and key points you can stand behind — leave blanks instead of inventing facts.",
-        "Set one primary CTA and a real link (or leave the link empty for a placeholder).",
-        "Use Additional context for restrictions: no fake scarcity, claims to avoid, must-include wording.",
+        "Fill Newsletter topic, Primary goal, Target readers, Main takeaway, Facts to include, and Output language.",
+        "Add only verified facts and supplied links — leave blanks instead of guessing dates or prices.",
+        "Open Message & Structure for source material, sections, opening approach, and timing.",
+        "If the issue is high-stakes (health, legal, finance…), set Sensitive topic so Jurisdiction appears when needed.",
       ]}
       groups={newsletterFormGroups}
       variables={newsletterFormVariables}

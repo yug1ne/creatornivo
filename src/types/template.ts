@@ -24,7 +24,7 @@ export type TemplateCategory =
   | "sales"
   | "app_ux";
 
-export type TemplateFieldType = "text" | "textarea" | "select";
+export type TemplateFieldType = "text" | "textarea" | "select" | "number";
 
 export interface TemplateVariableHelp {
   what: string;
@@ -32,6 +32,24 @@ export interface TemplateVariableHelp {
   example: string;
   avoid: string;
 }
+
+/** Single condition: another field equals / not-equals a value. */
+export interface TemplateFieldShowWhenClause {
+  key: string;
+  /** Visible when the controlling field equals this value (or any of these). */
+  equals?: string | string[];
+  /** Visible when the controlling field is not this value (or not any of these). */
+  notEquals?: string | string[];
+}
+
+/**
+ * Show field only when conditions match (client-side form UX).
+ * - Single clause: same as TemplateFieldShowWhenClause
+ * - anyOf: visible if any clause matches (OR)
+ */
+export type TemplateFieldShowWhen =
+  | TemplateFieldShowWhenClause
+  | { anyOf: TemplateFieldShowWhenClause[] };
 
 export interface TemplateVariable {
   key: string;
@@ -52,6 +70,10 @@ export interface TemplateVariable {
   options?: string[];
   /** Span full row in a 2-column grid. */
   fullWidth?: boolean;
+  /** Initial value for the generate form (select defaults, etc.). */
+  defaultValue?: string;
+  /** Hide until another field matches this condition. */
+  showWhen?: TemplateFieldShowWhen;
 }
 
 export interface TemplateFormGroup {

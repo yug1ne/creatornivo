@@ -1,10 +1,17 @@
 import type {
+  TemplateFieldShowWhen,
+  TemplateFieldShowWhenClause,
   TemplateFieldType,
   TemplateVariable,
   TemplateVariableHelp,
 } from "@/types/template";
 
-const FIELD_TYPES: TemplateFieldType[] = ["text", "textarea", "select"];
+const FIELD_TYPES: TemplateFieldType[] = [
+  "text",
+  "textarea",
+  "select",
+  "number",
+];
 
 function parseHelp(raw: unknown): TemplateVariableHelp | undefined {
   if (!raw || typeof raw !== "object") return undefined;
@@ -23,6 +30,87 @@ function parseHelp(raw: unknown): TemplateVariableHelp | undefined {
     example: h.example,
     avoid: h.avoid,
   };
+}
+
+function parseShowWhenClause(
+  raw: unknown,
+): TemplateFieldShowWhenClause | undefined {
+  if (!raw || typeof raw !== "object") return undefined;
+  const s = raw as Record<string, unknown>;
+  if (typeof s.key !== "string" || !s.key) return undefined;
+
+  const result: TemplateFieldShowWhenClause = { key: s.key };
+
+  if (typeof s.equals === "string") {
+    result.equals = s.equals;
+  } else if (Array.isArray(s.equals)) {
+    const list = s.equals.filter((o): o is string => typeof o === "string");
+    if (list.length) result.equals = list;
+  }
+
+  if (typeof s.notEquals === "string") {
+    result.notEquals = s.notEquals;
+  } else if (Array.isArray(s.notEquals)) {
+    const list = s.notEquals.filter((o): o is string => typeof o === "string");
+    if (list.length) result.notEquals = list;
+  }
+
+  if (result.equals === undefined && result.notEquals === undefined) {
+    return undefined;
+  }
+
+  return result;
+}
+
+function parseShowWhen(raw: unknown): TemplateFieldShowWhen | undefined {
+  if (!raw || typeof raw !== "object") return undefined;
+  const s = raw as Record<string, unknown>;
+
+  if (Array.isArray(s.anyOf)) {
+    const clauses = s.anyOf
+      .map(parseShowWhenClause)
+      .filter((c): c is TemplateFieldShowWhenClause => Boolean(c));
+    if (clauses.length === 0) return undefined;
+    return { anyOf: clauses };
+  }
+
+  return parseShowWhenClause(raw);
+}
+
+function clauseMatches(
+  clause: TemplateFieldShowWhenClause,
+  values: Record<string, string>,
+): boolean {
+  const current = values[clause.key] ?? "";
+
+  if (clause.equals !== undefined) {
+    const list = Array.isArray(clause.equals) ? clause.equals : [clause.equals];
+    if (!list.includes(current)) return false;
+  }
+
+  if (clause.notEquals !== undefined) {
+    const list = Array.isArray(clause.notEquals)
+      ? clause.notEquals
+      : [clause.notEquals];
+    if (list.includes(current)) return false;
+  }
+
+  return true;
+}
+
+/** Whether a field should render given current form values. */
+export function isTemplateFieldVisible(
+  variable: TemplateVariable,
+  values: Record<string, string>,
+): boolean {
+  const when = variable.showWhen;
+  if (!when) return true;
+
+  if ("anyOf" in when && Array.isArray(when.anyOf)) {
+    return when.anyOf.some((clause) => clauseMatches(clause, values));
+  }
+
+  return clauseMatches(when as TemplateFieldShowWhenClause, values);
 }
 
 export function parseTemplateVariables(raw: unknown): TemplateVariable[] {
@@ -66,6 +154,9 @@ export function parseTemplateVariables(raw: unknown): TemplateVariable[] {
         help: parseHelp(item.help),
         options: options && options.length > 0 ? options : undefined,
         fullWidth: item.fullWidth === true,
+        defaultValue:
+          typeof item.defaultValue === "string" ? item.defaultValue : undefined,
+        showWhen: parseShowWhen(item.showWhen),
       } satisfies TemplateVariable;
     });
 }
@@ -85,6 +176,7 @@ export function validateVariableValues(
   values: Record<string, string>,
 ): string | null {
   for (const variable of variables) {
+    if (!isTemplateFieldVisible(variable, values)) continue;
     if (variable.required && !values[variable.key]?.trim()) {
       return `Field "${variable.label}" is required`;
     }
@@ -97,7 +189,9 @@ export function buildDefaultValues(
   variables: TemplateVariable[],
 ): Record<string, string> {
   return variables.reduce<Record<string, string>>((acc, variable) => {
-    acc[variable.key] = "";
+    acc[variable.key] = variable.defaultValue?.trim()
+      ? variable.defaultValue
+      : "";
     return acc;
   }, {});
 }

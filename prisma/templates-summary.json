@@ -4,14 +4,14 @@
     "title": "Blog Article",
     "category": "blog",
     "plan": "free",
-    "vars": 235
+    "vars": 42
   },
   {
     "slug": "cold-email-outreach",
     "title": "Cold Email Outreach",
     "category": "email",
     "plan": "free",
-    "vars": 400
+    "vars": 34
   },
   {
     "slug": "facebook-post",
@@ -25,7 +25,7 @@
     "title": "FAQ Page",
     "category": "seo",
     "plan": "free",
-    "vars": 223
+    "vars": 42
   },
   {
     "slug": "google-business-profile-post",
@@ -39,28 +39,28 @@
     "title": "Instagram Post",
     "category": "instagram_post",
     "plan": "free",
-    "vars": 485
+    "vars": 23
   },
   {
     "slug": "linkedin-post",
     "title": "LinkedIn Post",
     "category": "linkedin_post",
     "plan": "free",
-    "vars": 646
+    "vars": 24
   },
   {
     "slug": "newsletter",
     "title": "Newsletter",
     "category": "newsletter",
     "plan": "free",
-    "vars": 14
+    "vars": 30
   },
   {
     "slug": "product-description",
     "title": "Product Description",
     "category": "product",
     "plan": "free",
-    "vars": 37
+    "vars": 32
   },
   {
     "slug": "reddit-post",
@@ -74,14 +74,14 @@
     "title": "SEO Meta Tags",
     "category": "seo",
     "plan": "free",
-    "vars": 10
+    "vars": 24
   },
   {
     "slug": "short-form-video",
     "title": "Short-Form Video Script",
     "category": "youtube",
     "plan": "free",
-    "vars": 10
+    "vars": 24
   },
   {
     "slug": "threads-post",
@@ -102,7 +102,7 @@
     "title": "X Thread",
     "category": "x_thread",
     "plan": "free",
-    "vars": 10
+    "vars": 24
   },
   {
     "slug": "amazon-listing",
@@ -123,7 +123,7 @@
     "title": "Case Study",
     "category": "marketing",
     "plan": "pro",
-    "vars": 12
+    "vars": 47
   },
   {
     "slug": "discord-announcement",
@@ -186,21 +186,21 @@
     "title": "Landing Page Copy",
     "category": "marketing",
     "plan": "pro",
-    "vars": 12
+    "vars": 36
   },
   {
     "slug": "linkedin-carousel",
     "title": "LinkedIn Carousel",
     "category": "linkedin_post",
     "plan": "pro",
-    "vars": 10
+    "vars": 36
   },
   {
     "slug": "paid-ad-copy",
     "title": "Paid Ad Copy",
     "category": "marketing",
     "plan": "pro",
-    "vars": 11
+    "vars": 30
   },
   {
     "slug": "pinterest-pin",
@@ -305,7 +305,7 @@
     "title": "YouTube Script",
     "category": "youtube",
     "plan": "pro",
-    "vars": 11
+    "vars": 40
   },
   {
     "slug": "youtube-video-package",

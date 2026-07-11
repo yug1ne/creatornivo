@@ -1,720 +1,658 @@
 {
   "slug": "product-description",
   "title": "Product Description",
-  "version": 1,
-  "generatedAt": "2026-07-11T09:34:55.413Z",
-  "fieldCount": 37,
+  "version": 2,
+  "generatedAt": "2026-07-11T11:06:16.442Z",
+  "fieldCount": 32,
   "requiredKeys": [
-    "product_name",
-    "product_category",
-    "brand_name",
-    "product_type",
-    "target_audience",
-    "customer_problem",
-    "main_purpose",
-    "platform",
-    "tone",
-    "language"
+    "productName",
+    "productFormat",
+    "productCategory",
+    "targetAudience",
+    "primaryGoal",
+    "coreProductFacts",
+    "topBenefits"
   ],
   "groups": [
     {
       "id": "essentials",
       "title": "Essentials",
-      "description": "Minimum inputs for a trustworthy product description.",
+      "description": "Name, format, category, audience, goal, facts, benefits, brand, destination, tone, length.",
       "defaultOpen": true
     },
     {
-      "id": "benefits",
-      "title": "Features & benefits",
-      "description": "Confirmed features, benefits, USPs, objections, limits.",
-      "defaultOpen": true
-    },
-    {
-      "id": "specs",
-      "title": "Specs & package",
-      "description": "Measurements, materials, variants, package contents.",
-      "defaultOpen": false
-    },
-    {
-      "id": "usage",
-      "title": "Usage & policies",
-      "description": "How to use, care, safety, warranty, shipping, returns.",
+      "id": "details",
+      "title": "Product Details & Proof",
+      "description": "Features, specs, materials, package, usage, evidence, and claim limits.",
       "defaultOpen": false
     },
     {
       "id": "offer",
-      "title": "Offer & platform",
-      "description": "Price, offer, CTA, SEO keywords.",
-      "defaultOpen": true
+      "title": "Offer & Purchase Information",
+      "description": "Variants, price, delivery, returns, digital access, subscription terms.",
+      "defaultOpen": false
     },
     {
-      "id": "style",
-      "title": "Style",
-      "description": "Length and extra constraints.",
+      "id": "positioning",
+      "title": "Positioning, SEO & Brand",
+      "description": "Customer problem, differentiators, use cases, objections, SEO, voice, extras.",
       "defaultOpen": false
     }
   ],
   "variables": [
     {
-      "key": "product_name",
+      "key": "productName",
       "label": "Product name",
-      "placeholder": "Creatornivo Pro — content generation for marketers",
+      "placeholder": "Example: AeroPress Go Travel Coffee Maker",
       "required": true,
       "type": "text",
       "group": "essentials",
       "groupTitle": "Essentials",
-      "hint": "Exact product name customers will see.",
+      "hint": "Enter the exact product name or working name that should appear in the copy.",
       "help": {
         "what": "Product name.",
-        "why": "Anchors titles, opening, and SEO without inventing a different product.",
-        "example": "Creatornivo Free plan",
-        "avoid": "Generic names like “Amazing Product” or unconfirmed model numbers."
+        "why": "The product cannot be identified or titled accurately without its name.",
+        "example": "AeroPress Go Travel Coffee Maker",
+        "avoid": "Vague working titles that customers will never see."
       },
       "fullWidth": false
     },
     {
-      "key": "product_category",
-      "label": "Product category",
-      "placeholder": "AI writing tools / content templates",
-      "required": true,
-      "type": "text",
-      "group": "essentials",
-      "groupTitle": "Essentials",
-      "hint": "Category for positioning and structure.",
-      "help": {
-        "what": "Product category.",
-        "why": "Shapes benefit hierarchy and which specs matter most.",
-        "example": "SaaS content generation software",
-        "avoid": "Vague categories that do not match how you sell it."
-      },
-      "fullWidth": false
-    },
-    {
-      "key": "brand_name",
-      "label": "Brand name",
-      "placeholder": "Creatornivo",
-      "required": true,
-      "type": "text",
-      "group": "essentials",
-      "groupTitle": "Essentials",
-      "hint": "Brand as shown on the listing.",
-      "help": {
-        "what": "Brand name.",
-        "why": "Used in brand-oriented titles and consistent voice.",
-        "example": "Creatornivo",
-        "avoid": "Invented brands or multiple conflicting brand names."
-      },
-      "fullWidth": false
-    },
-    {
-      "key": "product_type",
-      "label": "Product type",
-      "placeholder": "Software or application",
+      "key": "productFormat",
+      "label": "Product format",
+      "placeholder": "Select the product format",
       "required": true,
       "type": "select",
       "group": "essentials",
       "groupTitle": "Essentials",
-      "hint": "Physical, digital, software, etc. — unlocks type-specific rules.",
+      "hint": "This controls which product-detail fields and purchase information are relevant.",
       "help": {
-        "what": "Product type.",
-        "why": "Digital vs physical vs food require different specs and claims caution.",
-        "example": "Software or application",
-        "avoid": "Choosing a type that does not match how the product is delivered."
+        "what": "Product format.",
+        "why": "Physical, digital, subscription, and bundled products require different purchase information.",
+        "example": "Physical product",
+        "avoid": "Picking a format that does not match fulfilment reality."
       },
+      "fullWidth": false,
       "options": [
         "Physical product",
         "Digital product",
-        "Software or application",
-        "Handmade product",
-        "Clothing or accessories",
-        "Beauty or personal care",
-        "Food product",
-        "Furniture or home product",
-        "Electronics",
-        "Subscription product",
-        "Other confirmed type"
+        "Subscription",
+        "Bundle",
+        "Other"
       ],
-      "fullWidth": false
+      "defaultValue": "Physical product"
     },
     {
-      "key": "target_audience",
-      "label": "Target audience",
-      "placeholder": "small-team marketers and founders who publish content",
+      "key": "productCategory",
+      "label": "Product category",
+      "placeholder": "Example: Portable coffee maker, skincare serum, online course",
       "required": true,
       "type": "text",
       "group": "essentials",
       "groupTitle": "Essentials",
-      "hint": "Who this product is for.",
+      "hint": "Describe the product category clearly enough to establish context and relevant claim rules.",
       "help": {
-        "what": "Target audience.",
-        "why": "Adjusts terminology, depth, and use cases.",
-        "example": "Early-stage B2B founders and content leads",
-        "avoid": "Assuming every shopper is an expert or a buyer of everything."
+        "what": "Product category.",
+        "why": "The category determines terminology, customer expectations, structure, and potential regulated-claim concerns.",
+        "example": "Example: Portable coffee maker, skincare serum, online course",
+        "avoid": "Invented specs, prices, reviews, scarcity, or performance guarantees."
       },
       "fullWidth": false
     },
     {
-      "key": "customer_problem",
-      "label": "Customer problem",
-      "placeholder": "Hard to write trustworthy product or social copy without inventing claims",
+      "key": "targetAudience",
+      "label": "Target customer",
+      "placeholder": "Who is most likely to buy this product, and what matters to them?",
       "required": true,
       "type": "textarea",
       "group": "essentials",
       "groupTitle": "Essentials",
-      "hint": "Primary need or problem the product addresses.",
+      "hint": "Describe the intended customer, situation, experience level, or buying priorities.",
       "help": {
-        "what": "Primary customer need or problem.",
-        "why": "Opens the description with real relevance, not empty praise.",
-        "example": "Need structured content templates without fake social proof",
-        "avoid": "Invented pain points the product does not address."
+        "what": "Target customer.",
+        "why": "Product value must be translated into benefits that matter to a specific customer.",
+        "example": "Who is most likely to buy this product, and what matters to them?",
+        "avoid": "Invented specs, prices, reviews, scarcity, or performance guarantees."
       },
       "fullWidth": true
     },
     {
-      "key": "main_purpose",
-      "label": "Main purpose",
-      "placeholder": "Generate structured marketing copy from confirmed product facts",
-      "required": true,
-      "type": "textarea",
-      "group": "essentials",
-      "groupTitle": "Essentials",
-      "hint": "What the product is mainly for.",
-      "help": {
-        "what": "Main product purpose.",
-        "why": "First paragraph must state purpose clearly.",
-        "example": "Help teams draft platform-ready copy from real inputs",
-        "avoid": "Vague purpose like “improve your life”."
-      },
-      "fullWidth": true
-    },
-    {
-      "key": "platform",
-      "label": "Platform",
-      "placeholder": "E-commerce product page",
+      "key": "primaryGoal",
+      "label": "Primary goal",
+      "placeholder": "Select the main goal",
       "required": true,
       "type": "select",
       "group": "essentials",
       "groupTitle": "Essentials",
-      "hint": "Where this description will be published.",
+      "hint": "Choose the main job the description should perform.",
       "help": {
-        "what": "Sales platform or destination.",
-        "why": "Marketplace vs brand store vs B2B need different structures.",
-        "example": "Shopify store",
-        "avoid": "Using one generic structure for every platform."
+        "what": "Primary goal.",
+        "why": "The goal affects emphasis, structure, detail level, CTA strength, and SEO treatment.",
+        "example": "Drive direct sales",
+        "avoid": "Invented specs, prices, reviews, scarcity, or performance guarantees."
       },
+      "fullWidth": false,
       "options": [
-        "E-commerce product page",
-        "Online marketplace",
-        "Amazon-style listing",
-        "Etsy-style listing",
-        "Shopify store",
-        "WooCommerce store",
-        "Product catalog",
-        "Landing page",
-        "Social commerce page",
-        "Mobile shopping application",
-        "B2B product page",
-        "Digital product marketplace",
-        "App or software directory",
-        "Subscription product page"
+        "Drive direct sales",
+        "Explain the product clearly",
+        "Support a product launch",
+        "Improve search visibility",
+        "Reduce purchase hesitation",
+        "Balanced product presentation"
       ],
+      "defaultValue": "Drive direct sales"
+    },
+    {
+      "key": "coreProductFacts",
+      "label": "Essential product facts",
+      "placeholder": "Explain what it is, how it works, its main components, and verified capabilities.",
+      "required": true,
+      "type": "textarea",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Include only facts that may be stated publicly and accurately.",
+      "help": {
+        "what": "Essential product facts.",
+        "why": "The description requires a reliable factual foundation and must not infer unsupported capabilities.",
+        "example": "What it is, how it works, verified capabilities only",
+        "avoid": "Unreleased features stated as available."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "topBenefits",
+      "label": "Main customer benefits",
+      "placeholder": "What useful outcomes or improvements does the product provide?",
+      "required": true,
+      "type": "textarea",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Focus on supported customer value rather than exaggerated promises.",
+      "help": {
+        "what": "Main customer benefits.",
+        "why": "Benefits explain why the supplied facts and features matter to the buyer.",
+        "example": "Faster morning coffee on the road without a bulky setup",
+        "avoid": "Guaranteed outcomes without evidence."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "brandName",
+      "label": "Brand name",
+      "placeholder": "Example: Northfield Supply",
+      "required": false,
+      "type": "text",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Leave blank when the brand should not be mentioned.",
+      "help": {
+        "what": "Brand name.",
+        "why": "The brand may need to appear in titles, descriptions, or CTA wording.",
+        "example": "Example: Northfield Supply",
+        "avoid": "Invented specs, prices, reviews, scarcity, or performance guarantees."
+      },
       "fullWidth": false
+    },
+    {
+      "key": "platformDestination",
+      "label": "Store or destination",
+      "placeholder": "Example: Shopify store, WooCommerce page, retail catalogue",
+      "required": false,
+      "type": "text",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Name the intended store, page type, or sales environment when known.",
+      "help": {
+        "what": "Store or destination.",
+        "why": "The destination affects formatting, length, title style, SEO elements, and purchase-detail placement.",
+        "example": "Online store product page",
+        "avoid": "Invented specs, prices, reviews, scarcity, or performance guarantees."
+      },
+      "fullWidth": false,
+      "defaultValue": "Online store product page"
     },
     {
       "key": "tone",
       "label": "Tone",
-      "placeholder": "clear, specific, helpful, no hype",
-      "required": true,
-      "type": "text",
-      "group": "essentials",
-      "groupTitle": "Essentials",
-      "hint": "How the description should sound.",
-      "help": {
-        "what": "Tone of voice.",
-        "why": "Keeps copy persuasive without exaggerated ad language.",
-        "example": "professional, concrete, trustworthy",
-        "avoid": "Revolutionary / game-changing / must-have fluff."
-      },
-      "fullWidth": false
-    },
-    {
-      "key": "language",
-      "label": "Language",
-      "placeholder": "English",
-      "required": true,
-      "type": "text",
-      "group": "essentials",
-      "groupTitle": "Essentials",
-      "hint": "Language of the full package.",
-      "help": {
-        "what": "Language.",
-        "why": "Titles, bullets, and SEO elements should match this language.",
-        "example": "English",
-        "avoid": "Mixing languages without stating so."
-      },
-      "fullWidth": false
-    },
-    {
-      "key": "key_features",
-      "label": "Key features",
-      "placeholder": "Feature 1…\nFeature 2…\n(only confirmed features)",
-      "required": false,
-      "type": "textarea",
-      "group": "benefits",
-      "groupTitle": "Features & benefits",
-      "hint": "Facts about what the product has or does.",
-      "help": {
-        "what": "Key features.",
-        "why": "Each important feature should map to a practical benefit.",
-        "example": "45 structured templates; Free 5/day; Pro 100/month",
-        "avoid": "Unreleased features described as available."
-      },
-      "fullWidth": true
-    },
-    {
-      "key": "key_benefits",
-      "label": "Key benefits",
-      "placeholder": "Benefit 1…\nBenefit 2…\n(outcomes customers can expect)",
-      "required": false,
-      "type": "textarea",
-      "group": "benefits",
-      "groupTitle": "Features & benefits",
-      "hint": "Customer outcomes — not just feature names.",
-      "help": {
-        "what": "Key benefits.",
-        "why": "Benefit hierarchy drives bullets and opening value.",
-        "example": "Faster first drafts; clearer structure; fewer invented claims",
-        "avoid": "Guaranteed results without evidence."
-      },
-      "fullWidth": true
-    },
-    {
-      "key": "unique_selling_points",
-      "label": "Unique selling points",
-      "placeholder": "What is distinct — only if true and specific",
-      "required": false,
-      "type": "textarea",
-      "group": "benefits",
-      "groupTitle": "Features & benefits",
-      "hint": "Differentiators you can defend.",
-      "help": {
-        "what": "Unique selling points.",
-        "why": "Supports positioning without unsupported superlatives.",
-        "example": "Honest Early Access messaging; no fake testimonials",
-        "avoid": "Claims like \"only product that...\" without proof."
-      },
-      "fullWidth": true
-    },
-    {
-      "key": "competitive_advantages",
-      "label": "Competitive advantages",
-      "placeholder": "Compared to alternatives — only fair, confirmed points",
-      "required": false,
-      "type": "textarea",
-      "group": "benefits",
-      "groupTitle": "Features & benefits",
-      "hint": "Optional. Do not invent competitor weaknesses.",
-      "help": {
-        "what": "Competitive advantages.",
-        "why": "Helps positioning when differences are real.",
-        "example": "Template-first workflow with transparent quotas",
-        "avoid": "False comparisons or invented competitor flaws."
-      },
-      "fullWidth": true
-    },
-    {
-      "key": "customer_objections",
-      "label": "Customer objections",
-      "placeholder": "Is it hard to learn? Will it invent claims? Pricing?",
-      "required": false,
-      "type": "textarea",
-      "group": "benefits",
-      "groupTitle": "Features & benefits",
-      "hint": "Concerns to address only with confirmed answers.",
-      "help": {
-        "what": "Customer objections or concerns.",
-        "why": "Enables honest objection handling without fake reassurance.",
-        "example": "Worried AI will invent stats — we only use supplied facts",
-        "avoid": "Making up answers you cannot verify."
-      },
-      "fullWidth": true
-    },
-    {
-      "key": "product_limitations",
-      "label": "Product limitations",
-      "placeholder": "What the product does not do or does not include",
-      "required": false,
-      "type": "textarea",
-      "group": "benefits",
-      "groupTitle": "Features & benefits",
-      "hint": "Honest limits improve trust.",
-      "help": {
-        "what": "Product limitations.",
-        "why": "Copy must not hide relevant limitations.",
-        "example": "Does not auto-publish to marketplaces; facts must be supplied",
-        "avoid": "Hiding limits to sound more complete."
-      },
-      "fullWidth": true
-    },
-    {
-      "key": "materials_or_ingredients",
-      "label": "Materials or ingredients",
-      "placeholder": "Only confirmed materials or ingredients",
-      "required": false,
-      "type": "textarea",
-      "group": "specs",
-      "groupTitle": "Specs & package",
-      "hint": "Materials or ingredients.",
-      "help": {
-        "what": "Materials or ingredients.",
-        "why": "Required for physical, beauty, food, handmade listings when real.",
-        "example": "100% cotton / leave blank for software",
-        "avoid": "Guessing composition or allergen status."
-      },
-      "fullWidth": true
-    },
-    {
-      "key": "technical_specifications",
-      "label": "Technical specifications",
-      "placeholder": "Model, power, OS, file format, capacity…",
-      "required": false,
-      "type": "textarea",
-      "group": "specs",
-      "groupTitle": "Specs & package",
-      "hint": "Technical specifications.",
-      "help": {
-        "what": "Technical specifications.",
-        "why": "Marketplace and technical buyers need scannable facts.",
-        "example": "Web app; English UI; Free and Pro plans",
-        "avoid": "Invented measurements or system requirements."
-      },
-      "fullWidth": true
-    },
-    {
-      "key": "dimensions",
-      "label": "Dimensions",
-      "placeholder": "e.g. 30 × 20 × 10 cm — only if confirmed",
-      "required": false,
-      "type": "text",
-      "group": "specs",
-      "groupTitle": "Specs & package",
-      "hint": "Dimensions.",
-      "help": {
-        "what": "Dimensions.",
-        "why": "Fit and shipping decisions depend on real sizes.",
-        "example": "Leave blank if not a physical product",
-        "avoid": "Approximate guesses presented as exact."
-      },
-      "fullWidth": false
-    },
-    {
-      "key": "weight",
-      "label": "Weight",
-      "placeholder": "e.g. 450 g — only if confirmed",
-      "required": false,
-      "type": "text",
-      "group": "specs",
-      "groupTitle": "Specs & package",
-      "hint": "Weight.",
-      "help": {
-        "what": "Weight.",
-        "why": "Shipping and usability context.",
-        "example": "e.g. 450 g — only if confirmed",
-        "avoid": "Invented weight."
-      },
-      "fullWidth": false
-    },
-    {
-      "key": "available_sizes",
-      "label": "Available sizes",
-      "placeholder": "S, M, L / One size / N/A",
-      "required": false,
-      "type": "text",
-      "group": "specs",
-      "groupTitle": "Specs & package",
-      "hint": "Available sizes.",
-      "help": {
-        "what": "Available sizes.",
-        "why": "Clothing and similar products need size clarity.",
-        "example": "S, M, L / One size / N/A",
-        "avoid": "Guessing fit charts."
-      },
-      "fullWidth": false
-    },
-    {
-      "key": "available_variants",
-      "label": "Available variants",
-      "placeholder": "Colors, finishes, formats — confirmed only",
-      "required": false,
-      "type": "text",
-      "group": "specs",
-      "groupTitle": "Specs & package",
-      "hint": "Available colors or variants.",
-      "help": {
-        "what": "Available colors or variants.",
-        "why": "Helps customers choose the right option.",
-        "example": "Colors, finishes, formats — confirmed only",
-        "avoid": "Listing variants that are not sellable."
-      },
-      "fullWidth": false
-    },
-    {
-      "key": "compatibility",
-      "label": "Compatibility",
-      "placeholder": "Devices, OS, software, accessories — confirmed only",
-      "required": false,
-      "type": "textarea",
-      "group": "specs",
-      "groupTitle": "Specs & package",
-      "hint": "Compatibility.",
-      "help": {
-        "what": "Compatibility.",
-        "why": "Reduces returns and support friction.",
-        "example": "Modern browsers; account required",
-        "avoid": "Assuming cables, adapters, or OS support."
-      },
-      "fullWidth": true
-    },
-    {
-      "key": "package_contents",
-      "label": "Package contents",
-      "placeholder": "What is in the box / what the purchase includes",
-      "required": false,
-      "type": "textarea",
-      "group": "specs",
-      "groupTitle": "Specs & package",
-      "hint": "What is included.",
-      "help": {
-        "what": "What is included.",
-        "why": "Answers “what do I get?” with confirmed items only.",
-        "example": "What is in the box / what the purchase includes",
-        "avoid": "Assuming accessories are included."
-      },
-      "fullWidth": true
-    },
-    {
-      "key": "how_to_use",
-      "label": "How to use",
-      "placeholder": "Step-by-step usage when known",
-      "required": false,
-      "type": "textarea",
-      "group": "usage",
-      "groupTitle": "Usage & policies",
-      "hint": "How to use.",
-      "help": {
-        "what": "How to use.",
-        "why": "Supports How to Use section when instructions exist.",
-        "example": "Step-by-step usage when known",
-        "avoid": "Unsafe or invented instructions."
-      },
-      "fullWidth": true
-    },
-    {
-      "key": "care_instructions",
-      "label": "Care instructions",
-      "placeholder": "Wash, store, maintain — only if confirmed",
-      "required": false,
-      "type": "textarea",
-      "group": "usage",
-      "groupTitle": "Usage & policies",
-      "hint": "Care or maintenance instructions.",
-      "help": {
-        "what": "Care or maintenance instructions.",
-        "why": "Physical and textile products need accurate care notes.",
-        "example": "Wash, store, maintain — only if confirmed",
-        "avoid": "Generic care advice that may damage the product."
-      },
-      "fullWidth": true
-    },
-    {
-      "key": "safety_information",
-      "label": "Safety information",
-      "placeholder": "Warnings, age limits, hazards — confirmed only",
-      "required": false,
-      "type": "textarea",
-      "group": "usage",
-      "groupTitle": "Usage & policies",
-      "hint": "Safety information or warnings.",
-      "help": {
-        "what": "Safety information or warnings.",
-        "why": "High-stakes categories need supplied warnings only.",
-        "example": "Warnings, age limits, hazards — confirmed only",
-        "avoid": "Inventing medical/safety claims or disclaimers."
-      },
-      "fullWidth": true
-    },
-    {
-      "key": "certifications",
-      "label": "Certifications",
-      "placeholder": "CE, organic, ISO… only if verified",
-      "required": false,
-      "type": "textarea",
-      "group": "usage",
-      "groupTitle": "Usage & policies",
-      "hint": "Certifications or standards.",
-      "help": {
-        "what": "Certifications or standards.",
-        "why": "Trust signals only when real.",
-        "example": "CE, organic, ISO… only if verified",
-        "avoid": "Claiming approval without confirmation."
-      },
-      "fullWidth": true
-    },
-    {
-      "key": "warranty",
-      "label": "Warranty",
-      "placeholder": "e.g. 12-month limited warranty — or leave blank",
-      "required": false,
-      "type": "text",
-      "group": "usage",
-      "groupTitle": "Usage & policies",
-      "hint": "Warranty.",
-      "help": {
-        "what": "Warranty.",
-        "why": "Purchase confidence from confirmed terms.",
-        "example": "e.g. 12-month limited warranty — or leave blank",
-        "avoid": "Invented warranty periods."
-      },
-      "fullWidth": false
-    },
-    {
-      "key": "shipping_information",
-      "label": "Shipping information",
-      "placeholder": "Delivery method, regions, times — confirmed only",
-      "required": false,
-      "type": "textarea",
-      "group": "usage",
-      "groupTitle": "Usage & policies",
-      "hint": "Shipping or delivery information.",
-      "help": {
-        "what": "Shipping or delivery information.",
-        "why": "Physical and digital delivery differ — only state what is true.",
-        "example": "Delivery method, regions, times — confirmed only",
-        "avoid": "Fake delivery promises; digital products as shipped goods."
-      },
-      "fullWidth": true
-    },
-    {
-      "key": "returns_information",
-      "label": "Returns information",
-      "placeholder": "Return window and conditions if known",
-      "required": false,
-      "type": "textarea",
-      "group": "usage",
-      "groupTitle": "Usage & policies",
-      "hint": "Returns information.",
-      "help": {
-        "what": "Returns information.",
-        "why": "Addresses a common objection with real policy text.",
-        "example": "Return window and conditions if known",
-        "avoid": "Invented return rights."
-      },
-      "fullWidth": true
-    },
-    {
-      "key": "price",
-      "label": "Price",
-      "placeholder": "e.g. Free tier; Pro $X/month — confirmed only",
-      "required": false,
-      "type": "text",
-      "group": "offer",
-      "groupTitle": "Offer & platform",
-      "hint": "Price or price range.",
-      "help": {
-        "what": "Price or price range.",
-        "why": "Purchase context when pricing is public and correct.",
-        "example": "e.g. Free tier; Pro $X/month — confirmed only",
-        "avoid": "Guessed prices or fake discounts."
-      },
-      "fullWidth": false
-    },
-    {
-      "key": "offer",
-      "label": "Offer",
-      "placeholder": "Only confirmed promo — no fake scarcity",
-      "required": false,
-      "type": "text",
-      "group": "offer",
-      "groupTitle": "Offer & platform",
-      "hint": "Discount or special offer.",
-      "help": {
-        "what": "Discount or special offer.",
-        "why": "Includes offer only when real; no invented deadlines.",
-        "example": "Only confirmed promo — no fake scarcity",
-        "avoid": "False urgency or limited stock claims."
-      },
-      "fullWidth": false
-    },
-    {
-      "key": "call_to_action",
-      "label": "Call to action",
-      "placeholder": "Add to cart / View plans / Choose your option",
-      "required": false,
-      "type": "text",
-      "group": "offer",
-      "groupTitle": "Offer & platform",
-      "hint": "One primary CTA — not aggressive scarcity.",
-      "help": {
-        "what": "Primary call to action.",
-        "why": "Ends the package with one clear next step for the platform.",
-        "example": "View plans and start generating",
-        "avoid": "Buy now before it’s too late / Do not miss out."
-      },
-      "fullWidth": false
-    },
-    {
-      "key": "seo_keywords",
-      "label": "Seo keywords",
-      "placeholder": "primary keyword; secondary, secondary…",
-      "required": false,
-      "type": "text",
-      "group": "offer",
-      "groupTitle": "Offer & platform",
-      "hint": "Natural SEO only — no stuffing.",
-      "help": {
-        "what": "SEO keywords.",
-        "why": "Optional natural inclusion in titles and meta; readability first.",
-        "example": "AI product description generator; ecommerce copy",
-        "avoid": "Irrelevant keywords or unsupported claims for SEO."
-      },
-      "fullWidth": false
-    },
-    {
-      "key": "length",
-      "label": "Length",
-      "placeholder": "medium",
+      "placeholder": "Select a tone",
       "required": false,
       "type": "select",
-      "group": "style",
-      "groupTitle": "Style",
-      "hint": "Editorial depth for the main description.",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Choose the overall writing style without changing the underlying facts.",
       "help": {
-        "what": "Desired description length.",
-        "why": "Controls depth without padding a simple product.",
-        "example": "medium",
-        "avoid": "Making a simple item artificially long."
+        "what": "Tone.",
+        "why": "Tone materially changes phrasing and positioning while a safe default reduces user effort.",
+        "example": "Clear and natural",
+        "avoid": "Invented specs, prices, reviews, scarcity, or performance guarantees."
       },
+      "fullWidth": false,
       "options": [
-        "short",
-        "medium",
-        "long"
+        "Clear and natural",
+        "Warm and approachable",
+        "Premium and refined",
+        "Practical and direct",
+        "Technical and precise",
+        "Playful and energetic",
+        "Minimal and understated",
+        "Auto"
       ],
-      "fullWidth": false
+      "defaultValue": "Clear and natural"
     },
     {
-      "key": "additional_context",
-      "label": "Additional context",
-      "placeholder": "Restrictions, must-avoid claims, brand rules, legal notes…",
+      "key": "outputLanguage",
+      "label": "Output language",
+      "placeholder": "Select the output language",
+      "required": false,
+      "type": "select",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "The complete generated package will use this language.",
+      "help": {
+        "what": "Output language.",
+        "why": "Language cannot always be inferred reliably from product data or the publishing destination.",
+        "example": "English",
+        "avoid": "Invented specs, prices, reviews, scarcity, or performance guarantees."
+      },
+      "fullWidth": false,
+      "options": [
+        "English",
+        "Ukrainian",
+        "Russian",
+        "Polish",
+        "German",
+        "French",
+        "Spanish",
+        "Auto from input"
+      ],
+      "defaultValue": "English"
+    },
+    {
+      "key": "descriptionLength",
+      "label": "Description length",
+      "placeholder": "Select a preferred length",
+      "required": false,
+      "type": "select",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Auto chooses an appropriate depth for the product, destination, and sales goal.",
+      "help": {
+        "what": "Description length.",
+        "why": "Different stores and purchase decisions require materially different description depths.",
+        "example": "Auto",
+        "avoid": "Invented specs, prices, reviews, scarcity, or performance guarantees."
+      },
+      "fullWidth": false,
+      "options": [
+        "Auto",
+        "Concise",
+        "Standard",
+        "Detailed"
+      ],
+      "defaultValue": "Auto"
+    },
+    {
+      "key": "keyFeatures",
+      "label": "Key features",
+      "placeholder": "List the most important functions, components, or design features.",
       "required": false,
       "type": "textarea",
-      "group": "style",
-      "groupTitle": "Style",
-      "hint": "Anything else the model must respect.",
+      "group": "details",
+      "groupTitle": "Product Details & Proof",
+      "hint": "Include features that should appear separately from the main narrative.",
       "help": {
-        "what": "Additional context, restrictions, or requirements.",
-        "why": "Captures claim bans and brand rules so copy stays accurate.",
-        "example": "Do not invent reviews or ratings. No medical claims.",
-        "avoid": "Leaving critical restrictions only in your head."
+        "what": "Key features.",
+        "why": "A feature list supports scanning and prevents important capabilities from being buried.",
+        "example": "List the most important functions, components, or design features.",
+        "avoid": "Invented specs, prices, reviews, scarcity, or performance guarantees."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "specifications",
+      "label": "Technical specifications",
+      "placeholder": "Dimensions, weight, capacity, compatibility, power, model, or other specifications.",
+      "required": false,
+      "type": "textarea",
+      "group": "details",
+      "groupTitle": "Product Details & Proof",
+      "hint": "Enter exact specifications only; unsupported values will not be estimated.",
+      "help": {
+        "what": "Technical specifications.",
+        "why": "Physical products often require precise specifications before a customer can purchase confidently.",
+        "example": "Dimensions, weight, capacity, compatibility, power, model, or other specifications.",
+        "avoid": "Invented specs, prices, reviews, scarcity, or performance guarantees."
+      },
+      "fullWidth": true,
+      "showWhen": {
+        "key": "productFormat",
+        "equals": [
+          "Physical product",
+          "Bundle"
+        ]
+      }
+    },
+    {
+      "key": "materialsIngredients",
+      "label": "Materials or ingredients",
+      "placeholder": "List relevant materials, ingredients, composition, sourcing, or allergen details.",
+      "required": false,
+      "type": "textarea",
+      "group": "details",
+      "groupTitle": "Product Details & Proof",
+      "hint": "Include exact terminology and any qualification that must remain attached to a claim.",
+      "help": {
+        "what": "Materials or ingredients.",
+        "why": "Composition can affect product suitability, trust, safety, care, and purchase decisions.",
+        "example": "List relevant materials, ingredients, composition, sourcing, or allergen details.",
+        "avoid": "Invented specs, prices, reviews, scarcity, or performance guarantees."
+      },
+      "fullWidth": true,
+      "showWhen": {
+        "key": "productFormat",
+        "equals": [
+          "Physical product",
+          "Bundle"
+        ]
+      }
+    },
+    {
+      "key": "whatsIncluded",
+      "label": "What is included",
+      "placeholder": "List package contents, files, modules, accessories, licences, or bonuses.",
+      "required": false,
+      "type": "textarea",
+      "group": "details",
+      "groupTitle": "Product Details & Proof",
+      "hint": "Clarify exactly what the customer receives and what is not included when important.",
+      "help": {
+        "what": "What is included.",
+        "why": "Clear package contents reduce misunderstanding and avoid implying that optional items are included.",
+        "example": "List package contents, files, modules, accessories, licences, or bonuses.",
+        "avoid": "Invented specs, prices, reviews, scarcity, or performance guarantees."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "usageInstructions",
+      "label": "Use, setup or care",
+      "placeholder": "Explain setup, use, care, compatibility, prerequisites, or safe handling.",
+      "required": false,
+      "type": "textarea",
+      "group": "details",
+      "groupTitle": "Product Details & Proof",
+      "hint": "Add only information that a buyer should know before or shortly after purchase.",
+      "help": {
+        "what": "Use, setup or care.",
+        "why": "Some products require setup, maintenance, compatibility, or safe-use context to be described accurately.",
+        "example": "Explain setup, use, care, compatibility, prerequisites, or safe handling.",
+        "avoid": "Invented specs, prices, reviews, scarcity, or performance guarantees."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "proofCredentials",
+      "label": "Approved proof and credentials",
+      "placeholder": "Verified tests, certifications, awards, ratings, research, reviews, or measurable results.",
+      "required": false,
+      "type": "textarea",
+      "group": "details",
+      "groupTitle": "Product Details & Proof",
+      "hint": "Include only approved evidence and enough context to state it accurately.",
+      "help": {
+        "what": "Approved proof and credentials.",
+        "why": "Evidence can strengthen credibility but must be supplied rather than invented.",
+        "example": "Verified tests, certifications, awards, ratings, research, reviews, or measurable results.",
+        "avoid": "Invented specs, prices, reviews, scarcity, or performance guarantees."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "claimsRestrictions",
+      "label": "Claims and restrictions",
+      "placeholder": "Claims to avoid, required disclaimers, legal wording, limitations, or sensitive topics.",
+      "required": false,
+      "type": "textarea",
+      "group": "details",
+      "groupTitle": "Product Details & Proof",
+      "hint": "Use this for regulated products, restricted claims, and important product limitations.",
+      "help": {
+        "what": "Claims and restrictions.",
+        "why": "The product owner knows which statements are prohibited, qualified, jurisdiction-specific, or commercially sensitive.",
+        "example": "No medical claims; no “clinically proven” without study",
+        "avoid": "Leaving regulated claim bans only in your head."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "variantsOptions",
+      "label": "Variants and options",
+      "placeholder": "Sizes, colours, flavours, plans, editions, quantities, or customisation choices.",
+      "required": false,
+      "type": "textarea",
+      "group": "offer",
+      "groupTitle": "Offer & Purchase Information",
+      "hint": "Describe only variants that are currently available or intended for publication.",
+      "help": {
+        "what": "Variants and options.",
+        "why": "Variants may change purchase information, suitability wording, and product-title treatment.",
+        "example": "Sizes, colours, flavours, plans, editions, quantities, or customisation choices.",
+        "avoid": "Invented specs, prices, reviews, scarcity, or performance guarantees."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "priceOfferInfo",
+      "label": "Price or offer details",
+      "placeholder": "Price, valid discount, bundle saving, tax note, or offer conditions.",
+      "required": false,
+      "type": "textarea",
+      "group": "offer",
+      "groupTitle": "Offer & Purchase Information",
+      "hint": "Leave blank to omit price and promotional claims.",
+      "help": {
+        "what": "Price or offer details.",
+        "why": "Pricing and promotions must be supplied exactly and must never be fabricated.",
+        "example": "Price, valid discount, bundle saving, tax note, or offer conditions.",
+        "avoid": "Invented specs, prices, reviews, scarcity, or performance guarantees."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "availabilityDelivery",
+      "label": "Availability and delivery",
+      "placeholder": "Stock status, processing time, delivery method, region, access timing, or fulfilment limits.",
+      "required": false,
+      "type": "textarea",
+      "group": "offer",
+      "groupTitle": "Offer & Purchase Information",
+      "hint": "Include only current or approved fulfilment information.",
+      "help": {
+        "what": "Availability and delivery.",
+        "why": "Delivery and availability can materially affect a buyer’s decision and must remain accurate.",
+        "example": "Stock status, processing time, delivery method, region, access timing, or fulfilment limits.",
+        "avoid": "Invented specs, prices, reviews, scarcity, or performance guarantees."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "warrantyReturns",
+      "label": "Warranty and returns",
+      "placeholder": "Warranty length, return period, exclusions, trial conditions, or support policy.",
+      "required": false,
+      "type": "textarea",
+      "group": "offer",
+      "groupTitle": "Offer & Purchase Information",
+      "hint": "State exact terms or leave blank; the model will not invent a policy.",
+      "help": {
+        "what": "Warranty and returns.",
+        "why": "Purchase protections and limitations should be described only from supplied policy details.",
+        "example": "Warranty length, return period, exclusions, trial conditions, or support policy.",
+        "avoid": "Invented specs, prices, reviews, scarcity, or performance guarantees."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "digitalAccessDetails",
+      "label": "Digital access details",
+      "placeholder": "File formats, download method, licence, device access, updates, or access duration.",
+      "required": false,
+      "type": "textarea",
+      "group": "offer",
+      "groupTitle": "Offer & Purchase Information",
+      "hint": "Explain how the customer receives and may use the digital product.",
+      "help": {
+        "what": "Digital access details.",
+        "why": "Digital products require access, format, licence, and compatibility information instead of physical shipping details.",
+        "example": "File formats, download method, licence, device access, updates, or access duration.",
+        "avoid": "Invented specs, prices, reviews, scarcity, or performance guarantees."
+      },
+      "fullWidth": true,
+      "showWhen": {
+        "key": "productFormat",
+        "equals": [
+          "Digital product",
+          "Bundle"
+        ]
+      }
+    },
+    {
+      "key": "subscriptionTerms",
+      "label": "Subscription terms",
+      "placeholder": "Billing frequency, renewal, cancellation, minimum term, trial, and included access.",
+      "required": false,
+      "type": "textarea",
+      "group": "offer",
+      "groupTitle": "Offer & Purchase Information",
+      "hint": "Include exact recurring-payment terms and avoid implied conditions.",
+      "help": {
+        "what": "Subscription terms.",
+        "why": "Recurring products require transparent billing, renewal, cancellation, and access information.",
+        "example": "Billed monthly; cancel anytime; what renews",
+        "avoid": "Invented renewal or cancellation policy."
+      },
+      "fullWidth": true,
+      "showWhen": {
+        "key": "productFormat",
+        "equals": "Subscription"
+      }
+    },
+    {
+      "key": "customerProblem",
+      "label": "Customer need or problem",
+      "placeholder": "What situation, frustration, task, or need leads the customer to seek this product?",
+      "required": false,
+      "type": "textarea",
+      "group": "positioning",
+      "groupTitle": "Positioning, SEO & Brand",
+      "hint": "Use a realistic customer need without exaggerating fear or discomfort.",
+      "help": {
+        "what": "Customer need or problem.",
+        "why": "The buying context helps connect the product to a relevant and credible customer need.",
+        "example": "What situation, frustration, task, or need leads the customer to seek this product?",
+        "avoid": "Invented specs, prices, reviews, scarcity, or performance guarantees."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "differentiators",
+      "label": "Key differentiators",
+      "placeholder": "What makes this product meaningfully different from common alternatives?",
+      "required": false,
+      "type": "textarea",
+      "group": "positioning",
+      "groupTitle": "Positioning, SEO & Brand",
+      "hint": "Use verifiable differences and avoid unsupported superiority claims.",
+      "help": {
+        "what": "Key differentiators.",
+        "why": "Distinctive positioning cannot be inferred safely from generic category knowledge.",
+        "example": "What makes this product meaningfully different from common alternatives?",
+        "avoid": "Invented specs, prices, reviews, scarcity, or performance guarantees."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "useCases",
+      "label": "Use cases",
+      "placeholder": "Describe realistic situations, environments, tasks, or customer scenarios.",
+      "required": false,
+      "type": "textarea",
+      "group": "positioning",
+      "groupTitle": "Positioning, SEO & Brand",
+      "hint": "Include only uses the product is designed or approved for.",
+      "help": {
+        "what": "Use cases.",
+        "why": "Concrete scenarios help customers assess fit without inventing unsupported applications.",
+        "example": "Describe realistic situations, environments, tasks, or customer scenarios.",
+        "avoid": "Invented specs, prices, reviews, scarcity, or performance guarantees."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "purchaseObjections",
+      "label": "Purchase concerns",
+      "placeholder": "Common questions about fit, difficulty, price, compatibility, quality, or delivery.",
+      "required": false,
+      "type": "textarea",
+      "group": "positioning",
+      "groupTitle": "Positioning, SEO & Brand",
+      "hint": "Add concerns the description should resolve without becoming defensive.",
+      "help": {
+        "what": "Purchase concerns.",
+        "why": "Known objections can be answered naturally using verified product information.",
+        "example": "Common questions about fit, difficulty, price, compatibility, quality, or delivery.",
+        "avoid": "Invented specs, prices, reviews, scarcity, or performance guarantees."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "seoKeywords",
+      "label": "Search keywords",
+      "placeholder": "Primary phrase and a few closely related terms, separated by commas.",
+      "required": false,
+      "type": "textarea",
+      "group": "positioning",
+      "groupTitle": "Positioning, SEO & Brand",
+      "hint": "Leave blank for natural category language without deliberate keyword targeting.",
+      "help": {
+        "what": "Search keywords.",
+        "why": "User-supplied search terms help align the copy with an existing SEO strategy without keyword guessing.",
+        "example": "Primary phrase and a few closely related terms, separated by commas.",
+        "avoid": "Invented specs, prices, reviews, scarcity, or performance guarantees."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "brandVoice",
+      "label": "Brand voice notes",
+      "placeholder": "Describe preferred vocabulary, personality, formality, and phrases to use or avoid.",
+      "required": false,
+      "type": "textarea",
+      "group": "positioning",
+      "groupTitle": "Positioning, SEO & Brand",
+      "hint": "Add guidance beyond the selected tone only when the brand has a distinct voice.",
+      "help": {
+        "what": "Brand voice notes.",
+        "why": "Specific brand conventions cannot be inferred from a general tone selection.",
+        "example": "Describe preferred vocabulary, personality, formality, and phrases to use or avoid.",
+        "avoid": "Invented specs, prices, reviews, scarcity, or performance guarantees."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "additionalRequirements",
+      "label": "Additional requirements",
+      "placeholder": "Add any important instruction not covered elsewhere.",
+      "required": false,
+      "type": "textarea",
+      "group": "positioning",
+      "groupTitle": "Positioning, SEO & Brand",
+      "hint": "Use for essential context only; standard writing and proofreading rules are already applied.",
+      "help": {
+        "what": "Additional requirements.",
+        "why": "One bounded catch-all field supports legitimate specialised requirements without creating several miscellaneous inputs.",
+        "example": "Add any important instruction not covered elsewhere.",
+        "avoid": "Invented specs, prices, reviews, scarcity, or performance guarantees."
       },
       "fullWidth": true
     }

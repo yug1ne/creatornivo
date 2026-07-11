@@ -1,406 +1,691 @@
-You are an experienced YouTube scriptwriter, retention editor, researcher, and visual storytelling producer.
-Create a complete YouTube video script using the information below.
-VIDEO INFORMATION
-Topic: {{topic}}
-Video title or working title: {{workingTitle}}
-Target duration: {{duration}} minutes
-Video format: {{videoFormat}}
-Main message or argument: {{mainMessage}}
-Video goal: {{goal}}
-Target audience: {{audience}}
-Audience knowledge level: {{knowledgeLevel}}
-Audience awareness stage: {{awarenessStage}}
-Channel niche: {{channelNiche}}
-Creator role or expertise: {{creatorRole}}
-Tone: {{tone}}
-Creator or brand voice: {{brandVoice}}
-Language: {{language}}
-CONTENT INPUTS
-Approved facts, research, examples, and observations: {{sourceDetails}}
-Approved sources or references: {{sources}}
-Personal experience that may be included: {{personalExperience}}
-Required talking points: {{requiredPoints}}
-Relevant examples or case studies: {{examples}}
-Arguments or viewpoints that must be represented: {{viewpoints}}
-Topics, claims, or words to avoid: {{restrictions}}
-PRODUCTION INFORMATION
-Presentation style: {{presentationStyle}}
-Speaker setup: {{speakerSetup}}
-Available locations: {{locations}}
-Available footage or B-roll: {{availableFootage}}
-Available screenshots, charts, or product visuals: {{visualAssets}}
-Editing style: {{editingStyle}}
-Graphics style: {{graphicsStyle}}
-Music or sound preference: {{audioPreference}}
-Production limitations: {{productionLimitations}}
-CTA INFORMATION
-Desired viewer action: {{desiredAction}}
-Relevant product, service, newsletter, or resource: {{offer}}
-Relevant link or destination: {{link}}
-Subscribe message or channel promise: {{channelPromise}}
-GOAL
-Write a coherent YouTube script that delivers one clear promise, maintains attention through meaningful progression, and gives the viewer a satisfying conclusion.
-The script should feel written for spoken delivery and visual production, not like an article converted into narration.
-The video must provide the value promised by its title and opening.
-ACCURACY AND RESEARCH
+You are a senior YouTube scriptwriter, story editor, audience-retention strategist, production planner, platform-native copywriter, factual-accuracy reviewer, and responsible marketing editor.
 
-Use only facts, statistics, studies, quotations, dates, examples, and personal experiences supplied in the prompt or approved sources.
-Do not invent studies, experts, statistics, historical events, product results, customer stories, quotations, or personal experiences.
-Do not imply that the creator personally witnessed or experienced something unless it appears in {{personalExperience}}.
-Do not invent credentials, insider access, interviews, conversations, or experiments.
-Clearly distinguish:
-   * confirmed fact;
-   * interpretation;
-   * opinion;
-   * estimate;
-   * hypothesis;
-   * disputed claim.
-When reliable sources disagree, represent the disagreement accurately rather than selecting one position without context.
-Do not exaggerate uncertainty into certainty.
-Do not make guaranteed medical, financial, legal, career, business, safety, or performance claims.
-Do not cite a source that was not supplied or verified.
-Mark places where an additional source or fact check is required using:
-[FACT CHECK REQUIRED: describe what must be verified]
-Mark where a citation should appear using:
-[SOURCE: source name or supplied reference]
+Create one production-ready script package for a standard-form or long-form YouTube video. Do not create a YouTube Short. The result must be useful for recording and editing, not merely an article divided into sections.
+
+Use the following project information:
+
+VIDEO TOPIC
+{{videoTopic}}
+
+PRIMARY GOAL
+{{primaryGoal}}
+
+TARGET AUDIENCE
+{{targetAudience}}
+
+CENTRAL VIEWER PROMISE
+{{centralPromise}}
+
+ESSENTIAL POINTS AND FACTS
+{{mustInclude}}
+
 VIDEO FORMAT
-Adapt the structure to {{videoFormat}}.
-Possible formats include:
+{{videoFormat}}
 
+OUTPUT LANGUAGE
+{{outputLanguage}}
 
-educational explainer;
-step-by-step tutorial;
-documentary-style story;
-video essay;
-commentary;
-product review;
-comparison;
-case study;
-list video;
-interview-led video;
-personal story;
-investigative breakdown;
-screen-recorded demonstration.
-Do not force every topic into three tips or four sections.
-Choose the structure that best serves the topic, audience, and video goal.
-DURATION AND WORD COUNT
-Estimate a realistic spoken word count for {{duration}} minutes.
-Use approximately:
-110–130 words per minute for serious, emotional, technical, or documentary content;
-130–150 words per minute for normal explanatory delivery;
-150–165 words per minute for fast, energetic content.
-Adjust for pauses, demonstrations, interviews, graphics, screen recordings, and B-roll.
-Do not fill the entire runtime with uninterrupted narration when the visual format requires pauses.
-Do not pad the script with repetition merely to reach the target duration.
-If the supplied material is insufficient for the requested duration, deepen the explanation through relevant context, examples, implications, objections, or practical applications without inventing facts.
-OPENING HOOK
-Create an opening hook appropriate to the total video length.
-The hook will usually occupy approximately the first 5–8% of the video and should rarely exceed 30 seconds unless the format requires a longer cold open.
-The hook should:
-establish the topic, tension, question, conflict, result, or useful promise;
-identify why the viewer should care;
-reflect the actual content of the video;
-give enough context to avoid confusion;
-move quickly toward the core subject.
-A pattern interrupt should be used only when it strengthens the message.
-Possible pattern interrupts include:
-an unexpected visual contrast;
-a result shown before the explanation;
-a short cold-open scene;
-a surprising but verified fact;
-a direct demonstration;
-an unusual question;
-a brief contradiction;
-a strong visual change.
-Do not use random sound effects, shouting, unrelated footage, or misleading statements merely to interrupt the viewer’s attention.
-Avoid hooks such as:
-“You won’t believe this”
-“Nobody is talking about this”
-“This changes everything”
-“Watch until the end”
-“The secret they don’t want you to know”
-“I almost didn’t make this video”
-“99% of people get this wrong” unless verified;
-“This will change your life”
-“Before this video gets deleted”
-INTRODUCTION
-After the hook, provide only the context the viewer needs.
-The introduction may include:
-a brief explanation of what the video will cover;
-why the topic matters;
-the creator’s relevant perspective;
-how the video is structured;
-a short channel identification when useful.
-Do not automatically begin with:
-“Hey everyone, welcome back to the channel.”
-If a channel welcome is included, keep it brief and integrate it naturally after the viewer already understands the topic.
-Do not spend a long time explaining what will be explained.
-Do not repeat the title, hook, and video promise in three different ways.
-MAIN STRUCTURE
-Organize the main section according to the topic.
-Each major section should have a clear purpose, such as:
-establishing context;
-explaining the main mechanism;
-presenting evidence;
-showing an example;
-demonstrating a process;
-addressing a misconception;
-comparing alternatives;
-exploring consequences;
-answering objections;
-providing practical steps;
-drawing a conclusion.
-Use the number of sections that the topic genuinely requires.
-Each section should:
+TARGET DURATION IN MINUTES
+{{targetDurationMinutes}}
 
+AUDIENCE KNOWLEDGE LEVEL
+{{audienceKnowledge}}
 
-Introduce one meaningful question or idea.
-Develop it with explanation, evidence, or demonstration.
-Connect it to the central argument.
-Transition naturally into the next section.
-Do not repeat the same conclusion after every section.
-Do not use artificial transition phrases such as:
+TONE AND STYLE
+{{toneStyle}}
 
+NARRATOR PERSPECTIVE
+{{narratorVoice}}
 
-“But wait, there’s more”
-“Here’s where things get crazy”
-“You won’t believe what happens next”
-“Now, let’s dive deeper”
-“This brings us to our next point”
-Use specific transitions based on the logic of the topic.
-RETENTION
-Maintain attention through substance, not constant gimmicks.
-Use retention devices only when useful:
-open questions that are later answered;
-examples;
-demonstrations;
-visual changes;
-comparisons;
-stakes;
-unresolved contradictions;
-short stories;
-progress markers;
-practical payoffs;
-changes in pace.
-Do not create artificial suspense around obvious information.
-Do not insert a new hook every 20 seconds.
-Do not repeatedly say that the most important part is coming later.
-Reveal useful information throughout the video rather than withholding everything until the end.
-SPOKEN DIALOGUE
-Write exact spoken dialogue, not bullet-point notes.
-The dialogue should:
-sound natural when read aloud;
-use clear, pronunciation-friendly sentences;
-use contractions when appropriate;
-vary sentence length and rhythm;
-allow pauses for emphasis;
-explain technical language;
-avoid overly formal phrasing;
-avoid long, nested sentences;
-avoid excessive rhetorical questions;
-match {{creatorRole}}, {{tone}}, and {{brandVoice}}.
-Do not write like an academic article unless the channel intentionally uses that style.
-Do not repeatedly address the audience as “guys,” “friends,” or “everyone” unless it matches the established voice.
-TIMESTAMPS
-Divide the script into approximate timestamped sections.
-The timestamps must add up realistically to {{duration}} minutes.
-For each section provide:
-section title;
-approximate time range;
-spoken dialogue;
-visual direction;
-B-roll or graphic cues;
-on-screen text when useful;
-editing or audio notes.
-Do not assign exact second-by-second timing to every sentence unless requested.
-B-ROLL AND VISUAL CUES
-Use visual cues that explain, demonstrate, or emotionally support the narration.
-Possible visual elements include:
-direct-to-camera footage;
-relevant real-world B-roll;
-product demonstration;
-screen recording;
-archival material;
-documents or source excerpts;
-photographs;
-timeline;
-simple diagram;
-comparison graphic;
-map, only when geographically necessary and accurate;
-text emphasis;
-animated process;
-object close-up;
-environmental establishing shot.
-For each cue, explain what should appear and why it supports the narration.
-Do not write only:
-[B-ROLL: relevant footage]
-Do not suggest:
-unavailable footage;
-fabricated dashboards;
-fake social posts;
-invented news headlines;
-unverified charts;
-customer logos without permission;
-misleading before-and-after visuals;
-complex cinematic scenes that exceed {{productionLimitations}}.
-Mark difficult or optional footage as:
-[OPTIONAL B-ROLL: description]
-ON-SCREEN TEXT
-Use on-screen text only for information that benefits from visual reinforcement, such as:
-key terms;
-short quotations;
-dates;
-numbers;
-steps;
-contrasts;
-section labels;
-definitions.
-Keep most on-screen text concise.
-Do not display full narration paragraphs on screen.
-Use this format:
-[ON-SCREEN TEXT: text]
-For sourced facts, include:
-[ON-SCREEN SOURCE: abbreviated source]
-CHAPTERS
-After the script, provide suggested YouTube chapters based on the final structure.
-Chapter titles should:
-accurately describe each section;
-use natural language;
-avoid clickbait;
-help viewers navigate;
-begin at realistic timestamps.
-Do not create chapters for sections shorter than necessary.
-CTA STRATEGY
-Use one primary CTA and, if necessary, one subtle secondary CTA.
-The CTA should match {{goal}} and {{desiredAction}}.
-Possible CTAs include:
-subscribe for a clearly defined type of future content;
-watch a related video;
-comment with a specific experience or answer;
-download a supplied resource;
-visit a supplied page;
-try a practical step;
-join a newsletter;
-explore a product or service transparently.
-Do not automatically use:
-“Like, subscribe, and hit the notification bell.”
-A subscription CTA should explain what viewers will receive from the channel.
-Example:
-“If you want more practical breakdowns of how small online products are built, subscribe. That’s what this channel focuses on.”
-Do not ask viewers to like, subscribe, comment, share, visit a link, and buy something all at once.
-MID-VIDEO CTA
-Include a mid-video CTA only when it fits naturally.
-It must not interrupt the most important explanation.
-It should be brief and connected to the value already delivered.
-Do not add a mid-video CTA by default.
-OUTRO
-The outro should:
-resolve the central question;
-summarize the most important takeaway without repeating the entire video;
-explain what the viewer should remember or do;
-lead naturally into the CTA;
-optionally recommend a related video.
-Keep the outro concise.
-Do not introduce an entirely new argument in the final section.
-STYLE
-Write in a natural, credible voice.
-Avoid:
-generic motivational speeches;
-exaggerated reactions;
-fake vulnerability;
-forced controversy;
-repeated cliffhangers;
-excessive self-promotion;
-artificial enthusiasm;
-corporate jargon;
-excessive metaphors;
-constant jokes;
-unnecessary apologies;
-keyword stuffing;
-repeating the title throughout the script.
-Avoid common YouTube and AI phrases such as:
-“Without further ado”
-“Let’s dive in”
-“Smash that like button”
-“Make sure you watch until the end”
-“This is a game-changer”
-“Here’s the thing”
-“Let that sink in”
-“But it gets even crazier”
-“Your future self will thank you”
-“This one simple trick”
-“In today’s fast-paced world”
-“Whether you’re a beginner or an expert”
-FINAL QUALITY CHECK
-Before presenting the script, silently verify that:
-the word count fits {{duration}};
-the structure matches {{videoFormat}};
-the hook accurately represents the video;
-the introduction does not unnecessarily delay the value;
-every major section advances the central message;
-no fact, story, statistic, quote, or source was invented;
-the dialogue sounds natural when spoken;
-visual cues are specific and achievable;
-B-roll supports rather than distracts from the narration;
-timestamps are realistic;
-the conclusion resolves the video’s main promise;
-the CTA is relevant and not overloaded;
-the script does not sound like a generic AI-generated YouTube video.
-OUTPUT FORMAT
+PRIMARY CALL TO ACTION
+{{primaryCTA}}
 
-# Video Overview
-Working title:
-[Title]
-Video format:
-[Format]
-Target duration:
-{{duration}} minutes
-Estimated spoken word count:
-[Number]
-Main viewer promise:
-[One sentence]
-Primary CTA:
-[One action]
-# Full Script
-## [00:00–00:XX] Hook
-Visual:
-[Opening visual or pattern interrupt]
-Spoken dialogue:
-“[Exact dialogue]”
-[ON-SCREEN TEXT: text]
-Editing/audio cue:
-[Direction]
-## [Timestamp] Introduction
-Visual:
-[Direction]
-Spoken dialogue:
-“[Exact dialogue]”
-Continue through all main sections.
-## [Timestamp] Outro
-Visual:
-[Direction]
-Spoken dialogue:
-“[Exact dialogue]”
-CTA:
-[Exact spoken CTA]
-# Suggested YouTube Chapters
-00:00 [Chapter title]
-00:XX [Chapter title]
-# B-Roll and Asset List
+PREFERRED CONTENT ANGLE
+{{contentAngle}}
 
-[Required footage or asset]
-[Required footage or asset]
-[Optional footage or asset]
+PREFERRED SECTIONS
+{{keySections}}
 
-# On-Screen Text List
+OPENING APPROACH
+{{openingStyle}}
 
-[Text]
-[Text]
-[Text]
+NARRATIVE STRUCTURE
+{{narrativeStructure}}
 
-# Fact-Check and Source Notes
+PACING
+{{pacing}}
 
-[Claim and source]
-[Fact check required]
-[Quotation approval required]
-Output only the completed script and production materials. Do not explain your writing process.]
+RETENTION TECHNIQUES
+{{retentionDevices}}
+
+EXAMPLES OR STORIES
+{{examplesStories}}
+
+QUESTIONS, OBJECTIONS, OR MYTHS
+{{objectionsQuestions}}
+
+CHANNEL CONTEXT
+{{channelContext}}
+
+VOICE GUIDELINES
+{{brandVoice}}
+
+PRESENTER FORMAT
+{{hostPresence}}
+
+AVAILABLE VISUALS
+{{availableVisuals}}
+
+VISUAL-NOTE DETAIL
+{{bRollDirection}}
+
+ON-SCREEN TEXT STYLE
+{{onScreenText}}
+
+EDITING INTENSITY
+{{editingIntensity}}
+
+PRIMARY SEARCH PHRASE
+{{primaryKeyword}}
+
+SUPPORTING SEARCH TERMS
+{{supportingKeywords}}
+
+TITLE DIRECTION
+{{titleDirection}}
+
+INCLUDE YOUTUBE DESCRIPTION
+{{includeDescription}}
+
+INCLUDE VIDEO CHAPTERS
+{{includeChapters}}
+
+INCLUDE PINNED COMMENT
+{{includePinnedComment}}
+
+SOURCES AND REFERENCE MATERIAL
+{{sourceMaterial}}
+
+COMMERCIAL RELATIONSHIP
+{{commercialRelationship}}
+
+OFFER OR SPONSOR DETAILS
+{{sponsorOrOfferDetails}}
+
+REQUIRED DISCLOSURE
+{{disclosureRequirements}}
+
+SENSITIVE OR REGULATED TOPIC
+{{regulatedTopic}}
+
+RELEVANT JURISDICTION
+{{jurisdiction}}
+
+RESTRICTIONS AND ADDITIONAL CONTEXT
+{{restrictionsAndAdditionalContext}}
+
+### 1. Interpret the brief
+
+Treat the user’s supplied facts, requirements, source material, commercial details, restrictions, and central promise as controlling information.
+
+When an optional field is blank, irrelevant, set to Auto, set to None, or not displayed:
+
+* make a conservative platform-appropriate decision;
+* omit unnecessary sections;
+* do not expose empty labels or placeholders;
+* do not say that information was “not provided” in public-facing copy;
+* do not invent the missing information;
+* do not add commercial, personal, legal, medical, financial, political, or statistical claims merely to make the script sound complete.
+
+If instructions conflict, prioritize factual accuracy, safety, the central viewer promise, mandatory facts, restrictions, and required disclosures over stylistic preferences.
+
+Write the complete package in {{outputLanguage}}. Preserve product names, quotations, titles, proper nouns, legally required wording, and technical terms in their necessary original form when translation would make them inaccurate.
+
+### 2. Build for spoken delivery
+
+Write for a human presenter or narrator, not for silent reading.
+
+The spoken script must:
+
+* sound natural when read aloud;
+* use contractions and conversational phrasing when appropriate to the selected language and voice;
+* vary sentence length;
+* avoid dense blocks of exposition;
+* explain unfamiliar terminology before relying on it;
+* use concrete examples instead of unnecessary abstractions;
+* avoid repeating the title or central promise mechanically;
+* avoid excessive rhetorical questions;
+* avoid artificial enthusiasm;
+* avoid generic creator phrases such as “smash that like button” unless explicitly required;
+* avoid filler introductions about what the video is “going to cover” when the hook can begin with the actual subject;
+* use transitions that move the idea forward rather than announcing every section.
+
+Do not default to corporate, motivational, promotional, or overly polished language. Follow {{toneStyle}}, {{brandVoice}}, {{channelContext}}, and {{narratorVoice}} without imitating a living creator’s distinctive voice.
+
+### 3. Match the requested video format
+
+Adapt the architecture to {{videoFormat}}.
+
+For an explainer:
+
+* establish why the subject matters;
+* clarify the central question;
+* move from essential context to explanation, implications, and takeaway;
+* distinguish established facts from interpretation.
+
+For a tutorial or how-to:
+
+* state the useful result early;
+* identify prerequisites where relevant;
+* present actions in a usable order;
+* include warnings, decision points, expected outcomes, and common mistakes only when supported;
+* do not claim that a method is universally successful.
+
+For commentary or opinion:
+
+* make the main position understandable;
+* separate opinion, inference, and verifiable fact;
+* present necessary context before strong conclusions;
+* address meaningful counterarguments rather than inventing weak opposing positions.
+
+For storytelling:
+
+* establish a person, situation, tension, or unanswered question quickly;
+* build progression through decisions, discoveries, consequences, or changing stakes;
+* avoid presenting invented personal experiences as real;
+* deliver a clear emotional or intellectual payoff.
+
+For a review or comparison:
+
+* define the criteria;
+* use only supplied specifications, observations, evidence, and first-hand experience;
+* do not claim personal testing unless the user supplied it;
+* include trade-offs and suitable use cases;
+* do not invent prices, ratings, defects, customer feedback, or performance results.
+
+For documentary-style content:
+
+* create a clear chronological, thematic, investigative, or cause-and-effect progression;
+* handle quotations, dates, identities, and allegations carefully;
+* avoid dramatic invention;
+* do not create composite characters or scenes presented as factual events.
+
+For a list or countdown:
+
+* give the entries a meaningful progression;
+* avoid padding the list with nearly identical points;
+* use short transitions and varied section openings;
+* do not claim that the ranking is objective unless evidence supports it.
+
+For an interview-led video:
+
+* create the host opening, guest introduction from supplied facts, question sequence, transitions, follow-up prompts, and closing;
+* never fabricate the guest’s answers;
+* label suggested follow-ups as prompts rather than predicted responses.
+
+### 4. Duration and script length
+
+Use {{targetDurationMinutes}} as the approximate finished runtime.
+
+Estimate a practical spoken-word budget using a flexible delivery range of roughly 125–155 words per minute. Adjust within that range according to {{pacing}}, {{toneStyle}}, {{editingIntensity}}, demonstrations, pauses, quotations, multiple speakers, and visual-only moments.
+
+Do not pad the script to reach an exact word count. Do not compress complex explanations until they become misleading. Aim for a finished duration within approximately ten percent of the target unless the supplied material clearly requires a different length.
+
+Provide:
+
+* an estimated spoken word count;
+* an estimated finished runtime;
+* approximate section timings.
+
+Label all timings as production estimates rather than exact measurements.
+
+### 5. Opening and viewer promise
+
+Create three concise hook options. Each hook must use a genuinely different approach rather than minor wording changes.
+
+Select the strongest hook for the full script based on:
+
+* {{openingStyle}};
+* {{centralPromise}};
+* {{primaryGoal}};
+* {{targetAudience}};
+* {{videoFormat}};
+* the available facts and visuals.
+
+The opening should normally establish the subject, tension, relevance, result, or unanswered question within the first spoken lines.
+
+Do not use:
+
+* false suspense;
+* a claim the video cannot support;
+* misleading before-and-after framing;
+* fake urgency;
+* exaggerated danger;
+* a promise that the script does not fulfil;
+* a long channel introduction before delivering viewer value.
+
+The full script must begin delivering on {{centralPromise}} early. Do not withhold basic information solely to manipulate watch time.
+
+### 6. Narrative progression and retention
+
+Use {{narrativeStructure}} and {{keySections}} when supplied. When they are blank or Auto, select the structure that best fits the topic, format, goal, and duration.
+
+Use {{contentAngle}} to differentiate the video without forcing novelty unsupported by the facts.
+
+Use {{retentionDevices}} selectively. Retention techniques must improve clarity or anticipation, not manipulate viewers.
+
+Acceptable uses include:
+
+* briefly previewing a later practical payoff;
+* marking progress through a process;
+* asking a question the next section genuinely answers;
+* revealing evidence or visuals at the relevant moment;
+* returning to an earlier example;
+* providing smaller conclusions before the final takeaway;
+* changing visual treatment when the information changes.
+
+Do not insert an open loop that is never resolved. Do not repeatedly tease information that could be stated immediately. Do not add empty lines such as “keep watching because number three will shock you.”
+
+Address {{objectionsQuestions}} where they logically belong. Do not create fake controversy or straw-man objections.
+
+Use {{examplesStories}} only as supplied. Clearly frame hypothetical examples as hypothetical. Do not transform an unverified anecdote into evidence.
+
+### 7. Production-ready formatting
+
+Create a beat map before the complete script. The beat map must show:
+
+* approximate time range;
+* purpose of the section;
+* key idea or action;
+* intended viewer payoff;
+* major visual approach.
+
+Then create the complete script using timestamped sections.
+
+Within the script, use these production labels only when relevant:
+
+* SPOKEN:
+* HOST:
+* NARRATOR:
+* GUEST QUESTION:
+* VISUAL:
+* B-ROLL:
+* SCREEN:
+* ON-SCREEN TEXT:
+* SFX:
+* MUSIC:
+* PAUSE:
+* TRANSITION:
+* DISCLOSURE:
+
+Do not overload every sentence with directions. Keep the spoken copy easy to extract and record.
+
+Adapt production directions to:
+
+* {{hostPresence}};
+* {{availableVisuals}};
+* {{bRollDirection}};
+* {{onScreenText}};
+* {{editingIntensity}}.
+
+Do not assume access to actors, studios, drones, animation, archive footage, licensed media, locations, product samples, interviews, or expensive effects unless the user listed them.
+
+When available visuals are limited, suggest achievable alternatives such as:
+
+* presenter framing changes;
+* screen recordings;
+* close-up object shots;
+* original diagrams;
+* simple text callouts;
+* public-domain or properly licensed material;
+* creator-recorded environmental footage.
+
+Do not instruct the creator to copy protected footage, music, photographs, graphics, or another creator’s work without permission. Do not invent licensing status.
+
+For on-screen text:
+
+* keep wording shorter than the spoken line;
+* use it for names, steps, numbers, definitions, contrasts, warnings, or key phrases;
+* avoid displaying full paragraphs unless {{onScreenText}} explicitly calls for a text-led format;
+* do not repeat every spoken sentence on screen.
+
+### 8. Titles and discovery
+
+Create three title options matching {{titleDirection}}.
+
+Each title must:
+
+* accurately represent the actual video;
+* communicate the subject or viewer value;
+* avoid deceptive clickbait;
+* avoid unsupported superlatives;
+* avoid unnecessary ALL CAPS;
+* avoid excessive punctuation or emoji;
+* remain under 100 characters;
+* preferably keep the main meaning within approximately 55–70 characters when natural;
+* place the most important words early.
+
+Use {{primaryKeyword}} and {{supportingKeywords}} naturally when supplied. Do not force an exact keyword if it makes the title or spoken copy unnatural. Do not repeat keywords mechanically. Do not claim a search phrase is popular unless evidence was supplied.
+
+Identify one recommended title and give a one-sentence reason based on clarity, accuracy, audience fit, and the selected title direction.
+
+### 9. CTA and closing
+
+Use {{primaryCTA}} as the primary action. When it is Auto, select one restrained action that supports {{primaryGoal}}.
+
+The CTA must be:
+
+* clear;
+* relevant to the content;
+* proportional to the relationship with the viewer;
+* consistent with the commercial context;
+* placed where it does not interrupt the most valuable information.
+
+Do not insert several competing CTAs. A brief secondary engagement prompt may be included only when it does not distract from the primary action.
+
+The closing must:
+
+* complete the central promise;
+* provide a final takeaway, implication, next step, or emotional resolution;
+* avoid mechanically summarizing every section;
+* avoid unnecessary “in conclusion” phrasing;
+* avoid ending immediately after a sales message when a more natural resolution is possible.
+
+### 10. Description, chapters, and pinned comment
+
+Follow {{includeDescription}}, {{includeChapters}}, and {{includePinnedComment}}.
+
+When a setting is Yes, include the asset.
+
+When a setting is No, omit it completely.
+
+When a setting is Auto:
+
+* include the YouTube description when the video would benefit from a concise upload-ready summary, source notes, links supplied by the user, or disclosure placement;
+* include chapters when the video is long enough and has at least three meaningful sections;
+* include a pinned comment when it supports a useful discussion question, clarification, correction note, source note, or primary CTA.
+
+YouTube description requirements:
+
+* maximum 5,000 characters;
+* lead with a concise, accurate summary;
+* make the first lines understandable without expanding the description;
+* use supplied search phrases naturally;
+* include only links, credits, products, sources, and contact information actually supplied;
+* do not invent URLs;
+* do not create fake timestamps;
+* do not keyword-stuff;
+* preserve required disclosures;
+* do not use misleading claims to drive clicks.
+
+YouTube chapter requirements:
+
+* begin at 0:00;
+* include at least three timestamps;
+* list timestamps in ascending order;
+* make each chapter at least ten seconds long;
+* use concise, descriptive labels;
+* derive times from the estimated script structure;
+* identify them as estimated chapters that may require adjustment after editing.
+
+Pinned-comment requirements:
+
+* keep it concise;
+* use one clear purpose;
+* do not manufacture praise, controversy, or audience reactions;
+* do not use engagement bait;
+* do not imply that viewers have already agreed with the creator.
+
+### 11. Facts, sources, and quotations
+
+Use {{mustInclude}} and {{sourceMaterial}} carefully.
+
+Never invent or misrepresent:
+
+* facts;
+* dates;
+* statistics;
+* research;
+* quotations;
+* sources;
+* URLs;
+* expert opinions;
+* testimonials;
+* reviews;
+* ratings;
+* customer identities;
+* product tests;
+* revenue;
+* user numbers;
+* prices;
+* discounts;
+* deadlines;
+* awards;
+* certifications;
+* partnerships;
+* clients;
+* media coverage;
+* funding;
+* legal approval;
+* medical outcomes;
+* first-hand experience;
+* personal stories presented as real.
+
+Do not claim that the script was researched, fact-checked, tested, verified, legally reviewed, medically reviewed, or professionally approved unless the supplied information establishes that this occurred.
+
+When an essential claim lacks support:
+
+* omit it when it is not necessary;
+* rewrite it as a cautious general statement when that remains accurate;
+* frame it as an opinion or question when appropriate;
+* add it to a private “Verification Notes” section;
+* never place “[insert statistic]” or similar unfinished placeholders in the spoken script unless the user explicitly asked for placeholders.
+
+Use direct quotations only when supplied and clearly attributable. Do not create quotations for experts, customers, public figures, sponsors, interview guests, or the creator.
+
+When sources disagree, acknowledge the uncertainty rather than selecting the most dramatic claim.
+
+### 12. Commercial relationships and disclosures
+
+Apply {{commercialRelationship}}, {{sponsorOrOfferDetails}}, and {{disclosureRequirements}}.
+
+When the commercial relationship is None:
+
+* do not insert a sponsor;
+* do not invent an affiliate relationship;
+* do not turn an informational video into an advertisement.
+
+When the creator is promoting their own offer:
+
+* make the relationship clear;
+* connect the CTA to the actual value supplied;
+* avoid presenting the creator as an independent reviewer of their own product.
+
+For sponsorships, affiliate relationships, brand partnerships, or other commercial relationships:
+
+* preserve the meaning of {{disclosureRequirements}};
+* make the disclosure clear and reasonably close to the commercial message;
+* do not hide it in vague wording;
+* distinguish the sponsor’s approved claims from the creator’s independent observations;
+* do not claim the creator uses, recommends, tested, or achieved results with the product unless supplied;
+* do not guarantee outcomes;
+* do not invent discounts, expiry dates, scarcity, coupon codes, prices, or availability;
+* do not criticize competitors using unsupported comparisons.
+
+Create sponsor placement only from {{sponsorOrOfferDetails}}. If essential commercial details are missing, keep the integration minimal and add a private verification note instead of inventing copy.
+
+### 13. Sensitive and regulated subjects
+
+Apply {{regulatedTopic}} and {{jurisdiction}}.
+
+For medical or health content:
+
+* do not diagnose;
+* do not provide individualized treatment;
+* do not promise cures, prevention, guaranteed results, or risk-free outcomes;
+* distinguish general education from professional care;
+* recommend authoritative or professional verification when materially necessary.
+
+For legal, financial, tax, insurance, employment, or safety content:
+
+* do not present general information as personalized professional advice;
+* do not guarantee legal, financial, employment, insurance, or safety outcomes;
+* identify jurisdictional limits where relevant;
+* avoid precise instructions when missing context could make them harmful.
+
+For political or public-affairs content:
+
+* separate factual claims, interpretation, and opinion;
+* do not invent polling, quotations, endorsements, official decisions, election results, or current officeholders;
+* avoid deceptive persuasion, impersonation, voter suppression, or fabricated public consensus.
+
+For every regulated topic:
+
+* use the minimum relevant disclaimer;
+* do not fill the script with defensive boilerplate;
+* do not describe the content as compliant, approved, or authoritative without evidence;
+* add uncertain or time-sensitive claims to Verification Notes.
+
+### 14. Privacy and platform integrity
+
+Do not reveal or infer private personal information.
+
+Do not include:
+
+* private addresses;
+* personal phone numbers;
+* private email addresses;
+* private financial information;
+* medical records;
+* passwords;
+* account credentials;
+* identifying information about minors;
+* unverified allegations about identifiable people;
+* sensitive personal details unrelated to the public-interest purpose.
+
+Do not encourage:
+
+* spam;
+* scams;
+* impersonation;
+* fake engagement;
+* coordinated manipulation;
+* misleading metadata;
+* deceptive thumbnails or titles;
+* fabricated comments;
+* harassment;
+* undisclosed advertising;
+* copyright infringement;
+* evasion of platform enforcement.
+
+Follow {{restrictionsAndAdditionalContext}} wherever it does not conflict with accuracy, safety, or required disclosure.
+
+### 15. Output format
+
+Output only the completed YouTube script package. Do not explain your internal reasoning, drafting process, or hidden analysis.
+
+Use this exact structure:
+
+# YouTube Script Package
+
+## 1. Recommended Direction
+
+Include:
+
+* selected content angle;
+* intended viewer payoff;
+* selected narrative structure;
+* estimated spoken word count;
+* estimated finished duration;
+* brief production approach.
+
+Keep this section concise.
+
+## 2. Title Options
+
+Provide three titles.
+
+Mark one as Recommended and explain the selection in one sentence.
+
+## 3. Hook Options
+
+Provide three genuinely different opening hooks.
+
+Mark the hook used in the complete script.
+
+## 4. Beat Map
+
+For every major section provide:
+
+* estimated time range;
+* section purpose;
+* key content;
+* viewer payoff;
+* main visual approach.
+
+## 5. Full Production Script
+
+Write the complete timestamped script.
+
+Include spoken dialogue, transitions, retention beats, CTA, closing, visual notes, B-roll, on-screen text, and production cues according to the selected settings.
+
+Do not replace complete spoken sections with summaries such as “explain the process here.”
+
+For interview-led videos, provide questions and follow-up prompts without fabricated guest answers.
+
+## 6. Production Notes
+
+Include only practical notes not already clear from the script:
+
+* pronunciation or terminology notes;
+* essential assets;
+* recording considerations;
+* editing or pacing considerations;
+* disclosure placement;
+* source or rights considerations.
+
+Omit this section when there are no meaningful notes.
+
+## 7. Verification Notes
+
+Include only claims, dates, quotations, legal details, current facts, prices, links, statistics, or sponsor statements that require confirmation before recording.
+
+Do not repeat already supported information.
+
+Omit this section when no verification is needed.
+
+## 8. YouTube Description
+
+Include only when required by {{includeDescription}} or justified by Auto behavior.
+
+## 9. Estimated Video Chapters
+
+Include only when required by {{includeChapters}} or justified by Auto behavior.
+
+## 10. Pinned Comment
+
+Include only when required by {{includePinnedComment}} or justified by Auto behavior.
+
+### 16. Final quality check
+
+Before producing the final package, silently confirm that:
+
+* the script fulfils {{centralPromise}};
+* all mandatory points from {{mustInclude}} are covered;
+* the structure matches {{videoFormat}};
+* the language, tone, narrator perspective, and channel voice are consistent;
+* the estimated runtime reasonably matches {{targetDurationMinutes}};
+* the opening begins delivering value quickly;
+* retention devices are resolved and not manipulative;
+* the CTA is relevant and not excessive;
+* visual notes are achievable with the supplied resources;
+* titles are accurate and below 100 characters;
+* the description, when included, stays below 5,000 characters;
+* chapters, when included, follow the required timestamp structure;
+* commercial relationships are clear;
+* unsupported claims and invented facts have been removed;
+* sensitive content uses cautious, jurisdiction-aware wording;
+* no blank optional fields appear in the public content;
+* no internal reasoning or chain-of-thought is revealed.
+
+Return only the completed package.

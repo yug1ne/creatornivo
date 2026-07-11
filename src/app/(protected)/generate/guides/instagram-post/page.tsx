@@ -10,7 +10,7 @@ import { requireSession } from "@/lib/auth/session";
 export const metadata: Metadata = {
   title: "Instagram Post field guide",
   description:
-    "How to fill every Instagram Post parameter — format, caption, media, offers, and community rules.",
+    "How to fill Instagram Post fields — caption brief, proof, hashtags, visual concept, and alt text.",
 };
 
 export default async function InstagramPostGuidePage() {
@@ -20,12 +20,12 @@ export default async function InstagramPostGuidePage() {
     <TemplateFieldGuide
       title="Instagram Post — field guide"
       templateSlug="instagram-post"
-      intro="How to fill the Instagram Post form. Empty optional fields are fine — the model will not invent personal stories, testimonials, discounts, or engagement bait. Match claims to real product facts and only use media and tags you have rights for."
+      intro="How to fill the Instagram Post form (23 fields). Empty optional sections are fine — the model will not invent proof, discounts, engagement bait, or private details. Five Essentials fields are enough for a solid first caption package."
       quickStart={[
-        "Fill Topic, Post type, Audience, Tone, and Language.",
-        "Set Post format (photo, carousel, Reel) so the package matches Instagram surfaces.",
-        "Add one main message and one desired action — avoid stacking sell + share + DM + event in one post.",
-        "Expand Offer, Event, Story, Media, or Partnership only when those details are real and approved.",
+        "Fill Post topic, Primary goal, Target audience, Core message, and Output language.",
+        "Add Essential details only when names, dates, or terms must appear accurately.",
+        "Open Message & Evidence for proof, disclosures, and offer terms (offer fields appear for promotional goals).",
+        "Set hashtag strategy and visual format; use Provided only hashtags when the campaign requires fixed tags.",
       ]}
       groups={instagramPostFormGroups}
       variables={instagramPostFormVariables}

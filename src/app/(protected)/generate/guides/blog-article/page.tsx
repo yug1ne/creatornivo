@@ -6,7 +6,7 @@ import { requireSession } from "@/lib/auth/session";
 export const metadata: Metadata = {
   title: "Blog Article field guide",
   description:
-    "How to fill every Blog Article parameter — what each field means, examples, and what to avoid.",
+    "How to fill Blog Article fields — essentials, editorial direction, SEO, sources, and CTA controls.",
 };
 
 export default async function BlogArticleGuidePage() {

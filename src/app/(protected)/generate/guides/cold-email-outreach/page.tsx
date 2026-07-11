@@ -10,7 +10,7 @@ import { requireSession } from "@/lib/auth/session";
 export const metadata: Metadata = {
   title: "Cold Email Outreach field guide",
   description:
-    "How to fill every Cold Email Outreach parameter — legitimate B2B outreach, data quality, and compliance fields.",
+    "How to fill Cold Email Outreach fields — relevance, proof, personalization limits, and compliance safeguards.",
 };
 
 export default async function ColdEmailOutreachGuidePage() {
@@ -20,12 +20,12 @@ export default async function ColdEmailOutreachGuidePage() {
     <TemplateFieldGuide
       title="Cold Email Outreach — field guide"
       templateSlug="cold-email-outreach"
-      intro="How to fill the Cold Email Outreach form. Empty optional fields are fine — the model will not invent prospect facts, referrals, pricing, or legal compliance. Fill only what you can verify before sending."
+      intro="How to fill the Cold Email Outreach form (34 fields). Empty optional sections are fine — the model will not invent prospect research, referrals, metrics, or legal compliance. Six Essentials fields are enough for a truthful first draft."
       quickStart={[
-        "Fill Primary offer, Desired action, Job title, Company name, Problem addressed, Tone, and Language.",
-        "Add a real sender name/role and only verified prospect details.",
-        "Leave personalization blank unless you have a sourced observation.",
-        "Expand Legal, Suppression, and Deliverability only when you have real answers — never invent compliance.",
+        "Fill Sender identity, Offer and outcome, Outreach goal, Target recipient, Why it is relevant, and Approved facts.",
+        "Pick an email package (initial only or with follow-ups) and a low-friction CTA preference.",
+        "Add personalization only from verifiable public details — never fabricate familiarity.",
+        "Conditional fields appear for referrals and regulated topics; leave compliance blanks empty instead of inventing addresses or disclaimers.",
       ]}
       groups={coldEmailOutreachFormGroups}
       variables={coldEmailOutreachFormVariables}

@@ -1,0 +1,644 @@
+{
+  "slug": "paid-ad-copy",
+  "title": "Paid Ad Copy",
+  "version": 1,
+  "generatedAt": "2026-07-11T11:48:31.017Z",
+  "fieldCount": 30,
+  "requiredKeys": [
+    "adPlatform",
+    "productOrOffer",
+    "campaignGoal",
+    "targetAudience",
+    "coreValueProposition",
+    "outputLanguage"
+  ],
+  "groups": [
+    {
+      "id": "essentials",
+      "title": "Essentials",
+      "description": "Platform, format, offer, goal, audience, value prop, terms, URL, language, variants.",
+      "defaultOpen": true
+    },
+    {
+      "id": "audience",
+      "title": "Audience & Offer",
+      "description": "Awareness, need, outcome, differentiators, objections, proof, market.",
+      "defaultOpen": false
+    },
+    {
+      "id": "brand",
+      "title": "Brand & Creative",
+      "description": "Brand name, voice, tone, creative context, search/video/carousel inputs.",
+      "defaultOpen": false
+    },
+    {
+      "id": "compliance",
+      "title": "Compliance & Output",
+      "description": "CTA, testing angles, regulated category, disclosures, prohibited claims.",
+      "defaultOpen": false
+    }
+  ],
+  "variables": [
+    {
+      "key": "adPlatform",
+      "label": "Ad platform",
+      "placeholder": "Select the advertising platform",
+      "required": true,
+      "type": "select",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Choose where the ads will be published so the correct asset structure and length rules can be applied.",
+      "help": {
+        "what": "Ad platform.",
+        "why": "The platform determines the required ad assets, formatting conventions, CTAs, and character handling.",
+        "example": "Meta Ads",
+        "avoid": "Mixing platform rules in one package without selecting a platform."
+      },
+      "fullWidth": false,
+      "options": [
+        "Meta Ads",
+        "Google Search Ads",
+        "Google Display / Performance Max",
+        "LinkedIn Ads",
+        "TikTok Ads",
+        "Other platform"
+      ]
+    },
+    {
+      "key": "adFormat",
+      "label": "Ad format",
+      "placeholder": "Choose a format or use Auto",
+      "required": false,
+      "type": "select",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Auto selects a suitable native format based on the platform and campaign goal.",
+      "help": {
+        "what": "Ad format.",
+        "why": "Different formats require different copy elements, such as hooks, cards, headlines, or responsive assets.",
+        "example": "Auto",
+        "avoid": "Invented proof, fake urgency, personal-attribute claims, or guaranteed approval."
+      },
+      "fullWidth": false,
+      "options": [
+        "Auto",
+        "Single image",
+        "Short video",
+        "Carousel",
+        "Search text",
+        "Responsive asset set",
+        "Lead form"
+      ],
+      "defaultValue": "Auto"
+    },
+    {
+      "key": "productOrOffer",
+      "label": "Product or offer",
+      "placeholder": "Describe what you are advertising and what the customer receives.",
+      "required": true,
+      "type": "textarea",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Include the product, service, event, application, subscription, or lead offer being promoted.",
+      "help": {
+        "what": "Product or offer.",
+        "why": "The model cannot accurately describe or position an unspecified product or offer.",
+        "example": "What is advertised and what the customer receives",
+        "avoid": "Vague offers without a clear product or next step."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "campaignGoal",
+      "label": "Campaign goal",
+      "placeholder": "Select the main campaign goal",
+      "required": true,
+      "type": "select",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Choose the single most important action or outcome for this campaign.",
+      "help": {
+        "what": "Campaign goal.",
+        "why": "The campaign goal determines the message hierarchy, conversion friction, and CTA.",
+        "example": "Select the main campaign goal",
+        "avoid": "Invented proof, fake urgency, personal-attribute claims, or guaranteed approval."
+      },
+      "fullWidth": false,
+      "options": [
+        "Brand awareness",
+        "Website traffic",
+        "Lead generation",
+        "Sales or purchases",
+        "App installs",
+        "Bookings",
+        "Event registrations",
+        "Retargeting"
+      ]
+    },
+    {
+      "key": "targetAudience",
+      "label": "Target audience",
+      "placeholder": "Who should see this ad, and what makes the offer relevant to them?",
+      "required": true,
+      "type": "textarea",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Describe the audience using useful business or interest context without including private personal data.",
+      "help": {
+        "what": "Target audience.",
+        "why": "Audience relevance materially changes the language, angle, benefits, and level of explanation.",
+        "example": "Who should see this ad, and what makes the offer relevant to them?",
+        "avoid": "Invented proof, fake urgency, personal-attribute claims, or guaranteed approval."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "coreValueProposition",
+      "label": "Core value proposition",
+      "placeholder": "What is the clearest reason someone should consider this offer?",
+      "required": true,
+      "type": "textarea",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Focus on the main value rather than a long list of features.",
+      "help": {
+        "what": "Core value proposition.",
+        "why": "The central value proposition provides the primary persuasive idea for the campaign.",
+        "example": "One clear reason to consider the offer",
+        "avoid": "A long feature dump without a main idea."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "offerDetails",
+      "label": "Offer details",
+      "placeholder": "Add verified prices, discounts, dates, bonuses, trial terms, or availability.",
+      "required": false,
+      "type": "textarea",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Only include terms that are current, accurate, and approved for advertising.",
+      "help": {
+        "what": "Offer details.",
+        "why": "Real offer terms can materially strengthen conversion copy but must not be invented.",
+        "example": "Add verified prices, discounts, dates, bonuses, trial terms, or availability.",
+        "avoid": "Invented proof, fake urgency, personal-attribute claims, or guaranteed approval."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "destinationUrl",
+      "label": "Destination URL",
+      "placeholder": "https://example.com/landing-page",
+      "required": false,
+      "type": "text",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Enter the page users should reach after clicking the ad.",
+      "help": {
+        "what": "Destination URL.",
+        "why": "The destination helps identify the intended action and alerts the output to landing-page consistency requirements.",
+        "example": "https://example.com/landing-page",
+        "avoid": "Invented proof, fake urgency, personal-attribute claims, or guaranteed approval."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "outputLanguage",
+      "label": "Output language",
+      "placeholder": "English",
+      "required": true,
+      "type": "text",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Specify the language in which all generated copy should be written.",
+      "help": {
+        "what": "Output language.",
+        "why": "Language cannot always be inferred and can affect character use, tone, and platform limits.",
+        "example": "English",
+        "avoid": "Invented proof, fake urgency, personal-attribute claims, or guaranteed approval."
+      },
+      "fullWidth": false,
+      "defaultValue": "English"
+    },
+    {
+      "key": "variantCount",
+      "label": "Testing angles",
+      "placeholder": "3",
+      "required": false,
+      "type": "number",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Choose between 1 and 5 meaningfully different ad angles.",
+      "help": {
+        "what": "Testing angles.",
+        "why": "Paid advertising benefits from distinct testable concepts rather than one isolated piece of copy.",
+        "example": "3",
+        "avoid": "Invented proof, fake urgency, personal-attribute claims, or guaranteed approval."
+      },
+      "fullWidth": false,
+      "defaultValue": "3"
+    },
+    {
+      "key": "audienceAwareness",
+      "label": "Audience awareness",
+      "placeholder": "Select how familiar the audience is",
+      "required": false,
+      "type": "select",
+      "group": "audience",
+      "groupTitle": "Audience & Offer",
+      "hint": "This controls how much context, education, and direct selling the ad should use.",
+      "help": {
+        "what": "Audience awareness.",
+        "why": "Cold and warm audiences require materially different openings and conversion approaches.",
+        "example": "Auto",
+        "avoid": "Invented proof, fake urgency, personal-attribute claims, or guaranteed approval."
+      },
+      "fullWidth": false,
+      "options": [
+        "Auto",
+        "Unaware or cold",
+        "Problem aware",
+        "Solution aware",
+        "Product aware",
+        "Warm or retargeting"
+      ],
+      "defaultValue": "Auto"
+    },
+    {
+      "key": "problemOrNeed",
+      "label": "Problem or need",
+      "placeholder": "What situation, frustration, task, or need makes the offer relevant?",
+      "required": false,
+      "type": "textarea",
+      "group": "audience",
+      "groupTitle": "Audience & Offer",
+      "hint": "Describe the need without using shame, fear, or unsupported assumptions about individuals.",
+      "help": {
+        "what": "Problem or need.",
+        "why": "A supplied need helps make the ad specific without forcing the model to invent audience pain points.",
+        "example": "What situation, frustration, task, or need makes the offer relevant?",
+        "avoid": "Invented proof, fake urgency, personal-attribute claims, or guaranteed approval."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "desiredOutcome",
+      "label": "Desired outcome",
+      "placeholder": "What practical result is the audience hoping to achieve?",
+      "required": false,
+      "type": "textarea",
+      "group": "audience",
+      "groupTitle": "Audience & Offer",
+      "hint": "Use a realistic outcome that the product can genuinely support.",
+      "help": {
+        "what": "Desired outcome.",
+        "why": "The desired outcome helps translate features into relevant benefits.",
+        "example": "What practical result is the audience hoping to achieve?",
+        "avoid": "Invented proof, fake urgency, personal-attribute claims, or guaranteed approval."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "differentiators",
+      "label": "Key differentiators",
+      "placeholder": "What makes this offer meaningfully different from common alternatives?",
+      "required": false,
+      "type": "textarea",
+      "group": "audience",
+      "groupTitle": "Audience & Offer",
+      "hint": "Include only distinctions that can be explained and substantiated.",
+      "help": {
+        "what": "Key differentiators.",
+        "why": "Verified differentiation supports stronger positioning and prevents generic advertising.",
+        "example": "What makes this offer meaningfully different from common alternatives?",
+        "avoid": "Invented proof, fake urgency, personal-attribute claims, or guaranteed approval."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "objections",
+      "label": "Audience objections",
+      "placeholder": "What concerns might stop someone from clicking, signing up, or buying?",
+      "required": false,
+      "type": "textarea",
+      "group": "audience",
+      "groupTitle": "Audience & Offer",
+      "hint": "Examples may include price, complexity, trust, setup time, fit, or switching effort.",
+      "help": {
+        "what": "Audience objections.",
+        "why": "Real objections can produce useful test angles and more credible copy.",
+        "example": "What concerns might stop someone from clicking, signing up, or buying?",
+        "avoid": "Invented proof, fake urgency, personal-attribute claims, or guaranteed approval."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "proofPoints",
+      "label": "Approved proof points",
+      "placeholder": "Add verified results, specifications, certifications, ratings, or evidence.",
+      "required": false,
+      "type": "textarea",
+      "group": "audience",
+      "groupTitle": "Audience & Offer",
+      "hint": "Only provide claims that may be used publicly and can be substantiated.",
+      "help": {
+        "what": "Approved proof points.",
+        "why": "The model needs approved evidence before it can safely create proof-led advertising.",
+        "example": "Only verified results with context",
+        "avoid": "Invented testimonials, ratings, or ROI."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "targetMarket",
+      "label": "Target market",
+      "placeholder": "For example: United States, Germany, EU, or worldwide",
+      "required": false,
+      "type": "text",
+      "group": "audience",
+      "groupTitle": "Audience & Offer",
+      "hint": "Add the country, region, or jurisdiction when it affects wording, currency, eligibility, or disclosures.",
+      "help": {
+        "what": "Target market.",
+        "why": "Advertising rules, offer availability, and market expectations can differ by jurisdiction.",
+        "example": "For example: United States, Germany, EU, or worldwide",
+        "avoid": "Invented proof, fake urgency, personal-attribute claims, or guaranteed approval."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "brandName",
+      "label": "Brand name",
+      "placeholder": "Enter the public brand or business name",
+      "required": false,
+      "type": "text",
+      "group": "brand",
+      "groupTitle": "Brand & Creative",
+      "hint": "Use the name that should appear in the ad or advertising account.",
+      "help": {
+        "what": "Brand name.",
+        "why": "Some platforms require a business name, while other ads may need clear advertiser identification.",
+        "example": "Enter the public brand or business name",
+        "avoid": "Invented proof, fake urgency, personal-attribute claims, or guaranteed approval."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "brandVoice",
+      "label": "Brand voice",
+      "placeholder": "Select the closest brand voice",
+      "required": false,
+      "type": "select",
+      "group": "brand",
+      "groupTitle": "Brand & Creative",
+      "hint": "Choose the overall communication style rather than a temporary campaign emotion.",
+      "help": {
+        "what": "Brand voice.",
+        "why": "Brand voice changes wording and presentation while preserving the same factual message.",
+        "example": "Clear and natural",
+        "avoid": "Invented proof, fake urgency, personal-attribute claims, or guaranteed approval."
+      },
+      "fullWidth": false,
+      "options": [
+        "Clear and natural",
+        "Professional",
+        "Friendly",
+        "Direct",
+        "Premium",
+        "Technical",
+        "Playful",
+        "Minimal"
+      ],
+      "defaultValue": "Clear and natural"
+    },
+    {
+      "key": "toneModifiers",
+      "label": "Tone modifiers",
+      "placeholder": "Conversational\nConfident\nCalm\nEnergetic\nEmpathetic\nConcise\nEducational\nTime-sensitive but factual",
+      "required": false,
+      "type": "textarea",
+      "group": "brand",
+      "groupTitle": "Brand & Creative",
+      "hint": "Select only qualities that should noticeably influence this campaign. Select all that apply (one per line). Options: Conversational; Confident; Calm; Energetic; Empathetic; Concise; Educational; Time-sensitive but factual.",
+      "help": {
+        "what": "Tone modifiers.",
+        "why": "Tone modifiers allow campaign-level adjustment without duplicating the brand-voice field.",
+        "example": "Add optional tone qualities",
+        "avoid": "Invented proof, fake urgency, personal-attribute claims, or guaranteed approval."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "creativeContext",
+      "label": "Creative context",
+      "placeholder": "Describe the image, video, product shot, demonstration, or existing creative.",
+      "required": false,
+      "type": "textarea",
+      "group": "brand",
+      "groupTitle": "Brand & Creative",
+      "hint": "The generated copy should complement the creative rather than contradict or repeat it.",
+      "help": {
+        "what": "Creative context.",
+        "why": "Effective paid-ad copy must align with what the audience will actually see.",
+        "example": "Describe the image, video, product shot, demonstration, or existing creative.",
+        "avoid": "Invented proof, fake urgency, personal-attribute claims, or guaranteed approval."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "searchKeywords",
+      "label": "Search keywords",
+      "placeholder": "List priority searches or keyword themes, separated by commas.",
+      "required": false,
+      "type": "textarea",
+      "group": "brand",
+      "groupTitle": "Brand & Creative",
+      "hint": "Use verified keyword targets from the relevant search campaign.",
+      "help": {
+        "what": "Search keywords.",
+        "why": "Search-ad headlines and descriptions should reflect the intent of the supplied keyword set.",
+        "example": "List priority searches or keyword themes, separated by commas.",
+        "avoid": "Invented proof, fake urgency, personal-attribute claims, or guaranteed approval."
+      },
+      "fullWidth": true,
+      "showWhen": {
+        "key": "adPlatform",
+        "equals": "Google Search Ads"
+      }
+    },
+    {
+      "key": "videoOpeningContext",
+      "label": "Video opening",
+      "placeholder": "What happens or appears during the first few seconds?",
+      "required": false,
+      "type": "textarea",
+      "group": "brand",
+      "groupTitle": "Brand & Creative",
+      "hint": "Describe the opening shot, action, speaker, demonstration, or available footage.",
+      "help": {
+        "what": "Video opening.",
+        "why": "A video hook should match the real opening visual rather than describe footage that does not exist.",
+        "example": "What happens or appears during the first few seconds?",
+        "avoid": "Invented proof, fake urgency, personal-attribute claims, or guaranteed approval."
+      },
+      "fullWidth": true,
+      "showWhen": {
+        "key": "adFormat",
+        "equals": "Short video"
+      }
+    },
+    {
+      "key": "carouselCardCount",
+      "label": "Carousel cards",
+      "placeholder": "5",
+      "required": false,
+      "type": "number",
+      "group": "brand",
+      "groupTitle": "Brand & Creative",
+      "hint": "Choose between 2 and 10 cards.",
+      "help": {
+        "what": "Carousel cards.",
+        "why": "The number of cards directly determines the message progression and amount of card copy.",
+        "example": "5",
+        "avoid": "Invented proof, fake urgency, personal-attribute claims, or guaranteed approval."
+      },
+      "fullWidth": false,
+      "defaultValue": "5",
+      "showWhen": {
+        "key": "adFormat",
+        "equals": "Carousel"
+      }
+    },
+    {
+      "key": "ctaPreference",
+      "label": "Preferred CTA",
+      "placeholder": "Select a CTA or use Auto",
+      "required": false,
+      "type": "select",
+      "group": "compliance",
+      "groupTitle": "Compliance & Output",
+      "hint": "Auto chooses a standard platform CTA that matches the campaign goal.",
+      "help": {
+        "what": "Preferred CTA.",
+        "why": "The preferred action affects both button selection and the closing language of the ad.",
+        "example": "Auto",
+        "avoid": "Invented proof, fake urgency, personal-attribute claims, or guaranteed approval."
+      },
+      "fullWidth": false,
+      "options": [
+        "Auto",
+        "Learn more",
+        "Shop now",
+        "Sign up",
+        "Book now",
+        "Get quote",
+        "Download",
+        "Contact us"
+      ],
+      "defaultValue": "Auto"
+    },
+    {
+      "key": "testingAngles",
+      "label": "Preferred ad angles",
+      "placeholder": "Auto\nCore benefit\nProblem and solution\nProduct use case\nDifferentiation\nApproved proof\nOffer or promotion\nObjection handling",
+      "required": false,
+      "type": "textarea",
+      "group": "compliance",
+      "groupTitle": "Compliance & Output",
+      "hint": "Only select angles that match the available facts and campaign strategy. Select all that apply (one per line). Options: Auto; Core benefit; Problem and solution; Product use case; Differentiation; Approved proof; Offer or promotion; Objection handling.",
+      "help": {
+        "what": "Preferred ad angles.",
+        "why": "Advertisers may need specific strategic angles while the model still prevents unsupported use of proof or offers.",
+        "example": "Auto",
+        "avoid": "Invented proof, fake urgency, personal-attribute claims, or guaranteed approval."
+      },
+      "fullWidth": true,
+      "defaultValue": "Auto"
+    },
+    {
+      "key": "regulatedCategory",
+      "label": "Regulated category",
+      "placeholder": "Select a category when relevant",
+      "required": false,
+      "type": "select",
+      "group": "compliance",
+      "groupTitle": "Compliance & Output",
+      "hint": "This activates more cautious claim handling and additional review notes.",
+      "help": {
+        "what": "Regulated category.",
+        "why": "High-stakes and regulated advertising requires materially different wording and review safeguards.",
+        "example": "None",
+        "avoid": "Health/finance claims without approved disclosures."
+      },
+      "fullWidth": false,
+      "options": [
+        "None",
+        "Health or medical",
+        "Financial or insurance",
+        "Legal or tax",
+        "Employment, housing, or credit",
+        "Alcohol or gambling",
+        "Political or social issue",
+        "Children or minors",
+        "Other or unsure"
+      ],
+      "defaultValue": "None"
+    },
+    {
+      "key": "mandatoryDisclosures",
+      "label": "Required disclosures",
+      "placeholder": "Paste approved legal text, eligibility terms, warnings, or required qualifiers.",
+      "required": false,
+      "type": "textarea",
+      "group": "compliance",
+      "groupTitle": "Compliance & Output",
+      "hint": "Use exact approved wording where possible and state where it must appear.",
+      "help": {
+        "what": "Required disclosures.",
+        "why": "The model cannot safely invent legally required disclosures or jurisdiction-specific wording.",
+        "example": "Paste approved legal text, eligibility terms, warnings, or required qualifiers.",
+        "avoid": "Invented proof, fake urgency, personal-attribute claims, or guaranteed approval."
+      },
+      "fullWidth": true,
+      "showWhen": {
+        "key": "regulatedCategory",
+        "notEquals": "None"
+      }
+    },
+    {
+      "key": "prohibitedClaims",
+      "label": "Claims to avoid",
+      "placeholder": "List prohibited promises, phrases, comparisons, or product claims.",
+      "required": false,
+      "type": "textarea",
+      "group": "compliance",
+      "groupTitle": "Compliance & Output",
+      "hint": "Include internal brand restrictions and wording that must not appear.",
+      "help": {
+        "what": "Claims to avoid.",
+        "why": "Advertiser-specific restrictions cannot always be inferred from general policy rules.",
+        "example": "List prohibited promises, phrases, comparisons, or product claims.",
+        "avoid": "Invented proof, fake urgency, personal-attribute claims, or guaranteed approval."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "additionalRequirements",
+      "label": "Additional requirements",
+      "placeholder": "Add any remaining instructions that materially affect the final ad package.",
+      "required": false,
+      "type": "textarea",
+      "group": "compliance",
+      "groupTitle": "Compliance & Output",
+      "hint": "Use this for essential requirements not covered by the other fields.",
+      "help": {
+        "what": "Additional requirements.",
+        "why": "One controlled catch-all field prevents multiple overlapping miscellaneous inputs.",
+        "example": "Add any remaining instructions that materially affect the final ad package.",
+        "avoid": "Invented proof, fake urgency, personal-attribute claims, or guaranteed approval."
+      },
+      "fullWidth": true
+    }
+  ]
+}

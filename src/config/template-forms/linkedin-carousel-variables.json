@@ -1,0 +1,803 @@
+{
+  "slug": "linkedin-carousel",
+  "title": "LinkedIn Carousel",
+  "version": 1,
+  "generatedAt": "2026-07-11T11:41:59.642Z",
+  "fieldCount": 36,
+  "requiredKeys": [
+    "carouselTopic",
+    "primaryGoal",
+    "targetAudience",
+    "coreMessage",
+    "keyInformation",
+    "outputLanguage"
+  ],
+  "groups": [
+    {
+      "id": "essentials",
+      "title": "Essentials",
+      "description": "Topic, goal, audience, takeaway, key info, structure, publisher, slides, CTA, tone, language.",
+      "defaultOpen": true
+    },
+    {
+      "id": "content",
+      "title": "Content & Proof",
+      "description": "Category, sources, proof, story, offer, URL, must-include, restrictions.",
+      "defaultOpen": false
+    },
+    {
+      "id": "visual",
+      "title": "Brand & Visual",
+      "description": "Brand voice, visual system, format, imagery, colors, attribution, emoji.",
+      "defaultOpen": false
+    },
+    {
+      "id": "caption",
+      "title": "Caption & Output",
+      "description": "Caption length, hashtags, cover hooks, accessibility, design notes.",
+      "defaultOpen": false
+    },
+    {
+      "id": "compliance",
+      "title": "Compliance",
+      "description": "Jurisdiction, disclosure, compliance notes, and privacy restrictions.",
+      "defaultOpen": false
+    }
+  ],
+  "variables": [
+    {
+      "key": "carouselTopic",
+      "label": "Carousel topic",
+      "placeholder": "What professional topic will this document carousel cover?",
+      "required": true,
+      "type": "textarea",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "One clear subject — not several unrelated ideas.",
+      "help": {
+        "what": "Carousel topic.",
+        "why": "Defines the carousel’s central subject.",
+        "example": "How small teams write honest product updates",
+        "avoid": "Vague multi-topic briefs."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "primaryGoal",
+      "label": "Primary goal",
+      "placeholder": "Select the main outcome",
+      "required": true,
+      "type": "select",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "One dominant goal for structure and CTA.",
+      "help": {
+        "what": "Primary goal.",
+        "why": "Determines progression and final CTA intensity.",
+        "example": "Educate",
+        "avoid": "Invented stats, fake social proof, engagement bait, or private data."
+      },
+      "fullWidth": false,
+      "options": [
+        "Educate",
+        "Build authority",
+        "Share a framework",
+        "Support a launch",
+        "Promote an offer",
+        "Start a discussion",
+        "Document a process",
+        "Correct a misconception"
+      ],
+      "defaultValue": "Educate"
+    },
+    {
+      "key": "targetAudience",
+      "label": "Target audience",
+      "placeholder": "Who should read this on LinkedIn?",
+      "required": true,
+      "type": "textarea",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Professional role, context, and knowledge level.",
+      "help": {
+        "what": "Target audience.",
+        "why": "Shapes vocabulary, examples, and depth.",
+        "example": "Who should read this on LinkedIn?",
+        "avoid": "Invented stats, fake social proof, engagement bait, or private data."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "coreMessage",
+      "label": "Core takeaway",
+      "placeholder": "What should readers remember after the last slide?",
+      "required": true,
+      "type": "textarea",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "One central takeaway, not a list of competing messages.",
+      "help": {
+        "what": "Core takeaway.",
+        "why": "Keeps every slide aligned to one outcome.",
+        "example": "What should readers remember after the last slide?",
+        "avoid": "Invented stats, fake social proof, engagement bait, or private data."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "keyInformation",
+      "label": "Key information",
+      "placeholder": "Facts, steps, points, or arguments the slides must cover",
+      "required": true,
+      "type": "textarea",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Only accurate, approved information.",
+      "help": {
+        "what": "Key information.",
+        "why": "Factual basis for slide content — no invention.",
+        "example": "Facts, steps, points, or arguments the slides must cover",
+        "avoid": "Invented stats, fake social proof, engagement bait, or private data."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "carouselType",
+      "label": "Carousel structure",
+      "placeholder": "Choose a structure",
+      "required": false,
+      "type": "select",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Auto picks a structure from topic and goal.",
+      "help": {
+        "what": "Carousel structure.",
+        "why": "Different structures need different slide roles.",
+        "example": "Auto",
+        "avoid": "Invented stats, fake social proof, engagement bait, or private data."
+      },
+      "fullWidth": false,
+      "options": [
+        "Auto",
+        "Step-by-step guide",
+        "Mistakes and fixes",
+        "Framework",
+        "Checklist",
+        "Story and lesson",
+        "Case-study breakdown",
+        "Myth versus reality",
+        "Opinion and argument"
+      ],
+      "defaultValue": "Auto"
+    },
+    {
+      "key": "publisherType",
+      "label": "Publishing as",
+      "placeholder": "Who is publishing?",
+      "required": false,
+      "type": "select",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Controls first person vs organizational voice.",
+      "help": {
+        "what": "Publishing as.",
+        "why": "Perspective must match the real publisher type.",
+        "example": "Personal profile",
+        "avoid": "Invented stats, fake social proof, engagement bait, or private data."
+      },
+      "fullWidth": false,
+      "options": [
+        "Personal profile",
+        "Company Page",
+        "Employee advocate",
+        "Independent publication"
+      ],
+      "defaultValue": "Personal profile"
+    },
+    {
+      "key": "slideCount",
+      "label": "Slide count",
+      "placeholder": "6–15 slides including cover and close",
+      "required": false,
+      "type": "select",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Includes cover + development + final slide.",
+      "help": {
+        "what": "Slide count.",
+        "why": "Controls depth without padding weak ideas.",
+        "example": "8",
+        "avoid": "Invented stats, fake social proof, engagement bait, or private data."
+      },
+      "fullWidth": false,
+      "options": [
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15"
+      ],
+      "defaultValue": "8"
+    },
+    {
+      "key": "ctaObjective",
+      "label": "CTA objective",
+      "placeholder": "What should readers do next?",
+      "required": false,
+      "type": "select",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Auto chooses the least promotional action that fits the goal.",
+      "help": {
+        "what": "CTA objective.",
+        "why": "Final slide and caption CTA must stay proportional.",
+        "example": "Auto",
+        "avoid": "Invented stats, fake social proof, engagement bait, or private data."
+      },
+      "fullWidth": false,
+      "options": [
+        "Auto",
+        "No CTA",
+        "Invite discussion",
+        "Visit a link",
+        "Download a resource",
+        "Follow for more",
+        "Book a call",
+        "Try or buy"
+      ],
+      "defaultValue": "Auto"
+    },
+    {
+      "key": "tone",
+      "label": "Tone",
+      "placeholder": "Select tone",
+      "required": false,
+      "type": "select",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Professional LinkedIn voice without hype.",
+      "help": {
+        "what": "Tone.",
+        "why": "Tone changes how the same facts are received.",
+        "example": "Clear and natural",
+        "avoid": "Invented stats, fake social proof, engagement bait, or private data."
+      },
+      "fullWidth": false,
+      "options": [
+        "Clear and natural",
+        "Educational",
+        "Authoritative",
+        "Conversational",
+        "Analytical",
+        "Warm and human",
+        "Direct"
+      ],
+      "defaultValue": "Clear and natural"
+    },
+    {
+      "key": "outputLanguage",
+      "label": "Output language",
+      "placeholder": "English",
+      "required": true,
+      "type": "text",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Language for slides, caption, and notes.",
+      "help": {
+        "what": "Output language.",
+        "why": "Cannot always be inferred from the topic.",
+        "example": "English",
+        "avoid": "Invented stats, fake social proof, engagement bait, or private data."
+      },
+      "fullWidth": false,
+      "defaultValue": "English"
+    },
+    {
+      "key": "topicCategory",
+      "label": "Topic category",
+      "placeholder": "Select when high-stakes content applies",
+      "required": false,
+      "type": "select",
+      "group": "content",
+      "groupTitle": "Content & Proof",
+      "hint": "Activates extra caution for regulated subjects.",
+      "help": {
+        "what": "Topic category.",
+        "why": "High-stakes topics need cautious wording.",
+        "example": "General professional",
+        "avoid": "Invented stats, fake social proof, engagement bait, or private data."
+      },
+      "fullWidth": false,
+      "options": [
+        "General professional",
+        "Health or medical",
+        "Legal",
+        "Financial",
+        "Employment",
+        "Child safety",
+        "Political or public policy",
+        "Other regulated"
+      ],
+      "defaultValue": "General professional"
+    },
+    {
+      "key": "sourceMaterial",
+      "label": "Source material",
+      "placeholder": "Notes, research excerpts, product docs, approved drafts",
+      "required": false,
+      "type": "textarea",
+      "group": "content",
+      "groupTitle": "Content & Proof",
+      "hint": "Paste only material the slides may use.",
+      "help": {
+        "what": "Source material.",
+        "why": "Improves accuracy without inventing evidence.",
+        "example": "Notes, research excerpts, product docs, approved drafts",
+        "avoid": "Invented stats, fake social proof, engagement bait, or private data."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "proofPoints",
+      "label": "Verified proof points",
+      "placeholder": "Only verified stats, results, or credentials",
+      "required": false,
+      "type": "textarea",
+      "group": "content",
+      "groupTitle": "Content & Proof",
+      "hint": "Include context and measurement periods when known.",
+      "help": {
+        "what": "Verified proof points.",
+        "why": "Prevents fabricated social proof or metrics.",
+        "example": "Only verified stats, results, or credentials",
+        "avoid": "Invented stats, fake social proof, engagement bait, or private data."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "examplesOrStory",
+      "label": "Example or story",
+      "placeholder": "Approved anecdote or example only",
+      "required": false,
+      "type": "textarea",
+      "group": "content",
+      "groupTitle": "Content & Proof",
+      "hint": "Do not invent first-hand experience.",
+      "help": {
+        "what": "Example or story.",
+        "why": "Story slides need real supplied narrative material.",
+        "example": "Approved anecdote or example only",
+        "avoid": "Invented stats, fake social proof, engagement bait, or private data."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "offerOrResource",
+      "label": "Offer or resource",
+      "placeholder": "Real offer, resource, or next step if promotional",
+      "required": false,
+      "type": "textarea",
+      "group": "content",
+      "groupTitle": "Content & Proof",
+      "hint": "Only confirmed commercial or resource details.",
+      "help": {
+        "what": "Offer or resource.",
+        "why": "CTA must not invent products or freebies.",
+        "example": "Real offer, resource, or next step if promotional",
+        "avoid": "Invented stats, fake social proof, engagement bait, or private data."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "destinationUrl",
+      "label": "Destination URL",
+      "placeholder": "https://www.creatornivo.com/…",
+      "required": false,
+      "type": "text",
+      "group": "content",
+      "groupTitle": "Content & Proof",
+      "hint": "Only a real URL — never invented.",
+      "help": {
+        "what": "Destination URL.",
+        "why": "Links must be accurate when used in caption or final slide.",
+        "example": "https://www.creatornivo.com/…",
+        "avoid": "Invented stats, fake social proof, engagement bait, or private data."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "mustInclude",
+      "label": "Must include",
+      "placeholder": "Required points, terms, or sections",
+      "required": false,
+      "type": "textarea",
+      "group": "content",
+      "groupTitle": "Content & Proof",
+      "hint": "Non-negotiable content that must appear.",
+      "help": {
+        "what": "Must include.",
+        "why": "Prevents omission of critical messages.",
+        "example": "Required points, terms, or sections",
+        "avoid": "Invented stats, fake social proof, engagement bait, or private data."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "contentRestrictions",
+      "label": "Content restrictions",
+      "placeholder": "Topics, claims, or words to avoid",
+      "required": false,
+      "type": "textarea",
+      "group": "content",
+      "groupTitle": "Content & Proof",
+      "hint": "Brand, legal, or editorial exclusions.",
+      "help": {
+        "what": "Content restrictions.",
+        "why": "User-specific bans cannot be inferred.",
+        "example": "Topics, claims, or words to avoid",
+        "avoid": "Invented stats, fake social proof, engagement bait, or private data."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "brandVoice",
+      "label": "Brand voice",
+      "placeholder": "How this brand or author usually sounds",
+      "required": false,
+      "type": "textarea",
+      "group": "visual",
+      "groupTitle": "Brand & Visual",
+      "hint": "Leave blank for a natural professional voice.",
+      "help": {
+        "what": "Brand voice.",
+        "why": "Distinctive voice cannot be guessed from topic alone.",
+        "example": "How this brand or author usually sounds",
+        "avoid": "Invented stats, fake social proof, engagement bait, or private data."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "visualStyle",
+      "label": "Visual style",
+      "placeholder": "Overall design system",
+      "required": false,
+      "type": "select",
+      "group": "visual",
+      "groupTitle": "Brand & Visual",
+      "hint": "Auto = clean professional hierarchy.",
+      "help": {
+        "what": "Visual style.",
+        "why": "Keeps slide system consistent.",
+        "example": "Auto",
+        "avoid": "Invented stats, fake social proof, engagement bait, or private data."
+      },
+      "fullWidth": false,
+      "options": [
+        "Auto",
+        "Minimal clean",
+        "Bold editorial",
+        "Data-led",
+        "Soft professional",
+        "High contrast"
+      ],
+      "defaultValue": "Auto"
+    },
+    {
+      "key": "aspectRatio",
+      "label": "Slide format",
+      "placeholder": "Page aspect ratio",
+      "required": false,
+      "type": "select",
+      "group": "visual",
+      "groupTitle": "Brand & Visual",
+      "hint": "Common LinkedIn document formats.",
+      "help": {
+        "what": "Slide format.",
+        "why": "Affects layout recommendations.",
+        "example": "1:1",
+        "avoid": "Invented stats, fake social proof, engagement bait, or private data."
+      },
+      "fullWidth": false,
+      "options": [
+        "1:1",
+        "4:5",
+        "16:9",
+        "Auto"
+      ],
+      "defaultValue": "1:1"
+    },
+    {
+      "key": "imageryStyle",
+      "label": "Imagery preference",
+      "placeholder": "What kind of visuals?",
+      "required": false,
+      "type": "select",
+      "group": "visual",
+      "groupTitle": "Brand & Visual",
+      "hint": "Do not request stock photos of fake customers.",
+      "help": {
+        "what": "Imagery preference.",
+        "why": "Visual direction must stay producible and honest.",
+        "example": "Icons and simple diagrams",
+        "avoid": "Invented stats, fake social proof, engagement bait, or private data."
+      },
+      "fullWidth": false,
+      "options": [
+        "Icons and simple diagrams",
+        "Typography-led",
+        "Charts only with real data",
+        "Product screenshots if supplied",
+        "Illustration",
+        "Photo only if real asset exists",
+        "Auto"
+      ],
+      "defaultValue": "Icons and simple diagrams"
+    },
+    {
+      "key": "brandColors",
+      "label": "Brand colors",
+      "placeholder": "e.g. #0F172A, #2563EB — or leave blank",
+      "required": false,
+      "type": "text",
+      "group": "visual",
+      "groupTitle": "Brand & Visual",
+      "hint": "Hex or named brand colors if known.",
+      "help": {
+        "what": "Brand colors.",
+        "why": "Supports consistent production notes.",
+        "example": "e.g. #0F172A, #2563EB — or leave blank",
+        "avoid": "Invented stats, fake social proof, engagement bait, or private data."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "attributionName",
+      "label": "Name or attribution",
+      "placeholder": "Optional subtle footer name",
+      "required": false,
+      "type": "text",
+      "group": "visual",
+      "groupTitle": "Brand & Visual",
+      "hint": "Subtle only — not a long signature every slide.",
+      "help": {
+        "what": "Name or attribution.",
+        "why": "Attribution must match real identity.",
+        "example": "Optional subtle footer name",
+        "avoid": "Invented stats, fake social proof, engagement bait, or private data."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "emojiUse",
+      "label": "Emoji use",
+      "placeholder": "Emoji policy",
+      "required": false,
+      "type": "select",
+      "group": "visual",
+      "groupTitle": "Brand & Visual",
+      "hint": "Usually none on slides; minimal in caption if any.",
+      "help": {
+        "what": "Emoji use.",
+        "why": "Emoji preference varies by brand.",
+        "example": "None",
+        "avoid": "Invented stats, fake social proof, engagement bait, or private data."
+      },
+      "fullWidth": false,
+      "options": [
+        "None",
+        "Minimal",
+        "Moderate"
+      ],
+      "defaultValue": "None"
+    },
+    {
+      "key": "captionLength",
+      "label": "Caption length",
+      "placeholder": "Accompanying LinkedIn caption depth",
+      "required": false,
+      "type": "select",
+      "group": "caption",
+      "groupTitle": "Caption & Output",
+      "hint": "Short ~300–600, Standard ~600–1200, Detailed ~1200–2000 chars.",
+      "help": {
+        "what": "Caption length.",
+        "why": "Caption complements slides without repeating them.",
+        "example": "Standard",
+        "avoid": "Invented stats, fake social proof, engagement bait, or private data."
+      },
+      "fullWidth": false,
+      "options": [
+        "Short",
+        "Standard",
+        "Detailed"
+      ],
+      "defaultValue": "Standard"
+    },
+    {
+      "key": "hashtagMode",
+      "label": "Hashtag mode",
+      "placeholder": "How hashtags should be handled",
+      "required": false,
+      "type": "select",
+      "group": "caption",
+      "groupTitle": "Caption & Output",
+      "hint": "Auto suggests 0–5 relevant tags; Custom uses only your list.",
+      "help": {
+        "what": "Hashtag mode.",
+        "why": "Hashtag strategy is account-specific.",
+        "example": "Auto",
+        "avoid": "Invented stats, fake social proof, engagement bait, or private data."
+      },
+      "fullWidth": false,
+      "options": [
+        "None",
+        "Auto",
+        "Custom"
+      ],
+      "defaultValue": "Auto"
+    },
+    {
+      "key": "customHashtags",
+      "label": "Custom hashtags",
+      "placeholder": "#BrandTag #TopicTag",
+      "required": false,
+      "type": "text",
+      "group": "caption",
+      "groupTitle": "Caption & Output",
+      "hint": "Shown when Hashtag mode is Custom.",
+      "help": {
+        "what": "Custom hashtags.",
+        "why": "Campaign tags must not be invented when Custom is selected.",
+        "example": "#BrandTag #TopicTag",
+        "avoid": "Invented stats, fake social proof, engagement bait, or private data."
+      },
+      "fullWidth": false,
+      "showWhen": {
+        "key": "hashtagMode",
+        "equals": "Custom"
+      }
+    },
+    {
+      "key": "coverHookCount",
+      "label": "Cover hook options",
+      "placeholder": "How many cover options to generate",
+      "required": false,
+      "type": "select",
+      "group": "caption",
+      "groupTitle": "Caption & Output",
+      "hint": "Distinct angles, not one-word swaps.",
+      "help": {
+        "what": "Cover hook options.",
+        "why": "Gives cover alternatives without noise.",
+        "example": "3",
+        "avoid": "Invented stats, fake social proof, engagement bait, or private data."
+      },
+      "fullWidth": false,
+      "options": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "defaultValue": "3"
+    },
+    {
+      "key": "includeAltText",
+      "label": "Accessibility text",
+      "placeholder": "Include accessibility summary?",
+      "required": false,
+      "type": "select",
+      "group": "caption",
+      "groupTitle": "Caption & Output",
+      "hint": "Document summary + optional per-slide notes when visuals add meaning.",
+      "help": {
+        "what": "Accessibility text.",
+        "why": "Supports accessible PDF / publishing workflows.",
+        "example": "Off",
+        "avoid": "Invented stats, fake social proof, engagement bait, or private data."
+      },
+      "fullWidth": false,
+      "options": [
+        "Off",
+        "On"
+      ],
+      "defaultValue": "Off"
+    },
+    {
+      "key": "includeDesignNotes",
+      "label": "Design notes",
+      "placeholder": "Include production notes per slide?",
+      "required": false,
+      "type": "select",
+      "group": "caption",
+      "groupTitle": "Caption & Output",
+      "hint": "Layout, hierarchy, and visual device guidance.",
+      "help": {
+        "what": "Design notes.",
+        "why": "Helps designers produce the document consistently.",
+        "example": "On",
+        "avoid": "Invented stats, fake social proof, engagement bait, or private data."
+      },
+      "fullWidth": false,
+      "options": [
+        "Off",
+        "On"
+      ],
+      "defaultValue": "On"
+    },
+    {
+      "key": "jurisdiction",
+      "label": "Relevant jurisdiction",
+      "placeholder": "e.g. United Kingdom, EU — only if needed",
+      "required": false,
+      "type": "text",
+      "group": "compliance",
+      "groupTitle": "Compliance",
+      "hint": "For high-stakes topics that vary by region.",
+      "help": {
+        "what": "Relevant jurisdiction.",
+        "why": "Avoids false universal legal/medical claims.",
+        "example": "e.g. United Kingdom, EU — only if needed",
+        "avoid": "Invented stats, fake social proof, engagement bait, or private data."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "requiredDisclosure",
+      "label": "Required disclosure",
+      "placeholder": "Exact sponsorship / affiliation wording if required",
+      "required": false,
+      "type": "textarea",
+      "group": "compliance",
+      "groupTitle": "Compliance",
+      "hint": "Included nearly verbatim when supplied.",
+      "help": {
+        "what": "Required disclosure.",
+        "why": "Commercial relationships must be transparent.",
+        "example": "Exact sponsorship / affiliation wording if required",
+        "avoid": "Invented stats, fake social proof, engagement bait, or private data."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "complianceNotes",
+      "label": "Claims and compliance notes",
+      "placeholder": "Claim limits, required caveats, review needs",
+      "required": false,
+      "type": "textarea",
+      "group": "compliance",
+      "groupTitle": "Compliance",
+      "hint": "Anything reviewers must respect.",
+      "help": {
+        "what": "Claims and compliance notes.",
+        "why": "Prevents overclaiming on regulated subjects.",
+        "example": "Claim limits, required caveats, review needs",
+        "avoid": "Invented stats, fake social proof, engagement bait, or private data."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "privacyRestrictions",
+      "label": "Privacy restrictions",
+      "placeholder": "Names, clients, metrics, or data that must not appear",
+      "required": false,
+      "type": "textarea",
+      "group": "compliance",
+      "groupTitle": "Compliance",
+      "hint": "Omit or generalize protected details.",
+      "help": {
+        "what": "Privacy restrictions.",
+        "why": "Protects confidential and personal information.",
+        "example": "Names, clients, metrics, or data that must not appear",
+        "avoid": "Invented stats, fake social proof, engagement bait, or private data."
+      },
+      "fullWidth": true
+    }
+  ]
+}

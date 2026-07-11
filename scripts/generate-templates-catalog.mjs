@@ -113,6 +113,86 @@ const FULL_FORM_SCHEMAS = {
     ),
     buildHint: "node scripts/build-product-description-form.mjs",
   },
+  "seo-meta-tags": {
+    path: path.join(
+      root,
+      "src",
+      "config",
+      "template-forms",
+      "seo-meta-tags-variables.json",
+    ),
+    buildHint: "node scripts/build-seo-meta-tags-form.mjs",
+  },
+  "short-form-video": {
+    path: path.join(
+      root,
+      "src",
+      "config",
+      "template-forms",
+      "short-form-video-variables.json",
+    ),
+    buildHint: "node scripts/build-short-form-video-form.mjs",
+  },
+  "x-thread": {
+    path: path.join(
+      root,
+      "src",
+      "config",
+      "template-forms",
+      "x-thread-variables.json",
+    ),
+    buildHint: "node scripts/build-x-thread-form.mjs",
+  },
+  "case-study": {
+    path: path.join(
+      root,
+      "src",
+      "config",
+      "template-forms",
+      "case-study-variables.json",
+    ),
+    buildHint: "node scripts/build-case-study-form.mjs",
+  },
+  "landing-page-copy": {
+    path: path.join(
+      root,
+      "src",
+      "config",
+      "template-forms",
+      "landing-page-copy-variables.json",
+    ),
+    buildHint: "node scripts/build-landing-page-copy-form.mjs",
+  },
+  "linkedin-carousel": {
+    path: path.join(
+      root,
+      "src",
+      "config",
+      "template-forms",
+      "linkedin-carousel-variables.json",
+    ),
+    buildHint: "node scripts/build-linkedin-carousel-form.mjs",
+  },
+  "paid-ad-copy": {
+    path: path.join(
+      root,
+      "src",
+      "config",
+      "template-forms",
+      "paid-ad-copy-variables.json",
+    ),
+    buildHint: "node scripts/build-paid-ad-copy-form.mjs",
+  },
+  "youtube-script": {
+    path: path.join(
+      root,
+      "src",
+      "config",
+      "template-forms",
+      "youtube-script-variables.json",
+    ),
+    buildHint: "node scripts/build-youtube-script-form.mjs",
+  },
 };
 
 function loadFullFormVariables(slug) {
@@ -139,112 +219,13 @@ function loadFullFormVariables(slug) {
     hint: v.hint,
     options: v.options,
     fullWidth: Boolean(v.fullWidth),
+    defaultValue: v.defaultValue,
+    showWhen: v.showWhen,
   }));
 }
 
 const curated = {
   // full-form templates use loadFullFormVariables() via FULL_FORM_SCHEMAS
-  "seo-meta-tags": {
-    required: ["topic", "keyword", "brand", "intent"],
-    optional: [
-      "audience",
-      "pageSummary",
-      "primaryValue",
-      "secondaryKeywords",
-      "language",
-      "market",
-    ],
-  },
-  "x-thread": {
-    required: ["topic", "tone", "audience"],
-    optional: [
-      "mainMessage",
-      "goal",
-      "tweetCount",
-      "authorRole",
-      "sourceDetails",
-      "desiredAction",
-      "language",
-    ],
-  },
-  "case-study": {
-    required: [
-      "clientName",
-      "clientIndustry",
-      "productName",
-      "challenge",
-      "result",
-      "tone",
-    ],
-    optional: [
-      "productDescription",
-      "implementation",
-      "verifiedMetrics",
-      "targetAudience",
-      "desiredAction",
-      "language",
-    ],
-  },
-  "landing-page-copy": {
-    required: ["productName", "productTagline", "audience", "painPoint", "tone"],
-    optional: [
-      "productDescription",
-      "desiredOutcome",
-      "confirmedBenefits",
-      "differentiator",
-      "desiredAction",
-      "pageGoal",
-      "language",
-    ],
-  },
-  "linkedin-carousel": {
-    required: ["topic", "tone", "audience"],
-    optional: [
-      "mainMessage",
-      "goal",
-      "slideCount",
-      "sourceDetails",
-      "desiredAction",
-      "brandVoice",
-      "language",
-    ],
-  },
-  "paid-ad-copy": {
-    required: ["offer", "platform", "audience", "goal"],
-    optional: [
-      "productName",
-      "painPoint",
-      "primaryBenefit",
-      "tone",
-      "desiredAction",
-      "landingPageMessage",
-      "language",
-    ],
-  },
-  "short-form-video": {
-    required: ["topic", "platform", "duration", "tone"],
-    optional: [
-      "audience",
-      "mainMessage",
-      "goal",
-      "desiredAction",
-      "sourceDetails",
-      "language",
-    ],
-  },
-  "youtube-script": {
-    required: ["topic", "duration", "tone"],
-    optional: [
-      "audience",
-      "mainMessage",
-      "goal",
-      "videoFormat",
-      "desiredAction",
-      "sourceDetails",
-      "channelNiche",
-      "language",
-    ],
-  },
 };
 
 const meta = {

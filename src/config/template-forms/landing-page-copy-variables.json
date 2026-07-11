@@ -1,0 +1,763 @@
+{
+  "slug": "landing-page-copy",
+  "title": "Landing Page Copy",
+  "version": 1,
+  "generatedAt": "2026-07-11T11:32:05.131Z",
+  "fieldCount": 36,
+  "requiredKeys": [
+    "brandOrCompany",
+    "offerName",
+    "offerType",
+    "primaryGoal",
+    "targetAudience",
+    "coreProblem",
+    "mainPromise"
+  ],
+  "groups": [
+    {
+      "id": "essentials",
+      "title": "Essentials",
+      "description": "Brand, offer, type, goal, audience, problem, promise, CTA, URL, language, page depth.",
+      "defaultOpen": true
+    },
+    {
+      "id": "audience",
+      "title": "Audience & Positioning",
+      "description": "Context, outcomes, differentiators, awareness, objections, alternatives.",
+      "defaultOpen": false
+    },
+    {
+      "id": "offer",
+      "title": "Offer & Conversion",
+      "description": "Benefits, features, pricing, conversion path, secondary CTA, urgency.",
+      "defaultOpen": false
+    },
+    {
+      "id": "brand",
+      "title": "Brand, Proof & Compliance",
+      "description": "Voice, proof, regulated topics, jurisdiction, disclosures, privacy notes.",
+      "defaultOpen": false
+    },
+    {
+      "id": "seo",
+      "title": "SEO & Output Settings",
+      "description": "Keywords, FAQ mode, and additional requirements.",
+      "defaultOpen": false
+    }
+  ],
+  "variables": [
+    {
+      "key": "brandOrCompany",
+      "label": "Brand or company",
+      "placeholder": "Example: Creatornivo",
+      "required": true,
+      "type": "text",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Enter the brand, company, project, or creator name behind the offer.",
+      "help": {
+        "what": "Brand or company.",
+        "why": "It identifies who is making the offer and supports accurate brand references.",
+        "example": "Creatornivo",
+        "avoid": "Inventing a brand name."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "offerName",
+      "label": "Offer name",
+      "placeholder": "Example: AI Content Template Library",
+      "required": true,
+      "type": "text",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Name the product, service, application, event, resource, or campaign.",
+      "help": {
+        "what": "Offer name.",
+        "why": "The landing page must clearly identify what is being presented.",
+        "example": "AI Content Template Library",
+        "avoid": "Vague working titles without a real offer name."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "offerType",
+      "label": "Offer type",
+      "placeholder": "Select the closest offer type",
+      "required": true,
+      "type": "select",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "This changes the page structure, terminology, proof needs, and conversion flow.",
+      "help": {
+        "what": "Offer type.",
+        "why": "Different offer types require different explanations, sections, and calls to action.",
+        "example": "Select the closest offer type",
+        "avoid": "Invented proof, fake urgency, unsupported guarantees, or fabricated pricing."
+      },
+      "fullWidth": false,
+      "options": [
+        "SaaS or software",
+        "Professional service",
+        "Physical product",
+        "Digital product",
+        "Mobile or web app",
+        "Event or webinar",
+        "Nonprofit or cause",
+        "Other offer"
+      ]
+    },
+    {
+      "key": "primaryGoal",
+      "label": "Primary page goal",
+      "placeholder": "Example: Get visitors to start a free trial",
+      "required": true,
+      "type": "text",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Describe the single most important action or result for this page.",
+      "help": {
+        "what": "Primary page goal.",
+        "why": "The goal determines the message hierarchy and dominant CTA.",
+        "example": "Example: Get visitors to start a free trial",
+        "avoid": "Invented proof, fake urgency, unsupported guarantees, or fabricated pricing."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "targetAudience",
+      "label": "Target audience",
+      "placeholder": "Example: Solo creators who need faster content production without hiring a team",
+      "required": true,
+      "type": "textarea",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Describe the people or organizations this offer is specifically for.",
+      "help": {
+        "what": "Target audience.",
+        "why": "Audience details materially affect language, benefits, objections, and positioning.",
+        "example": "Example: Solo creators who need faster content production without hiring a team",
+        "avoid": "Invented proof, fake urgency, unsupported guarantees, or fabricated pricing."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "coreProblem",
+      "label": "Core problem",
+      "placeholder": "What frustrating, costly, slow, or difficult situation does the offer address?",
+      "required": true,
+      "type": "textarea",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Focus on the main problem the visitor already recognizes or experiences.",
+      "help": {
+        "what": "Core problem.",
+        "why": "The page needs an accurate problem context without inventing audience pain points.",
+        "example": "What frustrating, costly, slow, or difficult situation does the offer address?",
+        "avoid": "Invented proof, fake urgency, unsupported guarantees, or fabricated pricing."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "mainPromise",
+      "label": "Main value proposition",
+      "placeholder": "Explain the main value or outcome without making an unsupported guarantee",
+      "required": true,
+      "type": "textarea",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "State why the offer matters and what useful change it can help create.",
+      "help": {
+        "what": "Main value proposition.",
+        "why": "It provides the central promise around which the page is structured.",
+        "example": "Clearer first drafts without inventing claims",
+        "avoid": "Unsupported guarantees."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "primaryCta",
+      "label": "Primary CTA",
+      "placeholder": "Example: Start Free Trial",
+      "required": false,
+      "type": "text",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Leave as Auto to generate the clearest action for the selected goal.",
+      "help": {
+        "what": "Primary CTA.",
+        "why": "It lets the user control the exact primary action when required.",
+        "example": "Auto",
+        "avoid": "Invented proof, fake urgency, unsupported guarantees, or fabricated pricing."
+      },
+      "fullWidth": false,
+      "defaultValue": "Auto"
+    },
+    {
+      "key": "destinationUrl",
+      "label": "CTA destination URL",
+      "placeholder": "https://example.com/signup",
+      "required": false,
+      "type": "text",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Add the page, form, checkout, booking, download, or signup destination.",
+      "help": {
+        "what": "CTA destination URL.",
+        "why": "It helps keep CTA references consistent with the real conversion destination.",
+        "example": "https://example.com/signup",
+        "avoid": "Invented proof, fake urgency, unsupported guarantees, or fabricated pricing."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "outputLanguage",
+      "label": "Output language",
+      "placeholder": "Example: English, Ukrainian, Polish",
+      "required": false,
+      "type": "text",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Enter the language in which the landing page should be written.",
+      "help": {
+        "what": "Output language.",
+        "why": "A free-text language field supports multilingual output without a restrictive language list.",
+        "example": "English",
+        "avoid": "Invented proof, fake urgency, unsupported guarantees, or fabricated pricing."
+      },
+      "fullWidth": false,
+      "defaultValue": "English"
+    },
+    {
+      "key": "pageLength",
+      "label": "Page depth",
+      "placeholder": "Choose the preferred page depth",
+      "required": false,
+      "type": "select",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Auto selects the shortest depth that explains the offer and handles key objections.",
+      "help": {
+        "what": "Page depth.",
+        "why": "It controls content depth without asking the user for a technical word count.",
+        "example": "Auto",
+        "avoid": "Invented proof, fake urgency, unsupported guarantees, or fabricated pricing."
+      },
+      "fullWidth": false,
+      "options": [
+        "Auto",
+        "Concise",
+        "Standard",
+        "Detailed"
+      ],
+      "defaultValue": "Auto"
+    },
+    {
+      "key": "audienceContext",
+      "label": "Audience context",
+      "placeholder": "Describe their situation, priorities, experience, or buying context",
+      "required": false,
+      "type": "textarea",
+      "group": "audience",
+      "groupTitle": "Audience & Positioning",
+      "hint": "Add details that affect how the audience evaluates this offer.",
+      "help": {
+        "what": "Audience context.",
+        "why": "It enables more precise messaging without splitting audience information across several minor fields.",
+        "example": "Describe their situation, priorities, experience, or buying context",
+        "avoid": "Invented proof, fake urgency, unsupported guarantees, or fabricated pricing."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "desiredOutcome",
+      "label": "Desired audience outcome",
+      "placeholder": "What does the audience want to achieve, improve, avoid, or simplify?",
+      "required": false,
+      "type": "textarea",
+      "group": "audience",
+      "groupTitle": "Audience & Positioning",
+      "hint": "Describe the practical outcome from the audience’s perspective.",
+      "help": {
+        "what": "Desired audience outcome.",
+        "why": "It distinguishes the audience’s desired result from the company’s conversion goal.",
+        "example": "What does the audience want to achieve, improve, avoid, or simplify?",
+        "avoid": "Invented proof, fake urgency, unsupported guarantees, or fabricated pricing."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "keyDifferentiators",
+      "label": "Key differentiators",
+      "placeholder": "What makes this offer meaningfully different from common alternatives?",
+      "required": false,
+      "type": "textarea",
+      "group": "audience",
+      "groupTitle": "Audience & Positioning",
+      "hint": "Use specific, supportable differences rather than broad superiority claims.",
+      "help": {
+        "what": "Key differentiators.",
+        "why": "Specific differentiators materially improve positioning and conversion clarity.",
+        "example": "What makes this offer meaningfully different from common alternatives?",
+        "avoid": "Invented proof, fake urgency, unsupported guarantees, or fabricated pricing."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "awarenessLevel",
+      "label": "Audience awareness",
+      "placeholder": "How familiar is the audience?",
+      "required": false,
+      "type": "select",
+      "group": "audience",
+      "groupTitle": "Audience & Positioning",
+      "hint": "Auto infers the appropriate explanation level from the other inputs.",
+      "help": {
+        "what": "Audience awareness.",
+        "why": "Awareness level changes whether the page should educate, differentiate, or focus on action.",
+        "example": "Auto",
+        "avoid": "Invented proof, fake urgency, unsupported guarantees, or fabricated pricing."
+      },
+      "fullWidth": false,
+      "options": [
+        "Auto",
+        "Unaware",
+        "Problem-aware",
+        "Solution-aware",
+        "Product-aware",
+        "Most-aware"
+      ],
+      "defaultValue": "Auto"
+    },
+    {
+      "key": "mainObjections",
+      "label": "Main objections",
+      "placeholder": "Example: Price, setup time, trust, compatibility, effort, or switching concerns",
+      "required": false,
+      "type": "textarea",
+      "group": "audience",
+      "groupTitle": "Audience & Positioning",
+      "hint": "List the genuine reasons a suitable visitor may hesitate.",
+      "help": {
+        "what": "Main objections.",
+        "why": "Objection handling is central to landing-page performance and cannot always be inferred safely.",
+        "example": "Example: Price, setup time, trust, compatibility, effort, or switching concerns",
+        "avoid": "Invented proof, fake urgency, unsupported guarantees, or fabricated pricing."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "alternativesContext",
+      "label": "Alternatives or competitors",
+      "placeholder": "Describe current solutions, manual methods, or named competitors when relevant",
+      "required": false,
+      "type": "textarea",
+      "group": "audience",
+      "groupTitle": "Audience & Positioning",
+      "hint": "Used only for accurate positioning, not unsupported attacks or comparisons.",
+      "help": {
+        "what": "Alternatives or competitors.",
+        "why": "It clarifies the visitor’s current options and the offer’s place among them.",
+        "example": "Describe current solutions, manual methods, or named competitors when relevant",
+        "avoid": "Invented proof, fake urgency, unsupported guarantees, or fabricated pricing."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "keyBenefits",
+      "label": "Key benefits",
+      "placeholder": "List the most important practical benefits for the customer",
+      "required": false,
+      "type": "textarea",
+      "group": "offer",
+      "groupTitle": "Offer & Conversion",
+      "hint": "Focus on useful outcomes rather than broad promotional claims.",
+      "help": {
+        "what": "Key benefits.",
+        "why": "Supplied benefits prevent the model from inferring unsupported customer outcomes.",
+        "example": "List the most important practical benefits for the customer",
+        "avoid": "Invented proof, fake urgency, unsupported guarantees, or fabricated pricing."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "featuresOrDeliverables",
+      "label": "Features or deliverables",
+      "placeholder": "List included features, services, files, sessions, modules, or deliverables",
+      "required": false,
+      "type": "textarea",
+      "group": "offer",
+      "groupTitle": "Offer & Conversion",
+      "hint": "Include only items that are currently available or confirmed.",
+      "help": {
+        "what": "Features or deliverables.",
+        "why": "The page must accurately explain what the visitor receives.",
+        "example": "List included features, services, files, sessions, modules, or deliverables",
+        "avoid": "Invented proof, fake urgency, unsupported guarantees, or fabricated pricing."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "pricingAndTerms",
+      "label": "Pricing and terms",
+      "placeholder": "Add verified pricing, billing, trial, refund, eligibility, or contract details",
+      "required": false,
+      "type": "textarea",
+      "group": "offer",
+      "groupTitle": "Offer & Conversion",
+      "hint": "Leave blank when pricing should not appear or has not been finalized.",
+      "help": {
+        "what": "Pricing and terms.",
+        "why": "Commercial details must come from the user and must not be fabricated.",
+        "example": "Add verified pricing, billing, trial, refund, eligibility, or contract details",
+        "avoid": "Invented proof, fake urgency, unsupported guarantees, or fabricated pricing."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "conversionPath",
+      "label": "Conversion path",
+      "placeholder": "What happens after the CTA?",
+      "required": false,
+      "type": "select",
+      "group": "offer",
+      "groupTitle": "Offer & Conversion",
+      "hint": "This controls button wording, friction level, process explanation, and privacy context.",
+      "help": {
+        "what": "Conversion path.",
+        "why": "The action after the click determines how the page should set expectations.",
+        "example": "Auto",
+        "avoid": "Invented proof, fake urgency, unsupported guarantees, or fabricated pricing."
+      },
+      "fullWidth": false,
+      "options": [
+        "Auto",
+        "Purchase or checkout",
+        "Lead form",
+        "Book a call",
+        "Start trial or signup",
+        "Download or access",
+        "Join waitlist",
+        "Contact or request quote"
+      ],
+      "defaultValue": "Auto"
+    },
+    {
+      "key": "secondaryCta",
+      "label": "Secondary CTA",
+      "placeholder": "Example: View Demo",
+      "required": false,
+      "type": "text",
+      "group": "offer",
+      "groupTitle": "Offer & Conversion",
+      "hint": "Use only when visitors need a lower-commitment alternative.",
+      "help": {
+        "what": "Secondary CTA.",
+        "why": "Some landing pages benefit from one subordinate action, but it should not be generated automatically in every case.",
+        "example": "Example: View Demo",
+        "avoid": "Invented proof, fake urgency, unsupported guarantees, or fabricated pricing."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "timeSensitiveOffer",
+      "label": "Time-sensitive offer",
+      "placeholder": "Not applicable",
+      "required": false,
+      "type": "select",
+      "group": "offer",
+      "groupTitle": "Offer & Conversion",
+      "hint": "Enable only when a real deadline, quantity, eligibility rule, or capacity limit exists.",
+      "help": {
+        "what": "Time-sensitive offer.",
+        "why": "It prevents routine or fabricated urgency from being added to the page.",
+        "example": "Off",
+        "avoid": "Fake urgency without real deadlines."
+      },
+      "fullWidth": false,
+      "options": [
+        "Off",
+        "On"
+      ],
+      "defaultValue": "Off"
+    },
+    {
+      "key": "deadlineOrScarcityDetails",
+      "label": "Deadline or availability",
+      "placeholder": "State the exact deadline, quantity, capacity, eligibility, and relevant conditions",
+      "required": false,
+      "type": "textarea",
+      "group": "offer",
+      "groupTitle": "Offer & Conversion",
+      "hint": "Only verified and concrete limitations may appear in the generated copy.",
+      "help": {
+        "what": "Deadline or availability.",
+        "why": "Real urgency requires factual details that the model cannot infer.",
+        "example": "State the exact deadline, quantity, capacity, eligibility, and relevant conditions",
+        "avoid": "Invented proof, fake urgency, unsupported guarantees, or fabricated pricing."
+      },
+      "fullWidth": true,
+      "showWhen": {
+        "key": "timeSensitiveOffer",
+        "equals": "On"
+      }
+    },
+    {
+      "key": "brandVoice",
+      "label": "Brand voice",
+      "placeholder": "Choose the closest voice",
+      "required": false,
+      "type": "select",
+      "group": "brand",
+      "groupTitle": "Brand, Proof & Compliance",
+      "hint": "Select the general voice; add finer details in Brand style notes.",
+      "help": {
+        "what": "Brand voice.",
+        "why": "A simple voice selection changes the wording without creating an excessive style questionnaire.",
+        "example": "Clear and natural",
+        "avoid": "Invented proof, fake urgency, unsupported guarantees, or fabricated pricing."
+      },
+      "fullWidth": false,
+      "options": [
+        "Clear and natural",
+        "Friendly",
+        "Professional",
+        "Bold",
+        "Warm",
+        "Technical",
+        "Minimal",
+        "Premium"
+      ],
+      "defaultValue": "Clear and natural"
+    },
+    {
+      "key": "brandStyleNotes",
+      "label": "Brand style notes",
+      "placeholder": "Add preferred wording, terminology, examples, or brand phrases to avoid",
+      "required": false,
+      "type": "textarea",
+      "group": "brand",
+      "groupTitle": "Brand, Proof & Compliance",
+      "hint": "Use this for brand-specific guidance that cannot be inferred safely.",
+      "help": {
+        "what": "Brand style notes.",
+        "why": "It supports real brand consistency beyond a generic tone preset.",
+        "example": "Add preferred wording, terminology, examples, or brand phrases to avoid",
+        "avoid": "Invented proof, fake urgency, unsupported guarantees, or fabricated pricing."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "proofAvailable",
+      "label": "Verified proof available",
+      "placeholder": "Not applicable",
+      "required": false,
+      "type": "select",
+      "group": "brand",
+      "groupTitle": "Brand, Proof & Compliance",
+      "hint": "Enable when you can supply testimonials, results, statistics, clients, awards, or certifications.",
+      "help": {
+        "what": "Verified proof available.",
+        "why": "It prevents the automatic generation of fabricated trust signals.",
+        "example": "Off",
+        "avoid": "Invented testimonials or ratings."
+      },
+      "fullWidth": false,
+      "options": [
+        "Off",
+        "On"
+      ],
+      "defaultValue": "Off"
+    },
+    {
+      "key": "proofDetails",
+      "label": "Proof details",
+      "placeholder": "Paste approved testimonials, statistics, results, credentials, or attribution details",
+      "required": false,
+      "type": "textarea",
+      "group": "brand",
+      "groupTitle": "Brand, Proof & Compliance",
+      "hint": "Include exact wording, numbers, sources, dates, qualifiers, and permissions where relevant.",
+      "help": {
+        "what": "Proof details.",
+        "why": "Proof must be supplied accurately and preserved without invention or material distortion.",
+        "example": "Paste approved testimonials, statistics, results, credentials, or attribution details",
+        "avoid": "Invented proof, fake urgency, unsupported guarantees, or fabricated pricing."
+      },
+      "fullWidth": true,
+      "showWhen": {
+        "key": "proofAvailable",
+        "equals": "On"
+      }
+    },
+    {
+      "key": "regulatedTopic",
+      "label": "Regulated topic",
+      "placeholder": "Select only when relevant",
+      "required": false,
+      "type": "select",
+      "group": "brand",
+      "groupTitle": "Brand, Proof & Compliance",
+      "hint": "This activates more cautious claim, advice, and disclosure handling.",
+      "help": {
+        "what": "Regulated topic.",
+        "why": "High-stakes subjects require different claim standards and may depend on jurisdiction.",
+        "example": "None or general",
+        "avoid": "Medical/legal claims without approved wording."
+      },
+      "fullWidth": false,
+      "options": [
+        "None or general",
+        "Health or medical",
+        "Financial",
+        "Legal",
+        "Employment",
+        "Insurance",
+        "Safety",
+        "Other regulated topic"
+      ],
+      "defaultValue": "None or general"
+    },
+    {
+      "key": "jurisdiction",
+      "label": "Relevant jurisdiction",
+      "placeholder": "Example: United States, European Union, Ukraine, California",
+      "required": false,
+      "type": "text",
+      "group": "brand",
+      "groupTitle": "Brand, Proof & Compliance",
+      "hint": "Enter the country, region, or market whose rules may affect the copy.",
+      "help": {
+        "what": "Relevant jurisdiction.",
+        "why": "Legal and compliance language can vary materially between jurisdictions.",
+        "example": "Example: United States, European Union, Ukraine, California",
+        "avoid": "Invented proof, fake urgency, unsupported guarantees, or fabricated pricing."
+      },
+      "fullWidth": false,
+      "showWhen": {
+        "key": "regulatedTopic",
+        "notEquals": "None or general"
+      }
+    },
+    {
+      "key": "restrictionsAndDisclosures",
+      "label": "Restrictions and disclosures",
+      "placeholder": "Add mandatory wording, claim limits, exclusions, eligibility rules, or prohibited statements",
+      "required": false,
+      "type": "textarea",
+      "group": "brand",
+      "groupTitle": "Brand, Proof & Compliance",
+      "hint": "Combine all required restrictions and disclosures in one place.",
+      "help": {
+        "what": "Restrictions and disclosures.",
+        "why": "It preserves material conditions while avoiding several overlapping compliance fields.",
+        "example": "Add mandatory wording, claim limits, exclusions, eligibility rules, or prohibited statements",
+        "avoid": "Invented proof, fake urgency, unsupported guarantees, or fabricated pricing."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "privacyOrDataNotes",
+      "label": "Privacy and data notes",
+      "placeholder": "Explain what data is collected, why, consent wording, or relevant privacy conditions",
+      "required": false,
+      "type": "textarea",
+      "group": "brand",
+      "groupTitle": "Brand, Proof & Compliance",
+      "hint": "Include only confirmed data practices and approved privacy wording.",
+      "help": {
+        "what": "Privacy and data notes.",
+        "why": "Conversion flows that collect personal data may require accurate expectation and consent language.",
+        "example": "Explain what data is collected, why, consent wording, or relevant privacy conditions",
+        "avoid": "Invented proof, fake urgency, unsupported guarantees, or fabricated pricing."
+      },
+      "fullWidth": true,
+      "showWhen": {
+        "key": "conversionPath",
+        "equals": [
+          "Purchase or checkout",
+          "Lead form",
+          "Book a call",
+          "Start trial or signup",
+          "Download or access",
+          "Join waitlist",
+          "Contact or request quote"
+        ]
+      }
+    },
+    {
+      "key": "primaryKeyword",
+      "label": "Primary SEO keyword",
+      "placeholder": "Example: AI content templates",
+      "required": false,
+      "type": "text",
+      "group": "seo",
+      "groupTitle": "SEO & Output Settings",
+      "hint": "Add one realistic search phrase when organic search matters.",
+      "help": {
+        "what": "Primary SEO keyword.",
+        "why": "It provides search-intent direction without requiring a full SEO questionnaire.",
+        "example": "Example: AI content templates",
+        "avoid": "Invented proof, fake urgency, unsupported guarantees, or fabricated pricing."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "supportingKeywords",
+      "label": "Supporting keywords",
+      "placeholder": "Add a short list of closely related phrases, separated by commas",
+      "required": false,
+      "type": "textarea",
+      "group": "seo",
+      "groupTitle": "SEO & Output Settings",
+      "hint": "Use only relevant phrases; the generator will not force every term into the copy.",
+      "help": {
+        "what": "Supporting keywords.",
+        "why": "Related phrases can improve topic coverage while remaining optional.",
+        "example": "Add a short list of closely related phrases, separated by commas",
+        "avoid": "Invented proof, fake urgency, unsupported guarantees, or fabricated pricing."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "faqMode",
+      "label": "FAQ section",
+      "placeholder": "Choose whether to include FAQs",
+      "required": false,
+      "type": "select",
+      "group": "seo",
+      "groupTitle": "SEO & Output Settings",
+      "hint": "Auto adds FAQs only when they help resolve meaningful visitor uncertainty.",
+      "help": {
+        "what": "FAQ section.",
+        "why": "A FAQ is useful for some offers but should not be forced onto every landing page.",
+        "example": "Auto",
+        "avoid": "Invented proof, fake urgency, unsupported guarantees, or fabricated pricing."
+      },
+      "fullWidth": false,
+      "options": [
+        "Auto",
+        "Include",
+        "Omit"
+      ],
+      "defaultValue": "Auto"
+    },
+    {
+      "key": "additionalContext",
+      "label": "Additional context",
+      "placeholder": "Add any remaining implementation requirements or essential context",
+      "required": false,
+      "type": "textarea",
+      "group": "seo",
+      "groupTitle": "SEO & Output Settings",
+      "hint": "Use this single field for important information not covered elsewhere.",
+      "help": {
+        "what": "Additional context.",
+        "why": "It handles legitimate edge cases without creating several miscellaneous fields.",
+        "example": "Add any remaining implementation requirements or essential context",
+        "avoid": "Invented proof, fake urgency, unsupported guarantees, or fabricated pricing."
+      },
+      "fullWidth": true
+    }
+  ]
+}

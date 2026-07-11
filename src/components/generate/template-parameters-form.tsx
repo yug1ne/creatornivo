@@ -5,7 +5,10 @@ import { useMemo, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { groupTemplateVariables } from "@/lib/templates/utils";
+import {
+  groupTemplateVariables,
+  isTemplateFieldVisible,
+} from "@/lib/templates/utils";
 import type { TemplateVariable } from "@/types/template";
 import { cn } from "@/lib/utils/cn";
 
@@ -47,6 +50,18 @@ function FieldControl({
         id={commonId}
         value={value}
         rows={3}
+        placeholder={variable.placeholder}
+        onChange={(e) => onChange(e.target.value)}
+      />
+    );
+  }
+
+  if (type === "number") {
+    return (
+      <Input
+        id={commonId}
+        type="number"
+        value={value}
         placeholder={variable.placeholder}
         onChange={(e) => onChange(e.target.value)}
       />
@@ -122,12 +137,15 @@ export function TemplateParametersForm({
     );
   }
 
+  const visibleVariables = variables.filter((v) =>
+    isTemplateFieldVisible(v, values),
+  );
   const hasGroups = groups.length > 1 || groups[0]?.groupId !== "parameters";
 
   if (!hasGroups) {
     return (
       <div className="grid gap-4 sm:grid-cols-2">
-        {variables.map((variable) => (
+        {visibleVariables.map((variable) => (
           <FieldBlock
             key={variable.key}
             variable={variable}
@@ -136,8 +154,8 @@ export function TemplateParametersForm({
             wide={
               variable.fullWidth ||
               variable.type === "textarea" ||
-              (variables.length % 2 !== 0 &&
-                variable.key === variables.at(-1)?.key)
+              (visibleVariables.length % 2 !== 0 &&
+                variable.key === visibleVariables.at(-1)?.key)
             }
           />
         ))}
@@ -164,14 +182,22 @@ export function TemplateParametersForm({
         </button>
         <span className="text-muted-foreground">
           {variables.filter((v) => v.required).length} required ·{" "}
-          {variables.length} total fields
+          {visibleVariables.length} fields shown
+          {visibleVariables.length !== variables.length
+            ? ` (${variables.length} total)`
+            : ""}
         </span>
       </div>
 
       {groups.map((group) => {
+        const visibleInGroup = group.variables.filter((v) =>
+          isTemplateFieldVisible(v, values),
+        );
+        if (visibleInGroup.length === 0) return null;
+
         const isOpen = openGroups.has(group.groupId);
-        const requiredCount = group.variables.filter((v) => v.required).length;
-        const filledCount = group.variables.filter(
+        const requiredCount = visibleInGroup.filter((v) => v.required).length;
+        const filledCount = visibleInGroup.filter(
           (v) => values[v.key]?.trim(),
         ).length;
 
@@ -191,7 +217,7 @@ export function TemplateParametersForm({
                   {group.title}
                 </span>
                 <span className="block text-xs text-muted-foreground">
-                  {filledCount}/{group.variables.length} filled
+                  {filledCount}/{visibleInGroup.length} filled
                   {requiredCount > 0 ? ` · ${requiredCount} required` : ""}
                 </span>
               </span>
@@ -208,7 +234,7 @@ export function TemplateParametersForm({
 
             {isOpen && (
               <div className="grid gap-4 border-t border-border p-3 sm:grid-cols-2">
-                {group.variables.map((variable) => (
+                {visibleInGroup.map((variable) => (
                   <FieldBlock
                     key={variable.key}
                     variable={variable}

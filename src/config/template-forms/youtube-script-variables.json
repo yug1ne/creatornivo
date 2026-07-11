@@ -1,0 +1,927 @@
+{
+  "slug": "youtube-script",
+  "title": "YouTube Script",
+  "version": 1,
+  "generatedAt": "2026-07-11T12:04:31.287Z",
+  "fieldCount": 40,
+  "requiredKeys": [
+    "videoTopic",
+    "primaryGoal",
+    "targetAudience",
+    "centralPromise",
+    "mustInclude",
+    "videoFormat",
+    "outputLanguage"
+  ],
+  "groups": [
+    {
+      "id": "essentials",
+      "title": "Essentials",
+      "description": "Topic, goal, audience, promise, facts, format, language, duration, tone, voice, CTA.",
+      "defaultOpen": true
+    },
+    {
+      "id": "story",
+      "title": "Story, Structure & Retention",
+      "description": "Angle, sections, opening, structure, pacing, retention, examples, questions.",
+      "defaultOpen": false
+    },
+    {
+      "id": "production",
+      "title": "Channel Voice & Production",
+      "description": "Channel context, brand voice, host, visuals, B-roll, on-screen text, editing.",
+      "defaultOpen": false
+    },
+    {
+      "id": "discovery",
+      "title": "Discovery & Publishing",
+      "description": "Title direction, keywords, description, chapters, pinned comment.",
+      "defaultOpen": false
+    },
+    {
+      "id": "accuracy",
+      "title": "Accuracy & Commercial Context",
+      "description": "Sources, commercial relationship, disclosures, regulated topics, restrictions.",
+      "defaultOpen": false
+    }
+  ],
+  "variables": [
+    {
+      "key": "videoTopic",
+      "label": "Video topic",
+      "placeholder": "Explain what the video will be about.",
+      "required": true,
+      "type": "textarea",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Describe the subject, event, product, question, story, or idea the video should cover.",
+      "help": {
+        "what": "Video topic.",
+        "why": "The script cannot be created without knowing its central subject.",
+        "example": "What the long-form video will cover",
+        "avoid": "Several unrelated subjects in one video."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "primaryGoal",
+      "label": "Primary goal",
+      "placeholder": "Select the main goal",
+      "required": true,
+      "type": "select",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Choose the most important outcome the video should achieve.",
+      "help": {
+        "what": "Primary goal.",
+        "why": "The goal determines the script’s emphasis, structure, evidence, and CTA.",
+        "example": "Educate or explain",
+        "avoid": "Invented proof, fake urgency, fabricated stories, or unsupported claims."
+      },
+      "fullWidth": false,
+      "options": [
+        "Educate or explain",
+        "Entertain",
+        "Build trust or authority",
+        "Encourage discussion",
+        "Present an opinion",
+        "Review or compare",
+        "Promote an offer",
+        "Tell a story",
+        "Drive a specific action"
+      ],
+      "defaultValue": "Educate or explain"
+    },
+    {
+      "key": "targetAudience",
+      "label": "Target audience",
+      "placeholder": "Example: First-time founders building small SaaS products",
+      "required": true,
+      "type": "text",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Describe who should watch and why the topic matters to them.",
+      "help": {
+        "what": "Target audience.",
+        "why": "Audience context materially changes vocabulary, examples, pacing, and assumed knowledge.",
+        "example": "Example: First-time founders building small SaaS products",
+        "avoid": "Invented proof, fake urgency, fabricated stories, or unsupported claims."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "centralPromise",
+      "label": "Main viewer promise",
+      "placeholder": "What should viewers understand, feel, or be able to do afterward?",
+      "required": true,
+      "type": "text",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "State the central payoff the video must deliver.",
+      "help": {
+        "what": "Main viewer promise.",
+        "why": "A clear promise keeps the hook, body, and conclusion aligned.",
+        "example": "What viewers should understand or be able to do afterward",
+        "avoid": "Vague promises the video cannot deliver."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "mustInclude",
+      "label": "Essential points and facts",
+      "placeholder": "List the facts, arguments, steps, names, examples, or details that must appear.",
+      "required": true,
+      "type": "textarea",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Include only information the final script must not omit.",
+      "help": {
+        "what": "Essential points and facts.",
+        "why": "The model must know which user-supplied information is mandatory.",
+        "example": "Only mandatory facts, steps, or arguments",
+        "avoid": "Invented stats or first-hand stories."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "videoFormat",
+      "label": "Video format",
+      "placeholder": "Select a format",
+      "required": true,
+      "type": "select",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Choose the format that best matches how the topic should be presented.",
+      "help": {
+        "what": "Video format.",
+        "why": "Different YouTube formats require different narrative and production structures.",
+        "example": "Explainer",
+        "avoid": "Invented proof, fake urgency, fabricated stories, or unsupported claims."
+      },
+      "fullWidth": false,
+      "options": [
+        "Explainer",
+        "Tutorial or how-to",
+        "Commentary or opinion",
+        "Storytelling",
+        "Review or comparison",
+        "Documentary-style",
+        "List or countdown",
+        "Interview-led"
+      ],
+      "defaultValue": "Explainer"
+    },
+    {
+      "key": "outputLanguage",
+      "label": "Output language",
+      "placeholder": "Example: English, Ukrainian, Russian, Spanish",
+      "required": true,
+      "type": "text",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "The complete script and supporting assets will use this language.",
+      "help": {
+        "what": "Output language.",
+        "why": "Language cannot always be safely inferred from the topic or audience.",
+        "example": "English",
+        "avoid": "Invented proof, fake urgency, fabricated stories, or unsupported claims."
+      },
+      "fullWidth": false,
+      "defaultValue": "English"
+    },
+    {
+      "key": "targetDurationMinutes",
+      "label": "Target duration",
+      "placeholder": "10",
+      "required": false,
+      "type": "number",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Enter the approximate finished video length in minutes, normally between 3 and 60.",
+      "help": {
+        "what": "Target duration.",
+        "why": "Duration determines script depth, word budget, number of sections, and pacing.",
+        "example": "10",
+        "avoid": "Invented proof, fake urgency, fabricated stories, or unsupported claims."
+      },
+      "fullWidth": false,
+      "defaultValue": "10"
+    },
+    {
+      "key": "audienceKnowledge",
+      "label": "Audience knowledge level",
+      "placeholder": "Select a knowledge level",
+      "required": false,
+      "type": "select",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Controls how much background explanation and specialist terminology are appropriate.",
+      "help": {
+        "what": "Audience knowledge level.",
+        "why": "The same subject requires different explanations for beginners and experienced viewers.",
+        "example": "Auto",
+        "avoid": "Invented proof, fake urgency, fabricated stories, or unsupported claims."
+      },
+      "fullWidth": false,
+      "options": [
+        "Auto",
+        "Complete beginner",
+        "Some familiarity",
+        "Intermediate",
+        "Advanced",
+        "Mixed audience"
+      ],
+      "defaultValue": "Auto"
+    },
+    {
+      "key": "toneStyle",
+      "label": "Tone and style",
+      "placeholder": "Select a tone",
+      "required": false,
+      "type": "select",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Choose the dominant delivery style without prescribing every sentence.",
+      "help": {
+        "what": "Tone and style.",
+        "why": "Tone affects word choice, rhythm, emotional intensity, and presenter delivery.",
+        "example": "Clear and natural",
+        "avoid": "Invented proof, fake urgency, fabricated stories, or unsupported claims."
+      },
+      "fullWidth": false,
+      "options": [
+        "Clear and natural",
+        "Conversational",
+        "Energetic",
+        "Calm and authoritative",
+        "Analytical",
+        "Cinematic",
+        "Humorous",
+        "Emotional",
+        "Auto"
+      ],
+      "defaultValue": "Clear and natural"
+    },
+    {
+      "key": "narratorVoice",
+      "label": "Narrator perspective",
+      "placeholder": "Select a perspective",
+      "required": false,
+      "type": "select",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Choose how the presenter or narrator should address the audience.",
+      "help": {
+        "what": "Narrator perspective.",
+        "why": "Perspective influences pronouns, intimacy, authority, and script formatting.",
+        "example": "Direct to viewer",
+        "avoid": "Invented proof, fake urgency, fabricated stories, or unsupported claims."
+      },
+      "fullWidth": false,
+      "options": [
+        "Direct to viewer",
+        "First-person singular",
+        "First-person plural",
+        "Neutral narrator",
+        "Multiple speakers",
+        "Auto"
+      ],
+      "defaultValue": "Direct to viewer"
+    },
+    {
+      "key": "primaryCTA",
+      "label": "Primary call to action",
+      "placeholder": "Example: Subscribe, comment, download the guide, or visit the product page",
+      "required": false,
+      "type": "text",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Use one primary action. Leave as Auto for a restrained, goal-appropriate CTA.",
+      "help": {
+        "what": "Primary call to action.",
+        "why": "The intended next action changes how the closing and earlier CTA setup are written.",
+        "example": "Auto",
+        "avoid": "Invented proof, fake urgency, fabricated stories, or unsupported claims."
+      },
+      "fullWidth": false,
+      "defaultValue": "Auto"
+    },
+    {
+      "key": "contentAngle",
+      "label": "Preferred angle",
+      "placeholder": "Example: Focus on mistakes beginners make rather than a general overview",
+      "required": false,
+      "type": "text",
+      "group": "story",
+      "groupTitle": "Story, Structure & Retention",
+      "hint": "Specify the viewpoint or framing that should make this video distinctive.",
+      "help": {
+        "what": "Preferred angle.",
+        "why": "A specific angle prevents the script from becoming a generic topic summary.",
+        "example": "Example: Focus on mistakes beginners make rather than a general overview",
+        "avoid": "Invented proof, fake urgency, fabricated stories, or unsupported claims."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "keySections",
+      "label": "Preferred sections",
+      "placeholder": "List sections, steps, arguments, or story stages in the preferred order.",
+      "required": false,
+      "type": "textarea",
+      "group": "story",
+      "groupTitle": "Story, Structure & Retention",
+      "hint": "Leave blank to let the model build the strongest logical progression.",
+      "help": {
+        "what": "Preferred sections.",
+        "why": "Some creators already have a required sequence or editorial structure.",
+        "example": "List sections, steps, arguments, or story stages in the preferred order.",
+        "avoid": "Invented proof, fake urgency, fabricated stories, or unsupported claims."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "openingStyle",
+      "label": "Opening approach",
+      "placeholder": "Select an opening style",
+      "required": false,
+      "type": "select",
+      "group": "story",
+      "groupTitle": "Story, Structure & Retention",
+      "hint": "Controls how the script earns attention before providing background.",
+      "help": {
+        "what": "Opening approach.",
+        "why": "The first moments strongly affect the script’s framing and retention strategy.",
+        "example": "Auto",
+        "avoid": "Invented proof, fake urgency, fabricated stories, or unsupported claims."
+      },
+      "fullWidth": false,
+      "options": [
+        "Auto",
+        "Cold open",
+        "Problem first",
+        "Result first",
+        "Story moment",
+        "Contrarian insight",
+        "Question led",
+        "Immediate demonstration"
+      ],
+      "defaultValue": "Auto"
+    },
+    {
+      "key": "narrativeStructure",
+      "label": "Narrative structure",
+      "placeholder": "Select a structure",
+      "required": false,
+      "type": "select",
+      "group": "story",
+      "groupTitle": "Story, Structure & Retention",
+      "hint": "Choose a progression or let the model select one based on the format.",
+      "help": {
+        "what": "Narrative structure.",
+        "why": "The structure determines how information and payoffs are sequenced.",
+        "example": "Auto",
+        "avoid": "Invented proof, fake urgency, fabricated stories, or unsupported claims."
+      },
+      "fullWidth": false,
+      "options": [
+        "Auto",
+        "Problem and solution",
+        "Step by step",
+        "Story arc",
+        "Claim and evidence",
+        "Before and after",
+        "List progression",
+        "Documentary sequence",
+        "Question and answer"
+      ],
+      "defaultValue": "Auto"
+    },
+    {
+      "key": "pacing",
+      "label": "Pacing",
+      "placeholder": "Select a pacing style",
+      "required": false,
+      "type": "select",
+      "group": "story",
+      "groupTitle": "Story, Structure & Retention",
+      "hint": "Controls section length, sentence rhythm, and frequency of visual changes.",
+      "help": {
+        "what": "Pacing.",
+        "why": "Pacing must match the audience, subject, duration, and editing approach.",
+        "example": "Balanced",
+        "avoid": "Invented proof, fake urgency, fabricated stories, or unsupported claims."
+      },
+      "fullWidth": false,
+      "options": [
+        "Slow and reflective",
+        "Balanced",
+        "Fast",
+        "Dynamic shifts",
+        "Auto"
+      ],
+      "defaultValue": "Balanced"
+    },
+    {
+      "key": "retentionDevices",
+      "label": "Retention techniques",
+      "placeholder": "Auto\nOpen loops\nProgress markers\nViewer questions\nMini-payoffs\nVisual reveals\nPattern interrupts\nLater callbacks\nNone",
+      "required": false,
+      "type": "textarea",
+      "group": "story",
+      "groupTitle": "Story, Structure & Retention",
+      "hint": "Choose techniques to use naturally, not as artificial engagement tricks. Select all that apply (one per line). Options: Auto; Open loops; Progress markers; Viewer questions; Mini-payoffs; Visual reveals; Pattern interrupts; Later callbacks; None.",
+      "help": {
+        "what": "Retention techniques.",
+        "why": "It lets creators influence retention without asking them to design the entire script.",
+        "example": "Auto",
+        "avoid": "Invented proof, fake urgency, fabricated stories, or unsupported claims."
+      },
+      "fullWidth": true,
+      "defaultValue": "Auto"
+    },
+    {
+      "key": "examplesStories",
+      "label": "Examples or stories",
+      "placeholder": "Add real examples, personal experiences, scenarios, demonstrations, or analogies.",
+      "required": false,
+      "type": "textarea",
+      "group": "story",
+      "groupTitle": "Story, Structure & Retention",
+      "hint": "Only supplied experiences may be presented as real or first-hand.",
+      "help": {
+        "what": "Examples or stories.",
+        "why": "Real examples can make abstract information understandable and credible.",
+        "example": "Add real examples, personal experiences, scenarios, demonstrations, or analogies.",
+        "avoid": "Invented proof, fake urgency, fabricated stories, or unsupported claims."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "objectionsQuestions",
+      "label": "Questions to address",
+      "placeholder": "What doubts, objections, myths, or viewer questions should the script answer?",
+      "required": false,
+      "type": "textarea",
+      "group": "story",
+      "groupTitle": "Story, Structure & Retention",
+      "hint": "Use this for important concerns that should be resolved during the video.",
+      "help": {
+        "what": "Questions to address.",
+        "why": "Addressing genuine viewer uncertainty improves usefulness and narrative progression.",
+        "example": "What doubts, objections, myths, or viewer questions should the script answer?",
+        "avoid": "Invented proof, fake urgency, fabricated stories, or unsupported claims."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "channelContext",
+      "label": "Channel context",
+      "placeholder": "Describe the channel, recurring topics, host, audience relationship, or series context.",
+      "required": false,
+      "type": "textarea",
+      "group": "production",
+      "groupTitle": "Channel Voice & Production",
+      "hint": "Include only context that should influence this specific script.",
+      "help": {
+        "what": "Channel context.",
+        "why": "Channel context prevents the script from sounding disconnected from existing content.",
+        "example": "Describe the channel, recurring topics, host, audience relationship, or series context.",
+        "avoid": "Invented proof, fake urgency, fabricated stories, or unsupported claims."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "brandVoice",
+      "label": "Voice guidelines",
+      "placeholder": "Example: Informal, skeptical, dry humor, short sentences, no motivational language",
+      "required": false,
+      "type": "textarea",
+      "group": "production",
+      "groupTitle": "Channel Voice & Production",
+      "hint": "Describe distinctive voice traits or provide a short style sample.",
+      "help": {
+        "what": "Voice guidelines.",
+        "why": "A creator’s established voice cannot be reliably inferred from the topic alone.",
+        "example": "Example: Informal, skeptical, dry humor, short sentences, no motivational language",
+        "avoid": "Invented proof, fake urgency, fabricated stories, or unsupported claims."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "hostPresence",
+      "label": "Presenter format",
+      "placeholder": "Select a presenter format",
+      "required": false,
+      "type": "select",
+      "group": "production",
+      "groupTitle": "Channel Voice & Production",
+      "hint": "Determines how spoken sections and production notes are balanced.",
+      "help": {
+        "what": "Presenter format.",
+        "why": "A face-to-camera script is written differently from a voice-over or screen-recorded tutorial.",
+        "example": "Mixed host and visuals",
+        "avoid": "Invented proof, fake urgency, fabricated stories, or unsupported claims."
+      },
+      "fullWidth": false,
+      "options": [
+        "On-camera host",
+        "Voice-over",
+        "Mixed host and visuals",
+        "Multiple speakers",
+        "Screen recording with narration",
+        "No preference"
+      ],
+      "defaultValue": "Mixed host and visuals"
+    },
+    {
+      "key": "availableVisuals",
+      "label": "Available visuals",
+      "placeholder": "List footage, screenshots, product shots, locations, interviews, charts, or assets available.",
+      "required": false,
+      "type": "textarea",
+      "group": "production",
+      "groupTitle": "Channel Voice & Production",
+      "hint": "The script will not assume access to expensive or unavailable material.",
+      "help": {
+        "what": "Available visuals.",
+        "why": "Production directions should reflect resources the creator can actually use.",
+        "example": "List footage, screenshots, product shots, locations, interviews, charts, or assets available.",
+        "avoid": "Invented proof, fake urgency, fabricated stories, or unsupported claims."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "bRollDirection",
+      "label": "Visual-note detail",
+      "placeholder": "Select the visual-note level",
+      "required": false,
+      "type": "select",
+      "group": "production",
+      "groupTitle": "Channel Voice & Production",
+      "hint": "Controls how detailed the B-roll and scene directions should be.",
+      "help": {
+        "what": "Visual-note detail.",
+        "why": "Creators have different production workflows and levels of visual planning.",
+        "example": "Practical shot suggestions",
+        "avoid": "Invented proof, fake urgency, fabricated stories, or unsupported claims."
+      },
+      "fullWidth": false,
+      "options": [
+        "Minimal notes",
+        "Practical shot suggestions",
+        "Detailed visual plan",
+        "Screen-recording focused",
+        "Archive or stock focused",
+        "Auto"
+      ],
+      "defaultValue": "Practical shot suggestions"
+    },
+    {
+      "key": "onScreenText",
+      "label": "On-screen text style",
+      "placeholder": "Select a text style",
+      "required": false,
+      "type": "select",
+      "group": "production",
+      "groupTitle": "Channel Voice & Production",
+      "hint": "Controls callouts, captions, labels, and emphasis text in the production notes.",
+      "help": {
+        "what": "On-screen text style.",
+        "why": "Text-heavy and visually minimal videos need different scripting and editing cues.",
+        "example": "Minimal keywords",
+        "avoid": "Invented proof, fake urgency, fabricated stories, or unsupported claims."
+      },
+      "fullWidth": false,
+      "options": [
+        "Minimal keywords",
+        "Moderate callouts",
+        "Frequent text-led visuals",
+        "Subtitle-focused",
+        "None",
+        "Auto"
+      ],
+      "defaultValue": "Minimal keywords"
+    },
+    {
+      "key": "editingIntensity",
+      "label": "Editing intensity",
+      "placeholder": "Select an editing style",
+      "required": false,
+      "type": "select",
+      "group": "production",
+      "groupTitle": "Channel Voice & Production",
+      "hint": "Sets the expected frequency of cuts, inserts, visual changes, and pauses.",
+      "help": {
+        "what": "Editing intensity.",
+        "why": "The script’s sentence length and visual rhythm should match the intended editing style.",
+        "example": "Standard",
+        "avoid": "Invented proof, fake urgency, fabricated stories, or unsupported claims."
+      },
+      "fullWidth": false,
+      "options": [
+        "Light",
+        "Standard",
+        "Fast-paced",
+        "Cinematic",
+        "Documentary",
+        "Auto"
+      ],
+      "defaultValue": "Standard"
+    },
+    {
+      "key": "titleDirection",
+      "label": "Title direction",
+      "placeholder": "Select a title style",
+      "required": false,
+      "type": "select",
+      "group": "discovery",
+      "groupTitle": "Discovery & Publishing",
+      "hint": "Controls how the title balances clarity, curiosity, search intent, and viewer benefit.",
+      "help": {
+        "what": "Title direction.",
+        "why": "Different channels and topics require different title positioning.",
+        "example": "Balanced",
+        "avoid": "Invented proof, fake urgency, fabricated stories, or unsupported claims."
+      },
+      "fullWidth": false,
+      "options": [
+        "Balanced",
+        "Search-led",
+        "Curiosity-led",
+        "Benefit-led",
+        "Story-led",
+        "Authority-led",
+        "Direct and factual",
+        "Auto"
+      ],
+      "defaultValue": "Balanced"
+    },
+    {
+      "key": "primaryKeyword",
+      "label": "Primary search phrase",
+      "placeholder": "Example: how to validate a SaaS idea",
+      "required": false,
+      "type": "text",
+      "group": "discovery",
+      "groupTitle": "Discovery & Publishing",
+      "hint": "Use only when a specific search phrase matters; natural wording takes priority.",
+      "help": {
+        "what": "Primary search phrase.",
+        "why": "A supplied search phrase can align the title, introduction, and description with viewer intent.",
+        "example": "Example: how to validate a SaaS idea",
+        "avoid": "Invented proof, fake urgency, fabricated stories, or unsupported claims."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "supportingKeywords",
+      "label": "Supporting search terms",
+      "placeholder": "Separate a few related phrases with commas.",
+      "required": false,
+      "type": "text",
+      "group": "discovery",
+      "groupTitle": "Discovery & Publishing",
+      "hint": "Use naturally where relevant; never force repetition or keyword stuffing.",
+      "help": {
+        "what": "Supporting search terms.",
+        "why": "Related terminology can improve topic coverage when the user has a defined search strategy.",
+        "example": "Separate a few related phrases with commas.",
+        "avoid": "Invented proof, fake urgency, fabricated stories, or unsupported claims."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "includeDescription",
+      "label": "YouTube description",
+      "placeholder": "Choose whether to include it",
+      "required": false,
+      "type": "select",
+      "group": "discovery",
+      "groupTitle": "Discovery & Publishing",
+      "hint": "Auto includes a concise description when it adds practical value.",
+      "help": {
+        "what": "YouTube description.",
+        "why": "Some users need only the script, while others need a ready-to-upload description.",
+        "example": "Auto",
+        "avoid": "Invented proof, fake urgency, fabricated stories, or unsupported claims."
+      },
+      "fullWidth": false,
+      "options": [
+        "Auto",
+        "Yes",
+        "No"
+      ],
+      "defaultValue": "Auto"
+    },
+    {
+      "key": "includeChapters",
+      "label": "Video chapters",
+      "placeholder": "Choose whether to include chapters",
+      "required": false,
+      "type": "select",
+      "group": "discovery",
+      "groupTitle": "Discovery & Publishing",
+      "hint": "Auto adds chapters when the duration and structure make them useful.",
+      "help": {
+        "what": "Video chapters.",
+        "why": "Chapters are useful for structured long videos but unnecessary for every script.",
+        "example": "Auto",
+        "avoid": "Invented proof, fake urgency, fabricated stories, or unsupported claims."
+      },
+      "fullWidth": false,
+      "options": [
+        "Auto",
+        "Yes",
+        "No"
+      ],
+      "defaultValue": "Auto"
+    },
+    {
+      "key": "includePinnedComment",
+      "label": "Pinned comment",
+      "placeholder": "Choose whether to include one",
+      "required": false,
+      "type": "select",
+      "group": "discovery",
+      "groupTitle": "Discovery & Publishing",
+      "hint": "Auto adds one only when it supports discussion, clarification, or the primary CTA.",
+      "help": {
+        "what": "Pinned comment.",
+        "why": "A pinned comment can support a specific goal but should not be generated automatically for every video.",
+        "example": "Auto",
+        "avoid": "Invented proof, fake urgency, fabricated stories, or unsupported claims."
+      },
+      "fullWidth": false,
+      "options": [
+        "Auto",
+        "Yes",
+        "No"
+      ],
+      "defaultValue": "Auto"
+    },
+    {
+      "key": "sourceMaterial",
+      "label": "Sources and reference material",
+      "placeholder": "Paste verified notes, data, quotations, URLs, excerpts, specifications, or source summaries.",
+      "required": false,
+      "type": "textarea",
+      "group": "accuracy",
+      "groupTitle": "Accuracy & Commercial Context",
+      "hint": "The script may use only the claims supported by this material or other supplied facts.",
+      "help": {
+        "what": "Sources and reference material.",
+        "why": "Source material is essential when factual precision, quotations, current information, or evidence matters.",
+        "example": "Paste verified notes, data, quotations, URLs, excerpts, specifications, or source summaries.",
+        "avoid": "Invented proof, fake urgency, fabricated stories, or unsupported claims."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "commercialRelationship",
+      "label": "Commercial relationship",
+      "placeholder": "Select any relevant relationship",
+      "required": false,
+      "type": "select",
+      "group": "accuracy",
+      "groupTitle": "Accuracy & Commercial Context",
+      "hint": "Identify ownership, sponsorship, affiliate, or partnership context.",
+      "help": {
+        "what": "Commercial relationship.",
+        "why": "Commercial context affects disclosure, claims, CTA wording, and audience trust.",
+        "example": "None",
+        "avoid": "Hidden sponsorship or fake independent review framing."
+      },
+      "fullWidth": false,
+      "options": [
+        "None",
+        "Creator’s own offer",
+        "Sponsorship",
+        "Affiliate relationship",
+        "Brand partnership",
+        "Other commercial relationship"
+      ],
+      "defaultValue": "None"
+    },
+    {
+      "key": "sponsorOrOfferDetails",
+      "label": "Offer or sponsor details",
+      "placeholder": "Describe the product, sponsor, value, approved claims, CTA, and placement requirements.",
+      "required": false,
+      "type": "textarea",
+      "group": "accuracy",
+      "groupTitle": "Accuracy & Commercial Context",
+      "hint": "Provide only accurate information approved for use in the video.",
+      "help": {
+        "what": "Offer or sponsor details.",
+        "why": "Commercial messaging cannot be written accurately without the supplied offer and claim details.",
+        "example": "Describe the product, sponsor, value, approved claims, CTA, and placement requirements.",
+        "avoid": "Invented proof, fake urgency, fabricated stories, or unsupported claims."
+      },
+      "fullWidth": true,
+      "showWhen": {
+        "key": "commercialRelationship",
+        "equals": [
+          "Creator’s own offer",
+          "Creator's own offer",
+          "Sponsorship",
+          "Affiliate relationship",
+          "Brand partnership",
+          "Other commercial relationship"
+        ]
+      }
+    },
+    {
+      "key": "disclosureRequirements",
+      "label": "Required disclosure",
+      "placeholder": "Add required sponsorship, affiliate, partnership, or jurisdiction-specific wording.",
+      "required": false,
+      "type": "textarea",
+      "group": "accuracy",
+      "groupTitle": "Accuracy & Commercial Context",
+      "hint": "The model may improve readability but must preserve the meaning of required disclosures.",
+      "help": {
+        "what": "Required disclosure.",
+        "why": "The creator or advertiser may have mandatory disclosure language the model cannot infer.",
+        "example": "Add required sponsorship, affiliate, partnership, or jurisdiction-specific wording.",
+        "avoid": "Invented proof, fake urgency, fabricated stories, or unsupported claims."
+      },
+      "fullWidth": true,
+      "showWhen": {
+        "key": "commercialRelationship",
+        "equals": [
+          "Sponsorship",
+          "Affiliate relationship",
+          "Brand partnership",
+          "Other commercial relationship"
+        ]
+      }
+    },
+    {
+      "key": "regulatedTopic",
+      "label": "Sensitive or regulated topic",
+      "placeholder": "Select when special care is required",
+      "required": false,
+      "type": "select",
+      "group": "accuracy",
+      "groupTitle": "Accuracy & Commercial Context",
+      "hint": "Use this for content where inaccurate claims could cause meaningful harm.",
+      "help": {
+        "what": "Sensitive or regulated topic.",
+        "why": "High-stakes subjects require cautious wording and different verification behavior.",
+        "example": "None",
+        "avoid": "Medical/legal claims without approved wording."
+      },
+      "fullWidth": false,
+      "options": [
+        "None",
+        "Medical or health",
+        "Legal",
+        "Financial",
+        "Safety",
+        "Employment, insurance, or tax",
+        "Political or public affairs",
+        "Other regulated topic"
+      ],
+      "defaultValue": "None"
+    },
+    {
+      "key": "jurisdiction",
+      "label": "Relevant jurisdiction",
+      "placeholder": "Example: United States, European Union, Ukraine, California",
+      "required": false,
+      "type": "text",
+      "group": "accuracy",
+      "groupTitle": "Accuracy & Commercial Context",
+      "hint": "Specify the country, state, or region when laws, rules, or public systems are discussed.",
+      "help": {
+        "what": "Relevant jurisdiction.",
+        "why": "Legal, financial, political, tax, employment, and regulatory information may vary by jurisdiction.",
+        "example": "Example: United States, European Union, Ukraine, California",
+        "avoid": "Invented proof, fake urgency, fabricated stories, or unsupported claims."
+      },
+      "fullWidth": false,
+      "showWhen": {
+        "key": "regulatedTopic",
+        "notEquals": "None"
+      }
+    },
+    {
+      "key": "restrictionsAndAdditionalContext",
+      "label": "Restrictions and additional context",
+      "placeholder": "Add prohibited claims, sensitive details, pronunciation notes, links, names, or other requirements.",
+      "required": false,
+      "type": "textarea",
+      "group": "accuracy",
+      "groupTitle": "Accuracy & Commercial Context",
+      "hint": "Use this single field for important instructions not covered elsewhere.",
+      "help": {
+        "what": "Restrictions and additional context.",
+        "why": "It captures meaningful exceptions without creating several miscellaneous fields.",
+        "example": "Add prohibited claims, sensitive details, pronunciation notes, links, names, or other requirements.",
+        "avoid": "Invented proof, fake urgency, fabricated stories, or unsupported claims."
+      },
+      "fullWidth": true
+    }
+  ]
+}

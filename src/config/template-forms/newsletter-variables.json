@@ -1,295 +1,663 @@
 {
   "slug": "newsletter",
   "title": "Newsletter",
-  "version": 1,
-  "generatedAt": "2026-07-11T09:07:19.626Z",
-  "fieldCount": 14,
+  "version": 2,
+  "generatedAt": "2026-07-11T11:01:46.378Z",
+  "fieldCount": 30,
   "requiredKeys": [
-    "topic",
-    "goal",
-    "target_audience",
-    "newsletter_type",
-    "brand_name",
-    "tone",
-    "language"
+    "newsletterTopic",
+    "primaryGoal",
+    "targetAudience",
+    "keyMessage",
+    "essentialFacts",
+    "outputLanguage"
   ],
   "groups": [
     {
       "id": "essentials",
       "title": "Essentials",
-      "description": "Minimum inputs for a useful newsletter package.",
+      "description": "Topic, goal, audience, takeaway, facts, language, format, sender, CTA, length.",
       "defaultOpen": true
     },
     {
-      "id": "content",
-      "title": "Content",
-      "description": "Message, points, length, and constraints.",
-      "defaultOpen": true
+      "id": "structure",
+      "title": "Message & Structure",
+      "description": "Sources, sections, opening, links, timing, series context, exclusions.",
+      "defaultOpen": false
     },
     {
-      "id": "cta",
-      "title": "CTA & destination",
-      "description": "One clear action and verified link.",
-      "defaultOpen": true
+      "id": "brand",
+      "title": "Brand & Delivery",
+      "description": "Tone, voice, platform, formatting, personalisation, sign-off, replies.",
+      "defaultOpen": false
+    },
+    {
+      "id": "compliance",
+      "title": "Evidence & Compliance",
+      "description": "CTA URL, claims, disclosures, sensitive topics, and jurisdiction.",
+      "defaultOpen": false
     }
   ],
   "variables": [
     {
-      "key": "topic",
-      "label": "Topic",
-      "placeholder": "How small teams ship useful content without fake hype",
+      "key": "newsletterTopic",
+      "label": "Newsletter topic",
+      "placeholder": "What is this newsletter issue about?",
       "required": true,
-      "type": "text",
+      "type": "textarea",
       "group": "essentials",
       "groupTitle": "Essentials",
-      "hint": "One central theme for this issue.",
+      "hint": "Describe the main subject, update, story, offer, or theme.",
       "help": {
         "what": "Newsletter topic.",
-        "why": "Keeps the issue focused on one theme instead of several disconnected ideas.",
-        "example": "Why we publish Early Access status honestly",
-        "avoid": "Several unrelated topics or a vague “this week’s updates” without a thread."
+        "why": "The model needs a clear subject around which to build the entire issue.",
+        "example": "Honest Early Access update and what shipped this week",
+        "avoid": "Several unrelated themes in one issue."
       },
-      "fullWidth": false
+      "fullWidth": true
     },
     {
-      "key": "goal",
-      "label": "Goal",
-      "placeholder": "educate / update / invite reply / drive one clear action",
-      "required": true,
-      "type": "text",
-      "group": "essentials",
-      "groupTitle": "Essentials",
-      "hint": "One primary goal for this issue.",
-      "help": {
-        "what": "Main goal of the newsletter.",
-        "why": "Shapes structure, CTA, and how promotional the issue should feel.",
-        "example": "Help readers write one clearer product update email",
-        "avoid": "Stacking sell + event + survey + reply in one goal."
-      },
-      "fullWidth": false
-    },
-    {
-      "key": "target_audience",
-      "label": "Target audience",
-      "placeholder": "founders and marketers who publish product content",
-      "required": true,
-      "type": "text",
-      "group": "essentials",
-      "groupTitle": "Essentials",
-      "hint": "Who receives this newsletter.",
-      "help": {
-        "what": "Target audience.",
-        "why": "Language, depth, and examples should match their knowledge and goals.",
-        "example": "Early-stage B2B founders and content leads",
-        "avoid": "Assuming every reader is a buyer, expert, or insider."
-      },
-      "fullWidth": false
-    },
-    {
-      "key": "newsletter_type",
-      "label": "Newsletter type",
-      "placeholder": "Educational newsletter",
+      "key": "primaryGoal",
+      "label": "Primary goal",
+      "placeholder": "Select the main outcome",
       "required": true,
       "type": "select",
       "group": "essentials",
       "groupTitle": "Essentials",
-      "hint": "Pick the type that fits the goal — structure adapts to it.",
+      "hint": "Choose the single most important result this issue should achieve.",
       "help": {
-        "what": "Newsletter type.",
-        "why": "Digest, founder note, and promotional issue need different structures.",
-        "example": "Founder newsletter",
-        "avoid": "Forcing every issue into the same template regardless of content."
+        "what": "Primary goal.",
+        "why": "The goal determines emphasis, pacing, CTA strength, and content hierarchy.",
+        "example": "Inform readers",
+        "avoid": "Stacking sell + re-engage + community as equal goals."
       },
+      "fullWidth": false,
       "options": [
-        "Weekly or monthly digest",
-        "Educational newsletter",
-        "Industry insights newsletter",
-        "Product or company update",
-        "Founder newsletter",
-        "Curated content newsletter",
-        "Community newsletter",
-        "Promotional newsletter",
-        "Editorial newsletter",
-        "Event newsletter",
-        "Customer newsletter",
-        "Personal creator newsletter"
+        "Inform readers",
+        "Educate readers",
+        "Curate useful content",
+        "Nurture the audience",
+        "Announce something",
+        "Promote an offer",
+        "Re-engage subscribers",
+        "Build community"
       ],
-      "fullWidth": false
+      "defaultValue": "Inform readers"
     },
     {
-      "key": "brand_name",
-      "label": "Brand name",
-      "placeholder": "Creatornivo",
+      "key": "targetAudience",
+      "label": "Target readers",
+      "placeholder": "Who will receive this newsletter, and what do they care about?",
+      "required": true,
+      "type": "textarea",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Describe the readers, their context, and their level of familiarity with the topic.",
+      "help": {
+        "what": "Target readers.",
+        "why": "Audience context materially changes vocabulary, examples, depth, and positioning.",
+        "example": "Who will receive this newsletter, and what do they care about?",
+        "avoid": "Invented links, fake personalisation, false urgency, or unsupported claims."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "keyMessage",
+      "label": "Main takeaway",
+      "placeholder": "What should readers understand or remember after reading?",
+      "required": true,
+      "type": "textarea",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "State the central idea in one or two clear sentences.",
+      "help": {
+        "what": "Main takeaway.",
+        "why": "A defined takeaway prevents the newsletter from becoming unfocused.",
+        "example": "One clear takeaway readers should remember",
+        "avoid": "Vague multi-message issues without a spine."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "essentialFacts",
+      "label": "Facts to include",
+      "placeholder": "List the names, dates, details, prices, results, or points that must be accurate.",
+      "required": true,
+      "type": "textarea",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Include only information that may safely appear as factual content.",
+      "help": {
+        "what": "Facts to include.",
+        "why": "The newsletter cannot safely infer specific factual details about the user’s subject.",
+        "example": "Only verified dates, prices, and product limits",
+        "avoid": "Invented stats, testimonials, or urgency."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "outputLanguage",
+      "label": "Output language",
+      "placeholder": "For example: English, Ukrainian, Polish",
       "required": true,
       "type": "text",
       "group": "essentials",
       "groupTitle": "Essentials",
-      "hint": "Brand or sender name for sign-off and voice.",
+      "hint": "Specify the language for all generated newsletter content.",
       "help": {
-        "what": "Brand or sender name.",
-        "why": "Used in sign-off and so the voice matches who is writing.",
-        "example": "Creatornivo",
-        "avoid": "Invented company names or multiple conflicting sender identities."
+        "what": "Output language.",
+        "why": "The language cannot always be inferred from the topic or source material.",
+        "example": "English",
+        "avoid": "Invented links, fake personalisation, false urgency, or unsupported claims."
+      },
+      "fullWidth": false,
+      "defaultValue": "English"
+    },
+    {
+      "key": "newsletterType",
+      "label": "Newsletter format",
+      "placeholder": "Choose the closest format",
+      "required": false,
+      "type": "select",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "This controls the issue’s native editorial structure.",
+      "help": {
+        "what": "Newsletter format.",
+        "why": "Different newsletter formats require different section structures and levels of promotion.",
+        "example": "Editorial update",
+        "avoid": "Invented links, fake personalisation, false urgency, or unsupported claims."
+      },
+      "fullWidth": false,
+      "options": [
+        "Editorial update",
+        "Curated digest",
+        "Educational issue",
+        "Product or company update",
+        "Promotional campaign",
+        "Founder or personal note",
+        "Community newsletter",
+        "Auto"
+      ],
+      "defaultValue": "Editorial update"
+    },
+    {
+      "key": "senderName",
+      "label": "Sender name",
+      "placeholder": "Name of the person or team sending the newsletter",
+      "required": false,
+      "type": "text",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Used naturally in the introduction or sign-off when appropriate.",
+      "help": {
+        "what": "Sender name.",
+        "why": "Sender identity affects voice, perspective, and sign-off wording.",
+        "example": "Name of the person or team sending the newsletter",
+        "avoid": "Invented links, fake personalisation, false urgency, or unsupported claims."
       },
       "fullWidth": false
+    },
+    {
+      "key": "publicationName",
+      "label": "Publication or brand",
+      "placeholder": "Newsletter, company, project, or publication name",
+      "required": false,
+      "type": "text",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Leave blank when the newsletter is sent only under a personal name.",
+      "help": {
+        "what": "Publication or brand.",
+        "why": "The publication identity may need to appear in the opening, footer, or sender context.",
+        "example": "Newsletter, company, project, or publication name",
+        "avoid": "Invented links, fake personalisation, false urgency, or unsupported claims."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "primaryCta",
+      "label": "Primary reader action",
+      "placeholder": "For example: Read the guide, register, reply, or visit the product page",
+      "required": false,
+      "type": "text",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Use Auto to let the model choose one proportional next step.",
+      "help": {
+        "what": "Primary reader action.",
+        "why": "The desired action determines the newsletter’s conversion path and closing.",
+        "example": "Auto",
+        "avoid": "Invented links, fake personalisation, false urgency, or unsupported claims."
+      },
+      "fullWidth": false,
+      "defaultValue": "Auto"
+    },
+    {
+      "key": "preferredLength",
+      "label": "Newsletter length",
+      "placeholder": "Select the preferred depth",
+      "required": false,
+      "type": "select",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "The final length may adjust slightly to fit the supplied information.",
+      "help": {
+        "what": "Newsletter length.",
+        "why": "Newsletter depth materially affects structure and the amount of supporting context.",
+        "example": "Standard: 600–900 words",
+        "avoid": "Invented links, fake personalisation, false urgency, or unsupported claims."
+      },
+      "fullWidth": false,
+      "options": [
+        "Brief: 300–500 words",
+        "Standard: 600–900 words",
+        "Detailed: 900–1,400 words",
+        "Auto"
+      ],
+      "defaultValue": "Standard: 600–900 words"
+    },
+    {
+      "key": "sourceMaterial",
+      "label": "Source material",
+      "placeholder": "Paste notes, drafts, research, transcripts, announcements, or source excerpts.",
+      "required": false,
+      "type": "textarea",
+      "group": "structure",
+      "groupTitle": "Message & Structure",
+      "hint": "The model should use this material without inventing unsupported additions.",
+      "help": {
+        "what": "Source material.",
+        "why": "Raw material helps preserve supplied facts, terminology, and original insights.",
+        "example": "Paste notes, drafts, research, transcripts, announcements, or source excerpts.",
+        "avoid": "Invented links, fake personalisation, false urgency, or unsupported claims."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "desiredSections",
+      "label": "Requested sections",
+      "placeholder": "For example: introduction, product update, three links, quick tip, closing note",
+      "required": false,
+      "type": "textarea",
+      "group": "structure",
+      "groupTitle": "Message & Structure",
+      "hint": "Leave blank for a structure selected automatically from the newsletter format.",
+      "help": {
+        "what": "Requested sections.",
+        "why": "Some publishers have recurring sections that must remain consistent between issues.",
+        "example": "For example: introduction, product update, three links, quick tip, closing note",
+        "avoid": "Invented links, fake personalisation, false urgency, or unsupported claims."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "openingApproach",
+      "label": "Opening approach",
+      "placeholder": "Choose how the issue should begin",
+      "required": false,
+      "type": "select",
+      "group": "structure",
+      "groupTitle": "Message & Structure",
+      "hint": "The opening should still remain natural and relevant to the topic.",
+      "help": {
+        "what": "Opening approach.",
+        "why": "The opening approach changes the reader’s entry point without requiring a full writing brief.",
+        "example": "Auto",
+        "avoid": "Invented links, fake personalisation, false urgency, or unsupported claims."
+      },
+      "fullWidth": false,
+      "options": [
+        "Auto",
+        "Direct update",
+        "Personal observation",
+        "Reader problem",
+        "Short story",
+        "Surprising fact",
+        "Question",
+        "Issue summary"
+      ],
+      "defaultValue": "Auto"
+    },
+    {
+      "key": "supportingLinks",
+      "label": "Supporting links",
+      "placeholder": "Add relevant URLs with a short note explaining each destination.",
+      "required": false,
+      "type": "textarea",
+      "group": "structure",
+      "groupTitle": "Message & Structure",
+      "hint": "Only supplied links may be included; the model must not invent URLs.",
+      "help": {
+        "what": "Supporting links.",
+        "why": "Curated resources and secondary references require exact user-supplied destinations.",
+        "example": "Add relevant URLs with a short note explaining each destination.",
+        "avoid": "Invented links, fake personalisation, false urgency, or unsupported claims."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "timeSensitiveDetails",
+      "label": "Dates and timing",
+      "placeholder": "Add confirmed launch dates, event times, deadlines, availability, or time zones.",
+      "required": false,
+      "type": "textarea",
+      "group": "structure",
+      "groupTitle": "Message & Structure",
+      "hint": "Leave blank when the issue is not time-sensitive.",
+      "help": {
+        "what": "Dates and timing.",
+        "why": "Time-sensitive details cannot be guessed safely and may affect urgency and placement.",
+        "example": "Add confirmed launch dates, event times, deadlines, availability, or time zones.",
+        "avoid": "Invented links, fake personalisation, false urgency, or unsupported claims."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "issueContext",
+      "label": "Issue context",
+      "placeholder": "Mention the issue number, recurring theme, previous issue, or ongoing series.",
+      "required": false,
+      "type": "textarea",
+      "group": "structure",
+      "groupTitle": "Message & Structure",
+      "hint": "Use this to maintain continuity with an established newsletter.",
+      "help": {
+        "what": "Issue context.",
+        "why": "Recurring newsletters may require continuity that cannot be inferred from one issue.",
+        "example": "Mention the issue number, recurring theme, previous issue, or ongoing series.",
+        "avoid": "Invented links, fake personalisation, false urgency, or unsupported claims."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "contentToAvoid",
+      "label": "Content to avoid",
+      "placeholder": "List unwanted topics, phrases, comparisons, promises, or editorial angles.",
+      "required": false,
+      "type": "textarea",
+      "group": "structure",
+      "groupTitle": "Message & Structure",
+      "hint": "Use for project-specific restrictions rather than general writing rules.",
+      "help": {
+        "what": "Content to avoid.",
+        "why": "The user may have brand-specific exclusions that the model cannot predict.",
+        "example": "List unwanted topics, phrases, comparisons, promises, or editorial angles.",
+        "avoid": "Invented links, fake personalisation, false urgency, or unsupported claims."
+      },
+      "fullWidth": true
     },
     {
       "key": "tone",
       "label": "Tone",
-      "placeholder": "clear, useful, conversational, credible",
-      "required": true,
-      "type": "text",
-      "group": "essentials",
-      "groupTitle": "Essentials",
-      "hint": "How the newsletter should sound.",
-      "help": {
-        "what": "Tone of voice.",
-        "why": "Keeps the issue warm and professional without corporate fluff or hype.",
-        "example": "direct, human, no hype",
-        "avoid": "Empty motivation, aggressive sales tone, or generic AI polish."
-      },
-      "fullWidth": false
-    },
-    {
-      "key": "language",
-      "label": "Language",
-      "placeholder": "English",
-      "required": true,
-      "type": "text",
-      "group": "essentials",
-      "groupTitle": "Essentials",
-      "hint": "Language of the full package (subjects + body).",
-      "help": {
-        "what": "Publishing language.",
-        "why": "All subject lines, preview text, and body should match this language.",
-        "example": "English",
-        "avoid": "Mixing languages without saying so."
-      },
-      "fullWidth": false
-    },
-    {
-      "key": "industry",
-      "label": "Industry",
-      "placeholder": "Content tools / B2B SaaS",
-      "required": false,
-      "type": "text",
-      "group": "content",
-      "groupTitle": "Content",
-      "hint": "Niche context for examples and framing.",
-      "help": {
-        "what": "Industry or niche.",
-        "why": "Helps examples and wording feel relevant to the reader’s world.",
-        "example": "Marketing software for small teams",
-        "avoid": "Jargon without explanation when the audience is mixed."
-      },
-      "fullWidth": false
-    },
-    {
-      "key": "main_message",
-      "label": "Main message",
-      "placeholder": "One clear point the reader should remember after reading",
-      "required": false,
-      "type": "textarea",
-      "group": "content",
-      "groupTitle": "Content",
-      "hint": "Central idea — not a list of unrelated updates.",
-      "help": {
-        "what": "Main message.",
-        "why": "Gives the body a single spine from opening to CTA.",
-        "example": "Honest Early Access messaging builds more trust than fake social proof.",
-        "avoid": "Several competing messages or unstated claims."
-      },
-      "fullWidth": true
-    },
-    {
-      "key": "key_points",
-      "label": "Key points",
-      "placeholder": "Point 1…\nPoint 2…\nPoint 3…\n(only facts you can verify)",
-      "required": false,
-      "type": "textarea",
-      "group": "content",
-      "groupTitle": "Content",
-      "hint": "Facts and takeaways to include — no invented stats or stories.",
-      "help": {
-        "what": "Key points to include.",
-        "why": "Supplies verified content so the model does not invent details.",
-        "example": "Free: 5 generations/day UTC. Pro: 100/month. We never invent testimonials.",
-        "avoid": "Unverified stats, fake testimonials, or product features that are not live."
-      },
-      "fullWidth": true
-    },
-    {
-      "key": "length",
-      "label": "Length",
-      "placeholder": "medium (about 400–700 words)",
+      "placeholder": "Choose the closest tone",
       "required": false,
       "type": "select",
-      "group": "content",
-      "groupTitle": "Content",
-      "hint": "Editorial length — not a hard platform limit.",
+      "group": "brand",
+      "groupTitle": "Brand & Delivery",
+      "hint": "The tone will be adapted to the audience and subject.",
       "help": {
-        "what": "Desired length.",
-        "why": "Controls depth without padding a simple idea.",
-        "example": "short (about 200–350 words)",
-        "avoid": "Making a simple update artificially long."
+        "what": "Tone.",
+        "why": "Tone is a meaningful brand preference that cannot always be inferred.",
+        "example": "Clear and natural",
+        "avoid": "Invented links, fake personalisation, false urgency, or unsupported claims."
       },
+      "fullWidth": false,
       "options": [
-        "short (about 200–350 words)",
-        "medium (about 400–700 words)",
-        "long (about 800–1200 words)"
+        "Clear and natural",
+        "Friendly",
+        "Professional",
+        "Conversational",
+        "Thoughtful",
+        "Authoritative",
+        "Energetic",
+        "Warm and personal",
+        "Auto"
       ],
-      "fullWidth": false
+      "defaultValue": "Clear and natural"
     },
     {
-      "key": "additional_context",
-      "label": "Additional context",
-      "placeholder": "Restrictions, must-include links, things to avoid, brand rules…",
+      "key": "brandVoice",
+      "label": "Brand voice notes",
+      "placeholder": "Describe preferred wording, personality, style, or examples of how the brand speaks.",
       "required": false,
       "type": "textarea",
-      "group": "content",
-      "groupTitle": "Content",
-      "hint": "Anything else the model must respect.",
+      "group": "brand",
+      "groupTitle": "Brand & Delivery",
+      "hint": "Do not include general rules such as “write naturally” or “proofread.”",
       "help": {
-        "what": "Additional context, requirements, or restrictions.",
-        "why": "Captures constraints so the draft stays on-policy and accurate.",
-        "example": "Do not invent customer counts. No fake urgency. No hashtags.",
-        "avoid": "Leaving critical restrictions only in your head."
+        "what": "Brand voice notes.",
+        "why": "Specific voice characteristics help the output sound consistent with the sender.",
+        "example": "Describe preferred wording, personality, style, or examples of how the brand speaks.",
+        "avoid": "Invented links, fake personalisation, false urgency, or unsupported claims."
       },
       "fullWidth": true
     },
     {
-      "key": "call_to_action",
-      "label": "Call to action",
-      "placeholder": "Try the Newsletter template / Reply with your biggest blocker",
+      "key": "deliveryPlatform",
+      "label": "Delivery platform",
+      "placeholder": "Select the publishing service",
+      "required": false,
+      "type": "select",
+      "group": "brand",
+      "groupTitle": "Brand & Delivery",
+      "hint": "Used only to adapt formatting and presentation conventions.",
+      "help": {
+        "what": "Delivery platform.",
+        "why": "Different newsletter tools support slightly different formatting conventions.",
+        "example": "Platform-neutral",
+        "avoid": "Invented links, fake personalisation, false urgency, or unsupported claims."
+      },
+      "fullWidth": false,
+      "options": [
+        "Platform-neutral",
+        "Substack",
+        "Mailchimp",
+        "beehiiv",
+        "Kit",
+        "Ghost",
+        "Other email platform"
+      ],
+      "defaultValue": "Platform-neutral"
+    },
+    {
+      "key": "formattingStyle",
+      "label": "Formatting style",
+      "placeholder": "Choose the preferred presentation",
+      "required": false,
+      "type": "select",
+      "group": "brand",
+      "groupTitle": "Brand & Delivery",
+      "hint": "The model will avoid layouts that are fragile in email clients.",
+      "help": {
+        "what": "Formatting style.",
+        "why": "Presentation style affects headings, section length, link placement, and visual density.",
+        "example": "Clean email layout",
+        "avoid": "Invented links, fake personalisation, false urgency, or unsupported claims."
+      },
+      "fullWidth": false,
+      "options": [
+        "Clean email layout",
+        "Editorial article style",
+        "Short digest blocks",
+        "Personal letter style",
+        "Minimal plain style",
+        "Auto"
+      ],
+      "defaultValue": "Clean email layout"
+    },
+    {
+      "key": "personalisationLevel",
+      "label": "Personalisation level",
+      "placeholder": "Choose how personally the newsletter should address readers",
+      "required": false,
+      "type": "select",
+      "group": "brand",
+      "groupTitle": "Brand & Delivery",
+      "hint": "No recipient names or personal facts will be invented.",
+      "help": {
+        "what": "Personalisation level.",
+        "why": "The preferred relationship between sender and reader changes pronouns and narrative perspective.",
+        "example": "Light reader focus",
+        "avoid": "Invented links, fake personalisation, false urgency, or unsupported claims."
+      },
+      "fullWidth": false,
+      "options": [
+        "None",
+        "Light reader focus",
+        "Personal sender note",
+        "Segment-aware",
+        "Auto"
+      ],
+      "defaultValue": "Light reader focus"
+    },
+    {
+      "key": "signOff",
+      "label": "Preferred sign-off",
+      "placeholder": "For example: Thanks for reading, See you next week, or The Creatornivo Team",
       "required": false,
       "type": "text",
-      "group": "cta",
-      "groupTitle": "CTA & destination",
-      "hint": "One primary action — not several competing CTAs.",
+      "group": "brand",
+      "groupTitle": "Brand & Delivery",
+      "hint": "Use Auto for a natural sign-off based on the sender and tone.",
       "help": {
-        "what": "Primary call to action.",
-        "why": "Ends the issue with one clear, relevant next step.",
-        "example": "Open the Newsletter template in Creatornivo",
-        "avoid": "Stacking download + book a call + share + survey in one section."
+        "what": "Preferred sign-off.",
+        "why": "Established newsletters may use a recognisable closing phrase or signature.",
+        "example": "Auto",
+        "avoid": "Invented links, fake personalisation, false urgency, or unsupported claims."
+      },
+      "fullWidth": false,
+      "defaultValue": "Auto"
+    },
+    {
+      "key": "replyPrompt",
+      "label": "Invite reader replies",
+      "placeholder": "Not applicable",
+      "required": false,
+      "type": "select",
+      "group": "brand",
+      "groupTitle": "Brand & Delivery",
+      "hint": "Adds one natural reply question when reader feedback supports the goal.",
+      "help": {
+        "what": "Invite reader replies.",
+        "why": "Reply invitations are valuable for some newsletters but inappropriate for others.",
+        "example": "No",
+        "avoid": "Invented subscriber names or private personalisation."
+      },
+      "fullWidth": false,
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "defaultValue": "No"
+    },
+    {
+      "key": "ctaUrl",
+      "label": "Primary CTA URL",
+      "placeholder": "https://example.com/destination",
+      "required": false,
+      "type": "text",
+      "group": "compliance",
+      "groupTitle": "Evidence & Compliance",
+      "hint": "Leave blank when the CTA is to reply, reflect, or take an offline action.",
+      "help": {
+        "what": "Primary CTA URL.",
+        "why": "The primary conversion destination must be supplied rather than invented.",
+        "example": "https://example.com/destination",
+        "avoid": "Invented links, fake personalisation, false urgency, or unsupported claims."
       },
       "fullWidth": false
     },
     {
-      "key": "link",
-      "label": "Link",
-      "placeholder": "https://www.creatornivo.com/… or leave blank for placeholder",
+      "key": "claimsAndEvidence",
+      "label": "Claims and evidence",
+      "placeholder": "List approved statistics, results, studies, testimonials, or claims with their support.",
+      "required": false,
+      "type": "textarea",
+      "group": "compliance",
+      "groupTitle": "Evidence & Compliance",
+      "hint": "Unsupported proof, performance results, and quotations will be omitted.",
+      "help": {
+        "what": "Claims and evidence.",
+        "why": "Promotional and factual claims require user-supplied evidence and approval.",
+        "example": "List approved statistics, results, studies, testimonials, or claims with their support.",
+        "avoid": "Invented links, fake personalisation, false urgency, or unsupported claims."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "disclosedRelationships",
+      "label": "Commercial disclosures",
+      "placeholder": "Mention sponsorships, affiliate links, partnerships, gifted products, or paid placements.",
+      "required": false,
+      "type": "textarea",
+      "group": "compliance",
+      "groupTitle": "Evidence & Compliance",
+      "hint": "The model will add a clear disclosure only when relevant information is supplied.",
+      "help": {
+        "what": "Commercial disclosures.",
+        "why": "Commercial relationships may require transparent disclosure in the issue.",
+        "example": "Mention sponsorships, affiliate links, partnerships, gifted products, or paid placements.",
+        "avoid": "Invented links, fake personalisation, false urgency, or unsupported claims."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "sensitiveTopic",
+      "label": "Sensitive topic category",
+      "placeholder": "Select only when relevant",
+      "required": false,
+      "type": "select",
+      "group": "compliance",
+      "groupTitle": "Evidence & Compliance",
+      "hint": "Used to apply cautious wording and appropriate verification notes.",
+      "help": {
+        "what": "Sensitive topic category.",
+        "why": "High-stakes subject areas require stronger limitations and verification handling.",
+        "example": "None",
+        "avoid": "Medical/legal claims without approved wording and jurisdiction."
+      },
+      "fullWidth": false,
+      "options": [
+        "None",
+        "Health or medical",
+        "Legal",
+        "Finance or tax",
+        "Employment or insurance",
+        "Political or public affairs",
+        "Child or personal safety",
+        "Other regulated topic"
+      ],
+      "defaultValue": "None"
+    },
+    {
+      "key": "jurisdiction",
+      "label": "Relevant jurisdiction",
+      "placeholder": "For example: United States, European Union, Ukraine, or California",
       "required": false,
       "type": "text",
-      "group": "cta",
-      "groupTitle": "CTA & destination",
-      "hint": "Real URL only — missing links become placeholders.",
+      "group": "compliance",
+      "groupTitle": "Evidence & Compliance",
+      "hint": "Specify the applicable country, state, or region when rules may differ.",
       "help": {
-        "what": "Link or destination.",
-        "why": "Supports the CTA with a verified destination.",
-        "example": "https://www.creatornivo.com",
-        "avoid": "Fake URLs, untested links, or several competing destinations."
+        "what": "Relevant jurisdiction.",
+        "why": "Legal, financial, political, employment, and regulated information may depend on location.",
+        "example": "For example: United States, European Union, Ukraine, or California",
+        "avoid": "Invented links, fake personalisation, false urgency, or unsupported claims."
       },
-      "fullWidth": false
+      "fullWidth": false,
+      "showWhen": {
+        "key": "sensitiveTopic",
+        "equals": [
+          "Health or medical",
+          "Legal",
+          "Finance or tax",
+          "Employment or insurance",
+          "Political or public affairs",
+          "Child or personal safety",
+          "Other regulated topic"
+        ]
+      }
     }
   ]
 }

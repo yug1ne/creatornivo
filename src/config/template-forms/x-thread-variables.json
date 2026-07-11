@@ -1,0 +1,582 @@
+{
+  "slug": "x-thread",
+  "title": "X Thread",
+  "version": 1,
+  "generatedAt": "2026-07-11T11:17:03.515Z",
+  "fieldCount": 24,
+  "requiredKeys": [
+    "topicAndAngle",
+    "primaryGoal",
+    "targetAudience",
+    "keyPointsAndFacts",
+    "outputLanguage"
+  ],
+  "groups": [
+    {
+      "id": "essentials",
+      "title": "Essentials",
+      "description": "Topic, goal, audience, facts, language, sources, type, length, takeaway.",
+      "defaultOpen": true
+    },
+    {
+      "id": "structure",
+      "title": "Content & Structure",
+      "description": "Opening, depth, perspective, numbering, and ending style.",
+      "defaultOpen": false
+    },
+    {
+      "id": "brand",
+      "title": "Brand & Conversion",
+      "description": "Tone, voice, CTA, destination link, and commercial disclosure.",
+      "defaultOpen": false
+    },
+    {
+      "id": "compliance",
+      "title": "Compliance & Constraints",
+      "description": "Sensitive topics, claim restrictions, and additional context.",
+      "defaultOpen": false
+    }
+  ],
+  "variables": [
+    {
+      "key": "topicAndAngle",
+      "label": "Topic and angle",
+      "placeholder": "Explain what the thread is about and the specific angle you want to take.",
+      "required": true,
+      "type": "textarea",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Be specific enough to distinguish this thread from a general post about the topic.",
+      "help": {
+        "what": "Topic and angle.",
+        "why": "The model cannot safely choose the user’s intended subject and point of view.",
+        "example": "Why short product posts convert better than feature dumps",
+        "avoid": "A generic topic with no angle."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "primaryGoal",
+      "label": "Primary goal",
+      "placeholder": "Select the main outcome",
+      "required": true,
+      "type": "select",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Choose the single most important result the thread should achieve.",
+      "help": {
+        "what": "Primary goal.",
+        "why": "The goal determines the thread’s progression, emphasis, ending, and CTA.",
+        "example": "Educate or explain",
+        "avoid": "Stacking sell + discuss + authority as equal goals."
+      },
+      "fullWidth": false,
+      "options": [
+        "Educate or explain",
+        "Share an opinion",
+        "Tell a story",
+        "Build authority",
+        "Start a discussion",
+        "Drive website traffic",
+        "Generate leads",
+        "Announce or launch"
+      ],
+      "defaultValue": "Educate or explain"
+    },
+    {
+      "key": "targetAudience",
+      "label": "Target audience",
+      "placeholder": "Who should read this, and what do they already know or care about?",
+      "required": true,
+      "type": "textarea",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Describe the intended readers, their context, and their level of familiarity.",
+      "help": {
+        "what": "Target audience.",
+        "why": "Audience knowledge and motivation materially affect terminology, examples, and depth.",
+        "example": "Who should read this, and what do they already know or care about?",
+        "avoid": "Invented facts, engagement bait, fake urgency, or undisclosed promotion."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "keyPointsAndFacts",
+      "label": "Key points and facts",
+      "placeholder": "List the facts, arguments, steps, examples, or details the thread must use.",
+      "required": true,
+      "type": "textarea",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Include only information you want treated as factual or essential.",
+      "help": {
+        "what": "Key points and facts.",
+        "why": "The thread requires user-supplied substance and must not invent supporting facts.",
+        "example": "Only verified steps, numbers, and examples",
+        "avoid": "Invented stats, quotes, or personal experiences."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "outputLanguage",
+      "label": "Output language",
+      "placeholder": "For example: English, Ukrainian, Spanish",
+      "required": true,
+      "type": "text",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "You may also specify a regional variant, such as British English.",
+      "help": {
+        "what": "Output language.",
+        "why": "Language cannot always be inferred from the topic or source material.",
+        "example": "English",
+        "avoid": "Invented facts, engagement bait, fake urgency, or undisclosed promotion."
+      },
+      "fullWidth": false,
+      "defaultValue": "English"
+    },
+    {
+      "key": "sourceMaterial",
+      "label": "Source material",
+      "placeholder": "Paste notes, research, quotes, links, product details, or an existing draft.",
+      "required": false,
+      "type": "textarea",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "The model may reorganize supplied material but must not invent missing evidence.",
+      "help": {
+        "what": "Source material.",
+        "why": "Source material improves accuracy when the thread depends on research, quotations, or product information.",
+        "example": "Paste notes, research, quotes, links, product details, or an existing draft.",
+        "avoid": "Invented facts, engagement bait, fake urgency, or undisclosed promotion."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "threadType",
+      "label": "Thread type",
+      "placeholder": "Select a thread format",
+      "required": false,
+      "type": "select",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Choose the format closest to the way the idea should unfold.",
+      "help": {
+        "what": "Thread type.",
+        "why": "Different X threads require different narrative structures rather than a generic hook-body-CTA formula.",
+        "example": "Educational breakdown",
+        "avoid": "Invented facts, engagement bait, fake urgency, or undisclosed promotion."
+      },
+      "fullWidth": false,
+      "options": [
+        "Educational breakdown",
+        "Step-by-step guide",
+        "Story or experience",
+        "Opinion or argument",
+        "Case breakdown",
+        "Lessons or mistakes",
+        "Announcement or launch",
+        "Auto"
+      ],
+      "defaultValue": "Educational breakdown"
+    },
+    {
+      "key": "threadLength",
+      "label": "Thread length",
+      "placeholder": "Select a target length",
+      "required": false,
+      "type": "select",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "The final count may be reduced when the idea does not justify the selected length.",
+      "help": {
+        "what": "Thread length.",
+        "why": "The desired thread length affects pacing and the amount of detail allocated to each point.",
+        "example": "7 posts",
+        "avoid": "Invented facts, engagement bait, fake urgency, or undisclosed promotion."
+      },
+      "fullWidth": false,
+      "options": [
+        "Auto",
+        "5 posts",
+        "7 posts",
+        "9 posts",
+        "12 posts",
+        "15 posts"
+      ],
+      "defaultValue": "7 posts"
+    },
+    {
+      "key": "centralTakeaway",
+      "label": "Main takeaway",
+      "placeholder": "What should readers remember after finishing the thread?",
+      "required": false,
+      "type": "text",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Leave blank when the takeaway can be inferred from the key points.",
+      "help": {
+        "what": "Main takeaway.",
+        "why": "A supplied takeaway helps prevent the thread from becoming a disconnected list of posts.",
+        "example": "What should readers remember after finishing the thread?",
+        "avoid": "Invented facts, engagement bait, fake urgency, or undisclosed promotion."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "hookStyle",
+      "label": "Opening style",
+      "placeholder": "Choose how the first post opens",
+      "required": false,
+      "type": "select",
+      "group": "structure",
+      "groupTitle": "Content & Structure",
+      "hint": "Auto selects the strongest truthful opening for the topic and goal.",
+      "help": {
+        "what": "Opening style.",
+        "why": "The opening approach changes how the thread earns attention without relying on clickbait.",
+        "example": "Auto",
+        "avoid": "Invented facts, engagement bait, fake urgency, or undisclosed promotion."
+      },
+      "fullWidth": false,
+      "options": [
+        "Auto",
+        "Direct promise",
+        "Strong observation",
+        "Contrarian view",
+        "Short story",
+        "Question",
+        "Surprising fact",
+        "Problem first"
+      ],
+      "defaultValue": "Auto"
+    },
+    {
+      "key": "depthLevel",
+      "label": "Level of detail",
+      "placeholder": "Select the desired depth",
+      "required": false,
+      "type": "select",
+      "group": "structure",
+      "groupTitle": "Content & Structure",
+      "hint": "This controls information density, not the number of posts by itself.",
+      "help": {
+        "what": "Level of detail.",
+        "why": "Users may need either a fast overview or a more substantial explanation within the same post count.",
+        "example": "Balanced",
+        "avoid": "Invented facts, engagement bait, fake urgency, or undisclosed promotion."
+      },
+      "fullWidth": false,
+      "options": [
+        "Concise",
+        "Balanced",
+        "Detailed"
+      ],
+      "defaultValue": "Balanced"
+    },
+    {
+      "key": "narrativePerspective",
+      "label": "Writing perspective",
+      "placeholder": "Select who appears to be speaking",
+      "required": false,
+      "type": "select",
+      "group": "structure",
+      "groupTitle": "Content & Structure",
+      "hint": "Do not use first-person experience unless it is supported by the supplied information.",
+      "help": {
+        "what": "Writing perspective.",
+        "why": "Perspective determines whether the thread reads as personal experience, brand communication, or independent explanation.",
+        "example": "Auto",
+        "avoid": "Invented facts, engagement bait, fake urgency, or undisclosed promotion."
+      },
+      "fullWidth": false,
+      "options": [
+        "Auto",
+        "First person",
+        "Brand voice",
+        "Neutral explainer"
+      ],
+      "defaultValue": "Auto"
+    },
+    {
+      "key": "threadNumbering",
+      "label": "Post numbering",
+      "placeholder": "Choose how posts are numbered",
+      "required": false,
+      "type": "select",
+      "group": "structure",
+      "groupTitle": "Content & Structure",
+      "hint": "Numbering is included inside the character allowance when used.",
+      "help": {
+        "what": "Post numbering.",
+        "why": "Numbering affects readability, character usage, and the appearance of the published thread.",
+        "example": "Auto",
+        "avoid": "Invented facts, engagement bait, fake urgency, or undisclosed promotion."
+      },
+      "fullWidth": false,
+      "options": [
+        "Auto",
+        "1/7 format",
+        "Number only",
+        "No visible numbering"
+      ],
+      "defaultValue": "Auto"
+    },
+    {
+      "key": "endingStyle",
+      "label": "Ending style",
+      "placeholder": "Choose how the thread finishes",
+      "required": false,
+      "type": "select",
+      "group": "structure",
+      "groupTitle": "Content & Structure",
+      "hint": "The ending should resolve the thread rather than abruptly adding a sales pitch.",
+      "help": {
+        "what": "Ending style.",
+        "why": "The intended ending changes how the final posts consolidate or convert reader attention.",
+        "example": "Auto",
+        "avoid": "Invented facts, engagement bait, fake urgency, or undisclosed promotion."
+      },
+      "fullWidth": false,
+      "options": [
+        "Auto",
+        "Final takeaway",
+        "Action steps",
+        "Discussion question",
+        "Short summary",
+        "CTA-led ending"
+      ],
+      "defaultValue": "Auto"
+    },
+    {
+      "key": "tone",
+      "label": "Tone",
+      "placeholder": "Select the overall tone",
+      "required": false,
+      "type": "select",
+      "group": "brand",
+      "groupTitle": "Brand & Conversion",
+      "hint": "The tone will remain appropriate to the subject and audience.",
+      "help": {
+        "what": "Tone.",
+        "why": "Tone is a genuine brand and communication preference that cannot always be inferred.",
+        "example": "Clear and natural",
+        "avoid": "Invented facts, engagement bait, fake urgency, or undisclosed promotion."
+      },
+      "fullWidth": false,
+      "options": [
+        "Clear and natural",
+        "Conversational",
+        "Professional",
+        "Analytical",
+        "Bold but credible",
+        "Friendly",
+        "Dry and concise",
+        "Reflective"
+      ],
+      "defaultValue": "Clear and natural"
+    },
+    {
+      "key": "brandVoice",
+      "label": "Voice guidance",
+      "placeholder": "Describe your usual voice or paste a short example of how you write.",
+      "required": false,
+      "type": "textarea",
+      "group": "brand",
+      "groupTitle": "Brand & Conversion",
+      "hint": "Mention distinctive preferences, not general rules such as “write naturally.”",
+      "help": {
+        "what": "Voice guidance.",
+        "why": "Specific voice guidance helps the output sound consistent with the user or brand.",
+        "example": "Describe your usual voice or paste a short example of how you write.",
+        "avoid": "Invented facts, engagement bait, fake urgency, or undisclosed promotion."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "ctaMode",
+      "label": "Desired reader action",
+      "placeholder": "Select the main action",
+      "required": false,
+      "type": "select",
+      "group": "brand",
+      "groupTitle": "Brand & Conversion",
+      "hint": "Auto chooses a proportionate CTA or omits it when none is useful.",
+      "help": {
+        "what": "Desired reader action.",
+        "why": "The desired action determines whether and how the final post should convert attention.",
+        "example": "Auto",
+        "avoid": "Invented facts, engagement bait, fake urgency, or undisclosed promotion."
+      },
+      "fullWidth": false,
+      "options": [
+        "Auto",
+        "None",
+        "Reply or discuss",
+        "Follow the account",
+        "Visit a link",
+        "Subscribe",
+        "Download",
+        "Buy or book"
+      ],
+      "defaultValue": "Auto"
+    },
+    {
+      "key": "ctaDetails",
+      "label": "CTA details",
+      "placeholder": "Describe the action, offer, resource, or next step readers should take.",
+      "required": false,
+      "type": "textarea",
+      "group": "brand",
+      "groupTitle": "Brand & Conversion",
+      "hint": "Include only one primary next step and any information needed to explain it.",
+      "help": {
+        "what": "CTA details.",
+        "why": "The model cannot safely invent an offer, resource, booking step, or conversion promise.",
+        "example": "Reply with your biggest posting bottleneck",
+        "avoid": "Multiple competing CTAs in the final posts."
+      },
+      "fullWidth": true,
+      "showWhen": {
+        "key": "ctaMode",
+        "notEquals": "None"
+      }
+    },
+    {
+      "key": "destinationUrl",
+      "label": "Destination URL",
+      "placeholder": "https://example.com/resource",
+      "required": false,
+      "type": "text",
+      "group": "brand",
+      "groupTitle": "Brand & Conversion",
+      "hint": "Only supplied URLs may appear in the generated thread.",
+      "help": {
+        "what": "Destination URL.",
+        "why": "A link-based CTA requires an accurate user-supplied destination.",
+        "example": "https://example.com/resource",
+        "avoid": "Invented facts, engagement bait, fake urgency, or undisclosed promotion."
+      },
+      "fullWidth": false,
+      "showWhen": {
+        "key": "ctaMode",
+        "equals": [
+          "Visit a link",
+          "Subscribe",
+          "Download",
+          "Buy or book"
+        ]
+      }
+    },
+    {
+      "key": "commercialRelationship",
+      "label": "Commercial relationship",
+      "placeholder": "Select any relevant relationship",
+      "required": false,
+      "type": "select",
+      "group": "brand",
+      "groupTitle": "Brand & Conversion",
+      "hint": "This helps the thread avoid presenting promotion as independent opinion.",
+      "help": {
+        "what": "Commercial relationship.",
+        "why": "Commercial affiliation may materially change wording and disclosure requirements.",
+        "example": "My own product",
+        "avoid": "Presenting owned products as independent reviews."
+      },
+      "fullWidth": false,
+      "options": [
+        "None",
+        "My own product",
+        "Employer or client",
+        "Sponsor",
+        "Affiliate relationship",
+        "Other commercial interest"
+      ],
+      "defaultValue": "None"
+    },
+    {
+      "key": "disclosureText",
+      "label": "Disclosure wording",
+      "placeholder": "For example: I built this product, or Sponsored by…",
+      "required": false,
+      "type": "text",
+      "group": "brand",
+      "groupTitle": "Brand & Conversion",
+      "hint": "Leave blank to generate a brief neutral disclosure based on the selected relationship.",
+      "help": {
+        "what": "Disclosure wording.",
+        "why": "The user may need approved or legally required disclosure wording.",
+        "example": "For example: I built this product, or Sponsored by…",
+        "avoid": "Invented facts, engagement bait, fake urgency, or undisclosed promotion."
+      },
+      "fullWidth": false,
+      "showWhen": {
+        "key": "commercialRelationship",
+        "notEquals": "None"
+      }
+    },
+    {
+      "key": "sensitiveTopic",
+      "label": "Sensitive topic",
+      "placeholder": "Select when additional caution is needed",
+      "required": false,
+      "type": "select",
+      "group": "compliance",
+      "groupTitle": "Compliance & Constraints",
+      "hint": "This enables cautious wording and verification notes where appropriate.",
+      "help": {
+        "what": "Sensitive topic.",
+        "why": "High-stakes subjects require different claim handling and may depend on jurisdiction or current authoritative information.",
+        "example": "None",
+        "avoid": "Medical/legal claims without approved wording."
+      },
+      "fullWidth": false,
+      "options": [
+        "None",
+        "Health or medical",
+        "Legal",
+        "Financial or tax",
+        "Employment",
+        "Political or civic",
+        "Safety",
+        "Child-related",
+        "Other regulated topic"
+      ],
+      "defaultValue": "None"
+    },
+    {
+      "key": "claimsAndRestrictions",
+      "label": "Claims and restrictions",
+      "placeholder": "List prohibited claims, required wording, jurisdiction, confidentiality limits, or topics to avoid.",
+      "required": false,
+      "type": "textarea",
+      "group": "compliance",
+      "groupTitle": "Compliance & Constraints",
+      "hint": "Use this for genuine legal, factual, brand, privacy, or editorial restrictions.",
+      "help": {
+        "what": "Claims and restrictions.",
+        "why": "The model cannot infer private restrictions, approved claims, or applicable jurisdiction.",
+        "example": "List prohibited claims, required wording, jurisdiction, confidentiality limits, or topics to avoid.",
+        "avoid": "Invented facts, engagement bait, fake urgency, or undisclosed promotion."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "additionalContext",
+      "label": "Additional context",
+      "placeholder": "Add any final context that materially affects the thread.",
+      "required": false,
+      "type": "textarea",
+      "group": "compliance",
+      "groupTitle": "Compliance & Constraints",
+      "hint": "Do not repeat information already entered in another field.",
+      "help": {
+        "what": "Additional context.",
+        "why": "One controlled catch-all field supports uncommon but material requirements without expanding the form.",
+        "example": "Add any final context that materially affects the thread.",
+        "avoid": "Invented facts, engagement bait, fake urgency, or undisclosed promotion."
+      },
+      "fullWidth": true
+    }
+  ]
+}

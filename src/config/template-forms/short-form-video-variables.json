@@ -1,0 +1,586 @@
+{
+  "slug": "short-form-video",
+  "title": "Short-Form Video Script",
+  "version": 1,
+  "generatedAt": "2026-07-11T11:14:32.425Z",
+  "fieldCount": 24,
+  "requiredKeys": [
+    "videoTopic",
+    "primaryGoal",
+    "targetAudience",
+    "keyMessage",
+    "essentialFacts",
+    "outputLanguage"
+  ],
+  "groups": [
+    {
+      "id": "essentials",
+      "title": "Essentials",
+      "description": "Topic, goal, audience, takeaway, facts, platform, duration, format, CTA, language.",
+      "defaultOpen": true
+    },
+    {
+      "id": "production",
+      "title": "Platform & Production",
+      "description": "Filming method, available assets, production level, and variants.",
+      "defaultOpen": false
+    },
+    {
+      "id": "brand",
+      "title": "Brand & Style",
+      "description": "Tone, brand voice, pacing, and caption style.",
+      "defaultOpen": false
+    },
+    {
+      "id": "accuracy",
+      "title": "Accuracy & Restrictions",
+      "description": "Sources, restrictions, sensitive subject category, and jurisdiction.",
+      "defaultOpen": false
+    }
+  ],
+  "variables": [
+    {
+      "key": "videoTopic",
+      "label": "Video topic",
+      "placeholder": "Explain what the video should be about.",
+      "required": true,
+      "type": "textarea",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Describe the subject, product, story, question, or idea the video should cover.",
+      "help": {
+        "what": "Video topic.",
+        "why": "The topic is the central factual and creative input that cannot be safely inferred.",
+        "example": "One practical tip for clearer product demos on Reels",
+        "avoid": "Several unrelated topics in a 30-second script."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "primaryGoal",
+      "label": "Primary goal",
+      "placeholder": "Select the main result you want.",
+      "required": true,
+      "type": "select",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Choose the single most important purpose of the video.",
+      "help": {
+        "what": "Primary goal.",
+        "why": "The goal determines the video structure, emphasis, CTA, and pacing.",
+        "example": "Educate or explain",
+        "avoid": "Stacking sell + engage + entertain as equal goals."
+      },
+      "fullWidth": false,
+      "options": [
+        "Educate or explain",
+        "Entertain",
+        "Build awareness",
+        "Promote or sell",
+        "Drive engagement",
+        "Share an update",
+        "Tell a story",
+        "Build trust"
+      ],
+      "defaultValue": "Educate or explain"
+    },
+    {
+      "key": "targetAudience",
+      "label": "Target audience",
+      "placeholder": "Who should watch this, and what do they already know?",
+      "required": true,
+      "type": "textarea",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Describe the intended viewer, relevant interests, and awareness level.",
+      "help": {
+        "what": "Target audience.",
+        "why": "Audience knowledge and motivation materially affect language, examples, and hook selection.",
+        "example": "Who should watch this, and what do they already know?",
+        "avoid": "Invented proof, fake urgency, engagement bait, or unsafe claims."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "keyMessage",
+      "label": "Main takeaway",
+      "placeholder": "What should viewers understand, remember, or believe?",
+      "required": true,
+      "type": "textarea",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "State the one central message the video must communicate.",
+      "help": {
+        "what": "Main takeaway.",
+        "why": "A defined takeaway prevents the short script from becoming unfocused.",
+        "example": "One takeaway viewers should remember",
+        "avoid": "Vague multi-message scripts."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "essentialFacts",
+      "label": "Facts to include",
+      "placeholder": "Add the facts, steps, features, dates, examples, or details that must appear.",
+      "required": true,
+      "type": "textarea",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Include only information that is accurate and approved for use.",
+      "help": {
+        "what": "Facts to include.",
+        "why": "The model must receive the factual details it is not permitted to invent.",
+        "example": "Only verified steps, features, or dates",
+        "avoid": "Invented stats, testimonials, or guarantees."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "outputLanguage",
+      "label": "Output language",
+      "placeholder": "Select the script language.",
+      "required": true,
+      "type": "select",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "The script, on-screen text, caption, and notes will use this language.",
+      "help": {
+        "what": "Output language.",
+        "why": "Language cannot always be reliably inferred from the topic or target platform.",
+        "example": "English",
+        "avoid": "Invented proof, fake urgency, engagement bait, or unsafe claims."
+      },
+      "fullWidth": false,
+      "options": [
+        "English",
+        "Ukrainian",
+        "Russian",
+        "Polish",
+        "Spanish",
+        "German",
+        "French",
+        "Auto"
+      ],
+      "defaultValue": "English"
+    },
+    {
+      "key": "targetPlatform",
+      "label": "Target platform",
+      "placeholder": "Choose where the video will be published.",
+      "required": false,
+      "type": "select",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Select one platform or use a broadly compatible vertical-video format.",
+      "help": {
+        "what": "Target platform.",
+        "why": "The destination affects pacing, tone, CTA language, caption style, and publishing conventions.",
+        "example": "Auto / multi-platform",
+        "avoid": "Invented proof, fake urgency, engagement bait, or unsafe claims."
+      },
+      "fullWidth": false,
+      "options": [
+        "Auto / multi-platform",
+        "TikTok",
+        "Instagram Reels",
+        "YouTube Shorts",
+        "Facebook Reels",
+        "LinkedIn video",
+        "Other"
+      ],
+      "defaultValue": "Auto / multi-platform"
+    },
+    {
+      "key": "videoLength",
+      "label": "Target duration",
+      "placeholder": "Choose the approximate duration.",
+      "required": false,
+      "type": "select",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "The spoken word count and number of scenes will be adapted to this duration.",
+      "help": {
+        "what": "Target duration.",
+        "why": "Duration directly limits the amount of spoken content and the number of visual beats.",
+        "example": "30–45 seconds",
+        "avoid": "Invented proof, fake urgency, engagement bait, or unsafe claims."
+      },
+      "fullWidth": false,
+      "options": [
+        "Auto",
+        "About 15 seconds",
+        "20–30 seconds",
+        "30–45 seconds",
+        "45–60 seconds",
+        "Up to 90 seconds"
+      ],
+      "defaultValue": "30–45 seconds"
+    },
+    {
+      "key": "contentFormat",
+      "label": "Video format",
+      "placeholder": "Select a format or let the model decide.",
+      "required": false,
+      "type": "select",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Choose the presentation structure that best fits your idea.",
+      "help": {
+        "what": "Video format.",
+        "why": "Different video formats require different narrative and scene structures.",
+        "example": "Auto",
+        "avoid": "Invented proof, fake urgency, engagement bait, or unsafe claims."
+      },
+      "fullWidth": false,
+      "options": [
+        "Auto",
+        "Talking-head tip",
+        "Story or anecdote",
+        "Product demonstration",
+        "List or countdown",
+        "Myth versus fact",
+        "Mini tutorial",
+        "Skit or dialogue",
+        "Faceless montage",
+        "Before-and-after explanation"
+      ],
+      "defaultValue": "Auto"
+    },
+    {
+      "key": "ctaGoal",
+      "label": "Viewer action",
+      "placeholder": "Choose what viewers should do next.",
+      "required": false,
+      "type": "select",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Use one clear action or select no CTA for a purely informational ending.",
+      "help": {
+        "what": "Viewer action.",
+        "why": "The desired action determines how the final beat should conclude.",
+        "example": "Auto",
+        "avoid": "Invented proof, fake urgency, engagement bait, or unsafe claims."
+      },
+      "fullWidth": false,
+      "options": [
+        "Auto",
+        "Follow or save",
+        "Comment or reply",
+        "Visit a link",
+        "Learn more",
+        "Buy or subscribe",
+        "Download or sign up",
+        "No CTA"
+      ],
+      "defaultValue": "Auto"
+    },
+    {
+      "key": "offerDetails",
+      "label": "Offer details",
+      "placeholder": "Describe the product, service, price, offer, destination, and approved claims.",
+      "required": false,
+      "type": "textarea",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Include only confirmed information that may appear in the promotional script.",
+      "help": {
+        "what": "Offer details.",
+        "why": "Commercial scripts require accurate offer information that must not be fabricated.",
+        "example": "Confirmed product name, price, and terms only",
+        "avoid": "Fake discounts or scarcity."
+      },
+      "fullWidth": true,
+      "showWhen": {
+        "key": "primaryGoal",
+        "equals": "Promote or sell"
+      }
+    },
+    {
+      "key": "customPlatform",
+      "label": "Platform name",
+      "placeholder": "Enter the platform or publishing destination.",
+      "required": false,
+      "type": "text",
+      "group": "production",
+      "groupTitle": "Platform & Production",
+      "hint": "Add the platform name and any important format requirement you know.",
+      "help": {
+        "what": "Platform name.",
+        "why": "A custom destination may have conventions that differ from the supported platform presets.",
+        "example": "Enter the platform or publishing destination.",
+        "avoid": "Invented proof, fake urgency, engagement bait, or unsafe claims."
+      },
+      "fullWidth": false,
+      "showWhen": {
+        "key": "targetPlatform",
+        "equals": "Other"
+      }
+    },
+    {
+      "key": "deliveryMode",
+      "label": "Delivery method",
+      "placeholder": "How will the message be presented?",
+      "required": false,
+      "type": "select",
+      "group": "production",
+      "groupTitle": "Platform & Production",
+      "hint": "The script and visual directions will match the selected recording style.",
+      "help": {
+        "what": "Delivery method.",
+        "why": "Spoken delivery and scene instructions differ substantially between recording methods.",
+        "example": "Auto",
+        "avoid": "Invented proof, fake urgency, engagement bait, or unsafe claims."
+      },
+      "fullWidth": false,
+      "options": [
+        "Auto",
+        "Direct to camera",
+        "Voiceover",
+        "Dialogue or skit",
+        "Screen demonstration",
+        "Product demonstration",
+        "Text-led faceless video"
+      ],
+      "defaultValue": "Auto"
+    },
+    {
+      "key": "availableVisuals",
+      "label": "Available visuals",
+      "placeholder": "Creator on camera\nProduct footage\nScreen recording\nExisting photos\nExisting video clips\nSimple B-roll\nStock footage\nText and graphics only",
+      "required": false,
+      "type": "textarea",
+      "group": "production",
+      "groupTitle": "Platform & Production",
+      "hint": "The script will avoid requesting footage or assets that are unavailable. Select all that apply (one per line). Options: Creator on camera; Product footage; Screen recording; Existing photos; Existing video clips; Simple B-roll; Stock footage; Text and graphics only.",
+      "help": {
+        "what": "Available visuals.",
+        "why": "Visual directions must remain practical for the creator’s available assets.",
+        "example": "Creator on camera\nProduct footage",
+        "avoid": "Requesting footage you cannot shoot."
+      },
+      "fullWidth": true,
+      "defaultValue": "Auto / not specified"
+    },
+    {
+      "key": "productionLevel",
+      "label": "Production level",
+      "placeholder": "Choose the realistic editing level.",
+      "required": false,
+      "type": "select",
+      "group": "production",
+      "groupTitle": "Platform & Production",
+      "hint": "Controls shot complexity, transitions, effects, and editing instructions.",
+      "help": {
+        "what": "Production level.",
+        "why": "The production level prevents unrealistic filming or editing recommendations.",
+        "example": "Simple phone-friendly",
+        "avoid": "Invented proof, fake urgency, engagement bait, or unsafe claims."
+      },
+      "fullWidth": false,
+      "options": [
+        "Auto",
+        "Simple phone-friendly",
+        "Moderate editing",
+        "Polished production"
+      ],
+      "defaultValue": "Simple phone-friendly"
+    },
+    {
+      "key": "variantCount",
+      "label": "Number of versions",
+      "placeholder": "1",
+      "required": false,
+      "type": "number",
+      "group": "production",
+      "groupTitle": "Platform & Production",
+      "hint": "Generate one to three meaningfully different script versions.",
+      "help": {
+        "what": "Number of versions.",
+        "why": "The user may need alternative concepts without receiving an excessive number of versions.",
+        "example": "1",
+        "avoid": "Invented proof, fake urgency, engagement bait, or unsafe claims."
+      },
+      "fullWidth": false,
+      "defaultValue": "1"
+    },
+    {
+      "key": "tone",
+      "label": "Tone",
+      "placeholder": "Select the desired tone.",
+      "required": false,
+      "type": "select",
+      "group": "brand",
+      "groupTitle": "Brand & Style",
+      "hint": "Choose the overall emotional and verbal style.",
+      "help": {
+        "what": "Tone.",
+        "why": "Tone materially changes word choice, hook intensity, delivery, and caption style.",
+        "example": "Clear and natural",
+        "avoid": "Invented proof, fake urgency, engagement bait, or unsafe claims."
+      },
+      "fullWidth": false,
+      "options": [
+        "Clear and natural",
+        "Casual",
+        "Professional",
+        "Energetic",
+        "Warm",
+        "Humorous",
+        "Direct",
+        "Thoughtful",
+        "Bold but credible"
+      ],
+      "defaultValue": "Clear and natural"
+    },
+    {
+      "key": "brandVoice",
+      "label": "Brand voice notes",
+      "placeholder": "Add preferred wording, personality, phrases to avoid, or a short style sample.",
+      "required": false,
+      "type": "textarea",
+      "group": "brand",
+      "groupTitle": "Brand & Style",
+      "hint": "Leave blank to use a natural neutral voice suited to the audience.",
+      "help": {
+        "what": "Brand voice notes.",
+        "why": "Existing brand language cannot be inferred reliably from a general tone selection.",
+        "example": "Add preferred wording, personality, phrases to avoid, or a short style sample.",
+        "avoid": "Invented proof, fake urgency, engagement bait, or unsafe claims."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "pacing",
+      "label": "Pacing",
+      "placeholder": "Choose the speed and rhythm.",
+      "required": false,
+      "type": "select",
+      "group": "brand",
+      "groupTitle": "Brand & Style",
+      "hint": "Controls sentence length, cut frequency, pauses, and information density.",
+      "help": {
+        "what": "Pacing.",
+        "why": "Pacing affects both the spoken script and the editing rhythm.",
+        "example": "Auto",
+        "avoid": "Invented proof, fake urgency, engagement bait, or unsafe claims."
+      },
+      "fullWidth": false,
+      "options": [
+        "Auto",
+        "Fast and punchy",
+        "Balanced",
+        "Calm and deliberate",
+        "Story-driven build"
+      ],
+      "defaultValue": "Auto"
+    },
+    {
+      "key": "captionStyle",
+      "label": "Caption style",
+      "placeholder": "Choose the accompanying post style.",
+      "required": false,
+      "type": "select",
+      "group": "brand",
+      "groupTitle": "Brand & Style",
+      "hint": "Controls caption length, CTA repetition, emoji use, and hashtag suggestions.",
+      "help": {
+        "what": "Caption style.",
+        "why": "The publishing caption serves a different function from the spoken script and may require separate treatment.",
+        "example": "Short with minimal hashtags",
+        "avoid": "Invented proof, fake urgency, engagement bait, or unsafe claims."
+      },
+      "fullWidth": false,
+      "options": [
+        "Short with minimal hashtags",
+        "Short without hashtags",
+        "Detailed supporting caption",
+        "Conversational caption",
+        "Caption text only",
+        "No caption"
+      ],
+      "defaultValue": "Short with minimal hashtags"
+    },
+    {
+      "key": "sourceMaterial",
+      "label": "Sources or references",
+      "placeholder": "Paste approved notes, quotations, URLs, source excerpts, or product documentation.",
+      "required": false,
+      "type": "textarea",
+      "group": "accuracy",
+      "groupTitle": "Accuracy & Restrictions",
+      "hint": "Use this for claims that must follow a specific source or approved wording.",
+      "help": {
+        "what": "Sources or references.",
+        "why": "Source material supports accurate claims and reduces the risk of invented information.",
+        "example": "Paste approved notes, quotations, URLs, source excerpts, or product documentation.",
+        "avoid": "Invented proof, fake urgency, engagement bait, or unsafe claims."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "restrictions",
+      "label": "Restrictions",
+      "placeholder": "List prohibited claims, sensitive details, required wording, or topics to avoid.",
+      "required": false,
+      "type": "textarea",
+      "group": "accuracy",
+      "groupTitle": "Accuracy & Restrictions",
+      "hint": "Combine all special limitations and mandatory requirements here.",
+      "help": {
+        "what": "Restrictions.",
+        "why": "User-specific legal, brand, privacy, or factual restrictions cannot always be inferred.",
+        "example": "List prohibited claims, sensitive details, required wording, or topics to avoid.",
+        "avoid": "Invented proof, fake urgency, engagement bait, or unsafe claims."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "subjectRisk",
+      "label": "Sensitive subject",
+      "placeholder": "Select a regulated category when relevant.",
+      "required": false,
+      "type": "select",
+      "group": "accuracy",
+      "groupTitle": "Accuracy & Restrictions",
+      "hint": "This enables additional caution for subjects where inaccurate claims may cause harm.",
+      "help": {
+        "what": "Sensitive subject.",
+        "why": "High-stakes subjects require stricter wording and verification safeguards.",
+        "example": "General topic",
+        "avoid": "Medical/legal claims without approved wording."
+      },
+      "fullWidth": false,
+      "options": [
+        "General topic",
+        "Health or medical",
+        "Legal or financial",
+        "Safety or employment",
+        "Tax, insurance, or benefits",
+        "Political or social issue",
+        "Child-related or regulated product"
+      ],
+      "defaultValue": "General topic"
+    },
+    {
+      "key": "jurisdiction",
+      "label": "Country or jurisdiction",
+      "placeholder": "For example: Ukraine, United States, EU, California.",
+      "required": false,
+      "type": "text",
+      "group": "accuracy",
+      "groupTitle": "Accuracy & Restrictions",
+      "hint": "Add the relevant location when laws, rights, benefits, or regulations may differ.",
+      "help": {
+        "what": "Country or jurisdiction.",
+        "why": "Legal, financial, political, employment, tax, insurance, and regulated claims may depend on jurisdiction.",
+        "example": "For example: Ukraine, United States, EU, California.",
+        "avoid": "Invented proof, fake urgency, engagement bait, or unsafe claims."
+      },
+      "fullWidth": false,
+      "showWhen": {
+        "key": "subjectRisk",
+        "notEquals": "General topic"
+      }
+    }
+  ]
+}
