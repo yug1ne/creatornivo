@@ -32,7 +32,7 @@
     "title": "Google Business Profile Post",
     "category": "google_business",
     "plan": "free",
-    "vars": 423
+    "vars": 23
   },
   {
     "slug": "instagram-post",
@@ -67,7 +67,7 @@
     "title": "Reddit Post",
     "category": "reddit",
     "plan": "free",
-    "vars": 12
+    "vars": 23
   },
   {
     "slug": "seo-meta-tags",
@@ -95,7 +95,7 @@
     "title": "TikTok Caption",
     "category": "tiktok",
     "plan": "free",
-    "vars": 13
+    "vars": 24
   },
   {
     "slug": "x-thread",
@@ -137,7 +137,7 @@
     "title": "Email Sequence",
     "category": "email",
     "plan": "pro",
-    "vars": 14
+    "vars": 43
   },
   {
     "slug": "etsy-listing",
@@ -207,7 +207,7 @@
     "title": "Pinterest Pin",
     "category": "pinterest",
     "plan": "pro",
-    "vars": 13
+    "vars": 24
   },
   {
     "slug": "podcast-script",
@@ -312,6 +312,6 @@
     "title": "YouTube Video Package",
     "category": "youtube",
     "plan": "pro",
-    "vars": 13
+    "vars": 40
   }
 ]

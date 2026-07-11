@@ -1,0 +1,1002 @@
+{
+  "slug": "email-sequence",
+  "title": "Email Sequence",
+  "fieldCount": 43,
+  "requiredKeys": [
+    "sequenceName",
+    "sequenceType",
+    "primaryGoal",
+    "businessName",
+    "offerOrTopic",
+    "targetAudience",
+    "keyMessage",
+    "outputLanguage",
+    "consentStatus"
+  ],
+  "groups": [
+    {
+      "id": "essentials",
+      "title": "Essentials",
+      "description": "Minimum information needed to understand the sequence, audience, goal, sender, CTA, language, and permission context.",
+      "defaultOpen": true
+    },
+    {
+      "id": "audience_journey",
+      "title": "Audience & Journey",
+      "description": "Audience awareness, relationship stage, objections, trigger context, and legitimate personalization.",
+      "defaultOpen": false
+    },
+    {
+      "id": "offer_proof_conversion",
+      "title": "Offer, Proof & Conversion",
+      "description": "Benefits, details, terms, pricing, evidence, quotes, deadlines, and relevant alternatives.",
+      "defaultOpen": false
+    },
+    {
+      "id": "brand_delivery",
+      "title": "Brand & Delivery",
+      "description": "Tone, sender perspective, email length, formatting, cadence, timing constraints, and emoji use.",
+      "defaultOpen": false
+    },
+    {
+      "id": "compliance_output",
+      "title": "Compliance & Output",
+      "description": "Regulated topics, jurisdiction, restrictions, output depth, plain-text versions, and final requirements.",
+      "defaultOpen": false
+    }
+  ],
+  "variables": [
+    {
+      "key": "sequenceName",
+      "label": "Sequence name",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": true,
+      "placeholder": "New customer onboarding",
+      "hint": "Give the sequence a clear internal name.",
+      "help": {
+        "what": "Provide the sequence name for this email sequence.",
+        "why": "It identifies the sequence and provides a useful heading for the generated package.",
+        "example": "Good example: New customer onboarding",
+        "avoid": "Avoid vague placeholders, invented facts, or values that conflict with the actual sequence context."
+      },
+      "maxLength": 120
+    },
+    {
+      "key": "sequenceType",
+      "label": "Sequence type",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": true,
+      "placeholder": "Select a sequence type",
+      "hint": "Choose the journey that most closely matches your goal.",
+      "help": {
+        "what": "Provide the sequence type for this email sequence.",
+        "why": "Different sequence types require different progression, timing, and promotional intensity.",
+        "example": "Good example: Lead nurture",
+        "avoid": "Avoid vague placeholders, invented facts, or values that conflict with the actual sequence context."
+      },
+      "defaultValue": "Lead nurture",
+      "maxLength": 40,
+      "options": [
+        "Welcome or onboarding",
+        "Lead nurture",
+        "Educational drip",
+        "Product launch",
+        "Sales or promotion",
+        "Abandoned cart",
+        "Post-purchase",
+        "Re-engagement",
+        "Event or webinar follow-up",
+        "Custom"
+      ]
+    },
+    {
+      "key": "primaryGoal",
+      "label": "Primary goal",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": true,
+      "placeholder": "Select the main goal",
+      "hint": "Choose the single most important result the sequence should support.",
+      "help": {
+        "what": "Provide the primary goal for this email sequence.",
+        "why": "The goal determines the sequence progression and primary CTA.",
+        "example": "Good example: Build trust",
+        "avoid": "Avoid vague placeholders, invented facts, or values that conflict with the actual sequence context."
+      },
+      "defaultValue": "Build trust",
+      "maxLength": 40,
+      "options": [
+        "Educate the audience",
+        "Build trust",
+        "Activate users",
+        "Generate sales",
+        "Book calls",
+        "Drive registrations",
+        "Recover checkout",
+        "Retain or reactivate",
+        "Other"
+      ]
+    },
+    {
+      "key": "businessName",
+      "label": "Business or brand",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": true,
+      "placeholder": "Acme Studio",
+      "hint": "Enter the sender’s business, product, organization, or brand name.",
+      "help": {
+        "what": "Provide the business or brand for this email sequence.",
+        "why": "The model must know who is communicating and how to identify the sender.",
+        "example": "Good example: Acme Studio",
+        "avoid": "Avoid vague placeholders, invented facts, or values that conflict with the actual sequence context."
+      },
+      "maxLength": 160
+    },
+    {
+      "key": "offerOrTopic",
+      "label": "Offer or topic",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "Describe the product, service, event, resource, or topic.",
+      "hint": "Explain what the sequence is about and what the reader is being introduced to.",
+      "help": {
+        "what": "Provide the offer or topic for this email sequence.",
+        "why": "The central offer or topic cannot be safely inferred.",
+        "example": "Good example: Describe the product, service, event, resource, or topic.",
+        "avoid": "Avoid vague placeholders, invented facts, or values that conflict with the actual sequence context."
+      },
+      "maxLength": 1500,
+      "fullWidth": true
+    },
+    {
+      "key": "targetAudience",
+      "label": "Target audience",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "Independent designers considering their first client-management tool.",
+      "hint": "Describe the intended recipients and any important shared characteristics.",
+      "help": {
+        "what": "Provide the target audience for this email sequence.",
+        "why": "Audience context materially changes the language, assumptions, objections, and CTA.",
+        "example": "Good example: Independent designers considering their first client-management tool.",
+        "avoid": "Avoid vague placeholders, invented facts, or values that conflict with the actual sequence context."
+      },
+      "maxLength": 1200,
+      "fullWidth": true
+    },
+    {
+      "key": "keyMessage",
+      "label": "Key message",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "The main idea readers should understand after completing the sequence.",
+      "hint": "State the central takeaway in plain language.",
+      "help": {
+        "what": "Provide the key message for this email sequence.",
+        "why": "It prevents the sequence from becoming unfocused or internally inconsistent.",
+        "example": "Good example: The main idea readers should understand after completing the sequence.",
+        "avoid": "Avoid vague placeholders, invented facts, or values that conflict with the actual sequence context."
+      },
+      "maxLength": 1000,
+      "fullWidth": true
+    },
+    {
+      "key": "outputLanguage",
+      "label": "Output language",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": true,
+      "placeholder": "English",
+      "hint": "Enter any language or regional language variant.",
+      "help": {
+        "what": "Provide the output language for this email sequence.",
+        "why": "The language cannot always be inferred from the surrounding interface.",
+        "example": "Good example: English",
+        "avoid": "Avoid vague placeholders, invented facts, or values that conflict with the actual sequence context."
+      },
+      "defaultValue": "English",
+      "maxLength": 80
+    },
+    {
+      "key": "emailCount",
+      "label": "Number of emails",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "number",
+      "required": false,
+      "placeholder": "5",
+      "hint": "Choose between 2 and 10 emails.",
+      "help": {
+        "what": "Optional context for the number of emails field.",
+        "why": "The required sequence length materially changes its structure and pacing.",
+        "example": "Good example: 5",
+        "avoid": "Avoid guessed details, unsupported claims, or extra requirements that do not apply to this sequence."
+      },
+      "defaultValue": "5",
+      "min": 2,
+      "max": 10
+    },
+    {
+      "key": "sequenceDepth",
+      "label": "Sequence depth",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select depth",
+      "hint": "Controls how much strategic and educational detail is distributed across the sequence.",
+      "help": {
+        "what": "Optional context for the sequence depth field.",
+        "why": "It allows the user to control complexity without specifying specialist copywriting rules.",
+        "example": "Good example: Select depth",
+        "avoid": "Avoid guessed details, unsupported claims, or extra requirements that do not apply to this sequence."
+      },
+      "defaultValue": "Balanced",
+      "maxLength": 24,
+      "options": [
+        "Auto",
+        "Concise",
+        "Balanced",
+        "Detailed"
+      ]
+    },
+    {
+      "key": "senderName",
+      "label": "Sender name",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": false,
+      "placeholder": "Alex from Acme",
+      "hint": "Add the person or team name that should appear in the sign-off.",
+      "help": {
+        "what": "Optional context for the sender name field.",
+        "why": "A supplied sender identity makes the emails more natural and implementation-ready.",
+        "example": "Good example: Alex from Acme",
+        "avoid": "Avoid guessed details, unsupported claims, or extra requirements that do not apply to this sequence."
+      },
+      "maxLength": 120
+    },
+    {
+      "key": "primaryCta",
+      "label": "Primary CTA",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select the main action",
+      "hint": "Choose the main action or let the model select a suitable low-friction step.",
+      "help": {
+        "what": "Optional context for the primary cta field.",
+        "why": "The main conversion action determines how the sequence progresses.",
+        "example": "Good example: Visit page",
+        "avoid": "Avoid guessed details, unsupported claims, or extra requirements that do not apply to this sequence."
+      },
+      "defaultValue": "Auto",
+      "maxLength": 32,
+      "options": [
+        "Auto",
+        "Visit page",
+        "Buy now",
+        "Book a call",
+        "Start free trial",
+        "Register",
+        "Download",
+        "Reply",
+        "No direct CTA"
+      ]
+    },
+    {
+      "key": "destinationUrl",
+      "label": "CTA destination URL",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": false,
+      "placeholder": "https://example.com/product",
+      "hint": "Provide the real destination for click-based CTAs.",
+      "help": {
+        "what": "Optional context for the cta destination url field.",
+        "why": "The system must not invent links or send readers to an unspecified destination.",
+        "example": "Good example: https://example.com/product",
+        "avoid": "Avoid fake links, tracking links you cannot verify, or unrelated destinations."
+      },
+      "format": "url",
+      "maxLength": 500,
+      "showWhen": {
+        "key": "primaryCta",
+        "equals": [
+          "Visit page",
+          "Buy now",
+          "Book a call",
+          "Start free trial",
+          "Register",
+          "Download"
+        ]
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "consentStatus",
+      "label": "Contact permission",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": true,
+      "placeholder": "Select the relationship",
+      "hint": "Describe why these recipients may lawfully and reasonably receive the sequence.",
+      "help": {
+        "what": "Provide the contact permission for this email sequence.",
+        "why": "Permission and relationship context materially affect tone, frequency, promotion, and opt-out handling.",
+        "example": "Good example: Confirmed subscribers",
+        "avoid": "Avoid vague placeholders, invented facts, or values that conflict with the actual sequence context."
+      },
+      "defaultValue": "Confirmed subscribers",
+      "maxLength": 40,
+      "options": [
+        "Confirmed subscribers",
+        "Existing customers",
+        "Registered attendees",
+        "Opted-in leads",
+        "Cold prospects",
+        "Transactional recipients",
+        "Consent uncertain"
+      ]
+    },
+    {
+      "key": "awarenessLevel",
+      "label": "Audience awareness",
+      "group": "audience_journey",
+      "groupTitle": "Audience & Journey",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select awareness level",
+      "hint": "Choose how familiar recipients are with the problem and offer.",
+      "help": {
+        "what": "Optional context for the audience awareness field.",
+        "why": "Awareness level changes how much explanation is needed before presenting the offer.",
+        "example": "Good example: Problem aware",
+        "avoid": "Avoid guessed details, unsupported claims, or extra requirements that do not apply to this sequence."
+      },
+      "defaultValue": "Auto",
+      "maxLength": 32,
+      "options": [
+        "Auto",
+        "Unaware",
+        "Problem aware",
+        "Solution aware",
+        "Product aware",
+        "Most aware"
+      ]
+    },
+    {
+      "key": "audiencePain",
+      "label": "Audience problem",
+      "group": "audience_journey",
+      "groupTitle": "Audience & Journey",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "What problem, frustration, or unmet need brings readers to this topic?",
+      "hint": "Focus on the most relevant problem rather than every possible pain point.",
+      "help": {
+        "what": "Optional context for the audience problem field.",
+        "why": "A specific problem creates relevance and helps avoid generic copy.",
+        "example": "Good example: What problem, frustration, or unmet need brings readers to this topic?",
+        "avoid": "Avoid guessed details, unsupported claims, or extra requirements that do not apply to this sequence."
+      },
+      "maxLength": 1000,
+      "fullWidth": true
+    },
+    {
+      "key": "desiredOutcome",
+      "label": "Desired reader outcome",
+      "group": "audience_journey",
+      "groupTitle": "Audience & Journey",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "What useful change or result does the reader want?",
+      "hint": "Describe the realistic outcome the audience hopes to achieve.",
+      "help": {
+        "what": "Optional context for the desired reader outcome field.",
+        "why": "It helps connect benefits and CTAs to a meaningful reader goal.",
+        "example": "Good example: What useful change or result does the reader want?",
+        "avoid": "Avoid guessed details, unsupported claims, or extra requirements that do not apply to this sequence."
+      },
+      "maxLength": 1000,
+      "fullWidth": true
+    },
+    {
+      "key": "relationshipStage",
+      "label": "Relationship stage",
+      "group": "audience_journey",
+      "groupTitle": "Audience & Journey",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select relationship stage",
+      "hint": "Choose the audience’s current relationship with the sender.",
+      "help": {
+        "what": "Optional context for the relationship stage field.",
+        "why": "The model should not assume trust or familiarity that does not exist.",
+        "example": "Good example: Warm lead",
+        "avoid": "Avoid guessed details, unsupported claims, or extra requirements that do not apply to this sequence."
+      },
+      "defaultValue": "New contact",
+      "maxLength": 32,
+      "options": [
+        "New contact",
+        "Warm lead",
+        "Existing customer",
+        "Active user",
+        "Lapsed contact",
+        "Cold prospect"
+      ]
+    },
+    {
+      "key": "triggerEvent",
+      "label": "Sequence trigger",
+      "group": "audience_journey",
+      "groupTitle": "Audience & Journey",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Signed up, left checkout, attended an event, or stopped using the product.",
+      "hint": "Describe the real action or event that starts the sequence.",
+      "help": {
+        "what": "Optional context for the sequence trigger field.",
+        "why": "Triggered sequences must accurately acknowledge the real event without fabricating behavior.",
+        "example": "Good example: Signed up, left checkout, attended an event, or stopped using the product.",
+        "avoid": "Avoid guessed details, unsupported claims, or extra requirements that do not apply to this sequence."
+      },
+      "maxLength": 600,
+      "showWhen": {
+        "key": "sequenceType",
+        "equals": [
+          "Welcome or onboarding",
+          "Abandoned cart",
+          "Post-purchase",
+          "Re-engagement",
+          "Event or webinar follow-up"
+        ]
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "commonObjections",
+      "label": "Common objections",
+      "group": "audience_journey",
+      "groupTitle": "Audience & Journey",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Select relevant objections",
+      "hint": "Choose only the barriers that genuinely affect this audience. Current form controls do not support checkboxes for this template yet, so list the relevant options separated by commas.",
+      "help": {
+        "what": "List one or more relevant options separated by commas. This preserves the prompt variable while using the current textarea control.",
+        "why": "Relevant objections help give later emails distinct roles.",
+        "example": "Good example: Price or budget, Trust or credibility",
+        "avoid": "Avoid guessed details, unsupported claims, or extra requirements that do not apply to this sequence."
+      },
+      "maxLength": 256,
+      "options": [
+        "Price or budget",
+        "Time or effort",
+        "Trust or credibility",
+        "Need or priority",
+        "Complexity",
+        "Switching risk",
+        "Team approval",
+        "Timing"
+      ]
+    },
+    {
+      "key": "personalizationData",
+      "label": "Personalization data",
+      "group": "audience_journey",
+      "groupTitle": "Audience & Journey",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Approved fields such as first name, plan, industry, or signup source.",
+      "hint": "Include only legitimate data that may safely be used in the emails.",
+      "help": {
+        "what": "Optional context for the personalization data field.",
+        "why": "The system must distinguish real personalization from fabricated familiarity.",
+        "example": "Good example: Approved fields such as first name, plan, industry, or signup source.",
+        "avoid": "Avoid private, sensitive, or inferred data that the email system cannot legitimately use."
+      },
+      "maxLength": 1000,
+      "fullWidth": true
+    },
+    {
+      "key": "keyBenefits",
+      "label": "Key benefits",
+      "group": "offer_proof_conversion",
+      "groupTitle": "Offer, Proof & Conversion",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "List the most important practical benefits for this audience.",
+      "hint": "Describe useful outcomes rather than unsupported hype.",
+      "help": {
+        "what": "Optional context for the key benefits field.",
+        "why": "Supplied benefits make the sequence more specific and commercially relevant.",
+        "example": "Good example: List the most important practical benefits for this audience.",
+        "avoid": "Avoid guessed details, unsupported claims, or extra requirements that do not apply to this sequence."
+      },
+      "maxLength": 1200,
+      "fullWidth": true
+    },
+    {
+      "key": "importantDetails",
+      "label": "Important details",
+      "group": "offer_proof_conversion",
+      "groupTitle": "Offer, Proof & Conversion",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Features, process, eligibility, delivery method, dates, or requirements.",
+      "hint": "Add factual information readers need before taking action.",
+      "help": {
+        "what": "Optional context for the important details field.",
+        "why": "Important operational facts cannot be safely invented.",
+        "example": "Good example: Features, process, eligibility, delivery method, dates, or requirements.",
+        "avoid": "Avoid guessed details, unsupported claims, or extra requirements that do not apply to this sequence."
+      },
+      "maxLength": 1500,
+      "fullWidth": true
+    },
+    {
+      "key": "offerTerms",
+      "label": "Offer terms",
+      "group": "offer_proof_conversion",
+      "groupTitle": "Offer, Proof & Conversion",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Trial conditions, included services, refund terms, or purchase conditions.",
+      "hint": "Include exact terms that must be communicated accurately.",
+      "help": {
+        "what": "Optional context for the offer terms field.",
+        "why": "Terms affect conversion copy and must not be inferred.",
+        "example": "Good example: Trial conditions, included services, refund terms, or purchase conditions.",
+        "avoid": "Avoid approximate commercial terms when exact wording, eligibility, or pricing matters."
+      },
+      "maxLength": 1200,
+      "fullWidth": true
+    },
+    {
+      "key": "pricingDetails",
+      "label": "Pricing details",
+      "group": "offer_proof_conversion",
+      "groupTitle": "Offer, Proof & Conversion",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Price, billing period, plan differences, or approved discount.",
+      "hint": "Leave blank when pricing should not appear.",
+      "help": {
+        "what": "Optional context for the pricing details field.",
+        "why": "Prices and discounts must only be used when supplied.",
+        "example": "Good example: Price, billing period, plan differences, or approved discount.",
+        "avoid": "Avoid approximate commercial terms when exact wording, eligibility, or pricing matters."
+      },
+      "maxLength": 1000,
+      "fullWidth": true
+    },
+    {
+      "key": "proofPoints",
+      "label": "Approved proof points",
+      "group": "offer_proof_conversion",
+      "groupTitle": "Offer, Proof & Conversion",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Verified metrics, certifications, research, customer numbers, or results.",
+      "hint": "Include only evidence that may be used publicly.",
+      "help": {
+        "what": "Optional context for the approved proof points field.",
+        "why": "It allows credible support while preventing fabricated evidence.",
+        "example": "Good example: Verified metrics, certifications, research, customer numbers, or results.",
+        "avoid": "Avoid invented metrics, paraphrased testimonials, or evidence that has not been approved for public use."
+      },
+      "maxLength": 2000,
+      "fullWidth": true
+    },
+    {
+      "key": "testimonialsOrQuotes",
+      "label": "Approved quotes",
+      "group": "offer_proof_conversion",
+      "groupTitle": "Offer, Proof & Conversion",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Paste exact approved testimonials or quotations with attribution.",
+      "hint": "Do not summarize unapproved feedback as a testimonial.",
+      "help": {
+        "what": "Optional context for the approved quotes field.",
+        "why": "Exact source wording is required to use testimonials truthfully.",
+        "example": "Good example: Paste exact approved testimonials or quotations with attribution.",
+        "avoid": "Avoid invented metrics, paraphrased testimonials, or evidence that has not been approved for public use."
+      },
+      "maxLength": 2000,
+      "fullWidth": true
+    },
+    {
+      "key": "deadlineOrAvailability",
+      "label": "Deadline or availability",
+      "group": "offer_proof_conversion",
+      "groupTitle": "Offer, Proof & Conversion",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Registration closes 18 September at 17:00 CET.",
+      "hint": "Add only real deadlines, availability limits, or launch dates.",
+      "help": {
+        "what": "Optional context for the deadline or availability field.",
+        "why": "It prevents the model from inventing urgency or scarcity.",
+        "example": "Good example: Registration closes 18 September at 17:00 CET.",
+        "avoid": "Avoid fake urgency, artificial scarcity, or deadlines that are not real."
+      },
+      "maxLength": 600,
+      "showWhen": {
+        "key": "sequenceType",
+        "equals": [
+          "Product launch",
+          "Sales or promotion",
+          "Abandoned cart",
+          "Event or webinar follow-up"
+        ]
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "alternativesOrCompetitors",
+      "label": "Alternatives to address",
+      "group": "offer_proof_conversion",
+      "groupTitle": "Offer, Proof & Conversion",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Describe relevant alternatives and factual differences.",
+      "hint": "Use this for fair positioning, not unsupported superiority claims.",
+      "help": {
+        "what": "Optional context for the alternatives to address field.",
+        "why": "Supplied comparison context can improve positioning without encouraging disparagement.",
+        "example": "Good example: Describe relevant alternatives and factual differences.",
+        "avoid": "Avoid guessed details, unsupported claims, or extra requirements that do not apply to this sequence."
+      },
+      "maxLength": 1000,
+      "fullWidth": true
+    },
+    {
+      "key": "tone",
+      "label": "Tone",
+      "group": "brand_delivery",
+      "groupTitle": "Brand & Delivery",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select a tone",
+      "hint": "Choose the overall communication style.",
+      "help": {
+        "what": "Optional context for the tone field.",
+        "why": "Tone is a legitimate brand preference that cannot always be inferred.",
+        "example": "Good example: Clear and natural",
+        "avoid": "Avoid guessed details, unsupported claims, or extra requirements that do not apply to this sequence."
+      },
+      "defaultValue": "Clear and natural",
+      "maxLength": 32,
+      "options": [
+        "Clear and natural",
+        "Friendly",
+        "Professional",
+        "Conversational",
+        "Warm",
+        "Direct",
+        "Educational",
+        "Persuasive",
+        "Premium",
+        "Playful"
+      ]
+    },
+    {
+      "key": "brandVoice",
+      "label": "Brand voice notes",
+      "group": "brand_delivery",
+      "groupTitle": "Brand & Delivery",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Calm, practical, slightly informal, and never overly enthusiastic.",
+      "hint": "Describe distinctive voice traits or paste a short approved example.",
+      "help": {
+        "what": "Optional context for the brand voice notes field.",
+        "why": "It helps the sequence sound consistent with the existing brand.",
+        "example": "Good example: Calm, practical, slightly informal, and never overly enthusiastic.",
+        "avoid": "Avoid guessed details, unsupported claims, or extra requirements that do not apply to this sequence."
+      },
+      "maxLength": 1200,
+      "fullWidth": true
+    },
+    {
+      "key": "senderPerspective",
+      "label": "Sender perspective",
+      "group": "brand_delivery",
+      "groupTitle": "Brand & Delivery",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select sender perspective",
+      "hint": "Choose whether the emails speak as a person, founder, team, or company.",
+      "help": {
+        "what": "Optional context for the sender perspective field.",
+        "why": "Pronouns, sign-offs, and relationship language depend on the sender perspective.",
+        "example": "Good example: Founder",
+        "avoid": "Avoid guessed details, unsupported claims, or extra requirements that do not apply to this sequence."
+      },
+      "defaultValue": "Auto",
+      "maxLength": 24,
+      "options": [
+        "Auto",
+        "Individual",
+        "Founder",
+        "Team",
+        "Company"
+      ]
+    },
+    {
+      "key": "emailLength",
+      "label": "Email length",
+      "group": "brand_delivery",
+      "groupTitle": "Brand & Delivery",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select email length",
+      "hint": "Controls the approximate body length while preserving mobile readability.",
+      "help": {
+        "what": "Optional context for the email length field.",
+        "why": "Some sequences require brief operational emails while others need deeper education.",
+        "example": "Good example: Medium",
+        "avoid": "Avoid guessed details, unsupported claims, or extra requirements that do not apply to this sequence."
+      },
+      "defaultValue": "Auto",
+      "maxLength": 24,
+      "options": [
+        "Auto",
+        "Short",
+        "Medium",
+        "Long",
+        "Mixed by email"
+      ]
+    },
+    {
+      "key": "cadenceStyle",
+      "label": "Cadence style",
+      "group": "brand_delivery",
+      "groupTitle": "Brand & Delivery",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select cadence",
+      "hint": "Choose the general pacing or let the model recommend one.",
+      "help": {
+        "what": "Optional context for the cadence style field.",
+        "why": "The desired frequency affects timing recommendations and pressure level.",
+        "example": "Good example: Balanced",
+        "avoid": "Avoid guessed details, unsupported claims, or extra requirements that do not apply to this sequence."
+      },
+      "defaultValue": "Auto",
+      "maxLength": 24,
+      "options": [
+        "Auto",
+        "Fast",
+        "Balanced",
+        "Gentle",
+        "Event-based",
+        "Custom"
+      ]
+    },
+    {
+      "key": "timingConstraints",
+      "label": "Timing constraints",
+      "group": "brand_delivery",
+      "groupTitle": "Brand & Delivery",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Do not send on weekends; final email must arrive before 12 October.",
+      "hint": "Add real scheduling restrictions, dates, or automation requirements.",
+      "help": {
+        "what": "Optional context for the timing constraints field.",
+        "why": "The model cannot infer business-specific scheduling limitations.",
+        "example": "Good example: Do not send on weekends; final email must arrive before 12 October.",
+        "avoid": "Avoid guessed details, unsupported claims, or extra requirements that do not apply to this sequence."
+      },
+      "maxLength": 1000,
+      "fullWidth": true
+    },
+    {
+      "key": "emojiUse",
+      "label": "Emoji use",
+      "group": "brand_delivery",
+      "groupTitle": "Brand & Delivery",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select emoji use",
+      "hint": "Controls whether emojis may appear in subjects or bodies.",
+      "help": {
+        "what": "Optional context for the emoji use field.",
+        "why": "Emoji use is a visible brand and audience preference.",
+        "example": "Good example: Minimal",
+        "avoid": "Avoid guessed details, unsupported claims, or extra requirements that do not apply to this sequence."
+      },
+      "defaultValue": "Minimal",
+      "maxLength": 16,
+      "options": [
+        "None",
+        "Minimal",
+        "Moderate",
+        "Auto"
+      ]
+    },
+    {
+      "key": "formattingPreferences",
+      "label": "Formatting preferences",
+      "group": "brand_delivery",
+      "groupTitle": "Brand & Delivery",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Select formatting preferences",
+      "hint": "Choose useful presentation preferences without specifying technical HTML. Current form controls do not support checkboxes for this template yet, so list the relevant options separated by commas.",
+      "help": {
+        "what": "List one or more relevant options separated by commas. This preserves the prompt variable while using the current textarea control.",
+        "why": "Formatting affects readability and implementation in the user’s email platform.",
+        "example": "Good example: Short paragraphs, P.S. allowed",
+        "avoid": "Avoid guessed details, unsupported claims, or extra requirements that do not apply to this sequence."
+      },
+      "defaultValue": "Short paragraphs",
+      "maxLength": 256,
+      "options": [
+        "Plain-text style",
+        "Short paragraphs",
+        "Bullets allowed",
+        "Bold key lines",
+        "P.S. allowed",
+        "Button CTA",
+        "Text-link CTA",
+        "No special formatting"
+      ]
+    },
+    {
+      "key": "regulatedTopic",
+      "label": "Regulated topic",
+      "group": "compliance_output",
+      "groupTitle": "Compliance & Output",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select when relevant",
+      "hint": "Choose a category only when the sequence touches a regulated or high-stakes subject.",
+      "help": {
+        "what": "Optional context for the regulated topic field.",
+        "why": "High-stakes topics require more cautious language and verification.",
+        "example": "Good example: None",
+        "avoid": "Avoid guessed details, unsupported claims, or extra requirements that do not apply to this sequence."
+      },
+      "defaultValue": "None",
+      "maxLength": 32,
+      "options": [
+        "None",
+        "Health or medical",
+        "Legal",
+        "Finance or investing",
+        "Tax or insurance",
+        "Employment",
+        "Safety",
+        "Political",
+        "Child-related",
+        "Other regulated"
+      ]
+    },
+    {
+      "key": "jurisdiction",
+      "label": "Relevant jurisdiction",
+      "group": "compliance_output",
+      "groupTitle": "Compliance & Output",
+      "type": "text",
+      "required": false,
+      "placeholder": "European Union, California, United Kingdom, or Ukraine.",
+      "hint": "Enter the country, region, or legal market relevant to the sequence.",
+      "help": {
+        "what": "Optional context for the relevant jurisdiction field.",
+        "why": "Regulated wording and required verification may depend on location.",
+        "example": "Good example: European Union, California, United Kingdom, or Ukraine.",
+        "avoid": "Avoid guessed details, unsupported claims, or extra requirements that do not apply to this sequence."
+      },
+      "maxLength": 160,
+      "showWhen": {
+        "key": "regulatedTopic",
+        "notEquals": "None"
+      }
+    },
+    {
+      "key": "restrictions",
+      "label": "Restrictions",
+      "group": "compliance_output",
+      "groupTitle": "Compliance & Output",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Claims to avoid, prohibited terms, required wording, or sensitive topics.",
+      "hint": "Combine all brand, legal, and editorial restrictions here.",
+      "help": {
+        "what": "Optional context for the restrictions field.",
+        "why": "User-specific restrictions cannot be reliably inferred from general best practices.",
+        "example": "Good example: Claims to avoid, prohibited terms, required wording, or sensitive topics.",
+        "avoid": "Avoid guessed details, unsupported claims, or extra requirements that do not apply to this sequence."
+      },
+      "maxLength": 1500,
+      "fullWidth": true
+    },
+    {
+      "key": "outputMode",
+      "label": "Output mode",
+      "group": "compliance_output",
+      "groupTitle": "Compliance & Output",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select output mode",
+      "hint": "Choose whether you need full copy, strategy, or additional subject-line testing.",
+      "help": {
+        "what": "Optional context for the output mode field.",
+        "why": "It controls the amount and type of content generated without adding several separate toggles.",
+        "example": "Good example: Complete package",
+        "avoid": "Avoid guessed details, unsupported claims, or extra requirements that do not apply to this sequence."
+      },
+      "defaultValue": "Complete package",
+      "maxLength": 32,
+      "options": [
+        "Complete package",
+        "Copy only",
+        "Strategy and outline",
+        "A/B subject lines"
+      ]
+    },
+    {
+      "key": "includePlainTextVersions",
+      "label": "Include plain-text versions",
+      "group": "compliance_output",
+      "groupTitle": "Compliance & Output",
+      "type": "select",
+      "required": false,
+      "placeholder": "No",
+      "hint": "Add simplified plain-text copies for systems that do not use formatted email. Choose Yes or No.",
+      "help": {
+        "what": "Choose whether the generated package should include separate plain-text email versions.",
+        "why": "Some email platforms and accessibility workflows require a separate plain-text version.",
+        "example": "Good example: Yes",
+        "avoid": "Avoid guessed details, unsupported claims, or extra requirements that do not apply to this sequence."
+      },
+      "defaultValue": "No",
+      "maxLength": 5,
+      "options": [
+        "Yes",
+        "No"
+      ]
+    },
+    {
+      "key": "additionalContext",
+      "label": "Additional context",
+      "group": "compliance_output",
+      "groupTitle": "Compliance & Output",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Add any final context that does not fit the fields above.",
+      "hint": "Use this only for genuinely useful extra requirements.",
+      "help": {
+        "what": "Optional context for the additional context field.",
+        "why": "It handles uncommon but relevant information without creating multiple low-value fields.",
+        "example": "Good example: Add any final context that does not fit the fields above.",
+        "avoid": "Avoid guessed details, unsupported claims, or extra requirements that do not apply to this sequence."
+      },
+      "maxLength": 2000,
+      "fullWidth": true
+    }
+  ]
+}

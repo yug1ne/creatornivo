@@ -1,0 +1,936 @@
+{
+  "slug": "youtube-video-package",
+  "title": "YouTube Video Package",
+  "version": 1,
+  "generatedAt": "2026-07-11T19:02:30.736Z",
+  "fieldCount": 40,
+  "requiredKeys": [
+    "videoTopic",
+    "primaryGoal",
+    "targetAudience",
+    "keyMessage",
+    "essentialFacts",
+    "videoFormat",
+    "scriptDepth",
+    "targetDuration"
+  ],
+  "groups": [
+    {
+      "id": "essentials",
+      "title": "Essentials",
+      "description": "Minimum strategic, factual, structural, and stylistic information needed to generate a valid YouTube package.",
+      "defaultOpen": true
+    },
+    {
+      "id": "content_retention",
+      "title": "Content & Retention",
+      "description": "Opening, viewer problem, required content, examples, supporting materials, and pacing.",
+      "defaultOpen": false
+    },
+    {
+      "id": "discovery_packaging",
+      "title": "Discovery & Packaging",
+      "description": "Titles, thumbnail concepts, search positioning, description links, and viewer-facing packaging.",
+      "defaultOpen": false
+    },
+    {
+      "id": "channel_brand_production",
+      "title": "Channel, Brand & Production",
+      "description": "Channel context, presenter style, available equipment, visual assets, and editing capacity.",
+      "defaultOpen": false
+    },
+    {
+      "id": "monetization_safety_final",
+      "title": "Monetization, Safety & Final Settings",
+      "description": "Commercial relationships, disclosures, high-stakes subjects, privacy restrictions, and final requirements.",
+      "defaultOpen": false
+    }
+  ],
+  "variables": [
+    {
+      "key": "videoTopic",
+      "label": "Video topic or offer",
+      "placeholder": "Describe what the video is about, including any product, subject, event, or question it covers.",
+      "required": true,
+      "type": "textarea",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Give enough context to distinguish this video from other content on the same general topic.",
+      "help": {
+        "what": "Give enough context to distinguish this video from other content on the same general topic.",
+        "why": "It establishes the central subject and factual scope of the entire package.",
+        "example": "Describe what the video is about, including any product, subject, event, or question it covers.",
+        "avoid": "Avoid vague inputs, unsupported claims, invented facts, conflicting instructions, or irrelevant context."
+      },
+      "fullWidth": true,
+      "maxLength": 1200
+    },
+    {
+      "key": "primaryGoal",
+      "label": "Primary goal",
+      "placeholder": "Choose the main outcome for this video.",
+      "required": true,
+      "type": "select",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Select the single most important result rather than several competing objectives.",
+      "help": {
+        "what": "Select the single most important result rather than several competing objectives.",
+        "why": "The goal determines the video angle, CTA, pacing, and publishing package.",
+        "example": "Choose the main outcome for this video.",
+        "avoid": "Avoid vague inputs, unsupported claims, invented facts, conflicting instructions, or irrelevant context."
+      },
+      "options": [
+        "Educate or explain",
+        "Attract search traffic",
+        "Build authority",
+        "Increase engagement",
+        "Generate leads or sales",
+        "Launch or announce",
+        "Entertain or tell a story",
+        "Support existing customers"
+      ],
+      "fullWidth": false,
+      "maxLength": 40
+    },
+    {
+      "key": "targetAudience",
+      "label": "Target audience",
+      "placeholder": "Who should watch this, and what do they already know about the topic?",
+      "required": true,
+      "type": "textarea",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Include experience level, situation, needs, or relevant audience characteristics.",
+      "help": {
+        "what": "Include experience level, situation, needs, or relevant audience characteristics.",
+        "why": "Audience knowledge and motivation materially affect explanations, examples, tone, and packaging.",
+        "example": "Who should watch this, and what do they already know about the topic?",
+        "avoid": "Avoid vague inputs, unsupported claims, invented facts, conflicting instructions, or irrelevant context."
+      },
+      "fullWidth": true,
+      "maxLength": 800
+    },
+    {
+      "key": "keyMessage",
+      "label": "Main viewer takeaway",
+      "placeholder": "What should viewers understand, remember, believe, or be able to do after watching?",
+      "required": true,
+      "type": "textarea",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Focus on one central promise or conclusion.",
+      "help": {
+        "what": "Focus on one central promise or conclusion.",
+        "why": "It prevents the video from becoming an unfocused collection of loosely connected points.",
+        "example": "What should viewers understand, remember, believe, or be able to do after watching?",
+        "avoid": "Avoid vague inputs, unsupported claims, invented facts, conflicting instructions, or irrelevant context."
+      },
+      "fullWidth": true,
+      "maxLength": 700
+    },
+    {
+      "key": "essentialFacts",
+      "label": "Essential facts",
+      "placeholder": "Add the facts, features, dates, claims, prices, results, or details that must remain accurate.",
+      "required": true,
+      "type": "textarea",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Include only confirmed information; unsupported details will not be invented.",
+      "help": {
+        "what": "Include only confirmed information; unsupported details will not be invented.",
+        "why": "It provides the approved factual foundation for the script and metadata.",
+        "example": "Add the facts, features, dates, claims, prices, results, or details that must remain accurate.",
+        "avoid": "Avoid vague inputs, unsupported claims, invented facts, conflicting instructions, or irrelevant context."
+      },
+      "fullWidth": true,
+      "maxLength": 2000
+    },
+    {
+      "key": "videoFormat",
+      "label": "Video format",
+      "placeholder": "Choose the closest video format.",
+      "required": true,
+      "type": "select",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Choose the format that best fits the video the package should help create.",
+      "help": {
+        "what": "Choose the format that best fits the video the package should help create.",
+        "why": "Different formats require different structures, pacing, packaging, and production notes.",
+        "example": "Choose the closest video format.",
+        "avoid": "Avoid vague inputs, unsupported claims, invented facts, conflicting instructions, or irrelevant context."
+      },
+      "options": [
+        "Tutorial or how-to",
+        "Educational explainer",
+        "Commentary or analysis",
+        "Review or comparison",
+        "Story or case study",
+        "List or roundup",
+        "Product or service video",
+        "Interview or podcast-style",
+        "Other"
+      ],
+      "fullWidth": false,
+      "maxLength": 40
+    },
+    {
+      "key": "scriptDepth",
+      "label": "Script format",
+      "placeholder": "Choose how detailed the recording material should be.",
+      "required": true,
+      "type": "select",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Select whether you need a full script, outline, or hybrid deliverable.",
+      "help": {
+        "what": "Select whether you need a full script, outline, or hybrid deliverable.",
+        "why": "It controls the main production asset and prevents over- or under-scripting.",
+        "example": "Choose how detailed the recording material should be.",
+        "avoid": "Avoid vague inputs, unsupported claims, invented facts, conflicting instructions, or irrelevant context."
+      },
+      "options": [
+        "Full script",
+        "Detailed outline",
+        "Hybrid script + talking points"
+      ],
+      "fullWidth": false,
+      "maxLength": 40
+    },
+    {
+      "key": "targetDuration",
+      "label": "Target duration",
+      "placeholder": "Choose the intended video length.",
+      "required": true,
+      "type": "select",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "The script or outline will be sized to this duration when the topic supports it.",
+      "help": {
+        "what": "The script or outline will be sized to this duration when the topic supports it.",
+        "why": "Duration affects depth, pacing, section count, script length, and chapter planning.",
+        "example": "Choose the intended video length.",
+        "avoid": "Avoid vague inputs, unsupported claims, invented facts, conflicting instructions, or irrelevant context."
+      },
+      "options": [
+        "Under 3 minutes",
+        "3–5 minutes",
+        "5–8 minutes",
+        "8–12 minutes",
+        "12–20 minutes",
+        "20–30 minutes",
+        "30–45 minutes",
+        "More than 45 minutes"
+      ],
+      "fullWidth": false,
+      "maxLength": 20
+    },
+    {
+      "key": "outputLanguage",
+      "label": "Output language",
+      "placeholder": "Example: English, Ukrainian, Spanish, or Brazilian Portuguese.",
+      "required": false,
+      "type": "text",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Specify the language and regional variant if relevant.",
+      "help": {
+        "what": "Specify the language and regional variant if relevant.",
+        "why": "The language affects script rhythm, title wording, description style, and speaking-length estimates.",
+        "example": "Example: English, Ukrainian, Spanish, or Brazilian Portuguese.",
+        "avoid": "Avoid vague inputs, unsupported claims, invented facts, conflicting instructions, or irrelevant context."
+      },
+      "fullWidth": false,
+      "defaultValue": "English",
+      "maxLength": 60
+    },
+    {
+      "key": "toneStyle",
+      "label": "Tone",
+      "placeholder": "Choose the overall style.",
+      "required": false,
+      "type": "select",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Use Brand-defined only when you provide brand voice details.",
+      "help": {
+        "what": "Use Brand-defined only when you provide brand voice details.",
+        "why": "The tone guides the script, titles, description, CTA, and presenter language.",
+        "example": "Choose the overall style.",
+        "avoid": "Avoid vague inputs, unsupported claims, invented facts, conflicting instructions, or irrelevant context."
+      },
+      "options": [
+        "Clear and natural",
+        "Conversational",
+        "Energetic",
+        "Calm and expert",
+        "Direct and practical",
+        "Story-driven",
+        "Analytical",
+        "Humorous",
+        "Brand-defined"
+      ],
+      "fullWidth": false,
+      "defaultValue": "Clear and natural",
+      "maxLength": 40
+    },
+    {
+      "key": "channelContext",
+      "label": "Channel context",
+      "placeholder": "Describe the channel niche, usual audience, content style, or where this video fits.",
+      "required": false,
+      "type": "textarea",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Leave blank if this is a standalone package and no channel context matters.",
+      "help": {
+        "what": "Leave blank if this is a standalone package and no channel context matters.",
+        "why": "It helps align the package with existing audience expectations and channel positioning.",
+        "example": "Describe the channel niche, usual audience, content style, or where this video fits.",
+        "avoid": "Avoid vague inputs, unsupported claims, invented facts, conflicting instructions, or irrelevant context."
+      },
+      "fullWidth": true,
+      "maxLength": 700
+    },
+    {
+      "key": "primaryCTA",
+      "label": "Primary call to action",
+      "placeholder": "Example: subscribe, watch another video, download a checklist, book a demo, or leave a comment.",
+      "required": false,
+      "type": "textarea",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Write Auto if the model should choose one proportional CTA from the goal and context.",
+      "help": {
+        "what": "Write Auto if the model should choose one proportional CTA from the goal and context.",
+        "why": "A complete package needs one clear next step without stacking competing actions.",
+        "example": "Example: subscribe, watch another video, download a checklist, book a demo, or leave a comment.",
+        "avoid": "Avoid vague inputs, unsupported claims, invented facts, conflicting instructions, or irrelevant context."
+      },
+      "fullWidth": true,
+      "defaultValue": "Auto",
+      "maxLength": 300
+    },
+    {
+      "key": "viewerProblem",
+      "label": "Viewer problem or desire",
+      "placeholder": "Describe the problem, desire, confusion, question, or motivation that makes viewers care.",
+      "required": false,
+      "type": "textarea",
+      "group": "content_retention",
+      "groupTitle": "Content & Retention",
+      "hint": "Use this when the topic needs stronger viewer relevance.",
+      "help": {
+        "what": "Use this when the topic needs stronger viewer relevance.",
+        "why": "It sharpens the hook, intro, examples, title angles, and retention map.",
+        "example": "Describe the problem, desire, confusion, question, or motivation that makes viewers care.",
+        "avoid": "Avoid vague inputs, unsupported claims, invented facts, conflicting instructions, or irrelevant context."
+      },
+      "fullWidth": true,
+      "maxLength": 700
+    },
+    {
+      "key": "openingDirection",
+      "label": "Opening approach",
+      "placeholder": "Choose how the video should open.",
+      "required": false,
+      "type": "select",
+      "group": "content_retention",
+      "groupTitle": "Content & Retention",
+      "hint": "Auto selects the strongest opening based on the goal and topic.",
+      "help": {
+        "what": "Auto selects the strongest opening based on the goal and topic.",
+        "why": "The opening strongly affects retention and viewer expectation.",
+        "example": "Choose how the video should open.",
+        "avoid": "Avoid vague inputs, unsupported claims, invented facts, conflicting instructions, or irrelevant context."
+      },
+      "options": [
+        "Auto",
+        "Direct promise",
+        "Surprising fact",
+        "Viewer question",
+        "Cold open",
+        "Contrarian angle",
+        "Story moment",
+        "Demonstration first"
+      ],
+      "fullWidth": false,
+      "defaultValue": "Auto",
+      "maxLength": 30
+    },
+    {
+      "key": "mustInclude",
+      "label": "Required points",
+      "placeholder": "List points, sections, examples, objections, steps, phrases, or proof that must appear.",
+      "required": false,
+      "type": "textarea",
+      "group": "content_retention",
+      "groupTitle": "Content & Retention",
+      "hint": "Use only for information that must be included.",
+      "help": {
+        "what": "Use only for information that must be included.",
+        "why": "It prevents important user-approved material from being omitted from a large package.",
+        "example": "List points, sections, examples, objections, steps, phrases, or proof that must appear.",
+        "avoid": "Avoid vague inputs, unsupported claims, invented facts, conflicting instructions, or irrelevant context."
+      },
+      "fullWidth": true,
+      "maxLength": 1500
+    },
+    {
+      "key": "mustAvoid",
+      "label": "Things to avoid",
+      "placeholder": "List claims, phrases, examples, angles, competitors, topics, or production choices to avoid.",
+      "required": false,
+      "type": "textarea",
+      "group": "content_retention",
+      "groupTitle": "Content & Retention",
+      "hint": "Use this for brand, accuracy, privacy, or positioning limits.",
+      "help": {
+        "what": "Use this for brand, accuracy, privacy, or positioning limits.",
+        "why": "It prevents the script and package from using unwanted or unsafe material.",
+        "example": "List claims, phrases, examples, angles, competitors, topics, or production choices to avoid.",
+        "avoid": "Avoid vague inputs, unsupported claims, invented facts, conflicting instructions, or irrelevant context."
+      },
+      "fullWidth": true,
+      "maxLength": 1000
+    },
+    {
+      "key": "sourceMaterial",
+      "label": "Sources and reference material",
+      "placeholder": "Paste source notes, research summaries, approved data, transcript notes, or reference links.",
+      "required": false,
+      "type": "textarea",
+      "group": "content_retention",
+      "groupTitle": "Content & Retention",
+      "hint": "Use only material you are allowed to use; do not paste long copyrighted passages.",
+      "help": {
+        "what": "Use only material you are allowed to use; do not paste long copyrighted passages.",
+        "why": "It gives the model supported material for claims and prevents fabricated evidence.",
+        "example": "Paste source notes, research summaries, approved data, transcript notes, or reference links.",
+        "avoid": "Avoid vague inputs, unsupported claims, invented facts, conflicting instructions, or irrelevant context."
+      },
+      "fullWidth": true,
+      "maxLength": 4000
+    },
+    {
+      "key": "storyExamples",
+      "label": "Stories and examples",
+      "placeholder": "Add approved anecdotes, examples, customer situations, demos, or case details.",
+      "required": false,
+      "type": "textarea",
+      "group": "content_retention",
+      "groupTitle": "Content & Retention",
+      "hint": "Mark examples as hypothetical if they are not real or cannot be verified.",
+      "help": {
+        "what": "Mark examples as hypothetical if they are not real or cannot be verified.",
+        "why": "Stories and examples make long-form videos more concrete and easier to follow.",
+        "example": "Add approved anecdotes, examples, customer situations, demos, or case details.",
+        "avoid": "Avoid vague inputs, unsupported claims, invented facts, conflicting instructions, or irrelevant context."
+      },
+      "fullWidth": true,
+      "maxLength": 1500
+    },
+    {
+      "key": "retentionStyle",
+      "label": "Pacing and retention",
+      "placeholder": "Choose the preferred pacing style.",
+      "required": false,
+      "type": "select",
+      "group": "content_retention",
+      "groupTitle": "Content & Retention",
+      "hint": "This controls transitions, section rhythm, and retention devices without encouraging clickbait.",
+      "help": {
+        "what": "This controls transitions, section rhythm, and retention devices without encouraging clickbait.",
+        "why": "Retention strategy affects structure and delivery across the entire video.",
+        "example": "Choose the preferred pacing style.",
+        "avoid": "Avoid vague inputs, unsupported claims, invented facts, conflicting instructions, or irrelevant context."
+      },
+      "options": [
+        "Balanced",
+        "Fast-paced",
+        "Calm and detailed",
+        "Curiosity-driven",
+        "Story-led",
+        "Demonstration-led",
+        "Minimal interruptions"
+      ],
+      "fullWidth": false,
+      "defaultValue": "Balanced",
+      "maxLength": 30
+    },
+    {
+      "key": "searchIntent",
+      "label": "Viewer search intent",
+      "placeholder": "Describe what viewers might search for, compare, solve, learn, or decide before watching.",
+      "required": false,
+      "type": "textarea",
+      "group": "discovery_packaging",
+      "groupTitle": "Discovery & Packaging",
+      "hint": "Leave blank for videos that are not search-led.",
+      "help": {
+        "what": "Leave blank for videos that are not search-led.",
+        "why": "Search intent shapes titles, description wording, keyword themes, and structure.",
+        "example": "Describe what viewers might search for, compare, solve, learn, or decide before watching.",
+        "avoid": "Avoid vague inputs, unsupported claims, invented facts, conflicting instructions, or irrelevant context."
+      },
+      "fullWidth": true,
+      "maxLength": 700
+    },
+    {
+      "key": "targetKeywords",
+      "label": "Target keywords",
+      "placeholder": "List approved primary and secondary topic phrases, product terms, or search phrases.",
+      "required": false,
+      "type": "textarea",
+      "group": "discovery_packaging",
+      "groupTitle": "Discovery & Packaging",
+      "hint": "Use natural topic phrases rather than a keyword-stuffing list.",
+      "help": {
+        "what": "Use natural topic phrases rather than a keyword-stuffing list.",
+        "why": "It guides discovery metadata while keeping title and description wording relevant.",
+        "example": "List approved primary and secondary topic phrases, product terms, or search phrases.",
+        "avoid": "Avoid vague inputs, unsupported claims, invented facts, conflicting instructions, or irrelevant context."
+      },
+      "fullWidth": true,
+      "maxLength": 800
+    },
+    {
+      "key": "titleAngle",
+      "label": "Preferred title angles",
+      "placeholder": "List preferred angles: Search-led, Curiosity-led, Benefit-led, Problem and solution, Contrarian, Authority-led, Story-led, Comparison-led.",
+      "required": false,
+      "type": "textarea",
+      "group": "discovery_packaging",
+      "groupTitle": "Discovery & Packaging",
+      "hint": "Multi-select adapted to textarea: list any applicable title angles, separated by commas.",
+      "help": {
+        "what": "Multi-select adapted to textarea: list any applicable title angles, separated by commas.",
+        "why": "It guides title variety without forcing a single packaging style.",
+        "example": "List preferred angles: Search-led, Curiosity-led, Benefit-led, Problem and solution, Contrarian, Authority-led, Story-led, Comparison-led.",
+        "avoid": "Avoid vague inputs, unsupported claims, invented facts, conflicting instructions, or irrelevant context."
+      },
+      "options": [
+        "Search-led",
+        "Curiosity-led",
+        "Benefit-led",
+        "Problem and solution",
+        "Contrarian",
+        "Authority-led",
+        "Story-led",
+        "Comparison-led"
+      ],
+      "fullWidth": true,
+      "maxLength": 200
+    },
+    {
+      "key": "titleVariantCount",
+      "label": "Number of title options",
+      "placeholder": "5",
+      "required": false,
+      "type": "number",
+      "group": "discovery_packaging",
+      "groupTitle": "Discovery & Packaging",
+      "hint": "Choose between 3 and 10 title options.",
+      "help": {
+        "what": "Choose between 3 and 10 title options.",
+        "why": "A complete package needs enough title choices for comparison without generating noise.",
+        "example": "5",
+        "avoid": "Avoid vague inputs, unsupported claims, invented facts, conflicting instructions, or irrelevant context."
+      },
+      "fullWidth": false,
+      "defaultValue": "5",
+      "min": 3,
+      "max": 10
+    },
+    {
+      "key": "thumbnailStyle",
+      "label": "Thumbnail direction",
+      "placeholder": "Choose the preferred thumbnail style.",
+      "required": false,
+      "type": "select",
+      "group": "discovery_packaging",
+      "groupTitle": "Discovery & Packaging",
+      "hint": "Thumbnail concepts must accurately represent the video.",
+      "help": {
+        "what": "Thumbnail concepts must accurately represent the video.",
+        "why": "Thumbnail style affects the visual packaging concepts and title pairing.",
+        "example": "Choose the preferred thumbnail style.",
+        "avoid": "Avoid vague inputs, unsupported claims, invented facts, conflicting instructions, or irrelevant context."
+      },
+      "options": [
+        "Clear and specific",
+        "Curiosity gap",
+        "Result-focused",
+        "Before-and-after concept",
+        "Emotional reaction",
+        "Object or product focus",
+        "Diagram or data focus",
+        "Minimal text"
+      ],
+      "fullWidth": false,
+      "defaultValue": "Clear and specific",
+      "maxLength": 35
+    },
+    {
+      "key": "packagingRestrictions",
+      "label": "Title and thumbnail limits",
+      "placeholder": "List words, visual ideas, promises, thumbnail elements, or title styles that must be avoided.",
+      "required": false,
+      "type": "textarea",
+      "group": "discovery_packaging",
+      "groupTitle": "Discovery & Packaging",
+      "hint": "Use this to prevent misleading, off-brand, or overused packaging.",
+      "help": {
+        "what": "Use this to prevent misleading, off-brand, or overused packaging.",
+        "why": "It keeps titles and thumbnails accurate, brand-safe, and aligned with constraints.",
+        "example": "List words, visual ideas, promises, thumbnail elements, or title styles that must be avoided.",
+        "avoid": "Avoid vague inputs, unsupported claims, invented facts, conflicting instructions, or irrelevant context."
+      },
+      "fullWidth": true,
+      "maxLength": 800
+    },
+    {
+      "key": "descriptionLinks",
+      "label": "Description links",
+      "placeholder": "Paste approved URLs, resources, product links, credits, timestamps, or link labels.",
+      "required": false,
+      "type": "textarea",
+      "group": "discovery_packaging",
+      "groupTitle": "Discovery & Packaging",
+      "hint": "Only supplied links may appear in the description or pinned comment.",
+      "help": {
+        "what": "Only supplied links may appear in the description or pinned comment.",
+        "why": "The template must not invent URLs, affiliate links, resources, or credits.",
+        "example": "Paste approved URLs, resources, product links, credits, timestamps, or link labels.",
+        "avoid": "Avoid vague inputs, unsupported claims, invented facts, conflicting instructions, or irrelevant context."
+      },
+      "fullWidth": true,
+      "maxLength": 1800
+    },
+    {
+      "key": "channelName",
+      "label": "Channel name",
+      "placeholder": "Example: Creatornivo Studio",
+      "required": false,
+      "type": "text",
+      "group": "channel_brand_production",
+      "groupTitle": "Channel, Brand & Production",
+      "hint": "Use when the package should reference the channel directly.",
+      "help": {
+        "what": "Use when the package should reference the channel directly.",
+        "why": "Channel name can affect intro wording, description, and CTA phrasing.",
+        "example": "Example: Creatornivo Studio",
+        "avoid": "Avoid vague inputs, unsupported claims, invented facts, conflicting instructions, or irrelevant context."
+      },
+      "fullWidth": false,
+      "maxLength": 120
+    },
+    {
+      "key": "brandVoice",
+      "label": "Brand voice",
+      "placeholder": "Describe voice traits, phrases to use, phrases to avoid, or a short style note.",
+      "required": false,
+      "type": "textarea",
+      "group": "channel_brand_production",
+      "groupTitle": "Channel, Brand & Production",
+      "hint": "Use this when the channel has an established voice.",
+      "help": {
+        "what": "Use this when the channel has an established voice.",
+        "why": "It helps the script and metadata fit the creator’s existing brand without imitating another creator.",
+        "example": "Describe voice traits, phrases to use, phrases to avoid, or a short style note.",
+        "avoid": "Avoid vague inputs, unsupported claims, invented facts, conflicting instructions, or irrelevant context."
+      },
+      "fullWidth": true,
+      "maxLength": 1000
+    },
+    {
+      "key": "presenterStyle",
+      "label": "Presentation style",
+      "placeholder": "Choose how the video will be presented.",
+      "required": false,
+      "type": "select",
+      "group": "channel_brand_production",
+      "groupTitle": "Channel, Brand & Production",
+      "hint": "Auto chooses a suitable style from the brief and available resources.",
+      "help": {
+        "what": "Auto chooses a suitable style from the brief and available resources.",
+        "why": "Presentation style affects script phrasing, production notes, and visual planning.",
+        "example": "Choose how the video will be presented.",
+        "avoid": "Avoid vague inputs, unsupported claims, invented facts, conflicting instructions, or irrelevant context."
+      },
+      "options": [
+        "Auto",
+        "On-camera solo",
+        "Voice-over narrator",
+        "Screen-recorded tutorial",
+        "Interview host",
+        "Podcast or conversation",
+        "Faceless documentary",
+        "Mixed presentation"
+      ],
+      "fullWidth": false,
+      "defaultValue": "Auto",
+      "maxLength": 35
+    },
+    {
+      "key": "filmingResources",
+      "label": "Available production resources",
+      "placeholder": "List available resources: Basic setup only, Smartphone or camera, External microphone, Screen recording, Existing footage, Stock footage, Product demonstration, Slides or graphics, Guest or interview.",
+      "required": false,
+      "type": "textarea",
+      "group": "channel_brand_production",
+      "groupTitle": "Channel, Brand & Production",
+      "hint": "Multi-select adapted to textarea: list the resources actually available.",
+      "help": {
+        "what": "Multi-select adapted to textarea: list the resources actually available.",
+        "why": "Production notes must be feasible with the user’s actual filming and editing resources.",
+        "example": "List available resources: Basic setup only, Smartphone or camera, External microphone, Screen recording, Existing footage, Stock footage, Product demonstration, Slides or graphics, Guest or interview.",
+        "avoid": "Avoid vague inputs, unsupported claims, invented facts, conflicting instructions, or irrelevant context."
+      },
+      "options": [
+        "Basic setup only",
+        "Smartphone or camera",
+        "External microphone",
+        "Screen recording",
+        "Existing footage",
+        "Stock footage",
+        "Product demonstration",
+        "Slides or graphics",
+        "Guest or interview"
+      ],
+      "fullWidth": true,
+      "defaultValue": "Basic setup only",
+      "maxLength": 300
+    },
+    {
+      "key": "visualAssets",
+      "label": "Existing visual assets",
+      "placeholder": "Describe screenshots, footage, product images, charts, B-roll, logos, demos, or assets available.",
+      "required": false,
+      "type": "textarea",
+      "group": "channel_brand_production",
+      "groupTitle": "Channel, Brand & Production",
+      "hint": "Include only assets you can legally use.",
+      "help": {
+        "what": "Include only assets you can legally use.",
+        "why": "It allows production notes and thumbnail concepts to use real available visuals.",
+        "example": "Describe screenshots, footage, product images, charts, B-roll, logos, demos, or assets available.",
+        "avoid": "Avoid vague inputs, unsupported claims, invented facts, conflicting instructions, or irrelevant context."
+      },
+      "fullWidth": true,
+      "maxLength": 1500
+    },
+    {
+      "key": "editingComplexity",
+      "label": "Editing level",
+      "placeholder": "Choose the realistic editing complexity.",
+      "required": false,
+      "type": "select",
+      "group": "channel_brand_production",
+      "groupTitle": "Channel, Brand & Production",
+      "hint": "This keeps production notes achievable.",
+      "help": {
+        "what": "This keeps production notes achievable.",
+        "why": "Editing capacity affects pacing, visuals, graphics, B-roll, and post-production recommendations.",
+        "example": "Choose the realistic editing complexity.",
+        "avoid": "Avoid vague inputs, unsupported claims, invented facts, conflicting instructions, or irrelevant context."
+      },
+      "options": [
+        "Auto",
+        "Minimal",
+        "Basic",
+        "Moderate",
+        "Advanced"
+      ],
+      "fullWidth": false,
+      "defaultValue": "Auto",
+      "maxLength": 20
+    },
+    {
+      "key": "chapterMode",
+      "label": "Video chapters",
+      "placeholder": "Choose whether to include chapters.",
+      "required": false,
+      "type": "select",
+      "group": "channel_brand_production",
+      "groupTitle": "Channel, Brand & Production",
+      "hint": "Auto includes chapters only when the structure and duration support them.",
+      "help": {
+        "what": "Auto includes chapters only when the structure and duration support them.",
+        "why": "Chapters are useful for longer segmented videos but not every format needs them.",
+        "example": "Choose whether to include chapters.",
+        "avoid": "Avoid vague inputs, unsupported claims, invented facts, conflicting instructions, or irrelevant context."
+      },
+      "options": [
+        "Auto",
+        "Include",
+        "Omit"
+      ],
+      "fullWidth": false,
+      "defaultValue": "Auto",
+      "maxLength": 15
+    },
+    {
+      "key": "commercialRelationship",
+      "label": "Commercial relationship",
+      "placeholder": "Select any commercial relationship.",
+      "required": false,
+      "type": "select",
+      "group": "monetization_safety_final",
+      "groupTitle": "Monetization, Safety & Final Settings",
+      "hint": "This controls sponsorship, affiliate, owned-product, employer, client, and paid-promotion handling.",
+      "help": {
+        "what": "This controls sponsorship, affiliate, owned-product, employer, client, and paid-promotion handling.",
+        "why": "Commercial interests affect disclosure, description wording, CTA, and claims.",
+        "example": "Select any commercial relationship.",
+        "avoid": "Avoid vague inputs, unsupported claims, invented facts, conflicting instructions, or irrelevant context."
+      },
+      "options": [
+        "None",
+        "Own product or service",
+        "Affiliate relationship",
+        "Sponsor or paid integration",
+        "Paid partnership",
+        "Employer or client",
+        "Other"
+      ],
+      "fullWidth": false,
+      "defaultValue": "None",
+      "maxLength": 35
+    },
+    {
+      "key": "promotionDetails",
+      "label": "Promotion details",
+      "placeholder": "Describe the product, sponsor, affiliate link, owned offer, compensation, or relationship details.",
+      "required": false,
+      "type": "textarea",
+      "group": "monetization_safety_final",
+      "groupTitle": "Monetization, Safety & Final Settings",
+      "hint": "Include only confirmed information that may be disclosed.",
+      "help": {
+        "what": "Include only confirmed information that may be disclosed.",
+        "why": "Promotional facts and relationship details cannot be invented safely.",
+        "example": "Describe the product, sponsor, affiliate link, owned offer, compensation, or relationship details.",
+        "avoid": "Avoid vague inputs, unsupported claims, invented facts, conflicting instructions, or irrelevant context."
+      },
+      "fullWidth": true,
+      "maxLength": 1200,
+      "showWhen": {
+        "key": "commercialRelationship",
+        "notEquals": "None"
+      }
+    },
+    {
+      "key": "disclosureText",
+      "label": "Required disclosure",
+      "placeholder": "Paste required sponsor, affiliate, employer, client, or paid-promotion wording.",
+      "required": false,
+      "type": "textarea",
+      "group": "monetization_safety_final",
+      "groupTitle": "Monetization, Safety & Final Settings",
+      "hint": "When blank, the output may suggest plain-language disclosure wording for review.",
+      "help": {
+        "what": "When blank, the output may suggest plain-language disclosure wording for review.",
+        "why": "Required disclosure wording may be contractual or jurisdiction-specific and cannot be invented confidently.",
+        "example": "Paste required sponsor, affiliate, employer, client, or paid-promotion wording.",
+        "avoid": "Avoid vague inputs, unsupported claims, invented facts, conflicting instructions, or irrelevant context."
+      },
+      "fullWidth": true,
+      "maxLength": 800,
+      "showWhen": {
+        "key": "commercialRelationship",
+        "notEquals": "None"
+      }
+    },
+    {
+      "key": "regulatedContext",
+      "label": "Sensitive or regulated topic",
+      "placeholder": "Select a category only when the video enters a high-stakes subject area.",
+      "required": false,
+      "type": "select",
+      "group": "monetization_safety_final",
+      "groupTitle": "Monetization, Safety & Final Settings",
+      "hint": "This enables cautious wording and relevant verification notes without adding a large compliance questionnaire.",
+      "help": {
+        "what": "This enables cautious wording and relevant verification notes without adding a large compliance questionnaire.",
+        "why": "High-stakes subjects require different claim handling and safety protections.",
+        "example": "Select a category only when the video enters a high-stakes subject area.",
+        "avoid": "Avoid vague inputs, unsupported claims, invented facts, conflicting instructions, or irrelevant context."
+      },
+      "options": [
+        "None",
+        "Health or medical",
+        "Legal",
+        "Financial or investing",
+        "Personal or public safety",
+        "Employment",
+        "Political or civic",
+        "Children or minors",
+        "Other"
+      ],
+      "fullWidth": false,
+      "defaultValue": "None",
+      "maxLength": 30
+    },
+    {
+      "key": "jurisdiction",
+      "label": "Relevant jurisdiction",
+      "placeholder": "For example: United States, European Union, Ukraine, California, or England and Wales.",
+      "required": false,
+      "type": "text",
+      "group": "monetization_safety_final",
+      "groupTitle": "Monetization, Safety & Final Settings",
+      "hint": "Add this only when laws, regulations, elections, financial rules, or local guidance matter.",
+      "help": {
+        "what": "Add this only when laws, regulations, elections, financial rules, or local guidance matter.",
+        "why": "Legal and regulatory information can differ substantially between jurisdictions.",
+        "example": "For example: United States, European Union, Ukraine, California, or England and Wales.",
+        "avoid": "Avoid vague inputs, unsupported claims, invented facts, conflicting instructions, or irrelevant context."
+      },
+      "fullWidth": false,
+      "maxLength": 150,
+      "showWhen": {
+        "key": "regulatedContext",
+        "notEquals": "None"
+      }
+    },
+    {
+      "key": "privacyRestrictions",
+      "label": "Privacy restrictions",
+      "placeholder": "Identify private names, faces, locations, client details, children, records, or data that must be removed or anonymized.",
+      "required": false,
+      "type": "textarea",
+      "group": "monetization_safety_final",
+      "groupTitle": "Monetization, Safety & Final Settings",
+      "hint": "Do not paste unnecessary sensitive personal data into this field.",
+      "help": {
+        "what": "Do not paste unnecessary sensitive personal data into this field.",
+        "why": "The user knows which real people or confidential details require protection.",
+        "example": "Identify private names, faces, locations, client details, children, records, or data that must be removed or anonymized.",
+        "avoid": "Avoid vague inputs, unsupported claims, invented facts, conflicting instructions, or irrelevant context."
+      },
+      "fullWidth": true,
+      "maxLength": 1000
+    },
+    {
+      "key": "additionalRequirements",
+      "label": "Additional requirements",
+      "placeholder": "Add any final instructions that are not already covered by another field.",
+      "required": false,
+      "type": "textarea",
+      "group": "monetization_safety_final",
+      "groupTitle": "Monetization, Safety & Final Settings",
+      "hint": "Use this as the only general miscellaneous field.",
+      "help": {
+        "what": "Use this as the only general miscellaneous field.",
+        "why": "It accommodates legitimate project-specific constraints without expanding the standard form.",
+        "example": "Add any final instructions that are not already covered by another field.",
+        "avoid": "Avoid vague inputs, unsupported claims, invented facts, conflicting instructions, or irrelevant context."
+      },
+      "fullWidth": true,
+      "maxLength": 2000
+    }
+  ]
+}

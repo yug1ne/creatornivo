@@ -1,0 +1,604 @@
+{
+  "slug": "tiktok-caption",
+  "title": "TikTok Caption",
+  "version": 1,
+  "generatedAt": "2026-07-11T18:45:35.800Z",
+  "fieldCount": 24,
+  "requiredKeys": [
+    "videoTopic",
+    "videoSummary",
+    "primaryGoal",
+    "targetAudience",
+    "keyMessage"
+  ],
+  "groups": [
+    {
+      "id": "essentials",
+      "title": "Essentials",
+      "description": "Video context, audience, goal, key message, language, length, variants, and commercial relationship for a valid first result.",
+      "defaultOpen": true
+    },
+    {
+      "id": "voice_conversion",
+      "title": "Voice & Conversion",
+      "description": "Tone, opening style, CTA behavior, emoji use, offer details, and disclosure wording.",
+      "defaultOpen": false
+    },
+    {
+      "id": "discovery_safeguards",
+      "title": "Discovery & Safeguards",
+      "description": "On-screen hook, hashtags, approved claims, privacy restrictions, and final requirements.",
+      "defaultOpen": false
+    }
+  ],
+  "variables": [
+    {
+      "key": "videoTopic",
+      "label": "Video topic",
+      "placeholder": "Example: Three mistakes beginners make when editing videos",
+      "required": true,
+      "type": "text",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Name the main subject of the TikTok video.",
+      "help": {
+        "what": "The main subject around which the TikTok caption should be written.",
+        "why": "The model needs a clear subject around which to build the caption.",
+        "example": "Example: Three mistakes beginners make when editing videos",
+        "avoid": "A vague topic such as \"content\" or several unrelated video subjects."
+      },
+      "fullWidth": false,
+      "maxLength": 160
+    },
+    {
+      "key": "videoSummary",
+      "label": "What happens in the video?",
+      "placeholder": "Briefly describe what viewers see, hear, or learn in the video.",
+      "required": true,
+      "type": "textarea",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Include important scenes, spoken points, reveals, or outcomes.",
+      "help": {
+        "what": "A short description of the actual video content.",
+        "why": "The caption must complement the actual video rather than inventing or repeating irrelevant content.",
+        "example": "Briefly describe what viewers see, hear, or learn in the video.",
+        "avoid": "Details that do not appear in the video or unsupported claims about the result."
+      },
+      "fullWidth": true,
+      "maxLength": 1000
+    },
+    {
+      "key": "videoFormat",
+      "label": "Video format",
+      "placeholder": "Choose the closest format",
+      "required": false,
+      "type": "select",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Helps adapt the caption to how the video is presented.",
+      "help": {
+        "what": "The closest format or structure of the TikTok video.",
+        "why": "Different TikTok formats benefit from different caption angles and levels of explanation.",
+        "example": "Tutorial / how-to",
+        "avoid": "Choosing a format that does not match the actual video."
+      },
+      "options": [
+        "Auto",
+        "Talking head",
+        "Tutorial / how-to",
+        "Storytime",
+        "Product demo",
+        "Before-and-after",
+        "Behind the scenes",
+        "Trend / reaction",
+        "List / tips",
+        "Vlog / lifestyle"
+      ],
+      "fullWidth": false,
+      "defaultValue": "Auto",
+      "maxLength": 40
+    },
+    {
+      "key": "primaryGoal",
+      "label": "Primary goal",
+      "placeholder": "Choose the main result you want",
+      "required": true,
+      "type": "select",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Select one main purpose for the caption.",
+      "help": {
+        "what": "The main outcome the caption should support.",
+        "why": "The goal determines whether the caption should inform, invite discussion, build interest, or encourage action.",
+        "example": "Engagement",
+        "avoid": "Trying to combine awareness, traffic, conversion, and community goals in one short caption."
+      },
+      "options": [
+        "Awareness",
+        "Engagement",
+        "Education",
+        "Community",
+        "Traffic",
+        "Conversion",
+        "Personal expression"
+      ],
+      "fullWidth": false,
+      "defaultValue": "Engagement",
+      "maxLength": 40
+    },
+    {
+      "key": "targetAudience",
+      "label": "Target audience",
+      "placeholder": "Example: Freelance designers learning short-form video",
+      "required": true,
+      "type": "text",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Describe the people who should understand or respond to the post.",
+      "help": {
+        "what": "The viewers the caption should be written for.",
+        "why": "Audience knowledge materially changes language, context, humor, and CTA wording.",
+        "example": "Example: Freelance designers learning short-form video",
+        "avoid": "Overbroad audiences such as \"everyone\" or sensitive targeting assumptions."
+      },
+      "fullWidth": false,
+      "maxLength": 300
+    },
+    {
+      "key": "keyMessage",
+      "label": "Key message",
+      "placeholder": "What is the one idea viewers should remember?",
+      "required": true,
+      "type": "textarea",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "State the main takeaway, opinion, offer, or point.",
+      "help": {
+        "what": "The one idea viewers should understand or remember.",
+        "why": "The caption must preserve the user’s intended meaning instead of selecting an arbitrary angle.",
+        "example": "What is the one idea viewers should remember?",
+        "avoid": "A generic slogan or multiple competing messages."
+      },
+      "fullWidth": true,
+      "maxLength": 500
+    },
+    {
+      "key": "outputLanguage",
+      "label": "Output language",
+      "placeholder": "Example: English, Ukrainian, Spanish",
+      "required": false,
+      "type": "text",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "You may also specify a regional or conversational variant.",
+      "help": {
+        "what": "The language or language variant for the output package.",
+        "why": "The required language cannot always be inferred from the video topic.",
+        "example": "Example: English, Ukrainian, Spanish",
+        "avoid": "Mixing languages unless that is intentionally requested."
+      },
+      "fullWidth": false,
+      "defaultValue": "English",
+      "maxLength": 60
+    },
+    {
+      "key": "captionLength",
+      "label": "Caption length",
+      "placeholder": "Choose a preferred length",
+      "required": false,
+      "type": "select",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "These are writing targets rather than claimed platform limits.",
+      "help": {
+        "what": "The preferred caption length target.",
+        "why": "Some users need a one-line caption while others want room for context or a short story.",
+        "example": "Standard",
+        "avoid": "Treating these writing targets as official TikTok maximums."
+      },
+      "options": [
+        "Auto",
+        "Ultra-short",
+        "Short",
+        "Standard",
+        "Story-led"
+      ],
+      "fullWidth": false,
+      "defaultValue": "Auto",
+      "maxLength": 40
+    },
+    {
+      "key": "variantCount",
+      "label": "Number of variants",
+      "placeholder": "Choose how many options to generate",
+      "required": false,
+      "type": "select",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Each variant will use a meaningfully different angle.",
+      "help": {
+        "what": "How many caption options to generate.",
+        "why": "The user may want one ready-to-use caption or several options for comparison.",
+        "example": "3",
+        "avoid": "Expecting tiny synonym swaps instead of meaningfully different angles."
+      },
+      "options": [
+        "1",
+        "3",
+        "5"
+      ],
+      "fullWidth": false,
+      "defaultValue": "3",
+      "maxLength": 10
+    },
+    {
+      "key": "contentRelationship",
+      "label": "Post relationship",
+      "placeholder": "Choose how the post relates to a product or brand",
+      "required": false,
+      "type": "select",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Controls promotional wording and disclosure handling.",
+      "help": {
+        "what": "Whether the post is organic, your own promotion, sponsored, affiliate, or paid ad content.",
+        "why": "Commercial relationships affect transparency, wording, claims, and potential disclosure requirements.",
+        "example": "Organic / no promotion",
+        "avoid": "Hiding sponsored, affiliate, paid, or own-product relationships."
+      },
+      "options": [
+        "Organic / no promotion",
+        "Own product or service",
+        "Sponsored brand partnership",
+        "Affiliate content",
+        "Paid ad or Spark Ad"
+      ],
+      "fullWidth": false,
+      "defaultValue": "Organic / no promotion",
+      "maxLength": 50
+    },
+    {
+      "key": "tone",
+      "label": "Tone",
+      "placeholder": "Choose the overall voice",
+      "required": false,
+      "type": "select",
+      "group": "voice_conversion",
+      "groupTitle": "Voice & Conversion",
+      "hint": "Auto uses a clear, conversational TikTok voice.",
+      "help": {
+        "what": "The overall creative voice for the caption.",
+        "why": "Tone is a meaningful creative preference that cannot always be inferred from the subject.",
+        "example": "Helpful",
+        "avoid": "A tone that conflicts with accuracy, disclosure, privacy, or the video itself."
+      },
+      "options": [
+        "Auto",
+        "Conversational",
+        "Witty",
+        "Helpful",
+        "Bold",
+        "Warm",
+        "Deadpan",
+        "Polished",
+        "Energetic"
+      ],
+      "fullWidth": false,
+      "defaultValue": "Auto",
+      "maxLength": 32
+    },
+    {
+      "key": "openingStyle",
+      "label": "Opening style",
+      "placeholder": "Choose how the caption should begin",
+      "required": false,
+      "type": "select",
+      "group": "voice_conversion",
+      "groupTitle": "Voice & Conversion",
+      "hint": "Controls the first phrase without forcing clickbait.",
+      "help": {
+        "what": "The preferred style for the first phrase of the caption.",
+        "why": "The opening approach can materially change the caption’s personality and discovery value.",
+        "example": "Relatable observation",
+        "avoid": "Creating suspense the video does not satisfy or using empty clickbait."
+      },
+      "options": [
+        "Auto",
+        "Direct statement",
+        "Curiosity",
+        "Question",
+        "Relatable observation",
+        "Punchline",
+        "Keyword-first"
+      ],
+      "fullWidth": false,
+      "defaultValue": "Auto",
+      "maxLength": 40
+    },
+    {
+      "key": "ctaType",
+      "label": "Call to action",
+      "placeholder": "Choose the desired next step",
+      "required": false,
+      "type": "select",
+      "group": "voice_conversion",
+      "groupTitle": "Voice & Conversion",
+      "hint": "Auto adds a CTA only when it supports the goal.",
+      "help": {
+        "what": "The next step the caption should request, if any.",
+        "why": "Users may want no CTA, a discussion prompt, or a specific conversion action.",
+        "example": "Comment",
+        "avoid": "Stacking several actions such as comment, save, follow, and buy in one caption."
+      },
+      "options": [
+        "Auto",
+        "None",
+        "Comment",
+        "Follow",
+        "Save",
+        "Share",
+        "Visit profile",
+        "Visit link / shop",
+        "Buy / book"
+      ],
+      "fullWidth": false,
+      "defaultValue": "Auto",
+      "maxLength": 40
+    },
+    {
+      "key": "ctaDetails",
+      "label": "CTA details",
+      "placeholder": "Example: Ask viewers to share their editing mistake",
+      "required": false,
+      "type": "text",
+      "group": "voice_conversion",
+      "groupTitle": "Voice & Conversion",
+      "hint": "Add the destination, wording, or action the CTA should reference.",
+      "help": {
+        "what": "Specific wording, destination, or action details for the CTA.",
+        "why": "Specific CTA destinations or actions cannot be safely invented.",
+        "example": "Example: Ask viewers to share their editing mistake",
+        "avoid": "A CTA that requests several actions at once or points to an unsupplied destination."
+      },
+      "fullWidth": false,
+      "maxLength": 300,
+      "showWhen": {
+        "key": "ctaType",
+        "notEquals": [
+          "Auto",
+          "None"
+        ]
+      }
+    },
+    {
+      "key": "emojiLevel",
+      "label": "Emoji use",
+      "placeholder": "Choose how many emojis to use",
+      "required": false,
+      "type": "select",
+      "group": "voice_conversion",
+      "groupTitle": "Voice & Conversion",
+      "hint": "Emojis will be used only when they support meaning.",
+      "help": {
+        "what": "How much emoji use is allowed in the caption.",
+        "why": "Emoji preference strongly affects the visual tone of a short caption.",
+        "example": "Minimal",
+        "avoid": "Emoji chains or replacing essential words with emojis."
+      },
+      "options": [
+        "None",
+        "Minimal",
+        "Moderate",
+        "Expressive"
+      ],
+      "fullWidth": false,
+      "defaultValue": "Minimal",
+      "maxLength": 20
+    },
+    {
+      "key": "offerDetails",
+      "label": "Offer details",
+      "placeholder": "Describe the product, service, price, offer, or destination.",
+      "required": false,
+      "type": "textarea",
+      "group": "voice_conversion",
+      "groupTitle": "Voice & Conversion",
+      "hint": "Include only facts that may appear in the caption.",
+      "help": {
+        "what": "Commercial facts, product details, offer terms, prices, or destinations that may appear.",
+        "why": "The model must not invent commercial terms, prices, benefits, or destinations.",
+        "example": "Describe the product, service, price, offer, or destination.",
+        "avoid": "Invented discounts, deadlines, capabilities, availability, or benefits."
+      },
+      "fullWidth": true,
+      "maxLength": 1000,
+      "showWhen": {
+        "key": "contentRelationship",
+        "notEquals": "Organic / no promotion"
+      }
+    },
+    {
+      "key": "disclosureText",
+      "label": "Disclosure wording",
+      "placeholder": "Example: Ad, Sponsored, Affiliate link",
+      "required": false,
+      "type": "text",
+      "group": "voice_conversion",
+      "groupTitle": "Voice & Conversion",
+      "hint": "Enter wording required by your agreement or jurisdiction.",
+      "help": {
+        "what": "Disclosure wording required for sponsored, affiliate, or paid content.",
+        "why": "Disclosure wording may be contract-specific or jurisdiction-specific and should not be fabricated.",
+        "example": "Example: Ad, Sponsored, Affiliate link",
+        "avoid": "Claiming legal compliance or hiding the commercial relationship."
+      },
+      "fullWidth": false,
+      "maxLength": 120,
+      "showWhen": {
+        "key": "contentRelationship",
+        "equals": [
+          "Sponsored brand partnership",
+          "Affiliate content",
+          "Paid ad or Spark Ad"
+        ]
+      }
+    },
+    {
+      "key": "includeOnScreenHook",
+      "label": "Include on-screen hook",
+      "placeholder": "Not applicable",
+      "required": false,
+      "type": "select",
+      "group": "discovery_safeguards",
+      "groupTitle": "Discovery & Safeguards",
+      "hint": "Adds one short opening text suggestion for the video.",
+      "help": {
+        "what": "Whether to include one short on-screen hook suggestion.",
+        "why": "A short first-screen phrase can add value to a TikTok caption package without requiring a full video script.",
+        "example": "Enabled",
+        "avoid": "A hook that repeats the caption or makes an unsupported claim."
+      },
+      "options": [
+        "Enabled",
+        "Disabled"
+      ],
+      "fullWidth": false,
+      "defaultValue": "Enabled",
+      "maxLength": 8
+    },
+    {
+      "key": "hashtagMode",
+      "label": "Hashtag mode",
+      "placeholder": "Choose how hashtags should be handled",
+      "required": false,
+      "type": "select",
+      "group": "discovery_safeguards",
+      "groupTitle": "Discovery & Safeguards",
+      "hint": "Auto uses a small relevant set only when useful.",
+      "help": {
+        "what": "How hashtags should be generated or omitted.",
+        "why": "Some users want discovery hashtags while others prefer none or require specific terms.",
+        "example": "Auto",
+        "avoid": "Irrelevant viral tags, invented brand tags, or hashtag walls."
+      },
+      "options": [
+        "Auto",
+        "None",
+        "Niche only",
+        "Brand + niche",
+        "Custom only"
+      ],
+      "fullWidth": false,
+      "defaultValue": "Auto",
+      "maxLength": 32
+    },
+    {
+      "key": "hashtagCount",
+      "label": "Hashtag count",
+      "placeholder": "Choose the preferred range",
+      "required": false,
+      "type": "select",
+      "group": "discovery_safeguards",
+      "groupTitle": "Discovery & Safeguards",
+      "hint": "The model may use fewer to protect clarity and length.",
+      "help": {
+        "what": "The preferred range for hashtag count when hashtags are enabled.",
+        "why": "It gives the user simple control over hashtag density without requesting specialist knowledge.",
+        "example": "3–5",
+        "avoid": "Using more hashtags than the caption can naturally support."
+      },
+      "options": [
+        "1–2",
+        "3–5",
+        "6–8"
+      ],
+      "fullWidth": false,
+      "defaultValue": "3–5",
+      "maxLength": 10,
+      "showWhen": {
+        "key": "hashtagMode",
+        "notEquals": "None"
+      }
+    },
+    {
+      "key": "hashtagKeywords",
+      "label": "Hashtag guidance",
+      "placeholder": "List approved brand, campaign, niche, or topic terms.",
+      "required": false,
+      "type": "textarea",
+      "group": "discovery_safeguards",
+      "groupTitle": "Discovery & Safeguards",
+      "hint": "Separate terms with commas. Do not include unsupported claims.",
+      "help": {
+        "what": "Approved brand, campaign, niche, or topic terms for hashtags.",
+        "why": "Brand names and custom campaign terms cannot be safely inferred.",
+        "example": "List approved brand, campaign, niche, or topic terms.",
+        "avoid": "Invented branded tags, irrelevant trending tags, or unsupported claims."
+      },
+      "fullWidth": true,
+      "maxLength": 500,
+      "showWhen": {
+        "key": "hashtagMode",
+        "equals": [
+          "Brand + niche",
+          "Custom only"
+        ]
+      }
+    },
+    {
+      "key": "factsAndClaims",
+      "label": "Approved facts and claims",
+      "placeholder": "Add verified statistics, features, results, prices, or factual statements.",
+      "required": false,
+      "type": "textarea",
+      "group": "discovery_safeguards",
+      "groupTitle": "Discovery & Safeguards",
+      "hint": "Only supplied or clearly supported claims may appear in the caption.",
+      "help": {
+        "what": "Verified facts, statistics, features, prices, or claims that may be used.",
+        "why": "It provides a controlled factual source without asking the model to invent evidence.",
+        "example": "Add verified statistics, features, results, prices, or factual statements.",
+        "avoid": "Unsupported statistics, testimonials, ratings, results, or performance claims."
+      },
+      "fullWidth": true,
+      "maxLength": 1500
+    },
+    {
+      "key": "privacyRestrictions",
+      "label": "Privacy and content limits",
+      "placeholder": "Example: Do not mention the client name or exact location.",
+      "required": false,
+      "type": "textarea",
+      "group": "discovery_safeguards",
+      "groupTitle": "Discovery & Safeguards",
+      "hint": "List private details, topics, names, or wording that must be excluded.",
+      "help": {
+        "what": "Private details, sensitive content, or wording that must not appear.",
+        "why": "The user may know privacy or confidentiality restrictions that the model cannot infer.",
+        "example": "Example: Do not mention the client name or exact location.",
+        "avoid": "Private names, precise locations, account data, confidential details, or sensitive third-party information."
+      },
+      "fullWidth": true,
+      "maxLength": 1000
+    },
+    {
+      "key": "additionalRequirements",
+      "label": "Additional requirements",
+      "placeholder": "Add any final instruction not covered above.",
+      "required": false,
+      "type": "textarea",
+      "group": "discovery_safeguards",
+      "groupTitle": "Discovery & Safeguards",
+      "hint": "Use for required wording, verified limits, or special formatting.",
+      "help": {
+        "what": "Any final instruction that is not covered by the other fields.",
+        "why": "It covers legitimate exceptions without adding several low-value specialist fields.",
+        "example": "Add any final instruction not covered above.",
+        "avoid": "Repeating existing fields or adding requirements that conflict with accuracy, privacy, disclosure, or platform fit."
+      },
+      "fullWidth": true,
+      "maxLength": 2000
+    }
+  ]
+}

@@ -43,6 +43,16 @@ const FULL_FORM_SCHEMAS = {
     ),
     buildHint: "node scripts/build-cold-email-outreach-form.mjs",
   },
+  "email-sequence": {
+    path: path.join(
+      root,
+      "src",
+      "config",
+      "template-forms",
+      "email-sequence-variables.json",
+    ),
+    buildHint: "node scripts/build-email-sequence-form.mjs",
+  },
   "facebook-post": {
     path: path.join(
       root,
@@ -123,6 +133,16 @@ const FULL_FORM_SCHEMAS = {
     ),
     buildHint: "node scripts/build-product-description-form.mjs",
   },
+  "reddit-post": {
+    path: path.join(
+      root,
+      "src",
+      "config",
+      "template-forms",
+      "reddit-post-variables.json",
+    ),
+    buildHint: "node scripts/build-reddit-post-form.mjs",
+  },
   "seo-meta-tags": {
     path: path.join(
       root,
@@ -152,6 +172,16 @@ const FULL_FORM_SCHEMAS = {
       "threads-post-variables.json",
     ),
     buildHint: "node scripts/build-threads-post-form.mjs",
+  },
+  "tiktok-caption": {
+    path: path.join(
+      root,
+      "src",
+      "config",
+      "template-forms",
+      "tiktok-caption-variables.json",
+    ),
+    buildHint: "node scripts/build-tiktok-caption-form.mjs",
   },
   "x-thread": {
     path: path.join(
@@ -203,6 +233,16 @@ const FULL_FORM_SCHEMAS = {
     ),
     buildHint: "node scripts/build-paid-ad-copy-form.mjs",
   },
+  "pinterest-pin": {
+    path: path.join(
+      root,
+      "src",
+      "config",
+      "template-forms",
+      "pinterest-pin-variables.json",
+    ),
+    buildHint: "node scripts/build-pinterest-pin-form.mjs",
+  },
   "youtube-script": {
     path: path.join(
       root,
@@ -212,6 +252,16 @@ const FULL_FORM_SCHEMAS = {
       "youtube-script-variables.json",
     ),
     buildHint: "node scripts/build-youtube-script-form.mjs",
+  },
+  "youtube-video-package": {
+    path: path.join(
+      root,
+      "src",
+      "config",
+      "template-forms",
+      "youtube-video-package-variables.json",
+    ),
+    buildHint: "node scripts/build-youtube-video-package-form.mjs",
   },
 };
 
@@ -244,7 +294,16 @@ function loadFullFormVariables(slug) {
       showWhen: v.showWhen,
     };
 
-    if (slug === "threads-post" || slug === "instagram-carousel") {
+    if (
+      slug === "threads-post" ||
+      slug === "instagram-carousel" ||
+      slug === "pinterest-pin" ||
+      slug === "reddit-post" ||
+      slug === "email-sequence" ||
+      slug === "google-business-profile-post" ||
+      slug === "tiktok-caption" ||
+      slug === "youtube-video-package"
+    ) {
       variable.format = v.format;
       variable.maxLength = v.maxLength;
       variable.min = v.min;

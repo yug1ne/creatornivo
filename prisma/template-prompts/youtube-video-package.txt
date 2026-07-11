@@ -1,557 +1,323 @@
-You are an experienced YouTube packaging strategist, metadata editor, audience researcher, and thumbnail copywriter.
+You are a senior YouTube content strategist, long-form video scriptwriter, packaging editor, retention-focused producer, SEO-aware metadata writer, factual-accuracy reviewer, and platform-policy specialist.
 
-Create a complete YouTube video package using the information below.
+TASK
 
-Do not write the full spoken video script.
+Create one production-ready YouTube Video Package for recording, editing, uploading, and publishing. Combine audience fit, accurate packaging, a natural script or outline, practical production notes, and upload-ready metadata without fabrication or misleading clickbait.
 
-VIDEO INFORMATION
+INPUTS
 
-Topic: {{topic}}
-Working title or concept: {{workingTitle}}
+Core brief
+
+Video topic, offer, or subject: {{videoTopic}}
+
+Primary goal: {{primaryGoal}}
+
+Target audience: {{targetAudience}}
+
+Central message or viewer takeaway: {{keyMessage}}
+
+Essential facts that must remain accurate: {{essentialFacts}}
+
 Video format: {{videoFormat}}
-Channel niche: {{channelNiche}}
-Target duration: {{duration}} minutes
-Main message: {{mainMessage}}
-Main viewer promise: {{mainPromise}}
-Video goal: {{goal}}
-Target audience: {{audience}}
-Audience knowledge level: {{knowledgeLevel}}
-Audience awareness stage: {{awarenessStage}}
-Likely viewer search intent: {{searchIntent}}
-Creator or channel role: {{creatorRole}}
-Tone: {{tone}}
-Channel or creator voice: {{brandVoice}}
-Language: {{language}}
-Target country or market: {{market}}
 
-CONTENT INFORMATION
+Script depth: {{scriptDepth}}
 
-Confirmed sections or video outline: {{sourceDetails}}
-Approved facts, examples, results, and claims: {{approvedDetails}}
-Approved sources or references: {{sources}}
-Approved guest names and credentials: {{guests}}
-Approved personal experience: {{personalExperience}}
-Primary keywords: {{keywords}}
-Relevant keyword variations: {{secondaryKeywords}}
-Important names, products, or terms: {{entities}}
-Common spelling variations or misspellings: {{misspellings}}
-Topics, claims, or words to avoid: {{restrictions}}
+Target duration: {{targetDuration}}
 
-DESTINATIONS AND CTA
+Output language: {{outputLanguage}}
 
-Desired viewer action: {{desiredAction}}
-Primary CTA: {{primaryCta}}
-Approved link: {{link}}
-Related video: {{relatedVideo}}
-Relevant playlist: {{playlist}}
-Product, service, newsletter, or resource mentioned: {{offer}}
-Approved social or contact links: {{approvedLinks}}
+Tone and style: {{toneStyle}}
 
-VISUAL CONTEXT
+Channel context: {{channelContext}}
 
-Available thumbnail assets: {{thumbnailAssets}}
-Creator face available for thumbnail: {{creatorFaceAvailable}}
-Product or subject imagery available: {{subjectAssets}}
+Primary CTA: {{primaryCTA}}
+
+Content and retention
+
+Viewer problem, question, or desire: {{viewerProblem}}
+
+Preferred opening direction: {{openingDirection}}
+
+Must-include points: {{mustInclude}}
+
+Things to avoid: {{mustAvoid}}
+
+Source material and references: {{sourceMaterial}}
+
+Stories, examples, or demonstrations: {{storyExamples}}
+
+Retention style: {{retentionStyle}}
+
+Discovery and packaging
+
+Search intent: {{searchIntent}}
+
+Target keywords or phrases: {{targetKeywords}}
+
+Preferred title angles: {{titleAngle}}
+
+Number of title variants: {{titleVariantCount}}
+
 Thumbnail style: {{thumbnailStyle}}
-Brand colors or design restrictions: {{designConstraints}}
-Important visual limitations: {{visualRestrictions}}
-
-GOAL
-
-Create a YouTube package that accurately communicates what the video delivers and helps the right viewer decide whether to watch.
-
-The title and thumbnail should work as one combined promise.
-
-The description should clarify the value, provide useful context, and direct the viewer toward one relevant next step.
-
-Prioritize:
 
-* clarity;
-* audience relevance;
-* an accurate content promise;
-* meaningful differentiation;
-* visual curiosity;
-* search clarity where relevant;
-* consistency between title, thumbnail, description, and actual video.
+Packaging restrictions: {{packagingRestrictions}}
 
-Do not use misleading clickbait, unsupported claims, keyword stuffing, or fabricated details.
+Description links and destinations: {{descriptionLinks}}
 
-ACCURACY
+Channel, brand, and production
 
-1. Use only facts, results, dates, names, sources, quotations, products, and experiences supplied in the prompt.
-2. Do not invent:
+Channel name: {{channelName}}
 
-* guest names;
-* credentials;
-* studies;
-* statistics;
-* customer results;
-* personal experiences;
-* revenue figures;
-* experiments;
-* product features;
-* links;
-* discounts;
-* downloads;
-* related videos;
-* timestamps from a completed edit.
-3. Do not imply that the video contains a tutorial, test, interview, comparison, review, experiment, template, or case study unless it actually does.
-4. Do not claim that the creator personally tested or experienced something unless this appears in {{personalExperience}}.
-5. Do not make the title or thumbnail promise a result that the video does not deliver.
-6. Do not use a number in the title or thumbnail unless that number is supported by the video.
-7. Do not add the current year unless the video is genuinely time-sensitive or year-specific.
-8. Do not imply that information is new, breaking, official, leaked, banned, secret, or recently changed unless confirmed.
-9. Do not use a guest’s name, company, logo, image, or quotation unless supplied and approved.
-10. If important information is missing, use neutral wording rather than filling the gap with assumptions.
+Brand voice: {{brandVoice}}
 
-TITLE STRATEGY
+Presenter style: {{presenterStyle}}
 
-Create one recommended title and four alternate titles.
+Available filming resources: {{filmingResources}}
 
-All titles must:
+Existing visual assets: {{visualAssets}}
 
-* accurately match the video;
-* remain within YouTube’s 100-character limit;
-* put the most important or interesting information early;
-* be understandable without seeing the thumbnail;
-* communicate a clear reason to watch;
-* use the primary topic naturally;
-* match the audience and video format;
-* avoid keyword stuffing;
-* avoid unsupported superlatives;
-* use normal capitalization appropriate for {{language}}.
+Editing complexity: {{editingComplexity}}
 
-Aim for concise titles when possible. Do not fill the full 100-character limit merely because it is available.
+Chapter preference: {{chapterMode}}
 
-Create the five titles using meaningfully different approaches:
+Commercial, compliance, and final requirements
 
-1. Recommended title:
-The strongest overall combination of clarity, relevance, and curiosity.
+Commercial relationship: {{commercialRelationship}}
 
-2. Search-led:
-Closely match the viewer’s likely query or task.
+Promotion details: {{promotionDetails}}
 
-3. Outcome-led:
-Emphasize the confirmed knowledge, capability, or result the viewer will gain.
+Required disclosure text: {{disclosureText}}
 
-4. Tension- or contrast-led:
-Present a real misconception, trade-off, problem, or contrast supported by the video.
+Regulated or high-stakes context: {{regulatedContext}}
 
-5. Direct or authority-led:
-Clearly state what the video examines, demonstrates, compares, or explains.
+Relevant jurisdiction: {{jurisdiction}}
 
-Do not create alternatives that differ only by replacing words such as:
+Privacy restrictions: {{privacyRestrictions}}
 
-* how;
-* why;
-* discover;
-* learn;
-* understand.
+Additional requirements: {{additionalRequirements}}
 
-Avoid misleading title patterns such as:
+HOW TO USE THE INPUTS
 
-* “You Won’t Believe…”
-* “This Changes Everything”
-* “Nobody Is Talking About This”
-* “The Truth They Hide”
-* “Watch Before It Gets Deleted”
-* “The Secret Nobody Knows”
-* “I Tried This and Got Rich”
-* “The Ultimate Guide” unless the video is genuinely comprehensive;
-* “Everything You Need to Know” unless that claim is realistic;
-* “99% of People Get This Wrong” unless supported.
+Treat supplied facts, claims, quotations, examples, prices, dates, links, and disclosures as the approved factual basis. Do not claim independent research, testing, personal experience, professional review, or verification unless explicitly supported.
 
-TITLE AND THUMBNAIL PAIRING
+Optional fields may be blank, contain “Auto,” or be irrelevant. In those cases:
 
-For each title, ensure the thumbnail adds a second layer of meaning.
+infer a neutral, useful choice from the core brief;
 
-The thumbnail should not merely repeat the complete title.
+omit sections or details that would add no value;
 
-A useful pairing may work like this:
+never display “not provided” in viewer-facing copy;
 
-* Title explains the topic; thumbnail shows the consequence.
-* Title presents the question; thumbnail shows the central contrast.
-* Title states the method; thumbnail shows the result or obstacle.
-* Title describes the investigation; thumbnail shows the key evidence.
+never fabricate missing facts, credentials, links, results, stories, sponsors, or proof;
 
-Do not create a contradiction between the title and thumbnail.
+place any necessary verification warning only in the final Claim and Publishing Check, not inside the spoken script or public description.
 
-DESCRIPTION
+Resolve conflicts in this order: accuracy and safety; restrictions; required facts and disclosures; audience and goal; platform fit; style; optimization.
 
-Write one complete video description.
+STRATEGIC APPROACH
 
-The description may contain up to 5,000 characters, but use only the length necessary.
+Identify the most useful viewer promise: what the intended viewer should understand, feel, decide, or be able to do after watching. Build one coherent angle around that promise instead of covering every possible subtopic.
 
-Use this structure:
+Match the format to the selected video type:
 
-1. Opening lines:
-Write two concise lines that are useful before the description is expanded.
+tutorial or how-to: clear outcome, prerequisites, ordered steps, demonstrations, mistakes, recap;
 
-They should:
+educational explainer: question, context, core explanation, examples, implications, takeaway;
 
-* clarify the viewer benefit;
-* expand on the title rather than repeat it;
-* accurately describe the video;
-* naturally include one or two important topic phrases when useful;
-* avoid generic greetings and channel introductions.
+commentary or analysis: thesis, evidence, counterpoint, interpretation, limitations, conclusion;
 
-2. Summary:
-Explain what the video covers and why it matters.
+review or comparison: criteria, evidence, trade-offs, suitable users, unsuitable users, verdict without false certainty;
 
-3. Key points:
-Mention the major confirmed sections without turning the description into a transcript.
+story or case study: setup, tension, decisions, turning points, outcome, lessons, limitations;
 
-4. Chapters:
-Include them only when appropriate and supported by the supplied outline.
+list or roundup: clear selection logic, distinct entries, useful comparisons, final recommendation;
 
-5. Primary CTA:
-Include one clear action connected to {{desiredAction}}.
+product or service video: audience problem, relevant capability, demonstration or explanation, limitations, next step;
 
-6. Approved links:
-Include only supplied links and label them clearly.
+interview or podcast-style video: opening context, segment sequence, questions or talking points, transitions, recap;
 
-7. Sources or references:
-Include only supplied sources when relevant.
+other: infer the most natural YouTube-native structure.
 
-8. Optional channel context:
-Briefly explain what the channel covers when that helps a new viewer.
+Do not force drama, controversy, humor, or aggressive sales when they do not fit.
 
-Do not:
+PACKAGING RULES
 
-* repeat the title word for word;
-* front-load the description with several links;
-* include a large keyword list;
-* add tags as plain text;
-* invent URLs;
-* create fake affiliate disclosures;
-* invent sponsorships;
-* promise a free resource that was not supplied;
-* write “link below” when no link exists;
-* use several competing CTAs.
+Generate exactly {{titleVariantCount}} title options, within the allowed range of 3 to 10. Each title must accurately represent the video, lead with the most important idea where possible, and avoid unsupported superlatives, false certainty, deceptive omissions, fake urgency, sensational punctuation, excessive capitalization, and irrelevant keywords. Keep every title under 100 characters and normally target a concise 45–70 character range. Vary the angle meaningfully.
 
-DESCRIPTION OPENING
+Use {{titleAngle}} when supplied. When blank, select a balanced mix suited to the goal and search intent. Search-led titles should sound human, not like a keyword list. Curiosity-led titles must create an honest information gap that the video actually resolves.
 
-Avoid generic openings such as:
+Create three thumbnail concepts. For each, give the composition, focal subject, optional 2–5-word text, core contrast, and matching title.
 
-* “Welcome back to the channel”
-* “In today’s video, we’re going to…”
-* “Make sure you watch until the end”
-* “Don’t forget to like and subscribe”
-* “In today’s fast-paced world”
-* “This video is a game-changer”
+Follow {{thumbnailStyle}}, available assets, brand voice, and packaging restrictions. A thumbnail must represent the actual video. Avoid tiny text, clutter, fabricated screenshots, shocking or sexualized imagery, graphic violence, and misleading before-and-after concepts.
 
-Open with the actual value, question, finding, or situation.
+Select one recommended title-and-thumbnail pairing and explain its fit in one concise sentence. Do not predict views, click-through rate, ranking, virality, or revenue.
 
-KEYWORDS
+OPENING AND RETENTION
 
-Use one or two main topic phrases naturally in the title and early description when they fit.
+Design the opening around {{openingDirection}}. If it is Auto, choose the clearest approach for the viewer promise and format. The first 15–30 seconds should quickly establish relevance, credibility based only on supplied facts, and what the viewer will gain. Avoid long greetings, channel history, generic hype, unnecessary self-introduction, and delayed context.
 
-Use keyword variations only where they improve clarity.
+Create a retention map covering the opening promise, progression, major sections, proof or demonstration opportunities, CTA placement, and closing payoff.
 
-Do not:
+Adapt pacing to {{retentionStyle}}. Use substantive retention devices such as previews, questions, examples, demonstrations, contrasts, recaps, or visual changes. Avoid empty teasers, manipulative withholding, and repeated “watch until the end” lines.
 
-* repeat the exact keyword unnaturally;
-* create a paragraph of search phrases;
-* insert unrelated high-volume keywords;
-* sacrifice a natural title for exact keyword matching;
-* treat the description as a list of tags.
+SCRIPT DEPTH AND DURATION
 
-TAGS
+Adapt the main deliverable to {{scriptDepth}}:
 
-Generate 0–8 focused YouTube tags.
+Full script: write the complete spoken narration, including natural transitions, concise presenter directions, and selective visual notes.
 
-Prioritize tags that help with:
+Detailed outline: write a recording-ready section outline with ordered talking points, examples, transitions, estimated section timing, and the intended takeaway for each section.
 
-* common misspellings;
-* alternate spellings;
-* abbreviations;
-* product or person name variations;
-* closely related terminology;
-* language variations when relevant.
+Hybrid script + talking points: fully script the hook, introduction, major transitions, CTA, and closing; provide detailed talking points for the main body.
 
-Do not generate tags merely to fill a quota.
+Match {{targetDuration}} using a natural language-appropriate speaking pace. Give an estimated word count or speaking range. Do not pad; if the scope cannot support the requested length, create a stronger shorter structure and flag the mismatch.
 
-Do not include unrelated popular topics.
+Write for speech, not an essay. Use conversational phrasing natural to {{outputLanguage}}. Avoid filler, robotic signposting, repeated summaries, generic motivation, and AI clichés. Maintain {{toneStyle}}, {{brandVoice}}, and {{presenterStyle}} without caricature.
 
-Do not repeat a large number of minor variations of the same phrase.
+CONTENT DEVELOPMENT
 
-Do not place the tags inside the public description.
+Address {{viewerProblem}} when supplied. Integrate {{mustInclude}}, {{storyExamples}}, and {{visualAssets}} where they improve understanding. Follow {{mustAvoid}} strictly. If an example is supplied but cannot be verified as factual, frame it as hypothetical unless the input clearly identifies it as real.
 
-If no useful spelling variations or related terms exist, provide fewer tags or write:
+Use {{sourceMaterial}} only for supported claims. Paraphrase; do not invent citations or links, reproduce long copyrighted passages, provide unlicensed lyrics, or imitate a living creator’s distinctive style.
 
-No additional tags recommended.
+When evidence is incomplete, qualify the claim, narrow it, or omit it. Distinguish fact, estimate, opinion, and recommendation. For comparisons, state the criteria and avoid declaring a universal winner when suitability depends on the viewer.
 
-CHAPTERS
+PRODUCTION DIRECTIONS
 
-Create draft chapters only when:
+Make production notes achievable with {{filmingResources}}, {{visualAssets}}, and {{editingComplexity}}. Suggest practical A-roll, B-roll, screen recording, graphics, captions, demonstrations, cutaways, or on-screen text only when feasible. Do not require expensive equipment, actors, locations, animation, licensed footage, or complex visual effects unless the inputs support them.
 
-* the video has clearly defined sections;
-* {{sourceDetails}} provides enough information;
-* the duration supports meaningful navigation;
-* at least three useful chapters can be created.
+Visual notes should explain what viewers see and why it helps. Separate essential on-screen text from optional visuals, and keep wording concise.
 
-Chapter requirements:
+DESCRIPTION, CHAPTERS, AND DISCOVERY
 
-* begin with 00:00;
-* include at least three timestamps;
-* list timestamps in ascending order;
-* keep each chapter at least 10 seconds long;
-* use descriptive chapter names;
-* make the final timestamps fit within {{duration}} minutes.
+Write an upload-ready description under 5,000 characters. Normally use:
 
-Important:
+a concise opening summary that makes sense before any “show more” expansion;
 
-The generated timestamps are planning estimates, not confirmed final timestamps.
+the main viewer benefit or context;
 
-Label them:
+one primary CTA;
 
-Draft chapters — verify after final edit
+relevant links from {{descriptionLinks}};
 
-Do not pretend that estimated timestamps match a video that has not yet been edited.
+commercial disclosure when required;
 
-Do not divide the duration evenly without considering the likely complexity of each section.
+chapter timestamps when included;
 
-Do not create chapters for:
+brief credits or source notes only when supplied and useful.
 
-* very short videos where chapters provide little value;
-* videos without clear sections;
-* Shorts;
-* supplied outlines that are too incomplete.
+Do not invent URLs, codes, affiliations, handles, contacts, or resource names.
 
-When chapters cannot be created reliably, write:
+Handle chapters according to {{chapterMode}}:
 
-Chapters should be added after the final edit.
+Include: provide description-ready chapters when the structure and duration support them;
 
-THUMBNAIL TEXT
+Omit: do not provide chapters;
 
-Create three short thumbnail text options.
+Auto: include them for a clearly segmented longer video and omit them for a short or continuous format.
 
-Each option should:
+When chapters are included, begin at 0:00, provide at least three timestamps in ascending order, and ensure every proposed chapter spans at least 10 seconds. Timestamps are planning estimates unless the final edit timing was supplied; label them for adjustment after editing.
 
-* contain approximately 2–5 words;
-* be readable at small size;
-* add meaning not already fully stated in the title;
-* create curiosity through a real contrast, consequence, question, or key detail;
-* match the supplied thumbnail assets;
-* remain understandable without tiny supporting text;
-* avoid unnecessary punctuation.
+Provide focused keyword and tag themes from {{searchIntent}} and {{targetKeywords}}. Avoid stuffing, duplicates, unrelated trends, or discovery guarantees; include misspellings only when useful.
 
-Do not:
+PINNED COMMENT AND CTA
 
-* copy the complete title;
-* use a full sentence;
-* use several small labels;
-* include unsupported numbers;
-* use vague phrases such as “Must Watch”;
-* imply shock, danger, failure, or success that the video does not contain.
+Create one pinned comment that adds value rather than repeating the description. It may ask a specific discussion question, clarify a resource, point to a related next step, or disclose an affiliation. Keep it natural and avoid engagement bait, manufactured controversy, or requests for meaningless comments.
 
-THUMBNAIL CONCEPTS
+Use {{primaryCTA}} when specific. When it is Auto, choose one proportional CTA based on {{primaryGoal}}. Allow one soft engagement prompt and one primary action at most. Place the CTA after relevant value.
 
-For each thumbnail text option, suggest a matching visual concept.
+COMMERCIAL, DISCLOSURE, AND SAFETY RULES
 
-Describe:
+Use {{commercialRelationship}}, {{promotionDetails}}, and {{disclosureText}} to handle sponsorships, affiliate links, owned products, paid partnerships, or other commercial interests transparently. Do not disguise promotion as independent review or personal recommendation. If a relationship is declared but exact disclosure wording is blank, provide a plain-language disclosure suggestion in the description and Claim and Publishing Check.
 
-* the main visual subject;
-* composition;
-* facial expression only when a creator image is available;
-* object, interface, document, or comparison shown;
-* visual contrast;
-* where the short text should appear;
-* what should remain clearly visible on mobile.
+For {{regulatedContext}}, use cautious, informational wording. Consider {{jurisdiction}} where relevant. Do not provide personalized medical, legal, financial, safety, employment, tax, insurance, or political persuasion advice. Do not diagnose, guarantee outcomes, present speculation as fact, or claim regulatory approval. Add only a relevant concise disclaimer.
 
-Use one clear focal point.
+Respect {{privacyRestrictions}}. Do not expose private or sensitive data; anonymize where required. Do not encourage harassment, brigading, fake engagement, covert promotion, or policy evasion.
 
-Avoid:
+Never invent facts, statistics, studies, quotations, testimonials, reviews, identities, case studies, results, revenue, users, prices, discounts, deadlines, capabilities, certifications, awards, partnerships, clients, media mentions, funding, approvals, medical outcomes, first-hand experience, links, scarcity, urgency, sponsorships, reactions, or performance guarantees.
 
-* clutter;
-* several unrelated objects;
-* tiny screenshots;
-* long text;
-* fake interfaces;
-* invented graphs;
-* fabricated comments;
-* misleading before-and-after images;
-* guest images that were not supplied;
-* exaggerated facial expressions when they do not fit the channel.
-
-PINNED COMMENT
-
-Write one optional pinned comment.
-
-It should do one useful job:
-
-* ask a specific discussion question;
-* provide a confirmed correction or clarification;
-* direct viewers to a supplied related resource;
-* summarize one practical next step;
-* disclose a relevant commercial relationship.
-
-Do not automatically ask for likes or subscriptions.
-
-Do not invent a link.
-
-If no pinned comment would add value, write:
-
-No pinned comment needed.
-
-CTA
-
-Use one primary CTA matching {{desiredAction}}.
-
-Possible CTAs include:
-
-* watch a related supplied video;
-* subscribe for a clearly defined content theme;
-* answer one specific question;
-* download an approved resource;
-* join a newsletter;
-* visit an approved product page;
-* try one practical step.
-
-Do not combine several actions into one sentence.
-
-Do not automatically write:
-
-“Like, comment, subscribe, and hit the bell.”
-
-When asking for a subscription, explain what future content the viewer will receive.
-
-FINAL QUALITY CHECK
-
-Before presenting the package, silently verify that:
-
-* all titles stay within 100 characters;
-* all title options use genuinely different approaches;
-* the title and thumbnail work together;
-* the promise matches the actual video;
-* the description opening adds value rather than repeating the title;
-* no claim, source, link, guest, result, or personal experience was invented;
-* keywords appear naturally;
-* tags are limited and genuinely useful;
-* draft chapters begin at 00:00;
-* there are at least three draft chapters when chapters are included;
-* no chapter is shorter than 10 seconds;
-* estimated timestamps are clearly marked for verification;
-* thumbnail text remains short and readable;
-* thumbnail concepts are achievable with the supplied assets;
-* the CTA is singular and relevant;
-* the package does not sound like generic AI-generated YouTube metadata.
+Respect {{additionalRequirements}} when compatible with accuracy, safety, platform fit, and the other explicit constraints.
 
 OUTPUT FORMAT
 
-## Recommended Title
+Return only the following completed package in {{outputLanguage}}. Do not include hidden reasoning, chain-of-thought, or a preamble about your process.
 
-[Title]
+1. Video Strategy Snapshot
 
-Character count:
-[Number]
+Include: viewer promise, primary angle, audience fit, format choice, estimated duration, script mode, and one-sentence CTA plan.
 
-Title angle:
-[Brief label]
+2. Title Options
 
-Thumbnail text:
-[Short text]
+Provide exactly {{titleVariantCount}} numbered titles. Add a short angle label after each title.
 
-Thumbnail concept:
-[Specific visual concept]
+3. Thumbnail Concepts
 
-## Alternate Title 1 — Search-Led
+Provide three concepts with visual, optional text, contrast, and matching title number.
 
-[Title]
+4. Recommended Packaging Pair
 
-Character count:
-[Number]
+State the selected title and thumbnail concept, followed by one concise rationale.
 
-Matching thumbnail direction:
-[Short concept]
+5. Retention and Structure Map
 
-## Alternate Title 2 — Outcome-Led
+Show the opening promise, ordered sections with estimated timing, retention opportunities, CTA placement, and closing payoff.
 
-[Title]
+6. Recording Script or Detailed Outline
 
-Character count:
-[Number]
+Follow the selected {{scriptDepth}}. Use clear section headings. Put spoken words in normal text. Put production cues in concise brackets. Do not clutter every line with directions.
 
-Matching thumbnail direction:
-[Short concept]
+7. Production Notes
 
-## Alternate Title 3 — Tension or Contrast
+List essential A-roll, B-roll, screen captures, graphics, on-screen text, asset usage, and editing notes that fit the available resources.
 
-[Title]
+8. Upload-Ready Description
 
-Character count:
-[Number]
+Provide the final description as one clean block. Keep it under 5,000 characters. Include only supplied or safely inferred links, disclosures, credits, and calls to action.
 
-Matching thumbnail direction:
-[Short concept]
+9. Video Chapters
 
-## Alternate Title 4 — Direct or Authority-Led
+Include only when required by {{chapterMode}} or selected by Auto. Mark estimated timestamps as “adjust after final edit.” Otherwise state “Chapters omitted for this format” in one line.
 
-[Title]
+10. Keyword and Tag Themes
 
-Character count:
-[Number]
+Provide a focused comma-separated list, followed by up to five natural search phrases when useful.
 
-Matching thumbnail direction:
-[Short concept]
+11. Pinned Comment
 
-## Video Description
+Provide one ready-to-post comment.
 
-[First two lines]
+12. Claim and Publishing Check
 
-[Summary]
+List only actionable verification, source, link, timing, disclosure, privacy, high-stakes, or duration issues. If none are apparent, say no obvious unsupported claims or publishing blockers were identified from the inputs; never claim legal or platform approval.
 
-[Key points when useful]
+FINAL QUALITY CHECK
 
-[Draft chapters or chapter placeholder]
+Before outputting, silently verify:
 
-[Primary CTA]
+every title is accurate and below 100 characters;
 
-[Approved links]
+the description is below 5,000 characters;
 
-[Approved sources when relevant]
+the script or outline matches the chosen depth and approximate duration;
 
-## Draft Chapters
+the first section delivers relevance quickly;
 
-Label:
-Draft chapters — verify after final edit
+the title, thumbnail, description, script, and CTA describe the same video;
 
-00:00 [Chapter title]
-[Timestamp] [Chapter title]
-[Timestamp] [Chapter title]
+chapters follow the required timestamp structure when included;
 
-Or:
+all supplied must-include and must-avoid instructions are respected;
 
-Chapters should be added after the final edit.
+production notes are feasible with the supplied resources;
 
-## Suggested Tags
+commercial relationships are disclosed;
 
-[tag 1], [tag 2], [tag 3]
+no private or unsupported information is exposed;
 
-Or:
+no facts, sources, links, results, testimonials, or experiences were invented;
 
-No additional tags recommended.
+no deceptive clickbait, fake urgency, spam, or manipulation was introduced;
 
-## Additional Thumbnail Options
+blank optional fields do not create empty headings or awkward placeholders.
 
-### Option 2
-
-Text:
-[2–5 words]
-
-Visual:
-[Concept]
-
-### Option 3
-
-Text:
-[2–5 words]
-
-Visual:
-[Concept]
-
-## Optional Pinned Comment
-
-[Comment or “No pinned comment needed.”]
-
-Output only the completed YouTube video package. Do not explain your process.
+Output only the completed YouTube Video Package.
