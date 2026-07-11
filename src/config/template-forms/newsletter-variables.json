@@ -1,0 +1,295 @@
+{
+  "slug": "newsletter",
+  "title": "Newsletter",
+  "version": 1,
+  "generatedAt": "2026-07-11T09:07:19.626Z",
+  "fieldCount": 14,
+  "requiredKeys": [
+    "topic",
+    "goal",
+    "target_audience",
+    "newsletter_type",
+    "brand_name",
+    "tone",
+    "language"
+  ],
+  "groups": [
+    {
+      "id": "essentials",
+      "title": "Essentials",
+      "description": "Minimum inputs for a useful newsletter package.",
+      "defaultOpen": true
+    },
+    {
+      "id": "content",
+      "title": "Content",
+      "description": "Message, points, length, and constraints.",
+      "defaultOpen": true
+    },
+    {
+      "id": "cta",
+      "title": "CTA & destination",
+      "description": "One clear action and verified link.",
+      "defaultOpen": true
+    }
+  ],
+  "variables": [
+    {
+      "key": "topic",
+      "label": "Topic",
+      "placeholder": "How small teams ship useful content without fake hype",
+      "required": true,
+      "type": "text",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "One central theme for this issue.",
+      "help": {
+        "what": "Newsletter topic.",
+        "why": "Keeps the issue focused on one theme instead of several disconnected ideas.",
+        "example": "Why we publish Early Access status honestly",
+        "avoid": "Several unrelated topics or a vague “this week’s updates” without a thread."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "goal",
+      "label": "Goal",
+      "placeholder": "educate / update / invite reply / drive one clear action",
+      "required": true,
+      "type": "text",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "One primary goal for this issue.",
+      "help": {
+        "what": "Main goal of the newsletter.",
+        "why": "Shapes structure, CTA, and how promotional the issue should feel.",
+        "example": "Help readers write one clearer product update email",
+        "avoid": "Stacking sell + event + survey + reply in one goal."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "target_audience",
+      "label": "Target audience",
+      "placeholder": "founders and marketers who publish product content",
+      "required": true,
+      "type": "text",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Who receives this newsletter.",
+      "help": {
+        "what": "Target audience.",
+        "why": "Language, depth, and examples should match their knowledge and goals.",
+        "example": "Early-stage B2B founders and content leads",
+        "avoid": "Assuming every reader is a buyer, expert, or insider."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "newsletter_type",
+      "label": "Newsletter type",
+      "placeholder": "Educational newsletter",
+      "required": true,
+      "type": "select",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Pick the type that fits the goal — structure adapts to it.",
+      "help": {
+        "what": "Newsletter type.",
+        "why": "Digest, founder note, and promotional issue need different structures.",
+        "example": "Founder newsletter",
+        "avoid": "Forcing every issue into the same template regardless of content."
+      },
+      "options": [
+        "Weekly or monthly digest",
+        "Educational newsletter",
+        "Industry insights newsletter",
+        "Product or company update",
+        "Founder newsletter",
+        "Curated content newsletter",
+        "Community newsletter",
+        "Promotional newsletter",
+        "Editorial newsletter",
+        "Event newsletter",
+        "Customer newsletter",
+        "Personal creator newsletter"
+      ],
+      "fullWidth": false
+    },
+    {
+      "key": "brand_name",
+      "label": "Brand name",
+      "placeholder": "Creatornivo",
+      "required": true,
+      "type": "text",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Brand or sender name for sign-off and voice.",
+      "help": {
+        "what": "Brand or sender name.",
+        "why": "Used in sign-off and so the voice matches who is writing.",
+        "example": "Creatornivo",
+        "avoid": "Invented company names or multiple conflicting sender identities."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "tone",
+      "label": "Tone",
+      "placeholder": "clear, useful, conversational, credible",
+      "required": true,
+      "type": "text",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "How the newsletter should sound.",
+      "help": {
+        "what": "Tone of voice.",
+        "why": "Keeps the issue warm and professional without corporate fluff or hype.",
+        "example": "direct, human, no hype",
+        "avoid": "Empty motivation, aggressive sales tone, or generic AI polish."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "language",
+      "label": "Language",
+      "placeholder": "English",
+      "required": true,
+      "type": "text",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "hint": "Language of the full package (subjects + body).",
+      "help": {
+        "what": "Publishing language.",
+        "why": "All subject lines, preview text, and body should match this language.",
+        "example": "English",
+        "avoid": "Mixing languages without saying so."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "industry",
+      "label": "Industry",
+      "placeholder": "Content tools / B2B SaaS",
+      "required": false,
+      "type": "text",
+      "group": "content",
+      "groupTitle": "Content",
+      "hint": "Niche context for examples and framing.",
+      "help": {
+        "what": "Industry or niche.",
+        "why": "Helps examples and wording feel relevant to the reader’s world.",
+        "example": "Marketing software for small teams",
+        "avoid": "Jargon without explanation when the audience is mixed."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "main_message",
+      "label": "Main message",
+      "placeholder": "One clear point the reader should remember after reading",
+      "required": false,
+      "type": "textarea",
+      "group": "content",
+      "groupTitle": "Content",
+      "hint": "Central idea — not a list of unrelated updates.",
+      "help": {
+        "what": "Main message.",
+        "why": "Gives the body a single spine from opening to CTA.",
+        "example": "Honest Early Access messaging builds more trust than fake social proof.",
+        "avoid": "Several competing messages or unstated claims."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "key_points",
+      "label": "Key points",
+      "placeholder": "Point 1…\nPoint 2…\nPoint 3…\n(only facts you can verify)",
+      "required": false,
+      "type": "textarea",
+      "group": "content",
+      "groupTitle": "Content",
+      "hint": "Facts and takeaways to include — no invented stats or stories.",
+      "help": {
+        "what": "Key points to include.",
+        "why": "Supplies verified content so the model does not invent details.",
+        "example": "Free: 5 generations/day UTC. Pro: 100/month. We never invent testimonials.",
+        "avoid": "Unverified stats, fake testimonials, or product features that are not live."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "length",
+      "label": "Length",
+      "placeholder": "medium (about 400–700 words)",
+      "required": false,
+      "type": "select",
+      "group": "content",
+      "groupTitle": "Content",
+      "hint": "Editorial length — not a hard platform limit.",
+      "help": {
+        "what": "Desired length.",
+        "why": "Controls depth without padding a simple idea.",
+        "example": "short (about 200–350 words)",
+        "avoid": "Making a simple update artificially long."
+      },
+      "options": [
+        "short (about 200–350 words)",
+        "medium (about 400–700 words)",
+        "long (about 800–1200 words)"
+      ],
+      "fullWidth": false
+    },
+    {
+      "key": "additional_context",
+      "label": "Additional context",
+      "placeholder": "Restrictions, must-include links, things to avoid, brand rules…",
+      "required": false,
+      "type": "textarea",
+      "group": "content",
+      "groupTitle": "Content",
+      "hint": "Anything else the model must respect.",
+      "help": {
+        "what": "Additional context, requirements, or restrictions.",
+        "why": "Captures constraints so the draft stays on-policy and accurate.",
+        "example": "Do not invent customer counts. No fake urgency. No hashtags.",
+        "avoid": "Leaving critical restrictions only in your head."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "call_to_action",
+      "label": "Call to action",
+      "placeholder": "Try the Newsletter template / Reply with your biggest blocker",
+      "required": false,
+      "type": "text",
+      "group": "cta",
+      "groupTitle": "CTA & destination",
+      "hint": "One primary action — not several competing CTAs.",
+      "help": {
+        "what": "Primary call to action.",
+        "why": "Ends the issue with one clear, relevant next step.",
+        "example": "Open the Newsletter template in Creatornivo",
+        "avoid": "Stacking download + book a call + share + survey in one section."
+      },
+      "fullWidth": false
+    },
+    {
+      "key": "link",
+      "label": "Link",
+      "placeholder": "https://www.creatornivo.com/… or leave blank for placeholder",
+      "required": false,
+      "type": "text",
+      "group": "cta",
+      "groupTitle": "CTA & destination",
+      "hint": "Real URL only — missing links become placeholders.",
+      "help": {
+        "what": "Link or destination.",
+        "why": "Supports the CTA with a verified destination.",
+        "example": "https://www.creatornivo.com",
+        "avoid": "Fake URLs, untested links, or several competing destinations."
+      },
+      "fullWidth": false
+    }
+  ]
+}

@@ -93,6 +93,16 @@ const FULL_FORM_SCHEMAS = {
     ),
     buildHint: "node scripts/build-linkedin-post-form.mjs",
   },
+  newsletter: {
+    path: path.join(
+      root,
+      "src",
+      "config",
+      "template-forms",
+      "newsletter-variables.json",
+    ),
+    buildHint: "node scripts/build-newsletter-form.mjs",
+  },
 };
 
 function loadFullFormVariables(slug) {
@@ -124,18 +134,6 @@ function loadFullFormVariables(slug) {
 
 const curated = {
   // full-form templates use loadFullFormVariables() via FULL_FORM_SCHEMAS
-  newsletter: {
-    required: ["topic", "brand", "goal", "tone"],
-    optional: [
-      "audience",
-      "mainMessage",
-      "brandVoice",
-      "desiredAction",
-      "offer",
-      "sourceDetails",
-      "language",
-    ],
-  },
   "seo-meta-tags": {
     required: ["topic", "keyword", "brand", "intent"],
     optional: [

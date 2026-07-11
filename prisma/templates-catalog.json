@@ -32696,73 +32696,180 @@
     "description": "Subject, preview, and value-driven email body with one primary CTA",
     "category": "newsletter",
     "requiredPlan": "free",
-    "prompt": "You are an experienced email marketing copywriter, newsletter editor, and conversion-focused UX writer.\nCreate a clear, useful newsletter email using the information below.\nNEWSLETTER DETAILS\nTopic: {{topic}}\nBrand: {{brand}}\nBrand description: {{brandDescription}}\nTarget audience: {{audience}}\nSubscriber relationship: {{subscriberRelationship}}\nAudience awareness level: {{awarenessLevel}}\nGoal: {{goal}}\nMain message: {{mainMessage}}\nReason for sending now: {{timingContext}}\nOffer, update, or announcement: {{offer}}\nPrimary benefit to the reader: {{primaryBenefit}}\nSupporting details, facts, examples, or resources: {{sourceDetails}}\nPrimary CTA destination or action: {{desiredAction}}\nSecondary links or resources: {{secondaryResources}}\nTone: {{tone}}\nBrand voice: {{brandVoice}}\nLanguage: {{language}}\nSender name: {{senderName}}\nSign-off style: {{signOffStyle}}\nWords, claims, or topics to avoid: {{restrictions}}\nGOAL\nWrite a newsletter that gives the reader a clear reason to continue reading and take the intended action.\nThe email should feel useful and relevant to an existing subscriber. It should not read like a cold sales email, generic promotion, or automatically generated marketing template.\nACCURACY\n\n\nUse only the facts, features, benefits, dates, prices, offers, examples, and results supplied in the prompt.\nDo not invent discounts, deadlines, availability, customer results, product features, testimonials, statistics, events, or guarantees.\nDo not create urgency or scarcity unless it is supported by {{sourceDetails}}.\nDo not imply that an offer is personalized or exclusive unless that is confirmed.\nDo not claim that the reader has used, purchased, viewed, or requested something unless that information was supplied.\nClearly distinguish confirmed announcements from future plans or possibilities.\nDo not make guaranteed financial, medical, business, career, or performance claims.\nIf essential information is missing, keep the wording neutral rather than filling the gap with invented details.\nSUBJECT LINE\nWrite one subject line that:\n\n\nis under 50 characters, including spaces;\ncommunicates a clear reason to open;\nreflects the actual content of the email;\nsounds natural in the selected brand voice;\navoids misleading curiosity;\navoids excessive punctuation, all caps, and unnecessary emojis;\navoids spam-like urgency or unsupported promises.\nDo not use generic subject lines such as:\n“Exciting news!”\n“You don’t want to miss this”\n“Big announcement”\n“Last chance” unless it is factually true;\n“Important update” unless the update is genuinely important;\n“Open this now”\n“A special gift for you” unless an actual gift is included.\nPREVIEW TEXT\nWrite one preview line under 90 characters, including spaces.\nThe preview text should:\nadd new context rather than repeat the subject line;\nexplain the value or relevance of the email;\nwork naturally when shown beside the subject line;\navoid filler such as “View this email in your browser.”\nGREETING\nUse a short, natural greeting appropriate for {{subscriberRelationship}} and {{brandVoice}}.\nDo not invent a recipient’s name.\nDo not use overly formal greetings unless requested.\nOPENING\nOpen with the most relevant reader benefit, update, question, or context.\nThe opening should:\nexplain why the email matters;\nconnect naturally to {{topic}};\navoid lengthy scene-setting;\navoid repeating the subject line;\navoid generic phrases such as “We hope this email finds you well.”\nBODY STRUCTURE\nUse 2–3 value sections with short subheadings only when the topic supports them.\nEach section should have a distinct purpose, such as:\nexplaining the update;\nshowing why it matters;\nproviding useful advice;\npresenting an example;\nclarifying what changes for the reader;\nintroducing the next step.\nStructure rules:\n\n\nKeep paragraphs short and readable on mobile.\nFocus on one primary message.\nDo not overload the email with unrelated announcements.\nUse subheadings that communicate meaning, not generic labels such as “Introduction” or “Benefits.”\nDo not repeat the same benefit in several sections.\nUse bullet points only when they make information easier to scan.\nInclude concrete details when they are supplied.\nDo not force three sections if two are enough.\nDo not turn every sentence into a separate paragraph.\nKeep the email concise enough for the stated goal.\nVALUE AND RELEVANCE\nMake the reader benefit clear.\nFocus on:\n\n\nwhat changed;\nwhat the reader can learn, do, save, avoid, or understand;\nwhy the information is relevant now;\nwhat the next reasonable step is.\nDo not focus mainly on how proud, excited, or pleased the brand is.\nReplace brand-centred language such as:\n“We’re excited to announce our new feature”\nwith reader-centred language when appropriate, such as:\n“You can now complete the process without switching between tools.”\nSTYLE\nWrite in a clear, conversational tone appropriate for {{audience}}.\nUse varied sentence lengths and plain language.\nSound confident, helpful, and specific without being pushy, overly enthusiastic, or artificially friendly.\nAvoid:\nexcessive marketing adjectives;\nfake personalization;\ncorporate jargon;\nmultiple exclamation marks;\nunnecessary emojis;\nlong introductions;\nrepetitive CTAs;\nexaggerated claims;\nguilt-based persuasion;\nmanipulative urgency;\noverly formal transitions;\nkeyword stuffing.\nAvoid common AI and marketing phrases such as:\n“In today’s fast-paced world”\n“We’re thrilled to announce”\n“We’re excited to share”\n“Game-changing”\n“Revolutionary”\n“Unlock the power of”\n“Take your experience to the next level”\n“Don’t miss out”\n“Act now”\n“Whether you’re a beginner or an expert”\n“We’ve got you covered”\n“Here’s the thing”\n“Let’s dive in”\nCTA\nInclude one primary CTA.\nThe CTA must:\nmatch {{goal}} and {{desiredAction}};\ntell the reader what will happen after clicking;\nbe specific and concise;\nuse a button label of approximately 2–5 words;\navoid vague wording when a clearer action is possible.\nPrefer specific CTA labels such as:\n“Read the full guide”\n“See what changed”\n“Explore the new feature”\n“View available plans”\n“Reserve your place”\n“Complete your setup”\n“Download the checklist”\nAvoid generic labels such as:\n“Click here”\n“Submit”\n“Learn more” when a more specific phrase is possible;\n“Get started” when the next step is unclear.\nUse only one primary CTA. Secondary text links may be included only when supplied in {{secondaryResources}} and when they do not distract from the main action.\nSIGN-OFF\nEnd with a brief, natural sign-off that matches {{signOffStyle}} and {{brandVoice}}.\nDo not add a long final sales paragraph after the CTA.\nDo not invent team names, job titles, contact details, or signatures.\nEMAIL DELIVERABILITY AND TRUST\n\n\nAvoid excessive capitalization, punctuation, emoji use, and promotional language.\nDo not conceal the commercial purpose of the email.\nDo not use misleading subject lines or fake replies such as “Re:” or “Fwd:”.\nDo not make the email look like a personal message when it is clearly a brand newsletter.\nDo not include legal footer text, unsubscribe links, physical addresses, or privacy notices unless they were supplied or specifically requested.\nLeave technical compliance elements to the sending platform unless requested.\nFINAL QUALITY CHECK\nBefore presenting the newsletter, silently verify that:\n\n\nthe subject line is under 50 characters;\nthe preview text is under 90 characters;\nthe preview text does not repeat the subject;\nthe email has one main message;\nthe reader benefit is clear;\nno fact, offer, deadline, feature, or result was invented;\nthe opening is relevant and not generic;\neach section adds distinct value;\nthe CTA matches the goal;\nthe CTA label clearly describes the next step;\nthe email is easy to scan on mobile;\nthe tone matches the brand and audience;\nthe email does not sound like a generic AI template.\nOUTPUT FORMAT\nSubject: [subject line]\nPreview text: [preview text]\n[Greeting]\n[Opening paragraph]\n\n## [Value section subheading]\n[Section content]\n## [Value section subheading]\n[Section content]\n[Optional third value section only when useful]\nCTA button: [button label]\n[Brief sign-off]\nOutput only the finished newsletter email. Do not explain your writing process.",
+    "prompt": "You are an experienced newsletter strategist, editor, and conversion copywriter.\n\nCreate a complete, engaging, and professionally structured newsletter based on the information provided below.\n\nThe newsletter must feel genuinely useful and human. It should not read like generic AI-generated content, a corporate press release, or an aggressive sales email.\n\n## Newsletter Details\n\nNewsletter topic:\n{{topic}}\n\nMain goal:\n{{goal}}\n\nTarget audience:\n{{target_audience}}\n\nNewsletter type:\n{{newsletter_type}}\n\nBrand or sender name:\n{{brand_name}}\n\nIndustry or niche:\n{{industry}}\n\nMain message:\n{{main_message}}\n\nKey points to include:\n{{key_points}}\n\nPrimary call to action:\n{{call_to_action}}\n\nLink or destination:\n{{link}}\n\nTone of voice:\n{{tone}}\n\nDesired length:\n{{length}}\n\nLanguage:\n{{language}}\n\nAdditional context, requirements, or restrictions:\n{{additional_context}}\n\n## Newsletter Type Guidance\n\nAdapt the structure and writing style to the selected newsletter type.\n\nPossible newsletter types may include:\n\n* Weekly or monthly digest\n* Educational newsletter\n* Industry insights newsletter\n* Product or company update\n* Founder newsletter\n* Curated content newsletter\n* Community newsletter\n* Promotional newsletter\n* Editorial newsletter\n* Event newsletter\n* Customer newsletter\n* Personal creator newsletter\n\nDo not force every newsletter into the same structure. Choose the format that best supports the stated goal, audience, and content.\n\n## Core Requirements\n\nWrite a newsletter that:\n\n* Provides clear value from the opening lines.\n* Has one central theme rather than several disconnected topics.\n* Uses a natural, confident, and audience-appropriate voice.\n* Makes the reader understand why the topic matters.\n* Is easy to scan on both desktop and mobile.\n* Uses short paragraphs and clear section breaks.\n* Avoids unnecessary introductions and filler.\n* Maintains a logical flow from the opening to the final call to action.\n* Balances useful information with personality.\n* Includes specific observations, examples, explanations, or practical takeaways whenever relevant.\n* Makes promotional content feel connected to the reader’s needs.\n* Avoids exaggerated promises, fake urgency, and manipulative language.\n* Does not invent statistics, testimonials, quotes, customer stories, research findings, product features, or company achievements.\n* Clearly marks any missing factual information with a neutral placeholder instead of fabricating it.\n* Avoids repetitive wording and generic AI phrases.\n* Does not overuse bullet points, emojis, rhetorical questions, or exclamation marks.\n\n## Subject Line Requirements\n\nProvide 8 subject line options.\n\nThe subject lines should vary in approach:\n\n1. Direct and informative\n2. Curiosity-driven\n3. Benefit-focused\n4. Conversational\n5. Insight-focused\n6. Short and minimal\n7. Question-based\n8. Slightly unexpected but still relevant\n\nEach subject line must:\n\n* Match the actual newsletter content.\n* Avoid misleading clickbait.\n* Avoid spam-heavy wording.\n* Avoid unnecessary capitalization.\n* Remain clear when viewed on a mobile device.\n* Preferably stay under 55 characters when possible.\n\nDo not use false urgency, fake scarcity, or unsupported claims.\n\n## Preview Text Requirements\n\nProvide 5 preview text options.\n\nEach preview text should:\n\n* Complement rather than repeat the subject line.\n* Add useful context or create a clear reason to open.\n* Stay concise.\n* Preferably remain under 90 characters.\n* Avoid generic phrases such as “You don’t want to miss this.”\n\n## Opening Requirements\n\nBegin with a strong opening that immediately establishes relevance.\n\nDepending on the newsletter type, the opening may use:\n\n* A timely observation\n* A relatable problem\n* A useful insight\n* A surprising contrast\n* A brief personal note\n* A direct summary of what the reader will learn\n* A clear update from the company, creator, or community\n\nDo not begin with generic phrases such as:\n\n* “We hope this email finds you well.”\n* “In today’s fast-paced world.”\n* “We are excited to announce.”\n* “Welcome to another edition.”\n* “In this newsletter, we will explore.”\n\nA welcome sentence may be used only when it adds personality or context.\n\n## Main Content Structure\n\nChoose the most suitable structure for the newsletter.\n\nA recommended structure is:\n\n### 1. Opening Hook\n\nIntroduce the main topic and explain why it matters to the reader.\n\n### 2. Main Insight or Story\n\nDevelop the central idea using useful context, explanation, observations, or a short story.\n\n### 3. Key Takeaways\n\nPresent the most important lessons, updates, or practical points.\n\nUse bullets only when they improve readability.\n\n### 4. Practical Application\n\nExplain what the reader can do, consider, test, avoid, or explore next.\n\n### 5. Secondary Section\n\nInclude one relevant supporting section when appropriate, such as:\n\n* Quick tip\n* Useful resource\n* Product update\n* Behind-the-scenes note\n* Recommended article\n* Community highlight\n* Upcoming event\n* Common mistake\n* Question of the week\n* Short curated list\n\nDo not add a secondary section merely to make the newsletter longer.\n\n### 6. Call to Action\n\nEnd with one clear primary action.\n\nThe call to action should be specific and naturally connected to the newsletter content.\n\nExamples of suitable actions include:\n\n* Read the full article\n* Try a feature\n* Reply with an opinion\n* Register for an event\n* Download a resource\n* Join a community\n* View an update\n* Complete a survey\n* Explore a product\n* Share the newsletter\n\nAvoid placing several competing calls to action in the same section.\n\n## Personalization and Audience Relevance\n\nAdapt the newsletter to the target audience’s:\n\n* Level of knowledge\n* Main goals\n* Common frustrations\n* Likely objections\n* Preferred language\n* Relationship with the sender\n* Stage of awareness\n\nDo not assume that every reader already understands the topic, product, or industry.\n\nExplain specialist terms briefly when necessary, but do not make the writing feel like a textbook.\n\n## Tone and Style\n\nFollow the requested tone of voice consistently.\n\nUnless otherwise specified, the writing should be:\n\n* Clear\n* Useful\n* Conversational\n* Credible\n* Warm without being overly informal\n* Professional without sounding corporate\n* Persuasive without applying pressure\n\nUse contractions and natural sentence variation when appropriate for the selected language.\n\nAvoid:\n\n* Empty motivational language\n* Corporate jargon\n* Excessive hype\n* Long blocks of text\n* Forced humor\n* Fake personal stories\n* Repetitive conclusions\n* Overly polished marketing language\n* Phrases that sound generated by AI\n\nAvoid common generic expressions such as:\n\n* “Game-changer”\n* “Unlock your potential”\n* “Take your business to the next level”\n* “Dive into”\n* “Revolutionary”\n* “In an ever-changing landscape”\n* “Whether you’re a beginner or an expert”\n* “Here’s the good news”\n* “Without further ado”\n\nUse these expressions only when they are genuinely appropriate and supported by the context.\n\n## Promotional Content Rules\n\nWhen the newsletter includes a product, service, offer, or company update:\n\n* Focus on the reader’s problem or desired outcome.\n* Explain the practical relevance of the offer.\n* Connect features to real benefits.\n* Do not overstate results.\n* Do not create false deadlines.\n* Do not claim limited availability unless confirmed.\n* Do not present opinions as proven facts.\n* Do not use aggressive sales pressure.\n* Do not turn an educational newsletter into a disguised advertisement.\n\nThe promotional section should feel like a natural continuation of the content.\n\n## Formatting Rules\n\nFormat the newsletter for easy reading.\n\nUse:\n\n* A clear title or headline\n* Short paragraphs\n* Descriptive section headings\n* Bullets only where useful\n* One primary CTA\n* Bold text sparingly\n* Clear spacing between sections\n\nDo not use tables unless explicitly requested.\n\nDo not add emojis unless they match the requested tone or brand. When used, limit them to a small number and use them purposefully.\n\nDo not add hashtags.\n\nDo not include HTML unless explicitly requested.\n\n## Accuracy and Trust\n\nDo not invent:\n\n* Statistics\n* Survey results\n* Quotes\n* Research\n* News\n* Case studies\n* Customer outcomes\n* Dates\n* Prices\n* Discounts\n* Product capabilities\n* Awards\n* Partnerships\n* Testimonials\n\nWhen necessary information is missing, use placeholders such as:\n\n* [Add verified statistic]\n* [Insert confirmed date]\n* [Add customer example]\n* [Insert destination URL]\n* [Confirm offer details]\n\n## Required Output Format\n\nReturn the result in the following order:\n\n### 1. Newsletter Strategy\n\nBriefly provide:\n\n* Newsletter type\n* Primary goal\n* Core reader benefit\n* Main content angle\n* Recommended CTA\n\nKeep this section concise.\n\n### 2. Subject Line Options\n\nProvide 8 numbered subject line options.\n\n### 3. Preview Text Options\n\nProvide 5 numbered preview text options.\n\n### 4. Recommended Subject Line and Preview Text\n\nSelect the strongest combination and briefly explain why it fits the audience and goal.\n\n### 5. Newsletter Copy\n\nProvide the complete newsletter with:\n\n* Headline\n* Opening\n* Main content sections\n* Practical takeaway or supporting section\n* Primary CTA\n* Closing\n* Sender sign-off\n\n### 6. CTA Variations\n\nProvide 5 concise CTA button or link-text alternatives.\n\n### 7. Plain-Text Version\n\nProvide a clean plain-text version suitable for email platforms.\n\nDo not include strategic comments, explanations, or writing notes inside the newsletter itself.\n\n### 8. Quality Check\n\nConclude with a compact checklist confirming whether the newsletter:\n\n* Delivers clear reader value\n* Matches the requested tone\n* Has one central message\n* Uses only verified information\n* Includes one clear primary CTA\n* Avoids clickbait and spam-heavy language\n* Is easy to read on mobile\n* Does not sound generic or AI-generated\n\nProduce only the requested newsletter package. Do not describe your writing process.",
     "variables": [
       {
         "key": "topic",
         "label": "Topic",
-        "placeholder": "Lessons from year one of building a SaaS",
-        "required": true
-      },
-      {
-        "key": "brand",
-        "label": "Brand",
-        "placeholder": "Creatornivo",
-        "required": true
+        "placeholder": "How small teams ship useful content without fake hype",
+        "required": true,
+        "type": "text",
+        "group": "essentials",
+        "groupTitle": "Essentials",
+        "hint": "One central theme for this issue.",
+        "fullWidth": false
       },
       {
         "key": "goal",
         "label": "Goal",
-        "placeholder": "spark discussion and profile visits",
-        "required": true
+        "placeholder": "educate / update / invite reply / drive one clear action",
+        "required": true,
+        "type": "text",
+        "group": "essentials",
+        "groupTitle": "Essentials",
+        "hint": "One primary goal for this issue.",
+        "fullWidth": false
+      },
+      {
+        "key": "target_audience",
+        "label": "Target audience",
+        "placeholder": "founders and marketers who publish product content",
+        "required": true,
+        "type": "text",
+        "group": "essentials",
+        "groupTitle": "Essentials",
+        "hint": "Who receives this newsletter.",
+        "fullWidth": false
+      },
+      {
+        "key": "newsletter_type",
+        "label": "Newsletter type",
+        "placeholder": "Educational newsletter",
+        "required": true,
+        "type": "select",
+        "group": "essentials",
+        "groupTitle": "Essentials",
+        "hint": "Pick the type that fits the goal — structure adapts to it.",
+        "options": [
+          "Weekly or monthly digest",
+          "Educational newsletter",
+          "Industry insights newsletter",
+          "Product or company update",
+          "Founder newsletter",
+          "Curated content newsletter",
+          "Community newsletter",
+          "Promotional newsletter",
+          "Editorial newsletter",
+          "Event newsletter",
+          "Customer newsletter",
+          "Personal creator newsletter"
+        ],
+        "fullWidth": false
+      },
+      {
+        "key": "brand_name",
+        "label": "Brand name",
+        "placeholder": "Creatornivo",
+        "required": true,
+        "type": "text",
+        "group": "essentials",
+        "groupTitle": "Essentials",
+        "hint": "Brand or sender name for sign-off and voice.",
+        "fullWidth": false
       },
       {
         "key": "tone",
         "label": "Tone",
-        "placeholder": "professional, clear, human",
-        "required": true
-      },
-      {
-        "key": "audience",
-        "label": "Audience",
-        "placeholder": "solo founders and marketers",
-        "required": false
-      },
-      {
-        "key": "mainMessage",
-        "label": "Main Message",
-        "placeholder": "Distribution beats features early on",
-        "required": false
-      },
-      {
-        "key": "brandVoice",
-        "label": "Brand Voice",
-        "placeholder": "honest, practical, Early Access product",
-        "required": false
-      },
-      {
-        "key": "desiredAction",
-        "label": "Desired Action",
-        "placeholder": "comment with their biggest launch lesson",
-        "required": false
-      },
-      {
-        "key": "offer",
-        "label": "Offer",
-        "placeholder": "Creatornivo Pro monthly plan",
-        "required": false
-      },
-      {
-        "key": "sourceDetails",
-        "label": "Source Details",
-        "placeholder": "Only use facts supplied here; do not invent metrics",
-        "required": false
+        "placeholder": "clear, useful, conversational, credible",
+        "required": true,
+        "type": "text",
+        "group": "essentials",
+        "groupTitle": "Essentials",
+        "hint": "How the newsletter should sound.",
+        "fullWidth": false
       },
       {
         "key": "language",
         "label": "Language",
         "placeholder": "English",
-        "required": false
+        "required": true,
+        "type": "text",
+        "group": "essentials",
+        "groupTitle": "Essentials",
+        "hint": "Language of the full package (subjects + body).",
+        "fullWidth": false
+      },
+      {
+        "key": "industry",
+        "label": "Industry",
+        "placeholder": "Content tools / B2B SaaS",
+        "required": false,
+        "type": "text",
+        "group": "content",
+        "groupTitle": "Content",
+        "hint": "Niche context for examples and framing.",
+        "fullWidth": false
+      },
+      {
+        "key": "main_message",
+        "label": "Main message",
+        "placeholder": "One clear point the reader should remember after reading",
+        "required": false,
+        "type": "textarea",
+        "group": "content",
+        "groupTitle": "Content",
+        "hint": "Central idea — not a list of unrelated updates.",
+        "fullWidth": true
+      },
+      {
+        "key": "key_points",
+        "label": "Key points",
+        "placeholder": "Point 1…\nPoint 2…\nPoint 3…\n(only facts you can verify)",
+        "required": false,
+        "type": "textarea",
+        "group": "content",
+        "groupTitle": "Content",
+        "hint": "Facts and takeaways to include — no invented stats or stories.",
+        "fullWidth": true
+      },
+      {
+        "key": "length",
+        "label": "Length",
+        "placeholder": "medium (about 400–700 words)",
+        "required": false,
+        "type": "select",
+        "group": "content",
+        "groupTitle": "Content",
+        "hint": "Editorial length — not a hard platform limit.",
+        "options": [
+          "short (about 200–350 words)",
+          "medium (about 400–700 words)",
+          "long (about 800–1200 words)"
+        ],
+        "fullWidth": false
+      },
+      {
+        "key": "additional_context",
+        "label": "Additional context",
+        "placeholder": "Restrictions, must-include links, things to avoid, brand rules…",
+        "required": false,
+        "type": "textarea",
+        "group": "content",
+        "groupTitle": "Content",
+        "hint": "Anything else the model must respect.",
+        "fullWidth": true
+      },
+      {
+        "key": "call_to_action",
+        "label": "Call to action",
+        "placeholder": "Try the Newsletter template / Reply with your biggest blocker",
+        "required": false,
+        "type": "text",
+        "group": "cta",
+        "groupTitle": "CTA & destination",
+        "hint": "One primary action — not several competing CTAs.",
+        "fullWidth": false
+      },
+      {
+        "key": "link",
+        "label": "Link",
+        "placeholder": "https://www.creatornivo.com/… or leave blank for placeholder",
+        "required": false,
+        "type": "text",
+        "group": "cta",
+        "groupTitle": "CTA & destination",
+        "hint": "Real URL only — missing links become placeholders.",
+        "fullWidth": false
       }
     ]
   },
