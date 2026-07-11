@@ -11,6 +11,7 @@ import { GOOGLE_BUSINESS_PROFILE_POST_GUIDE_PATH } from "@/config/template-forms
 import { INSTAGRAM_POST_GUIDE_PATH } from "@/config/template-forms/instagram-post";
 import { LINKEDIN_POST_GUIDE_PATH } from "@/config/template-forms/linkedin-post";
 import { NEWSLETTER_GUIDE_PATH } from "@/config/template-forms/newsletter";
+import { PRODUCT_DESCRIPTION_GUIDE_PATH } from "@/config/template-forms/product-description";
 import { cn } from "@/lib/utils/cn";
 
 const GUIDE_PATH_BY_SLUG: Record<string, string> = {
@@ -22,6 +23,7 @@ const GUIDE_PATH_BY_SLUG: Record<string, string> = {
   "instagram-post": INSTAGRAM_POST_GUIDE_PATH,
   "linkedin-post": LINKEDIN_POST_GUIDE_PATH,
   newsletter: NEWSLETTER_GUIDE_PATH,
+  "product-description": PRODUCT_DESCRIPTION_GUIDE_PATH,
 };
 
 interface TemplateHelpButtonProps {

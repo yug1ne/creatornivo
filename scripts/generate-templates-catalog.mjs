@@ -103,6 +103,16 @@ const FULL_FORM_SCHEMAS = {
     ),
     buildHint: "node scripts/build-newsletter-form.mjs",
   },
+  "product-description": {
+    path: path.join(
+      root,
+      "src",
+      "config",
+      "template-forms",
+      "product-description-variables.json",
+    ),
+    buildHint: "node scripts/build-product-description-form.mjs",
+  },
 };
 
 function loadFullFormVariables(slug) {
@@ -208,18 +218,6 @@ const curated = {
       "tone",
       "desiredAction",
       "landingPageMessage",
-      "language",
-    ],
-  },
-  "product-description": {
-    required: ["productName", "benefits", "buyer"],
-    optional: [
-      "productDescription",
-      "features",
-      "painPoint",
-      "desiredOutcome",
-      "tone",
-      "price",
       "language",
     ],
   },
