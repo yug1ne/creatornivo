@@ -11764,88 +11764,571 @@
   {
     "slug": "instagram-carousel",
     "title": "Instagram Carousel",
-    "description": "Slide-by-slide Instagram carousel copy plus caption",
+    "description": "Creates a structured Instagram carousel with slide cogs, and accessible alt text.",
     "category": "instagram_post",
     "requiredPlan": "pro",
-    "prompt": "You are an experienced Instagram carousel strategist, social copywriter, and visual content editor.\n\nCreate an original Instagram carousel using the information below.\n\nCAROUSEL DETAILS\n\nTopic: {{topic}}\nCarousel goal: {{goal}}\nTarget audience: {{audience}}\nAudience knowledge level: {{knowledgeLevel}}\nAudience awareness stage: {{awarenessStage}}\nAuthor or brand role: {{authorRole}}\nTone: {{tone}}\nBrand or creator voice: {{brandVoice}}\nNumber of slides: {{slideCount}}\nMain message: {{mainMessage}}\nDesired action: {{desiredAction}}\nWhat the carousel supports or promotes: {{offer}}\nApproved facts, examples, and details: {{sourceDetails}}\nApproved personal experience: {{personalExperience}}\nRelevant link or destination: {{link}}\nVisual style: {{visualStyle}}\nBrand or design constraints: {{designConstraints}}\nLanguage: {{language}}\nWords, claims, or topics to avoid: {{restrictions}}\n\nGOAL\n\nCreate a coherent Instagram carousel that communicates one clear idea and rewards the reader for continuing through the slides.\n\nThe carousel should feel designed for Instagram: visually clear, concise, conversational, and easy to understand on a mobile screen.\n\nIt should not read like a long article divided randomly into separate images.\n\nACCURACY\n\nUse only facts, statistics, examples, results, quotations, and experiences supplied in the prompt.\n\nDo not invent personal stories, customer outcomes, studies, dates, conversations, credentials, or professional results.\n\nDo not imply that the author personally experienced something unless it appears in {{personalExperience}}.\n\nDo not create unsupported numbers merely to make the carousel more persuasive.\n\nDo not invent links, products, offers, discounts, deadlines, or guarantees.\n\nClearly distinguish confirmed facts from opinions, recommendations, and interpretations.\n\nDo not guarantee medical, financial, business, career, relationship, or performance outcomes.\n\nCAROUSEL STRUCTURE\n\nCreate exactly {{slideCount}} slides.\n\nUse this general flow:\n\nSlide 1 — Hook and content promise\n\nSlide 2 — Context, problem, or reason the topic matters\n\nMiddle slides — Core insights, steps, examples, contrasts, or explanations\n\nPenultimate slide — Practical takeaway or synthesis\n\nFinal slide — Concise summary and one relevant CTA\n\nAdapt the middle slides to the topic.\n\nDo not force every carousel into a numbered list or “five tips” format.\n\nEvery slide must have a clear role and add new information.\n\nDo not repeat the same idea in different wording to fill the requested slide count.\n\nIf the available material does not support many separate insights, divide it into useful stages, examples, misconceptions, implications, or applications without inventing claims.\n\nSLIDE 1 — HOOK\n\nWrite a hook of no more than 15 words.\n\nThe hook should:\n\nidentify a relevant problem, tension, contrast, observation, or useful promise;\n\nappeal specifically to {{audience}};\n\naccurately reflect the content of the carousel;\n\nremain understandable without additional context;\n\ncreate interest without exaggeration.\n\nAvoid empty or misleading hooks such as:\n\n“Stop scrolling”\n\n“Nobody talks about this”\n\n“This changes everything”\n\n“You’re doing it all wrong”\n\n“The secret nobody tells you”\n\n“Read this before it’s too late”\n\n“Swipe to transform your life”\n\n“99% of people fail at this” unless verified.\n\nMIDDLE SLIDES\n\nFor slides 2 through the penultimate slide:\n\nPresent one main insight per slide.\n\nGive every slide a short heading when useful.\n\nKeep the combined heading and body copy to approximately 30 words or fewer.\n\nUse plain language appropriate for {{knowledgeLevel}}.\n\nExplain why the point matters rather than merely naming it.\n\nUse examples only when supplied.\n\nKeep text readable without requiring the viewer to zoom.\n\nAvoid several dense bullets on one slide.\n\nDo not end every slide with a question.\n\nDo not make every heading use the same grammatical pattern.\n\nUse numbered steps only when the information is genuinely sequential.\n\nAvoid repeating text already visible in supporting images or screenshots.\n\nSuggested structure:\n\nHeading:\nApproximately 3–8 words\n\nBody:\nOne concise explanation, ideally 10–25 words\n\nOptional label:\nOne short step, stage, category, or contrast marker\n\nFINAL SLIDE\n\nThe final slide should contain:\n\na concise summary of the main message;\n\none clear takeaway;\n\none CTA only when it naturally supports {{goal}}.\n\nPossible CTAs include:\n\nsave the carousel when it contains reusable information;\n\nshare it with someone who would genuinely benefit;\n\nanswer one specific question;\n\ntry one practical step;\n\nvisit a supplied resource;\n\nview a product or service;\n\nsend a relevant DM;\n\nfollow for a clearly defined type of future content.\n\nDo not ask the reader to save, share, comment, follow, click, and message all at once.\n\nDo not use “Follow for more” as the automatic CTA.\n\nIf a CTA would feel forced, end with a strong concluding statement instead.\n\nVISUAL DIRECTION\n\nFor every slide, provide one specific visual concept.\n\nThe visual should reinforce the meaning of the slide.\n\nPossible formats include:\n\nsimple comparison;\n\nbefore-and-after layout;\n\nprocess flow;\n\nchecklist;\n\ntimeline;\n\nsplit-screen contrast;\n\nannotated object or interface;\n\nrealistic lifestyle scene;\n\nclose-up detail;\n\nsimple diagram;\n\nquote treatment;\n\nstep progression;\n\neditorial collage;\n\nclean typography-led layout.\n\nFor every visual note, describe what should actually appear.\n\nDo not write only:\n\n“Use an icon”\n\n“Add a graphic”\n\n“Use an illustration”\n\nAvoid defaulting to generic:\n\nlightbulbs;\n\nrockets;\n\ntargets;\n\ntrophies;\n\nhandshakes;\n\nupward arrows;\n\nrandom abstract shapes.\n\nDo not suggest charts or graphs unless verified data was supplied.\n\nDo not invent customer screenshots, product interfaces, review cards, or before-and-after results.\n\nVISUAL CONSISTENCY\n\nKeep the carousel visually consistent.\n\nFor every slide:\n\nuse one main focal point;\n\nmaintain enough empty space;\n\nuse strong contrast;\n\nkeep essential text away from edges;\n\nkeep heading placement consistent;\n\navoid excessive decorative elements;\n\ndo not rely only on color to communicate meaning;\n\nkeep text readable on a typical phone screen.\n\nCAPTION\n\nWrite one Instagram feed caption that complements the carousel.\n\nThe caption should:\n\nbegin with a strong first line;\n\nexplain why the carousel matters;\n\nadd context or value not already fully stated on the slides;\n\nsupport {{goal}};\n\nend with one CTA when appropriate;\n\navoid repeating every slide in prose form.\n\nUse 1–3 short paragraphs in most cases.\n\nDo not force a long caption when the carousel already contains the full explanation.\n\nUse only supplied facts and personal experience.\n\nDo not invent a backstory about why the author created the carousel.\n\nCAPTION STYLE\n\nWrite in natural, conversational language appropriate for {{audience}}, {{tone}}, and {{brandVoice}}.\n\nUse emojis sparingly or omit them.\n\nAvoid:\n\ngeneric motivation;\n\nfake vulnerability;\n\nforced relatability;\n\nexaggerated enthusiasm;\n\nexcessive rhetorical questions;\n\nartificial one-line paragraphs;\n\ncorporate jargon;\n\nkeyword stuffing;\n\nengagement bait;\n\nunnecessary repetition.\n\nAvoid phrases such as:\n\n“Stop scrolling”\n\n“Here’s the thing”\n\n“Let that sink in”\n\n“Game-changer”\n\n“Unlock your potential”\n\n“Save this before it disappears”\n\n“Your future self will thank you”\n\n“Swipe to learn more”\n\n“This is your sign”\n\n“You need to hear this”\n\nHASHTAGS\n\nUse 0–5 relevant hashtags by default.\n\nUse up to 8 only when the topic, market, or campaign genuinely benefits from them.\n\nPlace hashtags on one separate final line.\n\nPrefer:\n\nspecific topic hashtags;\n\naudience-relevant hashtags;\n\nniche or industry hashtags;\n\ncampaign or event hashtags when supplied.\n\nAvoid:\n\nextremely broad spam-like tags;\n\nrepeated variations of the same keyword;\n\ninvented branded hashtags;\n\nunrelated trending hashtags;\n\nhashtags inside the slide text.\n\nACCESSIBILITY\n\nProvide brief alt text for every slide.\n\nAlt text should describe:\n\nthe purpose of the slide;\n\nimportant visual information;\n\nrelationships shown in a comparison, diagram, or process.\n\nDo not repeat all visible slide text word for word.\n\nDescribe meaning rather than decorative details.\n\nFINAL QUALITY CHECK\n\nBefore presenting the carousel, silently verify that:\n\nthere are exactly {{slideCount}} slides;\n\nthe first slide contains no more than 15 words;\n\neach middle slide contains approximately 30 words or fewer;\n\nevery slide advances the same central idea;\n\nno slide repeats an earlier point;\n\nno fact, statistic, story, or result was invented;\n\nthe final slide contains one CTA or a natural conclusion;\n\nvisual concepts are specific and relevant;\n\nno chart or result visual was suggested without verified data;\n\nall slides are readable on mobile;\n\nthe caption adds context rather than restating the carousel;\n\nhashtags are limited and relevant;\n\nthe content does not sound like a generic AI carousel.\n\nOUTPUT FORMAT\n\nCaption:\n\n[Opening line]\n\n[Caption body]\n\n[CTA when appropriate]\n\n[Optional hashtags]\n\nSlides:\n\nHeading: [Hook under 15 words]\nBody: [Optional short support line]\nVisual: [Specific visual concept]\nAlt text: [Accessible description]\n\nHeading: [Short heading]\nBody: [Maximum approximately 30 words including heading]\nVisual: [Specific visual concept]\nAlt text: [Accessible description]\n\nContinue through the penultimate slide.\n\n{{slideCount}}. Heading: [Summary]\nBody: [Concise takeaway]\nCTA: [One specific CTA when appropriate]\nVisual: [Specific visual concept]\nAlt text: [Accessible description]\n\nOutput only the completed caption and slides. Do not explain your process.",
+    "prompt": "You are a senior Instagram carousel strategist, platform-native copywriter, information designer, visual content planner, accessibility-aware editor, conversion editor, fact-checking reviewer, and responsible marketing specialist.\n\nYour task is to create one complete, publication-ready content package for an organic Instagram Feed carousel. Build a coherent swipe-through experience rather than a collection of unrelated captions. The carousel must communicate one central message, maintain reader interest from the cover to the final slide, and use concise mobile-readable language.\n\nDo not reveal private reasoning, hidden analysis, scoring, or chain-of-thought. Output only the requested carousel package.\n\nINPUTS\n\nTopic, product, or idea:\n{{carouselTopic}}\n\nPrimary goal:\n{{primaryGoal}}\n\nTarget audience:\n{{targetAudience}}\n\nMain takeaway:\n{{keyMessage}}\n\nPoints that must appear:\n{{essentialPoints}}\n\nOutput language:\n{{outputLanguage}}\n\nRequested number of slides:\n{{carouselLength}}\n\nRequested carousel angle:\n{{contentAngle}}\n\nDesired reader action:\n{{ctaType}}\n\nDestination URL:\n{{destinationUrl}}\n\nSource material:\n{{sourceMaterial}}\n\nEvidence and proof:\n{{evidenceAndProof}}\n\nOffer details:\n{{offerDetails}}\n\nExample or story:\n{{exampleOrStory}}\n\nContent depth:\n{{contentDepth}}\n\nPreferred slide flow:\n{{slideFlowPreference}}\n\nBrand or account name:\n{{brandName}}\n\nTone:\n{{tone}}\n\nBrand voice guidance:\n{{brandVoice}}\n\nWriting style:\n{{writingStyle}}\n\nWords or claims to avoid:\n{{wordsToAvoid}}\n\nVisual direction:\n{{visualDirection}}\n\nBrand colors:\n{{brandColors}}\n\nCarousel format:\n{{imageOrientation}}\n\nInclude image prompts:\n{{includeVisualPrompts}}\n\nAlt-text output:\n{{altTextMode}}\n\nPrimary asset style:\n{{assetType}}\n\nCaption length:\n{{captionLength}}\n\nHashtag approach:\n{{hashtagMode}}\n\nEmoji use:\n{{emojiUse}}\n\nCommercial relationship:\n{{relationshipType}}\n\nRequired disclosure:\n{{disclosureText}}\n\nSensitive topic category:\n{{riskCategory}}\n\nAdditional requirements:\n{{additionalContext}}\n\nINPUT HANDLING\n\nUse every supplied field only where it meaningfully improves the result. Follow explicit user facts, restrictions, approved wording, brand guidance, and requested structure unless they conflict with accuracy, safety, or platform requirements.\n\nTreat blank optional fields as permission to make a restrained professional decision or omit the corresponding element. Do not display empty headings, unresolved placeholders, “not provided,” or commentary about missing optional information in the public-facing content.\n\nDo not infer prices, dates, deadlines, discounts, performance, qualifications, certifications, statistics, customer experiences, partnerships, legal status, product capabilities, or commercial relationships. When an essential claim is unsupported, either omit it, rewrite it as a non-factual general statement, or place it in the private Verification Notes section for user review.\n\nCAROUSEL STRATEGY\n\nCreate an organic Instagram carousel, not an Ads Manager carousel advertisement.\n\nChoose one clear narrative path. Use the selected content angle when supplied. When the angle is Auto, select the structure that best supports the goal and source material, such as:\n\n- explanation progressing from problem to understanding;\n- step-by-step process;\n- mistakes followed by corrections;\n- myth-versus-fact progression;\n- framework with one component per slide;\n- practical checklist;\n- story with a clear turning point;\n- comparison based on supplied facts;\n- problem, cause, solution, and next action.\n\nDo not force a generic formula when the subject needs a different progression.\n\nThe cover slide must communicate a specific reason to continue swiping. It may create curiosity, identify a problem, promise a useful outcome, or present a surprising but supportable idea. Do not use deceptive clickbait, exaggerated fear, or a promise the carousel does not fulfil.\n\nEach middle slide must have one primary function. Possible functions include explaining one idea, presenting one step, correcting one misconception, showing one example, introducing one part of a framework, or transitioning to the next point.\n\nThe final slide must close the argument or lesson before presenting any CTA. Do not make the carousel feel incomplete merely to force comments, saves, follows, or link clicks.\n\nSLIDE COUNT\n\nWhen {{carouselLength}} is Auto, select the shortest useful length, normally between 5 and 10 slides, including the cover and final slide.\n\nWhen an explicit length is selected, aim to use that exact number. Do not pad the carousel with repeated ideas, empty motivational statements, or artificial recap slides. If the supplied material cannot support the requested number without fabrication or excessive repetition, use fewer slides and mention the adjustment briefly in Production Notes.\n\nNever create more than 20 slides for this organic carousel template.\n\nAdapt density to {{contentDepth}}:\n\n- Quick overview: one short point per slide with minimal supporting text.\n- Balanced: a concise explanation plus one supporting detail where useful.\n- Detailed: more substantial slide copy, but still readable on a mobile screen.\n\nSLIDE COPY RULES\n\nFor every slide provide:\n\n1. Slide number and role.\n2. Main on-slide headline.\n3. Supporting on-slide copy when needed.\n4. Concise visual direction.\n5. Full image or design prompt only when {{includeVisualPrompts}} is Yes.\n6. Alt text according to {{altTextMode}}.\n\nUse the requested {{outputLanguage}} throughout unless bilingual output is explicitly requested.\n\nKeep cover headlines concise, preferably about 3–10 words. Keep ordinary slide headlines concise and immediately understandable. Supporting copy should normally remain around 8–35 words per slide. Detailed content may occasionally use more, but avoid dense paragraphs, tiny-text layouts, or several unrelated statements on one slide.\n\nUse line breaks, short labels, numbered steps, contrasts, or compact bullets when they improve comprehension. Do not write every slide in the same sentence pattern. Avoid repetitive transitions such as “Next,” “Another thing,” or “Here is why” on every card.\n\nDo not repeat the cover promise, slide copy, and caption verbatim. The caption should add context rather than duplicate the entire carousel.\n\nWrite naturally for {{targetAudience}}. Match the requested {{tone}}, {{brandVoice}}, and {{writingStyle}}. When detailed voice guidance is blank, use clear, natural, audience-appropriate language.\n\nAvoid unnecessary corporate language, inflated enthusiasm, empty motivational statements, and generic AI phrasing. Avoid expressions such as “in today’s fast-paced world,” “unlock the power,” “game-changing,” “revolutionary,” “dive into,” “delve into,” “take it to the next level,” and “the possibilities are endless” unless the wording is genuinely justified and natural.\n\nDo not use anything listed in {{wordsToAvoid}}.\n\nCTA RULES\n\nUse one primary CTA based on {{ctaType}} and {{primaryGoal}}.\n\nWhen CTA is Auto, select a proportionate action:\n\n- educational content may invite a save, share, or relevant follow;\n- discussion content may ask one specific, answerable question;\n- lead-generation content may direct readers to the supplied resource;\n- an offer may direct readers to a profile, link, booking, or purchase page;\n- awareness or storytelling content may end without a conversion CTA.\n\nDo not use several competing CTAs. Do not manufacture urgency, scarcity, deadlines, or consequences. Do not ask for meaningless engagement such as commenting a random word solely to manipulate reach.\n\nUse {{destinationUrl}} only when supplied. Never invent, shorten, repair, or replace a URL. Since Instagram feed captions may not provide a directly clickable external link in every context, phrase the CTA according to the actual publishing workflow, such as “link in bio,” only when supported by the user’s context. Otherwise use neutral wording such as “visit the provided page.”\n\nVISUAL DIRECTION\n\nUse {{visualDirection}}, {{brandColors}}, {{imageOrientation}}, and {{assetType}} to create a consistent visual system across all slides.\n\nWhen visual guidance is blank, suggest a clean, coherent style appropriate to the topic and audience. Do not invent official brand colors or imply that suggested colors are approved brand assets.\n\nMaintain consistent typography hierarchy, spacing, contrast, illustration or photography style, and recurring visual elements. Vary composition enough that the carousel does not look like the same slide duplicated repeatedly.\n\nThe cover should have the clearest visual hierarchy. Middle slides should prioritise comprehension. The final slide should visually signal completion and make the CTA easy to identify.\n\nWhen {{includeVisualPrompts}} is Yes, provide one concise prompt per slide. Each prompt must state the subject, composition, mood, asset style, orientation, and meaningful visual details. For text-led designs, instruct the designer or generator to preserve clean text-safe areas rather than asking an image model to render long paragraphs. Avoid random lettering, fake logos, unreadable interface text, unsupported product packaging, or invented branded assets.\n\nDo not include identifiable private people, personal data, confidential documents, faces of minors, medical records, financial records, addresses, phone numbers, email addresses, account credentials, or private conversations unless the user has clearly supplied lawful permission and the information is essential. Prefer anonymised or generic visual representations.\n\nALT TEXT\n\nFollow {{altTextMode}}:\n\n- None: omit the Alt Text section.\n- Concise per slide: provide one compact description for every slide.\n- Detailed per slide: describe the meaningful visual content, relevant text purpose, and important relationships without keyword stuffing.\n- Single post summary: provide one overall description of the carousel’s visual content and purpose.\n\nAlt text must describe meaningful visuals and communication context. Do not merely repeat every written word on the slide. Do not add promotional claims that are absent from the visual.\n\nCAPTION\n\nCreate one Instagram caption aligned with {{captionLength}}:\n\n- Short: approximately 150–400 characters when the subject permits.\n- Standard: approximately 400–900 characters.\n- Detailed: approximately 900–1,500 characters.\n- Auto: choose the shortest range that adds useful context.\n\nThese are safe writing targets, not claims about official platform maximums.\n\nThe opening line should work in the feed preview and introduce the topic naturally. Expand on the carousel’s value, add context that did not fit on the slides, and finish with the selected CTA when applicable.\n\nUse {{emojiUse}} consistently:\n\n- None: no decorative emojis.\n- Minimal: zero to three relevant emojis.\n- Moderate: restrained use for structure or emphasis.\n- Auto: use only when suitable for the audience and brand.\n\nDo not use emoji strings as decoration, replace essential words with ambiguous symbols, or reduce accessibility.\n\nHASHTAGS\n\nFollow {{hashtagMode}}:\n\n- None: omit hashtags.\n- Focused: provide approximately 3–6 specific and relevant hashtags.\n- Broad and niche: provide approximately 5–8 hashtags combining relevant category and topic terms.\n- Auto: include a small set only when it benefits discovery and suits the account style.\n\nDo not use unrelated trending hashtags, banned-looking terms, repetitive variations, misleading locations, competitor names without reason, or excessive hashtag blocks. Do not claim that a hashtag guarantees reach.\n\nFACTUAL ACCURACY\n\nUse supplied facts from {{essentialPoints}}, {{sourceMaterial}}, {{evidenceAndProof}}, {{offerDetails}}, and {{exampleOrStory}} carefully.\n\nNever invent or embellish:\n\n- statistics, studies, research findings, quotations, citations, or sources;\n- reviews, testimonials, ratings, customer identities, or case studies;\n- revenue, performance, growth, savings, conversion rates, or audience size;\n- prices, discounts, stock levels, deadlines, or availability;\n- awards, certifications, approvals, partnerships, clients, or media coverage;\n- product functions, medical effects, legal outcomes, financial returns, or safety guarantees;\n- personal experiences, founder stories, or customer stories presented as real;\n- URLs, usernames, publications, experts, or organisations.\n\nDo not describe something as researched, proven, tested, verified, certified, compliant, approved, risk-free, guaranteed, or scientifically established unless the supplied material supports that exact wording.\n\nClearly separate supplied facts from creative framing. If evidence is incomplete, use cautious wording or move the claim to Verification Notes.\n\nMARKETING AND COMMERCIAL DISCLOSURE\n\nUse {{relationshipType}} and {{disclosureText}} to handle commercial context.\n\nFor Own brand or product, promotional language may be used when it remains accurate and proportionate.\n\nFor Affiliate, Sponsored partnership, Client content, or Other commercial relationship, include the supplied disclosure clearly and early enough to be noticeable. Do not disguise the relationship, imitate an independent review, or write as though the creator purchased or personally tested something unless that fact was supplied.\n\nDo not invent a disclosure when none was provided. When a disclosure appears necessary but exact wording is absent, add a clear item to Verification Notes instead of pretending a particular legal phrase is universally sufficient.\n\nNever create fake urgency, fake scarcity, false countdowns, misleading discounts, fabricated social proof, guaranteed outcomes, manipulative fear, shame-based pressure, deceptive before-and-after claims, or misleading comparisons.\n\nHIGH-STAKES CONTENT\n\nApply additional caution based on {{riskCategory}}.\n\nFor health or medical content, do not diagnose, prescribe, promise treatment outcomes, or replace professional care. Distinguish general education from personal medical advice.\n\nFor legal, financial, tax, employment, or insurance content, do not give personalised professional advice, guarantee outcomes, or imply universal rules. Jurisdiction-dependent claims must be identified for verification.\n\nFor political or civic content, distinguish factual claims from opinion, avoid invented quotations or voting information, and do not create deceptive persuasion, impersonation, or targeted manipulation.\n\nFor child, safety, or regulated-product content, avoid unsafe instructions, inappropriate targeting, unsupported safety claims, or content that normalises harmful use.\n\nUse a concise disclaimer only when genuinely helpful. A disclaimer does not make an unsupported claim acceptable.\n\nCAPTION AND CAROUSEL RELATIONSHIP\n\nThe carousel should contain the essential educational or persuasive value. Do not hide the main answer in the caption after promising it in the slides.\n\nThe caption should provide context, interpretation, a brief summary, attribution, disclosure, or next action. It should not reproduce every slide word for word.\n\nOUTPUT FORMAT\n\nReturn the package in this exact order.\n\n# Instagram Carousel\n\n## Carousel Overview\n\nInclude:\n\n- selected slide count;\n- selected or inferred content angle;\n- one-sentence creative concept;\n- recommended format using {{imageOrientation}};\n- primary CTA.\n\nDo not include a lengthy strategy explanation.\n\n## Slide-by-Slide Carousel\n\nFor each slide use:\n\n### Slide [number] — [role]\n\nOn-slide headline:\n[Copy]\n\nSupporting copy:\n[Copy, or omit when unnecessary]\n\nVisual direction:\n[Concise design or scene direction]\n\nImage/design prompt:\n[Include only when {{includeVisualPrompts}} is Yes]\n\nAlt text:\n[Include according to {{altTextMode}}]\n\nEnsure the final slide clearly completes the content and contains the proportionate CTA when one is requested.\n\n## Instagram Caption\n\nProvide the publication-ready caption. Include the commercial disclosure when required. Do not include character-count commentary inside the caption.\n\n## Hashtags\n\nInclude only when enabled by {{hashtagMode}}.\n\n## Overall Alt Text\n\nInclude only when {{altTextMode}} is Single post summary. When per-slide alt text was requested, keep it with each slide and omit this section.\n\n## Production Notes\n\nInclude only when useful. Limit this section to concise implementation notes such as:\n\n- a factual claim that requires verification;\n- missing attribution;\n- a disclosure that requires confirmation;\n- a slide-count adjustment;\n- a destination URL or publishing action that needs manual confirmation;\n- content that may depend on jurisdiction or current platform rules.\n\nDo not place ordinary writing advice or internal quality commentary in Production Notes.\n\nFINAL QUALITY CHECK\n\nBefore responding, silently confirm that:\n\n- the cover gives a truthful reason to swipe;\n- the slides form one coherent progression;\n- each slide has one main function;\n- required points are included without unsupported additions;\n- slide copy remains mobile-readable;\n- the selected slide count is respected or any necessary adjustment is noted;\n- the caption complements rather than duplicates the slides;\n- only one primary CTA is used;\n- visual direction is consistent;\n- alt text follows the selected mode;\n- supplied disclosures are visible;\n- high-stakes claims are cautious;\n- no facts, proof, experiences, links, offers, or relationships were invented;\n- no empty optional sections appear;\n- all output is written in {{outputLanguage}};\n- only the requested content package is returned.",
     "variables": [
       {
-        "key": "topic",
-        "label": "Topic",
+        "key": "carouselTopic",
+        "label": "Topic, product, or idea",
+        "placeholder": "A content workflow framework, product launch, lesson, offer, or story",
         "required": true,
-        "placeholder": "7 habits of consistent creators"
+        "type": "textarea",
+        "group": "essentials",
+        "groupTitle": "Essentials",
+        "hint": "Include the subject, product, service, lesson, announcement, or central idea.",
+        "fullWidth": true,
+        "maxLength": 800
       },
       {
-        "key": "audience",
-        "label": "Audience",
+        "key": "primaryGoal",
+        "label": "Primary goal",
+        "placeholder": "Select the main goal.",
         "required": true,
-        "placeholder": "creators aged 25-40"
+        "type": "select",
+        "group": "essentials",
+        "groupTitle": "Essentials",
+        "hint": "Choose the single most important outcome for this carousel.",
+        "options": [
+          "Educate or explain",
+          "Build authority",
+          "Drive engagement",
+          "Promote an offer",
+          "Generate leads",
+          "Launch or announce",
+          "Tell a story",
+          "Increase awareness"
+        ],
+        "fullWidth": false,
+        "defaultValue": "Educate or explain",
+        "maxLength": 40
+      },
+      {
+        "key": "targetAudience",
+        "label": "Target audience",
+        "placeholder": "Who should read this, and what do they already know?",
+        "required": true,
+        "type": "textarea",
+        "group": "essentials",
+        "groupTitle": "Essentials",
+        "hint": "Describe the intended readers, their situation, and relevant knowledge level.",
+        "fullWidth": true,
+        "maxLength": 700
+      },
+      {
+        "key": "keyMessage",
+        "label": "Main takeaway",
+        "placeholder": "What should readers understand or remember after the final slide?",
+        "required": true,
+        "type": "textarea",
+        "group": "essentials",
+        "groupTitle": "Essentials",
+        "hint": "State the central message in one or two clear sentences.",
+        "fullWidth": true,
+        "maxLength": 500
+      },
+      {
+        "key": "essentialPoints",
+        "label": "Points that must appear",
+        "placeholder": "List facts, steps, arguments, features, or examples that must be included.",
+        "required": true,
+        "type": "textarea",
+        "group": "essentials",
+        "groupTitle": "Essentials",
+        "hint": "Use short lines or bullets. Include only information that belongs in the carousel.",
+        "fullWidth": true,
+        "maxLength": 1500
+      },
+      {
+        "key": "outputLanguage",
+        "label": "Output language",
+        "placeholder": "English, Ukrainian, Spanish, French…",
+        "required": true,
+        "type": "text",
+        "group": "essentials",
+        "groupTitle": "Essentials",
+        "hint": "Specify one language or request a bilingual version.",
+        "fullWidth": false,
+        "defaultValue": "English",
+        "maxLength": 80
+      },
+      {
+        "key": "carouselLength",
+        "label": "Number of slides",
+        "placeholder": "Choose a length.",
+        "required": false,
+        "type": "select",
+        "group": "essentials",
+        "groupTitle": "Essentials",
+        "hint": "Auto selects the shortest slide count that explains the topic properly.",
+        "options": [
+          "Auto",
+          "5 slides",
+          "7 slides",
+          "8 slides",
+          "10 slides",
+          "12 slides",
+          "15 slides",
+          "20 slides"
+        ],
+        "fullWidth": false,
+        "defaultValue": "Auto",
+        "maxLength": 20
+      },
+      {
+        "key": "contentAngle",
+        "label": "Carousel angle",
+        "placeholder": "Choose a presentation angle.",
+        "required": false,
+        "type": "select",
+        "group": "essentials",
+        "groupTitle": "Essentials",
+        "hint": "Select a structure or let the model choose the best fit.",
+        "options": [
+          "Auto",
+          "Step-by-step",
+          "Mistakes to avoid",
+          "Myth versus fact",
+          "Framework or method",
+          "Checklist",
+          "Story progression",
+          "Comparison",
+          "Problem to solution"
+        ],
+        "fullWidth": false,
+        "defaultValue": "Auto",
+        "maxLength": 40
+      },
+      {
+        "key": "ctaType",
+        "label": "Desired reader action",
+        "placeholder": "Choose the final action.",
+        "required": false,
+        "type": "select",
+        "group": "essentials",
+        "groupTitle": "Essentials",
+        "hint": "Auto selects one proportionate CTA based on the carousel goal.",
+        "options": [
+          "Auto",
+          "Save the post",
+          "Share the post",
+          "Comment or reply",
+          "Follow the account",
+          "Visit profile or link",
+          "Download or learn more",
+          "Buy or book",
+          "No CTA"
+        ],
+        "fullWidth": false,
+        "defaultValue": "Auto",
+        "maxLength": 40
+      },
+      {
+        "key": "destinationUrl",
+        "label": "Destination URL",
+        "placeholder": "https://example.com/resource",
+        "required": false,
+        "type": "text",
+        "group": "essentials",
+        "groupTitle": "Essentials",
+        "hint": "Add only when the CTA leads to a specific page, product, booking, or resource.",
+        "fullWidth": false,
+        "format": "url",
+        "maxLength": 2048
+      },
+      {
+        "key": "sourceMaterial",
+        "label": "Source material",
+        "placeholder": "Paste notes, approved copy, source excerpts, product details, or reference material.",
+        "required": false,
+        "type": "textarea",
+        "group": "content_structure",
+        "groupTitle": "Content & Structure",
+        "hint": "The model will use only relevant information and will not invent missing source details.",
+        "fullWidth": true,
+        "maxLength": 4000
+      },
+      {
+        "key": "evidenceAndProof",
+        "label": "Evidence and proof",
+        "placeholder": "Add verified statistics, results, testimonials, credentials, or supporting facts.",
+        "required": false,
+        "type": "textarea",
+        "group": "content_structure",
+        "groupTitle": "Content & Structure",
+        "hint": "Include attribution, dates, and approval status when relevant.",
+        "fullWidth": true,
+        "maxLength": 2000
+      },
+      {
+        "key": "offerDetails",
+        "label": "Offer details",
+        "placeholder": "Describe the offer, price, eligibility, deadline, conditions, and main benefit.",
+        "required": false,
+        "type": "textarea",
+        "group": "content_structure",
+        "groupTitle": "Content & Structure",
+        "hint": "Include only confirmed details that may be stated publicly.",
+        "fullWidth": true,
+        "showWhen": {
+          "key": "primaryGoal",
+          "equals": [
+            "Promote an offer",
+            "Generate leads",
+            "Launch or announce"
+          ]
+        },
+        "maxLength": 1500
+      },
+      {
+        "key": "exampleOrStory",
+        "label": "Example or story",
+        "placeholder": "Add a real example, scenario, experience, or story the carousel may use.",
+        "required": false,
+        "type": "textarea",
+        "group": "content_structure",
+        "groupTitle": "Content & Structure",
+        "hint": "Do not include confidential information or invented experiences.",
+        "fullWidth": true,
+        "maxLength": 1500
+      },
+      {
+        "key": "contentDepth",
+        "label": "Content depth",
+        "placeholder": "Choose the desired depth.",
+        "required": false,
+        "type": "select",
+        "group": "content_structure",
+        "groupTitle": "Content & Structure",
+        "hint": "Controls how much explanation appears on each slide.",
+        "options": [
+          "Quick overview",
+          "Balanced",
+          "Detailed"
+        ],
+        "fullWidth": false,
+        "defaultValue": "Balanced",
+        "maxLength": 20
+      },
+      {
+        "key": "slideFlowPreference",
+        "label": "Preferred slide flow",
+        "placeholder": "Problem → three causes → solution → checklist → CTA.",
+        "required": false,
+        "type": "textarea",
+        "group": "content_structure",
+        "groupTitle": "Content & Structure",
+        "hint": "Use this only when you need a particular order or slide assigned to a specific point.",
+        "fullWidth": true,
+        "maxLength": 800
+      },
+      {
+        "key": "brandName",
+        "label": "Brand or account name",
+        "placeholder": "Enter the public brand, account, creator, or company name.",
+        "required": false,
+        "type": "text",
+        "group": "brand_tone",
+        "groupTitle": "Brand & Tone",
+        "hint": "Used only when natural and relevant to the caption or CTA.",
+        "fullWidth": false,
+        "maxLength": 120
       },
       {
         "key": "tone",
         "label": "Tone",
-        "required": true,
-        "placeholder": "friendly, punchy"
-      },
-      {
-        "key": "goal",
-        "label": "Carousel goal",
+        "placeholder": "Choose a tone.",
         "required": false,
-        "placeholder": "saves and profile visits"
-      },
-      {
-        "key": "slideCount",
-        "label": "Number of slides",
-        "required": false,
-        "placeholder": "8"
-      },
-      {
-        "key": "mainMessage",
-        "label": "Main message",
-        "required": false,
-        "placeholder": "Consistency beats intensity"
-      },
-      {
-        "key": "desiredAction",
-        "label": "Desired action",
-        "required": false,
-        "placeholder": "save and share"
-      },
-      {
-        "key": "authorRole",
-        "label": "Author role",
-        "required": false,
-        "placeholder": "creator educator"
+        "type": "select",
+        "group": "brand_tone",
+        "groupTitle": "Brand & Tone",
+        "hint": "Sets the overall emotional and professional style.",
+        "options": [
+          "Auto",
+          "Clear and natural",
+          "Friendly",
+          "Bold",
+          "Educational",
+          "Expert",
+          "Conversational",
+          "Playful",
+          "Minimal",
+          "Empathetic"
+        ],
+        "fullWidth": false,
+        "defaultValue": "Clear and natural",
+        "maxLength": 30
       },
       {
         "key": "brandVoice",
-        "label": "Brand voice",
+        "label": "Brand voice guidance",
+        "placeholder": "Describe how the brand normally sounds or paste a short writing sample.",
         "required": false,
-        "placeholder": "practical, encouraging"
+        "type": "textarea",
+        "group": "brand_tone",
+        "groupTitle": "Brand & Tone",
+        "hint": "Mention preferred vocabulary, personality, formality, or sentence style.",
+        "fullWidth": true,
+        "maxLength": 1000
       },
       {
-        "key": "language",
-        "label": "Language",
+        "key": "writingStyle",
+        "label": "Writing style traits",
+        "placeholder": "Concise; Data-led; Beginner-friendly",
         "required": false,
-        "placeholder": "English"
+        "type": "textarea",
+        "group": "brand_tone",
+        "groupTitle": "Brand & Tone",
+        "hint": "List up to eight relevant style traits from the supported options.",
+        "fullWidth": true,
+        "maxLength": 300
       },
       {
-        "key": "sourceDetails",
-        "label": "Facts / details",
+        "key": "wordsToAvoid",
+        "label": "Words or claims to avoid",
+        "placeholder": "List unwanted phrases, claims, terminology, clichés, or competitor references.",
         "required": false,
-        "placeholder": "Verified only"
+        "type": "textarea",
+        "group": "brand_tone",
+        "groupTitle": "Brand & Tone",
+        "hint": "Include legal, brand, cultural, or stylistic restrictions.",
+        "fullWidth": true,
+        "maxLength": 500
       },
       {
-        "key": "offer",
-        "label": "What it supports / promotes",
+        "key": "visualDirection",
+        "label": "Visual direction",
+        "placeholder": "Describe the desired look, mood, setting, subjects, references, or design treatment.",
         "required": false,
-        "placeholder": "Optional product or free resource"
+        "type": "textarea",
+        "group": "visual_accessibility",
+        "groupTitle": "Visual Direction & Accessibility",
+        "hint": "Include visual requirements that cannot be inferred from the topic.",
+        "fullWidth": true,
+        "maxLength": 1200
       },
       {
-        "key": "restrictions",
-        "label": "Restrictions",
+        "key": "brandColors",
+        "label": "Brand colors",
+        "placeholder": "Navy, warm white, muted orange, or approved HEX codes.",
         "required": false,
-        "placeholder": "Words or claims to avoid"
+        "type": "text",
+        "group": "visual_accessibility",
+        "groupTitle": "Visual Direction & Accessibility",
+        "hint": "Leave blank to receive a neutral topic-appropriate palette suggestion.",
+        "fullWidth": false,
+        "maxLength": 200
+      },
+      {
+        "key": "imageOrientation",
+        "label": "Carousel format",
+        "placeholder": "Choose the image format.",
+        "required": false,
+        "type": "select",
+        "group": "visual_accessibility",
+        "groupTitle": "Visual Direction & Accessibility",
+        "hint": "The recommendation affects composition and safe text placement.",
+        "options": [
+          "Portrait 4:5",
+          "Square 1:1",
+          "Auto"
+        ],
+        "fullWidth": false,
+        "defaultValue": "Portrait 4:5",
+        "maxLength": 20
+      },
+      {
+        "key": "includeVisualPrompts",
+        "label": "Include image prompts",
+        "placeholder": "Choose whether to include prompts.",
+        "required": false,
+        "type": "select",
+        "group": "visual_accessibility",
+        "groupTitle": "Visual Direction & Accessibility",
+        "hint": "Adds a concise generation or design prompt for every slide.",
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "fullWidth": false,
+        "defaultValue": "Yes"
+      },
+      {
+        "key": "altTextMode",
+        "label": "Alt-text output",
+        "placeholder": "Choose an accessibility format.",
+        "required": false,
+        "type": "select",
+        "group": "visual_accessibility",
+        "groupTitle": "Visual Direction & Accessibility",
+        "hint": "Alt text describes meaningful visual information rather than repeating promotional copy.",
+        "options": [
+          "None",
+          "Concise per slide",
+          "Detailed per slide",
+          "Single post summary"
+        ],
+        "fullWidth": false,
+        "defaultValue": "Concise per slide",
+        "maxLength": 30
+      },
+      {
+        "key": "assetType",
+        "label": "Primary asset style",
+        "placeholder": "Choose the main visual asset type.",
+        "required": false,
+        "type": "select",
+        "group": "visual_accessibility",
+        "groupTitle": "Visual Direction & Accessibility",
+        "hint": "The model may combine supporting elements while preserving the selected primary style.",
+        "options": [
+          "Auto",
+          "Text-led graphics",
+          "Photo-led",
+          "Illustration-led",
+          "Product screenshots",
+          "Mixed assets"
+        ],
+        "fullWidth": false,
+        "defaultValue": "Auto",
+        "maxLength": 30
+      },
+      {
+        "key": "captionLength",
+        "label": "Caption length",
+        "placeholder": "Choose a caption length.",
+        "required": false,
+        "type": "select",
+        "group": "publishing_compliance",
+        "groupTitle": "Publishing, Compliance & Extras",
+        "hint": "The caption should complement the slides instead of repeating them.",
+        "options": [
+          "Auto",
+          "Short",
+          "Standard",
+          "Detailed"
+        ],
+        "fullWidth": false,
+        "defaultValue": "Standard",
+        "maxLength": 20
+      },
+      {
+        "key": "hashtagMode",
+        "label": "Hashtag approach",
+        "placeholder": "Choose a hashtag approach.",
+        "required": false,
+        "type": "select",
+        "group": "publishing_compliance",
+        "groupTitle": "Publishing, Compliance & Extras",
+        "hint": "Hashtags remain relevant and restrained rather than being added for volume.",
+        "options": [
+          "None",
+          "Focused",
+          "Broad and niche",
+          "Auto"
+        ],
+        "fullWidth": false,
+        "defaultValue": "Focused",
+        "maxLength": 20
+      },
+      {
+        "key": "emojiUse",
+        "label": "Emoji use",
+        "placeholder": "Choose an emoji level.",
+        "required": false,
+        "type": "select",
+        "group": "publishing_compliance",
+        "groupTitle": "Publishing, Compliance & Extras",
+        "hint": "Controls emoji use in the caption and CTA, not inside every slide.",
+        "options": [
+          "None",
+          "Minimal",
+          "Moderate",
+          "Auto"
+        ],
+        "fullWidth": false,
+        "defaultValue": "Minimal",
+        "maxLength": 20
+      },
+      {
+        "key": "relationshipType",
+        "label": "Commercial relationship",
+        "placeholder": "Select the relevant relationship.",
+        "required": false,
+        "type": "select",
+        "group": "publishing_compliance",
+        "groupTitle": "Publishing, Compliance & Extras",
+        "hint": "Used to determine whether a clear promotional or partnership disclosure is needed.",
+        "options": [
+          "None",
+          "Own brand or product",
+          "Affiliate",
+          "Sponsored partnership",
+          "Client content",
+          "Other commercial relationship"
+        ],
+        "fullWidth": false,
+        "defaultValue": "None",
+        "maxLength": 40
+      },
+      {
+        "key": "disclosureText",
+        "label": "Required disclosure",
+        "placeholder": "Ad, Sponsored, Affiliate link, or an approved disclosure.",
+        "required": false,
+        "type": "text",
+        "group": "publishing_compliance",
+        "groupTitle": "Publishing, Compliance & Extras",
+        "hint": "Enter wording required by the agreement, platform, or applicable rules.",
+        "fullWidth": false,
+        "showWhen": {
+          "key": "relationshipType",
+          "equals": [
+            "Affiliate",
+            "Sponsored partnership",
+            "Client content",
+            "Other commercial relationship"
+          ]
+        },
+        "maxLength": 300
+      },
+      {
+        "key": "riskCategory",
+        "label": "Sensitive topic category",
+        "placeholder": "Select a category when relevant.",
+        "required": false,
+        "type": "select",
+        "group": "publishing_compliance",
+        "groupTitle": "Publishing, Compliance & Extras",
+        "hint": "Helps apply cautious wording and avoid unsupported professional advice.",
+        "options": [
+          "General or none",
+          "Health or medical",
+          "Legal",
+          "Financial or tax",
+          "Employment",
+          "Insurance",
+          "Political or civic",
+          "Child or safety",
+          "Regulated product",
+          "Other sensitive topic"
+        ],
+        "fullWidth": false,
+        "defaultValue": "General or none",
+        "maxLength": 30
+      },
+      {
+        "key": "additionalContext",
+        "label": "Additional requirements",
+        "placeholder": "Add any remaining context, restrictions, formatting needs, or production notes.",
+        "required": false,
+        "type": "textarea",
+        "group": "publishing_compliance",
+        "groupTitle": "Publishing, Compliance & Extras",
+        "hint": "Use this for important requirements not already covered by another field.",
+        "fullWidth": true,
+        "maxLength": 2000
       }
     ]
   },

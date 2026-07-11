@@ -83,6 +83,16 @@ const FULL_FORM_SCHEMAS = {
     ),
     buildHint: "node scripts/build-instagram-post-form.mjs",
   },
+  "instagram-carousel": {
+    path: path.join(
+      root,
+      "src",
+      "config",
+      "template-forms",
+      "instagram-carousel-variables.json",
+    ),
+    buildHint: "node scripts/build-instagram-carousel-form.mjs",
+  },
   "linkedin-post": {
     path: path.join(
       root,
@@ -234,7 +244,7 @@ function loadFullFormVariables(slug) {
       showWhen: v.showWhen,
     };
 
-    if (slug === "threads-post") {
+    if (slug === "threads-post" || slug === "instagram-carousel") {
       variable.format = v.format;
       variable.maxLength = v.maxLength;
       variable.min = v.min;

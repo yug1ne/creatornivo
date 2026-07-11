@@ -9,6 +9,7 @@ import { COLD_EMAIL_OUTREACH_GUIDE_PATH } from "@/config/template-forms/cold-ema
 import { FACEBOOK_POST_GUIDE_PATH } from "@/config/template-forms/facebook-post";
 import { FAQ_PAGE_GUIDE_PATH } from "@/config/template-forms/faq-page";
 import { GOOGLE_BUSINESS_PROFILE_POST_GUIDE_PATH } from "@/config/template-forms/google-business-profile-post";
+import { INSTAGRAM_CAROUSEL_GUIDE_PATH } from "@/config/template-forms/instagram-carousel";
 import { INSTAGRAM_POST_GUIDE_PATH } from "@/config/template-forms/instagram-post";
 import { LANDING_PAGE_COPY_GUIDE_PATH } from "@/config/template-forms/landing-page-copy";
 import { LINKEDIN_CAROUSEL_GUIDE_PATH } from "@/config/template-forms/linkedin-carousel";
@@ -30,6 +31,7 @@ const GUIDE_PATH_BY_SLUG: Record<string, string> = {
   "facebook-post": FACEBOOK_POST_GUIDE_PATH,
   "faq-page": FAQ_PAGE_GUIDE_PATH,
   "google-business-profile-post": GOOGLE_BUSINESS_PROFILE_POST_GUIDE_PATH,
+  "instagram-carousel": INSTAGRAM_CAROUSEL_GUIDE_PATH,
   "instagram-post": INSTAGRAM_POST_GUIDE_PATH,
   "landing-page-copy": LANDING_PAGE_COPY_GUIDE_PATH,
   "linkedin-carousel": LINKEDIN_CAROUSEL_GUIDE_PATH,
