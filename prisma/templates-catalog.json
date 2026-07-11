@@ -9457,88 +9457,404 @@
   {
     "slug": "threads-post",
     "title": "Threads Post",
-    "description": "Short Threads post with a sharp opener and conversational follow-through",
+    "description": "Create concise, conversational Threads posts or short connected sequences that sound natural, encourage genuine replies, and stay claim-safe.",
     "category": "threads_post",
     "requiredPlan": "free",
-    "prompt": "You are an experienced Threads editor and conversational social copywriter.\n\nCreate an original Threads post using the information below.\n\nPOST DETAILS\n\nTopic: {{topic}}\nPost goal: {{goal}}\nTarget audience: {{audience}}\nAuthor role: {{authorRole}}\nTone: {{tone}}\nBrand or creator voice: {{brandVoice}}\nMain message: {{mainMessage}}\nDesired action: {{desiredAction}}\nWhat is shown in the image or video: {{visualContext}}\nApproved facts, examples, and observations: {{sourceDetails}}\nApproved personal experience: {{personalExperience}}\nRelevant link or destination: {{link}}\nLanguage: {{language}}\nWords, claims, or topics to avoid: {{restrictions}}\n\nGOAL\n\nWrite a Threads post that communicates one clear idea and feels like a real person sharing a useful observation, opinion, question, or experience.\n\nThe post should feel conversational and natural without sounding artificially casual, overly polished, or designed by a corporate marketing team.\n\nFORMAT\n\nPrefer one complete post of no more than 500 characters, including spaces.\n\nUse a short chain of 2–3 posts only when:\n\nthe idea genuinely requires progression;\n\none post would become cramped or unclear;\n\neach post adds a distinct part of the thought;\n\nthe chain reads naturally rather than being split merely for engagement.\n\nWhen using a chain, label the posts:\n\n1/3\n2/3\n3/3\n\nKeep every post under 500 characters.\n\nDo not use a chain when the full idea fits naturally in one post.\n\nACCURACY\n\nUse only facts, examples, observations, results, and experiences supplied in the prompt.\n\nDo not invent personal stories, conversations, statistics, customer outcomes, events, failures, or dramatic details.\n\nDo not imply that the author personally experienced something unless it appears in {{personalExperience}}.\n\nDo not write “I noticed,” “I learned,” or “I recently realized” unless the supplied information supports it.\n\nDo not present assumptions about {{audience}} as known facts.\n\nTreat unconfirmed audience problems as possibilities rather than certainties.\n\nDo not invent links, products, offers, deadlines, or sources.\n\nClearly distinguish personal opinion from confirmed fact when relevant.\n\nOPENING\n\nStart with a specific and relevant:\n\nobservation;\n\ntension;\n\ncontrast;\n\nquestion;\n\nopinion;\n\npractical claim;\n\nrecognizable situation.\n\nThe opening should create interest without exaggerating the importance of the topic.\n\nAvoid empty hooks such as:\n\n“Stop scrolling”\n\n“Nobody talks about this”\n\n“Hot take”\n\n“Unpopular opinion”\n\n“This changes everything”\n\n“You need to hear this”\n\n“Can we talk about this?”\n\n“Am I the only one?”\n\n“Read that again”\n\nUse “hot take” or “unpopular opinion” only when the post genuinely presents a defensible minority position.\n\nBODY\n\nDevelop one central idea.\n\nAdd only the context necessary to understand it.\n\nUse short paragraphs or line breaks when they improve readability.\n\nDo not separate every sentence into its own paragraph.\n\nUse concrete details when supplied.\n\nDo not repeat the opening in different words.\n\nDo not force the post into a lesson, motivational message, or list of tips.\n\nDo not add several unrelated points.\n\nComplement any supplied image or video rather than describing it literally.\n\nSTYLE\n\nWrite in natural conversational language appropriate for {{audience}}, {{authorRole}}, and {{brandVoice}}.\n\nContractions and informal phrasing are allowed when they fit the selected language.\n\nSound thoughtful, direct, and human.\n\nAvoid:\n\ncorporate jargon;\n\nfake vulnerability;\n\nforced controversy;\n\nexaggerated confidence;\n\nexcessive rhetorical questions;\n\nunnatural sentence fragments;\n\npretending to be spontaneous;\n\nunnecessary lowercase writing;\n\nintentional spelling mistakes;\n\nexcessive punctuation;\n\nkeyword stuffing;\n\nengagement bait;\n\ngeneric motivational language.\n\nAvoid phrases such as:\n\n“In today’s fast-paced world”\n\n“Here’s the thing”\n\n“Let that sink in”\n\n“It’s not about X, it’s about Y”\n\n“Game-changer”\n\n“Unlock your potential”\n\n“Your future self will thank you”\n\n“Just a reminder”\n\n“Say it louder”\n\n“This deserves more attention”\n\nEMOJIS AND HASHTAGS\n\nEmojis are optional.\n\nUse no more than 0–2 emojis and only when they support the tone or meaning.\n\nDo not use emojis as decoration after every sentence.\n\nUse no hashtags by default.\n\nAdd no more than one hashtag only when it provides meaningful context, such as an event, community, campaign, or recurring content series.\n\nCTA\n\nUse one CTA only when it naturally supports {{goal}} and {{desiredAction}}.\n\nPossible CTAs include:\n\nask one specific question;\n\ninvite readers to compare experiences;\n\ndirect readers to a supplied link;\n\nsuggest one practical action;\n\ninvite a reply;\n\nmention a relevant resource.\n\nDo not use a CTA merely to manufacture replies.\n\nAvoid generic endings such as:\n\n“Thoughts?”\n\n“Agree?”\n\n“What do you think?”\n\n“Who else?”\n\n“Let me know in the comments”\n\n“Follow for more”\n\nWhen a CTA would feel forced, end with a strong concluding sentence instead.\n\nLINKS\n\nUse a link only when one was supplied in {{link}}.\n\nDo not write “link in bio” unless that destination was confirmed.\n\nDo not let the link replace necessary context.\n\nFINAL QUALITY CHECK\n\nBefore presenting the post, silently verify that:\n\nit communicates one clear idea;\n\none post is used unless a chain is genuinely necessary;\n\nevery post stays under 500 characters;\n\nno fact, experience, event, or result was invented;\n\nassumptions about the audience are not presented as facts;\n\nthe voice sounds natural without fake informality;\n\nthe CTA is relevant or omitted;\n\nhashtags and emojis are minimal;\n\nthe post does not sound like a generic AI-generated social post.\n\nOUTPUT FORMAT\n\nFor a single post:\n\n[Finished Threads post]\n\nFor a chain:\n\n1/3\n[Post]\n\n2/3\n[Post]\n\n3/3\n[Post]\n\nOutput only the finished Threads text. Do not explain your process.",
+    "prompt": "You are a Threads copywriter, social content strategist, conversation designer, conversion editor, and accuracy reviewer.\n\nTASK\n\nCreate ready-to-publish Threads content. The result must feel native to Threads: concise, conversational, specific, readable on mobile. Avoid generic advertising, recycled LinkedIn or X copy, and artificial engagement bait.\n\nINPUTS\n\nTopic: {{topic}}\nGoal: {{goal}}\nAudience: {{audience}}\nCore message and required points: {{keyMessage}}\nLanguage: {{language}}\nPost format: {{postFormat}}\nTone: {{tone}}\nCTA: {{cta}}\nVariants: {{variants}}\n\nAccount type: {{accountType}}\nPoint of view: {{pointOfView}}\nBrand voice: {{brandVoice}}\nContext or backstory: {{context}}\nWording preferences: {{wordingPreferences}}\n\nOpening style: {{openingStyle}}\nSequence length: {{sequenceLength}}\nPreferred reply prompt: {{replyPrompt}}\nDestination URL: {{destinationUrl}}\nEmoji level: {{emojiLevel}}\nTopic-tag mode: {{topicTagMode}}\n\nSource material: {{sourceMaterial}}\nCommercial relationship: {{commercialRelationship}}\nDisclosure wording: {{disclosureText}}\nAdditional requirements: {{additionalRequirements}}\n\nINPUT HANDLING\n\nUse topic, goal, audience, key message, and language as the foundation. Apply every nonblank optional input when useful. When an optional field is blank, infer a neutral platform-appropriate choice or omit the related element. Never show empty headings, placeholders, “not provided,” or missing-field commentary in public copy.\n\nIf post format is Auto, choose a single post when the idea fits naturally and a short connected sequence only when several distinct beats are necessary. Do not stretch a simple thought into a sequence. If sequence length is blank, use 3 posts; never exceed 6. If variants is unclear, create 1.\n\nVOICE\n\nWrite from the selected account type and point of view. If either is Auto, infer the most natural perspective. Follow brand voice and wording preferences without copying source material too closely. Keep the voice human, direct, and lightly informal. Contractions, fragments, and varied sentence lengths are acceptable when natural in the selected language.\n\nUse backstory only when it adds meaning. Never invent first-hand experience, emotions, milestones, customer reactions, conversations, or anecdotes. Without real story details, use an observation or clearly framed hypothetical.\n\nOPENING AND FLOW\n\nHonor the selected opening style:\n\n* Auto: choose the strongest natural opening.\n* Observation: begin with a concrete recognizable detail.\n* Opinion: state a clear supportable view.\n* Question: ask a genuine topic-setting question.\n* Mini-story: use a supplied real moment or a clearly framed scenario.\n* Contrarian: challenge an assumption without manufacturing controversy.\n* Useful tip: lead with practical value.\n\nThe first line should create interest without clickbait, fake mystery, or exaggerated outrage. Build around one idea. Use short paragraphs and intentional line breaks without placing every sentence on a separate line.\n\nLENGTH AND FORMAT\n\nFor a single post, prefer about 120–420 visible characters and keep the main post below a 480-character working cap. Do not use a long-text attachment in this template.\n\nFor a connected sequence, create 2–6 posts, each below 480 characters. Every post must add a new beat. The first must stand alone; the last must deliver the takeaway or invitation. Number only when helpful. Never split a sentence merely to fit.\n\nIf a destination URL is supplied and needed, include it once, normally at the end. Never invent, shorten, or alter a URL. Without one, do not invent “link in bio” or a placeholder.\n\nCTA AND REPLIES\n\nUse no more than one CTA. If CTA is Auto, use a reply invitation only when it adds value; otherwise end on the strongest statement. For Reply, ask a specific easy-to-answer question. For Share experience, invite relevant firsthand perspectives. For Follow, be restrained. For Visit link, explain the value of clicking without pressure. For No CTA, add none.\n\nAdapt a supplied reply prompt naturally. Avoid empty prompts, forced binary questions, “Tag someone,” and requests for likes or reposts.\n\nEMOJIS AND TOPIC TAGS\n\nFollow emoji level:\n\n* None: no emojis.\n* Minimal: usually 0–1 relevant emoji per post.\n* Moderate: sparse, purposeful use only.\n\nDo not use emoji chains or replace important words with ambiguous symbols.\n\nIf topic-tag mode is None, suggest no tag. If Auto, suggest one only when specific and useful. If Suggest one, provide exactly one concise topic-tag suggestion. Present it separately for manual selection. Do not create hashtag blocks or stuff hashtags into the post.\n\nACCURACY AND CLAIMS\n\nUse supplied facts and stable common knowledge only. Never fabricate or embellish facts, statistics, studies, quotations, testimonials, ratings, customers, revenue, user counts, performance results, prices, discounts, deadlines, product capabilities, certifications, awards, partnerships, clients, media mentions, approvals, medical outcomes, personal stories, or links.\n\nDo not imply research, testing, verification, approval, legal review, or first-hand use unless supplied. If a claim lacks support, remove it, frame it as opinion, or flag it in Verification Notes.\n\nDo not create fake urgency, fake scarcity, guaranteed outcomes, misleading comparisons, deceptive before-and-after claims, fabricated social proof, or manipulative fear. Avoid absolutes such as “best,” “only,” “guaranteed,” “risk-free,” or “works for everyone” unless the supplied evidence supports them.\n\nPROMOTION, DISCLOSURE, PRIVACY\n\nKeep promotional content useful and transparent. Respect commercial relationship. When a material connection exists, use the supplied disclosure wording. If it is blank but disclosure is clearly needed, write a short plain-language disclosure and flag it in Publishing Notes for confirmation. Never impersonate an independent customer, hide affiliation, manufacture reactions, create fake replies, or encourage coordinated engagement.\n\nDo not produce spam, repetitive promotion, follow-trading, engagement-pod tactics, or mass-posting instructions. Exclude private, sensitive, or unintended identifying details.\n\nHIGH-STAKES CONTENT\n\nFor high-stakes or regulated topics, use cautious general wording. Do not diagnose, prescribe, give personalized professional advice, guarantee outcomes, or claim compliance. Preserve supplied jurisdiction and source context; flag needed verification privately.\n\nSTYLE\n\nWrite naturally and specifically. Remove filler, repetition, inflated adjectives, corporate jargon, and stock AI phrases such as “in today’s fast-paced world,” “unlock the power of,” “game-changing,” “revolutionary,” and “the possibilities are endless.” Do not make every result promotional or overly enthusiastic.\n\nOUTPUT\n\nOutput only this package. Do not reveal reasoning.\n\n# Threads Post\n\nFor each requested variant:\n\n## Variant [number]\n\n### Ready-to-post copy\n\n[One post, or a sequence labeled Post 1, Post 2, and so on.]\n\n### Topic tag\n\n[Exactly one suggestion only when requested or useful under the selected mode. Otherwise omit.]\n\n### Character check\n\n* [Single post: visible character count and confirmation it is below 480.]\n* [Sequence: count for each post and confirmation every post is below 480.]\n\n### Publishing notes\n\n[Only when needed for URL placement, disclosure confirmation, topic-tag application, or a platform caveat. Otherwise omit.]\n\n### Verification notes\n\n[Only for unresolved factual, regulated, privacy, or claim issues. Keep outside public copy. Otherwise omit.]\n\nFINAL CHECK\n\nConfirm that the result matches the format, language, voice, tone, audience, and goal; every post is below 480 characters; sequences contain 2–6 distinct posts; facts, links, disclosures, and restrictions are respected; no unsupported claim, invented experience, fake urgency, covert promotion, privacy issue, or manipulative engagement remains; blank optional fields are omitted; and the response contains only the requested package.",
     "variables": [
       {
         "key": "topic",
-        "label": "Topic",
+        "label": "Topic or subject",
+        "placeholder": "A launch lesson, product update, useful observation, story, or announcement",
         "required": true,
-        "placeholder": "A useful take on content workflows"
+        "type": "textarea",
+        "group": "essentials",
+        "groupTitle": "Essentials",
+        "hint": "Describe the main subject, event, product, idea, opinion, or update.",
+        "fullWidth": true,
+        "maxLength": 800
+      },
+      {
+        "key": "goal",
+        "label": "Primary goal",
+        "placeholder": "Select the main purpose",
+        "required": true,
+        "type": "select",
+        "group": "essentials",
+        "groupTitle": "Essentials",
+        "hint": "Choose the single most important outcome for this post.",
+        "options": [
+          "Share an insight",
+          "Start a conversation",
+          "Tell a story",
+          "Promote an offer",
+          "Announce an update",
+          "Educate the audience",
+          "Build awareness",
+          "Other"
+        ],
+        "fullWidth": false,
+        "defaultValue": "Start a conversation",
+        "maxLength": 40
+      },
+      {
+        "key": "audience",
+        "label": "Target audience",
+        "placeholder": "Indie founders, designers, local customers, or newsletter creators",
+        "required": true,
+        "type": "text",
+        "group": "essentials",
+        "groupTitle": "Essentials",
+        "hint": "Identify the people who should understand or respond to the post.",
+        "fullWidth": false,
+        "maxLength": 200
+      },
+      {
+        "key": "keyMessage",
+        "label": "Core message",
+        "placeholder": "What must readers understand, remember, or react to?",
+        "required": true,
+        "type": "textarea",
+        "group": "essentials",
+        "groupTitle": "Essentials",
+        "hint": "Include the central point and any information that must appear.",
+        "fullWidth": true,
+        "maxLength": 1200
+      },
+      {
+        "key": "language",
+        "label": "Output language",
+        "placeholder": "English",
+        "required": true,
+        "type": "text",
+        "group": "essentials",
+        "groupTitle": "Essentials",
+        "hint": "Enter the language or regional language variant for the final post.",
+        "fullWidth": false,
+        "defaultValue": "English",
+        "maxLength": 80
+      },
+      {
+        "key": "postFormat",
+        "label": "Post format",
+        "placeholder": "Choose a format",
+        "required": false,
+        "type": "select",
+        "group": "essentials",
+        "groupTitle": "Essentials",
+        "hint": "Auto selects the shortest format that communicates the idea clearly.",
+        "options": [
+          "Auto",
+          "Single post",
+          "Short sequence"
+        ],
+        "fullWidth": false,
+        "defaultValue": "Auto",
+        "maxLength": 30
       },
       {
         "key": "tone",
         "label": "Tone",
-        "required": true,
-        "placeholder": "casual, sharp, human"
-      },
-      {
-        "key": "audience",
-        "label": "Audience",
-        "required": true,
-        "placeholder": "creators and indie builders"
-      },
-      {
-        "key": "goal",
-        "label": "Post goal",
+        "placeholder": "Choose a tone",
         "required": false,
-        "placeholder": "spark replies"
+        "type": "select",
+        "group": "essentials",
+        "groupTitle": "Essentials",
+        "hint": "Sets the overall emotional and stylistic character of the writing.",
+        "options": [
+          "Clear and conversational",
+          "Thoughtful",
+          "Direct",
+          "Warm",
+          "Witty",
+          "Bold",
+          "Educational",
+          "Calm and professional",
+          "Match brand voice"
+        ],
+        "fullWidth": false,
+        "defaultValue": "Clear and conversational",
+        "maxLength": 40
       },
       {
-        "key": "authorRole",
-        "label": "Author role",
+        "key": "cta",
+        "label": "Desired reader action",
+        "placeholder": "Choose an ending",
         "required": false,
-        "placeholder": "solo founder"
+        "type": "select",
+        "group": "essentials",
+        "groupTitle": "Essentials",
+        "hint": "Auto adds a CTA only when one improves the post.",
+        "options": [
+          "Auto",
+          "Reply",
+          "Share experience",
+          "Follow",
+          "Visit link",
+          "No CTA"
+        ],
+        "fullWidth": false,
+        "defaultValue": "Auto",
+        "maxLength": 30
       },
       {
-        "key": "mainMessage",
-        "label": "Main message",
+        "key": "variants",
+        "label": "Number of versions",
+        "placeholder": "Choose a quantity",
         "required": false,
-        "placeholder": "One insight"
+        "type": "select",
+        "group": "essentials",
+        "groupTitle": "Essentials",
+        "hint": "Generate additional complete versions with meaningfully different approaches.",
+        "options": [
+          "1",
+          "2",
+          "3"
+        ],
+        "fullWidth": false,
+        "defaultValue": "1",
+        "maxLength": 1
       },
       {
-        "key": "desiredAction",
-        "label": "Desired action",
+        "key": "accountType",
+        "label": "Account type",
+        "placeholder": "Who is publishing?",
         "required": false,
-        "placeholder": "reply with their take"
+        "type": "select",
+        "group": "voice_positioning",
+        "groupTitle": "Voice & Positioning",
+        "hint": "Helps the post sound appropriate for the person or organization publishing it.",
+        "options": [
+          "Auto",
+          "Personal account",
+          "Creator or founder",
+          "Brand or business",
+          "Community or project"
+        ],
+        "fullWidth": false,
+        "defaultValue": "Auto",
+        "maxLength": 40
+      },
+      {
+        "key": "pointOfView",
+        "label": "Point of view",
+        "placeholder": "Choose the speaking perspective",
+        "required": false,
+        "type": "select",
+        "group": "voice_positioning",
+        "groupTitle": "Voice & Positioning",
+        "hint": "Controls whether the post uses “I,” “we,” or a neutral perspective.",
+        "options": [
+          "Auto",
+          "First person singular",
+          "First person plural",
+          "Neutral perspective"
+        ],
+        "fullWidth": false,
+        "defaultValue": "Auto",
+        "maxLength": 40
       },
       {
         "key": "brandVoice",
-        "label": "Brand voice",
+        "label": "Voice guidance",
+        "placeholder": "Informal, honest, dry humor, no marketing language",
         "required": false,
-        "placeholder": "direct, peer-to-peer"
+        "type": "textarea",
+        "group": "voice_positioning",
+        "groupTitle": "Voice & Positioning",
+        "hint": "Describe how the account usually sounds or paste a short voice reference.",
+        "fullWidth": true,
+        "maxLength": 700
       },
       {
-        "key": "language",
-        "label": "Language",
+        "key": "context",
+        "label": "Context or backstory",
+        "placeholder": "What happened before this post or why does the topic matter now?",
         "required": false,
-        "placeholder": "English"
+        "type": "textarea",
+        "group": "voice_positioning",
+        "groupTitle": "Voice & Positioning",
+        "hint": "Add background that readers need to understand the message.",
+        "fullWidth": true,
+        "maxLength": 1000
       },
       {
-        "key": "sourceDetails",
-        "label": "Facts / details",
+        "key": "wordingPreferences",
+        "label": "Wording preferences",
+        "placeholder": "Words to use, phrases to avoid, spelling preferences, or account terminology",
         "required": false,
-        "placeholder": "Verified only"
+        "type": "textarea",
+        "group": "voice_positioning",
+        "groupTitle": "Voice & Positioning",
+        "hint": "Combine preferred language and prohibited wording in one place.",
+        "fullWidth": true,
+        "maxLength": 700
       },
       {
-        "key": "personalExperience",
-        "label": "Personal experience",
+        "key": "openingStyle",
+        "label": "Opening style",
+        "placeholder": "Choose an opening",
         "required": false,
-        "placeholder": "Only if true and approved"
+        "type": "select",
+        "group": "format_engagement",
+        "groupTitle": "Format & Engagement",
+        "hint": "Controls how the post enters the conversation without forcing clickbait.",
+        "options": [
+          "Auto",
+          "Observation",
+          "Opinion",
+          "Question",
+          "Mini-story",
+          "Contrarian point",
+          "Useful tip"
+        ],
+        "fullWidth": false,
+        "defaultValue": "Auto",
+        "maxLength": 30
       },
       {
-        "key": "link",
-        "label": "Link",
+        "key": "sequenceLength",
+        "label": "Sequence length",
+        "placeholder": "3",
         "required": false,
-        "placeholder": "Optional destination URL"
+        "type": "number",
+        "group": "format_engagement",
+        "groupTitle": "Format & Engagement",
+        "hint": "Choose between 2 and 6 connected posts.",
+        "fullWidth": false,
+        "defaultValue": "3",
+        "showWhen": {
+          "key": "postFormat",
+          "equals": "Short sequence"
+        },
+        "min": 2,
+        "max": 6
       },
       {
-        "key": "restrictions",
-        "label": "Restrictions",
+        "key": "replyPrompt",
+        "label": "Preferred reply prompt",
+        "placeholder": "What question or discussion would you like to invite?",
         "required": false,
-        "placeholder": "Words or claims to avoid"
+        "type": "textarea",
+        "group": "format_engagement",
+        "groupTitle": "Format & Engagement",
+        "hint": "The wording will be adapted naturally rather than pasted mechanically.",
+        "fullWidth": true,
+        "maxLength": 300
+      },
+      {
+        "key": "destinationUrl",
+        "label": "Destination URL",
+        "placeholder": "https://example.com/page",
+        "required": false,
+        "type": "text",
+        "group": "format_engagement",
+        "groupTitle": "Format & Engagement",
+        "hint": "The URL will be included once and will never be invented or modified.",
+        "fullWidth": false,
+        "showWhen": {
+          "key": "cta",
+          "equals": "Visit link"
+        },
+        "format": "url",
+        "maxLength": 500
+      },
+      {
+        "key": "emojiLevel",
+        "label": "Emoji use",
+        "placeholder": "Choose emoji use",
+        "required": false,
+        "type": "select",
+        "group": "format_engagement",
+        "groupTitle": "Format & Engagement",
+        "hint": "Controls emoji frequency without creating decorative emoji chains.",
+        "options": [
+          "None",
+          "Minimal",
+          "Moderate"
+        ],
+        "fullWidth": false,
+        "defaultValue": "Minimal",
+        "maxLength": 20
+      },
+      {
+        "key": "topicTagMode",
+        "label": "Topic tag",
+        "placeholder": "Choose topic-tag handling",
+        "required": false,
+        "type": "select",
+        "group": "format_engagement",
+        "groupTitle": "Format & Engagement",
+        "hint": "Controls whether one relevant Threads topic tag should be suggested separately.",
+        "options": [
+          "None",
+          "Auto",
+          "Suggest one"
+        ],
+        "fullWidth": false,
+        "defaultValue": "Auto",
+        "maxLength": 20
+      },
+      {
+        "key": "sourceMaterial",
+        "label": "Facts or source material",
+        "placeholder": "Paste verified facts, figures, quotations, product details, or reference text",
+        "required": false,
+        "type": "textarea",
+        "group": "facts_restrictions",
+        "groupTitle": "Facts & Restrictions",
+        "hint": "Only supplied or safely established facts should appear as factual claims.",
+        "fullWidth": true,
+        "maxLength": 4000
+      },
+      {
+        "key": "commercialRelationship",
+        "label": "Commercial relationship",
+        "placeholder": "Select any relationship",
+        "required": false,
+        "type": "select",
+        "group": "facts_restrictions",
+        "groupTitle": "Facts & Restrictions",
+        "hint": "Identify a material relationship that readers may need to understand.",
+        "options": [
+          "None",
+          "Own product or service",
+          "Affiliate relationship",
+          "Sponsored or paid",
+          "Employer or client",
+          "Other material relationship"
+        ],
+        "fullWidth": false,
+        "defaultValue": "None",
+        "maxLength": 40
+      },
+      {
+        "key": "disclosureText",
+        "label": "Disclosure wording",
+        "placeholder": "Sponsored by…, Affiliate link, or I built this product",
+        "required": false,
+        "type": "text",
+        "group": "facts_restrictions",
+        "groupTitle": "Facts & Restrictions",
+        "hint": "Provide required wording, or leave blank for a plain-language suggestion.",
+        "fullWidth": false,
+        "showWhen": {
+          "key": "commercialRelationship",
+          "notEquals": "None"
+        },
+        "maxLength": 300
+      },
+      {
+        "key": "additionalRequirements",
+        "label": "Additional requirements",
+        "placeholder": "Add restrictions, mandatory details, sensitive points, or final instructions",
+        "required": false,
+        "type": "textarea",
+        "group": "facts_restrictions",
+        "groupTitle": "Facts & Restrictions",
+        "hint": "Use this for requirements not already covered by another field.",
+        "fullWidth": true,
+        "maxLength": 2000
       }
     ]
   },

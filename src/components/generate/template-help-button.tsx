@@ -18,6 +18,7 @@ import { PAID_AD_COPY_GUIDE_PATH } from "@/config/template-forms/paid-ad-copy";
 import { PRODUCT_DESCRIPTION_GUIDE_PATH } from "@/config/template-forms/product-description";
 import { SEO_META_TAGS_GUIDE_PATH } from "@/config/template-forms/seo-meta-tags";
 import { SHORT_FORM_VIDEO_GUIDE_PATH } from "@/config/template-forms/short-form-video";
+import { THREADS_POST_GUIDE_PATH } from "@/config/template-forms/threads-post";
 import { X_THREAD_GUIDE_PATH } from "@/config/template-forms/x-thread";
 import { YOUTUBE_SCRIPT_GUIDE_PATH } from "@/config/template-forms/youtube-script";
 import { cn } from "@/lib/utils/cn";
@@ -38,6 +39,7 @@ const GUIDE_PATH_BY_SLUG: Record<string, string> = {
   "product-description": PRODUCT_DESCRIPTION_GUIDE_PATH,
   "seo-meta-tags": SEO_META_TAGS_GUIDE_PATH,
   "short-form-video": SHORT_FORM_VIDEO_GUIDE_PATH,
+  "threads-post": THREADS_POST_GUIDE_PATH,
   "x-thread": X_THREAD_GUIDE_PATH,
   "youtube-script": YOUTUBE_SCRIPT_GUIDE_PATH,
 };

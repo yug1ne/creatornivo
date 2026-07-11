@@ -133,6 +133,16 @@ const FULL_FORM_SCHEMAS = {
     ),
     buildHint: "node scripts/build-short-form-video-form.mjs",
   },
+  "threads-post": {
+    path: path.join(
+      root,
+      "src",
+      "config",
+      "template-forms",
+      "threads-post-variables.json",
+    ),
+    buildHint: "node scripts/build-threads-post-form.mjs",
+  },
   "x-thread": {
     path: path.join(
       root,
@@ -208,20 +218,31 @@ function loadFullFormVariables(slug) {
     process.exit(1);
   }
   // Full `help` stays in JSON for the guide page only — keep catalog/DB lean.
-  return data.variables.map((v) => ({
-    key: v.key,
-    label: v.label,
-    placeholder: v.placeholder,
-    required: Boolean(v.required),
-    type: v.type || "text",
-    group: v.group,
-    groupTitle: v.groupTitle,
-    hint: v.hint,
-    options: v.options,
-    fullWidth: Boolean(v.fullWidth),
-    defaultValue: v.defaultValue,
-    showWhen: v.showWhen,
-  }));
+  return data.variables.map((v) => {
+    const variable = {
+      key: v.key,
+      label: v.label,
+      placeholder: v.placeholder,
+      required: Boolean(v.required),
+      type: v.type || "text",
+      group: v.group,
+      groupTitle: v.groupTitle,
+      hint: v.hint,
+      options: v.options,
+      fullWidth: Boolean(v.fullWidth),
+      defaultValue: v.defaultValue,
+      showWhen: v.showWhen,
+    };
+
+    if (slug === "threads-post") {
+      variable.format = v.format;
+      variable.maxLength = v.maxLength;
+      variable.min = v.min;
+      variable.max = v.max;
+    }
+
+    return variable;
+  });
 }
 
 const curated = {
