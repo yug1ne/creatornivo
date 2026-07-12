@@ -1,0 +1,509 @@
+{
+  "slug": "telegram-post",
+  "title": "Telegram Post",
+  "fieldCount": 22,
+  "requiredKeys": [
+    "topicOrOffer",
+    "primaryGoal",
+    "targetAudience",
+    "keyMessage",
+    "factsAndDetails"
+  ],
+  "groups": [
+    {
+      "id": "essentials",
+      "title": "Essentials",
+      "description": "Minimum topic, goal, audience, message, factual detail, format, language, length, and CTA context for an accurate Telegram post.",
+      "defaultOpen": true
+    },
+    {
+      "id": "message_voice",
+      "title": "Message & Voice",
+      "description": "Tone, channel voice, emoji level, and Telegram-compatible formatting preferences.",
+      "defaultOpen": false
+    },
+    {
+      "id": "links_publishing",
+      "title": "Links & Publishing",
+      "description": "Destination URL, button label, timing, and hashtag preferences for Telegram publishing workflows.",
+      "defaultOpen": false
+    },
+    {
+      "id": "accuracy_output",
+      "title": "Accuracy & Output",
+      "description": "Evidence, disclosures, restrictions, variant count, and additional constraints.",
+      "defaultOpen": false
+    }
+  ],
+  "variables": [
+    {
+      "key": "topicOrOffer",
+      "label": "Topic, Product, or Offer",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": true,
+      "placeholder": "What should the Telegram post be about?",
+      "hint": "Enter the main topic, announcement, product, event, or offer.",
+      "help": {
+        "what": "Provide the topic, product, or offer for this Telegram post.",
+        "why": "It establishes the central subject of the post.",
+        "example": "Good example: Creatornivo Early Access update",
+        "avoid": "Avoid vague placeholders, multiple competing topics, invented context, or claims the post cannot support."
+      },
+      "maxLength": 200
+    },
+    {
+      "key": "primaryGoal",
+      "label": "Primary Goal",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": true,
+      "placeholder": "Select the main purpose",
+      "hint": "Choose the single most important outcome for this post.",
+      "help": {
+        "what": "Provide the primary goal for this Telegram post.",
+        "why": "The goal determines the post structure, emphasis, and CTA.",
+        "example": "Good example: Inform or update",
+        "avoid": "Avoid vague placeholders, multiple competing topics, invented context, or claims the post cannot support."
+      },
+      "defaultValue": "Inform or update",
+      "maxLength": 40,
+      "options": [
+        "Inform or update",
+        "Announce news",
+        "Educate or explain",
+        "Promote an offer",
+        "Drive traffic",
+        "Build engagement",
+        "Invite or organize",
+        "Share opinion or story",
+        "Recruit or hire"
+      ]
+    },
+    {
+      "key": "targetAudience",
+      "label": "Target Audience",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "Who should read this post, and what matters to them?",
+      "hint": "Describe the intended readers and any relevant interests or needs.",
+      "help": {
+        "what": "Provide the target audience for this Telegram post.",
+        "why": "Audience context materially changes vocabulary, examples, framing, and detail.",
+        "example": "Good example: Existing Creatornivo users and creators following product updates.",
+        "avoid": "Avoid vague placeholders, multiple competing topics, invented context, or claims the post cannot support."
+      },
+      "maxLength": 500,
+      "fullWidth": true
+    },
+    {
+      "key": "keyMessage",
+      "label": "Core Message",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "What should readers understand or remember?",
+      "hint": "State the main takeaway in plain language.",
+      "help": {
+        "what": "Provide the core message for this Telegram post.",
+        "why": "It prevents the generated post from drifting away from the intended takeaway.",
+        "example": "Good example: Password reset and sign-out polish are live, and generation limits are clearer.",
+        "avoid": "Avoid vague placeholders, multiple competing topics, invented context, or claims the post cannot support."
+      },
+      "maxLength": 800,
+      "fullWidth": true
+    },
+    {
+      "key": "factsAndDetails",
+      "label": "Facts and Required Details",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "Names, dates, prices, conditions, features, or required points",
+      "hint": "Include only confirmed information that must appear in the post.",
+      "help": {
+        "what": "Provide the facts and required details for this Telegram post.",
+        "why": "It supplies the factual information the model must not infer or fabricate.",
+        "example": "Good example: Free plan has 5 generations per UTC day. Pro has 100 generations per UTC month. Support email is support@creatornivo.com.",
+        "avoid": "Avoid assumptions, fake dates, invented prices, fabricated results, unsupported links, or vague filler."
+      },
+      "maxLength": 1500,
+      "fullWidth": true
+    },
+    {
+      "key": "postFormat",
+      "label": "Post Format",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": false,
+      "placeholder": "Choose how the post will be published",
+      "hint": "Media captions require a much shorter result than standalone posts.",
+      "help": {
+        "what": "Optional context for the post format field.",
+        "why": "Text posts and media captions require different length handling.",
+        "example": "Good example: Text post",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, engagement bait, unsupported social proof, or extra CTAs."
+      },
+      "defaultValue": "Auto",
+      "maxLength": 30,
+      "options": [
+        "Auto",
+        "Text post",
+        "Media caption"
+      ]
+    },
+    {
+      "key": "outputLanguage",
+      "label": "Output Language",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": false,
+      "placeholder": "English, Ukrainian, Spanish, or another language",
+      "hint": "The model will write the complete output in this language.",
+      "help": {
+        "what": "Optional context for the output language field.",
+        "why": "Language cannot always be safely inferred from names or source material.",
+        "example": "Good example: English",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, engagement bait, unsupported social proof, or extra CTAs."
+      },
+      "defaultValue": "English",
+      "maxLength": 60
+    },
+    {
+      "key": "channelContext",
+      "label": "Channel Context",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "What does the channel publish, and what do readers expect?",
+      "hint": "Add the channel topic, relationship with readers, or publishing context.",
+      "help": {
+        "what": "Optional context for the channel context field.",
+        "why": "The same announcement may require different framing in a news, business, educational, or personal channel.",
+        "example": "Good example: Product update channel for an early-access AI content workflow product.",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, engagement bait, unsupported social proof, or extra CTAs."
+      },
+      "maxLength": 500,
+      "fullWidth": true
+    },
+    {
+      "key": "lengthPreference",
+      "label": "Length",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": false,
+      "placeholder": "Choose a preferred length",
+      "hint": "Auto selects a practical length while respecting the selected post format.",
+      "help": {
+        "what": "Optional context for the length field.",
+        "why": "Users may need anything from a short update to a detailed channel post.",
+        "example": "Good example: Standard",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, engagement bait, unsupported social proof, or extra CTAs."
+      },
+      "defaultValue": "Auto",
+      "maxLength": 30,
+      "options": [
+        "Auto",
+        "Brief",
+        "Standard",
+        "Detailed",
+        "Maximum safe"
+      ]
+    },
+    {
+      "key": "ctaGoal",
+      "label": "Reader Action",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": false,
+      "placeholder": "What should readers do next?",
+      "hint": "Choose one primary action or let the model select it.",
+      "help": {
+        "what": "Optional context for the reader action field.",
+        "why": "It aligns the ending with the intended user action without creating competing CTAs.",
+        "example": "Good example: Open link",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, engagement bait, unsupported social proof, or extra CTAs."
+      },
+      "defaultValue": "Auto",
+      "maxLength": 40,
+      "options": [
+        "Auto",
+        "No CTA",
+        "Open link",
+        "Reply or comment",
+        "Join channel or group",
+        "Register or sign up",
+        "Download",
+        "Buy or order",
+        "Vote or react",
+        "Save or share"
+      ]
+    },
+    {
+      "key": "tone",
+      "label": "Tone",
+      "group": "message_voice",
+      "groupTitle": "Message & Voice",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select a tone",
+      "hint": "Choose the overall communication style.",
+      "help": {
+        "what": "Optional context for the tone field.",
+        "why": "Tone materially changes wording and audience perception.",
+        "example": "Good example: Clear and natural",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, engagement bait, unsupported social proof, or extra CTAs."
+      },
+      "defaultValue": "Clear and natural",
+      "maxLength": 40,
+      "options": [
+        "Clear and natural",
+        "Conversational",
+        "Professional",
+        "Friendly",
+        "Authoritative",
+        "Energetic",
+        "Calm",
+        "Direct",
+        "Humorous"
+      ]
+    },
+    {
+      "key": "brandVoice",
+      "label": "Brand Voice",
+      "group": "message_voice",
+      "groupTitle": "Message & Voice",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Describe the usual voice or paste a short style example",
+      "hint": "Add distinctive voice rules only when the default tone is insufficient.",
+      "help": {
+        "what": "Optional context for the brand voice field.",
+        "why": "It helps the result remain consistent with an established channel identity.",
+        "example": "Good example: Practical, transparent, and product-focused.",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, engagement bait, unsupported social proof, or extra CTAs."
+      },
+      "maxLength": 800,
+      "fullWidth": true
+    },
+    {
+      "key": "emojiUse",
+      "label": "Emoji Use",
+      "group": "message_voice",
+      "groupTitle": "Message & Voice",
+      "type": "select",
+      "required": false,
+      "placeholder": "Choose an emoji level",
+      "hint": "Controls whether emojis support scanning or are omitted.",
+      "help": {
+        "what": "Optional context for the emoji use field.",
+        "why": "Emoji expectations vary substantially between Telegram channels.",
+        "example": "Good example: Minimal",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, engagement bait, unsupported social proof, or extra CTAs."
+      },
+      "defaultValue": "Minimal",
+      "maxLength": 20,
+      "options": [
+        "Auto",
+        "None",
+        "Minimal",
+        "Moderate"
+      ]
+    },
+    {
+      "key": "formattingMode",
+      "label": "Telegram Formatting",
+      "group": "message_voice",
+      "groupTitle": "Message & Voice",
+      "type": "select",
+      "required": false,
+      "placeholder": "Choose a publishing format",
+      "hint": "Select plain copy, manual formatting, or bot-compatible markup.",
+      "help": {
+        "what": "Optional context for the telegram formatting field.",
+        "why": "Telegram HTML, MarkdownV2, and manually formatted posts require different output syntax.",
+        "example": "Good example: Plain text",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, engagement bait, unsupported social proof, or extra CTAs."
+      },
+      "defaultValue": "Auto",
+      "maxLength": 30,
+      "options": [
+        "Auto",
+        "Plain text",
+        "Telegram HTML",
+        "MarkdownV2",
+        "Manual editor"
+      ]
+    },
+    {
+      "key": "destinationUrl",
+      "label": "Destination URL",
+      "group": "links_publishing",
+      "groupTitle": "Links & Publishing",
+      "type": "text",
+      "required": false,
+      "placeholder": "https://www.creatornivo.com/updates",
+      "hint": "Add the exact page readers should open.",
+      "help": {
+        "what": "Optional context for the destination url field.",
+        "why": "The model must not invent or modify destination links.",
+        "example": "Good example: https://www.creatornivo.com/updates",
+        "avoid": "Avoid invented, shortened, tracking-modified, or unsupported links."
+      },
+      "format": "url",
+      "maxLength": 2000,
+      "fullWidth": true
+    },
+    {
+      "key": "buttonText",
+      "label": "Button Text",
+      "group": "links_publishing",
+      "groupTitle": "Links & Publishing",
+      "type": "text",
+      "required": false,
+      "placeholder": "Read More, Join Now, View Details",
+      "hint": "Leave blank to generate a concise label automatically.",
+      "help": {
+        "what": "Optional context for the button text field.",
+        "why": "It allows control over the optional Telegram inline-button label.",
+        "example": "Good example: Read update",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, engagement bait, unsupported social proof, or extra CTAs."
+      },
+      "maxLength": 80,
+      "showWhen": {
+        "key": "destinationUrl",
+        "isValidUrl": true
+      }
+    },
+    {
+      "key": "timingDetails",
+      "label": "Dates and Timing",
+      "group": "links_publishing",
+      "groupTitle": "Links & Publishing",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Launch date, deadline, event time, timezone, or availability",
+      "hint": "Include confirmed time-sensitive information that affects the message.",
+      "help": {
+        "what": "Optional context for the dates and timing field.",
+        "why": "Announcements and events often depend on exact dates, deadlines, and timezones.",
+        "example": "Good example: Published after the July 2026 maintenance release.",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, engagement bait, unsupported social proof, or extra CTAs."
+      },
+      "maxLength": 600,
+      "fullWidth": true
+    },
+    {
+      "key": "hashtagPreference",
+      "label": "Hashtags",
+      "group": "links_publishing",
+      "groupTitle": "Links & Publishing",
+      "type": "select",
+      "required": false,
+      "placeholder": "Choose a hashtag approach",
+      "hint": "Telegram posts usually need few or no hashtags.",
+      "help": {
+        "what": "Optional context for the hashtags field.",
+        "why": "Some channels use hashtags for navigation, while others avoid them entirely.",
+        "example": "Good example: None",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, engagement bait, unsupported social proof, or extra CTAs."
+      },
+      "defaultValue": "Auto",
+      "maxLength": 30,
+      "options": [
+        "Auto",
+        "None",
+        "1–3 relevant",
+        "Use tags from facts"
+      ]
+    },
+    {
+      "key": "evidenceAndSources",
+      "label": "Evidence and Sources",
+      "group": "accuracy_output",
+      "groupTitle": "Accuracy & Output",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Paste approved statistics, quotations, source notes, or URLs",
+      "hint": "Supply evidence for claims that should not rely only on general wording.",
+      "help": {
+        "what": "Optional context for the evidence and sources field.",
+        "why": "It allows factual claims to be grounded without asking users for a separate research workflow.",
+        "example": "Good example: Use only the supplied release notes and public product limits.",
+        "avoid": "Avoid unsupported statistics, quotes, studies, proof, or claims that the supplied source does not establish."
+      },
+      "maxLength": 4000,
+      "fullWidth": true
+    },
+    {
+      "key": "disclosuresAndRestrictions",
+      "label": "Disclosures and Restrictions",
+      "group": "accuracy_output",
+      "groupTitle": "Accuracy & Output",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Sponsorship disclosure, prohibited claims, privacy rules, or topics to avoid",
+      "hint": "Add mandatory disclosures and anything the post must not say.",
+      "help": {
+        "what": "Optional context for the disclosures and restrictions field.",
+        "why": "Commercial, regulated, or sensitive posts may require explicit boundaries.",
+        "example": "Good example: Do not imply customer numbers, ratings, revenue, urgency, or scarcity.",
+        "avoid": "Avoid hiding commercial relationships, privacy boundaries, regulated-topic limits, or prohibited claims."
+      },
+      "maxLength": 1500,
+      "fullWidth": true
+    },
+    {
+      "key": "numberOfVariants",
+      "label": "Number of Variants",
+      "group": "accuracy_output",
+      "groupTitle": "Accuracy & Output",
+      "type": "select",
+      "required": false,
+      "placeholder": "Choose the number of versions",
+      "hint": "Additional versions use different angles without changing the supplied facts.",
+      "help": {
+        "what": "Optional context for the number of variants field.",
+        "why": "Some users need alternatives, but excessive variations would make a compact template inefficient.",
+        "example": "Good example: 1",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, engagement bait, unsupported social proof, or extra CTAs."
+      },
+      "defaultValue": "1",
+      "maxLength": 10,
+      "options": [
+        "1",
+        "2",
+        "3"
+      ]
+    },
+    {
+      "key": "additionalContext",
+      "label": "Additional Context",
+      "group": "accuracy_output",
+      "groupTitle": "Accuracy & Output",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Add any useful instruction not covered above",
+      "hint": "Use this only for information that materially affects the result.",
+      "help": {
+        "what": "Optional context for the additional context field.",
+        "why": "It provides one controlled place for uncommon requirements without multiplying form fields.",
+        "example": "Good example: Keep the post calm and easy to scan on mobile.",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, engagement bait, unsupported social proof, or extra CTAs."
+      },
+      "maxLength": 2000,
+      "fullWidth": true
+    }
+  ]
+}

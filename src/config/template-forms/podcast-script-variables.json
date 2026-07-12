@@ -1,0 +1,1006 @@
+{
+  "slug": "podcast-script",
+  "title": "Podcast Script",
+  "fieldCount": 44,
+  "requiredKeys": [
+    "episodeTopic",
+    "primaryGoal",
+    "targetAudience",
+    "coreMessage",
+    "keyPoints",
+    "episodeFormat",
+    "outputLanguage",
+    "episodeLength"
+  ],
+  "groups": [
+    {
+      "id": "essentials",
+      "title": "Essentials",
+      "description": "Episode subject, objective, audience, core content, format, language, target duration, host identity, podcast identity, listener action, and source material.",
+      "defaultOpen": true
+    },
+    {
+      "id": "episode_structure",
+      "title": "Episode Structure",
+      "description": "Script depth, opening, segment count, required sections, examples, transitions, listener interaction, and recurring show elements.",
+      "defaultOpen": false
+    },
+    {
+      "id": "voice_delivery",
+      "title": "Voice & Delivery",
+      "description": "Host voice, pacing, energy, language complexity, humor, pronunciation guidance, and words or phrases to avoid.",
+      "defaultOpen": false
+    },
+    {
+      "id": "guests_sponsors_conversion",
+      "title": "Guests, Sponsors & Conversion",
+      "description": "Guest participation, interview boundaries, sponsor messages, sponsor placement, and CTA details.",
+      "defaultOpen": false
+    },
+    {
+      "id": "publishing_discovery_safety",
+      "title": "Publishing, Discovery & Safety",
+      "description": "Publishing context, series continuity, sensitive-content handling, show notes, discovery keywords, links, and additional requirements.",
+      "defaultOpen": false
+    }
+  ],
+  "variables": [
+    {
+      "key": "episodeTopic",
+      "label": "Episode topic",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": true,
+      "placeholder": "Example: Why small creators struggle to stay consistent",
+      "hint": "State the main subject or question the episode should explore.",
+      "help": {
+        "what": "Provide the episode topic for this podcast episode.",
+        "why": "The model cannot determine the episode’s central subject without user input.",
+        "example": "Good example: Why small creators struggle to stay consistent",
+        "avoid": "Avoid vague placeholders, unsupported claims, broad topics without a clear angle, or changing the requested episode into a different subject."
+      },
+      "maxLength": 200
+    },
+    {
+      "key": "primaryGoal",
+      "label": "Primary goal",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": true,
+      "placeholder": "Select the main purpose",
+      "hint": "Choose the most important result the episode should achieve.",
+      "help": {
+        "what": "Provide the primary goal for this podcast episode.",
+        "why": "The same topic requires a different structure depending on the intended outcome.",
+        "example": "Good example: Educate or explain",
+        "avoid": "Avoid vague placeholders, unsupported claims, broad topics without a clear angle, or changing the requested episode into a different subject."
+      },
+      "defaultValue": "Educate or explain",
+      "options": [
+        "Educate or explain",
+        "Entertain",
+        "Inspire or motivate",
+        "Share a story",
+        "Build authority",
+        "Promote an offer",
+        "Interview or explore",
+        "Discuss current events"
+      ],
+      "maxLength": 40
+    },
+    {
+      "key": "targetAudience",
+      "label": "Target listeners",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "Who are they, what do they know, and why would they listen?",
+      "hint": "Describe the intended listeners, their knowledge level, interests, or challenges.",
+      "help": {
+        "what": "Provide the target listeners for this podcast episode.",
+        "why": "Audience knowledge and motivation materially affect language, examples, depth, and pacing.",
+        "example": "Good example: Solo creators who understand content strategy but struggle to keep a weekly publishing rhythm.",
+        "avoid": "Avoid vague placeholders, unsupported claims, broad topics without a clear angle, or changing the requested episode into a different subject."
+      },
+      "maxLength": 700,
+      "fullWidth": true
+    },
+    {
+      "key": "coreMessage",
+      "label": "Core message",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "What should listeners understand, feel, or remember afterward?",
+      "hint": "Summarize the episode’s main takeaway in one or two clear ideas.",
+      "help": {
+        "what": "Provide the core message for this podcast episode.",
+        "why": "A defined takeaway prevents the episode from becoming unfocused.",
+        "example": "Good example: A repeatable content workflow beats rebuilding every prompt from scratch.",
+        "avoid": "Avoid vague placeholders, unsupported claims, broad topics without a clear angle, or changing the requested episode into a different subject."
+      },
+      "maxLength": 800,
+      "fullWidth": true
+    },
+    {
+      "key": "keyPoints",
+      "label": "Key points and facts",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "List the arguments, facts, examples, steps, or questions that must appear.",
+      "hint": "Include the essential material the script must cover.",
+      "help": {
+        "what": "Provide the key points and facts for this podcast episode.",
+        "why": "These details determine the factual substance and progression of the episode.",
+        "example": "Good example: Templates reduce decision fatigue, saved prompts preserve what works, and consistency improves when the workflow is simple.",
+        "avoid": "Avoid vague placeholders, unsupported claims, broad topics without a clear angle, or changing the requested episode into a different subject."
+      },
+      "maxLength": 1500,
+      "fullWidth": true
+    },
+    {
+      "key": "episodeFormat",
+      "label": "Episode format",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": true,
+      "placeholder": "Select a format",
+      "hint": "Choose the format that best matches how the episode will be recorded.",
+      "help": {
+        "what": "Provide the episode format for this podcast episode.",
+        "why": "Each podcast format requires a different script architecture and speaker treatment.",
+        "example": "Good example: Solo monologue",
+        "avoid": "Avoid vague placeholders, unsupported claims, broad topics without a clear angle, or changing the requested episode into a different subject."
+      },
+      "defaultValue": "Solo monologue",
+      "options": [
+        "Solo monologue",
+        "Interview",
+        "Co-hosted discussion",
+        "Educational tutorial",
+        "Narrative storytelling",
+        "Panel discussion",
+        "News or commentary",
+        "Hybrid format"
+      ],
+      "maxLength": 32
+    },
+    {
+      "key": "outputLanguage",
+      "label": "Output language",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": true,
+      "placeholder": "Example: English, Ukrainian, Spanish",
+      "hint": "Specify the language in which the complete output should be written.",
+      "help": {
+        "what": "Provide the output language for this podcast episode.",
+        "why": "The recording script and supporting material must use the user’s publishing language.",
+        "example": "Good example: English",
+        "avoid": "Avoid vague placeholders, unsupported claims, broad topics without a clear angle, or changing the requested episode into a different subject."
+      },
+      "defaultValue": "English",
+      "maxLength": 80
+    },
+    {
+      "key": "episodeLength",
+      "label": "Target duration",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": true,
+      "placeholder": "Select the target length",
+      "hint": "The script will use an approximate spoken-word target rather than an exact runtime guarantee.",
+      "help": {
+        "what": "Provide the target duration for this podcast episode.",
+        "why": "Duration determines script depth, segment timing, question count, and approximate word count.",
+        "example": "Good example: 20–40 minutes",
+        "avoid": "Avoid vague placeholders, unsupported claims, broad topics without a clear angle, or changing the requested episode into a different subject."
+      },
+      "defaultValue": "20–40 minutes",
+      "options": [
+        "5–10 minutes",
+        "10–20 minutes",
+        "20–40 minutes",
+        "40–60 minutes",
+        "More than 60 minutes",
+        "Let the model decide"
+      ],
+      "maxLength": 24
+    },
+    {
+      "key": "hostName",
+      "label": "Host name",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": false,
+      "placeholder": "Example: Alex Morgan",
+      "hint": "Used in the introduction and closing when appropriate.",
+      "help": {
+        "what": "Optional context for the host name field.",
+        "why": "A supplied host name makes the spoken introduction usable without manual replacement.",
+        "example": "Good example: Alex Morgan",
+        "avoid": "Avoid guessed facts, fake urgency, fabricated social proof, overstuffed CTAs, or requirements that are not actually intended for this episode."
+      },
+      "maxLength": 120
+    },
+    {
+      "key": "podcastName",
+      "label": "Podcast name",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": false,
+      "placeholder": "Example: The Independent Creator Show",
+      "hint": "Leave blank when the show name should not be mentioned.",
+      "help": {
+        "what": "Optional context for the podcast name field.",
+        "why": "The show name may be required for a recording-ready introduction and outro.",
+        "example": "Good example: The Independent Creator Show",
+        "avoid": "Avoid guessed facts, fake urgency, fabricated social proof, overstuffed CTAs, or requirements that are not actually intended for this episode."
+      },
+      "maxLength": 120
+    },
+    {
+      "key": "desiredListenerAction",
+      "label": "Listener action",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select the main action",
+      "hint": "Choose one primary action or let the model select a low-pressure conclusion.",
+      "help": {
+        "what": "Optional context for the listener action field.",
+        "why": "The episode closing should support the user’s actual goal without adding competing calls to action.",
+        "example": "Good example: Follow or subscribe",
+        "avoid": "Avoid guessed facts, fake urgency, fabricated social proof, overstuffed CTAs, or requirements that are not actually intended for this episode."
+      },
+      "defaultValue": "Auto",
+      "options": [
+        "Auto",
+        "Follow or subscribe",
+        "Visit a website",
+        "Join an email list",
+        "Download a resource",
+        "Buy or try an offer",
+        "Share the episode",
+        "No promotional action"
+      ],
+      "maxLength": 32
+    },
+    {
+      "key": "sourceMaterial",
+      "label": "Sources and reference material",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Paste verified facts, quotes, research notes, links, or source excerpts.",
+      "hint": "Only supplied or clearly established information may be presented as factual.",
+      "help": {
+        "what": "Optional context for the sources and reference material field.",
+        "why": "Source material improves factual precision and prevents unsupported research claims.",
+        "example": "Good example: Use only the supplied workflow notes; do not invent creator counts, revenue, or research.",
+        "avoid": "Avoid invented facts, links, credentials, quotations, sponsor claims, guest details, or private information that was not supplied."
+      },
+      "maxLength": 4000,
+      "fullWidth": true
+    },
+    {
+      "key": "scriptDepth",
+      "label": "Script detail",
+      "group": "episode_structure",
+      "groupTitle": "Episode Structure",
+      "type": "select",
+      "required": false,
+      "placeholder": "Choose the level of detail",
+      "hint": "Select a complete script, flexible talking points, or a combination of both.",
+      "help": {
+        "what": "Optional context for the script detail field.",
+        "why": "Different hosts need different levels of scripting and improvisational freedom.",
+        "example": "Good example: Hybrid script",
+        "avoid": "Avoid guessed facts, fake urgency, fabricated social proof, overstuffed CTAs, or requirements that are not actually intended for this episode."
+      },
+      "defaultValue": "Hybrid script",
+      "options": [
+        "Full word-for-word script",
+        "Detailed talking points",
+        "Hybrid script"
+      ],
+      "maxLength": 32
+    },
+    {
+      "key": "openingStyle",
+      "label": "Opening style",
+      "group": "episode_structure",
+      "groupTitle": "Episode Structure",
+      "type": "select",
+      "required": false,
+      "placeholder": "Choose how the episode begins",
+      "hint": "Controls the opening moments before the main host introduction.",
+      "help": {
+        "what": "Optional context for the opening style field.",
+        "why": "The opening style materially changes the first minute and listener-retention approach.",
+        "example": "Good example: Provocative question",
+        "avoid": "Avoid guessed facts, fake urgency, fabricated social proof, overstuffed CTAs, or requirements that are not actually intended for this episode."
+      },
+      "defaultValue": "Auto",
+      "options": [
+        "Auto",
+        "Cold open",
+        "Provocative question",
+        "Short story",
+        "Surprising fact",
+        "Episode preview",
+        "Direct introduction"
+      ],
+      "maxLength": 32
+    },
+    {
+      "key": "segmentCount",
+      "label": "Number of segments",
+      "group": "episode_structure",
+      "groupTitle": "Episode Structure",
+      "type": "number",
+      "required": false,
+      "placeholder": "Example: 4",
+      "hint": "Use 2–8 for most episodes or leave the default.",
+      "help": {
+        "what": "Optional context for the number of segments field.",
+        "why": "This gives the user direct control over the episode’s structural complexity.",
+        "example": "Good example: 4",
+        "avoid": "Avoid guessed facts, fake urgency, fabricated social proof, overstuffed CTAs, or requirements that are not actually intended for this episode."
+      },
+      "defaultValue": "4",
+      "maxLength": 2
+    },
+    {
+      "key": "mustIncludeSections",
+      "label": "Sections to include",
+      "group": "episode_structure",
+      "groupTitle": "Episode Structure",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Select any required sections; or list multiple choices separated by commas.",
+      "hint": "Choose only sections that are important to this episode. Available options: Opening hook, Host introduction, Topic context, Main discussion, Practical example, Listener question, Key takeaways, Call to action, Closing outro.",
+      "help": {
+        "what": "Optional context for the sections to include field.",
+        "why": "Some shows have required structural elements that cannot be inferred reliably.",
+        "example": "Good example: Opening hook, main discussion, key takeaways, closing outro",
+        "avoid": "Avoid guessed facts, fake urgency, fabricated social proof, overstuffed CTAs, or requirements that are not actually intended for this episode."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "requiredStoriesExamples",
+      "label": "Stories or examples",
+      "group": "episode_structure",
+      "groupTitle": "Episode Structure",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Describe any real story, case, analogy, demonstration, or example to include.",
+      "hint": "Do not include private details or stories that are not approved for publication.",
+      "help": {
+        "what": "Optional context for the stories or examples field.",
+        "why": "User-supplied examples make the episode specific without requiring fabricated anecdotes.",
+        "example": "Good example: Use the approved example of a creator saving three reusable prompt formats.",
+        "avoid": "Avoid fake personal stories, customer stories, case studies, testimonials, or dialogue presented as real."
+      },
+      "maxLength": 1500,
+      "fullWidth": true
+    },
+    {
+      "key": "transitionStyle",
+      "label": "Transition style",
+      "group": "episode_structure",
+      "groupTitle": "Episode Structure",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select a transition style",
+      "hint": "Controls how the script moves between topics and segments.",
+      "help": {
+        "what": "Optional context for the transition style field.",
+        "why": "Transition style affects how formal, conversational, or tightly produced the episode feels.",
+        "example": "Good example: Conversational callbacks",
+        "avoid": "Avoid guessed facts, fake urgency, fabricated social proof, overstuffed CTAs, or requirements that are not actually intended for this episode."
+      },
+      "defaultValue": "Natural and subtle",
+      "options": [
+        "Natural and subtle",
+        "Clear signposting",
+        "Conversational callbacks",
+        "Story-led transitions",
+        "Fast and minimal",
+        "Auto"
+      ],
+      "maxLength": 32
+    },
+    {
+      "key": "audienceInteraction",
+      "label": "Listener interaction",
+      "group": "episode_structure",
+      "groupTitle": "Episode Structure",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Select interaction elements; or list multiple choices separated by commas.",
+      "hint": "Add only interaction methods that fit the episode naturally. Available options: Auto, Reflection question, Listener challenge, Comment prompt, Q&A invitation, Poll suggestion, Listener submission request, No interaction.",
+      "help": {
+        "what": "Optional context for the listener interaction field.",
+        "why": "The user may want participation beyond a standard promotional CTA.",
+        "example": "Good example: Reflection question, comment prompt",
+        "avoid": "Avoid guessed facts, fake urgency, fabricated social proof, overstuffed CTAs, or requirements that are not actually intended for this episode."
+      },
+      "defaultValue": "Auto",
+      "fullWidth": true
+    },
+    {
+      "key": "recurringElements",
+      "label": "Recurring show elements",
+      "group": "episode_structure",
+      "groupTitle": "Episode Structure",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Add recurring segment names, catchphrases, rituals, or intro conventions.",
+      "hint": "Include only established elements the show already uses.",
+      "help": {
+        "what": "Optional context for the recurring show elements field.",
+        "why": "Existing show conventions must be supplied rather than invented.",
+        "example": "Good example: End each episode with one practical workflow question.",
+        "avoid": "Avoid guessed facts, fake urgency, fabricated social proof, overstuffed CTAs, or requirements that are not actually intended for this episode."
+      },
+      "maxLength": 800,
+      "fullWidth": true
+    },
+    {
+      "key": "tone",
+      "label": "Tone",
+      "group": "voice_delivery",
+      "groupTitle": "Voice & Delivery",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select the overall tone",
+      "hint": "Choose the dominant tone; the model will avoid exaggerated delivery.",
+      "help": {
+        "what": "Optional context for the tone field.",
+        "why": "Tone affects vocabulary, sentence rhythm, framing, and emotional intensity.",
+        "example": "Good example: Clear and natural",
+        "avoid": "Avoid guessed facts, fake urgency, fabricated social proof, overstuffed CTAs, or requirements that are not actually intended for this episode."
+      },
+      "defaultValue": "Clear and natural",
+      "options": [
+        "Clear and natural",
+        "Conversational",
+        "Warm and personal",
+        "Energetic",
+        "Analytical",
+        "Calm and thoughtful",
+        "Humorous",
+        "Serious",
+        "Investigative"
+      ],
+      "maxLength": 32
+    },
+    {
+      "key": "hostVoice",
+      "label": "Host voice or style",
+      "group": "voice_delivery",
+      "groupTitle": "Voice & Delivery",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Describe how the host normally speaks or paste a short approved sample.",
+      "hint": "Mention sentence style, personality, preferred expressions, or level of formality.",
+      "help": {
+        "what": "Optional context for the host voice or style field.",
+        "why": "A supplied voice description helps the script sound like the actual host.",
+        "example": "Good example: Practical, warm, slightly wry; short sentences around important points.",
+        "avoid": "Avoid guessed facts, fake urgency, fabricated social proof, overstuffed CTAs, or requirements that are not actually intended for this episode."
+      },
+      "maxLength": 1200,
+      "fullWidth": true
+    },
+    {
+      "key": "pacing",
+      "label": "Pacing",
+      "group": "voice_delivery",
+      "groupTitle": "Voice & Delivery",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select the speaking pace",
+      "hint": "Controls information density and the amount of space between ideas.",
+      "help": {
+        "what": "Optional context for the pacing field.",
+        "why": "Pacing determines sentence length, pauses, segment density, and estimated runtime.",
+        "example": "Good example: Balanced",
+        "avoid": "Avoid guessed facts, fake urgency, fabricated social proof, overstuffed CTAs, or requirements that are not actually intended for this episode."
+      },
+      "defaultValue": "Balanced",
+      "options": [
+        "Slow and reflective",
+        "Relaxed",
+        "Balanced",
+        "Fast-moving",
+        "Auto"
+      ],
+      "maxLength": 24
+    },
+    {
+      "key": "energyLevel",
+      "label": "Energy level",
+      "group": "voice_delivery",
+      "groupTitle": "Voice & Delivery",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select the delivery energy",
+      "hint": "Choose how restrained or animated the host should sound.",
+      "help": {
+        "what": "Optional context for the energy level field.",
+        "why": "Energy is distinct from tone and changes spoken delivery instructions.",
+        "example": "Good example: Moderate",
+        "avoid": "Avoid guessed facts, fake urgency, fabricated social proof, overstuffed CTAs, or requirements that are not actually intended for this episode."
+      },
+      "defaultValue": "Moderate",
+      "options": [
+        "Low and intimate",
+        "Calm",
+        "Moderate",
+        "High",
+        "Variable by segment"
+      ],
+      "maxLength": 24
+    },
+    {
+      "key": "readingLevel",
+      "label": "Language complexity",
+      "group": "voice_delivery",
+      "groupTitle": "Voice & Delivery",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select a language level",
+      "hint": "Adjusts vocabulary and explanation depth without oversimplifying the subject.",
+      "help": {
+        "what": "Optional context for the language complexity field.",
+        "why": "Audience familiarity does not always indicate the desired vocabulary level.",
+        "example": "Good example: General audience",
+        "avoid": "Avoid guessed facts, fake urgency, fabricated social proof, overstuffed CTAs, or requirements that are not actually intended for this episode."
+      },
+      "defaultValue": "General audience",
+      "options": [
+        "Very accessible",
+        "General audience",
+        "Informed audience",
+        "Professional",
+        "Specialist"
+      ],
+      "maxLength": 28
+    },
+    {
+      "key": "humorLevel",
+      "label": "Humor level",
+      "group": "voice_delivery",
+      "groupTitle": "Voice & Delivery",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select the humor level",
+      "hint": "Humor will not be forced into serious or sensitive sections.",
+      "help": {
+        "what": "Optional context for the humor level field.",
+        "why": "Humor can substantially change the host’s language and episode rhythm.",
+        "example": "Good example: Light when natural",
+        "avoid": "Avoid guessed facts, fake urgency, fabricated social proof, overstuffed CTAs, or requirements that are not actually intended for this episode."
+      },
+      "defaultValue": "Light when natural",
+      "options": [
+        "None",
+        "Very subtle",
+        "Light when natural",
+        "Frequent",
+        "Strong comedic style"
+      ],
+      "maxLength": 28
+    },
+    {
+      "key": "pronunciationNotes",
+      "label": "Pronunciation notes",
+      "group": "voice_delivery",
+      "groupTitle": "Voice & Delivery",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Add phonetic spellings for names, brands, places, or technical terms.",
+      "hint": "Use this for words the host may need help pronouncing while recording.",
+      "help": {
+        "what": "Optional context for the pronunciation notes field.",
+        "why": "Pronunciation guidance is a practical requirement for recording-ready scripts.",
+        "example": "Good example: Creatornivo: creator-NEE-voh",
+        "avoid": "Avoid guessed facts, fake urgency, fabricated social proof, overstuffed CTAs, or requirements that are not actually intended for this episode."
+      },
+      "maxLength": 1000,
+      "fullWidth": true
+    },
+    {
+      "key": "phrasesToAvoid",
+      "label": "Words or phrases to avoid",
+      "group": "voice_delivery",
+      "groupTitle": "Voice & Delivery",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "List unwanted expressions, clichés, claims, topics, or brand language.",
+      "hint": "Use one field for all wording and style restrictions.",
+      "help": {
+        "what": "Optional context for the words or phrases to avoid field.",
+        "why": "The user may have brand-specific or subject-specific restrictions the model cannot infer.",
+        "example": "Good example: game-changing, unlock the power of, in today's fast-paced world",
+        "avoid": "Avoid leaving out phrases that would violate brand, compliance, sensitivity, or editorial rules."
+      },
+      "maxLength": 800,
+      "fullWidth": true
+    },
+    {
+      "key": "hasGuest",
+      "label": "Include a guest",
+      "group": "guests_sponsors_conversion",
+      "groupTitle": "Guests, Sponsors & Conversion",
+      "type": "select",
+      "required": false,
+      "placeholder": "Not applicable",
+      "hint": "Enable this when another person will participate in the episode.",
+      "help": {
+        "what": "Optional context for the include a guest field.",
+        "why": "Guest participation activates a substantially different script workflow.",
+        "example": "Good example: Off",
+        "avoid": "Avoid enabling this unless the guest or sponsor information is real, approved, and meant to appear in the episode."
+      },
+      "defaultValue": "Off",
+      "options": [
+        "On",
+        "Off"
+      ]
+    },
+    {
+      "key": "guestDetails",
+      "label": "Guest details",
+      "group": "guests_sponsors_conversion",
+      "groupTitle": "Guests, Sponsors & Conversion",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Provide the guest’s name, role, expertise, project, and approved introduction.",
+      "hint": "Include only information that may be stated publicly.",
+      "help": {
+        "what": "Optional context for the guest details field.",
+        "why": "A guest introduction and relevant questions require accurate supplied background information.",
+        "example": "Good example: Jordan Lee, independent newsletter operator, approved intro: writes about sustainable creator workflows.",
+        "avoid": "Avoid invented facts, links, credentials, quotations, sponsor claims, guest details, or private information that was not supplied."
+      },
+      "maxLength": 1500,
+      "showWhen": {
+        "key": "hasGuest",
+        "equals": "On"
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "guestTopicsAndBoundaries",
+      "label": "Guest topics and boundaries",
+      "group": "guests_sponsors_conversion",
+      "groupTitle": "Guests, Sponsors & Conversion",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "List priority questions, approved themes, sensitive areas, or topics to avoid.",
+      "hint": "Helps create a focused and respectful conversation.",
+      "help": {
+        "what": "Optional context for the guest topics and boundaries field.",
+        "why": "Interview goals and boundaries cannot be inferred safely from a guest’s identity.",
+        "example": "Good example: Ask about repeatable systems; avoid revenue, private clients, and unapproved metrics.",
+        "avoid": "Avoid invented facts, links, credentials, quotations, sponsor claims, guest details, or private information that was not supplied."
+      },
+      "maxLength": 1500,
+      "showWhen": {
+        "key": "hasGuest",
+        "equals": "On"
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "interviewQuestionCount",
+      "label": "Interview question count",
+      "group": "guests_sponsors_conversion",
+      "groupTitle": "Guests, Sponsors & Conversion",
+      "type": "number",
+      "required": false,
+      "placeholder": "Example: 10",
+      "hint": "The model may add optional follow-ups without exceeding the planned episode length.",
+      "help": {
+        "what": "Optional context for the interview question count field.",
+        "why": "The number of questions directly affects interview depth and timing.",
+        "example": "Good example: 8",
+        "avoid": "Avoid guessed facts, fake urgency, fabricated social proof, overstuffed CTAs, or requirements that are not actually intended for this episode."
+      },
+      "defaultValue": "10",
+      "maxLength": 2,
+      "showWhen": {
+        "key": "hasGuest",
+        "equals": "On"
+      }
+    },
+    {
+      "key": "hasSponsor",
+      "label": "Include a sponsor message",
+      "group": "guests_sponsors_conversion",
+      "groupTitle": "Guests, Sponsors & Conversion",
+      "type": "select",
+      "required": false,
+      "placeholder": "Not applicable",
+      "hint": "Enable only when an actual sponsor, partner, or approved promotional message exists.",
+      "help": {
+        "what": "Optional context for the include a sponsor message field.",
+        "why": "Sponsor copy must never be inserted or invented automatically.",
+        "example": "Good example: Off",
+        "avoid": "Avoid enabling this unless the guest or sponsor information is real, approved, and meant to appear in the episode."
+      },
+      "defaultValue": "Off",
+      "options": [
+        "On",
+        "Off"
+      ]
+    },
+    {
+      "key": "sponsorBrief",
+      "label": "Sponsor brief",
+      "group": "guests_sponsors_conversion",
+      "groupTitle": "Guests, Sponsors & Conversion",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Add the sponsor name, approved message, offer, facts, URL, and required disclosure.",
+      "hint": "Only supplied and approved claims may appear in the sponsor read.",
+      "help": {
+        "what": "Optional context for the sponsor brief field.",
+        "why": "Accurate sponsor copy requires approved commercial information and disclosure details.",
+        "example": "Good example: Sponsor: Creatornivo. Approved message: structured AI templates for consistent publishing. URL: https://www.creatornivo.com",
+        "avoid": "Avoid invented facts, links, credentials, quotations, sponsor claims, guest details, or private information that was not supplied."
+      },
+      "maxLength": 2000,
+      "showWhen": {
+        "key": "hasSponsor",
+        "equals": "On"
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "sponsorPlacement",
+      "label": "Sponsor placement",
+      "group": "guests_sponsors_conversion",
+      "groupTitle": "Guests, Sponsors & Conversion",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select the placement",
+      "hint": "Controls where the sponsor read appears in the episode.",
+      "help": {
+        "what": "Optional context for the sponsor placement field.",
+        "why": "Sponsor placement affects transitions, pacing, and segment timing.",
+        "example": "Good example: Mid-roll",
+        "avoid": "Avoid guessed facts, fake urgency, fabricated social proof, overstuffed CTAs, or requirements that are not actually intended for this episode."
+      },
+      "defaultValue": "Mid-roll",
+      "options": [
+        "Pre-roll",
+        "Early episode",
+        "Mid-roll",
+        "Before closing",
+        "Multiple placements",
+        "Let the model decide"
+      ],
+      "maxLength": 24,
+      "showWhen": {
+        "key": "hasSponsor",
+        "equals": "On"
+      }
+    },
+    {
+      "key": "ctaDetails",
+      "label": "CTA details",
+      "group": "guests_sponsors_conversion",
+      "groupTitle": "Guests, Sponsors & Conversion",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Provide the destination, offer, URL, deadline, or exact action when applicable.",
+      "hint": "Leave blank for a natural CTA based on the selected listener action.",
+      "help": {
+        "what": "Optional context for the cta details field.",
+        "why": "Specific calls to action require accurate destinations and offer details.",
+        "example": "Good example: Visit https://www.creatornivo.com to try the free templates.",
+        "avoid": "Avoid guessed facts, fake urgency, fabricated social proof, overstuffed CTAs, or requirements that are not actually intended for this episode."
+      },
+      "maxLength": 1000,
+      "fullWidth": true
+    },
+    {
+      "key": "episodeContext",
+      "label": "Publishing context",
+      "group": "publishing_discovery_safety",
+      "groupTitle": "Publishing, Discovery & Safety",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select the episode context",
+      "hint": "Helps the model decide how much date context and series continuity to include.",
+      "help": {
+        "what": "Optional context for the publishing context field.",
+        "why": "Publishing context changes framing, references, disclosures, and the useful lifespan of the episode.",
+        "example": "Good example: Evergreen episode",
+        "avoid": "Avoid guessed facts, fake urgency, fabricated social proof, overstuffed CTAs, or requirements that are not actually intended for this episode."
+      },
+      "defaultValue": "Evergreen episode",
+      "options": [
+        "Evergreen episode",
+        "Timely topic",
+        "Series episode",
+        "Product or project launch",
+        "Sponsored or branded",
+        "Internal or private"
+      ],
+      "maxLength": 32
+    },
+    {
+      "key": "seriesContext",
+      "label": "Series context",
+      "group": "publishing_discovery_safety",
+      "groupTitle": "Publishing, Discovery & Safety",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Explain previous episodes, the series theme, and what comes next.",
+      "hint": "Include only the context listeners need to understand this installment.",
+      "help": {
+        "what": "Optional context for the series context field.",
+        "why": "A series episode may require continuity that is unavailable from the topic alone.",
+        "example": "Good example: Part two of a three-part series about turning scattered ideas into a publishing workflow.",
+        "avoid": "Avoid guessed facts, fake urgency, fabricated social proof, overstuffed CTAs, or requirements that are not actually intended for this episode."
+      },
+      "maxLength": 1200,
+      "showWhen": {
+        "key": "episodeContext",
+        "equals": "Series episode"
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "contentRisk",
+      "label": "Sensitive content type",
+      "group": "publishing_discovery_safety",
+      "groupTitle": "Publishing, Discovery & Safety",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select the closest category",
+      "hint": "Used to apply cautious wording and verification notes when necessary.",
+      "help": {
+        "what": "Optional context for the sensitive content type field.",
+        "why": "High-stakes subjects require stronger accuracy, scope, and disclaimer controls.",
+        "example": "Good example: General content",
+        "avoid": "Avoid treating high-stakes legal, financial, medical, political, or regulated topics as personalized professional advice."
+      },
+      "defaultValue": "General content",
+      "options": [
+        "General content",
+        "Health or medical",
+        "Legal",
+        "Financial or tax",
+        "Political or current events",
+        "Children or family safety",
+        "Regulated products"
+      ],
+      "maxLength": 36
+    },
+    {
+      "key": "jurisdiction",
+      "label": "Relevant jurisdiction",
+      "group": "publishing_discovery_safety",
+      "groupTitle": "Publishing, Discovery & Safety",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Example: United States federal law, England and Wales, European Union",
+      "hint": "State the country, state, or region when rules may vary by location.",
+      "help": {
+        "what": "Optional context for the relevant jurisdiction field.",
+        "why": "Jurisdiction can materially change legal, financial, political, and regulated-content accuracy.",
+        "example": "Good example: United States",
+        "avoid": "Avoid treating high-stakes legal, financial, medical, political, or regulated topics as personalized professional advice."
+      },
+      "maxLength": 300,
+      "showWhen": {
+        "key": "contentRisk",
+        "equals": [
+          "Legal",
+          "Financial or tax",
+          "Political or current events",
+          "Regulated products"
+        ]
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "showNotesLevel",
+      "label": "Show notes detail",
+      "group": "publishing_discovery_safety",
+      "groupTitle": "Publishing, Discovery & Safety",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select the show notes level",
+      "hint": "Controls the amount of supporting text generated for publication.",
+      "help": {
+        "what": "Optional context for the show notes detail field.",
+        "why": "Different publishing workflows require different levels of supporting material.",
+        "example": "Good example: Standard",
+        "avoid": "Avoid guessed facts, fake urgency, fabricated social proof, overstuffed CTAs, or requirements that are not actually intended for this episode."
+      },
+      "defaultValue": "Standard",
+      "options": [
+        "None",
+        "Concise",
+        "Standard",
+        "Detailed"
+      ],
+      "maxLength": 24
+    },
+    {
+      "key": "discoveryKeywords",
+      "label": "Discovery keywords",
+      "group": "publishing_discovery_safety",
+      "groupTitle": "Publishing, Discovery & Safety",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Add natural phrases listeners may use to find this episode.",
+      "hint": "Use relevant topic phrases, not repetitive keyword stuffing.",
+      "help": {
+        "what": "Optional context for the discovery keywords field.",
+        "why": "User-supplied terminology can improve title and show-note discoverability.",
+        "example": "Good example: creator workflow, content consistency, prompt library",
+        "avoid": "Avoid guessed facts, fake urgency, fabricated social proof, overstuffed CTAs, or requirements that are not actually intended for this episode."
+      },
+      "maxLength": 500,
+      "fullWidth": true
+    },
+    {
+      "key": "linksAndResources",
+      "label": "Links and resources",
+      "group": "publishing_discovery_safety",
+      "groupTitle": "Publishing, Discovery & Safety",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "List approved websites, books, tools, profiles, studies, or resources.",
+      "hint": "The model must not invent URLs or sources that are not supplied.",
+      "help": {
+        "what": "Optional context for the links and resources field.",
+        "why": "Show notes often require exact links and resource names that cannot be inferred.",
+        "example": "Good example: https://www.creatornivo.com/resources",
+        "avoid": "Avoid invented facts, links, credentials, quotations, sponsor claims, guest details, or private information that was not supplied."
+      },
+      "maxLength": 2000,
+      "fullWidth": true
+    },
+    {
+      "key": "additionalRequirements",
+      "label": "Additional requirements",
+      "group": "publishing_discovery_safety",
+      "groupTitle": "Publishing, Discovery & Safety",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Add any final instructions that are not covered elsewhere.",
+      "hint": "Use this for important production, formatting, disclosure, or content requirements.",
+      "help": {
+        "what": "Optional context for the additional requirements field.",
+        "why": "One controlled miscellaneous field supports legitimate requirements without creating several narrow fields.",
+        "example": "Good example: Avoid fake urgency, fake testimonials, unsupported results, and invented customer stories.",
+        "avoid": "Avoid guessed facts, fake urgency, fabricated social proof, overstuffed CTAs, or requirements that are not actually intended for this episode."
+      },
+      "maxLength": 2000,
+      "fullWidth": true
+    }
+  ]
+}

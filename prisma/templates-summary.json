@@ -109,14 +109,14 @@
     "title": "Amazon Listing",
     "category": "ecommerce",
     "plan": "pro",
-    "vars": 14
+    "vars": 31
   },
   {
     "slug": "app-store-listing",
     "title": "App Store Listing",
     "category": "ecommerce",
     "plan": "pro",
-    "vars": 14
+    "vars": 34
   },
   {
     "slug": "case-study",
@@ -144,7 +144,7 @@
     "title": "Etsy Listing",
     "category": "ecommerce",
     "plan": "pro",
-    "vars": 14
+    "vars": 36
   },
   {
     "slug": "github-readme",
@@ -214,7 +214,7 @@
     "title": "Podcast Script",
     "category": "youtube",
     "plan": "pro",
-    "vars": 14
+    "vars": 44
   },
   {
     "slug": "press-release",
@@ -228,21 +228,21 @@
     "title": "Product Hunt Launch",
     "category": "product_launch",
     "plan": "pro",
-    "vars": 14
+    "vars": 32
   },
   {
     "slug": "push-notification",
     "title": "Push Notification",
     "category": "marketing",
     "plan": "pro",
-    "vars": 11
+    "vars": 23
   },
   {
     "slug": "quora-answer",
     "title": "Quora Answer",
     "category": "community",
     "plan": "pro",
-    "vars": 12
+    "vars": 24
   },
   {
     "slug": "review-response",
@@ -263,28 +263,28 @@
     "title": "SMS Campaign",
     "category": "marketing",
     "plan": "pro",
-    "vars": 12
+    "vars": 24
   },
   {
     "slug": "substack-post",
     "title": "Substack Post",
     "category": "community",
     "plan": "pro",
-    "vars": 14
+    "vars": 36
   },
   {
     "slug": "telegram-post",
     "title": "Telegram Post",
     "category": "community",
     "plan": "pro",
-    "vars": 14
+    "vars": 22
   },
   {
     "slug": "webinar-package",
     "title": "Webinar Package",
     "category": "marketing",
     "plan": "pro",
-    "vars": 16
+    "vars": 44
   },
   {
     "slug": "website-popup",

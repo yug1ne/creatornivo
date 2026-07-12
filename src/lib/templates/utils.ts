@@ -59,10 +59,18 @@ function parseShowWhenClause(
     result.isValidUrl = true;
   }
 
+  if (typeof s.contains === "string") {
+    result.contains = s.contains;
+  } else if (Array.isArray(s.contains)) {
+    const list = s.contains.filter((o): o is string => typeof o === "string");
+    if (list.length) result.contains = list;
+  }
+
   if (
     result.equals === undefined &&
     result.notEquals === undefined &&
-    result.isValidUrl !== true
+    result.isValidUrl !== true &&
+    result.contains === undefined
   ) {
     return undefined;
   }
@@ -91,6 +99,14 @@ function parseShowWhen(raw: unknown): TemplateFieldShowWhen | undefined {
     return { anyOf: clauses };
   }
 
+  if (Array.isArray(s.allOf)) {
+    const clauses = s.allOf
+      .map(parseShowWhenClause)
+      .filter((c): c is TemplateFieldShowWhenClause => Boolean(c));
+    if (clauses.length === 0) return undefined;
+    return { allOf: clauses };
+  }
+
   return parseShowWhenClause(raw);
 }
 
@@ -116,6 +132,13 @@ function clauseMatches(
     return false;
   }
 
+  if (clause.contains !== undefined) {
+    const list = Array.isArray(clause.contains)
+      ? clause.contains
+      : [clause.contains];
+    if (!list.some((item) => current.includes(item))) return false;
+  }
+
   return true;
 }
 
@@ -129,6 +152,10 @@ export function isTemplateFieldVisible(
 
   if ("anyOf" in when && Array.isArray(when.anyOf)) {
     return when.anyOf.some((clause) => clauseMatches(clause, values));
+  }
+
+  if ("allOf" in when && Array.isArray(when.allOf)) {
+    return when.allOf.every((clause) => clauseMatches(clause, values));
   }
 
   return clauseMatches(when as TemplateFieldShowWhenClause, values);

@@ -1,0 +1,547 @@
+{
+  "slug": "quora-answer",
+  "title": "Quora Answer",
+  "fieldCount": 24,
+  "requiredKeys": [
+    "quoraQuestion",
+    "answerGoal",
+    "directAnswer",
+    "keyPoints",
+    "perspectiveType",
+    "outputLanguage"
+  ],
+  "groups": [
+    {
+      "id": "essentials",
+      "title": "Essentials",
+      "description": "Question, intended answer, audience, important points, author perspective, language, tone, length, and necessary context.",
+      "defaultOpen": true
+    },
+    {
+      "id": "evidence_credibility",
+      "title": "Evidence & Credibility",
+      "description": "Supporting material, examples, experience details, credentials, and limitations without encouraging fabricated authority.",
+      "defaultOpen": false
+    },
+    {
+      "id": "promotion_disclosure",
+      "title": "Promotion & Disclosure",
+      "description": "Commercial relationships, links, affiliation disclosure, and proportional reader actions.",
+      "defaultOpen": false
+    },
+    {
+      "id": "style_output",
+      "title": "Style & Output",
+      "description": "Answer structure, opening, reading level, verification notes, and exceptional requirements.",
+      "defaultOpen": false
+    }
+  ],
+  "variables": [
+    {
+      "key": "quoraQuestion",
+      "label": "Quora question",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": true,
+      "placeholder": "What question should the answer respond to?",
+      "hint": "Paste the exact question or write it as it appears on Quora.",
+      "help": {
+        "what": "Provide the quora question for this Quora answer.",
+        "why": "The answer must respond directly to the exact question being asked.",
+        "example": "Good example: What is the best way for solo founders to stay consistent with content?",
+        "avoid": "Avoid vague placeholders, unsupported conclusions, invented evidence, or changing the question into an easier one."
+      },
+      "maxLength": 300
+    },
+    {
+      "key": "answerGoal",
+      "label": "Answer goal",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": true,
+      "placeholder": "Select the main purpose",
+      "hint": "Choose what the answer should primarily help the reader do or understand.",
+      "help": {
+        "what": "Provide the answer goal for this Quora answer.",
+        "why": "Different Quora questions require different reasoning and content structures.",
+        "example": "Good example: Explain clearly",
+        "avoid": "Avoid vague placeholders, unsupported conclusions, invented evidence, or changing the question into an easier one."
+      },
+      "defaultValue": "Explain clearly",
+      "options": [
+        "Explain clearly",
+        "Compare options",
+        "Recommend an approach",
+        "Troubleshoot a problem",
+        "Share experience",
+        "Correct a misconception"
+      ]
+    },
+    {
+      "key": "targetReader",
+      "label": "Target reader",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": false,
+      "placeholder": "For example: first-time founders, students, new homeowners",
+      "hint": "Describe who should find the answer most useful.",
+      "help": {
+        "what": "Optional context for the target reader field.",
+        "why": "Reader knowledge and circumstances affect terminology, examples, and depth.",
+        "example": "Good example: Solo founders building a small content workflow.",
+        "avoid": "Avoid guessed facts, fake urgency, fake testimonials, hidden promotion, engagement bait, or unsupported high-stakes advice."
+      },
+      "defaultValue": "General reader asking this question",
+      "maxLength": 200
+    },
+    {
+      "key": "directAnswer",
+      "label": "Main answer",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "State the main conclusion or position the answer should communicate.",
+      "hint": "Give the direct answer in your own words before adding supporting detail.",
+      "help": {
+        "what": "Provide the main answer for this Quora answer.",
+        "why": "The model should not guess the user's intended conclusion or recommendation.",
+        "example": "Good example: A simple repeatable system is more reliable than waiting for motivation.",
+        "avoid": "Avoid vague placeholders, unsupported conclusions, invented evidence, or changing the question into an easier one."
+      },
+      "maxLength": 800,
+      "fullWidth": true
+    },
+    {
+      "key": "keyPoints",
+      "label": "Key points to include",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "List the facts, reasons, warnings, steps, or distinctions that must appear.",
+      "hint": "Include only points that are important to answering the question.",
+      "help": {
+        "what": "Provide the key points to include for this Quora answer.",
+        "why": "These points determine the substance and usefulness of the answer.",
+        "example": "Good example: Use templates, define a weekly cadence, save prompts that work, and review which drafts become publishable.",
+        "avoid": "Avoid vague placeholders, unsupported conclusions, invented evidence, or changing the question into an easier one."
+      },
+      "maxLength": 1500,
+      "fullWidth": true
+    },
+    {
+      "key": "perspectiveType",
+      "label": "Author perspective",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": true,
+      "placeholder": "Choose the perspective",
+      "hint": "Select the truthful position from which the answer should be written.",
+      "help": {
+        "what": "Provide the author perspective for this Quora answer.",
+        "why": "The model must know whether it may write from experience, expertise, opinion, or an organizational role.",
+        "example": "Good example: Neutral explainer",
+        "avoid": "Avoid vague placeholders, unsupported conclusions, invented evidence, or changing the question into an easier one."
+      },
+      "defaultValue": "Neutral explainer",
+      "options": [
+        "Neutral explainer",
+        "Subject-matter expertise",
+        "First-hand experience",
+        "Experience and expertise",
+        "Company representative",
+        "Personal opinion"
+      ]
+    },
+    {
+      "key": "outputLanguage",
+      "label": "Output language",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": true,
+      "placeholder": "For example: English, Ukrainian, Spanish",
+      "hint": "Enter the language for the complete generated answer.",
+      "help": {
+        "what": "Provide the output language for this Quora answer.",
+        "why": "Quora operates across languages, and the desired language cannot always be inferred.",
+        "example": "Good example: English",
+        "avoid": "Avoid vague placeholders, unsupported conclusions, invented evidence, or changing the question into an easier one."
+      },
+      "defaultValue": "English",
+      "maxLength": 80
+    },
+    {
+      "key": "tone",
+      "label": "Tone",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select a tone",
+      "hint": "Choose the overall voice without changing the factual position.",
+      "help": {
+        "what": "Optional context for the tone field.",
+        "why": "Tone materially affects how credible and appropriate the answer feels to its intended reader.",
+        "example": "Good example: Clear and natural",
+        "avoid": "Avoid guessed facts, fake urgency, fake testimonials, hidden promotion, engagement bait, or unsupported high-stakes advice."
+      },
+      "defaultValue": "Clear and natural",
+      "options": [
+        "Clear and natural",
+        "Friendly and conversational",
+        "Professional",
+        "Concise and direct",
+        "Thoughtful",
+        "Technical",
+        "Cautious",
+        "Auto"
+      ]
+    },
+    {
+      "key": "answerLength",
+      "label": "Answer length",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select the preferred depth",
+      "hint": "The model may write less when the available facts do not support a longer answer.",
+      "help": {
+        "what": "Optional context for the answer length field.",
+        "why": "Quora answers can range from brief explanations to detailed expert responses.",
+        "example": "Good example: Platform appropriate",
+        "avoid": "Avoid guessed facts, fake urgency, fake testimonials, hidden promotion, engagement bait, or unsupported high-stakes advice."
+      },
+      "defaultValue": "Platform appropriate",
+      "options": [
+        "Concise",
+        "Standard",
+        "Detailed",
+        "Platform appropriate"
+      ]
+    },
+    {
+      "key": "questionContext",
+      "label": "Question context",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Add assumptions, background, or ambiguity the answer should address.",
+      "hint": "Use this when the question needs context beyond its visible wording.",
+      "help": {
+        "what": "Optional context for the question context field.",
+        "why": "Some questions contain hidden assumptions or refer to a specific situation that affects the answer.",
+        "example": "Good example: The reader is asking about consistency, not viral growth or paid ads.",
+        "avoid": "Avoid guessed facts, fake urgency, fake testimonials, hidden promotion, engagement bait, or unsupported high-stakes advice."
+      },
+      "maxLength": 1000,
+      "fullWidth": true
+    },
+    {
+      "key": "supportingEvidence",
+      "label": "Evidence and references",
+      "group": "evidence_credibility",
+      "groupTitle": "Evidence & Credibility",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Paste approved facts, statistics, quotations, study details, or source links.",
+      "hint": "Only supplied evidence may be presented as sourced or verified.",
+      "help": {
+        "what": "Optional context for the evidence and references field.",
+        "why": "Evidence-dependent answers require user-supplied facts and references to avoid fabrication.",
+        "example": "Good example: Only use the supplied workflow notes; do not invent studies or statistics.",
+        "avoid": "Avoid invented studies, statistics, quotations, sources, links, or claims that the supplied evidence does not support."
+      },
+      "maxLength": 4000,
+      "fullWidth": true
+    },
+    {
+      "key": "examplesOrSteps",
+      "label": "Examples or practical steps",
+      "group": "evidence_credibility",
+      "groupTitle": "Evidence & Credibility",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Add examples, procedures, comparisons, or steps that should be used.",
+      "hint": "Provide real details or clearly describe anything that should remain hypothetical.",
+      "help": {
+        "what": "Optional context for the examples or practical steps field.",
+        "why": "Examples and procedures can materially improve explanatory, recommendation, and troubleshooting answers.",
+        "example": "Good example: Pick one channel, create three reusable formats, and schedule one review block per week.",
+        "avoid": "Avoid guessed facts, fake urgency, fake testimonials, hidden promotion, engagement bait, or unsupported high-stakes advice."
+      },
+      "maxLength": 1500,
+      "fullWidth": true
+    },
+    {
+      "key": "firstHandDetails",
+      "label": "First-hand experience",
+      "group": "evidence_credibility",
+      "groupTitle": "Evidence & Credibility",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Describe what you personally did, observed, used, or learned.",
+      "hint": "Include only genuine experience that may be written in the first person.",
+      "help": {
+        "what": "Optional context for the first-hand experience field.",
+        "why": "The model needs specific authentic details before it can truthfully claim personal experience.",
+        "example": "Good example: I used a saved prompt library to reduce rewriting before publishing weekly updates.",
+        "avoid": "Avoid fake first-person experience, exaggerated outcomes, or stories that did not happen."
+      },
+      "maxLength": 1500,
+      "showWhen": {
+        "key": "perspectiveType",
+        "equals": [
+          "First-hand experience",
+          "Experience and expertise"
+        ]
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "credentialsContext",
+      "label": "Relevant credentials",
+      "group": "evidence_credibility",
+      "groupTitle": "Evidence & Credibility",
+      "type": "text",
+      "required": false,
+      "placeholder": "For example: tax accountant in Ontario with eight years of experience",
+      "hint": "Add only credentials or roles directly relevant to the question.",
+      "help": {
+        "what": "Optional context for the relevant credentials field.",
+        "why": "Relevant credentials can establish context but must not be inferred or invented.",
+        "example": "Good example: Founder building content workflow tools.",
+        "avoid": "Avoid credentials, roles, licenses, clients, employers, or authority signals that are not true and relevant."
+      },
+      "maxLength": 500
+    },
+    {
+      "key": "uncertaintyLimits",
+      "label": "Limits and uncertainties",
+      "group": "evidence_credibility",
+      "groupTitle": "Evidence & Credibility",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Note disputed facts, exceptions, risks, unknowns, or jurisdiction limits.",
+      "hint": "Use this to prevent an overly broad or overconfident conclusion.",
+      "help": {
+        "what": "Optional context for the limits and uncertainties field.",
+        "why": "Known limitations may materially change the accuracy and safety of the answer.",
+        "example": "Good example: The best cadence depends on the founder's available time and topic complexity.",
+        "avoid": "Avoid guessed facts, fake urgency, fake testimonials, hidden promotion, engagement bait, or unsupported high-stakes advice."
+      },
+      "maxLength": 1000,
+      "fullWidth": true
+    },
+    {
+      "key": "affiliationType",
+      "label": "Relationship to the subject",
+      "group": "promotion_disclosure",
+      "groupTitle": "Promotion & Disclosure",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select any relevant relationship",
+      "hint": "Disclose financial, professional, ownership, or other material connections.",
+      "help": {
+        "what": "Optional context for the relationship to the subject field.",
+        "why": "Quora requires relevant affiliations to be disclosed clearly when they could affect how an answer is understood.",
+        "example": "Good example: No material affiliation",
+        "avoid": "Avoid hiding material relationships or implying independent neutrality when a connection exists."
+      },
+      "defaultValue": "No material affiliation",
+      "options": [
+        "No material affiliation",
+        "Founder or owner",
+        "Employee or representative",
+        "Customer or user",
+        "Consultant or partner",
+        "Affiliate relationship",
+        "Paid sponsorship",
+        "Investor or other connection"
+      ]
+    },
+    {
+      "key": "affiliatedEntity",
+      "label": "Affiliated entity",
+      "group": "promotion_disclosure",
+      "groupTitle": "Promotion & Disclosure",
+      "type": "text",
+      "required": false,
+      "placeholder": "Name the product, company, service, or organization.",
+      "hint": "This is used to create a clear and specific disclosure.",
+      "help": {
+        "what": "Optional context for the affiliated entity field.",
+        "why": "A disclosure is not useful when it does not identify the relevant relationship or entity.",
+        "example": "Good example: Creatornivo",
+        "avoid": "Avoid hiding material relationships or implying independent neutrality when a connection exists."
+      },
+      "maxLength": 200,
+      "showWhen": {
+        "key": "affiliationType",
+        "notEquals": "No material affiliation"
+      }
+    },
+    {
+      "key": "relevantLink",
+      "label": "Relevant link",
+      "group": "promotion_disclosure",
+      "groupTitle": "Promotion & Disclosure",
+      "type": "text",
+      "required": false,
+      "placeholder": "https://www.creatornivo.com/resources",
+      "hint": "Include one link only when it directly helps answer the question.",
+      "help": {
+        "what": "Optional context for the relevant link field.",
+        "why": "A relevant resource may improve the answer, but the model must not invent or overuse links.",
+        "example": "Good example: https://www.creatornivo.com/resources",
+        "avoid": "Avoid invented, shortened, repeated, irrelevant, or promotional links that do not help answer the question."
+      },
+      "format": "url",
+      "maxLength": 500
+    },
+    {
+      "key": "readerAction",
+      "label": "Reader next step",
+      "group": "promotion_disclosure",
+      "groupTitle": "Promotion & Disclosure",
+      "type": "select",
+      "required": false,
+      "placeholder": "Choose an optional next step",
+      "hint": "The answer will use no CTA unless the selected action fits naturally.",
+      "help": {
+        "what": "Optional context for the reader next step field.",
+        "why": "The desired next step affects the conclusion and determines whether a link or promotional mention is appropriate.",
+        "example": "Good example: Auto",
+        "avoid": "Avoid guessed facts, fake urgency, fake testimonials, hidden promotion, engagement bait, or unsupported high-stakes advice."
+      },
+      "defaultValue": "Auto",
+      "options": [
+        "None",
+        "Invite discussion",
+        "Read a resource",
+        "Try a product or service",
+        "Contact the author or company",
+        "Follow the profile",
+        "Auto"
+      ]
+    },
+    {
+      "key": "structureStyle",
+      "label": "Answer structure",
+      "group": "style_output",
+      "groupTitle": "Style & Output",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select a structure",
+      "hint": "Choose how the explanation should be organized.",
+      "help": {
+        "what": "Optional context for the answer structure field.",
+        "why": "Procedures, comparisons, and explanatory answers benefit from different structures.",
+        "example": "Good example: Mixed",
+        "avoid": "Avoid guessed facts, fake urgency, fake testimonials, hidden promotion, engagement bait, or unsupported high-stakes advice."
+      },
+      "defaultValue": "Auto",
+      "options": [
+        "Natural paragraphs",
+        "Step by step",
+        "Comparison",
+        "Mixed",
+        "Auto"
+      ]
+    },
+    {
+      "key": "openingStyle",
+      "label": "Opening style",
+      "group": "style_output",
+      "groupTitle": "Style & Output",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select how the answer should begin",
+      "hint": "Quora readers should receive useful information immediately.",
+      "help": {
+        "what": "Optional context for the opening style field.",
+        "why": "The opening determines whether the answer begins with a conclusion, clarification, or valid personal context.",
+        "example": "Good example: Direct answer",
+        "avoid": "Avoid guessed facts, fake urgency, fake testimonials, hidden promotion, engagement bait, or unsupported high-stakes advice."
+      },
+      "defaultValue": "Direct answer",
+      "options": [
+        "Direct answer",
+        "Brief context",
+        "Clarify the premise",
+        "Personal observation",
+        "Auto"
+      ]
+    },
+    {
+      "key": "readingLevel",
+      "label": "Reading level",
+      "group": "style_output",
+      "groupTitle": "Style & Output",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select the expected knowledge level",
+      "hint": "This controls terminology and explanation depth rather than answer quality.",
+      "help": {
+        "what": "Optional context for the reading level field.",
+        "why": "The same subject may require very different terminology for beginners and specialists.",
+        "example": "Good example: General audience",
+        "avoid": "Avoid guessed facts, fake urgency, fake testimonials, hidden promotion, engagement bait, or unsupported high-stakes advice."
+      },
+      "defaultValue": "General audience",
+      "options": [
+        "Simple",
+        "General audience",
+        "Informed audience",
+        "Specialist",
+        "Auto"
+      ]
+    },
+    {
+      "key": "includeSourceNotes",
+      "label": "Include verification notes",
+      "group": "style_output",
+      "groupTitle": "Style & Output",
+      "type": "select",
+      "required": false,
+      "placeholder": "Off",
+      "hint": "Adds private source and claim-check notes after the public answer. Choose On or Off.",
+      "help": {
+        "what": "Choose whether to include private source and claim-check notes after the public answer.",
+        "why": "Users working with factual or high-stakes material may need a separate publication review.",
+        "example": "Good example: Off",
+        "avoid": "Avoid guessed facts, fake urgency, fake testimonials, hidden promotion, engagement bait, or unsupported high-stakes advice."
+      },
+      "defaultValue": "Off",
+      "options": [
+        "On",
+        "Off"
+      ]
+    },
+    {
+      "key": "additionalRequirements",
+      "label": "Additional requirements",
+      "group": "style_output",
+      "groupTitle": "Style & Output",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Add necessary wording, exclusions, formatting, or other special instructions.",
+      "hint": "Use this only for requirements not already covered by another field.",
+      "help": {
+        "what": "Optional context for the additional requirements field.",
+        "why": "One controlled miscellaneous field supports exceptional requirements without expanding the form unnecessarily.",
+        "example": "Good example: Avoid fake results, user counts, revenue claims, and promotional pressure.",
+        "avoid": "Avoid guessed facts, fake urgency, fake testimonials, hidden promotion, engagement bait, or unsupported high-stakes advice."
+      },
+      "maxLength": 2000,
+      "fullWidth": true
+    }
+  ]
+}

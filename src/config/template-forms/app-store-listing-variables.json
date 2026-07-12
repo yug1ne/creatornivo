@@ -1,0 +1,771 @@
+{
+  "slug": "app-store-listing",
+  "title": "App Store Listing",
+  "fieldCount": 34,
+  "requiredKeys": [
+    "platformTarget",
+    "appName",
+    "appSummary",
+    "targetAudience",
+    "coreFeatures",
+    "keyBenefits",
+    "outputLanguage"
+  ],
+  "groups": [
+    {
+      "id": "essentials",
+      "title": "Essentials",
+      "description": "Minimum information required to understand the app, its audience, its value, and the intended store destination.",
+      "defaultOpen": true
+    },
+    {
+      "id": "audience_positioning",
+      "title": "Audience & Positioning",
+      "description": "Market position, audience problem, differentiation, voice, and geographic relevance.",
+      "defaultOpen": false
+    },
+    {
+      "id": "product_trust_details",
+      "title": "Product & Trust Details",
+      "description": "Functionality, pricing, requirements, supported devices, evidence, privacy information, and visual assets.",
+      "defaultOpen": false
+    },
+    {
+      "id": "discovery_visuals_release",
+      "title": "Discovery, Visuals & Release",
+      "description": "Keyword direction, promotional messaging, listing rewrites, screenshot concepts, and version-update content.",
+      "defaultOpen": false
+    },
+    {
+      "id": "compliance_output",
+      "title": "Compliance & Output",
+      "description": "Sensitive categories, age considerations, wording restrictions, requested output modules, and final requirements.",
+      "defaultOpen": false
+    }
+  ],
+  "variables": [
+    {
+      "key": "platformTarget",
+      "label": "Store destination",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": true,
+      "placeholder": "Select the store destination",
+      "hint": "Choose whether the listing is for Apple, Google Play, or both.",
+      "help": {
+        "what": "Provide the store destination for this app store listing.",
+        "why": "Store rules, metadata limits, and output sections differ by destination.",
+        "example": "Good example: Apple App Store",
+        "avoid": "Avoid vague placeholders, future features, invented claims, or benefits the current app does not support."
+      },
+      "defaultValue": "Apple App Store",
+      "maxLength": 40,
+      "options": [
+        "Apple App Store",
+        "Google Play",
+        "Both"
+      ]
+    },
+    {
+      "key": "appName",
+      "label": "App name",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": true,
+      "placeholder": "Creatornivo",
+      "hint": "Enter the public app name exactly as it should appear.",
+      "help": {
+        "what": "Provide the app name for this app store listing.",
+        "why": "The app name anchors metadata, title options, and review checks.",
+        "example": "Good example: Creatornivo",
+        "avoid": "Avoid vague placeholders, future features, invented claims, or benefits the current app does not support."
+      },
+      "maxLength": 80
+    },
+    {
+      "key": "appCategory",
+      "label": "App category",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select app category",
+      "hint": "Choose the closest store category or leave Auto.",
+      "help": {
+        "what": "Optional context for the app category field.",
+        "why": "Category helps shape keywords, positioning, and compliance expectations.",
+        "example": "Good example: Productivity",
+        "avoid": "Avoid guessed details, unsupported superlatives, keyword stuffing, or claims that are not supported by the supplied facts."
+      },
+      "defaultValue": "Auto",
+      "maxLength": 40,
+      "options": [
+        "Auto",
+        "Business",
+        "Education",
+        "Entertainment",
+        "Finance",
+        "Health & Fitness",
+        "Productivity",
+        "Social",
+        "Games",
+        "Other"
+      ]
+    },
+    {
+      "key": "appSummary",
+      "label": "What does the app do?",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "A structured AI content workspace that turns briefs into platform-ready drafts.",
+      "hint": "Explain the app in plain factual language.",
+      "help": {
+        "what": "Provide the what does the app do? for this app store listing.",
+        "why": "The listing cannot be accurate without a clear description of the current app.",
+        "example": "Good example: A structured AI content workspace that turns briefs into platform-ready drafts.",
+        "avoid": "Avoid vague placeholders, future features, invented claims, or benefits the current app does not support."
+      },
+      "maxLength": 800,
+      "fullWidth": true
+    },
+    {
+      "key": "targetAudience",
+      "label": "Target users",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "Solo founders and creators who publish content every week.",
+      "hint": "Describe the users this app is built for.",
+      "help": {
+        "what": "Provide the target users for this app store listing.",
+        "why": "Audience context controls benefits, screenshots, keywords, and tone.",
+        "example": "Good example: Solo founders and creators who publish content every week.",
+        "avoid": "Avoid vague placeholders, future features, invented claims, or benefits the current app does not support."
+      },
+      "maxLength": 600,
+      "fullWidth": true
+    },
+    {
+      "key": "coreFeatures",
+      "label": "Core features",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "Template library, saved prompts, personal content library, Markdown export.",
+      "hint": "List the real features users can access now.",
+      "help": {
+        "what": "Provide the core features for this app store listing.",
+        "why": "The prompt must not invent app functionality or imply unavailable features.",
+        "example": "Good example: Template library, saved prompts, personal content library, Markdown export.",
+        "avoid": "Avoid vague placeholders, future features, invented claims, or benefits the current app does not support."
+      },
+      "maxLength": 1200,
+      "fullWidth": true
+    },
+    {
+      "key": "keyBenefits",
+      "label": "Key user benefits",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "Create consistent first drafts without rebuilding every prompt from scratch.",
+      "hint": "Explain the practical value users receive from those features.",
+      "help": {
+        "what": "Provide the key user benefits for this app store listing.",
+        "why": "Benefits connect features to user outcomes while staying truthful.",
+        "example": "Good example: Create consistent first drafts without rebuilding every prompt from scratch.",
+        "avoid": "Avoid vague placeholders, future features, invented claims, or benefits the current app does not support."
+      },
+      "maxLength": 1000,
+      "fullWidth": true
+    },
+    {
+      "key": "primaryGoal",
+      "label": "Listing goal",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select listing goal",
+      "hint": "Choose the main goal for this listing package.",
+      "help": {
+        "what": "Optional context for the listing goal field.",
+        "why": "The goal affects emphasis across metadata, screenshots, and review notes.",
+        "example": "Good example: Drive qualified installs",
+        "avoid": "Avoid guessed details, unsupported superlatives, keyword stuffing, or claims that are not supported by the supplied facts."
+      },
+      "defaultValue": "Drive qualified installs",
+      "maxLength": 40,
+      "options": [
+        "Drive qualified installs",
+        "Improve search discovery",
+        "Improve listing conversion",
+        "Launch a new app",
+        "Refresh positioning",
+        "Explain a major update"
+      ]
+    },
+    {
+      "key": "monetizationModel",
+      "label": "Monetization model",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select monetization model",
+      "hint": "Choose how the app is currently monetized.",
+      "help": {
+        "what": "Optional context for the monetization model field.",
+        "why": "Pricing language and disclosure depend on the monetization model.",
+        "example": "Good example: Freemium",
+        "avoid": "Avoid guessed details, unsupported superlatives, keyword stuffing, or claims that are not supported by the supplied facts."
+      },
+      "defaultValue": "Auto",
+      "maxLength": 40,
+      "options": [
+        "Auto",
+        "Free",
+        "Paid upfront",
+        "Freemium",
+        "Subscription",
+        "In-app purchases",
+        "Ad-supported",
+        "Mixed"
+      ]
+    },
+    {
+      "key": "listingStage",
+      "label": "Listing stage",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select listing stage",
+      "hint": "Choose whether this is a new listing, refresh, or version update.",
+      "help": {
+        "what": "Optional context for the listing stage field.",
+        "why": "The stage determines whether existing copy or release-note fields matter.",
+        "example": "Good example: New launch",
+        "avoid": "Avoid guessed details, unsupported superlatives, keyword stuffing, or claims that are not supported by the supplied facts."
+      },
+      "defaultValue": "New launch",
+      "maxLength": 40,
+      "options": [
+        "New launch",
+        "Existing listing refresh",
+        "Version update"
+      ]
+    },
+    {
+      "key": "outputLanguage",
+      "label": "Output language",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": true,
+      "placeholder": "English",
+      "hint": "Enter the language or regional variant for the listing.",
+      "help": {
+        "what": "Provide the output language for this app store listing.",
+        "why": "The copy should match the language intended for the store listing.",
+        "example": "Good example: English",
+        "avoid": "Avoid vague placeholders, future features, invented claims, or benefits the current app does not support."
+      },
+      "defaultValue": "English",
+      "maxLength": 80
+    },
+    {
+      "key": "userProblem",
+      "label": "User problem or need",
+      "group": "audience_positioning",
+      "groupTitle": "Audience & Positioning",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Creators waste time rewriting prompts and lose consistency across channels.",
+      "hint": "Describe the problem that makes the app useful.",
+      "help": {
+        "what": "Optional context for the user problem or need field.",
+        "why": "Problem context improves relevance without relying on generic benefits.",
+        "example": "Good example: Creators waste time rewriting prompts and lose consistency across channels.",
+        "avoid": "Avoid guessed details, unsupported superlatives, keyword stuffing, or claims that are not supported by the supplied facts."
+      },
+      "maxLength": 800,
+      "fullWidth": true
+    },
+    {
+      "key": "differentiators",
+      "label": "What makes it different?",
+      "group": "audience_positioning",
+      "groupTitle": "Audience & Positioning",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Template-first workflow, transparent generation limits, and no fake social proof.",
+      "hint": "Explain factual differences from alternatives.",
+      "help": {
+        "what": "Optional context for the what makes it different? field.",
+        "why": "Differentiation helps positioning while avoiding unsupported superiority claims.",
+        "example": "Good example: Template-first workflow, transparent generation limits, and no fake social proof.",
+        "avoid": "Avoid guessed details, unsupported superlatives, keyword stuffing, or claims that are not supported by the supplied facts."
+      },
+      "maxLength": 1000,
+      "fullWidth": true
+    },
+    {
+      "key": "competitorContext",
+      "label": "Alternative solutions",
+      "group": "audience_positioning",
+      "groupTitle": "Audience & Positioning",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Alternative to manually rebuilding prompts in a general AI chat tool.",
+      "hint": "Describe relevant alternatives or comparison context.",
+      "help": {
+        "what": "Optional context for the alternative solutions field.",
+        "why": "It helps keep comparisons fair and specific.",
+        "example": "Good example: Alternative to manually rebuilding prompts in a general AI chat tool.",
+        "avoid": "Avoid guessed details, unsupported superlatives, keyword stuffing, or claims that are not supported by the supplied facts."
+      },
+      "maxLength": 800,
+      "fullWidth": true
+    },
+    {
+      "key": "brandVoice",
+      "label": "Brand voice",
+      "group": "audience_positioning",
+      "groupTitle": "Audience & Positioning",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select brand voice",
+      "hint": "Choose the tone that matches the app and audience.",
+      "help": {
+        "what": "Optional context for the brand voice field.",
+        "why": "Voice affects listing copy, screenshot captions, and review notes.",
+        "example": "Good example: Clear and trustworthy",
+        "avoid": "Avoid guessed details, unsupported superlatives, keyword stuffing, or claims that are not supported by the supplied facts."
+      },
+      "defaultValue": "Clear and trustworthy",
+      "maxLength": 40,
+      "options": [
+        "Clear and trustworthy",
+        "Friendly and approachable",
+        "Professional and concise",
+        "Energetic and playful",
+        "Calm and reassuring",
+        "Premium and polished",
+        "Technical and precise",
+        "Minimal and direct"
+      ]
+    },
+    {
+      "key": "targetRegions",
+      "label": "Target countries or regions",
+      "group": "audience_positioning",
+      "groupTitle": "Audience & Positioning",
+      "type": "text",
+      "required": false,
+      "placeholder": "United States, United Kingdom, Canada",
+      "hint": "Add markets where language, terminology, or compliance context matters.",
+      "help": {
+        "what": "Optional context for the target countries or regions field.",
+        "why": "Regional context can change spelling, examples, claims, and metadata choices.",
+        "example": "Good example: United States, United Kingdom, Canada",
+        "avoid": "Avoid guessed details, unsupported superlatives, keyword stuffing, or claims that are not supported by the supplied facts."
+      },
+      "maxLength": 300
+    },
+    {
+      "key": "featureDetails",
+      "label": "Feature details",
+      "group": "product_trust_details",
+      "groupTitle": "Product & Trust Details",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Includes template-specific forms, prompt saving, generated content saving, and export.",
+      "hint": "Add deeper product details that should appear in the listing.",
+      "help": {
+        "what": "Optional context for the feature details field.",
+        "why": "Detailed facts make the output more concrete without adding unsupported claims.",
+        "example": "Good example: Includes template-specific forms, prompt saving, generated content saving, and export.",
+        "avoid": "Avoid guessed details, unsupported superlatives, keyword stuffing, or claims that are not supported by the supplied facts."
+      },
+      "maxLength": 1500,
+      "fullWidth": true
+    },
+    {
+      "key": "pricingDetails",
+      "label": "Pricing and purchases",
+      "group": "product_trust_details",
+      "groupTitle": "Product & Trust Details",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Free plan with daily limits; Pro monthly plan for higher usage.",
+      "hint": "Describe pricing, subscriptions, purchases, or free access.",
+      "help": {
+        "what": "Optional context for the pricing and purchases field.",
+        "why": "Commercial details must be accurate and not implied from the monetization model alone.",
+        "example": "Good example: Free plan with daily limits; Pro monthly plan for higher usage.",
+        "avoid": "Avoid approximate prices, hidden conditions, or purchase claims that are not confirmed."
+      },
+      "maxLength": 800,
+      "fullWidth": true
+    },
+    {
+      "key": "supportedDevices",
+      "label": "Supported devices",
+      "group": "product_trust_details",
+      "groupTitle": "Product & Trust Details",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Select supported devices",
+      "hint": "List the devices or platforms the app supports. Current form controls do not support checkboxes for this template yet, so list the relevant options separated by commas.",
+      "help": {
+        "what": "List one or more relevant options separated by commas. This preserves the prompt variable while using the current textarea control.",
+        "why": "Device support affects Apple and Google Play copy and review checks.",
+        "example": "Good example: iPhone, iPad, Android phone",
+        "avoid": "Avoid guessed details, unsupported superlatives, keyword stuffing, or claims that are not supported by the supplied facts."
+      },
+      "defaultValue": "Auto",
+      "maxLength": 300,
+      "options": [
+        "Auto",
+        "iPhone",
+        "iPad",
+        "Mac",
+        "Apple Watch",
+        "Apple TV",
+        "Apple Vision",
+        "Android phone",
+        "Android tablet",
+        "Wear OS"
+      ],
+      "fullWidth": true
+    },
+    {
+      "key": "usageRequirements",
+      "label": "Usage requirements",
+      "group": "product_trust_details",
+      "groupTitle": "Product & Trust Details",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Requires an account and internet connection.",
+      "hint": "List login, subscription, hardware, OS, or connectivity requirements.",
+      "help": {
+        "what": "Optional context for the usage requirements field.",
+        "why": "Users and reviewers need to know material requirements before installing.",
+        "example": "Good example: Requires an account and internet connection.",
+        "avoid": "Avoid guessed details, unsupported superlatives, keyword stuffing, or claims that are not supported by the supplied facts."
+      },
+      "maxLength": 800,
+      "fullWidth": true
+    },
+    {
+      "key": "proofCredentials",
+      "label": "Approved proof or credentials",
+      "group": "product_trust_details",
+      "groupTitle": "Product & Trust Details",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Use only approved facts; no awards or rankings yet.",
+      "hint": "Add approved awards, certifications, ratings, credentials, or proof.",
+      "help": {
+        "what": "Optional context for the approved proof or credentials field.",
+        "why": "Proof can support trust only when it is real and approved.",
+        "example": "Good example: Use only approved facts; no awards or rankings yet.",
+        "avoid": "Avoid invented awards, ratings, rankings, certifications, user counts, or review claims."
+      },
+      "maxLength": 1200,
+      "fullWidth": true
+    },
+    {
+      "key": "dataPrivacyNotes",
+      "label": "Privacy and data use",
+      "group": "product_trust_details",
+      "groupTitle": "Product & Trust Details",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "User content is saved in a personal library when the user chooses.",
+      "hint": "Describe relevant data collection, account, privacy, or security notes.",
+      "help": {
+        "what": "Optional context for the privacy and data use field.",
+        "why": "Privacy-related copy must stay accurate and avoid unsupported assurances.",
+        "example": "Good example: User content is saved in a personal library when the user chooses.",
+        "avoid": "Avoid broad privacy promises, security guarantees, or compliance claims that have not been reviewed."
+      },
+      "maxLength": 1200,
+      "fullWidth": true
+    },
+    {
+      "key": "visualAssetsContext",
+      "label": "Screens available to feature",
+      "group": "product_trust_details",
+      "groupTitle": "Product & Trust Details",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Template picker, generation form, saved content library, export screen.",
+      "hint": "Describe screenshots or screens available for screenshot messages.",
+      "help": {
+        "what": "Optional context for the screens available to feature field.",
+        "why": "Screenshot messages should describe real screens rather than imagined UI.",
+        "example": "Good example: Template picker, generation form, saved content library, export screen.",
+        "avoid": "Avoid guessed details, unsupported superlatives, keyword stuffing, or claims that are not supported by the supplied facts."
+      },
+      "maxLength": 1500,
+      "showWhen": {
+        "key": "outputModules",
+        "contains": "Screenshot messages"
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "keywordThemes",
+      "label": "Preferred search themes",
+      "group": "discovery_visuals_release",
+      "groupTitle": "Discovery, Visuals & Release",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "AI writing, content templates, creator workflow.",
+      "hint": "List search themes or phrases to consider.",
+      "help": {
+        "what": "Optional context for the preferred search themes field.",
+        "why": "Keyword direction helps ASO without encouraging stuffing.",
+        "example": "Good example: AI writing, content templates, creator workflow",
+        "avoid": "Avoid guessed details, unsupported superlatives, keyword stuffing, or claims that are not supported by the supplied facts."
+      },
+      "maxLength": 800,
+      "fullWidth": true
+    },
+    {
+      "key": "keywordsToAvoid",
+      "label": "Terms to avoid",
+      "group": "discovery_visuals_release",
+      "groupTitle": "Discovery, Visuals & Release",
+      "type": "text",
+      "required": false,
+      "placeholder": "best, guaranteed, viral, #1",
+      "hint": "List terms, competitor names, or claims to avoid.",
+      "help": {
+        "what": "Optional context for the terms to avoid field.",
+        "why": "Avoid terms protect against misleading claims and keyword-policy risks.",
+        "example": "Good example: best, guaranteed, viral, #1",
+        "avoid": "Avoid leaving out terms that could create misleading, risky, or unsupported app-store copy."
+      },
+      "maxLength": 400
+    },
+    {
+      "key": "promotionalFocus",
+      "label": "Promotional focus",
+      "group": "discovery_visuals_release",
+      "groupTitle": "Discovery, Visuals & Release",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Early Access launch positioning without fake scarcity.",
+      "hint": "Describe the promotion angle for promotional text.",
+      "help": {
+        "what": "Optional context for the promotional focus field.",
+        "why": "Promotional copy should be based on a real focus, not invented urgency.",
+        "example": "Good example: Early Access launch positioning without fake scarcity.",
+        "avoid": "Avoid guessed details, unsupported superlatives, keyword stuffing, or claims that are not supported by the supplied facts."
+      },
+      "maxLength": 600,
+      "showWhen": {
+        "key": "outputModules",
+        "contains": "Promotional text"
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "existingListing",
+      "label": "Existing listing copy",
+      "group": "discovery_visuals_release",
+      "groupTitle": "Discovery, Visuals & Release",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Paste the current subtitle, description, keywords, and promo text.",
+      "hint": "Paste current listing copy when refreshing an existing listing.",
+      "help": {
+        "what": "Optional context for the existing listing copy field.",
+        "why": "Refreshes and updates should improve real existing copy rather than start from assumptions.",
+        "example": "Good example: Paste the current subtitle, description, keywords, and promo text.",
+        "avoid": "Avoid guessed details, unsupported superlatives, keyword stuffing, or claims that are not supported by the supplied facts."
+      },
+      "maxLength": 4000,
+      "showWhen": {
+        "key": "listingStage",
+        "equals": [
+          "Existing listing refresh",
+          "Version update"
+        ]
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "versionNumber",
+      "label": "Version number",
+      "group": "discovery_visuals_release",
+      "groupTitle": "Discovery, Visuals & Release",
+      "type": "text",
+      "required": false,
+      "placeholder": "1.2.0",
+      "hint": "Enter the version number for update copy.",
+      "help": {
+        "what": "Optional context for the version number field.",
+        "why": "Release notes should identify the relevant app version when supplied.",
+        "example": "Good example: 1.2.0",
+        "avoid": "Avoid guessed details, unsupported superlatives, keyword stuffing, or claims that are not supported by the supplied facts."
+      },
+      "maxLength": 80,
+      "showWhen": {
+        "key": "listingStage",
+        "equals": "Version update"
+      }
+    },
+    {
+      "key": "releaseChanges",
+      "label": "Changes in this version",
+      "group": "discovery_visuals_release",
+      "groupTitle": "Discovery, Visuals & Release",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Added saved prompts and improved export labels.",
+      "hint": "List confirmed changes, fixes, or improvements in this version.",
+      "help": {
+        "what": "Optional context for the changes in this version field.",
+        "why": "Release notes must describe real changes only.",
+        "example": "Good example: Added saved prompts and improved export labels.",
+        "avoid": "Avoid guessed details, unsupported superlatives, keyword stuffing, or claims that are not supported by the supplied facts."
+      },
+      "maxLength": 2000,
+      "showWhen": {
+        "key": "listingStage",
+        "equals": "Version update"
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "sensitiveCategory",
+      "label": "Sensitive content category",
+      "group": "compliance_output",
+      "groupTitle": "Compliance & Output",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select if relevant",
+      "hint": "Choose a sensitive or regulated category when applicable.",
+      "help": {
+        "what": "Optional context for the sensitive content category field.",
+        "why": "Sensitive categories require extra claim caution and review notes.",
+        "example": "Good example: None",
+        "avoid": "Avoid guessed details, unsupported superlatives, keyword stuffing, or claims that are not supported by the supplied facts."
+      },
+      "defaultValue": "None",
+      "maxLength": 40,
+      "options": [
+        "None",
+        "Health or medical",
+        "Finance or crypto",
+        "Legal",
+        "Children or family",
+        "Dating or social",
+        "Gambling or real money",
+        "Safety or emergency",
+        "Political or civic",
+        "Other regulated area"
+      ]
+    },
+    {
+      "key": "ageAudience",
+      "label": "Intended age audience",
+      "group": "compliance_output",
+      "groupTitle": "Compliance & Output",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select intended age audience",
+      "hint": "Choose the intended audience age group.",
+      "help": {
+        "what": "Optional context for the intended age audience field.",
+        "why": "Age context affects wording, claims, privacy, and store-review considerations.",
+        "example": "Good example: General audience",
+        "avoid": "Avoid guessed details, unsupported superlatives, keyword stuffing, or claims that are not supported by the supplied facts."
+      },
+      "defaultValue": "General audience",
+      "maxLength": 40,
+      "options": [
+        "General audience",
+        "Children",
+        "Teens",
+        "Adults",
+        "Mixed ages",
+        "Auto"
+      ]
+    },
+    {
+      "key": "claimsRestrictions",
+      "label": "Claims and wording restrictions",
+      "group": "compliance_output",
+      "groupTitle": "Compliance & Output",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Do not claim guaranteed reach, rankings, revenue, or time savings.",
+      "hint": "List claims, phrases, or topics that must not appear.",
+      "help": {
+        "what": "Optional context for the claims and wording restrictions field.",
+        "why": "Restrictions prevent unsafe, unsupported, or non-compliant listing language.",
+        "example": "Good example: Do not claim guaranteed reach, rankings, revenue, or time savings.",
+        "avoid": "Avoid leaving out terms that could create misleading, risky, or unsupported app-store copy."
+      },
+      "maxLength": 1200,
+      "fullWidth": true
+    },
+    {
+      "key": "outputModules",
+      "label": "Include in the output",
+      "group": "compliance_output",
+      "groupTitle": "Compliance & Output",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Select output modules",
+      "hint": "List the sections the generated package should include. Current form controls do not support checkboxes for this template yet, so list the relevant options separated by commas.",
+      "help": {
+        "what": "List one or more relevant options separated by commas. This preserves the prompt variable while using the current textarea control.",
+        "why": "Requested modules control output size and whether screenshots, promo text, release notes, or review reports are included.",
+        "example": "Good example: Core listing copy, Keyword suggestions, Screenshot messages, Review report",
+        "avoid": "Avoid guessed details, unsupported superlatives, keyword stuffing, or claims that are not supported by the supplied facts."
+      },
+      "defaultValue": "Core listing copy, Keyword suggestions, Screenshot messages, Review report",
+      "maxLength": 250,
+      "options": [
+        "Core listing copy",
+        "Keyword suggestions",
+        "Screenshot messages",
+        "Promotional text",
+        "Release notes",
+        "Review report"
+      ],
+      "fullWidth": true
+    },
+    {
+      "key": "additionalRequirements",
+      "label": "Additional requirements",
+      "group": "compliance_output",
+      "groupTitle": "Compliance & Output",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Use creatornivo.com as the canonical domain if a URL is needed.",
+      "hint": "Add final constraints or context that does not fit elsewhere.",
+      "help": {
+        "what": "Optional context for the additional requirements field.",
+        "why": "This captures uncommon requirements without adding extra prompt variables.",
+        "example": "Good example: Use creatornivo.com as the canonical domain if a URL is needed.",
+        "avoid": "Avoid guessed details, unsupported superlatives, keyword stuffing, or claims that are not supported by the supplied facts."
+      },
+      "maxLength": 2000,
+      "fullWidth": true
+    }
+  ]
+}

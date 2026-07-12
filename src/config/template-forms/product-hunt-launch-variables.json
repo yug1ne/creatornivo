@@ -1,0 +1,691 @@
+{
+  "slug": "product-hunt-launch",
+  "title": "Product Hunt Launch",
+  "fieldCount": 32,
+  "requiredKeys": [
+    "productName",
+    "productUrl",
+    "productSummary",
+    "targetAudience",
+    "coreProblem",
+    "keyOutcome",
+    "pricingType"
+  ],
+  "groups": [
+    {
+      "id": "essentials",
+      "title": "Essentials",
+      "description": "Product identity, destination, audience, problem, outcome, pricing, and launch objective needed for a usable first result.",
+      "defaultOpen": true
+    },
+    {
+      "id": "positioning_evidence",
+      "title": "Positioning & Evidence",
+      "description": "Feature prioritization, differentiation, use-case clarity, claim accuracy, and product availability wording.",
+      "defaultOpen": false
+    },
+    {
+      "id": "maker_story_offer",
+      "title": "Maker Story & Offer",
+      "description": "Maker comment context, requested feedback, tone, and any real Product Hunt offer.",
+      "defaultOpen": false
+    },
+    {
+      "id": "launch_assets_controls",
+      "title": "Launch Assets & Controls",
+      "description": "Launch tags, gallery messaging, demo placement, CTA direction, regulated-content handling, variants, and special requirements.",
+      "defaultOpen": false
+    }
+  ],
+  "variables": [
+    {
+      "key": "productName",
+      "label": "Product name",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": true,
+      "placeholder": "Creatornivo",
+      "hint": "Enter the public product name exactly as it should appear.",
+      "help": {
+        "what": "Provide the product name for this Product Hunt launch.",
+        "why": "The launch package needs a consistent product name across titles, comments, and copy.",
+        "example": "Good example: Creatornivo",
+        "avoid": "Avoid vague placeholders, invented facts, or wording that overstates what the product can do."
+      },
+      "maxLength": 100
+    },
+    {
+      "key": "productUrl",
+      "label": "Product URL",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": true,
+      "placeholder": "https://www.creatornivo.com",
+      "hint": "Provide the real destination hunters should visit.",
+      "help": {
+        "what": "Provide the product url for this Product Hunt launch.",
+        "why": "Product Hunt launch copy must not invent or guess the product link.",
+        "example": "Good example: https://www.creatornivo.com",
+        "avoid": "Avoid fake URLs, unpublished links, or destinations that do not match the launch."
+      },
+      "format": "url",
+      "maxLength": 500,
+      "fullWidth": true
+    },
+    {
+      "key": "productSummary",
+      "label": "What does the product do?",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "A structured AI workspace that helps creators turn briefs into platform-ready content.",
+      "hint": "Explain the product in plain language.",
+      "help": {
+        "what": "Provide the what does the product do? for this Product Hunt launch.",
+        "why": "The package needs a clear factual description before it can create positioning.",
+        "example": "Good example: A structured AI workspace that helps creators turn briefs into platform-ready content.",
+        "avoid": "Avoid vague placeholders, invented facts, or wording that overstates what the product can do."
+      },
+      "maxLength": 800,
+      "fullWidth": true
+    },
+    {
+      "key": "targetAudience",
+      "label": "Who is it for?",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "Solo founders, marketers, and creators publishing weekly.",
+      "hint": "Describe the people who should care about the launch.",
+      "help": {
+        "what": "Provide the who is it for? for this Product Hunt launch.",
+        "why": "Audience context controls the angle, wording, objections, and CTA.",
+        "example": "Good example: Solo founders, marketers, and creators publishing weekly.",
+        "avoid": "Avoid vague placeholders, invented facts, or wording that overstates what the product can do."
+      },
+      "maxLength": 600,
+      "fullWidth": true
+    },
+    {
+      "key": "coreProblem",
+      "label": "Problem it solves",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "Blank-page friction and inconsistent prompting slow down content production.",
+      "hint": "State the main problem or frustration the product addresses.",
+      "help": {
+        "what": "Provide the problem it solves for this Product Hunt launch.",
+        "why": "A specific problem makes the Product Hunt messaging useful instead of generic.",
+        "example": "Good example: Blank-page friction and inconsistent prompting slow down content production.",
+        "avoid": "Avoid vague placeholders, invented facts, or wording that overstates what the product can do."
+      },
+      "maxLength": 700,
+      "fullWidth": true
+    },
+    {
+      "key": "keyOutcome",
+      "label": "Main user outcome",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": true,
+      "placeholder": "Create more consistent first drafts without rebuilding every prompt.",
+      "hint": "Name the realistic outcome users can expect.",
+      "help": {
+        "what": "Provide the main user outcome for this Product Hunt launch.",
+        "why": "The outcome anchors benefits without requiring exaggerated claims.",
+        "example": "Good example: Create more consistent first drafts without rebuilding every prompt.",
+        "avoid": "Avoid vague placeholders, invented facts, or wording that overstates what the product can do."
+      },
+      "maxLength": 250
+    },
+    {
+      "key": "pricingType",
+      "label": "Pricing type",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": true,
+      "placeholder": "Select pricing type",
+      "hint": "Choose the pricing model that is currently true.",
+      "help": {
+        "what": "Provide the pricing type for this Product Hunt launch.",
+        "why": "Pricing affects positioning, CTA wording, and expectation setting.",
+        "example": "Good example: Freemium",
+        "avoid": "Avoid vague placeholders, invented facts, or wording that overstates what the product can do."
+      },
+      "maxLength": 40,
+      "options": [
+        "Free",
+        "Freemium",
+        "Paid",
+        "Paid with free trial",
+        "Open source",
+        "Custom pricing"
+      ]
+    },
+    {
+      "key": "productType",
+      "label": "Product type",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select product type",
+      "hint": "Choose the closest product category or leave Auto.",
+      "help": {
+        "what": "Optional context for the product type field.",
+        "why": "Product type helps the output fit Product Hunt conventions and user expectations.",
+        "example": "Good example: SaaS or web app",
+        "avoid": "Avoid guessed details, fake social proof, fake urgency, or claims that are not supported by the supplied facts."
+      },
+      "defaultValue": "Auto",
+      "maxLength": 40,
+      "options": [
+        "Auto",
+        "SaaS or web app",
+        "Mobile app",
+        "Desktop app",
+        "Browser extension",
+        "Developer tool or API",
+        "Hardware",
+        "Marketplace or community",
+        "Other"
+      ]
+    },
+    {
+      "key": "launchGoal",
+      "label": "Primary launch goal",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select the launch goal",
+      "hint": "Choose the main launch objective.",
+      "help": {
+        "what": "Optional context for the primary launch goal field.",
+        "why": "The launch goal controls the priority of feedback, awareness, sign-ups, partnerships, or validation.",
+        "example": "Good example: Feedback and early users",
+        "avoid": "Avoid guessed details, fake social proof, fake urgency, or claims that are not supported by the supplied facts."
+      },
+      "defaultValue": "Feedback and early users",
+      "maxLength": 40,
+      "options": [
+        "Feedback and early users",
+        "Product awareness",
+        "Beta testers",
+        "Waitlist sign-ups",
+        "Partnerships",
+        "Launch validation"
+      ]
+    },
+    {
+      "key": "outputLanguage",
+      "label": "Output language",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": false,
+      "placeholder": "English",
+      "hint": "Enter the language or regional variant for the output.",
+      "help": {
+        "what": "Optional context for the output language field.",
+        "why": "The launch copy should match the language the maker will publish in.",
+        "example": "Good example: English",
+        "avoid": "Avoid guessed details, fake social proof, fake urgency, or claims that are not supported by the supplied facts."
+      },
+      "defaultValue": "English",
+      "maxLength": 60
+    },
+    {
+      "key": "keyFeatures",
+      "label": "Key features",
+      "group": "positioning_evidence",
+      "groupTitle": "Positioning & Evidence",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Template library, saved prompts, generation limits, Markdown export.",
+      "hint": "List the most important actual product capabilities.",
+      "help": {
+        "what": "Optional context for the key features field.",
+        "why": "Features help create concrete copy without inventing product functionality.",
+        "example": "Good example: Template library, saved prompts, generation limits, Markdown export.",
+        "avoid": "Avoid guessed details, fake social proof, fake urgency, or claims that are not supported by the supplied facts."
+      },
+      "maxLength": 1200,
+      "fullWidth": true
+    },
+    {
+      "key": "mainUseCases",
+      "label": "Main use cases",
+      "group": "positioning_evidence",
+      "groupTitle": "Positioning & Evidence",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "LinkedIn posts, newsletters, launch copy, product descriptions.",
+      "hint": "Describe practical situations where the product is useful.",
+      "help": {
+        "what": "Optional context for the main use cases field.",
+        "why": "Use cases make the launch more understandable to Product Hunt readers.",
+        "example": "Good example: LinkedIn posts, newsletters, launch copy, product descriptions.",
+        "avoid": "Avoid guessed details, fake social proof, fake urgency, or claims that are not supported by the supplied facts."
+      },
+      "maxLength": 1000,
+      "fullWidth": true
+    },
+    {
+      "key": "differentiation",
+      "label": "What makes it different?",
+      "group": "positioning_evidence",
+      "groupTitle": "Positioning & Evidence",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Template-first generation with honest limits and no fake social proof.",
+      "hint": "Explain the real difference from alternatives.",
+      "help": {
+        "what": "Optional context for the what makes it different? field.",
+        "why": "Differentiation helps positioning while avoiding unsupported superiority claims.",
+        "example": "Good example: Template-first generation with honest limits and no fake social proof.",
+        "avoid": "Avoid guessed details, fake social proof, fake urgency, or claims that are not supported by the supplied facts."
+      },
+      "maxLength": 900,
+      "fullWidth": true
+    },
+    {
+      "key": "proofPoints",
+      "label": "Proof and verified results",
+      "group": "positioning_evidence",
+      "groupTitle": "Positioning & Evidence",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Use only verified launch facts and product capabilities.",
+      "hint": "Add only approved metrics, testimonials, customer facts, or evidence.",
+      "help": {
+        "what": "Optional context for the proof and verified results field.",
+        "why": "Proof can support credibility, but only when it is real and approved.",
+        "example": "Good example: Use only verified launch facts and product capabilities.",
+        "avoid": "Avoid invented user counts, rankings, reviews, metrics, or customer results."
+      },
+      "maxLength": 1500,
+      "fullWidth": true
+    },
+    {
+      "key": "availability",
+      "label": "Availability",
+      "group": "positioning_evidence",
+      "groupTitle": "Positioning & Evidence",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Public beta is available on the website.",
+      "hint": "Explain who can access the product and any real limitations.",
+      "help": {
+        "what": "Optional context for the availability field.",
+        "why": "Availability prevents misleading CTAs for waitlists, private betas, or limited access.",
+        "example": "Good example: Public beta is available on the website.",
+        "avoid": "Avoid guessed details, fake social proof, fake urgency, or claims that are not supported by the supplied facts."
+      },
+      "maxLength": 700,
+      "fullWidth": true
+    },
+    {
+      "key": "productStatus",
+      "label": "Current product status",
+      "group": "positioning_evidence",
+      "groupTitle": "Positioning & Evidence",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select product status",
+      "hint": "Choose the current launch stage.",
+      "help": {
+        "what": "Optional context for the current product status field.",
+        "why": "The output must not present a beta, waitlist, or coming-soon product as fully live.",
+        "example": "Good example: Public beta",
+        "avoid": "Avoid guessed details, fake social proof, fake urgency, or claims that are not supported by the supplied facts."
+      },
+      "defaultValue": "Live",
+      "maxLength": 30,
+      "options": [
+        "Live",
+        "Public beta",
+        "Private beta",
+        "Waitlist",
+        "Coming soon"
+      ]
+    },
+    {
+      "key": "competitorContext",
+      "label": "Alternative or competitor context",
+      "group": "positioning_evidence",
+      "groupTitle": "Positioning & Evidence",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Alternative to rebuilding prompts manually in a general AI chat interface.",
+      "hint": "Describe fair comparison context without attacking competitors.",
+      "help": {
+        "what": "Optional context for the alternative or competitor context field.",
+        "why": "It helps frame the product honestly without unsupported comparison claims.",
+        "example": "Good example: Alternative to rebuilding prompts manually in a general AI chat interface.",
+        "avoid": "Avoid unsupported superiority claims, attacks, or comparison points you cannot verify."
+      },
+      "maxLength": 1000,
+      "fullWidth": true
+    },
+    {
+      "key": "makerNames",
+      "label": "Maker or team details",
+      "group": "maker_story_offer",
+      "groupTitle": "Maker Story & Offer",
+      "type": "text",
+      "required": false,
+      "placeholder": "Alex, solo founder and builder.",
+      "hint": "Add the maker names, roles, or team context to mention.",
+      "help": {
+        "what": "Optional context for the maker or team details field.",
+        "why": "Maker context makes the first comment and replies sound human and specific.",
+        "example": "Good example: Alex, solo founder and builder.",
+        "avoid": "Avoid guessed details, fake social proof, fake urgency, or claims that are not supported by the supplied facts."
+      },
+      "maxLength": 300
+    },
+    {
+      "key": "makerStory",
+      "label": "Why you created it",
+      "group": "maker_story_offer",
+      "groupTitle": "Maker Story & Offer",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Built after noticing creators repeating the same prompt setup for every channel.",
+      "hint": "Explain the motivation or origin story behind the product.",
+      "help": {
+        "what": "Optional context for the why you created it field.",
+        "why": "A real maker story helps the launch feel authentic without fabricated drama.",
+        "example": "Good example: Built after noticing creators repeating the same prompt setup for every channel.",
+        "avoid": "Avoid guessed details, fake social proof, fake urgency, or claims that are not supported by the supplied facts."
+      },
+      "maxLength": 1200,
+      "fullWidth": true
+    },
+    {
+      "key": "buildJourney",
+      "label": "Build journey",
+      "group": "maker_story_offer",
+      "groupTitle": "Maker Story & Offer",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Started with core templates, then added saved prompts, usage limits, and billing.",
+      "hint": "Summarize meaningful build milestones or tradeoffs.",
+      "help": {
+        "what": "Optional context for the build journey field.",
+        "why": "Build journey details support a credible maker-led first comment.",
+        "example": "Good example: Started with core templates, then added saved prompts, usage limits, and billing.",
+        "avoid": "Avoid guessed details, fake social proof, fake urgency, or claims that are not supported by the supplied facts."
+      },
+      "maxLength": 1200,
+      "fullWidth": true
+    },
+    {
+      "key": "feedbackRequest",
+      "label": "Feedback you want",
+      "group": "maker_story_offer",
+      "groupTitle": "Maker Story & Offer",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Which templates would make your weekly publishing workflow easier?",
+      "hint": "Ask for specific useful feedback from the Product Hunt community.",
+      "help": {
+        "what": "Optional context for the feedback you want field.",
+        "why": "Specific feedback requests work better than generic engagement-bait.",
+        "example": "Good example: Which templates would make your weekly publishing workflow easier?",
+        "avoid": "Avoid guessed details, fake social proof, fake urgency, or claims that are not supported by the supplied facts."
+      },
+      "maxLength": 600,
+      "fullWidth": true
+    },
+    {
+      "key": "tone",
+      "label": "Maker voice",
+      "group": "maker_story_offer",
+      "groupTitle": "Maker Story & Offer",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select maker voice",
+      "hint": "Choose the voice that fits the maker and product.",
+      "help": {
+        "what": "Optional context for the maker voice field.",
+        "why": "Tone keeps launch copy aligned with the maker’s natural style.",
+        "example": "Good example: Natural and maker-led",
+        "avoid": "Avoid guessed details, fake social proof, fake urgency, or claims that are not supported by the supplied facts."
+      },
+      "defaultValue": "Natural and maker-led",
+      "maxLength": 40,
+      "options": [
+        "Natural and maker-led",
+        "Friendly and concise",
+        "Technical and precise",
+        "Bold but grounded",
+        "Warm and story-led"
+      ]
+    },
+    {
+      "key": "promoAvailable",
+      "label": "Product Hunt offer",
+      "group": "maker_story_offer",
+      "groupTitle": "Maker Story & Offer",
+      "type": "select",
+      "required": false,
+      "placeholder": "Off",
+      "hint": "Turn on only when there is a real launch offer. Choose On or Off.",
+      "help": {
+        "what": "Choose whether a real Product Hunt launch offer exists. Offer details appear only when this is On.",
+        "why": "The prompt must not invent discounts, scarcity, codes, or promotional terms.",
+        "example": "Good example: Off",
+        "avoid": "Avoid guessed details, fake social proof, fake urgency, or claims that are not supported by the supplied facts."
+      },
+      "defaultValue": "Off",
+      "maxLength": 5,
+      "options": [
+        "On",
+        "Off"
+      ]
+    },
+    {
+      "key": "promoDetails",
+      "label": "Offer details",
+      "group": "maker_story_offer",
+      "groupTitle": "Maker Story & Offer",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Launch week Pro plan discount for Product Hunt visitors.",
+      "hint": "Add exact offer terms, dates, codes, and eligibility.",
+      "help": {
+        "what": "Optional context for the offer details field.",
+        "why": "Offer details must be precise when a promotion is used.",
+        "example": "Good example: Launch week Pro plan discount for Product Hunt visitors.",
+        "avoid": "Avoid fake scarcity, unclear eligibility, or promotional terms that are not approved."
+      },
+      "maxLength": 700,
+      "showWhen": {
+        "key": "promoAvailable",
+        "equals": "On"
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "launchTags",
+      "label": "Preferred launch tags",
+      "group": "launch_assets_controls",
+      "groupTitle": "Launch Assets & Controls",
+      "type": "text",
+      "required": false,
+      "placeholder": "Productivity, Marketing, Writing",
+      "hint": "List Product Hunt topics or tags under consideration.",
+      "help": {
+        "what": "Optional context for the preferred launch tags field.",
+        "why": "Tags help suggest launch positioning without pretending Product Hunt approved them.",
+        "example": "Good example: Productivity, Marketing, Writing",
+        "avoid": "Avoid guessed details, fake social proof, fake urgency, or claims that are not supported by the supplied facts."
+      },
+      "maxLength": 200
+    },
+    {
+      "key": "galleryPlan",
+      "label": "Gallery assets or ideas",
+      "group": "launch_assets_controls",
+      "groupTitle": "Launch Assets & Controls",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Hero screenshot, template picker, generation form, saved content library.",
+      "hint": "Describe available launch visuals or concepts.",
+      "help": {
+        "what": "Optional context for the gallery assets or ideas field.",
+        "why": "Gallery notes guide screenshot captions and visual messaging.",
+        "example": "Good example: Hero screenshot, template picker, generation form, saved content library.",
+        "avoid": "Avoid guessed details, fake social proof, fake urgency, or claims that are not supported by the supplied facts."
+      },
+      "maxLength": 1500,
+      "fullWidth": true
+    },
+    {
+      "key": "demoVideoUrl",
+      "label": "Demo video URL",
+      "group": "launch_assets_controls",
+      "groupTitle": "Launch Assets & Controls",
+      "type": "text",
+      "required": false,
+      "placeholder": "https://www.youtube.com/watch?v=example",
+      "hint": "Provide a real demo video link if one exists.",
+      "help": {
+        "what": "Optional context for the demo video url field.",
+        "why": "The output must not invent demo links or claim a video exists.",
+        "example": "Good example: https://www.youtube.com/watch?v=example",
+        "avoid": "Avoid fake URLs, unpublished links, or destinations that do not match the launch."
+      },
+      "format": "url",
+      "maxLength": 500,
+      "fullWidth": true
+    },
+    {
+      "key": "ctaFocus",
+      "label": "Primary call to action",
+      "group": "launch_assets_controls",
+      "groupTitle": "Launch Assets & Controls",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select primary CTA",
+      "hint": "Choose the main action for hunters.",
+      "help": {
+        "what": "Optional context for the primary call to action field.",
+        "why": "CTA focus keeps the package from asking for too many actions at once.",
+        "example": "Good example: Try it and share feedback",
+        "avoid": "Avoid guessed details, fake social proof, fake urgency, or claims that are not supported by the supplied facts."
+      },
+      "defaultValue": "Try it and share feedback",
+      "maxLength": 40,
+      "options": [
+        "Try it and share feedback",
+        "Try the product",
+        "Join the waitlist",
+        "Request access",
+        "Explore the demo",
+        "Learn more"
+      ]
+    },
+    {
+      "key": "regulatedArea",
+      "label": "Regulated or sensitive area",
+      "group": "launch_assets_controls",
+      "groupTitle": "Launch Assets & Controls",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select only when relevant",
+      "hint": "Choose a category when the product touches a regulated or high-stakes area.",
+      "help": {
+        "what": "Optional context for the regulated or sensitive area field.",
+        "why": "Regulated topics require extra claim caution and may need jurisdiction context.",
+        "example": "Good example: None",
+        "avoid": "Avoid guessed details, fake social proof, fake urgency, or claims that are not supported by the supplied facts."
+      },
+      "defaultValue": "None",
+      "maxLength": 40,
+      "options": [
+        "None",
+        "Health or medical",
+        "Finance or investing",
+        "Legal",
+        "Employment or HR",
+        "Insurance",
+        "Safety or security",
+        "Children",
+        "Other regulated area"
+      ]
+    },
+    {
+      "key": "jurisdiction",
+      "label": "Relevant jurisdiction",
+      "group": "launch_assets_controls",
+      "groupTitle": "Launch Assets & Controls",
+      "type": "text",
+      "required": false,
+      "placeholder": "United States",
+      "hint": "Enter the country, region, or market relevant to regulated claims.",
+      "help": {
+        "what": "Optional context for the relevant jurisdiction field.",
+        "why": "Jurisdiction can affect safety, legal, financial, medical, or employment wording.",
+        "example": "Good example: United States",
+        "avoid": "Avoid guessed details, fake social proof, fake urgency, or claims that are not supported by the supplied facts."
+      },
+      "maxLength": 150,
+      "showWhen": {
+        "key": "regulatedArea",
+        "notEquals": "None"
+      }
+    },
+    {
+      "key": "variantCount",
+      "label": "Number of tagline options",
+      "group": "launch_assets_controls",
+      "groupTitle": "Launch Assets & Controls",
+      "type": "select",
+      "required": false,
+      "placeholder": "3",
+      "hint": "Choose how many tagline options to generate.",
+      "help": {
+        "what": "Optional context for the number of tagline options field.",
+        "why": "Variant count controls output size without adding extra fields.",
+        "example": "Good example: 3",
+        "avoid": "Avoid guessed details, fake social proof, fake urgency, or claims that are not supported by the supplied facts."
+      },
+      "defaultValue": "3",
+      "maxLength": 1,
+      "options": [
+        "1",
+        "3",
+        "5"
+      ]
+    },
+    {
+      "key": "additionalRequirements",
+      "label": "Additional requirements",
+      "group": "launch_assets_controls",
+      "groupTitle": "Launch Assets & Controls",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Avoid fake urgency, fake rankings, or invented user counts.",
+      "hint": "Add any final constraints that do not fit elsewhere.",
+      "help": {
+        "what": "Optional context for the additional requirements field.",
+        "why": "This catches unusual requirements without changing the prompt structure.",
+        "example": "Good example: Avoid fake urgency, fake rankings, or invented user counts.",
+        "avoid": "Avoid guessed details, fake social proof, fake urgency, or claims that are not supported by the supplied facts."
+      },
+      "maxLength": 2000,
+      "fullWidth": true
+    }
+  ]
+}

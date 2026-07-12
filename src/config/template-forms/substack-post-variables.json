@@ -1,0 +1,807 @@
+{
+  "slug": "substack-post",
+  "title": "Substack Post",
+  "fieldCount": 36,
+  "requiredKeys": [
+    "postTopic",
+    "primaryGoal",
+    "targetAudience",
+    "centralThesis",
+    "keyPoints",
+    "outputLanguage"
+  ],
+  "groups": [
+    {
+      "id": "essentials",
+      "title": "Essentials",
+      "description": "Topic, audience, message, factual input, format, language, length, CTA, and title preferences for a valid first draft.",
+      "defaultOpen": true
+    },
+    {
+      "id": "editorial_shape",
+      "title": "Editorial Shape",
+      "description": "Angle, reader knowledge level, opening, structure, depth, counterpoints, and ending style.",
+      "defaultOpen": false
+    },
+    {
+      "id": "voice_author_context",
+      "title": "Voice & Author Context",
+      "description": "Author voice, point of view, writing sample, public context, and terms or styles to avoid.",
+      "defaultOpen": false
+    },
+    {
+      "id": "publishing_monetization",
+      "title": "Publishing & Monetization",
+      "description": "Publication context, access model, free-preview boundary, paid-offer details, subject style, URL slug, and tags.",
+      "defaultOpen": false
+    },
+    {
+      "id": "facts_sources_restrictions",
+      "title": "Facts, Sources & Restrictions",
+      "description": "Evidence, quotations, approved links, disclosures, sensitive-topic context, and additional requirements.",
+      "defaultOpen": false
+    }
+  ],
+  "variables": [
+    {
+      "key": "postTopic",
+      "label": "Post topic",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "What should the post be about?",
+      "hint": "Describe the subject, event, question, argument, or idea the post should cover.",
+      "help": {
+        "what": "Provide the post topic for this Substack post.",
+        "why": "The model cannot determine the intended subject from the template name alone.",
+        "example": "Good example: Why small creators struggle to stay consistent",
+        "avoid": "Avoid vague placeholders, unsupported claims, broad topics without a clear thesis, or changing the requested post into a different subject."
+      },
+      "maxLength": 600,
+      "fullWidth": true
+    },
+    {
+      "key": "primaryGoal",
+      "label": "Primary goal",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": true,
+      "placeholder": "Choose the main purpose",
+      "hint": "Select the single most important outcome the post should achieve.",
+      "help": {
+        "what": "Provide the primary goal for this Substack post.",
+        "why": "The same topic requires a different structure depending on the intended reader outcome.",
+        "example": "Good example: Inform or explain",
+        "avoid": "Avoid vague placeholders, unsupported claims, broad topics without a clear thesis, or changing the requested post into a different subject."
+      },
+      "defaultValue": "Inform or explain",
+      "options": [
+        "Inform or explain",
+        "Share analysis",
+        "Persuade readers",
+        "Tell a story",
+        "Build reader trust",
+        "Start a discussion",
+        "Drive subscriptions",
+        "Announce an update"
+      ],
+      "maxLength": 32
+    },
+    {
+      "key": "targetAudience",
+      "label": "Target readers",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "Who should read this, and what do they already care about?",
+      "hint": "Describe the intended readers, their interests, situation, or level of familiarity.",
+      "help": {
+        "what": "Provide the target readers for this Substack post.",
+        "why": "Reader knowledge and motivation materially affect examples, terminology, depth, and framing.",
+        "example": "Good example: Solo creators who publish weekly and want a calmer editorial workflow.",
+        "avoid": "Avoid vague placeholders, unsupported claims, broad topics without a clear thesis, or changing the requested post into a different subject."
+      },
+      "maxLength": 600,
+      "fullWidth": true
+    },
+    {
+      "key": "centralThesis",
+      "label": "Central message",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "What should readers understand, believe, or reconsider?",
+      "hint": "State the main argument, conclusion, lesson, or takeaway in plain language.",
+      "help": {
+        "what": "Provide the central message for this Substack post.",
+        "why": "A long-form Substack post needs one controlling idea rather than an unfocused collection of points.",
+        "example": "Good example: Consistency improves when creators stop rebuilding their process from scratch.",
+        "avoid": "Avoid vague placeholders, unsupported claims, broad topics without a clear thesis, or changing the requested post into a different subject."
+      },
+      "maxLength": 800,
+      "fullWidth": true
+    },
+    {
+      "key": "keyPoints",
+      "label": "Key points",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "List the facts, arguments, examples, or sections that must appear.",
+      "hint": "Include the information that cannot be safely inferred or omitted.",
+      "help": {
+        "what": "Provide the key points for this Substack post.",
+        "why": "It identifies the user-supplied substance that the final post must cover.",
+        "example": "Good example: Templates reduce blank-page friction, saved prompts preserve useful patterns, and simple weekly review keeps the system honest.",
+        "avoid": "Avoid vague placeholders, unsupported claims, broad topics without a clear thesis, or changing the requested post into a different subject."
+      },
+      "maxLength": 1500,
+      "fullWidth": true
+    },
+    {
+      "key": "sourceMaterial",
+      "label": "Source material",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Paste notes, research, drafts, references, interview material, or source excerpts.",
+      "hint": "Only supplied or independently verified information may be presented as factual.",
+      "help": {
+        "what": "Optional context for the source material field.",
+        "why": "It provides factual grounding and lets the template transform existing material without inventing evidence.",
+        "example": "Good example: Use only the supplied workflow notes; do not invent subscriber counts, revenue, or studies.",
+        "avoid": "Avoid invented studies, statistics, quotations, links, citations, attribution, or evidence that was not supplied."
+      },
+      "maxLength": 4000,
+      "fullWidth": true
+    },
+    {
+      "key": "postFormat",
+      "label": "Post format",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": false,
+      "placeholder": "Choose a format",
+      "hint": "Select a format or let the model choose from the goal and material.",
+      "help": {
+        "what": "Optional context for the post format field.",
+        "why": "Substack supports several distinct editorial formats that require different content architecture.",
+        "example": "Good example: Essay",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, fabricated social proof, hidden advertising, engagement bait, or unsupported claims."
+      },
+      "defaultValue": "Auto",
+      "options": [
+        "Auto",
+        "Essay",
+        "Analysis",
+        "How-to guide",
+        "Personal story",
+        "Commentary",
+        "Curated roundup",
+        "Announcement or update",
+        "Interview or Q&A"
+      ],
+      "maxLength": 32
+    },
+    {
+      "key": "outputLanguage",
+      "label": "Output language",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": true,
+      "placeholder": "English",
+      "hint": "Enter the language or regional language variant for the complete output.",
+      "help": {
+        "what": "Provide the output language for this Substack post.",
+        "why": "Language cannot always be inferred reliably from the topic or source material.",
+        "example": "Good example: English",
+        "avoid": "Avoid vague placeholders, unsupported claims, broad topics without a clear thesis, or changing the requested post into a different subject."
+      },
+      "defaultValue": "English",
+      "maxLength": 80
+    },
+    {
+      "key": "postLength",
+      "label": "Post length",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": false,
+      "placeholder": "Choose a target length",
+      "hint": "Select a practical editorial range rather than an exact mandatory word count.",
+      "help": {
+        "what": "Optional context for the post length field.",
+        "why": "The intended depth and subscriber commitment materially affect the final post.",
+        "example": "Good example: Standard: 1,000–1,600 words",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, fabricated social proof, hidden advertising, engagement bait, or unsupported claims."
+      },
+      "defaultValue": "Platform appropriate",
+      "options": [
+        "Platform appropriate",
+        "Short: 600–900 words",
+        "Standard: 1,000–1,600 words",
+        "Deep dive: 1,800–3,000 words",
+        "Custom from requirements"
+      ],
+      "maxLength": 32
+    },
+    {
+      "key": "callToAction",
+      "label": "Primary reader action",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": false,
+      "placeholder": "Choose one reader action",
+      "hint": "Select one proportionate action or allow the model to choose.",
+      "help": {
+        "what": "Optional context for the primary reader action field.",
+        "why": "A Substack post should support one clear next step rather than several competing conversion goals.",
+        "example": "Good example: Subscribe",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, fabricated social proof, hidden advertising, engagement bait, or unsupported claims."
+      },
+      "defaultValue": "Auto",
+      "options": [
+        "Auto",
+        "Subscribe",
+        "Upgrade to paid",
+        "Comment",
+        "Reply by email",
+        "Share the post",
+        "Visit a supplied link",
+        "Reflect only",
+        "No CTA"
+      ],
+      "maxLength": 32
+    },
+    {
+      "key": "titleDirection",
+      "label": "Title direction",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": false,
+      "placeholder": "Example: direct, curious, analytical, understated, or include a phrase",
+      "hint": "Leave blank to generate accurate platform-appropriate title options automatically.",
+      "help": {
+        "what": "Optional context for the title direction field.",
+        "why": "Titles strongly affect editorial positioning and email opens, while remaining optional for users without a preference.",
+        "example": "Good example: Direct and understated, with the phrase content workflow",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, fabricated social proof, hidden advertising, engagement bait, or unsupported claims."
+      },
+      "maxLength": 200
+    },
+    {
+      "key": "editorialAngle",
+      "label": "Editorial angle",
+      "group": "editorial_shape",
+      "groupTitle": "Editorial Shape",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "What distinctive perspective should shape the post?",
+      "hint": "Use this for a specific lens, tension, interpretation, or position.",
+      "help": {
+        "what": "Optional context for the editorial angle field.",
+        "why": "It helps differentiate the post when the general topic can support several valid approaches.",
+        "example": "Good example: The problem is not motivation; it is asking creators to rebuild the same decisions every week.",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, fabricated social proof, hidden advertising, engagement bait, or unsupported claims."
+      },
+      "maxLength": 700,
+      "fullWidth": true
+    },
+    {
+      "key": "audienceKnowledge",
+      "label": "Reader knowledge level",
+      "group": "editorial_shape",
+      "groupTitle": "Editorial Shape",
+      "type": "select",
+      "required": false,
+      "placeholder": "Choose reader familiarity",
+      "hint": "Controls terminology, explanation depth, and assumed background knowledge.",
+      "help": {
+        "what": "Optional context for the reader knowledge level field.",
+        "why": "The same argument must be explained differently to beginners and specialists.",
+        "example": "Good example: General audience",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, fabricated social proof, hidden advertising, engagement bait, or unsupported claims."
+      },
+      "defaultValue": "General audience",
+      "options": [
+        "New to the topic",
+        "General audience",
+        "Informed readers",
+        "Specialist readers"
+      ],
+      "maxLength": 32
+    },
+    {
+      "key": "openingApproach",
+      "label": "Opening approach",
+      "group": "editorial_shape",
+      "groupTitle": "Editorial Shape",
+      "type": "select",
+      "required": false,
+      "placeholder": "Choose how the post begins",
+      "hint": "Controls the first impression without requiring the user to write the opening.",
+      "help": {
+        "what": "Optional context for the opening approach field.",
+        "why": "The opening has a major effect on reader retention and may depend on the author’s preferred style.",
+        "example": "Good example: Reader question",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, fabricated social proof, hidden advertising, engagement bait, or unsupported claims."
+      },
+      "defaultValue": "Auto",
+      "options": [
+        "Auto",
+        "Direct statement",
+        "Personal scene",
+        "Reader question",
+        "Surprising fact",
+        "Current event",
+        "Tension or contradiction",
+        "Short anecdote",
+        "Immediate takeaway"
+      ],
+      "maxLength": 32
+    },
+    {
+      "key": "structurePreference",
+      "label": "Structure preference",
+      "group": "editorial_shape",
+      "groupTitle": "Editorial Shape",
+      "type": "select",
+      "required": false,
+      "placeholder": "Choose a content flow",
+      "hint": "Select a preferred progression or allow the model to build the most natural structure.",
+      "help": {
+        "what": "Optional context for the structure preference field.",
+        "why": "Structure materially changes how a long-form post develops and how easily it can be followed.",
+        "example": "Good example: Problem and response",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, fabricated social proof, hidden advertising, engagement bait, or unsupported claims."
+      },
+      "defaultValue": "Auto",
+      "options": [
+        "Auto",
+        "Narrative progression",
+        "Argument and evidence",
+        "Problem and response",
+        "Step-by-step",
+        "Thematic sections",
+        "Question and answer",
+        "Chronological"
+      ],
+      "maxLength": 32
+    },
+    {
+      "key": "depthLevel",
+      "label": "Content depth",
+      "group": "editorial_shape",
+      "groupTitle": "Editorial Shape",
+      "type": "select",
+      "required": false,
+      "placeholder": "Choose the level of depth",
+      "hint": "Controls context, nuance, examples, and treatment of implications.",
+      "help": {
+        "what": "Optional context for the content depth field.",
+        "why": "Word count alone does not specify the expected analytical or explanatory depth.",
+        "example": "Good example: Balanced",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, fabricated social proof, hidden advertising, engagement bait, or unsupported claims."
+      },
+      "defaultValue": "Balanced",
+      "options": [
+        "Concise",
+        "Balanced",
+        "Detailed",
+        "Deep and nuanced"
+      ],
+      "maxLength": 32
+    },
+    {
+      "key": "includeCounterpoints",
+      "label": "Address counterpoints",
+      "group": "editorial_shape",
+      "groupTitle": "Editorial Shape",
+      "type": "select",
+      "required": false,
+      "placeholder": "Not applicable",
+      "hint": "Include a strong objection, limitation, trade-off, or alternative explanation when relevant.",
+      "help": {
+        "what": "Optional context for the address counterpoints field.",
+        "why": "Some essays benefit from explicit counterarguments, while others become unnecessarily diluted by them.",
+        "example": "Good example: On",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, fabricated social proof, hidden advertising, engagement bait, or unsupported claims."
+      },
+      "defaultValue": "Off",
+      "options": [
+        "Off",
+        "On"
+      ]
+    },
+    {
+      "key": "endingStyle",
+      "label": "Ending style",
+      "group": "editorial_shape",
+      "groupTitle": "Editorial Shape",
+      "type": "select",
+      "required": false,
+      "placeholder": "Choose how the post closes",
+      "hint": "Controls the emotional and editorial effect of the final paragraphs.",
+      "help": {
+        "what": "Optional context for the ending style field.",
+        "why": "A reflective essay and a practical guide require different types of closure.",
+        "example": "Good example: Practical next step",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, fabricated social proof, hidden advertising, engagement bait, or unsupported claims."
+      },
+      "options": [
+        "Auto",
+        "Clear takeaway",
+        "Reflective close",
+        "Practical next step",
+        "Open question",
+        "Forward-looking note",
+        "Brief summary"
+      ],
+      "maxLength": 32
+    },
+    {
+      "key": "tone",
+      "label": "Tone",
+      "group": "voice_author_context",
+      "groupTitle": "Voice & Author Context",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Choose up to three qualities; or list up to three qualities separated by commas.",
+      "hint": "Select only the qualities that should be consistently noticeable. Available options: Clear and natural, Conversational, Analytical, Reflective, Warm, Direct, Witty, Serious, Provocative but fair.",
+      "help": {
+        "what": "Optional context for the tone field.",
+        "why": "Substack is strongly author-driven, so tone materially affects whether the result feels authentic.",
+        "example": "Good example: Clear and natural, reflective",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, fabricated social proof, hidden advertising, engagement bait, or unsupported claims."
+      },
+      "defaultValue": "Clear and natural",
+      "maxLength": 100,
+      "fullWidth": true
+    },
+    {
+      "key": "pointOfView",
+      "label": "Point of view",
+      "group": "voice_author_context",
+      "groupTitle": "Voice & Author Context",
+      "type": "select",
+      "required": false,
+      "placeholder": "Choose a narrative perspective",
+      "hint": "First person should be used only when supported by supplied author context.",
+      "help": {
+        "what": "Optional context for the point of view field.",
+        "why": "Perspective changes the relationship between the writer, subject, and subscriber.",
+        "example": "Good example: Mixed editorial voice",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, fabricated social proof, hidden advertising, engagement bait, or unsupported claims."
+      },
+      "defaultValue": "Auto",
+      "options": [
+        "Auto",
+        "First person",
+        "Second person",
+        "Third person",
+        "Mixed editorial voice"
+      ],
+      "maxLength": 32
+    },
+    {
+      "key": "voiceSample",
+      "label": "Writing sample",
+      "group": "voice_author_context",
+      "groupTitle": "Voice & Author Context",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Paste a short sample of the author’s natural writing.",
+      "hint": "The model should follow its broad rhythm and formality without copying phrases.",
+      "help": {
+        "what": "Optional context for the writing sample field.",
+        "why": "A supplied sample provides more reliable voice adaptation than numerous abstract style controls.",
+        "example": "Good example: I like practical essays that make one useful distinction and then show how it changes the work.",
+        "avoid": "Avoid fake first-person experience, invented credentials, copied private wording, or details the author would not publish."
+      },
+      "maxLength": 1500,
+      "fullWidth": true
+    },
+    {
+      "key": "authorContext",
+      "label": "Author context",
+      "group": "voice_author_context",
+      "groupTitle": "Voice & Author Context",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Relevant experience, perspective, role, relationship, or personal context",
+      "hint": "Include only details the author is comfortable presenting publicly.",
+      "help": {
+        "what": "Optional context for the author context field.",
+        "why": "It allows credible first-person framing without fabricating expertise or personal experience.",
+        "example": "Good example: Solo founder building Creatornivo for content workflows.",
+        "avoid": "Avoid fake first-person experience, invented credentials, copied private wording, or details the author would not publish."
+      },
+      "maxLength": 1200,
+      "fullWidth": true
+    },
+    {
+      "key": "termsToAvoid",
+      "label": "Terms or styles to avoid",
+      "group": "voice_author_context",
+      "groupTitle": "Voice & Author Context",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "List unwanted phrases, clichés, framing, terminology, or stylistic habits.",
+      "hint": "Use one field for all brand, voice, and wording restrictions.",
+      "help": {
+        "what": "Optional context for the terms or styles to avoid field.",
+        "why": "Specific prohibitions cannot always be inferred from positive tone selections.",
+        "example": "Good example: game-changing, unlock the power of, in today's fast-paced world",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, fabricated social proof, hidden advertising, engagement bait, or unsupported claims."
+      },
+      "maxLength": 800,
+      "fullWidth": true
+    },
+    {
+      "key": "publicationName",
+      "label": "Publication context",
+      "group": "publishing_monetization",
+      "groupTitle": "Publishing & Monetization",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Publication name, subject area, recurring series, or subscriber expectations",
+      "hint": "Provide only context that should subtly influence the post and packaging.",
+      "help": {
+        "what": "Optional context for the publication context field.",
+        "why": "A post may need to fit an established publication, series, or reader relationship.",
+        "example": "Good example: Creatornivo Notes, a publication about practical creator workflows",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, fabricated social proof, hidden advertising, engagement bait, or unsupported claims."
+      },
+      "maxLength": 500,
+      "fullWidth": true
+    },
+    {
+      "key": "accessModel",
+      "label": "Post access",
+      "group": "publishing_monetization",
+      "groupTitle": "Publishing & Monetization",
+      "type": "select",
+      "required": false,
+      "placeholder": "Choose who can read the post",
+      "hint": "Controls whether the output includes paid-reader framing or a free-preview marker.",
+      "help": {
+        "what": "Optional context for the post access field.",
+        "why": "Free, paid, and preview-based posts require materially different content boundaries and CTAs.",
+        "example": "Good example: Free",
+        "avoid": "Avoid invented paid benefits, prices, deadlines, discounts, exclusivity, scarcity, trial terms, or subscriber perks."
+      },
+      "defaultValue": "Free",
+      "options": [
+        "Free",
+        "Paid",
+        "Paid with free preview"
+      ],
+      "maxLength": 32
+    },
+    {
+      "key": "previewBoundary",
+      "label": "Free-preview boundary",
+      "group": "publishing_monetization",
+      "groupTitle": "Publishing & Monetization",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Describe what free readers should see before the paid section begins.",
+      "hint": "Leave blank to place the break after genuine value but before the strongest paid material.",
+      "help": {
+        "what": "Optional context for the free-preview boundary field.",
+        "why": "The author may have a deliberate editorial or conversion boundary for free subscribers.",
+        "example": "Good example: Free readers should get the problem and first practical distinction before the paid framework.",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, fabricated social proof, hidden advertising, engagement bait, or unsupported claims."
+      },
+      "maxLength": 700,
+      "showWhen": {
+        "key": "accessModel",
+        "equals": "Paid with free preview"
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "paidOfferDetails",
+      "label": "Paid subscriber value",
+      "group": "publishing_monetization",
+      "groupTitle": "Publishing & Monetization",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "What do paid subscribers genuinely receive?",
+      "hint": "Include only real benefits, frequency, access, or membership details.",
+      "help": {
+        "what": "Optional context for the paid subscriber value field.",
+        "why": "Any paid-upgrade language must be based on real supplied benefits rather than invented perks.",
+        "example": "Good example: Paid subscribers receive the complete workflow breakdown and monthly source notes.",
+        "avoid": "Avoid invented paid benefits, prices, deadlines, discounts, exclusivity, scarcity, trial terms, or subscriber perks."
+      },
+      "maxLength": 800,
+      "showWhen": {
+        "key": "accessModel",
+        "equals": [
+          "Paid",
+          "Paid with free preview"
+        ]
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "emailSubjectStyle",
+      "label": "Email subject style",
+      "group": "publishing_monetization",
+      "groupTitle": "Publishing & Monetization",
+      "type": "select",
+      "required": false,
+      "placeholder": "Choose an inbox style",
+      "hint": "Controls subject-line positioning without permitting deceptive framing.",
+      "help": {
+        "what": "Optional context for the email subject style field.",
+        "why": "Substack posts are also email messages, making inbox presentation part of the native output.",
+        "example": "Good example: Direct and clear",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, fabricated social proof, hidden advertising, engagement bait, or unsupported claims."
+      },
+      "defaultValue": "Auto",
+      "options": [
+        "Auto",
+        "Direct and clear",
+        "Curiosity-led",
+        "Benefit-led",
+        "Editorial",
+        "Personal and understated"
+      ],
+      "maxLength": 32
+    },
+    {
+      "key": "urlSlug",
+      "label": "Preferred URL slug",
+      "group": "publishing_monetization",
+      "groupTitle": "Publishing & Monetization",
+      "type": "text",
+      "required": false,
+      "placeholder": "example-post-slug",
+      "hint": "Leave blank to generate a short lowercase slug from the recommended title.",
+      "help": {
+        "what": "Optional context for the preferred url slug field.",
+        "why": "A custom post URL may be important for clarity, sharing, and long-term discovery.",
+        "example": "Good example: creator-content-workflow",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, fabricated social proof, hidden advertising, engagement bait, or unsupported claims."
+      },
+      "maxLength": 48
+    },
+    {
+      "key": "tags",
+      "label": "Tags or discovery terms",
+      "group": "publishing_monetization",
+      "groupTitle": "Publishing & Monetization",
+      "type": "text",
+      "required": false,
+      "placeholder": "Example: independent media, creator economy, online publishing",
+      "hint": "Add focused terms only; the output will suggest no more than five tags.",
+      "help": {
+        "what": "Optional context for the tags or discovery terms field.",
+        "why": "The author may use an existing publication taxonomy that cannot be inferred reliably.",
+        "example": "Good example: creator economy, publishing systems, content workflow",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, fabricated social proof, hidden advertising, engagement bait, or unsupported claims."
+      },
+      "maxLength": 300
+    },
+    {
+      "key": "claimsEvidence",
+      "label": "Claims and evidence",
+      "group": "facts_sources_restrictions",
+      "groupTitle": "Facts, Sources & Restrictions",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "List important claims with the evidence, data, or source supporting each one.",
+      "hint": "Unsupported material claims will be softened, omitted, or flagged.",
+      "help": {
+        "what": "Optional context for the claims and evidence field.",
+        "why": "It separates factual support from general notes and reduces invented or overstated claims.",
+        "example": "Good example: Claim: blank-page work creates repeat friction. Evidence: supplied product notes and user workflow observations only.",
+        "avoid": "Avoid invented studies, statistics, quotations, links, citations, attribution, or evidence that was not supplied."
+      },
+      "maxLength": 2500,
+      "fullWidth": true
+    },
+    {
+      "key": "quotesAttribution",
+      "label": "Quotes and attribution",
+      "group": "facts_sources_restrictions",
+      "groupTitle": "Facts, Sources & Restrictions",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Paste approved quotes with speaker, source, and context.",
+      "hint": "A paraphrase will not be converted into a direct quotation.",
+      "help": {
+        "what": "Optional context for the quotes and attribution field.",
+        "why": "Quotation wording and attribution require exact user-supplied information.",
+        "example": "Good example: Quote from approved interview notes: “The hard part is starting from zero every Monday.”",
+        "avoid": "Avoid invented studies, statistics, quotations, links, citations, attribution, or evidence that was not supplied."
+      },
+      "maxLength": 2000,
+      "fullWidth": true
+    },
+    {
+      "key": "linksToInclude",
+      "label": "Links to include",
+      "group": "facts_sources_restrictions",
+      "groupTitle": "Facts, Sources & Restrictions",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Paste approved URLs with a note explaining where each should lead.",
+      "hint": "No links or destinations will be invented.",
+      "help": {
+        "what": "Optional context for the links to include field.",
+        "why": "The model must know the exact approved destinations for references or conversion actions.",
+        "example": "Good example: https://www.creatornivo.com/resources — creator workflow resources",
+        "avoid": "Avoid invented studies, statistics, quotations, links, citations, attribution, or evidence that was not supplied."
+      },
+      "maxLength": 2000,
+      "fullWidth": true
+    },
+    {
+      "key": "disclosure",
+      "label": "Disclosure information",
+      "group": "facts_sources_restrictions",
+      "groupTitle": "Facts, Sources & Restrictions",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Sponsorship, affiliate, employer, product, client, or other material relationship",
+      "hint": "Relevant commercial or personal interests should be disclosed clearly.",
+      "help": {
+        "what": "Optional context for the disclosure information field.",
+        "why": "Transparent affiliation cannot be inferred and may be necessary for reader trust or compliance.",
+        "example": "Good example: Disclosure: I created Creatornivo.",
+        "avoid": "Avoid hiding material relationships or implying independent neutrality when a sponsorship, affiliate, employer, product, client, or ownership connection exists."
+      },
+      "maxLength": 1000,
+      "fullWidth": true
+    },
+    {
+      "key": "sensitiveContext",
+      "label": "Sensitive topic context",
+      "group": "facts_sources_restrictions",
+      "groupTitle": "Facts, Sources & Restrictions",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Jurisdiction, risk, affected group, uncertainty, or wording that needs special care",
+      "hint": "Use for health, legal, financial, political, safety, child-related, or regulated topics.",
+      "help": {
+        "what": "Optional context for the sensitive topic context field.",
+        "why": "High-stakes subjects may require jurisdictional or contextual details that cannot be safely inferred.",
+        "example": "Good example: Avoid personal productivity claims that imply guaranteed mental-health or business outcomes.",
+        "avoid": "Avoid personalized medical, legal, financial, political, safety, tax, or regulated advice unless the supplied context supports safe general wording."
+      },
+      "maxLength": 1500,
+      "fullWidth": true
+    },
+    {
+      "key": "additionalRequirements",
+      "label": "Additional requirements",
+      "group": "facts_sources_restrictions",
+      "groupTitle": "Facts, Sources & Restrictions",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Add any remaining instructions that materially affect the final result.",
+      "hint": "Use this single field for custom length, formatting, required wording, or special restrictions.",
+      "help": {
+        "what": "Optional context for the additional requirements field.",
+        "why": "It supports legitimate uncommon requirements without creating numerous low-value fields.",
+        "example": "Good example: Use Markdown headings sparingly and avoid fake urgency, fake social proof, and invented metrics.",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, fabricated social proof, hidden advertising, engagement bait, or unsupported claims."
+      },
+      "maxLength": 2000,
+      "fullWidth": true
+    }
+  ]
+}

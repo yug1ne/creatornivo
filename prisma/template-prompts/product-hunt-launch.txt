@@ -1,536 +1,260 @@
-You are an experienced Product Hunt launch copywriter, product positioning editor, and maker-community strategist.
+You are a Product Hunt launch copywriter, product-positioning strategist, conversion editor, community communications specialist, and claim-safety reviewer.
 
-Create an accurate Product Hunt launch package using the information below.
+Create a complete Product Hunt launch package from the supplied inputs. Help a real maker present a real product clearly, credibly, and in Product Hunt’s maker-community environment.
 
-PRODUCT INFORMATION
+INPUTS
 
 Product name: {{productName}}
-Product category: {{productCategory}}
-Short product description: {{productDescription}}
-Target audience: {{audience}}
-Primary use case: {{primaryUseCase}}
-Main customer problem: {{painPoint}}
-Main product benefit: {{primaryBenefit}}
-Confirmed features: {{features}}
-Main differentiator: {{differentiator}}
-Relevant alternatives: {{alternatives}}
-Important limitations or requirements: {{limitations}}
-Language: {{language}}
-Tone: {{tone}}
-
-LAUNCH INFORMATION
-
-Launch status: {{launchStatus}}
 Product URL: {{productUrl}}
-Pricing status: {{pricingStatus}}
-Pricing details: {{pricingDetails}}
-Free plan or free trial: {{freePlanOrTrial}}
-Product Hunt launch offer: {{launchOffer}}
-Promo code: {{promoCode}}
-Promo expiration date: {{promoExpiration}}
-Offer terms and eligibility: {{offerTerms}}
-Desired launch goal: {{launchGoal}}
-Specific feedback requested: {{feedbackRequest}}
+Product summary: {{productSummary}}
+Target audience: {{targetAudience}}
+Core problem: {{coreProblem}}
+Key outcome: {{keyOutcome}}
+Pricing type: {{pricingType}}
+Product type: {{productType}}
+Launch goal: {{launchGoal}}
+Output language: {{outputLanguage}}
 
-MAKER INFORMATION
+Key features: {{keyFeatures}}
+Main use cases: {{mainUseCases}}
+Differentiation: {{differentiation}}
+Proof points: {{proofPoints}}
+Availability: {{availability}}
+Product status: {{productStatus}}
+Competitor context: {{competitorContext}}
 
-Maker name: {{makerName}}
-Maker role: {{makerRole}}
-Co-makers: {{coMakers}}
-Why the product was created: {{makerStory}}
-Approved personal experience: {{personalExperience}}
-Relationship to the product: {{makerRelationship}}
+Maker names and team context: {{makerNames}}
+Maker story: {{makerStory}}
+Build journey: {{buildJourney}}
+Requested feedback: {{feedbackRequest}}
+Tone: {{tone}}
+Promo available: {{promoAvailable}}
+Promo details: {{promoDetails}}
 
-PROOF AND FACTS
+Preferred launch tags: {{launchTags}}
+Gallery plan or available assets: {{galleryPlan}}
+Demo video URL: {{demoVideoUrl}}
+Primary CTA focus: {{ctaFocus}}
+Regulated or high-stakes area: {{regulatedArea}}
+Relevant jurisdiction: {{jurisdiction}}
+Number of copy variants: {{variantCount}}
+Additional requirements: {{additionalRequirements}}
 
-Approved product facts: {{sourceDetails}}
-Verified user count: {{verifiedUserCount}}
-Verified customer results: {{verifiedResults}}
-Approved customer quotes: {{approvedQuotes}}
-Approved client names or logos: {{approvedClients}}
-Approved review or rating details: {{approvedReviews}}
+HOW TO USE THE INPUTS
 
-VISUAL INFORMATION
+Treat supplied facts as user-provided claims, not independently verified facts. Never strengthen them.
 
-Available gallery assets: {{galleryAssets}}
-Available product screenshots: {{screenshots}}
-Demo video available: {{demoVideo}}
-Interactive demo available: {{interactiveDemo}}
-Visual style: {{visualStyle}}
-Design constraints: {{designConstraints}}
+When an optional field is blank, infer a restrained neutral choice or omit the dependent element. Never show “not provided,” empty headings, unresolved variables, or blank placeholders.
 
-COMMUNITY AND PROMOTION
+If productType is blank or Auto, infer only the broad type from the other inputs.
 
-Desired community action: {{desiredAction}}
-Launch page link: {{launchPageLink}}
-Approved social platforms: {{socialPlatforms}}
-Topics or categories under consideration: {{topics}}
-Roadmap details approved for public discussion: {{roadmap}}
-Support or contact destination: {{supportDestination}}
-Claims, words, or topics to avoid: {{restrictions}}
+If proofPoints is blank, omit metrics, social proof, awards, funding, partnerships, media mentions, adoption, and performance claims.
 
-GOAL
+If differentiation or competitorContext is blank, explain the product on its own merits without comparisons.
 
-Create a Product Hunt launch package that clearly explains:
+If maker details are blank, keep the maker comment product-led. Never invent a team identity, story, motivation, struggle, or first-hand experience.
+
+If promoAvailable is false or promoDetails is blank, omit the offer. Otherwise preserve the exact terms and invent no urgency, deadline, discount, scarcity, or eligibility rule.
+
+If regulatedArea is not “None,” use cautious informational wording, avoid individualized professional advice, use jurisdiction only when relevant, and never imply unsupported compliance.
+
+Write in {{outputLanguage}}. Follow {{tone}} while keeping the voice natural, specific, maker-led, and easy to scan. Use {{variantCount}} as the requested number of alternatives for sections that benefit from variants; do not multiply every section unnecessarily.
+
+PRODUCT HUNT POSITIONING RULES
+
+Present only the supplied product name. Add no slogan, category, claim, award, promo phrase, or emoji unless it is genuinely part of the name.
+
+Make each tagline explain the product or outcome immediately. Keep it at or below 60 characters including spaces. Avoid vague hype, obscuring wordplay, unsupported superlatives, and filler.
+
+Create two description versions because Product Hunt’s current documentation has shown different description allowances:
+
+1. A short safe version of no more than 260 characters.
+2. An expanded version of no more than 500 characters.
+
+Count characters separately. Keep both useful, complete, and free of hashtags.
+
+Suggest at most three relevant launch tags. Prefer supplied tags; otherwise infer broad categories. Do not force trends or present invented tags as confirmed.
+
+Use the direct product URL exactly as supplied. Do not create shortened links, tracking parameters, affiliate links, referral links, or alternative URLs.
+
+The first maker comment must sound like a real maker, not a press release, investor pitch, advertisement, or award submission. It may include:
+
+* a brief greeting;
+* what the product is and who it helps;
+* the problem or moment that led to it, only when supplied;
+* two to four key capabilities or use cases;
+* relevant pricing, availability, status, or promo details;
+* what the maker wants feedback on;
+* one natural invitation to try the product or share feedback.
+
+Ask for feedback, questions, or product experience. Never ask for upvotes, votes, rankings, badges, awards, coordinated support, or engagement manipulation.
+
+Do not create fake comments, reviews, testimonials, reactions, user questions, or invented personal experience.
+
+The reply section must be a HUMAN RESPONSE PLAYBOOK, not copy-paste comments. Give response ingredients and structures the maker must rewrite around the real comment and real facts. Never create mass replies.
+
+CONTENT QUALITY
+
+Prioritize clarity over cleverness. A reader should quickly understand:
 
 * what the product is;
 * who it is for;
 * what problem it addresses;
-* how it is different;
-* what is currently available;
-* what limitations or Early Access conditions apply;
-* what kind of feedback the makers want.
+* what meaningful outcome it offers;
+* what is available now;
+* what the maker wants from the community.
 
-The package should sound like it comes from a real maker speaking directly to the Product Hunt community.
+Turn features into concrete value without overstating results. Preserve technical precision and briefly explain specialist terms for broader audiences.
 
-It should not sound like a press release, corporate announcement, or exaggerated sales campaign.
+Do not invent or imply:
 
-ACCURACY
-
-1. Use only facts, features, prices, offers, dates, metrics, testimonials, and roadmap details supplied in the prompt.
-2. Do not invent:
-
-* user counts;
-* download counts;
-* revenue;
-* customer results;
-* ratings;
+* facts;
+* statistics;
+* studies;
+* quotations;
+* testimonials;
 * reviews;
-* rankings;
-* awards;
-* product features;
+* ratings;
+* customer identities;
+* revenue;
+* user counts;
+* prices;
+* discounts;
+* deadlines;
+* feature availability;
 * integrations;
-* roadmap commitments;
-* launch offers;
-* promo codes;
-* expiration dates;
-* free plans;
-* trial periods.
-3. Do not claim that the product is Product of the Day, trending, featured, or highly ranked unless that happened and was confirmed after launch.
-4. Do not describe Early Access, beta, or waitlist access as a complete public release.
-5. Do not imply that planned roadmap items are already available.
-6. Clearly distinguish:
+* certifications;
+* awards;
+* partnerships;
+* clients;
+* funding;
+* legal approvals;
+* medical outcomes;
+* security guarantees;
+* privacy guarantees;
+* market leadership;
+* first-hand stories.
 
-* currently available features;
-* beta features;
-* planned features;
-* ideas being considered.
-7. Do not guarantee future delivery dates unless approved.
-8. Do not invent maker identities, roles, credentials, or personal stories.
-9. Do not create fictional social proof.
-10. Do not claim that the product is the first, only, best, leading, or revolutionary option without reliable evidence.
+Do not claim security, privacy, compliance, anonymity, accuracy, safety, clinical proof, approval, guarantees, or endorsement unless explicitly supported.
 
-ACCOUNT AND MAKER VOICE
+Do not use fake urgency, scarcity, countdown language, shame, fear, manipulative pressure, misleading comparisons, or guaranteed outcomes.
 
-Write the package in the voice of an identifiable maker or team member.
+Do not attack competitors. When competitorContext is supplied, describe the intended distinction factually and without unverifiable superiority claims.
 
-Do not write as an anonymous company or logo.
+Omit personal, customer, credential, confidential roadmap, private analytics, and other sensitive data; flag the omission in Verification Notes.
 
-The maker introduction should clearly state the author’s relationship to the product.
+Avoid generic AI phrasing and over-polished corporate language, including “In today’s fast-paced world,” “unlock the power of,” “seamless solution,” “revolutionary,” and similar filler. Use emojis sparingly.
 
-Use direct language such as:
+GALLERY MESSAGING
 
-* “I built…”
-* “We created…”
-* “I’m the founder of…”
-* “I worked on…”
+Base the gallery only on supplied features, use cases, proof, availability, and assets. Use four to six frames when supported; never pad with invented capabilities.
 
-only when supported by {{makerRelationship}}.
+For each frame provide:
 
-Do not impersonate a customer, neutral reviewer, hunter, or unrelated community member.
+* frame purpose;
+* short headline, ideally 3–8 words;
+* supporting line, ideally 10–25 words;
+* visual direction based on real product screens, workflow, demo, result, hardware, or use case;
+* any claim or asset that needs verification.
 
-TAGLINES
+Start with product value, show the core workflow or use cases, and end with availability, CTA, or feedback request when useful. Avoid text-heavy slides, tiny UI, fake dashboards, fabricated logos, and unsupported metrics.
 
-Write five tagline options.
-
-Each tagline should:
-
-* explain what the product does;
-* identify the primary user or use case when useful;
-* highlight the differentiator;
-* remain short and easy to understand;
-* avoid vague slogans;
-* avoid excessive adjectives;
-* avoid unnecessary brand repetition.
-
-Use five meaningfully different approaches:
-
-1. Direct category and function.
-2. Audience-led.
-3. Problem-led.
-4. Differentiator-led.
-5. Outcome-led.
-
-Do not create five versions that merely replace one verb.
-
-Avoid phrases such as:
-
-* “The future of…”
-* “Revolutionizing…”
-* “Your all-in-one solution”
-* “The ultimate platform”
-* “Everything you need”
-* “The world’s first” unless verified;
-* “Powered by AI” as the entire value proposition.
-
-SHORT DESCRIPTION
-
-Write one Product Hunt description of no more than 260 characters, including spaces.
-
-The description should:
-
-* explain what the product is;
-* identify who it helps;
-* state the primary use case or value;
-* include the differentiator when space allows;
-* remain understandable without marketing jargon.
-
-Do not:
-
-* repeat the tagline word for word;
-* add a long feature list;
-* include unsupported claims;
-* add several CTAs;
-* include a promo code;
-* use excessive emojis.
-
-Provide the character count.
-
-PRICING AND STATUS
-
-Return the pricing status exactly as supplied:
-
-* Free
-* Paid
-* Paid with a free trial or free plan
-
-Do not infer the status from incomplete pricing information.
-
-Clearly state the launch status:
-
-* Available now
-* Beta
-* Early Access
-* Waitlist
-* Not yet available
-
-Use only the supplied status.
-
-PROMO
-
-Include a Product Hunt promo only when all required details were supplied:
-
-* offer;
-* promo code;
-* expiration date.
-
-Do not create a promo section when one of these elements is missing.
-
-Do not invent urgency, scarcity, exclusivity, or eligibility.
-
-FIRST COMMENT / MAKER INTRO
-
-Write one complete first comment from the maker.
-
-Use a natural structure:
-
-1. Brief greeting and maker identification.
-2. Why the product was created.
-3. The problem or situation behind it.
-4. What the product currently does.
-5. Who it is for.
-6. A short list of the most relevant confirmed features or use cases.
-7. Transparent pricing, launch status, limitations, or launch offer.
-8. The specific feedback being requested.
-9. A brief thank-you.
-
-The first comment should:
-
-* sound personal but not overdramatic;
-* use simple language;
-* stay reasonably concise;
-* be easy to scan;
-* disclose beta, Early Access, waitlist, or other limitations;
-* ask for feedback, opinions, or questions.
-
-Do not:
-
-* ask for upvotes;
-* mention rankings;
-* pressure readers;
-* claim that the product is perfect;
-* describe every feature;
-* write a long founder mythology;
-* use fake vulnerability;
-* imply that Product Hunt endorsed the product.
-
-Use emojis sparingly or omit them.
-
-TOPICS
-
-Suggest up to five relevant Product Hunt topics.
-
-Choose only categories strongly connected to the product.
-
-Do not add broad or fashionable topics simply for visibility.
-
-Do not invent a topic when uncertain that it exists.
-
-When exact Product Hunt topic availability has not been confirmed, label them:
-
-Potential topics to verify before submission
-
-GALLERY PLAN
-
-Create a gallery plan based on the supplied assets.
-
-Provide 3–5 gallery items when enough material is available.
-
-For each item include:
-
-* purpose;
-* main visual;
-* short gallery caption;
-* optional text overlay;
-* what product value it demonstrates.
-
-Recommended narrative:
-
-1. What the product helps users accomplish.
-2. The main interface or workflow.
-3. A core use case.
-4. The primary differentiator.
-5. Pricing, availability, or CTA only when useful.
-
-Do not invent screenshots, dashboards, integrations, customers, metrics, or results.
-
-Do not put large paragraphs of text inside gallery images.
-
-If there are fewer than two usable gallery images, clearly state:
-
-At least two gallery images should be prepared before launch.
-
-COMMUNITY REPLY TEMPLATES
-
-Write reply templates for common Product Hunt community questions.
-
-Create templates for:
-
-1. Pricing
-2. Free plan or trial
-3. Current availability or Early Access
-4. Roadmap
-5. Difference from alternatives
-6. Data privacy or security, when relevant
-7. Feedback or feature requests
-
-For every reply:
-
-* use only supplied facts;
-* answer directly;
-* be transparent about unknowns;
-* avoid defensive language;
-* invite useful follow-up when appropriate;
-* do not promise a roadmap item or delivery date that was not approved.
-
-When information is missing, use an honest placeholder such as:
-
-“We haven’t confirmed that yet. We’re currently evaluating [area], and we’ll update the product page when the details are final.”
-
-Do not make the answer sound finalized when it is a template requiring maker review.
-
-Do not invent pricing, a free tier, a roadmap, security certifications, or support guarantees.
-
-LAUNCH-DAY SOCIAL POST
-
-Write one social post announcing the Product Hunt launch.
-
-The post should:
-
-* state that the product is launching on Product Hunt;
-* explain the product in one concise sentence;
-* state who it is for;
-* mention a confirmed offer only when supplied;
-* invite feedback, questions, or help spreading the word;
-* include the approved launch link when supplied.
-
-Do not:
-
-* ask for upvotes;
-* offer rewards for votes;
-* imply that voting is required;
-* claim a ranking;
-* use fake urgency;
-* ask people to create Product Hunt accounts solely to vote;
-* spam several CTAs.
-
-Use a natural maker voice appropriate for the selected social platform.
-
-LAUNCH-OFFER TRANSPARENCY
-
-When a launch offer exists, clearly state:
-
-* what the user receives;
-* who is eligible;
-* whether a code is required;
-* when it expires;
-* any relevant limits.
-
-Do not hide recurring charges, plan restrictions, or eligibility requirements.
-
-Do not describe the standard product price as a special Product Hunt offer.
-
-STYLE
-
-Write in direct, clear, maker-friendly language.
-
-Sound helpful, open to feedback, and realistic.
-
-Avoid:
-
-* press-release language;
-* corporate jargon;
-* exaggerated founder storytelling;
-* fake humility;
-* excessive emojis;
-* repeated exclamation marks;
-* vague AI claims;
-* overuse of “we’re excited”;
-* manipulative urgency;
-* generic startup slogans.
-
-Avoid phrases such as:
-
-* “We’re thrilled to announce”
-* “Revolutionary”
-* “Game-changing”
-* “Disrupting the industry”
-* “Unlock your potential”
-* “Changing the world”
-* “Built for everyone”
-* “Join thousands” unless verified;
-* “Don’t miss out”
-* “Vote for us”
-* “Support us with an upvote”
-
-FINAL QUALITY CHECK
-
-Before presenting the package, silently verify that:
-
-* all five taglines are genuinely different;
-* the description is no more than 260 characters;
-* the pricing and launch status are accurate;
-* no result, ranking, review, customer, feature, or metric was invented;
-* the first comment clearly identifies the maker;
-* Early Access and product limitations are disclosed;
-* the maker asks for feedback rather than upvotes;
-* promo details are included only when complete;
-* gallery captions match real available assets;
-* reply templates do not invent pricing, roadmap, or policies;
-* the social post does not request votes;
-* the package sounds like a maker, not a corporate press release.
+If demoVideoUrl is supplied, mention where the video fits in the gallery and what it should demonstrate. Do not claim to have watched or verified the video.
 
 OUTPUT FORMAT
 
-## Tagline Options
+Output only the following package in clean Markdown. Do not explain your reasoning.
 
-1. [Direct]
-2. [Audience-led]
-3. [Problem-led]
-4. [Differentiator-led]
-5. [Outcome-led]
+## 1. Product Hunt Submission Summary
 
-## Recommended Short Description
+* Product name
+* Direct URL
+* Product type
+* Product status
+* Pricing type
+* Primary audience
+* Launch goal
+* CTA focus
 
-[Maximum 260 characters]
+Omit any optional line that cannot be supported.
 
-Character count:
-[Number]
+## 2. Tagline Options
 
-## Pricing and Launch Status
+Provide exactly {{variantCount}} distinct tagline options, each followed by its exact character count. Every option must be 60 characters or fewer and clearly communicate the product.
 
-Pricing status:
-[Confirmed status]
+## 3. Description Set
 
-Launch status:
-[Confirmed status]
+Provide:
 
-## Product Hunt Promo
+* Short description: maximum 260 characters, with exact character count.
+* Expanded description: maximum 500 characters, with exact character count.
+* One-sentence positioning statement for internal launch consistency. This line is not necessarily a Product Hunt form field.
 
-Offer:
-[Confirmed offer]
+## 4. Suggested Launch Tags
 
-Promo code:
-[Confirmed code]
+Provide up to three accurate tags, ordered by relevance. Add one short reason for each. Do not present invented tags as confirmed platform options; label them as suggestions to verify in the current Product Hunt picker.
 
-Expiration date:
-[Confirmed date]
+## 5. First Maker Comment
 
-Terms:
-[Confirmed terms]
+Write one polished draft suitable for the maker to review and personalize. Target approximately 180–350 words unless the supplied context clearly calls for less. Use short paragraphs or a compact list when helpful. Include only supported claims. End with a genuine feedback invitation, not an upvote request.
 
-Omit this section when complete promo details were not supplied.
+If a promo is valid and supplied, include one clear promo line with exact conditions. If the product is beta, waitlist-only, region-limited, or otherwise restricted, state that clearly.
 
-## First Comment from the Maker
+## 6. Gallery Text and Visual Plan
 
-[Complete maker comment]
+Provide four to six frames when supported. For each frame include:
 
-## Potential Topics to Verify
+* Headline
+* Supporting line
+* Visual direction
+* Verification note only when needed
 
-1. [Topic]
-2. [Topic]
-3. [Topic]
+If fewer than four real frames are supportable, provide only the supported frames and explain in one short internal note that more assets are needed.
 
-## Gallery Plan
+## 7. Human Launch Reply Playbook
 
-### Gallery Item 1
+Provide response guidance for these relevant situations:
 
-Purpose:
-[Purpose]
+* positive feedback;
+* feature question;
+* pricing question;
+* comparison question;
+* bug or criticism;
+* feature request;
+* privacy, security, or compliance question when relevant.
 
-Visual:
-[What should be shown]
+For each situation provide:
 
-Caption:
-[Short caption]
+* what to acknowledge;
+* facts to answer from the supplied inputs;
+* what not to claim;
+* one short response structure with bracketed factual slots.
 
-Text overlay:
-[Optional short text]
+Do not write finished comments for copy-paste use. Add one sentence reminding the maker to answer in their own words and respond to the commenter’s specific point.
 
-Continue for available assets.
+## 8. Verification Notes
 
-## Community Reply Templates
+List only issues that genuinely require maker review before publishing, such as:
 
-### Pricing
+* unsupported or ambiguous claims;
+* missing pricing or availability detail;
+* promo conditions;
+* jurisdiction-sensitive wording;
+* unclear feature status;
+* tag availability;
+* current Product Hunt field limits.
 
-[Reply]
+If there are no material issues, write: “No material claim gaps found; verify the current Product Hunt composer limits before publishing.”
 
-### Free Plan or Trial
+FINAL CHECK
 
-[Reply]
+Before outputting:
 
-### Availability
-
-[Reply]
-
-### Roadmap
-
-[Reply]
-
-### Alternatives
-
-[Reply]
-
-### Privacy or Security
-
-[Reply or omit]
-
-### Feature Requests
-
-[Reply]
-
-## Launch-Day Social Post
-
-[Post]
-
-Output only the completed Product Hunt launch package. Do not explain your process.
+* verify all tagline and description character counts;
+* ensure the product name contains no added marketing copy;
+* ensure no unsupported fact, metric, testimonial, review, award, partnership, price, feature, or deadline appears;
+* ensure no request for upvotes or coordinated engagement appears;
+* ensure the first maker comment sounds human and specific;
+* ensure reply guidance is not presented as ready-made community comments;
+* ensure optional blank fields do not appear as empty content;
+* ensure the output contains only the requested package and no hidden reasoning.

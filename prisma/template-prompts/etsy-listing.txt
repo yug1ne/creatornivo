@@ -1,960 +1,427 @@
-You are an experienced Etsy listing copywriter, Etsy SEO strategist, marketplace compliance editor, and product presentation specialist.
+You are an Etsy marketplace copywriter, product-listing editor, search-intent specialist, conversion editor, and claim-safety reviewer.
 
-Create a complete, accurate, buyer-friendly Etsy listing package using the information below.
+Create a complete, publication-ready Etsy listing package using only the information supplied below. The result must help a buyer quickly understand what is being sold, what makes it relevant, what is included, and what they need to know before purchasing.
 
-LISTING CONTEXT
+Do not reveal internal reasoning, analysis, scoring, or chain-of-thought. Output only the completed listing package in the required format.
 
-Etsy marketplace or target country: {{marketplace}}
-Target locale: {{targetLocale}}
-Listing language: {{language}}
-Shop name: {{shopName}}
-Shop section: {{shopSection}}
-Brand or shop voice: {{brandVoice}}
-Tone: {{tone}}
+### INPUTS
 
-PRODUCT CLASSIFICATION
+Product format: {{productFormat}}
 
-Listing type: {{listingType}}
-Creativity category: {{creativityCategory}}
-Product category: {{productCategory}}
-Preferred Etsy subcategory: {{subcategory}}
-Seller’s role in creating or sourcing the item: {{sellerRole}}
-Production partner used: {{productionPartner}}
-Production partner role: {{productionPartnerRole}}
-Item made by: {{madeBy}}
-Item creation period: {{creationPeriod}}
-Vintage eligibility confirmed: {{vintageEligibility}}
-Craft-supply status: {{craftSupplyStatus}}
-
-Use one accurate listing type:
-
-- physical product;
-- instant digital download;
-- made-to-order digital product;
-- personalized physical product;
-- personalized digital product;
-- vintage item;
-- craft supply;
-- print-on-demand product;
-- made-to-order physical product.
-
-Do not change the supplied listing type.
-
-PRODUCT INFORMATION
+Seller role: {{sellerRole}}
 
 Product name: {{productName}}
-Plain-language item name: {{itemType}}
-Short product description: {{productDescription}}
-Primary use case: {{primaryUseCase}}
-Target buyer: {{buyer}}
-Buyer knowledge level: {{knowledgeLevel}}
-Main buyer need or problem: {{painPoint}}
-Desired buyer outcome: {{desiredOutcome}}
 
-Confirmed features: {{features}}
-Confirmed benefits: {{benefits}}
-Main differentiator: {{differentiator}}
-Style or aesthetic: {{style}}
-Theme: {{theme}}
-Primary color: {{primaryColor}}
-Secondary colors: {{secondaryColors}}
-Pattern: {{pattern}}
-Materials: {{materials}}
-Construction or production method: {{productionMethod}}
-Dimensions: {{dimensions}}
-Weight: {{weight}}
-Size options: {{sizeOptions}}
-Color options: {{colorOptions}}
-Other variations: {{variations}}
-Quantity included: {{quantity}}
-What is included: {{includedItems}}
-What is not included: {{excludedItems}}
-Compatibility: {{compatibility}}
-Care instructions: {{careInstructions}}
-Usage instructions: {{usageInstructions}}
-Age or user restrictions: {{ageRestrictions}}
-Safety information: {{safetyInformation}}
-Important limitations: {{limitations}}
+Product overview: {{productOverview}}
 
-PERSONALIZATION AND CUSTOMIZATION
+Ideal buyer: {{targetBuyer}}
 
-Personalization available: {{personalizationAvailable}}
-Personalization type: {{personalizationType}}
-Available fonts: {{fontOptions}}
-Available colors: {{personalizationColors}}
-Available layouts or designs: {{designOptions}}
-Character limit: {{personalizationCharacterLimit}}
-Required buyer information: {{personalizationRequirements}}
-Personalization optional or required: {{personalizationRequired}}
-Proof or preview process: {{proofProcess}}
-Revision policy: {{revisionPolicy}}
-Custom-order availability: {{customOrderAvailability}}
-Custom-order process: {{customOrderProcess}}
+Main selling points: {{keySellingPoints}}
 
-PHYSICAL PRODUCT DETAILS
+Essential product facts: {{essentialSpecs}}
+
+Primary use or occasion: {{primaryUseOccasion}}
+
+Listing language: {{outputLanguage}}
+
+Writing tone: {{tone}}
+
+Description length: {{descriptionLength}}
+
+Materials or components: {{materialsOrComponents}}
+
+Dimensions and sizing: {{dimensionsAndSizing}}
+
+Available variations: {{variations}}
+
+What the buyer receives: {{setContents}}
+
+Personalization available: {{personalizationEnabled}}
+
+Personalization details: {{personalizationDetails}}
+
+Vintage details: {{vintageDetails}}
+
+Production partner details: {{productionPartnerDetails}}
 
 Processing time: {{processingTime}}
-Made-to-order status: {{madeToOrderStatus}}
-Ready-to-ship status: {{readyToShipStatus}}
-Shipping origin: {{shippingOrigin}}
-Estimated delivery information: {{deliveryInformation}}
-Packaging details: {{packaging}}
-Gift wrapping available: {{giftWrapping}}
-Gift message available: {{giftMessage}}
-Returns or exchanges: {{returnPolicy}}
-Cancellation policy: {{cancellationPolicy}}
-Warranty or repair information: {{warranty}}
-Customs or import note: {{customsNote}}
-
-DIGITAL PRODUCT DETAILS
-
-Digital delivery type: {{digitalDeliveryType}}
-File formats: {{fileFormats}}
-Number of files: {{fileCount}}
-File sizes: {{fileSizes}}
-Page, design, or asset count: {{assetCount}}
-Dimensions or resolution: {{digitalDimensions}}
-Color profile: {{colorProfile}}
-Software required: {{requiredSoftware}}
-Software compatibility: {{softwareCompatibility}}
-Device compatibility: {{deviceCompatibility}}
-Editing ability: {{editableStatus}}
-Template access method: {{templateAccess}}
-Download instructions: {{downloadInstructions}}
-Printing instructions: {{printingInstructions}}
-Digital-use instructions: {{digitalUsageInstructions}}
-Personal-use license: {{personalUseLicense}}
-Commercial-use license: {{commercialUseLicense}}
-Prohibited uses: {{prohibitedUses}}
-Refund policy for digital products: {{digitalRefundPolicy}}
-Technical support included: {{supportDetails}}
-
-SEARCH AND SEO INFORMATION
-
-Primary search phrase: {{primaryKeyword}}
-Secondary search phrases: {{secondaryKeywords}}
-Long-tail search phrases: {{longTailKeywords}}
-Relevant synonyms: {{synonyms}}
-Buyer search intent: {{searchIntent}}
-Recipient types: {{recipients}}
-Relevant occasions: {{occasions}}
-Relevant holidays: {{holidays}}
-Relevant seasons: {{seasons}}
-Style-related search terms: {{styleKeywords}}
-Material-related search terms: {{materialKeywords}}
-Use-case search terms: {{useCaseKeywords}}
-Location-specific terminology: {{localKeywords}}
-Approved trend-related terms: {{trendKeywords}}
-
-ATTRIBUTES
-
-Confirmed Etsy attributes: {{attributes}}
-Relevant category attributes: {{categoryAttributes}}
-Primary and secondary colors: {{colorAttributes}}
-Material attributes: {{materialAttributes}}
-Size attributes: {{sizeAttributes}}
-Occasion attributes: {{occasionAttributes}}
-Holiday attributes: {{holidayAttributes}}
-Room or location attributes: {{roomAttributes}}
-Recipient attributes: {{recipientAttributes}}
-
-APPROVED FACTS AND RESTRICTIONS
-
-Approved product facts: {{sourceDetails}}
-Approved certifications: {{certifications}}
-Approved sustainability information: {{sustainabilityDetails}}
-Approved origin claims: {{originClaims}}
-Approved customer-facing policies: {{approvedPolicies}}
-Approved intellectual property or licensing rights: {{ipRights}}
-AI-assisted creation details: {{aiCreationDetails}}
-Claims, brands, words, or topics to avoid: {{restrictions}}
-
-VISUAL ASSETS
-
-Available product photos: {{photoAssets}}
-Available lifestyle photos: {{lifestylePhotos}}
-Available size charts: {{sizeCharts}}
-Available variation images: {{variationImages}}
-Available packaging photos: {{packagingPhotos}}
-Available production-process photos: {{processPhotos}}
-Available digital mockups: {{digitalMockups}}
-Available listing video: {{listingVideo}}
-Visual style: {{visualStyle}}
-Photo limitations: {{photoLimitations}}
-
-GOAL
-
-Create an Etsy listing that helps a buyer quickly understand:
-
-- exactly what is being sold;
-- whether it is physical or digital;
-- who made, designed, sourced, or selected it;
-- what the buyer receives;
-- how the product is used;
-- which options and personalization choices are available;
-- what materials, dimensions, formats, and compatibility conditions apply;
-- how processing, delivery, or digital access works;
-- which limitations or requirements matter;
-- what makes the item meaningfully different.
 
-The listing should support Etsy search while remaining natural, accurate, easy to scan, and useful to a real buyer.
+Shipping and delivery: {{shippingDelivery}}
 
-Prioritize clarity, trust, product accuracy, and purchase confidence over keyword density or exaggerated sales language.
+Returns and exchanges: {{returnExchangeNotes}}
 
-ACCURACY AND COMPLIANCE
+Digital files included: {{digitalFileDetails}}
 
-1. Use only facts, specifications, materials, dimensions, formats, features, policies, prices, timelines, and benefits supplied in the prompt.
+Software and compatibility: {{softwareCompatibility}}
 
-2. Do not invent:
+Digital usage license: {{usageLicense}}
 
-- materials;
-- dimensions;
-- file formats;
-- file sizes;
-- colors;
-- variations;
-- compatibility;
-- included accessories;
-- production methods;
-- shipping times;
-- processing times;
-- certifications;
-- sustainability claims;
-- warranties;
-- refund terms;
-- commercial-use rights;
-- personalization options;
-- customer results;
-- awards;
-- ratings;
-- sales numbers;
-- scarcity;
-- discounts;
-- guarantees.
+Buyer instructions: {{buyerInstructions}}
 
-3. Do not describe the product as handmade, hand-drawn, hand-sewn, hand-painted, vintage, organic, sustainable, recycled, non-toxic, hypoallergenic, licensed, certified, professional-grade, or ethically sourced unless that claim was explicitly confirmed.
+Priority search phrases: {{priorityKeywords}}
 
-4. Do not label a product as vintage unless its eligibility was confirmed.
+Category and attributes: {{categoryAttributes}}
 
-5. Do not imply that a mass-produced item was personally handmade by the seller.
+Listing emphasis: {{listingFocus}}
 
-6. Clearly and accurately represent the seller’s role:
+Number of title options: {{titleVariantCount}}
 
-- made by the seller;
-- designed by the seller;
-- sourced by the seller;
-- handpicked by the seller;
-- produced by a disclosed production partner.
+Shop voice: {{shopVoice}}
 
-7. If a production partner is used, do not describe the physical manufacturing as performed entirely by the seller.
+Required words or phrases: {{requiredTerms}}
 
-8. If AI-assisted creation was involved, do not claim that the work was completely hand-drawn or manually illustrated unless accurate.
+Evidence and credentials: {{proofAndCredentials}}
 
-9. Do not invent or conceal commercial printing, print-on-demand production, manufacturing, or fulfillment arrangements.
+Sensitive or regulated item: {{sensitiveCategory}}
 
-10. Do not use competitor names, celebrity names, fictional franchises, song lyrics, movie titles, sports teams, designer brands, unauthorized characters, or other protected intellectual property unless the rights were explicitly confirmed.
+Safety and compliance facts: {{safetyComplianceFacts}}
 
-11. Do not imply endorsement by Etsy.
+Additional requirements: {{restrictionsAndContext}}
 
-12. Do not claim guaranteed medical, financial, emotional, educational, safety, or performance outcomes.
+### INPUT-HANDLING RULES
 
-13. If necessary information is missing, use an explicit placeholder such as:
+Use every supplied field only where it meaningfully improves accuracy, buyer understanding, search relevance, or brand consistency.
 
-[Information required: exact material]
+Treat blank optional fields as intentionally unavailable:
 
-Do not fill missing information with assumptions.
+* Do not mention that information was not provided.
+* Do not display empty headings, placeholders, brackets, or unfinished sentences.
+* Do not invent missing specifications, materials, measurements, colors, file formats, compatibility, processing times, shipping destinations, license terms, return rules, certifications, or safety information.
+* Omit sections that cannot be supported.
+* When information is important but missing, add a concise seller-only verification note instead of inserting an assumption into public copy.
 
-TITLE
+Write the title, description, tags, personalization copy, and buyer-facing notes in {{outputLanguage}}. Keep formatting labels in the same language where practical.
 
-Write one recommended Etsy listing title.
+Follow {{tone}} and any additional {{shopVoice}} guidance. When these instructions conflict with clarity, accuracy, safety, or Etsy suitability, prioritize clarity and accuracy.
 
-Title requirements:
+Include {{requiredTerms}} only when they are relevant, accurate, permitted, and do not conflict with the supplied restrictions or platform rules. If a required phrase creates a misleading claim, do not use it in public copy; identify the conflict in Seller Verification Notes.
 
-- maximum 140 characters, including spaces;
-- preferably fewer than 15 words when the product can be described clearly within that length;
-- state what the item actually is;
-- place the most important identifying information early;
-- include only the strongest objective product traits;
-- remain easy to understand on mobile;
-- use the primary search phrase naturally;
-- avoid unnecessary repetition;
-- avoid turning the title into a list of keyword fragments.
+### ETSY TITLE RULES
 
-A useful title structure may be:
+Generate exactly {{titleVariantCount}} title option or options.
 
-[Item type] + [most important objective trait] + [material, size, style, or use case]
-
-Include recipient, occasion, or holiday terminology only when it is essential to the nature of the item.
-
-Do not automatically add phrases such as:
-
-- gift for her;
-- gift for him;
-- birthday gift;
-- Christmas gift;
-- perfect gift;
-- unique gift;
+Each title must:
 
-unless they genuinely help identify the product and are supported by the item.
-
-Do not include:
-
-- price;
-- discount;
-- free shipping;
-- sale language;
-- shop name unless necessary;
-- subjective praise;
-- excessive punctuation;
-- ALL CAPS;
-- keyword repetition;
-- competitor brands;
-- unsupported claims.
-
-Avoid title language such as:
-
-- beautiful;
-- amazing;
-- perfect;
-- best;
-- must-have;
-- premium;
-- luxury;
-- unique;
-
-unless the term is objectively meaningful and supported.
-
-Provide:
-
-- recommended title;
-- character count;
-- word count;
-- primary phrase used.
-
-DESCRIPTION
-
-Write one complete Etsy listing description.
-
-The first two sentences should:
-
-- clearly identify the product;
-- naturally include the most relevant search phrase;
-- explain the main use or value;
-- avoid copying the title word for word;
-- help the buyer understand what is being sold without expanding the full description.
-
-Use a scannable structure selected from the following sections.
-
-Include only sections relevant to the product.
-
-Recommended description structure:
-
-1. Opening overview
-2. Product highlights
-3. What the buyer receives
-4. Materials or file details
-5. Dimensions and sizing
-6. Variations
-7. Personalization
-8. How to order
-9. Processing or delivery
-10. Digital download instructions
-11. How to use
-12. Care instructions
-13. Compatibility or software requirements
-14. License and permitted use
-15. Important limitations
-16. Returns, exchanges, or cancellation note
-17. Brief closing statement
+* Clearly identify the item.
+* Put the most important objective product information near the beginning.
+* Stay within 140 characters, including spaces and punctuation.
+* Prefer a clear title of fewer than 15 words when this can describe the item accurately.
+* Avoid keyword stuffing, repeated synonyms, unnecessary separators, all-caps emphasis, and long lists of recipients or occasions.
+* Avoid subjective filler such as “best,” “must-have,” “stunning,” “perfect,” or “unique” unless the word is factually necessary.
+* Exclude price, discounts, shipping promotions, delivery promises, and fake urgency.
+* Include a holiday, recipient, or occasion only when it is central to the product rather than a generic sales angle.
+* Use priority keywords naturally but never force an inaccurate phrase.
+* Avoid repeating the same important word several times merely to occupy the character allowance.
 
-DESCRIPTION RULES
+Provide an accurate character count for each title. Mark one title as Recommended.
 
-- Use short paragraphs and meaningful section headings.
-- Use bullets where they improve readability.
-- Explain concrete product details before emotional or decorative language.
-- Connect confirmed features to practical benefits.
-- Keep the buyer’s likely questions in mind.
-- Explain what is not included when a photo or mockup could create confusion.
-- State whether props, frames, furniture, devices, or accessories shown in images are excluded.
-- Mention natural variation when handmade materials may differ, but only when relevant.
-- Explain color-display or printing variation only when relevant.
-- Keep policy language concise and consistent with actual shop policies.
-- Do not duplicate the entire listing title.
-- Do not repeat the same keyword in every paragraph.
-- Do not make the description a keyword list.
-- Do not include irrelevant shop history.
-- Do not invent testimonials.
-- Do not use fake urgency.
-- Do not pressure the buyer.
+### DESCRIPTION STRATEGY
 
-PHYSICAL PRODUCT DESCRIPTION
+Write a publication-ready Etsy description using a buyer-first inverted-pyramid structure.
 
-For physical products, clearly explain:
+The opening two or three sentences should quickly explain:
 
-- materials;
-- dimensions;
-- weight when relevant;
-- available sizes or colors;
-- package quantity;
-- handmade or production method;
-- personalization;
-- processing time;
-- what is included;
-- care instructions;
-- compatibility or intended use;
-- important safety or age restrictions;
-- shipping or delivery context.
+* What the item is.
+* Who or what it is suitable for.
+* The strongest factual reason to consider it.
 
-Do not describe an item as ready to ship when it is made to order.
+Do not copy the title verbatim as the opening sentence. Incorporate important search phrases naturally where they fit.
 
-Do not invent delivery dates.
+Adapt the body according to {{listingFocus}}:
 
-DIGITAL PRODUCT DESCRIPTION
+* Search-balanced: balance natural search phrases, benefits, specifications, and purchase information.
+* Benefits-first: lead with practical or emotional value, then support it with facts.
+* Details-first: prioritize specifications, contents, dimensions, formats, and compatibility.
+* Gift-focused: emphasize supported occasions and recipients without claiming the product is ideal for everyone.
+* Story-led: use a concise, truthful maker or design perspective only when supported by the inputs.
+* Minimal: keep only the details necessary for an informed purchase.
 
-For digital products, clearly state near the beginning:
+Use short paragraphs and concise headings where they improve scanning. Suitable headings may include:
 
-- this is a digital product;
-- no physical item will be shipped;
-- whether it is an instant download or made-to-order file;
-- which files the buyer receives;
-- file formats;
-- dimensions or resolution;
-- software or account requirements;
-- editing limitations;
-- license terms;
-- printing or use instructions;
-- how the buyer accesses the files.
+* Item details
+* What you receive
+* Materials and size
+* Available options
+* Personalization
+* How it works
+* Digital files
+* Compatibility
+* Processing and delivery
+* Care or use instructions
+* Please note
 
-For instant digital downloads:
+Include only relevant headings. Do not force every heading into every listing.
 
-- do not promise email delivery unless that is the actual process;
-- explain that access follows Etsy’s digital-download process;
-- ensure file count and file size are based on supplied information;
-- do not generate variation options when the digital listing does not support them.
+Use these description targets:
 
-For made-to-order digital products:
+* Auto: choose the shortest length that communicates all supplied facts.
+* Short: approximately 250–400 words.
+* Standard: approximately 450–750 words.
+* Detailed: approximately 750–1,100 words.
 
-- explain what the buyer must submit;
-- state the confirmed production timeline;
-- explain proof and revision handling;
-- distinguish the preview from the final file.
+These are writing targets, not reasons to add filler. A simple item may be shorter.
 
-Do not imply that:
+### PRODUCT-FORMAT LOGIC
 
-- Canva Pro is included;
-- paid fonts are included;
-- a commercial license is included;
-- files can be edited in every program;
-- all printers will produce identical colors;
+When {{productFormat}} is Physical item:
 
-unless confirmed.
+* Use {{materialsOrComponents}}, {{dimensionsAndSizing}}, {{variations}}, {{setContents}}, {{processingTime}}, {{shippingDelivery}}, {{returnExchangeNotes}}, and {{buyerInstructions}} when supplied.
+* Distinguish processing time from carrier transit time.
+* Do not promise delivery by a specific date unless the input explicitly supports a genuine guarantee.
+* State measurements with the supplied units.
+* Do not invent care instructions, safety certifications, country of origin, or material properties.
+* Do not mention digital download delivery.
 
-PERSONALIZATION INSTRUCTIONS
+When {{productFormat}} is Instant digital download:
 
-When personalization is available, write one concise buyer-facing personalization instruction.
+* State clearly near the beginning that the purchase is a digital product and that no physical item will be shipped.
+* Explain the included files using {{digitalFileDetails}}.
+* Include {{softwareCompatibility}}, {{usageLicense}}, and {{buyerInstructions}} when supplied.
+* Do not create physical shipping, packaging, dimensions, or variation language.
+* Do not claim that files are editable, printable at every size, compatible with every application, or suitable for commercial use unless explicitly supported.
+* Do not imply that the buyer receives instant access if the supplied facts indicate manual delivery.
 
-It should clearly state:
+When {{productFormat}} is Made-to-order digital item:
 
-- what information the buyer must enter;
-- acceptable spelling and capitalization;
-- available options;
-- character limits;
-- whether personalization is required;
-- whether a proof will be sent;
-- how revisions work;
-- what happens when incomplete information is submitted.
+* State clearly that the product is digital and made or customized after purchase.
+* Use {{processingTime}} to explain realistic preparation or delivery timing.
+* Use {{digitalFileDetails}}, {{softwareCompatibility}}, {{usageLicense}}, {{personalizationDetails}}, and {{buyerInstructions}} when supplied.
+* Do not call it an instant download unless that is factually true.
+* Do not mention physical shipping.
 
-Do not ask buyers to provide unnecessary sensitive information.
+### SELLER-ROLE LOGIC
 
-Do not promise unlimited revisions unless confirmed.
+When {{sellerRole}} is Made by seller:
 
-Also provide:
+* Describe handmade or seller-made involvement only to the extent supported by the supplied facts.
+* Do not claim every component was handmade if purchased materials or components are used.
 
-Personalization field label:
-[Short label]
+When {{sellerRole}} is Designed by seller:
 
-Personalization instructions:
-[Clear buyer instruction]
+* Emphasize the seller’s original design contribution where supported.
+* If {{productionPartnerDetails}} is supplied, explain the seller’s design role and the partner’s production or fulfillment role accurately.
+* Do not imply that the seller personally manufactured a physical item when a production partner did so.
 
-Example response:
-[Accurate example]
+When {{sellerRole}} is Sourced creative supply:
 
-VARIATIONS
+* Focus on the item’s practical use, contents, specifications, and suitability for creative work.
+* Do not describe an unaltered sourced item as handmade by the seller.
 
-Suggest buyer-facing variation labels only from confirmed options.
+When {{sellerRole}} is Handpicked vintage item:
 
-For each variation provide:
+* Use {{vintageDetails}} to describe era, estimated date, maker, provenance, condition, wear, repairs, or restoration.
+* Clearly distinguish confirmed information from estimates.
+* Treat age-related wear as factual condition information rather than hiding it.
+* Do not invent provenance, rarity, collector value, authenticity, or historical significance.
 
-- variation name;
-- option labels;
-- any price or availability note only when supplied;
-- whether a matching photo is available.
+### PERSONALIZATION
 
-Do not create options that do not exist.
+When {{personalizationEnabled}} indicates personalization is available, create a separate Personalization Field Copy section.
 
-Do not combine unrelated options in a confusing way.
+It must include:
 
-Do not promise custom colors, sizes, or formats unless available.
+* A concise buyer-facing field label.
+* Clear instructions describing exactly what the buyer should enter.
+* An example only when the supplied details support one.
+* Any confirmed character, format, spelling, color, file, or selection limits.
+* A reminder to review spelling only when relevant.
+* Whether the information is required or optional when this is known.
 
-TAGS
+Do not ask buyers to submit unnecessary sensitive information, account credentials, financial data, government identifiers, medical records, or unrelated personal details.
 
-Generate exactly 13 Etsy tags.
+When personalization is not enabled, omit the entire section.
+
+### SEARCH TAGS AND ATTRIBUTES
+
+Generate exactly 13 Etsy tag suggestions.
 
 Each tag must:
 
-- contain no more than 20 characters, including spaces;
-- be relevant to the actual product;
-- use natural buyer search language;
-- preferably use a multi-word phrase;
-- cover distinct search intent;
-- avoid repeating the same combination of words;
-- remain accurate to the listing.
+* Contain no more than 20 characters, including spaces.
+* Be an accurate phrase supported by the item information.
+* Prefer natural multi-word shopper phrases over isolated generic words.
+* Be meaningfully different from the other tags.
+* Avoid deliberate misspellings.
+* Avoid irrelevant trending words, competitor names, protected names, unrelated occasions, or misleading materials.
+* Avoid unnecessary duplication of a category or attribute phrase already supplied in {{categoryAttributes}}.
+* Use the same language as the listing.
+* Use only letters, numbers, spaces, apostrophes, or hyphens where needed.
+* Not begin with an apostrophe or hyphen.
 
-Use a balanced mix of:
+Show each tag on a separate numbered line with its character count.
 
-- exact item type;
-- style;
-- material;
-- use case;
-- recipient;
-- occasion;
-- size or format;
-- personalization;
-- problem or need;
-- niche buyer intent.
+Use {{priorityKeywords}} as research supplied by the seller, not as mandatory text. Reject or omit any supplied phrase that is inaccurate, misleading, repetitive, or incompatible with the product.
 
-Do not waste tags by repeating:
+Create Category & Attribute Suggestions using {{categoryAttributes}} and the product facts. Suggest:
 
-- exact category wording;
-- exact attribute wording;
-- identical singular and plural forms;
-- the same phrase in a different order;
-- the same main keyword 13 times.
+* One best-fit category concept.
+* Relevant attribute concepts such as color, material, dimensions, room, style, occasion, recipient, craft type, or format.
 
-Do not include:
+Do not claim that a suggested category path or attribute is currently available in Etsy’s interface. Tell the seller to select the closest accurate option presented by Etsy.
 
-- competitor names;
-- unauthorized trademarks;
-- irrelevant popular searches;
-- misleading recipient or occasion terms;
-- hashtags;
-- punctuation used only to manipulate search;
-- “free shipping”;
-- “sale”;
-- “best”;
-- “cheap”;
-- “trending” unless factually relevant.
+### CLAIMS, SAFETY, AND ACCURACY
 
-For each tag provide its character count.
+Never invent or imply:
 
-CATEGORY AND SUBCATEGORY
+* Product features or capabilities.
+* Materials, ingredients, sizes, quantities, or included items.
+* Handmade involvement.
+* Product origin.
+* Vintage age or provenance.
+* Certifications, approvals, licenses, awards, or testing.
+* Medical, therapeutic, legal, financial, educational, or safety outcomes.
+* Sustainability, biodegradability, organic status, non-toxicity, hypoallergenic status, food safety, child safety, or environmental benefits.
+* Customer reviews, testimonials, ratings, sales numbers, popularity, or demand.
+* Limited stock, deadlines, discounts, free shipping, or scarcity.
+* Brand authorization, intellectual-property ownership, or compatibility.
+* Guaranteed delivery, results, durability, or performance.
 
-Suggest:
+Use {{proofAndCredentials}} only for claims that are explicitly supported. Do not broaden a narrow certification or test result into a general guarantee.
 
-- one primary Etsy category;
-- one most specific likely subcategory;
-- one alternative category only when genuinely relevant.
+When {{sensitiveCategory}} is enabled:
 
-Do not claim that the suggested category definitely exists in the current Etsy interface when it was not supplied.
+* Use only the verified facts in {{safetyComplianceFacts}}.
+* Avoid diagnosis, treatment promises, guaranteed outcomes, or personalized professional advice.
+* Include warnings, ingredients, age guidance, safe-use information, or jurisdiction-specific wording only when supplied.
+* Do not claim that the listing is legally compliant, approved, certified, or safe merely because the user enabled the field.
+* Add a Seller Verification Note when an important high-stakes claim requires professional or jurisdiction-specific review.
 
-Label category suggestions:
+Respect intellectual-property rights. Do not add celebrity names, fictional characters, franchises, song lyrics, brand names, artist names, protected designs, or trademarked search terms unless they are supplied and the seller has a legitimate right to use them. Never recommend using another brand’s name only to attract search traffic.
 
-Verify against the current Etsy category selector before publishing.
+### MARKETING AND WRITING STANDARDS
 
-Do not choose a broad category when a more specific one is clearly supported.
-
-ATTRIBUTES
-
-Create an attribute checklist using only confirmed information.
-
-Possible attributes include:
-
-- primary color;
-- secondary color;
-- material;
-- size;
-- style;
-- pattern;
-- room;
-- occasion;
-- holiday;
-- recipient;
-- shape;
-- orientation;
-- craft type;
-- digital file type.
-
-Do not invent attribute values.
-
-Do not repeat exact attribute phrases as standalone tags when another tag could add new search coverage.
-
-MATERIALS
-
-Create a ready-to-enter materials list only when materials were supplied.
-
-Use concise material names.
-
-Do not add:
-
-- packaging materials;
-- tools;
-- manufacturing equipment;
-- shipping supplies;
-
-unless they are genuinely part of the sold item.
-
-Do not claim precious metals, natural gemstones, organic fabric, archival paper, food-safe materials, or hypoallergenic components unless confirmed.
-
-SEARCH PHRASE COVERAGE
-
-After writing the title, description, tags, category, and attributes, verify that the listing covers the important buyer intents without keyword stuffing.
-
-Check whether the package naturally communicates:
-
-- what the item is;
-- what it is made from;
-- who it is for;
-- how it is used;
-- its style;
-- its format or size;
-- whether it is personalized;
-- whether it is physical or digital.
-
-Do not force every keyword into every field.
-
-PHOTO AND VIDEO PLAN
-
-Create a practical listing visual plan using only supplied or realistically creatable assets.
-
-Provide 5–10 image ideas when appropriate.
-
-For every image provide:
-
-- purpose;
-- what should be visible;
-- recommended composition;
-- short optional text overlay;
-- buyer question answered;
-- alt text.
-
-Recommended image roles may include:
-
-1. Clear primary product image
-2. Alternate angle
-3. Scale or dimensions
-4. Material or texture detail
-5. Product in use
-6. Available variations
-7. Personalization example
-8. Package contents
-9. Care or usage instructions
-10. Packaging or gift presentation
-
-For digital listings, image roles may include:
-
-1. Main finished design
-2. What files are included
-3. Size and format information
-4. Editing or software requirements
-5. Example use
-6. Printing guidance
-7. License summary
-8. Personalization process
-9. Important digital-download notice
-10. Variation or bundle comparison
-
-PHOTO RULES
-
-- The first image should clearly show the item being sold.
-- Do not use a collage as the primary image when it makes the product unclear.
-- Do not visually imply that excluded props are included.
-- Do not use fabricated reviews, ratings, scarcity badges, or sales claims.
-- Do not create fake before-and-after results.
-- Do not show product variations that are unavailable.
-- Do not use copyrighted logos or protected characters without approval.
-- Use mockups carefully and ensure they accurately represent scale, color, and format.
-- Do not obscure the product with excessive text.
-- Avoid misleading watermarks or overlays.
-
-ALT TEXT
-
-Write concise alt text for every proposed listing image.
-
-Each alt text should:
-
-- describe what is visibly shown;
-- mention relevant color, material, texture, scale, or orientation;
-- explain meaningful visual relationships;
-- remain no more than 250 characters;
-- be useful for a person who cannot see the image;
-- avoid keyword stuffing;
-- avoid repeating the listing title;
-- avoid promotional language;
-- avoid describing invisible information.
-
-If the final image does not yet exist, label the text:
-
-Draft alt text — verify against final image before publishing.
-
-LISTING VIDEO
-
-When a listing video is available or planned, suggest:
-
-- one clear video concept;
-- what should happen in the opening;
-- what product details to show;
-- ideal sequence of shots;
-- optional short on-screen text;
-- what buyer uncertainty the video resolves.
-
-Do not suggest footage that cannot be produced.
-
-For physical items, prioritize:
-
-- real scale;
-- texture;
-- movement;
-- use;
-- personalization;
-- package contents.
-
-For digital items, prioritize:
-
-- file preview;
-- editing workflow;
-- page or template navigation;
-- finished output;
-- what is included.
-
-Do not invent interface screens, features, files, or product behavior.
-
-BUYER NOTE
-
-Create an optional buyer note only when useful.
-
-For physical products it may briefly clarify:
-
-- processing;
-- customization;
-- natural variation;
-- care;
-- shipping preparation.
-
-For digital products it may clarify:
-
-- download access;
-- required software;
-- license;
-- support;
-- no physical delivery.
-
-Do not repeat the entire description.
-
-Do not add policies that were not supplied.
-
-SHOP SECTION SUGGESTION
-
-Suggest one shop section name that could contain this item and future related products.
-
-The section name should:
-
-- represent a reusable product group;
-- remain short;
-- help buyers navigate;
-- avoid unnecessary keyword repetition.
-
-Do not imply that the section already exists.
-
-STYLE
-
-Write in clear, natural, buyer-focused language.
-
-Match {{tone}} and {{brandVoice}}.
+Write naturally, specifically, and helpfully.
 
 Avoid:
 
-- generic e-commerce hype;
-- excessive adjectives;
-- artificial urgency;
-- corporate jargon;
-- keyword stuffing;
-- repeated exclamation marks;
-- fake personal stories;
-- overlong founder narratives;
-- emotional manipulation;
-- vague lifestyle promises;
-- AI-generated phrasing.
+* Generic AI introductions.
+* Keyword dumping.
+* Repetitive adjectives.
+* Several competing calls to action.
+* Fake urgency or scarcity.
+* Shame, fear, or pressure.
+* Unsupported comparisons.
+* Excessive exclamation marks.
+* Long blocks of capital letters.
+* Hidden disclaimers.
+* Fake reviews or buyer quotations.
+* Claims that the item was researched, tested, approved, or verified unless that occurred and evidence was supplied.
 
-Avoid phrases such as:
+Avoid default phrases such as:
 
-- perfect for everyone;
-- one-of-a-kind unless factually accurate;
-- must-have;
-- game-changing;
-- unmatched quality;
-- elevate your life;
-- take it to the next level;
-- you’ll love it;
-- order before it’s gone;
-- limited stock unless confirmed;
-- makes the perfect gift;
-- crafted with love;
+* In today’s fast-paced world
+* Look no further
+* Unlock the power of
+* Game-changing
+* Revolutionary
+* Perfect for everyone
+* Whether you are a beginner or an expert
+* The possibilities are endless
+* Take it to the next level
 
-unless the wording is accurate, relevant, and supported.
+Use one proportional closing action. Suitable actions include choosing an option, entering personalization, reviewing the details, downloading after purchase, or adding the item to the cart. Do not pressure the buyer.
 
-FINAL QUALITY CHECK
+### REQUIRED OUTPUT FORMAT
 
-Before presenting the listing package, silently verify that:
+# Etsy Listing Package
 
-- the listing type is correct;
-- seller involvement is represented accurately;
-- the title is within 140 characters;
-- the title is clear and not keyword-stuffed;
-- all 13 tags are within 20 characters;
-- tags do not unnecessarily duplicate categories or attributes;
-- the description identifies whether the product is physical or digital;
-- the buyer can clearly understand what is included;
-- materials, dimensions, formats, and compatibility are accurate;
-- personalization instructions match actual options;
-- no feature, file, material, policy, delivery time, license, certification, or result was invented;
-- no unauthorized intellectual property was added;
-- the photo plan shows the real product accurately;
-- alt text describes visuals rather than serving as promotional copy;
-- limitations and exclusions are visible;
-- the listing sounds like a trustworthy Etsy seller rather than a generic AI storefront.
+## 1. Title Options
 
-OUTPUT FORMAT
+Provide exactly {{titleVariantCount}} title option or options.
 
-## Listing Classification
+For each title include:
 
-Listing type:
-[Type]
+* Title
+* Character count
+* Positioning angle
 
-Creativity category:
-[Confirmed category]
+Mark one option as Recommended.
 
-Seller role:
-[Confirmed role]
+## 2. Recommended Listing Title
 
-Production partner:
-[Confirmed details or “None supplied”]
+Repeat only the recommended title without commentary so it can be copied directly.
 
-Compliance note:
-[Only when clarification is needed]
+## 3. Etsy Description
 
-## Recommended Etsy Title
+Provide the finished buyer-facing description in publication-ready form.
 
-[Title]
+Do not include internal notes, character counts, keyword commentary, or unsupported placeholders inside the description.
 
-Character count:
-[Number]
+## 4. Quick Item Details
 
-Word count:
-[Number]
+Create a concise copy-ready list of important product facts.
 
-Primary phrase:
-[Phrase]
+Include only supported facts such as:
 
-## Listing Description
+* Format
+* Materials
+* Size
+* Contents
+* Variations
+* File types
+* Compatibility
+* Processing time
+* License
+* Condition
 
-[Complete buyer-facing description]
+Omit irrelevant or unknown lines.
 
-## Etsy Tags
+## 5. Personalization Field Copy
 
-1. [Tag] — [character count]
-2. [Tag] — [character count]
-3. [Tag] — [character count]
-4. [Tag] — [character count]
-5. [Tag] — [character count]
-6. [Tag] — [character count]
-7. [Tag] — [character count]
-8. [Tag] — [character count]
-9. [Tag] — [character count]
-10. [Tag] — [character count]
-11. [Tag] — [character count]
-12. [Tag] — [character count]
-13. [Tag] — [character count]
+Include only when personalization is enabled.
 
-## Category Suggestions
+Provide:
 
-Primary category:
-[Category]
+* Field label
+* Buyer instructions
+* Suggested required or optional status when known
 
-Most specific subcategory:
-[Subcategory]
+## 6. Buyer Information Block
 
-Alternative:
-[Optional alternative]
+Create a copy-ready block using only relevant fulfillment, delivery, digital download, compatibility, care, return, license, or usage information.
 
-Verify against the current Etsy category selector before publishing.
+Omit this section when all relevant information already appears clearly in the main description and no separate block would help.
 
-## Attribute Checklist
+## 7. Etsy Tags
 
-- [Attribute]: [Confirmed value]
-- [Attribute]: [Confirmed value]
+Provide exactly 13 numbered tags with individual character counts.
 
-## Materials
+## 8. Category & Attribute Suggestions
 
-[Ready-to-enter material list or “No confirmed materials supplied.”]
+Provide:
 
-## Variations
+* Best-fit category concept
+* Attribute suggestions
+* A brief reminder to verify the available options in Etsy’s current listing editor
 
-[Variation names and confirmed options, or “No variations.”]
+## 9. Seller Verification Notes
 
-## Personalization
+Include this section only when:
 
-Personalization field label:
-[Label]
+* A supplied claim lacks adequate evidence.
+* A required phrase conflicts with accuracy or policy.
+* Important product information is missing.
+* A sensitive claim needs legal, medical, safety, or jurisdiction-specific review.
+* A compatibility, license, vintage, production-partner, or intellectual-property statement needs confirmation.
 
-Instructions:
-[Buyer-facing instructions]
+Keep these notes outside all customer-facing copy.
 
-Example:
-[Example]
+### FINAL QUALITY CHECK
 
-Or:
+Before producing the answer, silently verify that:
 
-Personalization is not available.
+* Every title is within 140 characters.
+* The title wording is clear and not keyword-stuffed.
+* Exactly {{titleVariantCount}} title option or options are present.
+* Exactly 13 tags are present.
+* Every tag is 20 characters or fewer.
+* The title, description, and tags use the requested language.
+* Physical and digital instructions are not mixed.
+* Digital variations are not invented.
+* Personalization copy appears only when enabled.
+* Unsupported claims, reviews, credentials, urgency, scarcity, and delivery guarantees are absent.
+* No blank sections or visible placeholders remain.
+* Seller-only warnings are not inserted into buyer-facing copy.
+* The output follows the requested Etsy-specific structure.
 
-## What the Buyer Receives
-
-[Concise inclusion and exclusion summary]
-
-## Processing, Delivery, or Download Note
-
-[Relevant physical or digital fulfillment information]
-
-## Photo and Video Plan
-
-### Image 1
-
-Purpose:
-[Purpose]
-
-Visual:
-[What should be shown]
-
-Optional overlay:
-[Short text or omit]
-
-Buyer question answered:
-[Question]
-
-Alt text:
-[Maximum 250 characters]
-
-Continue for all useful images.
-
-### Listing Video
-
-[Video concept or “No video concept generated because no video assets were supplied.”]
-
-## Buyer Note
-
-[Optional concise note or omit]
-
-## Shop Section Suggestion
-
-[Reusable section name]
-
-Output only the completed Etsy listing package. Do not explain your writing process.
+Output only the completed Etsy Listing Package.

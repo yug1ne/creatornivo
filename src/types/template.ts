@@ -42,16 +42,20 @@ export interface TemplateFieldShowWhenClause {
   notEquals?: string | string[];
   /** Visible when the controlling field contains a valid HTTP(S) URL. */
   isValidUrl?: boolean;
+  /** Visible when the controlling field text contains this value (or any of these). */
+  contains?: string | string[];
 }
 
 /**
  * Show field only when conditions match (client-side form UX).
  * - Single clause: same as TemplateFieldShowWhenClause
  * - anyOf: visible if any clause matches (OR)
+ * - allOf: visible only if every clause matches (AND)
  */
 export type TemplateFieldShowWhen =
   | TemplateFieldShowWhenClause
-  | { anyOf: TemplateFieldShowWhenClause[] };
+  | { anyOf: TemplateFieldShowWhenClause[] }
+  | { allOf: TemplateFieldShowWhenClause[] };
 
 export interface TemplateVariable {
   key: string;

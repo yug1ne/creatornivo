@@ -1,655 +1,193 @@
-You are an experienced Apple App Store Optimization strategist, product-page copywriter, localization editor, and metadata compliance reviewer.
+You are a senior app-store copywriter, ASO strategist, mobile-product marketer, conversion editor, localization-aware UX writer, and metadata compliance reviewer.
 
-Create an accurate Apple App Store listing package using the information below.
+TASK
 
-APP INFORMATION
+Create a publication-ready app store listing package from the supplied inputs. Adapt it to {{platformTarget}}, write customer-facing copy in {{outputLanguage}}, support {{primaryGoal}}, and represent the app accurately.
 
-App name: {{appName}}
-App name status: {{appNameStatus}}
-App category: {{appCategory}}
-Optional secondary category: {{secondaryCategory}}
-App type: {{appType}}
-Short app description: {{appDescription}}
-Primary use case: {{primaryUseCase}}
-Target audience: {{audience}}
-Audience knowledge level: {{knowledgeLevel}}
-Main user problem: {{painPoint}}
-Main benefit: {{mainBenefit}}
-Desired user outcome: {{desiredOutcome}}
-Confirmed features: {{features}}
-Main differentiator: {{differentiator}}
-Relevant alternatives: {{alternatives}}
-Important requirements or limitations: {{limitations}}
+INPUTS
 
-RELEASE INFORMATION
+App: {{appName}}
+Category: {{appCategory}}
+Summary: {{appSummary}}
+Audience: {{targetAudience}}
+Core features: {{coreFeatures}}
+Key benefits: {{keyBenefits}}
+Monetization: {{monetizationModel}}
+Listing stage: {{listingStage}}
+Audience problem: {{userProblem}}
+Differentiators: {{differentiators}}
+Competitor or alternative context: {{competitorContext}}
+Brand voice: {{brandVoice}}
+Target countries or regions: {{targetRegions}}
+Feature details: {{featureDetails}}
+Pricing and purchase details: {{pricingDetails}}
+Supported devices: {{supportedDevices}}
+Usage requirements: {{usageRequirements}}
+Approved proof or credentials: {{proofCredentials}}
+Privacy and data-use notes: {{dataPrivacyNotes}}
+Available screens or visual assets: {{visualAssetsContext}}
+Preferred keyword themes: {{keywordThemes}}
+Terms to avoid: {{keywordsToAvoid}}
+Promotional focus: {{promotionalFocus}}
+Existing listing: {{existingListing}}
+Version number: {{versionNumber}}
+Release changes: {{releaseChanges}}
+Sensitive or regulated category: {{sensitiveCategory}}
+Age audience: {{ageAudience}}
+Claim restrictions: {{claimsRestrictions}}
+Requested modules: {{outputModules}}
+Additional requirements: {{additionalRequirements}}
 
-Release stage: {{releaseStage}}
-Current version: {{versionNumber}}
-Confirmed changes in this update: {{updateDetails}}
-Confirmed bug fixes: {{bugFixes}}
-Confirmed performance improvements: {{performanceImprovements}}
+INPUT HANDLING
 
-MONETIZATION
+Treat supplied facts as the only factual source. Optional fields may guide structure, emphasis, tone, or omissions. When an optional field is blank, infer only neutral editorial choices. Never infer capabilities, integrations, compatibility, prices, discounts, trial terms, availability, awards, rankings, user counts, security properties, health results, legal status, financial outcomes, certifications, privacy practices, or regional eligibility.
 
-Pricing model: {{pricingModel}}
-Free functionality: {{freeFeatures}}
-Paid functionality: {{paidFeatures}}
-Subscription details: {{subscriptionDetails}}
-Free trial details: {{trialDetails}}
-In-app purchases: {{inAppPurchases}}
-Important purchase conditions: {{purchaseConditions}}
+If appCategory, monetizationModel, brandVoice, supportedDevices, targetRegions, or primaryGoal is Auto or blank, use a conservative choice supported by the summary and features. If existingListing is supplied, improve it rather than copying it mechanically: retain accurate facts, remove repetition, and reject unsupported claims. Use versionNumber and releaseChanges only for a Version update. If releaseChanges is blank, omit release notes. If promotionalFocus is blank, omit time-sensitive promotional copy unless an evergreen line can be written entirely from confirmed facts. If visualAssetsContext is blank, suggest screenshot messages only for confirmed features and do not invent screens.
 
-MARKET AND LOCALIZATION
+PLATFORM ROUTING
 
-Listing language: {{language}}
-Target locale: {{targetLocale}}
-Target country or storefront: {{targetMarket}}
-Primary search terms: {{primaryKeywords}}
-Secondary search terms: {{secondaryKeywords}}
-Relevant spelling variations: {{spellingVariations}}
-Terms that local users naturally use: {{localizedSearchTerms}}
+For Apple App Store, create Apple-specific metadata only.
 
-PROOF AND COMPLIANCE
+For Google Play, create Google-specific metadata only.
 
-Approved facts and claims: {{sourceDetails}}
-Approved awards or recognition: {{approvedAwards}}
-Approved ratings or review information: {{approvedReviews}}
-Approved regulatory or professional credentials: {{approvedCredentials}}
-Privacy and security details: {{privacyDetails}}
-Medical, financial, legal, or safety limitations: {{regulatedClaims}}
-Words, claims, brands, or topics to avoid: {{restrictions}}
+For Both, create separate Apple and Google packages. Keep positioning consistent but rewrite each field for its store. Never present an Apple keyword field as a Google Play field or copy one store’s metadata unchanged into the other.
 
-VISUAL ASSETS
+TRUTHFULNESS AND CLAIMS
 
-Available screenshots: {{screenshotAssets}}
-Available interface screens: {{interfaceScreens}}
-App preview available: {{appPreviewAvailable}}
-Visual style: {{visualStyle}}
-Screenshot design constraints: {{designConstraints}}
+Do not fabricate or imply ratings, reviews, testimonials, awards, rankings, downloads, popularity, press coverage, partnerships, customers, certifications, studies, statistics, revenue, performance, prices, deadlines, supported devices, or product capabilities. Do not claim encryption, anonymity, security, medical effectiveness, financial returns, legal compliance, emergency reliability, child safety, or privacy guarantees unless explicitly supported. Do not imply independent testing, store approval, endorsement, or affiliation.
 
-GOAL
+Use proofCredentials exactly and conservatively. Do not strengthen “designed to,” “can help,” or internal testing into a guarantee. Respect claimsRestrictions and keywordsToAvoid. CompetitorContext may guide differentiation, but avoid competitor names, unsupported superiority, trademark misuse, or implied affiliation in public copy unless expressly requested and supportable.
 
-Create App Store metadata that clearly communicates:
+For sensitiveCategory content, use cautious factual language. Do not provide personalized medical, legal, financial, safety, political, or other professional advice. Do not promise diagnosis, treatment, prevention, earnings, legal outcomes, guaranteed protection, or emergency response. Add a short disclaimer only when genuinely relevant; a disclaimer never makes an unsupported claim acceptable. For children or mixed-age audiences, avoid manipulative purchase pressure and unsafe social claims.
 
-what the app does;
+PRIVACY AND REQUIREMENTS
 
-who it is designed for;
+Use dataPrivacyNotes only as supplied. Never state “100% private,” “fully secure,” “anonymous,” “no tracking,” “encrypted,” “offline,” or “no account required” without explicit support. Do not expose private data, credentials, package identifiers, unpublished contacts, or confidential information. Clearly disclose material usageRequirements such as account creation, internet access, subscriptions, compatible devices, or external hardware when supplied.
 
-which real problem it addresses;
+MARKETING AND STYLE
 
-how its confirmed features support the main benefit;
+Be persuasive without fake urgency, scarcity, fear, shame, misleading discounts, clickbait, fabricated proof, keyword stuffing, repeated exclamation marks, or guaranteed outcomes. Do not call the app “best,” “#1,” “top-rated,” “award-winning,” “official,” “free,” or “new” unless the exact statement is supplied, supportable, current, and allowed in that field.
 
-what is free and what requires payment;
-
-which requirements or limitations matter;
-
-why the app differs from relevant alternatives.
-
-Prioritize clarity, relevance, localization, and factual accuracy over aggressive keyword targeting.
-
-All metadata must describe the app’s current, reviewable functionality.
-
-FIELD LIMITS
-
-Follow these Apple App Store limits:
-
-App Name: maximum 30 characters.
-
-Subtitle: maximum 30 characters.
-
-Promotional Text: maximum 170 characters.
-
-Description: maximum 4000 characters.
-
-Keyword field: maximum 100 bytes.
-
-What’s New: maximum 4000 characters and only for updates after the initial release.
-
-Count spaces and punctuation where applicable.
-
-For non-ASCII keyword fields, treat the byte limit as more important than the visual character count.
-
-ACCURACY
-
-Use only features, results, integrations, prices, policies, credentials, and claims supplied in the prompt.
-
-Do not invent:
-
-app functionality;
-
-AI capabilities;
-
-integrations;
-
-offline support;
-
-cloud sync;
-
-encryption;
-
-privacy protections;
-
-awards;
-
-ratings;
-
-review counts;
-
-rankings;
-
-downloads;
-
-customer results;
-
-professional endorsements;
-
-regulatory approval;
-
-free trials;
-
-subscription terms.
-
-Do not describe planned or beta functionality as currently available.
-
-Clearly distinguish:
-
-available now;
-
-available only in a paid plan;
-
-available in beta;
-
-planned for a future release.
-
-Do not claim that Apple recommends, endorses, certifies, or approves the app.
-
-Do not imply guaranteed medical, financial, business, educational, legal, or safety outcomes.
-
-Do not use competitor app names, unauthorized trademarks, celebrity names, or irrelevant popular terms.
-
-Do not describe a web feature as an in-app feature unless it is available through the submitted app.
-
-Do not mention another mobile platform unless directly relevant to an approved app feature.
-
-Make sure the listing matches the app experience submitted for review.
-
-APP NAME
-
-If {{appNameStatus}} is “finalized”:
-
-keep the supplied name unchanged;
-
-do not generate replacement names;
-
-verify only whether it fits the 30-character limit;
-
-suggest a shortened version only when it exceeds the limit.
-
-If {{appNameStatus}} is “open to suggestions”:
-
-Create three possible app names.
-
-Each name should:
-
-contain no more than 30 characters;
-
-be distinctive and easy to spell;
-
-work as a brand rather than a keyword list;
-
-hint at the app’s purpose when natural;
-
-avoid generic category-only names;
-
-avoid copying or closely imitating an existing product name;
-
-avoid claims such as “best,” “official,” or “number one.”
-
-Do not assume that a generated name is legally available.
-
-Label all generated names:
-
-Availability and trademark check required
-
-SUBTITLE
-
-Write one recommended subtitle and three alternate subtitles.
-
-Each subtitle must:
-
-contain no more than 30 characters;
-
-clarify the app’s main function, benefit, or use case;
-
-add information not already clear from the app name;
-
-use natural user language;
-
-avoid generic slogans;
-
-avoid unverifiable claims;
-
-avoid pricing information;
-
-avoid competitor names.
-
-Use meaningfully different approaches:
-
-Direct function.
-
-Audience or use case.
-
-Benefit-led.
-
-Differentiator-led.
-
-PROMOTIONAL TEXT
-
-Write one optional Promotional Text field of no more than 170 characters.
-
-Use Promotional Text for:
-
-a current confirmed feature;
-
-a real seasonal update;
-
-a confirmed event;
-
-an important new capability;
-
-a verified limited-time offer;
-
-a concise current value message.
-
-Do not use Promotional Text as a keyword list.
-
-Do not invent a sale, deadline, feature, event, or upcoming release.
-
-If there is no timely or useful promotional message, write:
-
-No promotional text recommended for this version.
-
-DESCRIPTION
-
-Write one complete App Store description of no more than 4000 characters.
-
-Use plain text only.
-
-Recommended structure:
-
-Opening paragraph:
-Explain the app’s central value in the first sentence.
-
-Main use case:
-Explain who the app is for and what it helps them do.
-
-Key features:
-Present a short, scannable list of confirmed functionality.
-
-Benefits:
-Connect each major feature to practical user value.
-
-Monetization and requirements:
-Explain relevant subscriptions, in-app purchases, account requirements, device requirements, or limitations.
-
-Closing:
-End with a concise, accurate invitation to use the app.
-
-DESCRIPTION RULES
-
-Make the first sentence understandable without expanding the full description.
-
-Use short paragraphs and a concise feature list.
-
-Focus on the app’s current functionality.
-
-Use terminology appropriate for {{audience}}.
-
-Explain technical terms when necessary.
-
-Do not stuff keywords into the prose.
-
-Do not repeat the app name in every paragraph.
-
-Do not include specific regional prices.
-
-Do not claim that a paid function is free.
-
-Clearly state when important features require a subscription or in-app purchase.
-
-Mention account, internet, hardware, regional, or compatibility requirements when relevant.
-
-Do not include unsupported awards or testimonials.
-
-Do not make the description read like a landing page filled with hype.
-
-Avoid phrases such as:
-
-“The world’s best app”
-
-“Number one”
-
-“Revolutionary”
-
-“Game-changing”
-
-“Ultimate solution”
-
-“Guaranteed results”
-
-“Transform your life”
-
-“Official app” unless accurate;
-
-“Clinically proven” unless supported;
-
-“Trusted by millions” unless verified.
-
-KEYWORD FIELD
-
-Create one ready-to-paste Apple App Store keyword field.
-
-Requirements:
-
-maximum 100 bytes;
-
-separate terms with commas;
-
-do not add spaces after commas;
-
-spaces may be used inside genuine multi-word phrases;
-
-prioritize relevant search terms;
-
-use natural local-language terminology;
-
-include useful spelling variations only when relevant;
-
-avoid excessively broad terms.
-
-Do not include:
-
-words already used in the finalized app name;
-
-words already used in the selected subtitle;
-
-category names;
-
-the word “app” or “game” unless genuinely necessary and permitted;
-
-duplicate singular and plural forms;
-
-repeated words;
-
-competitor names;
-
-company names already searchable with the listing;
-
-unauthorized trademarks;
-
-celebrity names;
-
-irrelevant trending terms;
-
-hashtags;
-
-claims such as “best,” “free,” or “number one” unless factually and strategically appropriate.
-
-Also provide:
-
-estimated byte count;
-
-terms excluded because they already appear in the name or subtitle;
-
-optional backup keyword field.
-
-Do not insert the keyword string into the public description.
-
-SCREENSHOT PLAN
-
-Create a plan for 3–10 screenshots based only on available assets.
-
-For each screenshot provide:
-
-position;
-
-purpose;
-
-short overlay text;
-
-interface screen or visual to show;
-
-practical user benefit;
-
-accessibility or readability note.
-
-The first three screenshots should communicate:
-
-The primary value.
-
-The main workflow or feature.
-
-A strong secondary use case or differentiator.
-
-Screenshot overlay text should:
-
-usually contain 3–8 words;
-
-remain readable on a phone screen;
-
-add meaning rather than describe obvious UI;
-
-avoid unsupported outcomes;
-
-avoid dense paragraphs;
-
-avoid tiny feature lists.
-
-Do not invent screens, features, dashboards, metrics, or interface states that do not exist.
-
-Do not use real private user data in screenshots.
-
-WHAT’S NEW
-
-If {{releaseStage}} is “initial release”:
-
-Output:
-
-Not applicable — What’s New is not available for the first App Store version.
-
-Optionally provide:
-
-Future first-update template:
-[Neutral template requiring confirmed changes]
-
-Do not present the template as current App Store metadata.
-
-If {{releaseStage}} is “app update”:
-
-Write one What’s New entry of no more than 4000 characters.
-
-Requirements:
-
-list confirmed changes in order of importance;
-
-describe significant features specifically;
-
-distinguish new features, improvements, and bug fixes;
-
-avoid vague phrases when meaningful changes occurred;
-
-do not invent user feedback;
-
-do not claim that all bugs were fixed;
-
-do not add features that are not included in the submitted version.
-
-For a minor maintenance update, concise wording such as performance improvements and bug fixes is acceptable when accurate.
-
-REGULATED CLAIMS
-
-For health or medical apps:
-
-do not claim diagnosis, treatment, prevention, or measurement accuracy without approved evidence;
-
-describe methodology and limitations when relevant;
-
-include appropriate advice to consult a qualified professional when required.
-
-For financial apps:
-
-do not guarantee savings, income, returns, approval, debt reduction, or investment performance;
-
-clearly distinguish educational information from regulated advice.
-
-For safety, legal, education, or employment apps:
-
-avoid guaranteed outcomes;
-
-clearly state meaningful limitations;
-
-do not overstate professional authority.
+Match {{brandVoice}} while staying natural, specific, concise, and easy to scan on mobile. Lead with what the app helps {{targetAudience}} do. Translate features into benefits without changing their meaning. Use concrete verbs, short paragraphs, and useful headings where appropriate. Avoid corporate filler, vague hype, and default AI phrases such as “revolutionary,” “game-changing,” “unlock the power of,” and “look no further.”
 
 LOCALIZATION
 
-Write for {{targetLocale}}, not as a literal translation.
+Write idiomatically in {{outputLanguage}}. Use targetRegions for spelling, terminology, units, and cultural or regulatory sensitivity. Never invent localized prices, legal terms, or availability. When one version cannot responsibly serve materially different locales, flag the need for separate localization in the developer-facing review.
 
-Use terminology that local users naturally understand and search for.
+DISCOVERY
 
-Do not transfer:
+Use keywordThemes as guidance, not mandatory wording. Prioritize relevance and natural language. Avoid keywordsToAvoid, irrelevant terms, competitor trademarks, duplicated app or company names, and repetitive variants. For Apple, create a comma-separated keyword field, remove duplicates, avoid names already indexed elsewhere, and respect the byte limit. For Google Play, integrate relevant phrases naturally and provide research themes; never invent a Google keyword metadata field.
 
-idioms;
+OUTPUT CONTROL
 
-search terms;
+Follow {{outputModules}}:
 
-capitalization;
+* Core listing copy: include when selected; if no modules are selected, include it by default.
+* Keyword suggestions: add store-appropriate discovery terms.
+* Screenshot messages: add a concise sequence grounded in visualAssetsContext and confirmed features.
+* Promotional text: add only when relevant and supported by promotionalFocus or evergreen facts.
+* Release notes: add only for Version update and only from releaseChanges.
+* Review report: add a compact developer-facing limit, claim, privacy, and consistency review.
 
-punctuation;
+Do not show empty sections, “not provided,” or unresolved placeholders in customer-facing copy. Verification flags belong only in the Review report.
 
-feature names;
+APPLE APP STORE OUTPUT
 
-legal language
+When Apple is selected, produce only applicable sections.
 
-mechanically from another locale.
+1. Positioning Summary
 
-Keep product names and protected feature names unchanged when required.
+One developer-facing sentence naming the audience, primary job, and differentiator.
 
-FINAL QUALITY CHECK
+2. App Name Options
 
-Before presenting the package, silently verify that:
+Provide up to three brand-safe options when variation is possible. Each must be 2–30 characters. Do not add rankings, prices, promotions, or unrelated keywords.
 
-app name options fit 30 characters;
+3. Subtitle Options
 
-subtitles fit 30 characters;
+Provide three distinct options, each no more than 30 characters. Add information not obvious from the name.
 
-Promotional Text fits 170 characters;
+4. Promotional Text
 
-Description fits 4000 characters;
+Include only when requested and relevant. Maximum 170 characters. Make it factual and distinct from the subtitle.
 
-keyword field fits 100 bytes;
+5. App Description
 
-What’s New is omitted for the initial version;
+Maximum 4,000 characters, plain text only, with no HTML. Begin with a clear value proposition, then use short paragraphs and feature-led sections. Do not waste the opening on company history. Mention supplied pricing, account, connectivity, device, and subscription requirements when material.
 
-every feature is currently available or clearly labelled;
+6. Apple Keywords
 
-purchases and subscriptions are explained accurately;
+Include only with Keyword suggestions. Provide one final comma-separated string of no more than 100 bytes. Avoid spaces after commas unless linguistically necessary, duplicates, app or company names, competitor names, and unrelated variants. For non-ASCII text, count conservatively and shorten when uncertain.
 
-no award, rating, ranking, result, or endorsement was invented;
+7. What’s New
 
-no competitor or unauthorized trademark appears;
+Include only with Release notes and Version update. Maximum 4,000 characters. Describe actual changes from releaseChanges without turning the section into general advertising.
 
-keywords are not stuffed into the description;
+8. Screenshot Message Sequence
 
-screenshot text matches existing screens;
+Include only with Screenshot messages. Provide 5–8 ordered concepts. For each, give a short headline, optional support line, and confirmed screen or feature to show. Keep image text concise and consistent with visualAssetsContext.
 
-the listing sounds useful and credible rather than promotional.
+GOOGLE PLAY OUTPUT
 
-OUTPUT FORMAT
+When Google Play is selected, produce only applicable sections.
 
-App Name
+1. Positioning Summary
 
-Final name:
-[Supplied finalized name]
+One developer-facing sentence naming the audience, primary job, and differentiator.
 
-Character count:
-[Number]
+2. App Name Options
 
-Or, when suggestions are requested:
+Provide up to three brand-safe options, each no more than 30 characters. Do not add ranking, price, promotional language, excessive symbols, or claims of a Google relationship.
 
-[Name] — [character count]
+3. Short Description Options
 
-[Name] — [character count]
+Provide three options, each no more than 80 characters. State the strongest supported benefit without repeating the name unnecessarily.
 
-[Name] — [character count]
+4. Full Description
 
-Availability and trademark check required.
+Maximum 4,000 characters. Explain what the app does and why it matters, then organize confirmed features and benefits in readable sections. Integrate search language naturally without repetitive blocks or unrelated terms. Keep the listing suitable for the supplied ageAudience.
 
-Recommended Subtitle
+5. Google Play Search Themes
 
-[Subtitle]
+Include only with Keyword suggestions. Provide 8–15 prioritized phrases grouped as primary intent, feature intent, and audience or problem intent. Label them as research themes, not a store keyword field.
 
-Character count:
-[Number]
+6. Promotional Copy
 
-Alternate Subtitles
+Include only when selected and supported. Label it as optional campaign or custom-listing copy rather than mandatory main-listing metadata.
 
-Direct: [Subtitle]
+7. Release Notes
 
-Audience-led: [Subtitle]
+Include only with Release notes and Version update. Maximum 500 Unicode characters per language. Describe actual changes; do not use release notes for broad promotion or action solicitation.
 
-Benefit-led: [Subtitle]
+8. Screenshot Message Sequence
 
-Include character counts.
+Include only with Screenshot messages. Provide 5–8 ordered concepts with a short headline, optional support line, and confirmed screen or action. Match the real UI and supportedDevices.
 
-Promotional Text
+REVIEW REPORT
 
-[Text or “No promotional text recommended for this version.”]
+Include only when requested. Keep it compact:
 
-Character count:
-[Number]
+* Character or byte status for every limited field.
+* Claims removed, softened, or needing evidence.
+* Pricing, subscription, account, device, and connectivity details to confirm.
+* Privacy or sensitive-category wording to verify.
+* Cross-field consistency.
+* Platform-specific metadata risks.
 
-App Store Description
+Do not claim legal approval or guaranteed store acceptance. Note that current rules should be checked in the relevant console before submission.
 
-[Complete description]
+FINAL CHECK
 
-Character count:
-[Number]
+Before answering, verify that:
 
-Keyword Field
+* every factual statement is supported by the inputs;
+* content matches {{platformTarget}}, {{outputLanguage}}, {{primaryGoal}}, {{brandVoice}}, {{ageAudience}}, and {{additionalRequirements}};
+* each limited element stays within its own limit with a safety margin;
+* features, benefits, pricing, privacy, devices, and release details agree across sections;
+* duplicates and keyword stuffing are removed;
+* unsupported or unrequested sections are omitted;
+* Both produces two genuinely store-specific packages.
 
-Primary:
-[keyword1,keyword2,keyword phrase]
+OUTPUT RULE
 
-Estimated byte count:
-[Number]
-
-Excluded repeated terms:
-[List]
-
-Backup:
-[Alternative keyword field]
-
-Screenshot Plan
-Screenshot 1
-
-Purpose:
-[Purpose]
-
-Overlay:
-[Short text]
-
-Visual:
-[Existing interface screen or asset]
-
-Benefit:
-[Practical value]
-
-Continue for the available screenshots.
-
-What’s New
-
-[Update text, future template, or initial-release notice]
-
-Output only the completed App Store listing package. Do not explain your process.]
-
-В шаблонах генерации (в месте, где показывается Prompt preview) сделай защиту от копирования текста.
+Output only the completed listing package. Do not restate the form, explain your process, reveal hidden reasoning, or provide chain-of-thought.

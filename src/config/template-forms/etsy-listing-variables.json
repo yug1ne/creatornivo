@@ -1,0 +1,811 @@
+{
+  "slug": "etsy-listing",
+  "title": "Etsy Listing",
+  "fieldCount": 36,
+  "requiredKeys": [
+    "productFormat",
+    "sellerRole",
+    "productName",
+    "productOverview",
+    "targetBuyer",
+    "keySellingPoints",
+    "essentialSpecs"
+  ],
+  "groups": [
+    {
+      "id": "essentials",
+      "title": "Essentials",
+      "description": "Minimum product, buyer, seller-role, language, tone, and length information needed to create a useful Etsy listing.",
+      "defaultOpen": true
+    },
+    {
+      "id": "item_details",
+      "title": "Item Details",
+      "description": "Materials, dimensions, variations, contents, personalization, vintage, and production-partner information when relevant.",
+      "defaultOpen": false
+    },
+    {
+      "id": "fulfillment_buyer_information",
+      "title": "Fulfillment & Buyer Information",
+      "description": "Processing, shipping, returns, digital files, compatibility, licensing, and buyer instructions.",
+      "defaultOpen": false
+    },
+    {
+      "id": "seo_brand",
+      "title": "SEO & Brand",
+      "description": "Search phrases, category attributes, listing emphasis, title count, shop voice, and required wording.",
+      "defaultOpen": false
+    },
+    {
+      "id": "claims_restrictions",
+      "title": "Claims & Restrictions",
+      "description": "Evidence, sensitive-product safety facts, and restrictions that prevent unsupported claims.",
+      "defaultOpen": false
+    }
+  ],
+  "variables": [
+    {
+      "key": "productFormat",
+      "label": "Product format",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": true,
+      "placeholder": "Physical item",
+      "hint": "Choose whether the listing is physical, instant digital, or made-to-order digital.",
+      "help": {
+        "what": "Provide the product format for this Etsy listing.",
+        "why": "The format controls the listing structure, delivery language, and which item-detail fields appear.",
+        "example": "Good example: Physical item",
+        "avoid": "Avoid vague placeholders, invented product facts, fake proof, scarcity, reviews, or unsupported claims."
+      },
+      "defaultValue": "Physical item",
+      "maxLength": 60,
+      "options": [
+        "Physical item",
+        "Instant digital download",
+        "Made-to-order digital item"
+      ]
+    },
+    {
+      "key": "sellerRole",
+      "label": "Your role in creating it",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": true,
+      "placeholder": "Made by seller",
+      "hint": "Choose how you are involved in making, designing, sourcing, or selecting the item.",
+      "help": {
+        "what": "Provide the your role in creating it for this Etsy listing.",
+        "why": "Seller involvement affects handmade, designed, sourced, vintage, and production-partner wording.",
+        "example": "Good example: Made by seller",
+        "avoid": "Avoid vague placeholders, invented product facts, fake proof, scarcity, reviews, or unsupported claims."
+      },
+      "defaultValue": "Made by seller",
+      "maxLength": 80,
+      "options": [
+        "Made by seller",
+        "Designed by seller",
+        "Sourced creative supply",
+        "Handpicked vintage item"
+      ]
+    },
+    {
+      "key": "productName",
+      "label": "Product name",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": true,
+      "placeholder": "Printable Weekly Meal Planner",
+      "hint": "Enter the exact product name or working listing name.",
+      "help": {
+        "what": "Provide the product name for this Etsy listing.",
+        "why": "The listing title, description, and tags need a clear item identity.",
+        "example": "Good example: Printable Weekly Meal Planner",
+        "avoid": "Avoid vague placeholders, invented product facts, fake proof, scarcity, reviews, or unsupported claims."
+      },
+      "maxLength": 160
+    },
+    {
+      "key": "productOverview",
+      "label": "What are you selling?",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "A printable PDF meal-planning bundle with weekly menus, grocery lists, pantry inventory pages, and simple prep notes.",
+      "hint": "Describe the product in plain language.",
+      "help": {
+        "what": "Provide the what are you selling? for this Etsy listing.",
+        "why": "The overview anchors the customer-facing description without inventing features.",
+        "example": "Good example: A printable PDF meal-planning bundle with weekly menus, grocery lists, pantry inventory pages, and simple prep notes.",
+        "avoid": "Avoid vague placeholders, invented product facts, fake proof, scarcity, reviews, or unsupported claims."
+      },
+      "maxLength": 1200,
+      "fullWidth": true
+    },
+    {
+      "key": "targetBuyer",
+      "label": "Ideal buyer",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": true,
+      "placeholder": "Busy families and home cooks who want a simple weekly planning routine.",
+      "hint": "Describe the shopper and buying context.",
+      "help": {
+        "what": "Provide the ideal buyer for this Etsy listing.",
+        "why": "Buyer context guides benefits, use cases, tone, and search phrasing.",
+        "example": "Good example: Busy families and home cooks who want a simple weekly planning routine.",
+        "avoid": "Avoid vague placeholders, invented product facts, fake proof, scarcity, reviews, or unsupported claims."
+      },
+      "maxLength": 300
+    },
+    {
+      "key": "keySellingPoints",
+      "label": "Main selling points",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "Editable Canva version, US Letter and A4 PDFs, Sunday and Monday start options, clean minimalist layout.",
+      "hint": "List the strongest supported reasons to choose the product.",
+      "help": {
+        "what": "Provide the main selling points for this Etsy listing.",
+        "why": "Selling points help the listing feel specific without using fake urgency or unsupported proof.",
+        "example": "Good example: Editable Canva version, US Letter and A4 PDFs, Sunday and Monday start options, clean minimalist layout.",
+        "avoid": "Avoid vague placeholders, invented product facts, fake proof, scarcity, reviews, or unsupported claims."
+      },
+      "maxLength": 1000,
+      "fullWidth": true
+    },
+    {
+      "key": "essentialSpecs",
+      "label": "Essential product facts",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "Digital PDF and Canva template, 12 pages, US Letter and A4 sizes, instant download, no physical item shipped.",
+      "hint": "Provide the factual details the buyer must understand.",
+      "help": {
+        "what": "Provide the essential product facts for this Etsy listing.",
+        "why": "Specs prevent vague copy and keep claims tied to supplied facts.",
+        "example": "Good example: Digital PDF and Canva template, 12 pages, US Letter and A4 sizes, instant download, no physical item shipped.",
+        "avoid": "Avoid vague placeholders, invented product facts, fake proof, scarcity, reviews, or unsupported claims."
+      },
+      "maxLength": 1500,
+      "fullWidth": true
+    },
+    {
+      "key": "primaryUseOccasion",
+      "label": "Use or occasion",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": false,
+      "placeholder": "Weekly meal planning, grocery prep, and family routines.",
+      "hint": "Add a real use case, event, room, season, or occasion when relevant.",
+      "help": {
+        "what": "Optional context for the use or occasion field.",
+        "why": "Use or occasion helps shape title angles and tags without forcing fake demand.",
+        "example": "Good example: Weekly meal planning, grocery prep, and family routines.",
+        "avoid": "Avoid guessed facts, fake urgency, fake reviews, unsupported superlatives, or policy language that the seller did not provide."
+      },
+      "maxLength": 300
+    },
+    {
+      "key": "outputLanguage",
+      "label": "Listing language",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": false,
+      "placeholder": "English",
+      "hint": "Choose the language for the generated listing.",
+      "help": {
+        "what": "Optional context for the listing language field.",
+        "why": "The prompt keeps titles, descriptions, and tags in one consistent shop language.",
+        "example": "Good example: English",
+        "avoid": "Avoid guessed facts, fake urgency, fake reviews, unsupported superlatives, or policy language that the seller did not provide."
+      },
+      "defaultValue": "English",
+      "maxLength": 60
+    },
+    {
+      "key": "tone",
+      "label": "Writing tone",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": false,
+      "placeholder": "Clear and natural",
+      "hint": "Choose the writing style for the listing.",
+      "help": {
+        "what": "Optional context for the writing tone field.",
+        "why": "Tone affects clarity, warmth, precision, and category fit.",
+        "example": "Good example: Clear and natural",
+        "avoid": "Avoid guessed facts, fake urgency, fake reviews, unsupported superlatives, or policy language that the seller did not provide."
+      },
+      "defaultValue": "Clear and natural",
+      "maxLength": 80,
+      "options": [
+        "Clear and natural",
+        "Warm and handmade",
+        "Minimal and modern",
+        "Playful and friendly",
+        "Elegant and refined",
+        "Rustic and personal",
+        "Technical and precise"
+      ]
+    },
+    {
+      "key": "descriptionLength",
+      "label": "Description length",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": false,
+      "placeholder": "Standard",
+      "hint": "Choose how detailed the Etsy description should be.",
+      "help": {
+        "what": "Optional context for the description length field.",
+        "why": "Length controls detail without changing the required Etsy-specific output sections.",
+        "example": "Good example: Standard",
+        "avoid": "Avoid guessed facts, fake urgency, fake reviews, unsupported superlatives, or policy language that the seller did not provide."
+      },
+      "defaultValue": "Standard",
+      "maxLength": 40,
+      "options": [
+        "Auto",
+        "Short",
+        "Standard",
+        "Detailed"
+      ]
+    },
+    {
+      "key": "materialsOrComponents",
+      "label": "Materials or components",
+      "group": "item_details",
+      "groupTitle": "Item Details",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "100% cotton canvas with brass zipper and cotton lining.",
+      "hint": "List confirmed materials, ingredients, components, or finish details.",
+      "help": {
+        "what": "Optional context for the materials or components field.",
+        "why": "Material details are used for physical items and attribute suggestions when supplied.",
+        "example": "Good example: 100% cotton canvas with brass zipper and cotton lining.",
+        "avoid": "Avoid guessed facts, fake urgency, fake reviews, unsupported superlatives, or policy language that the seller did not provide."
+      },
+      "maxLength": 1000,
+      "showWhen": {
+        "key": "productFormat",
+        "equals": "Physical item"
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "dimensionsAndSizing",
+      "label": "Dimensions and sizing",
+      "group": "item_details",
+      "groupTitle": "Item Details",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "10 in x 7 in x 2 in.",
+      "hint": "Add measurements, size, capacity, or sizing notes.",
+      "help": {
+        "what": "Optional context for the dimensions and sizing field.",
+        "why": "Sizing helps buyers decide fit and prevents vague physical-product claims.",
+        "example": "Good example: 10 in x 7 in x 2 in.",
+        "avoid": "Avoid guessed facts, fake urgency, fake reviews, unsupported superlatives, or policy language that the seller did not provide."
+      },
+      "maxLength": 1000,
+      "showWhen": {
+        "key": "productFormat",
+        "equals": "Physical item"
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "variations",
+      "label": "Available variations",
+      "group": "item_details",
+      "groupTitle": "Item Details",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Natural, black, and sage green.",
+      "hint": "List confirmed colors, sizes, styles, bundles, or options.",
+      "help": {
+        "what": "Optional context for the available variations field.",
+        "why": "Variation details prevent the listing from mixing attributes across options.",
+        "example": "Good example: Natural, black, and sage green.",
+        "avoid": "Avoid guessed facts, fake urgency, fake reviews, unsupported superlatives, or policy language that the seller did not provide."
+      },
+      "maxLength": 1200,
+      "showWhen": {
+        "key": "productFormat",
+        "equals": "Physical item"
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "setContents",
+      "label": "What the buyer receives",
+      "group": "item_details",
+      "groupTitle": "Item Details",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "One printable planner PDF, one Canva template link, and setup instructions.",
+      "hint": "List exactly what is included in the order.",
+      "help": {
+        "what": "Optional context for the what the buyer receives field.",
+        "why": "Contents reduce confusion and prevent implied extras.",
+        "example": "Good example: One printable planner PDF, one Canva template link, and setup instructions.",
+        "avoid": "Avoid guessed facts, fake urgency, fake reviews, unsupported superlatives, or policy language that the seller did not provide."
+      },
+      "maxLength": 800,
+      "fullWidth": true
+    },
+    {
+      "key": "personalizationEnabled",
+      "label": "Personalization available",
+      "group": "item_details",
+      "groupTitle": "Item Details",
+      "type": "select",
+      "required": false,
+      "placeholder": "Off",
+      "hint": "Choose whether the buyer can personalize this item. Choose On or Off.",
+      "help": {
+        "what": "Choose whether buyers can personalize this item. Personalization details appear only when this is On.",
+        "why": "Personalization details appear only when the item actually supports buyer input.",
+        "example": "Good example: Off",
+        "avoid": "Avoid guessed facts, fake urgency, fake reviews, unsupported superlatives, or policy language that the seller did not provide."
+      },
+      "defaultValue": "Off",
+      "maxLength": 20,
+      "options": [
+        "On",
+        "Off"
+      ]
+    },
+    {
+      "key": "personalizationDetails",
+      "label": "Personalization details",
+      "group": "item_details",
+      "groupTitle": "Item Details",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Buyer can add a family name on the cover page.",
+      "hint": "Explain what buyers can personalize and what information they must provide.",
+      "help": {
+        "what": "Optional context for the personalization details field.",
+        "why": "Personalization copy needs clear instructions without requesting unnecessary sensitive data.",
+        "example": "Good example: Buyer can add a family name on the cover page.",
+        "avoid": "Avoid asking buyers for unrelated sensitive information, credentials, financial data, or unnecessary personal details."
+      },
+      "maxLength": 1200,
+      "showWhen": {
+        "key": "personalizationEnabled",
+        "equals": "On"
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "vintageDetails",
+      "label": "Vintage item details",
+      "group": "item_details",
+      "groupTitle": "Item Details",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "1980s ceramic vase with small glaze marks shown in the listing photos.",
+      "hint": "Add era, condition, provenance, repairs, or maker details when known.",
+      "help": {
+        "what": "Optional context for the vintage item details field.",
+        "why": "Vintage details must distinguish confirmed facts from estimates.",
+        "example": "Good example: 1980s ceramic vase with small glaze marks shown in the listing photos.",
+        "avoid": "Avoid invented rarity, provenance, collector value, authenticity, or historical significance."
+      },
+      "maxLength": 1000,
+      "showWhen": {
+        "key": "sellerRole",
+        "equals": "Handpicked vintage item"
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "productionPartnerDetails",
+      "label": "Production partner details",
+      "group": "item_details",
+      "groupTitle": "Item Details",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Printed by a production partner using the seller's original artwork.",
+      "hint": "Describe the seller's design role and partner's production or fulfillment role.",
+      "help": {
+        "what": "Optional context for the production partner details field.",
+        "why": "Production-partner context prevents misleading handmade or manufacturing claims.",
+        "example": "Good example: Printed by a production partner using the seller's original artwork.",
+        "avoid": "Avoid implying the seller personally manufactured the item when a partner produced or fulfilled it."
+      },
+      "maxLength": 1200,
+      "showWhen": {
+        "allOf": [
+          {
+            "key": "productFormat",
+            "equals": "Physical item"
+          },
+          {
+            "key": "sellerRole",
+            "equals": "Designed by seller"
+          }
+        ]
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "processingTime",
+      "label": "Processing time",
+      "group": "fulfillment_buyer_information",
+      "groupTitle": "Fulfillment & Buyer Information",
+      "type": "text",
+      "required": false,
+      "placeholder": "Instant download after purchase, or 3-5 business days for made-to-order personalization.",
+      "hint": "Add preparation or processing timing when relevant.",
+      "help": {
+        "what": "Optional context for the processing time field.",
+        "why": "Processing time is separate from carrier transit and should not imply unsupported guarantees.",
+        "example": "Good example: Instant download after purchase, or 3-5 business days for made-to-order personalization.",
+        "avoid": "Avoid guessed facts, fake urgency, fake reviews, unsupported superlatives, or policy language that the seller did not provide."
+      },
+      "maxLength": 300,
+      "showWhen": {
+        "key": "productFormat",
+        "equals": [
+          "Physical item",
+          "Made-to-order digital item"
+        ]
+      }
+    },
+    {
+      "key": "shippingDelivery",
+      "label": "Shipping and delivery",
+      "group": "fulfillment_buyer_information",
+      "groupTitle": "Fulfillment & Buyer Information",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Ships in protective packaging with tracking.",
+      "hint": "Describe shipping, packaging, handling, or delivery expectations.",
+      "help": {
+        "what": "Optional context for the shipping and delivery field.",
+        "why": "Shipping information is used only for physical items and should not invent delivery promises.",
+        "example": "Good example: Ships in protective packaging with tracking.",
+        "avoid": "Avoid guessed facts, fake urgency, fake reviews, unsupported superlatives, or policy language that the seller did not provide."
+      },
+      "maxLength": 1200,
+      "showWhen": {
+        "key": "productFormat",
+        "equals": "Physical item"
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "returnExchangeNotes",
+      "label": "Returns and exchanges",
+      "group": "fulfillment_buyer_information",
+      "groupTitle": "Fulfillment & Buyer Information",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Digital downloads are not returnable after access unless required by law.",
+      "hint": "Add confirmed returns, exchanges, or cancellation notes.",
+      "help": {
+        "what": "Optional context for the returns and exchanges field.",
+        "why": "Return wording should match the seller's actual policy and product format.",
+        "example": "Good example: Digital downloads are not returnable after access unless required by law.",
+        "avoid": "Avoid guessed facts, fake urgency, fake reviews, unsupported superlatives, or policy language that the seller did not provide."
+      },
+      "maxLength": 1000,
+      "showWhen": {
+        "key": "productFormat",
+        "equals": "Physical item"
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "digitalFileDetails",
+      "label": "Digital files included",
+      "group": "fulfillment_buyer_information",
+      "groupTitle": "Fulfillment & Buyer Information",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "PDF, PNG, and Canva template link.",
+      "hint": "List the digital files, formats, sizes, or access method.",
+      "help": {
+        "what": "Optional context for the digital files included field.",
+        "why": "Digital file details keep download listings clear and avoid physical-delivery language.",
+        "example": "Good example: PDF, PNG, and Canva template link.",
+        "avoid": "Avoid guessed facts, fake urgency, fake reviews, unsupported superlatives, or policy language that the seller did not provide."
+      },
+      "maxLength": 1400,
+      "showWhen": {
+        "key": "productFormat",
+        "equals": [
+          "Instant digital download",
+          "Made-to-order digital item"
+        ]
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "softwareCompatibility",
+      "label": "Software and compatibility",
+      "group": "fulfillment_buyer_information",
+      "groupTitle": "Fulfillment & Buyer Information",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Works with a Canva free account and any PDF reader.",
+      "hint": "Describe required apps, devices, accounts, or compatibility limits.",
+      "help": {
+        "what": "Optional context for the software and compatibility field.",
+        "why": "Compatibility prevents unsupported universal-fit or every-application claims.",
+        "example": "Good example: Works with a Canva free account and any PDF reader.",
+        "avoid": "Avoid guessed facts, fake urgency, fake reviews, unsupported superlatives, or policy language that the seller did not provide."
+      },
+      "maxLength": 1000,
+      "showWhen": {
+        "key": "productFormat",
+        "equals": [
+          "Instant digital download",
+          "Made-to-order digital item"
+        ]
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "usageLicense",
+      "label": "Digital usage license",
+      "group": "fulfillment_buyer_information",
+      "groupTitle": "Fulfillment & Buyer Information",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Personal use only; resale or redistribution is not included.",
+      "hint": "Explain allowed use, commercial rights, resale limits, or redistribution rules.",
+      "help": {
+        "what": "Optional context for the digital usage license field.",
+        "why": "License context prevents the listing from implying rights the buyer does not receive.",
+        "example": "Good example: Personal use only; resale or redistribution is not included.",
+        "avoid": "Avoid guessed facts, fake urgency, fake reviews, unsupported superlatives, or policy language that the seller did not provide."
+      },
+      "maxLength": 1200,
+      "showWhen": {
+        "key": "productFormat",
+        "equals": [
+          "Instant digital download",
+          "Made-to-order digital item"
+        ]
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "buyerInstructions",
+      "label": "Buyer instructions",
+      "group": "fulfillment_buyer_information",
+      "groupTitle": "Fulfillment & Buyer Information",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Download files from Etsy Purchases and Reviews, then open the instruction PDF first.",
+      "hint": "Add setup, ordering, download, personalization, or use instructions.",
+      "help": {
+        "what": "Optional context for the buyer instructions field.",
+        "why": "Instructions help buyers know what to do after purchase without adding unsupported steps.",
+        "example": "Good example: Download files from Etsy Purchases and Reviews, then open the instruction PDF first.",
+        "avoid": "Avoid guessed facts, fake urgency, fake reviews, unsupported superlatives, or policy language that the seller did not provide."
+      },
+      "maxLength": 1200,
+      "fullWidth": true
+    },
+    {
+      "key": "priorityKeywords",
+      "label": "Priority search phrases",
+      "group": "seo_brand",
+      "groupTitle": "SEO & Brand",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "printable meal planner, weekly menu planner, grocery list printable",
+      "hint": "Add researched phrases or shopper language to consider.",
+      "help": {
+        "what": "Optional context for the priority search phrases field.",
+        "why": "Keywords guide Etsy tags and titles but should not override product accuracy.",
+        "example": "Good example: printable meal planner, weekly menu planner, grocery list printable",
+        "avoid": "Avoid keyword stuffing, irrelevant trends, competitor names, protected names, or misleading attributes."
+      },
+      "maxLength": 1000,
+      "fullWidth": true
+    },
+    {
+      "key": "categoryAttributes",
+      "label": "Category and attributes",
+      "group": "seo_brand",
+      "groupTitle": "SEO & Brand",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Digital prints, planner templates, meal planning, PDF download",
+      "hint": "Add likely category, attribute, material, color, room, style, occasion, or recipient notes.",
+      "help": {
+        "what": "Optional context for the category and attributes field.",
+        "why": "Attribute context helps create suggestions without pretending Etsy's editor is static.",
+        "example": "Good example: Digital prints, planner templates, meal planning, PDF download",
+        "avoid": "Avoid keyword stuffing, irrelevant trends, competitor names, protected names, or misleading attributes."
+      },
+      "maxLength": 1000,
+      "fullWidth": true
+    },
+    {
+      "key": "listingFocus",
+      "label": "Listing emphasis",
+      "group": "seo_brand",
+      "groupTitle": "SEO & Brand",
+      "type": "select",
+      "required": false,
+      "placeholder": "Search-balanced",
+      "hint": "Choose the main emphasis for the listing.",
+      "help": {
+        "what": "Optional context for the listing emphasis field.",
+        "why": "Focus changes the balance between benefits, details, gifting, story, and minimal copy.",
+        "example": "Good example: Search-balanced",
+        "avoid": "Avoid guessed facts, fake urgency, fake reviews, unsupported superlatives, or policy language that the seller did not provide."
+      },
+      "defaultValue": "Search-balanced",
+      "maxLength": 60,
+      "options": [
+        "Search-balanced",
+        "Benefits-first",
+        "Details-first",
+        "Gift-focused",
+        "Story-led",
+        "Minimal"
+      ]
+    },
+    {
+      "key": "titleVariantCount",
+      "label": "Number of title options",
+      "group": "seo_brand",
+      "groupTitle": "SEO & Brand",
+      "type": "select",
+      "required": false,
+      "placeholder": "3",
+      "hint": "Choose how many Etsy title options to generate.",
+      "help": {
+        "what": "Optional context for the number of title options field.",
+        "why": "The prompt creates exactly this number of title options.",
+        "example": "Good example: 3",
+        "avoid": "Avoid guessed facts, fake urgency, fake reviews, unsupported superlatives, or policy language that the seller did not provide."
+      },
+      "defaultValue": "3",
+      "maxLength": 10,
+      "options": [
+        "1",
+        "3",
+        "5"
+      ]
+    },
+    {
+      "key": "shopVoice",
+      "label": "Shop voice",
+      "group": "seo_brand",
+      "groupTitle": "SEO & Brand",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Warm, practical, and calm, with short sentences.",
+      "hint": "Describe the shop's preferred voice or style notes.",
+      "help": {
+        "what": "Optional context for the shop voice field.",
+        "why": "Shop voice keeps wording consistent with the seller's brand.",
+        "example": "Good example: Warm, practical, and calm, with short sentences.",
+        "avoid": "Avoid guessed facts, fake urgency, fake reviews, unsupported superlatives, or policy language that the seller did not provide."
+      },
+      "maxLength": 700,
+      "fullWidth": true
+    },
+    {
+      "key": "requiredTerms",
+      "label": "Required words or phrases",
+      "group": "seo_brand",
+      "groupTitle": "SEO & Brand",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Use printable, instant download, and meal planner. Avoid guaranteed, best-selling, and handmade if not applicable.",
+      "hint": "List words to include or avoid.",
+      "help": {
+        "what": "Optional context for the required words or phrases field.",
+        "why": "Required wording is checked against accuracy and may be flagged if unsafe.",
+        "example": "Good example: Use printable, instant download, and meal planner. Avoid guaranteed, best-selling, and handmade if not applicable.",
+        "avoid": "Avoid guessed facts, fake urgency, fake reviews, unsupported superlatives, or policy language that the seller did not provide."
+      },
+      "maxLength": 800,
+      "fullWidth": true
+    },
+    {
+      "key": "proofAndCredentials",
+      "label": "Evidence and credentials",
+      "group": "claims_restrictions",
+      "groupTitle": "Claims & Restrictions",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Based on original seller artwork and verified file specifications only.",
+      "hint": "Provide evidence for claims, credentials, testing, provenance, or rights.",
+      "help": {
+        "what": "Optional context for the evidence and credentials field.",
+        "why": "The prompt uses supplied proof only and avoids broad unsupported claims.",
+        "example": "Good example: Based on original seller artwork and verified file specifications only.",
+        "avoid": "Avoid certifications, tests, approvals, safety claims, or legal conclusions that are not explicitly supplied."
+      },
+      "maxLength": 1500,
+      "fullWidth": true
+    },
+    {
+      "key": "sensitiveCategory",
+      "label": "Sensitive or regulated item",
+      "group": "claims_restrictions",
+      "groupTitle": "Claims & Restrictions",
+      "type": "select",
+      "required": false,
+      "placeholder": "Off",
+      "hint": "Choose whether this item involves safety, child, medical, cosmetic, food, legal, or regulated claims. Choose On or Off.",
+      "help": {
+        "what": "Choose whether this item needs sensitive or regulated claim safeguards. Safety facts appear only when this is On.",
+        "why": "Sensitive items need extra safeguards and verified safety facts.",
+        "example": "Good example: Off",
+        "avoid": "Avoid guessed facts, fake urgency, fake reviews, unsupported superlatives, or policy language that the seller did not provide."
+      },
+      "defaultValue": "Off",
+      "maxLength": 20,
+      "options": [
+        "On",
+        "Off"
+      ]
+    },
+    {
+      "key": "safetyComplianceFacts",
+      "label": "Safety and compliance facts",
+      "group": "claims_restrictions",
+      "groupTitle": "Claims & Restrictions",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "For children's wall art, use non-toxic ink certification only if supplied.",
+      "hint": "Add verified warnings, age guidance, ingredients, testing, or compliance facts.",
+      "help": {
+        "what": "Optional context for the safety and compliance facts field.",
+        "why": "Safety wording must be supplied by the seller and should not imply legal review.",
+        "example": "Good example: For children's wall art, use non-toxic ink certification only if supplied.",
+        "avoid": "Avoid certifications, tests, approvals, safety claims, or legal conclusions that are not explicitly supplied."
+      },
+      "maxLength": 2000,
+      "showWhen": {
+        "key": "sensitiveCategory",
+        "equals": "On"
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "restrictionsAndContext",
+      "label": "Additional requirements",
+      "group": "claims_restrictions",
+      "groupTitle": "Claims & Restrictions",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Do not invent shipping times, reviews, bestseller status, or scarcity.",
+      "hint": "Add final restrictions, missing context, or unusual requirements.",
+      "help": {
+        "what": "Optional context for the additional requirements field.",
+        "why": "Restrictions prevent unsafe copy and capture constraints that do not fit elsewhere.",
+        "example": "Good example: Do not invent shipping times, reviews, bestseller status, or scarcity.",
+        "avoid": "Avoid guessed facts, fake urgency, fake reviews, unsupported superlatives, or policy language that the seller did not provide."
+      },
+      "maxLength": 2000,
+      "fullWidth": true
+    }
+  ]
+}

@@ -1,0 +1,515 @@
+{
+  "slug": "push-notification",
+  "title": "Push Notification",
+  "fieldCount": 23,
+  "requiredKeys": [
+    "campaignSubject",
+    "primaryGoal",
+    "targetAudience",
+    "keyMessage",
+    "tapDestination"
+  ],
+  "groups": [
+    {
+      "id": "essentials",
+      "title": "Essentials",
+      "description": "Campaign subject, goal, audience, key message, tap destination, notification type, language, urgency, and variant count.",
+      "defaultOpen": true
+    },
+    {
+      "id": "message_delivery",
+      "title": "Message & Delivery",
+      "description": "Timing context, expiration, title/body structure, tone, and emoji preference.",
+      "defaultOpen": false
+    },
+    {
+      "id": "brand_personalization",
+      "title": "Brand & Personalization",
+      "description": "Sender identity, brand voice, supported personalization tokens, and CTA wording preferences.",
+      "defaultOpen": false
+    },
+    {
+      "id": "compliance_restrictions",
+      "title": "Compliance & Restrictions",
+      "description": "Sensitive categories, jurisdiction, required disclosures, claim restrictions, and final requirements.",
+      "defaultOpen": false
+    }
+  ],
+  "variables": [
+    {
+      "key": "campaignSubject",
+      "label": "What is the notification about?",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": true,
+      "placeholder": "Order update, new feature, expiring offer, appointment reminder",
+      "hint": "Name the event, update, product, offer, or action behind the notification.",
+      "help": {
+        "what": "Provide the what is the notification about? before generating push notification copy.",
+        "why": "It establishes the central subject the notification must communicate.",
+        "example": "Good example: Order update for a confirmed purchase",
+        "avoid": "Avoid vague placeholders, fake urgency, fake personalization, clickbait, or changing the notification into a different subject."
+      },
+      "maxLength": 160
+    },
+    {
+      "key": "primaryGoal",
+      "label": "Primary goal",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": true,
+      "placeholder": "Select the main goal",
+      "hint": "Choose the single most important outcome for this notification.",
+      "help": {
+        "what": "Provide the primary goal before generating push notification copy.",
+        "why": "The goal determines the message angle, urgency, and strength of the call to action.",
+        "example": "Good example: Confirm a status",
+        "avoid": "Avoid vague placeholders, fake urgency, fake personalization, clickbait, or changing the notification into a different subject."
+      },
+      "defaultValue": "Inform",
+      "options": [
+        "Inform",
+        "Remind",
+        "Drive action",
+        "Promote an offer",
+        "Re-engage users",
+        "Confirm a status",
+        "Warn about an issue",
+        "Announce an update"
+      ],
+      "maxLength": 32
+    },
+    {
+      "key": "targetAudience",
+      "label": "Target audience",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "Existing customers who added an item to their cart but did not complete checkout",
+      "hint": "Describe who will receive the notification and any relevant context.",
+      "help": {
+        "what": "Provide the target audience before generating push notification copy.",
+        "why": "Audience context affects relevance, wording, assumed knowledge, and privacy risk.",
+        "example": "Good example: Existing customers waiting for an order update inside the mobile app.",
+        "avoid": "Avoid vague placeholders, fake urgency, fake personalization, clickbait, or changing the notification into a different subject."
+      },
+      "maxLength": 500,
+      "fullWidth": true
+    },
+    {
+      "key": "keyMessage",
+      "label": "Key message and facts",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "State what happened, what matters, and any verified dates, prices, or conditions",
+      "hint": "Include only facts that may appear in the notification.",
+      "help": {
+        "what": "Provide the key message and facts before generating push notification copy.",
+        "why": "It provides the verified information the notification must communicate without fabrication.",
+        "example": "Good example: The order has shipped and tracking is available from the order details screen.",
+        "avoid": "Avoid invented prices, dates, features, availability, results, urgency, user behavior, or claims."
+      },
+      "maxLength": 1000,
+      "fullWidth": true
+    },
+    {
+      "key": "tapDestination",
+      "label": "Tap destination",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": true,
+      "placeholder": "Checkout screen, order details, article page, https://www.creatornivo.com/offers/summer",
+      "hint": "Enter the app screen, deep link, page, or action opened after the user taps.",
+      "help": {
+        "what": "Provide the tap destination before generating push notification copy.",
+        "why": "A push notification should set an accurate expectation for what happens after the tap.",
+        "example": "Good example: Order details screen",
+        "avoid": "Avoid invented screens, broken links, misleading destinations, or tap expectations that the product cannot support."
+      },
+      "maxLength": 300
+    },
+    {
+      "key": "notificationContext",
+      "label": "Notification type",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": false,
+      "placeholder": "Let Creatornivo decide",
+      "hint": "Select a type when it materially affects tone or compliance.",
+      "help": {
+        "what": "Optional context for the notification type field.",
+        "why": "Different notification types require different levels of urgency, persuasion, and sender context.",
+        "example": "Good example: Transactional",
+        "avoid": "Avoid guessed facts, private user data, manipulative pressure, unsupported urgency, excessive emojis, or generic marketing filler."
+      },
+      "defaultValue": "Auto",
+      "options": [
+        "Auto",
+        "Transactional",
+        "Reminder",
+        "Promotional",
+        "Product update",
+        "Content alert",
+        "Service alert",
+        "Re-engagement"
+      ],
+      "maxLength": 32
+    },
+    {
+      "key": "outputLanguage",
+      "label": "Output language",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": false,
+      "placeholder": "English, Spanish, German, Ukrainian",
+      "hint": "Specify the language or locale used in the final notification.",
+      "help": {
+        "what": "Optional context for the output language field.",
+        "why": "Language affects brevity, tone, grammar, and visual character density.",
+        "example": "Good example: English",
+        "avoid": "Avoid guessed facts, private user data, manipulative pressure, unsupported urgency, excessive emojis, or generic marketing filler."
+      },
+      "defaultValue": "English",
+      "maxLength": 60
+    },
+    {
+      "key": "urgencyLevel",
+      "label": "Urgency level",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select urgency",
+      "hint": "High or critical urgency will be used only when supported by the supplied facts.",
+      "help": {
+        "what": "Optional context for the urgency level field.",
+        "why": "It controls pacing and emphasis while preventing unjustified urgency.",
+        "example": "Good example: Normal",
+        "avoid": "Avoid guessed facts, private user data, manipulative pressure, unsupported urgency, excessive emojis, or generic marketing filler."
+      },
+      "defaultValue": "Normal",
+      "options": [
+        "Low",
+        "Normal",
+        "High",
+        "Critical"
+      ],
+      "maxLength": 24
+    },
+    {
+      "key": "variantCount",
+      "label": "Number of variants",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "number",
+      "required": false,
+      "placeholder": "3",
+      "hint": "Generate between one and five distinct notification options.",
+      "help": {
+        "what": "Optional context for the number of variants field.",
+        "why": "It lets users choose between a single result and a small set of genuinely different angles.",
+        "example": "Good example: 3",
+        "avoid": "Avoid guessed facts, private user data, manipulative pressure, unsupported urgency, excessive emojis, or generic marketing filler."
+      },
+      "defaultValue": "3",
+      "min": 1,
+      "max": 5,
+      "maxLength": 1
+    },
+    {
+      "key": "timingContext",
+      "label": "Timing context",
+      "group": "message_delivery",
+      "groupTitle": "Message & Delivery",
+      "type": "text",
+      "required": false,
+      "placeholder": "Send 30 minutes before the appointment or after a failed payment",
+      "hint": "Describe when or after which event the notification should be sent.",
+      "help": {
+        "what": "Optional context for the timing context field.",
+        "why": "Timing can change the relevance, tense, and urgency of the message.",
+        "example": "Good example: Send after shipment is confirmed.",
+        "avoid": "Avoid guessed facts, private user data, manipulative pressure, unsupported urgency, excessive emojis, or generic marketing filler."
+      },
+      "maxLength": 250
+    },
+    {
+      "key": "expirationContext",
+      "label": "Expiration or deadline",
+      "group": "message_delivery",
+      "groupTitle": "Message & Delivery",
+      "type": "text",
+      "required": false,
+      "placeholder": "Valid until 6 PM on July 15, or remove after the event begins",
+      "hint": "Add a verified deadline or the point when the notification becomes irrelevant.",
+      "help": {
+        "what": "Optional context for the expiration or deadline field.",
+        "why": "It prevents outdated notifications and supports accurate deadline wording.",
+        "example": "Good example: Remove after the order is delivered.",
+        "avoid": "Avoid guessed facts, private user data, manipulative pressure, unsupported urgency, excessive emojis, or generic marketing filler."
+      },
+      "maxLength": 250
+    },
+    {
+      "key": "titleMode",
+      "label": "Notification structure",
+      "group": "message_delivery",
+      "groupTitle": "Message & Delivery",
+      "type": "select",
+      "required": false,
+      "placeholder": "Let Creatornivo decide",
+      "hint": "Choose whether the output should use a title and body or body-only format.",
+      "help": {
+        "what": "Optional context for the notification structure field.",
+        "why": "Some notification environments support a separate title, while others use one compact message.",
+        "example": "Good example: Title and body",
+        "avoid": "Avoid guessed facts, private user data, manipulative pressure, unsupported urgency, excessive emojis, or generic marketing filler."
+      },
+      "defaultValue": "Auto",
+      "options": [
+        "Auto",
+        "Title and body",
+        "Body only"
+      ],
+      "maxLength": 24
+    },
+    {
+      "key": "tone",
+      "label": "Tone",
+      "group": "message_delivery",
+      "groupTitle": "Message & Delivery",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select a tone",
+      "hint": "Choose the overall voice without changing the underlying facts.",
+      "help": {
+        "what": "Optional context for the tone field.",
+        "why": "Tone materially affects how the same short message is perceived.",
+        "example": "Good example: Clear and natural",
+        "avoid": "Avoid guessed facts, private user data, manipulative pressure, unsupported urgency, excessive emojis, or generic marketing filler."
+      },
+      "defaultValue": "Clear and natural",
+      "options": [
+        "Clear and natural",
+        "Friendly",
+        "Professional",
+        "Warm",
+        "Energetic",
+        "Reassuring",
+        "Urgent but calm",
+        "Playful"
+      ],
+      "maxLength": 32
+    },
+    {
+      "key": "emojiUse",
+      "label": "Emoji use",
+      "group": "message_delivery",
+      "groupTitle": "Message & Delivery",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select emoji use",
+      "hint": "Emoji should support meaning rather than consume limited notification space.",
+      "help": {
+        "what": "Optional context for the emoji use field.",
+        "why": "Emoji use is a recognizable brand and platform preference that cannot always be inferred.",
+        "example": "Good example: Minimal",
+        "avoid": "Avoid guessed facts, private user data, manipulative pressure, unsupported urgency, excessive emojis, or generic marketing filler."
+      },
+      "defaultValue": "Minimal",
+      "options": [
+        "None",
+        "Minimal",
+        "Moderate"
+      ],
+      "maxLength": 16
+    },
+    {
+      "key": "senderName",
+      "label": "Sender or brand name",
+      "group": "brand_personalization",
+      "groupTitle": "Brand & Personalization",
+      "type": "text",
+      "required": false,
+      "placeholder": "Northstar, Acme App, River Dental",
+      "hint": "Add the sender only when users may not recognize the app or message context.",
+      "help": {
+        "what": "Optional context for the sender or brand name field.",
+        "why": "Sender identification can improve clarity, especially for browser or multi-brand notifications.",
+        "example": "Good example: Creatornivo",
+        "avoid": "Avoid guessed facts, private user data, manipulative pressure, unsupported urgency, excessive emojis, or generic marketing filler."
+      },
+      "maxLength": 80
+    },
+    {
+      "key": "brandVoice",
+      "label": "Brand voice",
+      "group": "brand_personalization",
+      "groupTitle": "Brand & Personalization",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Calm, concise, helpful, never overly promotional or playful",
+      "hint": "Describe distinctive voice preferences not covered by the tone selector.",
+      "help": {
+        "what": "Optional context for the brand voice field.",
+        "why": "It preserves meaningful brand distinctions without creating several overlapping style fields.",
+        "example": "Good example: Helpful, concise, and calm.",
+        "avoid": "Avoid guessed facts, private user data, manipulative pressure, unsupported urgency, excessive emojis, or generic marketing filler."
+      },
+      "maxLength": 700,
+      "fullWidth": true
+    },
+    {
+      "key": "personalizationTokens",
+      "label": "Personalization tokens",
+      "group": "brand_personalization",
+      "groupTitle": "Brand & Personalization",
+      "type": "text",
+      "required": false,
+      "placeholder": "{{first_name}}, {{order_number}}, {{appointment_time}}",
+      "hint": "List only tokens supported by your notification system.",
+      "help": {
+        "what": "Optional context for the personalization tokens field.",
+        "why": "The model must preserve valid token syntax and avoid inventing unsupported personalization.",
+        "example": "Good example: {{first_name}}, {{order_number}}",
+        "avoid": "Avoid personal data or token names that the notification system cannot reliably insert."
+      },
+      "maxLength": 300
+    },
+    {
+      "key": "callToActionPreference",
+      "label": "Call-to-action preference",
+      "group": "brand_personalization",
+      "groupTitle": "Brand & Personalization",
+      "type": "text",
+      "required": false,
+      "placeholder": "View order, Continue checkout, Read update, or Auto",
+      "hint": "Suggest a preferred action phrase or leave Auto for context-based wording.",
+      "help": {
+        "what": "Optional context for the call-to-action preference field.",
+        "why": "A specific action preference can materially change the final wording and tap expectation.",
+        "example": "Good example: View order",
+        "avoid": "Avoid guessed facts, private user data, manipulative pressure, unsupported urgency, excessive emojis, or generic marketing filler."
+      },
+      "defaultValue": "Auto",
+      "maxLength": 120
+    },
+    {
+      "key": "sensitiveCategory",
+      "label": "Sensitive or regulated topic",
+      "group": "compliance_restrictions",
+      "groupTitle": "Compliance & Restrictions",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select only when relevant",
+      "hint": "This enables more cautious wording and relevant verification notes.",
+      "help": {
+        "what": "Optional context for the sensitive or regulated topic field.",
+        "why": "Sensitive categories may require stricter privacy, claim, disclosure, and jurisdiction handling.",
+        "example": "Good example: None",
+        "avoid": "Avoid unsupported medical, financial, legal, employment, insurance, political, child-related, gambling, or regulated claims."
+      },
+      "defaultValue": "None",
+      "options": [
+        "None",
+        "Health or medical",
+        "Financial",
+        "Legal",
+        "Employment",
+        "Insurance",
+        "Political",
+        "Children",
+        "Gambling",
+        "Other regulated topic"
+      ],
+      "maxLength": 32
+    },
+    {
+      "key": "jurisdiction",
+      "label": "Relevant jurisdiction",
+      "group": "compliance_restrictions",
+      "groupTitle": "Compliance & Restrictions",
+      "type": "text",
+      "required": false,
+      "placeholder": "United States, California, European Union, United Kingdom",
+      "hint": "Enter the country or region whose rules may apply.",
+      "help": {
+        "what": "Optional context for the relevant jurisdiction field.",
+        "why": "Regulatory wording can depend on the location in which the notification is used.",
+        "example": "Good example: United States",
+        "avoid": "Avoid guessed facts, private user data, manipulative pressure, unsupported urgency, excessive emojis, or generic marketing filler."
+      },
+      "maxLength": 120,
+      "showWhen": {
+        "key": "sensitiveCategory",
+        "notEquals": "None"
+      }
+    },
+    {
+      "key": "requiredDisclosure",
+      "label": "Required disclosure",
+      "group": "compliance_restrictions",
+      "groupTitle": "Compliance & Restrictions",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Provide approved legal, eligibility, risk, or promotional disclosure text",
+      "hint": "Use only supplied or approved wording; long disclosures may require another channel.",
+      "help": {
+        "what": "Optional context for the required disclosure field.",
+        "why": "It allows mandatory wording to be considered without asking the model to invent legal language.",
+        "example": "Good example: Use the approved eligibility disclosure supplied here.",
+        "avoid": "Avoid unsupported medical, financial, legal, employment, insurance, political, child-related, gambling, or regulated claims."
+      },
+      "maxLength": 1200,
+      "showWhen": {
+        "key": "sensitiveCategory",
+        "notEquals": "None"
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "claimsAndRestrictions",
+      "label": "Claims and restrictions",
+      "group": "compliance_restrictions",
+      "groupTitle": "Compliance & Restrictions",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Avoid guaranteed results; do not mention price; use the exact approved offer terms",
+      "hint": "List prohibited claims, required facts, or wording that must not appear.",
+      "help": {
+        "what": "Optional context for the claims and restrictions field.",
+        "why": "It prevents unsupported, legally risky, inaccurate, or brand-inconsistent statements.",
+        "example": "Good example: Do not mention price, discounts, or guaranteed delivery time.",
+        "avoid": "Avoid invented prices, dates, features, availability, results, urgency, user behavior, or claims."
+      },
+      "maxLength": 1200,
+      "fullWidth": true
+    },
+    {
+      "key": "additionalRequirements",
+      "label": "Additional requirements",
+      "group": "compliance_restrictions",
+      "groupTitle": "Compliance & Restrictions",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Add any important instruction not covered by the fields above",
+      "hint": "Use this for final requirements only, not general writing best practices.",
+      "help": {
+        "what": "Optional context for the additional requirements field.",
+        "why": "It provides one controlled place for legitimate requirements that do not fit another field.",
+        "example": "Good example: Avoid fake urgency and keep each variant understandable when truncated.",
+        "avoid": "Avoid guessed facts, private user data, manipulative pressure, unsupported urgency, excessive emojis, or generic marketing filler."
+      },
+      "maxLength": 2000,
+      "fullWidth": true
+    }
+  ]
+}

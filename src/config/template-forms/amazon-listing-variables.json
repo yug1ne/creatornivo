@@ -1,0 +1,644 @@
+{
+  "slug": "amazon-listing",
+  "title": "Amazon Listing",
+  "fieldCount": 31,
+  "requiredKeys": [
+    "marketplace",
+    "productName",
+    "productCategory",
+    "targetCustomer",
+    "productFacts"
+  ],
+  "groups": [
+    {
+      "id": "essentials",
+      "title": "Essentials",
+      "description": "Minimum product, customer, marketplace, and positioning information needed to create a valid first listing.",
+      "defaultOpen": true
+    },
+    {
+      "id": "product_facts_purchase_info",
+      "title": "Product Facts & Purchase Info",
+      "description": "Objective details that affect purchase decisions, product accuracy, compatibility, care, safety, and package expectations.",
+      "defaultOpen": false
+    },
+    {
+      "id": "search_positioning",
+      "title": "Search & Positioning",
+      "description": "Keyword research, positioning preferences, brand tone, and wording restrictions without turning the form into an SEO questionnaire.",
+      "defaultOpen": false
+    },
+    {
+      "id": "compliance_variations_sources",
+      "title": "Compliance, Variations & Sources",
+      "description": "Regulated claims, Seller Central category rules, product variations, existing listings, source material, and unusual requirements.",
+      "defaultOpen": false
+    }
+  ],
+  "variables": [
+    {
+      "key": "marketplace",
+      "label": "Amazon Marketplace",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": true,
+      "placeholder": "Amazon.com US",
+      "hint": "Specify the marketplace and country for the listing.",
+      "help": {
+        "what": "Provide the amazon marketplace for this Amazon listing.",
+        "why": "Marketplace context affects language, assumptions, limits, and category caution.",
+        "example": "Good example: Amazon.com US",
+        "avoid": "Avoid vague placeholders, invented product facts, or claims the product cannot support."
+      },
+      "maxLength": 80
+    },
+    {
+      "key": "outputLanguage",
+      "label": "Output Language",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": false,
+      "placeholder": "English",
+      "hint": "Choose the language for the output.",
+      "help": {
+        "what": "Optional context for the output language field.",
+        "why": "Listing copy should match the language used in the target marketplace.",
+        "example": "Good example: English",
+        "avoid": "Avoid guessed details, fake proof, review language, urgency, competitor claims, or unsupported superlatives."
+      },
+      "defaultValue": "English",
+      "maxLength": 40
+    },
+    {
+      "key": "productName",
+      "label": "Product Name",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": true,
+      "placeholder": "Adjustable Bamboo Drawer Organizer",
+      "hint": "Enter the exact product name or working product name.",
+      "help": {
+        "what": "Provide the product name for this Amazon listing.",
+        "why": "The title, bullets, and description need a stable product identity.",
+        "example": "Good example: Adjustable Bamboo Drawer Organizer",
+        "avoid": "Avoid vague placeholders, invented product facts, or claims the product cannot support."
+      },
+      "maxLength": 180
+    },
+    {
+      "key": "brandName",
+      "label": "Brand Name",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": false,
+      "placeholder": "Northside Home",
+      "hint": "Add the brand name if it should appear in the listing.",
+      "help": {
+        "what": "Optional context for the brand name field.",
+        "why": "Brand context may affect title phrasing, store tone, and A+ section framing.",
+        "example": "Good example: Northside Home",
+        "avoid": "Avoid guessed details, fake proof, review language, urgency, competitor claims, or unsupported superlatives."
+      },
+      "maxLength": 100
+    },
+    {
+      "key": "productCategory",
+      "label": "Product Category",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": true,
+      "placeholder": "Kitchen drawer organizers",
+      "hint": "Describe the Amazon category or product type.",
+      "help": {
+        "what": "Provide the product category for this Amazon listing.",
+        "why": "Category context affects feature emphasis, compliance caution, and buyer expectations.",
+        "example": "Good example: Kitchen drawer organizers",
+        "avoid": "Avoid vague placeholders, invented product facts, or claims the product cannot support."
+      },
+      "maxLength": 120
+    },
+    {
+      "key": "targetCustomer",
+      "label": "Target Customer",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "Apartment renters and homeowners who want tidier kitchen drawers without custom cabinetry.",
+      "hint": "Describe the specific buyer and situation.",
+      "help": {
+        "what": "Provide the target customer for this Amazon listing.",
+        "why": "Buyer context guides benefits, objections, use cases, and wording.",
+        "example": "Good example: Apartment renters and homeowners who want tidier kitchen drawers without custom cabinetry.",
+        "avoid": "Avoid vague placeholders, invented product facts, or claims the product cannot support."
+      },
+      "maxLength": 700,
+      "fullWidth": true
+    },
+    {
+      "key": "productFacts",
+      "label": "Verified Product Facts",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "Expandable bamboo organizer, 7 compartments, fits drawers from 13 to 20 inches wide, non-slip feet, no tools required.",
+      "hint": "Provide only confirmed product facts that may be used publicly.",
+      "help": {
+        "what": "Provide the verified product facts for this Amazon listing.",
+        "why": "This is the factual source of truth for the listing.",
+        "example": "Good example: Expandable bamboo organizer, 7 compartments, fits drawers from 13 to 20 inches wide, non-slip feet, no tools required.",
+        "avoid": "Avoid future features, unverified results, ratings, awards, or claims not backed by product source material."
+      },
+      "maxLength": 2000,
+      "fullWidth": true
+    },
+    {
+      "key": "keyDifferentiators",
+      "label": "Key Differentiators",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Expandable width, smooth bamboo finish, removable dividers, and stable non-slip base.",
+      "hint": "Explain what is meaningfully different or useful about the product.",
+      "help": {
+        "what": "Optional context for the key differentiators field.",
+        "why": "Differentiators help positioning without inventing superiority claims.",
+        "example": "Good example: Expandable width, smooth bamboo finish, removable dividers, and stable non-slip base.",
+        "avoid": "Avoid guessed details, fake proof, review language, urgency, competitor claims, or unsupported superlatives."
+      },
+      "maxLength": 1000,
+      "fullWidth": true
+    },
+    {
+      "key": "primaryUseCases",
+      "label": "Primary Use Cases",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Organizing cutlery, cooking tools, office supplies, and small household items.",
+      "hint": "List the main real-world uses for the product.",
+      "help": {
+        "what": "Optional context for the primary use cases field.",
+        "why": "Use cases make the listing more concrete and buyer-focused.",
+        "example": "Good example: Organizing cutlery, cooking tools, office supplies, and small household items.",
+        "avoid": "Avoid guessed details, fake proof, review language, urgency, competitor claims, or unsupported superlatives."
+      },
+      "maxLength": 800,
+      "fullWidth": true
+    },
+    {
+      "key": "listingGoal",
+      "label": "Primary Listing Goal",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select listing goal",
+      "hint": "Choose the main optimization goal.",
+      "help": {
+        "what": "Optional context for the primary listing goal field.",
+        "why": "The goal changes the balance between discovery, confidence, launch, and premium positioning.",
+        "example": "Good example: Balanced conversion and discoverability",
+        "avoid": "Avoid guessed details, fake proof, review language, urgency, competitor claims, or unsupported superlatives."
+      },
+      "defaultValue": "Balanced conversion and discoverability",
+      "maxLength": 50,
+      "options": [
+        "Balanced conversion and discoverability",
+        "Improve discoverability",
+        "Improve purchase confidence",
+        "Premium positioning",
+        "New product launch",
+        "Refresh an existing listing"
+      ]
+    },
+    {
+      "key": "specifications",
+      "label": "Technical Specifications",
+      "group": "product_facts_purchase_info",
+      "groupTitle": "Product Facts & Purchase Info",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Expands from 13 to 20 inches wide, 17 inches deep, 2 inches high.",
+      "hint": "Add measurable specs that affect purchase decisions.",
+      "help": {
+        "what": "Optional context for the technical specifications field.",
+        "why": "Specifications prevent vague copy and reduce buyer uncertainty.",
+        "example": "Good example: Expands from 13 to 20 inches wide, 17 inches deep, 2 inches high.",
+        "avoid": "Avoid guessed details, fake proof, review language, urgency, competitor claims, or unsupported superlatives."
+      },
+      "maxLength": 1500,
+      "fullWidth": true
+    },
+    {
+      "key": "materialsIngredients",
+      "label": "Materials or Ingredients",
+      "group": "product_facts_purchase_info",
+      "groupTitle": "Product Facts & Purchase Info",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Bamboo body with silicone feet.",
+      "hint": "List materials, ingredients, finish, or composition.",
+      "help": {
+        "what": "Optional context for the materials or ingredients field.",
+        "why": "Materials and ingredients can affect buyer trust, fit, care, and compliance.",
+        "example": "Good example: Bamboo body with silicone feet.",
+        "avoid": "Avoid guessed details, fake proof, review language, urgency, competitor claims, or unsupported superlatives."
+      },
+      "maxLength": 1200,
+      "fullWidth": true
+    },
+    {
+      "key": "dimensionsWeight",
+      "label": "Dimensions and Weight",
+      "group": "product_facts_purchase_info",
+      "groupTitle": "Product Facts & Purchase Info",
+      "type": "text",
+      "required": false,
+      "placeholder": "13 to 20 in W x 17 in D x 2 in H, 2.4 lb.",
+      "hint": "Provide dimensions, weight, size, or capacity.",
+      "help": {
+        "what": "Optional context for the dimensions and weight field.",
+        "why": "Physical details often determine whether the product fits the buyer’s needs.",
+        "example": "Good example: 13 to 20 in W x 17 in D x 2 in H, 2.4 lb.",
+        "avoid": "Avoid guessed details, fake proof, review language, urgency, competitor claims, or unsupported superlatives."
+      },
+      "maxLength": 300
+    },
+    {
+      "key": "packageContents",
+      "label": "What Is Included",
+      "group": "product_facts_purchase_info",
+      "groupTitle": "Product Facts & Purchase Info",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "One expandable organizer and four removable dividers.",
+      "hint": "List exactly what the buyer receives.",
+      "help": {
+        "what": "Optional context for the what is included field.",
+        "why": "Package contents reduce confusion and prevent implied extras.",
+        "example": "Good example: One expandable organizer and four removable dividers.",
+        "avoid": "Avoid guessed details, fake proof, review language, urgency, competitor claims, or unsupported superlatives."
+      },
+      "maxLength": 700,
+      "fullWidth": true
+    },
+    {
+      "key": "compatibilityFit",
+      "label": "Compatibility or Fit",
+      "group": "product_facts_purchase_info",
+      "groupTitle": "Product Facts & Purchase Info",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Fits drawers at least 13 inches wide, 17 inches deep, and 2.25 inches tall.",
+      "hint": "Describe fit, compatibility, supported models, or exclusions.",
+      "help": {
+        "what": "Optional context for the compatibility or fit field.",
+        "why": "Compatibility details prevent misleading universal-fit claims.",
+        "example": "Good example: Fits drawers at least 13 inches wide, 17 inches deep, and 2.25 inches tall.",
+        "avoid": "Avoid guessed details, fake proof, review language, urgency, competitor claims, or unsupported superlatives."
+      },
+      "maxLength": 900,
+      "fullWidth": true
+    },
+    {
+      "key": "careInstructions",
+      "label": "Care Instructions",
+      "group": "product_facts_purchase_info",
+      "groupTitle": "Product Facts & Purchase Info",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Wipe clean with a damp cloth and dry immediately.",
+      "hint": "Add care, usage, maintenance, or storage instructions.",
+      "help": {
+        "what": "Optional context for the care instructions field.",
+        "why": "Care instructions help set accurate expectations after purchase.",
+        "example": "Good example: Wipe clean with a damp cloth and dry immediately.",
+        "avoid": "Avoid guessed details, fake proof, review language, urgency, competitor claims, or unsupported superlatives."
+      },
+      "maxLength": 700,
+      "fullWidth": true
+    },
+    {
+      "key": "safetyWarnings",
+      "label": "Safety Warnings",
+      "group": "product_facts_purchase_info",
+      "groupTitle": "Product Facts & Purchase Info",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Keep away from open flame and do not soak in water.",
+      "hint": "Add warnings, age limits, hazards, or safe-use notes.",
+      "help": {
+        "what": "Optional context for the safety warnings field.",
+        "why": "Safety wording must not be invented or omitted when material.",
+        "example": "Good example: Keep away from open flame and do not soak in water.",
+        "avoid": "Avoid guessed details, fake proof, review language, urgency, competitor claims, or unsupported superlatives."
+      },
+      "maxLength": 1000,
+      "fullWidth": true
+    },
+    {
+      "key": "warrantySupport",
+      "label": "Warranty or Support",
+      "group": "product_facts_purchase_info",
+      "groupTitle": "Product Facts & Purchase Info",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "One-year limited warranty and email support.",
+      "hint": "Describe warranty, support, returns, or customer help details.",
+      "help": {
+        "what": "Optional context for the warranty or support field.",
+        "why": "Support details can improve purchase confidence when confirmed.",
+        "example": "Good example: One-year limited warranty and email support.",
+        "avoid": "Avoid guessed details, fake proof, review language, urgency, competitor claims, or unsupported superlatives."
+      },
+      "maxLength": 700,
+      "fullWidth": true
+    },
+    {
+      "key": "primaryKeywords",
+      "label": "Primary Keywords",
+      "group": "search_positioning",
+      "groupTitle": "Search & Positioning",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "bamboo drawer organizer, expandable cutlery tray",
+      "hint": "Add the most important search terms from research.",
+      "help": {
+        "what": "Optional context for the primary keywords field.",
+        "why": "Keywords guide discovery without forcing keyword stuffing.",
+        "example": "Good example: bamboo drawer organizer, expandable cutlery tray",
+        "avoid": "Avoid keyword stuffing, competitor brand terms, or irrelevant search terms."
+      },
+      "maxLength": 700,
+      "fullWidth": true
+    },
+    {
+      "key": "secondaryKeywords",
+      "label": "Secondary Keywords",
+      "group": "search_positioning",
+      "groupTitle": "Search & Positioning",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "kitchen drawer organizer, utensil organizer, silverware tray, office drawer organizer",
+      "hint": "Add supporting search terms, synonyms, and buyer language.",
+      "help": {
+        "what": "Optional context for the secondary keywords field.",
+        "why": "Secondary keywords help coverage while staying natural.",
+        "example": "Good example: kitchen drawer organizer, utensil organizer, silverware tray, office drawer organizer",
+        "avoid": "Avoid keyword stuffing, competitor brand terms, or irrelevant search terms."
+      },
+      "maxLength": 1000,
+      "fullWidth": true
+    },
+    {
+      "key": "positioningAngle",
+      "label": "Positioning Angle",
+      "group": "search_positioning",
+      "groupTitle": "Search & Positioning",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select positioning angle",
+      "hint": "Choose the angle that best fits the product and buyer.",
+      "help": {
+        "what": "Optional context for the positioning angle field.",
+        "why": "Positioning controls which benefits receive emphasis.",
+        "example": "Good example: Practical value",
+        "avoid": "Avoid guessed details, fake proof, review language, urgency, competitor claims, or unsupported superlatives."
+      },
+      "defaultValue": "Auto",
+      "maxLength": 40,
+      "options": [
+        "Auto",
+        "Practical value",
+        "Premium quality",
+        "Durability",
+        "Ease of use",
+        "Performance",
+        "Space saving",
+        "Eco-conscious",
+        "Giftable",
+        "Specialized use"
+      ]
+    },
+    {
+      "key": "toneStyle",
+      "label": "Tone and Style",
+      "group": "search_positioning",
+      "groupTitle": "Search & Positioning",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select tone and style",
+      "hint": "Choose the writing style for the listing.",
+      "help": {
+        "what": "Optional context for the tone and style field.",
+        "why": "Tone affects clarity, confidence, and category fit.",
+        "example": "Good example: Clear and natural",
+        "avoid": "Avoid guessed details, fake proof, review language, urgency, competitor claims, or unsupported superlatives."
+      },
+      "defaultValue": "Clear and natural",
+      "maxLength": 40,
+      "options": [
+        "Clear and natural",
+        "Concise and factual",
+        "Warm and helpful",
+        "Premium and refined",
+        "Technical and precise",
+        "Energetic but credible",
+        "Minimalist",
+        "Brand-led"
+      ]
+    },
+    {
+      "key": "mustUseOrAvoidWording",
+      "label": "Required or Avoided Wording",
+      "group": "search_positioning",
+      "groupTitle": "Search & Positioning",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Use exact dimensions. Avoid best, guaranteed, indestructible, and eco-friendly.",
+      "hint": "List phrases to include or avoid.",
+      "help": {
+        "what": "Optional context for the required or avoided wording field.",
+        "why": "Wording constraints prevent unsafe claims and preserve brand language.",
+        "example": "Good example: Use exact dimensions. Avoid best, guaranteed, indestructible, and eco-friendly.",
+        "avoid": "Avoid guessed details, fake proof, review language, urgency, competitor claims, or unsupported superlatives."
+      },
+      "maxLength": 800,
+      "fullWidth": true
+    },
+    {
+      "key": "productRiskType",
+      "label": "Product Risk Type",
+      "group": "compliance_variations_sources",
+      "groupTitle": "Compliance, Variations & Sources",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select product risk type",
+      "hint": "Choose a risk category only when relevant.",
+      "help": {
+        "what": "Optional context for the product risk type field.",
+        "why": "Regulated or safety-sensitive products need stricter claim handling.",
+        "example": "Good example: Standard consumer product",
+        "avoid": "Avoid guessed details, fake proof, review language, urgency, competitor claims, or unsupported superlatives."
+      },
+      "defaultValue": "Standard consumer product",
+      "maxLength": 50,
+      "options": [
+        "Standard consumer product",
+        "Health or medical product",
+        "Dietary supplement",
+        "Food or beverage",
+        "Beauty or cosmetic product",
+        "Children’s product",
+        "Electrical or safety product",
+        "Other regulated product"
+      ]
+    },
+    {
+      "key": "claimsAndEvidence",
+      "label": "Claims and Supporting Evidence",
+      "group": "compliance_variations_sources",
+      "groupTitle": "Compliance, Variations & Sources",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Food-contact safe finish documented by supplier certificate dated May 2026.",
+      "hint": "Provide evidence for regulated, performance, safety, or health-related claims.",
+      "help": {
+        "what": "Optional context for the claims and supporting evidence field.",
+        "why": "Claims should appear only when supported by supplied evidence.",
+        "example": "Good example: Food-contact safe finish documented by supplier certificate dated May 2026.",
+        "avoid": "Avoid unsupported medical, safety, performance, environmental, or compliance claims."
+      },
+      "maxLength": 2500,
+      "showWhen": {
+        "key": "productRiskType",
+        "notEquals": "Standard consumer product"
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "sellerCentralRules",
+      "label": "Seller Central Category Rules",
+      "group": "compliance_variations_sources",
+      "groupTitle": "Compliance, Variations & Sources",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "No medical claims, no competitor brand names, no promotional language in title.",
+      "hint": "Paste relevant category, marketplace, or Seller Central rules.",
+      "help": {
+        "what": "Optional context for the seller central category rules field.",
+        "why": "Specific rules take priority over generic listing advice.",
+        "example": "Good example: No medical claims, no competitor brand names, no promotional language in title.",
+        "avoid": "Avoid guessing marketplace rules or treating generic guidance as category-specific policy."
+      },
+      "maxLength": 2000,
+      "fullWidth": true
+    },
+    {
+      "key": "hasVariations",
+      "label": "Product Has Variations",
+      "group": "compliance_variations_sources",
+      "groupTitle": "Compliance, Variations & Sources",
+      "type": "select",
+      "required": false,
+      "placeholder": "False",
+      "hint": "Choose whether this product has variations. Choose True or False.",
+      "help": {
+        "what": "Choose whether the product is sold as a variation family. Variation details appear only when this is True.",
+        "why": "Variation families need distinct notes for sizes, colors, models, or packs.",
+        "example": "Good example: False",
+        "avoid": "Avoid guessed details, fake proof, review language, urgency, competitor claims, or unsupported superlatives."
+      },
+      "defaultValue": "False",
+      "options": [
+        "True",
+        "False"
+      ]
+    },
+    {
+      "key": "variationDetails",
+      "label": "Variation Details",
+      "group": "compliance_variations_sources",
+      "groupTitle": "Compliance, Variations & Sources",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Available in natural bamboo and black finish, small and large sizes.",
+      "hint": "Describe confirmed variations, differences, and naming rules.",
+      "help": {
+        "what": "Optional context for the variation details field.",
+        "why": "Variation details prevent mixing attributes across different SKUs.",
+        "example": "Good example: Available in natural bamboo and black finish, small and large sizes.",
+        "avoid": "Avoid guessed details, fake proof, review language, urgency, competitor claims, or unsupported superlatives."
+      },
+      "maxLength": 1200,
+      "showWhen": {
+        "key": "hasVariations",
+        "equals": "True"
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "currentListing",
+      "label": "Current Listing",
+      "group": "compliance_variations_sources",
+      "groupTitle": "Compliance, Variations & Sources",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Paste current title, bullets, description, and backend terms.",
+      "hint": "Paste existing copy if this is a refresh or optimization.",
+      "help": {
+        "what": "Optional context for the current listing field.",
+        "why": "Current copy lets the output improve what exists rather than starting blind.",
+        "example": "Good example: Paste current title, bullets, description, and backend terms.",
+        "avoid": "Avoid guessed details, fake proof, review language, urgency, competitor claims, or unsupported superlatives."
+      },
+      "maxLength": 4000,
+      "fullWidth": true
+    },
+    {
+      "key": "referenceSource",
+      "label": "Product Source Material",
+      "group": "compliance_variations_sources",
+      "groupTitle": "Compliance, Variations & Sources",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Product spec sheet, packaging copy, supplier material statement, and approved photos.",
+      "hint": "Add source notes, spec sheets, packaging copy, or approved references.",
+      "help": {
+        "what": "Optional context for the product source material field.",
+        "why": "Source material helps keep the listing anchored to verified facts.",
+        "example": "Good example: Product spec sheet, packaging copy, supplier material statement, and approved photos.",
+        "avoid": "Avoid guessed details, fake proof, review language, urgency, competitor claims, or unsupported superlatives."
+      },
+      "maxLength": 4000,
+      "fullWidth": true
+    },
+    {
+      "key": "additionalContext",
+      "label": "Additional Context",
+      "group": "compliance_variations_sources",
+      "groupTitle": "Compliance, Variations & Sources",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Prioritize clarity over maximum character use.",
+      "hint": "Add any final constraints or context that does not fit elsewhere.",
+      "help": {
+        "what": "Optional context for the additional context field.",
+        "why": "This captures unusual requirements without adding extra prompt variables.",
+        "example": "Good example: Prioritize clarity over maximum character use.",
+        "avoid": "Avoid guessed details, fake proof, review language, urgency, competitor claims, or unsupported superlatives."
+      },
+      "maxLength": 2000,
+      "fullWidth": true
+    }
+  ]
+}

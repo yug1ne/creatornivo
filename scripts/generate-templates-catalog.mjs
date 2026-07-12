@@ -23,6 +23,26 @@ function extractVars(prompt) {
 
 /** Full form schemas (all prompt placeholders + UX metadata). */
 const FULL_FORM_SCHEMAS = {
+  "amazon-listing": {
+    path: path.join(
+      root,
+      "src",
+      "config",
+      "template-forms",
+      "amazon-listing-variables.json",
+    ),
+    buildHint: "node scripts/build-amazon-listing-form.mjs",
+  },
+  "app-store-listing": {
+    path: path.join(
+      root,
+      "src",
+      "config",
+      "template-forms",
+      "app-store-listing-variables.json",
+    ),
+    buildHint: "node scripts/build-app-store-listing-form.mjs",
+  },
   "blog-article": {
     path: path.join(
       root,
@@ -52,6 +72,16 @@ const FULL_FORM_SCHEMAS = {
       "email-sequence-variables.json",
     ),
     buildHint: "node scripts/build-email-sequence-form.mjs",
+  },
+  "etsy-listing": {
+    path: path.join(
+      root,
+      "src",
+      "config",
+      "template-forms",
+      "etsy-listing-variables.json",
+    ),
+    buildHint: "node scripts/build-etsy-listing-form.mjs",
   },
   "facebook-post": {
     path: path.join(
@@ -163,6 +193,26 @@ const FULL_FORM_SCHEMAS = {
     ),
     buildHint: "node scripts/build-short-form-video-form.mjs",
   },
+  "sms-campaign": {
+    path: path.join(
+      root,
+      "src",
+      "config",
+      "template-forms",
+      "sms-campaign-variables.json",
+    ),
+    buildHint: "node scripts/build-sms-campaign-form.mjs",
+  },
+  "substack-post": {
+    path: path.join(
+      root,
+      "src",
+      "config",
+      "template-forms",
+      "substack-post-variables.json",
+    ),
+    buildHint: "node scripts/build-substack-post-form.mjs",
+  },
   "threads-post": {
     path: path.join(
       root,
@@ -182,6 +232,26 @@ const FULL_FORM_SCHEMAS = {
       "tiktok-caption-variables.json",
     ),
     buildHint: "node scripts/build-tiktok-caption-form.mjs",
+  },
+  "telegram-post": {
+    path: path.join(
+      root,
+      "src",
+      "config",
+      "template-forms",
+      "telegram-post-variables.json",
+    ),
+    buildHint: "node scripts/build-telegram-post-form.mjs",
+  },
+  "webinar-package": {
+    path: path.join(
+      root,
+      "src",
+      "config",
+      "template-forms",
+      "webinar-package-variables.json",
+    ),
+    buildHint: "node scripts/build-webinar-package-form.mjs",
   },
   "x-thread": {
     path: path.join(
@@ -243,6 +313,46 @@ const FULL_FORM_SCHEMAS = {
     ),
     buildHint: "node scripts/build-pinterest-pin-form.mjs",
   },
+  "podcast-script": {
+    path: path.join(
+      root,
+      "src",
+      "config",
+      "template-forms",
+      "podcast-script-variables.json",
+    ),
+    buildHint: "node scripts/build-podcast-script-form.mjs",
+  },
+  "product-hunt-launch": {
+    path: path.join(
+      root,
+      "src",
+      "config",
+      "template-forms",
+      "product-hunt-launch-variables.json",
+    ),
+    buildHint: "node scripts/build-product-hunt-launch-form.mjs",
+  },
+  "push-notification": {
+    path: path.join(
+      root,
+      "src",
+      "config",
+      "template-forms",
+      "push-notification-variables.json",
+    ),
+    buildHint: "node scripts/build-push-notification-form.mjs",
+  },
+  "quora-answer": {
+    path: path.join(
+      root,
+      "src",
+      "config",
+      "template-forms",
+      "quora-answer-variables.json",
+    ),
+    buildHint: "node scripts/build-quora-answer-form.mjs",
+  },
   "youtube-script": {
     path: path.join(
       root,
@@ -297,11 +407,22 @@ function loadFullFormVariables(slug) {
     if (
       slug === "threads-post" ||
       slug === "instagram-carousel" ||
+      slug === "amazon-listing" ||
+      slug === "app-store-listing" ||
+      slug === "etsy-listing" ||
       slug === "pinterest-pin" ||
+      slug === "podcast-script" ||
+      slug === "product-hunt-launch" ||
+      slug === "push-notification" ||
+      slug === "quora-answer" ||
       slug === "reddit-post" ||
       slug === "email-sequence" ||
       slug === "google-business-profile-post" ||
+      slug === "sms-campaign" ||
+      slug === "substack-post" ||
       slug === "tiktok-caption" ||
+      slug === "telegram-post" ||
+      slug === "webinar-package" ||
       slug === "youtube-video-package"
     ) {
       variable.format = v.format;

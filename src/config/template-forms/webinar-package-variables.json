@@ -1,0 +1,953 @@
+{
+  "slug": "webinar-package",
+  "title": "Webinar Package",
+  "fieldCount": 44,
+  "requiredKeys": [
+    "webinarTopic",
+    "primaryGoal",
+    "targetAudience",
+    "audienceProblem",
+    "corePromise",
+    "keyTakeaways",
+    "webinarFormat",
+    "outputLanguage"
+  ],
+  "groups": [
+    {
+      "id": "essentials",
+      "title": "Essentials",
+      "description": "Webinar subject, goal, audience, promise, teaching points, format, duration, CTA direction, language, brand, and presenter identity.",
+      "defaultOpen": true
+    },
+    {
+      "id": "event_setup",
+      "title": "Event Setup",
+      "description": "Scheduling, hosting platform, registration destination, and presenter details when these are known.",
+      "defaultOpen": false
+    },
+    {
+      "id": "content_engagement",
+      "title": "Content & Engagement",
+      "description": "Source material, agenda preferences, audience knowledge, interaction choices, evidence, and topic-specific compliance requirements.",
+      "defaultOpen": false
+    },
+    {
+      "id": "brand_offer_promotion",
+      "title": "Brand, Offer & Promotion",
+      "description": "Tone, brand voice, registration-page depth, offer positioning, proof, objections, and visual direction.",
+      "defaultOpen": false
+    },
+    {
+      "id": "follow_up_output_settings",
+      "title": "Follow-Up & Output Settings",
+      "description": "CTA destination, follow-up objective, replay access, post-webinar resources, sender identity, and desired script depth.",
+      "defaultOpen": false
+    }
+  ],
+  "variables": [
+    {
+      "key": "webinarTopic",
+      "label": "Webinar topic",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": true,
+      "placeholder": "Example: How small agencies can automate client reporting",
+      "hint": "Enter the main subject, product, service, or transformation the webinar will cover.",
+      "help": {
+        "what": "Provide the webinar topic for this webinar package.",
+        "why": "The complete webinar package must be built around a clearly defined subject.",
+        "example": "Good example: How small agencies can automate client reporting",
+        "avoid": "Avoid vague placeholders, unsupported promises, guaranteed outcomes, fake urgency, or changing the webinar into a different topic."
+      },
+      "maxLength": 200
+    },
+    {
+      "key": "primaryGoal",
+      "label": "Primary webinar goal",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": true,
+      "placeholder": "Select the main goal",
+      "hint": "Choose the most important result the webinar should support.",
+      "help": {
+        "what": "Provide the primary webinar goal for this webinar package.",
+        "why": "The goal determines the webinar structure, CTA emphasis, and registration-page positioning.",
+        "example": "Good example: Educate the audience",
+        "avoid": "Avoid vague placeholders, unsupported promises, guaranteed outcomes, fake urgency, or changing the webinar into a different topic."
+      },
+      "defaultValue": "Educate the audience",
+      "options": [
+        "Educate the audience",
+        "Generate qualified leads",
+        "Demonstrate a product",
+        "Sell an offer",
+        "Onboard customers",
+        "Build authority",
+        "Grow a community",
+        "Deliver internal training",
+        "Other"
+      ],
+      "maxLength": 40
+    },
+    {
+      "key": "targetAudience",
+      "label": "Target audience",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "Describe who should attend, including role, experience, industry, or situation.",
+      "hint": "Focus on the people the webinar is specifically designed to help.",
+      "help": {
+        "what": "Provide the target audience for this webinar package.",
+        "why": "Audience context controls terminology, examples, depth, objections, and promotional messaging.",
+        "example": "Good example: Small agency owners and account managers who manually prepare recurring client updates.",
+        "avoid": "Avoid vague placeholders, unsupported promises, guaranteed outcomes, fake urgency, or changing the webinar into a different topic."
+      },
+      "maxLength": 700,
+      "fullWidth": true
+    },
+    {
+      "key": "audienceProblem",
+      "label": "Audience problem",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "What problem, frustration, uncertainty, or missed opportunity brings them here?",
+      "hint": "Describe the current situation the webinar should help the audience improve.",
+      "help": {
+        "what": "Provide the audience problem for this webinar package.",
+        "why": "The registration promise and teaching sequence need a specific audience problem.",
+        "example": "Good example: They spend hours assembling reports and struggle to make results clear to clients.",
+        "avoid": "Avoid vague placeholders, unsupported promises, guaranteed outcomes, fake urgency, or changing the webinar into a different topic."
+      },
+      "maxLength": 700,
+      "fullWidth": true
+    },
+    {
+      "key": "corePromise",
+      "label": "Core webinar promise",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "What should attendees understand, achieve, or be able to do afterward?",
+      "hint": "Use a realistic outcome rather than a guaranteed result.",
+      "help": {
+        "what": "Provide the core webinar promise for this webinar package.",
+        "why": "The promise anchors the title, registration copy, opening, agenda, and closing.",
+        "example": "Good example: Attendees will understand a practical workflow for clearer, faster client reporting.",
+        "avoid": "Avoid vague placeholders, unsupported promises, guaranteed outcomes, fake urgency, or changing the webinar into a different topic."
+      },
+      "maxLength": 500,
+      "fullWidth": true
+    },
+    {
+      "key": "keyTakeaways",
+      "label": "Key takeaways",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "List the main lessons, methods, decisions, or steps attendees should receive.",
+      "hint": "Three to six concrete takeaways usually work well.",
+      "help": {
+        "what": "Provide the key takeaways for this webinar package.",
+        "why": "The content plan cannot be accurately created without the intended learning outcomes.",
+        "example": "Good example: Map recurring reporting questions, choose the right metrics, build a repeatable agenda, and prepare a follow-up plan.",
+        "avoid": "Avoid vague placeholders, unsupported promises, guaranteed outcomes, fake urgency, or changing the webinar into a different topic."
+      },
+      "maxLength": 1500,
+      "fullWidth": true
+    },
+    {
+      "key": "webinarFormat",
+      "label": "Webinar format",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": true,
+      "placeholder": "Select a format",
+      "hint": "This controls scheduling language, interaction, replay wording, and presenter notes.",
+      "help": {
+        "what": "Provide the webinar format for this webinar package.",
+        "why": "Live, evergreen, and premiered webinars require different presentation and registration language.",
+        "example": "Good example: Live webinar",
+        "avoid": "Avoid vague placeholders, unsupported promises, guaranteed outcomes, fake urgency, or changing the webinar into a different topic."
+      },
+      "defaultValue": "Live webinar",
+      "options": [
+        "Live webinar",
+        "Recorded evergreen webinar",
+        "Recorded premiere"
+      ],
+      "maxLength": 30
+    },
+    {
+      "key": "webinarDuration",
+      "label": "Planned duration",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "number",
+      "required": false,
+      "placeholder": "60",
+      "hint": "Enter the total planned duration in minutes, including the CTA and Q&A.",
+      "help": {
+        "what": "Optional context for the planned duration field.",
+        "why": "Duration determines the number of segments, pacing, slides, examples, and interaction moments.",
+        "example": "Good example: 60",
+        "avoid": "Avoid guessed facts, fake scarcity, fake attendee counts, hidden promotion, manipulative pressure, or unsupported claims."
+      },
+      "defaultValue": "60",
+      "maxLength": 3
+    },
+    {
+      "key": "primaryCta",
+      "label": "Primary CTA",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": false,
+      "placeholder": "Example: Book a consultation or start a free trial",
+      "hint": "Use Auto to let the model choose a suitable next step from the supplied goal.",
+      "help": {
+        "what": "Optional context for the primary cta field.",
+        "why": "A webinar should lead toward one clear and proportionate next action.",
+        "example": "Good example: Book a consultation",
+        "avoid": "Avoid guessed facts, fake scarcity, fake attendee counts, hidden promotion, manipulative pressure, or unsupported claims."
+      },
+      "defaultValue": "Auto",
+      "maxLength": 180
+    },
+    {
+      "key": "outputLanguage",
+      "label": "Output language",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": true,
+      "placeholder": "Example: English, Ukrainian, German, or Spanish",
+      "hint": "All public-facing webinar content will be created in this language.",
+      "help": {
+        "what": "Provide the output language for this webinar package.",
+        "why": "The output language cannot always be safely inferred from the topic.",
+        "example": "Good example: English",
+        "avoid": "Avoid vague placeholders, unsupported promises, guaranteed outcomes, fake urgency, or changing the webinar into a different topic."
+      },
+      "defaultValue": "English",
+      "maxLength": 60
+    },
+    {
+      "key": "brandName",
+      "label": "Brand or company",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": false,
+      "placeholder": "Enter the organization, product, or brand name",
+      "hint": "Leave blank when the webinar is presented independently.",
+      "help": {
+        "what": "Optional context for the brand or company field.",
+        "why": "The brand name may be required in registration copy, introductions, CTAs, and emails.",
+        "example": "Good example: Creatornivo",
+        "avoid": "Avoid guessed facts, fake scarcity, fake attendee counts, hidden promotion, manipulative pressure, or unsupported claims."
+      },
+      "maxLength": 160
+    },
+    {
+      "key": "presenterName",
+      "label": "Presenter name",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": false,
+      "placeholder": "Enter the host or main presenter name",
+      "hint": "Leave blank to use neutral presenter references without inventing a name.",
+      "help": {
+        "what": "Optional context for the presenter name field.",
+        "why": "A supplied presenter name allows accurate introductions, biographies, and email sign-offs.",
+        "example": "Good example: Alex Morgan",
+        "avoid": "Avoid guessed facts, fake scarcity, fake attendee counts, hidden promotion, manipulative pressure, or unsupported claims."
+      },
+      "maxLength": 120
+    },
+    {
+      "key": "eventDate",
+      "label": "Event date",
+      "group": "event_setup",
+      "groupTitle": "Event Setup",
+      "type": "text",
+      "required": false,
+      "placeholder": "Example: 2026-08-20",
+      "hint": "Used only for scheduled live events or recorded premieres.",
+      "help": {
+        "what": "Optional context for the event date field.",
+        "why": "Registration copy needs the actual date when the event occurs at a scheduled time.",
+        "example": "Good example: 2026-08-20",
+        "avoid": "Avoid guessed facts, fake scarcity, fake attendee counts, hidden promotion, manipulative pressure, or unsupported claims."
+      },
+      "maxLength": 10,
+      "showWhen": {
+        "key": "webinarFormat",
+        "equals": [
+          "Live webinar",
+          "Recorded premiere"
+        ]
+      }
+    },
+    {
+      "key": "eventTime",
+      "label": "Event time",
+      "group": "event_setup",
+      "groupTitle": "Event Setup",
+      "type": "text",
+      "required": false,
+      "placeholder": "Example: 3:00 PM",
+      "hint": "Enter the scheduled start time in the format your audience expects.",
+      "help": {
+        "what": "Optional context for the event time field.",
+        "why": "Scheduled-event copy must display the correct time without inventing it.",
+        "example": "Good example: 3:00 PM",
+        "avoid": "Avoid guessed facts, fake scarcity, fake attendee counts, hidden promotion, manipulative pressure, or unsupported claims."
+      },
+      "maxLength": 40,
+      "showWhen": {
+        "key": "webinarFormat",
+        "equals": [
+          "Live webinar",
+          "Recorded premiere"
+        ]
+      }
+    },
+    {
+      "key": "timeZone",
+      "label": "Time zone",
+      "group": "event_setup",
+      "groupTitle": "Event Setup",
+      "type": "text",
+      "required": false,
+      "placeholder": "Example: EET, UTC+3, or America/New_York",
+      "hint": "Include a time zone whenever attendees may be in different locations.",
+      "help": {
+        "what": "Optional context for the time zone field.",
+        "why": "Time-zone clarity prevents misleading or ambiguous event scheduling.",
+        "example": "Good example: UTC+3",
+        "avoid": "Avoid guessed facts, fake scarcity, fake attendee counts, hidden promotion, manipulative pressure, or unsupported claims."
+      },
+      "maxLength": 80,
+      "showWhen": {
+        "key": "webinarFormat",
+        "equals": [
+          "Live webinar",
+          "Recorded premiere"
+        ]
+      }
+    },
+    {
+      "key": "registrationUrl",
+      "label": "Registration URL",
+      "group": "event_setup",
+      "groupTitle": "Event Setup",
+      "type": "text",
+      "required": false,
+      "placeholder": "https://www.creatornivo.com/webinar",
+      "hint": "Used in registration, confirmation, reminder, or promotional references when relevant.",
+      "help": {
+        "what": "Optional context for the registration url field.",
+        "why": "A real destination can be included without fabricating a registration link.",
+        "example": "Good example: https://www.creatornivo.com/webinar",
+        "avoid": "Avoid invented, shortened, unapproved, or misleading URLs."
+      },
+      "format": "url",
+      "maxLength": 500
+    },
+    {
+      "key": "webinarPlatform",
+      "label": "Hosting platform",
+      "group": "event_setup",
+      "groupTitle": "Event Setup",
+      "type": "text",
+      "required": false,
+      "placeholder": "Example: Zoom, Google Meet, Teams, YouTube, or a custom platform",
+      "hint": "Used only when platform-specific participation instructions are needed.",
+      "help": {
+        "what": "Optional context for the hosting platform field.",
+        "why": "The hosting environment may affect joining instructions, interaction options, and terminology.",
+        "example": "Good example: Zoom",
+        "avoid": "Avoid guessed facts, fake scarcity, fake attendee counts, hidden promotion, manipulative pressure, or unsupported claims."
+      },
+      "maxLength": 120
+    },
+    {
+      "key": "presenterRole",
+      "label": "Presenter role",
+      "group": "event_setup",
+      "groupTitle": "Event Setup",
+      "type": "text",
+      "required": false,
+      "placeholder": "Example: Product strategist, founder, researcher, or customer success lead",
+      "hint": "Describe the presenter’s relevant role without adding unsupported credentials.",
+      "help": {
+        "what": "Optional context for the presenter role field.",
+        "why": "The presenter’s actual role helps establish relevant context and authority.",
+        "example": "Good example: Founder and content workflow strategist",
+        "avoid": "Avoid guessed facts, fake scarcity, fake attendee counts, hidden promotion, manipulative pressure, or unsupported claims."
+      },
+      "maxLength": 160
+    },
+    {
+      "key": "presenterBio",
+      "label": "Presenter bio and credentials",
+      "group": "event_setup",
+      "groupTitle": "Event Setup",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Add approved experience, qualifications, achievements, and relevant background.",
+      "hint": "Only include credentials and claims that can be publicly used.",
+      "help": {
+        "what": "Optional context for the presenter bio and credentials field.",
+        "why": "Registration pages often need a factual presenter section, but credentials must not be invented.",
+        "example": "Good example: Founder building workflow tools for creators and small teams; use only approved credentials.",
+        "avoid": "Avoid invented facts, credentials, testimonials, results, prices, deadlines, examples, links, offers, or presenter details that were not supplied."
+      },
+      "maxLength": 1200,
+      "fullWidth": true
+    },
+    {
+      "key": "coPresenters",
+      "label": "Additional presenters",
+      "group": "event_setup",
+      "groupTitle": "Event Setup",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "List names, roles, and speaking responsibilities for any additional presenters.",
+      "hint": "Leave blank for a single-presenter webinar.",
+      "help": {
+        "what": "Optional context for the additional presenters field.",
+        "why": "Multiple presenters require accurate introductions and clear segment ownership.",
+        "example": "Good example: Jordan Lee — moderator and Q&A support.",
+        "avoid": "Avoid invented facts, credentials, testimonials, results, prices, deadlines, examples, links, offers, or presenter details that were not supplied."
+      },
+      "maxLength": 1200,
+      "fullWidth": true
+    },
+    {
+      "key": "sourceMaterial",
+      "label": "Source material",
+      "group": "content_engagement",
+      "groupTitle": "Content & Engagement",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Paste approved facts, notes, research, product details, links, or existing content.",
+      "hint": "Use this for information the model must rely on rather than infer.",
+      "help": {
+        "what": "Optional context for the source material field.",
+        "why": "Source material improves factual accuracy and prevents unsupported content.",
+        "example": "Good example: Use only supplied product notes, agenda notes, screenshots, and approved customer-safe examples.",
+        "avoid": "Avoid invented facts, credentials, testimonials, results, prices, deadlines, examples, links, offers, or presenter details that were not supplied."
+      },
+      "maxLength": 4000,
+      "fullWidth": true
+    },
+    {
+      "key": "agendaInputs",
+      "label": "Agenda preferences",
+      "group": "content_engagement",
+      "groupTitle": "Content & Engagement",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "List required sections, demonstrations, exercises, stories, or discussion topics.",
+      "hint": "Leave blank to let the model build the agenda from the promised takeaways.",
+      "help": {
+        "what": "Optional context for the agenda preferences field.",
+        "why": "Some webinars have required segments that cannot be safely inferred.",
+        "example": "Good example: Opening, reporting problem, workflow framework, short demo, Q&A, and consultation CTA.",
+        "avoid": "Avoid guessed facts, fake scarcity, fake attendee counts, hidden promotion, manipulative pressure, or unsupported claims."
+      },
+      "maxLength": 1500,
+      "fullWidth": true
+    },
+    {
+      "key": "audienceKnowledge",
+      "label": "Audience knowledge level",
+      "group": "content_engagement",
+      "groupTitle": "Content & Engagement",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select the expected level",
+      "hint": "Controls terminology, explanations, examples, and assumed background knowledge.",
+      "help": {
+        "what": "Optional context for the audience knowledge level field.",
+        "why": "The same subject requires substantially different explanations at different knowledge levels.",
+        "example": "Good example: Basic familiarity",
+        "avoid": "Avoid guessed facts, fake scarcity, fake attendee counts, hidden promotion, manipulative pressure, or unsupported claims."
+      },
+      "defaultValue": "Mixed audience",
+      "options": [
+        "Complete beginners",
+        "Basic familiarity",
+        "Intermediate",
+        "Advanced",
+        "Mixed audience"
+      ],
+      "maxLength": 30
+    },
+    {
+      "key": "interactionMethods",
+      "label": "Interaction methods",
+      "group": "content_engagement",
+      "groupTitle": "Content & Engagement",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Choose interaction formats; or list supported methods separated by commas.",
+      "hint": "Select only methods supported by the planned webinar environment. Available options: Auto, Live chat, Polls, Q&A, Short exercises, Breakout discussion, Knowledge quiz, No interaction.",
+      "help": {
+        "what": "Optional context for the interaction methods field.",
+        "why": "Interaction choices affect pacing, presenter transitions, and the run of show.",
+        "example": "Good example: Live chat, Q&A, short exercises",
+        "avoid": "Avoid guessed facts, fake scarcity, fake attendee counts, hidden promotion, manipulative pressure, or unsupported claims."
+      },
+      "defaultValue": "Auto",
+      "maxLength": 120,
+      "fullWidth": true
+    },
+    {
+      "key": "audienceQuestions",
+      "label": "Likely audience questions",
+      "group": "content_engagement",
+      "groupTitle": "Content & Engagement",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Add common questions, concerns, misunderstandings, or objections.",
+      "hint": "Used to prepare Q&A prompts and strengthen the teaching sequence.",
+      "help": {
+        "what": "Optional context for the likely audience questions field.",
+        "why": "Known audience questions help make the webinar more useful and relevant.",
+        "example": "Good example: How much reporting detail is enough? What should be automated first?",
+        "avoid": "Avoid guessed facts, fake scarcity, fake attendee counts, hidden promotion, manipulative pressure, or unsupported claims."
+      },
+      "maxLength": 1200,
+      "fullWidth": true
+    },
+    {
+      "key": "evidenceAndExamples",
+      "label": "Evidence and examples",
+      "group": "content_engagement",
+      "groupTitle": "Content & Engagement",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Add approved data, examples, demonstrations, case details, or quotations.",
+      "hint": "Unsupported statistics, testimonials, and results will not be invented.",
+      "help": {
+        "what": "Optional context for the evidence and examples field.",
+        "why": "Specific proof and examples must come from supplied, approved information.",
+        "example": "Good example: Use the approved example of replacing a manual weekly update with a reusable report outline.",
+        "avoid": "Avoid invented facts, credentials, testimonials, results, prices, deadlines, examples, links, offers, or presenter details that were not supplied."
+      },
+      "maxLength": 2000,
+      "fullWidth": true
+    },
+    {
+      "key": "topicSensitivity",
+      "label": "Topic sensitivity",
+      "group": "content_engagement",
+      "groupTitle": "Content & Engagement",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select when special care is required",
+      "hint": "This activates cautious wording and relevant verification reminders.",
+      "help": {
+        "what": "Optional context for the topic sensitivity field.",
+        "why": "High-stakes subjects require stricter claim handling and appropriate limitations.",
+        "example": "Good example: General topic",
+        "avoid": "Avoid personalized medical, legal, financial, employment, political, child-safety, or regulated advice unless supplied review requirements support safe general wording."
+      },
+      "defaultValue": "General topic",
+      "options": [
+        "General topic",
+        "Health or medical",
+        "Legal",
+        "Financial or investment",
+        "Safety or technical",
+        "Employment or HR",
+        "Political or public policy",
+        "Child-related",
+        "Other regulated topic"
+      ],
+      "maxLength": 40
+    },
+    {
+      "key": "complianceNotes",
+      "label": "Compliance requirements",
+      "group": "content_engagement",
+      "groupTitle": "Content & Engagement",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Add jurisdiction, approved disclaimer, prohibited claims, or review requirements.",
+      "hint": "Provide only requirements that actually apply to this webinar.",
+      "help": {
+        "what": "Optional context for the compliance requirements field.",
+        "why": "Regulated content may require jurisdiction-specific language that the model cannot safely infer.",
+        "example": "Good example: Avoid guaranteeing revenue, savings, or client retention improvements.",
+        "avoid": "Avoid personalized medical, legal, financial, employment, political, child-safety, or regulated advice unless supplied review requirements support safe general wording."
+      },
+      "maxLength": 2000,
+      "showWhen": {
+        "key": "topicSensitivity",
+        "notEquals": "General topic"
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "tone",
+      "label": "Tone",
+      "group": "brand_offer_promotion",
+      "groupTitle": "Brand, Offer & Promotion",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select the preferred tone",
+      "hint": "The model will keep the tone appropriate for both speaking and registration copy.",
+      "help": {
+        "what": "Optional context for the tone field.",
+        "why": "Tone materially changes the registration copy and presenter delivery style.",
+        "example": "Good example: Clear and natural",
+        "avoid": "Avoid guessed facts, fake scarcity, fake attendee counts, hidden promotion, manipulative pressure, or unsupported claims."
+      },
+      "defaultValue": "Clear and natural",
+      "options": [
+        "Clear and natural",
+        "Conversational",
+        "Educational",
+        "Warm and supportive",
+        "Energetic",
+        "Expert",
+        "Executive",
+        "Technical",
+        "Persuasive but restrained"
+      ],
+      "maxLength": 40
+    },
+    {
+      "key": "brandVoice",
+      "label": "Brand voice",
+      "group": "brand_offer_promotion",
+      "groupTitle": "Brand, Offer & Promotion",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Describe preferred vocabulary, personality, rhythm, and phrases to avoid.",
+      "hint": "Leave blank for a natural, professional, non-corporate voice.",
+      "help": {
+        "what": "Optional context for the brand voice field.",
+        "why": "Established brands may require a voice that cannot be inferred from the topic alone.",
+        "example": "Good example: Helpful, precise, low-pressure, practical.",
+        "avoid": "Avoid guessed facts, fake scarcity, fake attendee counts, hidden promotion, manipulative pressure, or unsupported claims."
+      },
+      "maxLength": 1000,
+      "fullWidth": true
+    },
+    {
+      "key": "registrationCopyLength",
+      "label": "Registration page length",
+      "group": "brand_offer_promotion",
+      "groupTitle": "Brand, Offer & Promotion",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select the preferred depth",
+      "hint": "Controls the depth of the public registration-page copy.",
+      "help": {
+        "what": "Optional context for the registration page length field.",
+        "why": "A simple event page and a high-consideration webinar need different copy depth.",
+        "example": "Good example: Standard",
+        "avoid": "Avoid guessed facts, fake scarcity, fake attendee counts, hidden promotion, manipulative pressure, or unsupported claims."
+      },
+      "defaultValue": "Standard",
+      "options": [
+        "Concise",
+        "Standard",
+        "Detailed"
+      ],
+      "maxLength": 20
+    },
+    {
+      "key": "offerType",
+      "label": "Webinar offer type",
+      "group": "brand_offer_promotion",
+      "groupTitle": "Brand, Offer & Promotion",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select what follows the webinar",
+      "hint": "Choose the offer or next step presented during the CTA section.",
+      "help": {
+        "what": "Optional context for the webinar offer type field.",
+        "why": "The CTA structure depends on whether the webinar teaches only or introduces an offer.",
+        "example": "Good example: Consultation",
+        "avoid": "Avoid guessed facts, fake scarcity, fake attendee counts, hidden promotion, manipulative pressure, or unsupported claims."
+      },
+      "defaultValue": "No commercial offer",
+      "options": [
+        "No commercial offer",
+        "Free resource",
+        "Consultation",
+        "Product or service",
+        "Course or program",
+        "Membership",
+        "Trial or demo",
+        "Another event",
+        "Other"
+      ],
+      "maxLength": 40
+    },
+    {
+      "key": "offerDetails",
+      "label": "Offer details",
+      "group": "brand_offer_promotion",
+      "groupTitle": "Brand, Offer & Promotion",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Describe the offer, price, inclusions, eligibility, availability, and approved terms.",
+      "hint": "Only supplied pricing, deadlines, bonuses, and results may be mentioned.",
+      "help": {
+        "what": "Optional context for the offer details field.",
+        "why": "Accurate CTA copy requires the actual offer details and limitations.",
+        "example": "Good example: Free 20-minute workflow consultation; no guaranteed outcomes; booking URL supplied separately.",
+        "avoid": "Avoid invented facts, credentials, testimonials, results, prices, deadlines, examples, links, offers, or presenter details that were not supplied."
+      },
+      "maxLength": 2000,
+      "showWhen": {
+        "key": "offerType",
+        "notEquals": "No commercial offer"
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "socialProof",
+      "label": "Approved social proof",
+      "group": "brand_offer_promotion",
+      "groupTitle": "Brand, Offer & Promotion",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Add verified testimonials, results, client names, ratings, or adoption data.",
+      "hint": "Leave blank rather than asking the model to create proof.",
+      "help": {
+        "what": "Optional context for the approved social proof field.",
+        "why": "Social proof is useful only when genuine, approved evidence has been supplied.",
+        "example": "Good example: Only use verified testimonials or results supplied here; otherwise omit proof.",
+        "avoid": "Avoid invented facts, credentials, testimonials, results, prices, deadlines, examples, links, offers, or presenter details that were not supplied."
+      },
+      "maxLength": 1500,
+      "fullWidth": true
+    },
+    {
+      "key": "objectionsToAddress",
+      "label": "Objections to address",
+      "group": "brand_offer_promotion",
+      "groupTitle": "Brand, Offer & Promotion",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "List concerns that may prevent registration, participation, trust, or action.",
+      "hint": "The model will answer objections without using pressure or fear.",
+      "help": {
+        "what": "Optional context for the objections to address field.",
+        "why": "Known objections influence registration copy, teaching emphasis, and CTA framing.",
+        "example": "Good example: Attendees may worry automation will make reports generic or too technical.",
+        "avoid": "Avoid guessed facts, fake scarcity, fake attendee counts, hidden promotion, manipulative pressure, or unsupported claims."
+      },
+      "maxLength": 1200,
+      "fullWidth": true
+    },
+    {
+      "key": "visualDirection",
+      "label": "Visual direction",
+      "group": "brand_offer_promotion",
+      "groupTitle": "Brand, Offer & Promotion",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Describe preferred slide style, brand visuals, diagrams, demos, or imagery.",
+      "hint": "Used for presentation guidance, not for inventing unsupported visual evidence.",
+      "help": {
+        "what": "Optional context for the visual direction field.",
+        "why": "Webinars benefit from presentation-specific visual planning when preferences exist.",
+        "example": "Good example: Clean slides, simple workflow diagrams, and screenshots only when supplied.",
+        "avoid": "Avoid guessed facts, fake scarcity, fake attendee counts, hidden promotion, manipulative pressure, or unsupported claims."
+      },
+      "maxLength": 1200,
+      "fullWidth": true
+    },
+    {
+      "key": "ctaDestination",
+      "label": "CTA destination URL",
+      "group": "follow_up_output_settings",
+      "groupTitle": "Follow-Up & Output Settings",
+      "type": "text",
+      "required": false,
+      "placeholder": "https://www.creatornivo.com/next-step",
+      "hint": "Leave blank to describe the action without inventing a destination.",
+      "help": {
+        "what": "Optional context for the cta destination url field.",
+        "why": "The webinar and follow-up email may need a real destination for the primary CTA.",
+        "example": "Good example: https://www.creatornivo.com/contact",
+        "avoid": "Avoid invented, shortened, unapproved, or misleading URLs."
+      },
+      "format": "url",
+      "maxLength": 500
+    },
+    {
+      "key": "followUpGoal",
+      "label": "Follow-up goal",
+      "group": "follow_up_output_settings",
+      "groupTitle": "Follow-Up & Output Settings",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select the main follow-up objective",
+      "hint": "Controls the focus of the post-webinar email.",
+      "help": {
+        "what": "Optional context for the follow-up goal field.",
+        "why": "The follow-up message should support one clear next step rather than several competing goals.",
+        "example": "Good example: Book a consultation",
+        "avoid": "Avoid guessed facts, fake scarcity, fake attendee counts, hidden promotion, manipulative pressure, or unsupported claims."
+      },
+      "defaultValue": "Nurture attendees",
+      "options": [
+        "Deliver the replay",
+        "Nurture attendees",
+        "Book a consultation",
+        "Encourage a purchase",
+        "Start a trial or demo",
+        "Deliver a resource",
+        "Join a community",
+        "Register for another event"
+      ],
+      "maxLength": 40
+    },
+    {
+      "key": "followUpTiming",
+      "label": "Follow-up timing",
+      "group": "follow_up_output_settings",
+      "groupTitle": "Follow-Up & Output Settings",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select the recommended send time",
+      "hint": "Used in the delivery recommendation, not as a fabricated scheduled event.",
+      "help": {
+        "what": "Optional context for the follow-up timing field.",
+        "why": "Timing affects the framing and urgency of the follow-up email.",
+        "example": "Good example: Within 2–6 hours",
+        "avoid": "Avoid guessed facts, fake scarcity, fake attendee counts, hidden promotion, manipulative pressure, or unsupported claims."
+      },
+      "defaultValue": "Within 2–6 hours",
+      "options": [
+        "Immediately",
+        "Within 2–6 hours",
+        "The next day",
+        "Within 2–3 days",
+        "Custom timing"
+      ],
+      "maxLength": 30
+    },
+    {
+      "key": "replayAvailability",
+      "label": "Replay availability",
+      "group": "follow_up_output_settings",
+      "groupTitle": "Follow-Up & Output Settings",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select the replay policy",
+      "hint": "Choose an actual replay window or let the model avoid making a specific claim.",
+      "help": {
+        "what": "Optional context for the replay availability field.",
+        "why": "Replay wording must not invent access, scarcity, or expiration dates.",
+        "example": "Good example: 7 days",
+        "avoid": "Avoid claiming replay access, expiration, scarcity, or ongoing availability unless it is confirmed."
+      },
+      "defaultValue": "Auto",
+      "options": [
+        "Auto",
+        "No replay",
+        "24 hours",
+        "3 days",
+        "7 days",
+        "Ongoing access"
+      ],
+      "maxLength": 30
+    },
+    {
+      "key": "postWebinarResource",
+      "label": "Post-webinar resource",
+      "group": "follow_up_output_settings",
+      "groupTitle": "Follow-Up & Output Settings",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Describe any checklist, workbook, slides, template, recording, or bonus resource.",
+      "hint": "Only resources that actually exist will be included.",
+      "help": {
+        "what": "Optional context for the post-webinar resource field.",
+        "why": "A supplied resource may shape both the closing and the follow-up email.",
+        "example": "Good example: Reporting checklist PDF, if supplied.",
+        "avoid": "Avoid guessed facts, fake scarcity, fake attendee counts, hidden promotion, manipulative pressure, or unsupported claims."
+      },
+      "maxLength": 1000,
+      "fullWidth": true
+    },
+    {
+      "key": "emailSenderName",
+      "label": "Follow-up sender name",
+      "group": "follow_up_output_settings",
+      "groupTitle": "Follow-Up & Output Settings",
+      "type": "text",
+      "required": false,
+      "placeholder": "Enter the person or brand sending the email",
+      "hint": "Falls back to the presenter or brand name when available.",
+      "help": {
+        "what": "Optional context for the follow-up sender name field.",
+        "why": "A real sender identity improves clarity and prevents invented attribution.",
+        "example": "Good example: Alex from Creatornivo",
+        "avoid": "Avoid guessed facts, fake scarcity, fake attendee counts, hidden promotion, manipulative pressure, or unsupported claims."
+      },
+      "maxLength": 120
+    },
+    {
+      "key": "outputDetail",
+      "label": "Presenter content depth",
+      "group": "follow_up_output_settings",
+      "groupTitle": "Follow-Up & Output Settings",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select the preferred script depth",
+      "hint": "Controls whether the presentation section contains an outline, notes, or fuller narration.",
+      "help": {
+        "what": "Optional context for the presenter content depth field.",
+        "why": "Different presenters need substantially different levels of scripting support.",
+        "example": "Good example: Detailed speaking notes",
+        "avoid": "Avoid guessed facts, fake scarcity, fake attendee counts, hidden promotion, manipulative pressure, or unsupported claims."
+      },
+      "defaultValue": "Detailed speaking notes",
+      "options": [
+        "Concise outline",
+        "Detailed speaking notes",
+        "Full presenter script"
+      ],
+      "maxLength": 40
+    },
+    {
+      "key": "additionalContext",
+      "label": "Additional context",
+      "group": "follow_up_output_settings",
+      "groupTitle": "Follow-Up & Output Settings",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Add any remaining requirements, restrictions, terminology, or background.",
+      "hint": "Use this only for information not already covered by another field.",
+      "help": {
+        "what": "Optional context for the additional context field.",
+        "why": "A single controlled field handles relevant edge cases without expanding the form unnecessarily.",
+        "example": "Good example: No fake urgency, fake scarcity, invented attendee counts, or unsupported product claims.",
+        "avoid": "Avoid guessed facts, fake scarcity, fake attendee counts, hidden promotion, manipulative pressure, or unsupported claims."
+      },
+      "maxLength": 2000,
+      "fullWidth": true
+    }
+  ]
+}
