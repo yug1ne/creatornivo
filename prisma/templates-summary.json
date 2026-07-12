@@ -158,7 +158,7 @@
     "title": "In-App UX Copy",
     "category": "app_ux",
     "plan": "pro",
-    "vars": 16
+    "vars": 24
   },
   {
     "slug": "indie-hackers-post",
@@ -221,7 +221,7 @@
     "title": "Press Release",
     "category": "sales",
     "plan": "pro",
-    "vars": 9
+    "vars": 34
   },
   {
     "slug": "product-hunt-launch",
@@ -249,14 +249,14 @@
     "title": "Review Response",
     "category": "sales",
     "plan": "pro",
-    "vars": 8
+    "vars": 21
   },
   {
     "slug": "sales-proposal",
     "title": "Sales Proposal",
     "category": "sales",
     "plan": "pro",
-    "vars": 10
+    "vars": 42
   },
   {
     "slug": "sms-campaign",
@@ -291,7 +291,7 @@
     "title": "Website Popup",
     "category": "app_ux",
     "plan": "pro",
-    "vars": 11
+    "vars": 24
   },
   {
     "slug": "whatsapp-broadcast",

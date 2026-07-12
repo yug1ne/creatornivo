@@ -1,0 +1,762 @@
+{
+  "slug": "press-release",
+  "title": "Press Release",
+  "fieldCount": 34,
+  "requiredKeys": [
+    "announcementType",
+    "companyName",
+    "announcementSummary",
+    "primaryAudience",
+    "keyFacts",
+    "releaseDate",
+    "datelineLocation"
+  ],
+  "groups": [
+    {
+      "id": "essentials",
+      "title": "Essentials",
+      "description": "Announcement type, company, news summary, audience, facts, date, dateline, goal, length, language, and geographic scope.",
+      "defaultOpen": true
+    },
+    {
+      "id": "message_evidence",
+      "title": "Message & Evidence",
+      "description": "Benefits, supporting evidence, references, timing, reader action, sensitive claims, and background context.",
+      "defaultOpen": false
+    },
+    {
+      "id": "quotes_company",
+      "title": "Quotes & Company",
+      "description": "Quote controls, authorized speakers, approved quotation material, boilerplate, website, media contact, and brand voice.",
+      "defaultOpen": false
+    },
+    {
+      "id": "distribution_settings",
+      "title": "Distribution Settings",
+      "description": "Publication destinations, editorial status, headline style, subheadline, and notes-to-editors controls.",
+      "defaultOpen": false
+    },
+    {
+      "id": "compliance_final_details",
+      "title": "Compliance & Final Details",
+      "description": "Release or embargo status, embargo date, and additional requirements.",
+      "defaultOpen": false
+    }
+  ],
+  "variables": [
+    {
+      "key": "announcementType",
+      "label": "Announcement type",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": true,
+      "placeholder": "Select the type of announcement",
+      "hint": "Helps structure the release around the correct kind of news.",
+      "help": {
+        "what": "Provide the announcement type for this press release.",
+        "why": "Different announcement types require different leads, evidence, chronology, and emphasis.",
+        "example": "Good example: Product or service launch",
+        "avoid": "Avoid vague placeholders, missing facts, unsupported claims, or information that is not approved for public use."
+      },
+      "defaultValue": "Product or service launch",
+      "maxLength": 40,
+      "options": [
+        "Product or service launch",
+        "Company news",
+        "Partnership",
+        "Event",
+        "Funding or investment",
+        "Research or report",
+        "Leadership appointment",
+        "Milestone or award",
+        "Other announcement"
+      ]
+    },
+    {
+      "key": "companyName",
+      "label": "Company or organization",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": true,
+      "placeholder": "Example: Northstar Analytics",
+      "hint": "Enter the official name that should appear in the release.",
+      "help": {
+        "what": "Provide the company or organization for this press release.",
+        "why": "The issuing company or organization cannot be safely inferred.",
+        "example": "Good example: Northstar Analytics",
+        "avoid": "Avoid vague placeholders, missing facts, unsupported claims, or information that is not approved for public use."
+      },
+      "maxLength": 160
+    },
+    {
+      "key": "announcementSummary",
+      "label": "What are you announcing?",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "Describe the announcement, what is changing, and why it matters.",
+      "hint": "Include the central news in plain language, not a polished press release.",
+      "help": {
+        "what": "Provide the what are you announcing? for this press release.",
+        "why": "This provides the central news angle and determines the release’s lead.",
+        "example": "Good example: Northstar Analytics is launching a workflow dashboard for regional logistics teams.",
+        "avoid": "Avoid turning this into final copy, adding claims not approved for publication, or burying the actual announcement."
+      },
+      "maxLength": 1500,
+      "fullWidth": true
+    },
+    {
+      "key": "primaryAudience",
+      "label": "Primary audience",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "Example: technology journalists, small-business owners, and industry analysts",
+      "hint": "Identify the journalists, readers, customers, or stakeholders the news should reach.",
+      "help": {
+        "what": "Provide the primary audience for this press release.",
+        "why": "Audience information materially changes terminology, emphasis, context, and news value.",
+        "example": "Good example: Technology journalists, logistics operators, and regional business publications",
+        "avoid": "Avoid vague placeholders, missing facts, unsupported claims, or information that is not approved for public use."
+      },
+      "maxLength": 600,
+      "fullWidth": true
+    },
+    {
+      "key": "keyFacts",
+      "label": "Essential facts",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "List verified dates, names, features, amounts, locations, results, and other required facts.",
+      "hint": "Provide only facts that may be stated publicly.",
+      "help": {
+        "what": "Provide the essential facts for this press release.",
+        "why": "A press release must be grounded in supplied, verifiable information.",
+        "example": "Good example: Launch date: September 12, 2026. Available in the UK and EU. Integrates with existing delivery-management tools.",
+        "avoid": "Avoid unverified numbers, invented dates, unsupported names, vague superlatives, or facts that are not public."
+      },
+      "maxLength": 2000,
+      "fullWidth": true
+    },
+    {
+      "key": "releaseDate",
+      "label": "Release date",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": true,
+      "placeholder": "Select the publication date",
+      "hint": "Used in the dateline and to interpret whether the announcement is upcoming or completed.",
+      "help": {
+        "what": "Provide the release date for this press release.",
+        "why": "The publication date affects tense, timing language, and dateline accuracy.",
+        "example": "Good example: 2026-09-12",
+        "avoid": "Avoid guessed dates, cities, countries, time zones, or locations chosen only for prestige."
+      },
+      "maxLength": 10
+    },
+    {
+      "key": "datelineLocation",
+      "label": "Dateline location",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": true,
+      "placeholder": "Example: Berlin, Germany",
+      "hint": "Enter the city and country or region associated with the announcement.",
+      "help": {
+        "what": "Provide the dateline location for this press release.",
+        "why": "A conventional press release normally requires an accurate dateline location.",
+        "example": "Good example: Berlin, Germany",
+        "avoid": "Avoid guessed dates, cities, countries, time zones, or locations chosen only for prestige."
+      },
+      "maxLength": 120
+    },
+    {
+      "key": "releaseGoal",
+      "label": "Primary goal",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select the main goal",
+      "hint": "Guides the news angle and final reader action without making the release overly promotional.",
+      "help": {
+        "what": "Optional context for the primary goal field.",
+        "why": "The desired outcome determines which facts and implications deserve the strongest emphasis.",
+        "example": "Good example: Earn media coverage",
+        "avoid": "Avoid guessed facts, promotional exaggeration, fake urgency, fake scarcity, unsupported superlatives, private data, or unapproved claims."
+      },
+      "defaultValue": "Earn media coverage",
+      "maxLength": 40,
+      "options": [
+        "Earn media coverage",
+        "Build stakeholder awareness",
+        "Support a product launch",
+        "Increase event attendance",
+        "Attract customers or users",
+        "Provide an investor update",
+        "Improve local visibility",
+        "Clarify company information"
+      ]
+    },
+    {
+      "key": "desiredLength",
+      "label": "Release length",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select a preferred length",
+      "hint": "Choose a useful editorial range rather than an exact word count.",
+      "help": {
+        "what": "Optional context for the release length field.",
+        "why": "The appropriate depth depends on the complexity and importance of the announcement.",
+        "example": "Good example: Standard",
+        "avoid": "Avoid guessed facts, promotional exaggeration, fake urgency, fake scarcity, unsupported superlatives, private data, or unapproved claims."
+      },
+      "defaultValue": "Standard",
+      "maxLength": 30,
+      "options": [
+        "Auto",
+        "Brief",
+        "Standard",
+        "Detailed"
+      ]
+    },
+    {
+      "key": "outputLanguage",
+      "label": "Output language",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select the release language",
+      "hint": "The release will use native professional conventions for the selected language.",
+      "help": {
+        "what": "Optional context for the output language field.",
+        "why": "Language affects grammar, dateline conventions, quotation punctuation, and editorial tone.",
+        "example": "Good example: English",
+        "avoid": "Avoid guessed facts, promotional exaggeration, fake urgency, fake scarcity, unsupported superlatives, private data, or unapproved claims."
+      },
+      "defaultValue": "English",
+      "maxLength": 30,
+      "options": [
+        "English",
+        "Spanish",
+        "French",
+        "German",
+        "Italian",
+        "Portuguese",
+        "Polish",
+        "Ukrainian",
+        "Russian",
+        "Other or specified below"
+      ]
+    },
+    {
+      "key": "geographicScope",
+      "label": "Geographic scope",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": false,
+      "placeholder": "Example: United Kingdom, European Union, global, or local market",
+      "hint": "Clarify where the announcement, product, event, or service applies.",
+      "help": {
+        "what": "Optional context for the geographic scope field.",
+        "why": "Geographic scope prevents the release from implying availability or relevance in unsupported markets.",
+        "example": "Good example: United Kingdom and European Union",
+        "avoid": "Avoid guessed facts, promotional exaggeration, fake urgency, fake scarcity, unsupported superlatives, private data, or unapproved claims."
+      },
+      "maxLength": 200
+    },
+    {
+      "key": "keyBenefits",
+      "label": "Main significance or benefits",
+      "group": "message_evidence",
+      "groupTitle": "Message & Evidence",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Explain who benefits, what improves, and why the announcement matters.",
+      "hint": "Use specific outcomes and significance rather than advertising slogans.",
+      "help": {
+        "what": "Optional context for the main significance or benefits field.",
+        "why": "This helps translate raw news into a relevant story for journalists and readers.",
+        "example": "Good example: Helps operations teams see route delays, handoff issues, and late deliveries in one dashboard.",
+        "avoid": "Avoid guessed facts, promotional exaggeration, fake urgency, fake scarcity, unsupported superlatives, private data, or unapproved claims."
+      },
+      "maxLength": 1200,
+      "fullWidth": true
+    },
+    {
+      "key": "supportingEvidence",
+      "label": "Evidence and measurable details",
+      "group": "message_evidence",
+      "groupTitle": "Message & Evidence",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Add verified statistics, research findings, milestones, comparisons, or performance data.",
+      "hint": "Include methodology, dates, sample sizes, or attribution when relevant.",
+      "help": {
+        "what": "Optional context for the evidence and measurable details field.",
+        "why": "Evidence can strengthen newsworthiness but must come directly from the user.",
+        "example": "Good example: Pilot customers reported identifying recurring delay patterns during a 60-day internal trial.",
+        "avoid": "Avoid unsupported statistics, missing methodology, unclear sample sizes, or comparisons without a basis."
+      },
+      "maxLength": 2000,
+      "fullWidth": true
+    },
+    {
+      "key": "sourceReferences",
+      "label": "Sources and reference material",
+      "group": "message_evidence",
+      "groupTitle": "Message & Evidence",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Paste source links, document titles, approved background notes, or factual references.",
+      "hint": "References guide verification but will not be invented or described as independently checked.",
+      "help": {
+        "what": "Optional context for the sources and reference material field.",
+        "why": "References help attribute claims and identify facts that require confirmation.",
+        "example": "Good example: Internal launch brief, approved product FAQ, and September 2026 availability note.",
+        "avoid": "Avoid guessed facts, promotional exaggeration, fake urgency, fake scarcity, unsupported superlatives, private data, or unapproved claims."
+      },
+      "maxLength": 4000,
+      "fullWidth": true
+    },
+    {
+      "key": "timingContext",
+      "label": "Timing and availability",
+      "group": "message_evidence",
+      "groupTitle": "Message & Evidence",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Add launch dates, event dates, rollout stages, availability, deadlines, or relevant timing.",
+      "hint": "Only include dates and availability details that are confirmed.",
+      "help": {
+        "what": "Optional context for the timing and availability field.",
+        "why": "Press releases frequently depend on precise launch, availability, or event timing.",
+        "example": "Good example: Public launch begins September 12, 2026, after a private beta with selected logistics partners.",
+        "avoid": "Avoid guessed facts, promotional exaggeration, fake urgency, fake scarcity, unsupported superlatives, private data, or unapproved claims."
+      },
+      "maxLength": 1000,
+      "fullWidth": true
+    },
+    {
+      "key": "readerAction",
+      "label": "Preferred reader action",
+      "group": "message_evidence",
+      "groupTitle": "Message & Evidence",
+      "type": "text",
+      "required": false,
+      "placeholder": "Example: visit the newsroom, register, download the report, or request an interview",
+      "hint": "Leave as Auto for one restrained, context-appropriate next step.",
+      "help": {
+        "what": "Optional context for the preferred reader action field.",
+        "why": "It determines the release’s single proportional CTA without adding competing actions.",
+        "example": "Good example: Visit the newsroom or request a product briefing",
+        "avoid": "Avoid guessed facts, promotional exaggeration, fake urgency, fake scarcity, unsupported superlatives, private data, or unapproved claims."
+      },
+      "defaultValue": "Auto",
+      "maxLength": 240
+    },
+    {
+      "key": "sensitiveClaims",
+      "label": "Claims or wording to avoid",
+      "group": "message_evidence",
+      "groupTitle": "Message & Evidence",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "List unapproved claims, confidential topics, legal restrictions, or prohibited wording.",
+      "hint": "Use this for specific restrictions, not general writing instructions.",
+      "help": {
+        "what": "Optional context for the claims or wording to avoid field.",
+        "why": "Company-specific legal, regulatory, contractual, or confidentiality restrictions cannot be inferred.",
+        "example": "Good example: Do not claim guaranteed delivery improvements or regulatory compliance.",
+        "avoid": "Avoid general style preferences when the field should capture concrete prohibited claims or legal boundaries."
+      },
+      "maxLength": 1200,
+      "fullWidth": true
+    },
+    {
+      "key": "relatedContext",
+      "label": "Background and context",
+      "group": "message_evidence",
+      "groupTitle": "Message & Evidence",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Add relevant history, earlier announcements, market context, or necessary explanation.",
+      "hint": "Include only context that helps readers understand the current news.",
+      "help": {
+        "what": "Optional context for the background and context field.",
+        "why": "Relevant background can make unfamiliar or technical announcements understandable.",
+        "example": "Good example: The dashboard follows the company’s earlier route-monitoring API release.",
+        "avoid": "Avoid guessed facts, promotional exaggeration, fake urgency, fake scarcity, unsupported superlatives, private data, or unapproved claims."
+      },
+      "maxLength": 1500,
+      "fullWidth": true
+    },
+    {
+      "key": "includeQuotes",
+      "label": "Include quotations",
+      "group": "quotes_company",
+      "groupTitle": "Quotes & Company",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select whether to include quotations",
+      "hint": "Turn on only when an authorized speaker and approved quotation material are available.",
+      "help": {
+        "what": "Optional context for the include quotations field.",
+        "why": "Quotations are common in press releases but should not be invented automatically.",
+        "example": "Good example: On",
+        "avoid": "Avoid guessed facts, promotional exaggeration, fake urgency, fake scarcity, unsupported superlatives, private data, or unapproved claims."
+      },
+      "defaultValue": "Off",
+      "maxLength": 5,
+      "options": [
+        "On",
+        "Off"
+      ]
+    },
+    {
+      "key": "quoteSpeakers",
+      "label": "Authorized speakers",
+      "group": "quotes_company",
+      "groupTitle": "Quotes & Company",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "List each speaker’s full name, title, organization, and relevance to the announcement.",
+      "hint": "Only include people authorized to be quoted publicly.",
+      "help": {
+        "what": "Optional context for the authorized speakers field.",
+        "why": "The model must know exactly who is authorized to speak and how they should be identified.",
+        "example": "Good example: Ava Brooks, CEO of Northstar Analytics, authorized to comment on product strategy.",
+        "avoid": "Avoid invented quotations, unapproved speakers, altered meanings, fake titles, or statements presented as approved when they are only draft ideas."
+      },
+      "maxLength": 800,
+      "showWhen": {
+        "key": "includeQuotes",
+        "equals": "On"
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "approvedQuotes",
+      "label": "Approved quotation material",
+      "group": "quotes_company",
+      "groupTitle": "Quotes & Company",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Paste approved quotes or exact approved ideas that may be turned into a draft for review.",
+      "hint": "Unapproved draft wording will be clearly marked outside the publishable release.",
+      "help": {
+        "what": "Optional context for the approved quotation material field.",
+        "why": "It prevents fabricated quotations and distinguishes approved wording from suggested language.",
+        "example": "Good example: This launch gives regional teams a clearer way to understand where delivery workflows slow down.",
+        "avoid": "Avoid invented quotations, unapproved speakers, altered meanings, fake titles, or statements presented as approved when they are only draft ideas."
+      },
+      "maxLength": 2000,
+      "showWhen": {
+        "key": "includeQuotes",
+        "equals": "On"
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "companyBoilerplate",
+      "label": "Company boilerplate",
+      "group": "quotes_company",
+      "groupTitle": "Quotes & Company",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Paste the approved “About the company” paragraph or provide verified company facts.",
+      "hint": "If omitted, use a minimal factual paragraph or a completion placeholder.",
+      "help": {
+        "what": "Optional context for the company boilerplate field.",
+        "why": "The boilerplate contains company facts that should not be inferred or fabricated.",
+        "example": "Good example: Northstar Analytics builds workflow visibility tools for regional logistics teams.",
+        "avoid": "Avoid guessed facts, promotional exaggeration, fake urgency, fake scarcity, unsupported superlatives, private data, or unapproved claims."
+      },
+      "maxLength": 1500,
+      "fullWidth": true
+    },
+    {
+      "key": "companyWebsite",
+      "label": "Company website",
+      "group": "quotes_company",
+      "groupTitle": "Quotes & Company",
+      "type": "text",
+      "required": false,
+      "placeholder": "https://example.com",
+      "hint": "Used only as a factual destination when a website link is appropriate.",
+      "help": {
+        "what": "Optional context for the company website field.",
+        "why": "The official website cannot be safely invented.",
+        "example": "Good example: https://example.com",
+        "avoid": "Avoid invented URLs, tracking-modified links, unrelated pages, or links that are not approved for publication."
+      },
+      "format": "url",
+      "maxLength": 300
+    },
+    {
+      "key": "mediaContact",
+      "label": "Media contact",
+      "group": "quotes_company",
+      "groupTitle": "Quotes & Company",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Add contact name, role, email address, phone number, or media inquiry URL.",
+      "hint": "Provide only business contact details approved for public publication.",
+      "help": {
+        "what": "Optional context for the media contact field.",
+        "why": "Journalists require a valid contact, but private or guessed information must never be inserted.",
+        "example": "Good example: Media Relations, press@example.com, +44 20 0000 0000",
+        "avoid": "Avoid private personal details, guessed email formats, personal social profiles, or contact information not approved for publication."
+      },
+      "maxLength": 500,
+      "fullWidth": true
+    },
+    {
+      "key": "brandVoice",
+      "label": "Brand voice",
+      "group": "quotes_company",
+      "groupTitle": "Quotes & Company",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select the preferred voice",
+      "hint": "The release will remain journalistic and restrained regardless of the selected voice.",
+      "help": {
+        "what": "Optional context for the brand voice field.",
+        "why": "Brand voice affects diction and tone without changing factual standards.",
+        "example": "Good example: Clear and professional",
+        "avoid": "Avoid guessed facts, promotional exaggeration, fake urgency, fake scarcity, unsupported superlatives, private data, or unapproved claims."
+      },
+      "defaultValue": "Clear and professional",
+      "maxLength": 40,
+      "options": [
+        "Clear and professional",
+        "Formal and corporate",
+        "Confident and direct",
+        "Technical and precise",
+        "Warm and human",
+        "Innovative but restrained",
+        "Public-sector neutral",
+        "Nonprofit and mission-led"
+      ]
+    },
+    {
+      "key": "publicationDestination",
+      "label": "Publication destinations",
+      "group": "distribution_settings",
+      "groupTitle": "Distribution Settings",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Select intended destinations",
+      "hint": "The release will be formatted for the selected distribution environments.",
+      "help": {
+        "what": "Optional context for the publication destinations field.",
+        "why": "Newswire, newsroom, trade, local, and stakeholder releases require different levels of context and formality.",
+        "example": "Good example: Company newsroom, Media outreach",
+        "avoid": "Avoid guessed facts, promotional exaggeration, fake urgency, fake scarcity, unsupported superlatives, private data, or unapproved claims."
+      },
+      "defaultValue": "Company newsroom, Media outreach",
+      "maxLength": 180,
+      "options": [
+        "Company newsroom",
+        "Newswire service",
+        "Direct media outreach",
+        "Trade publications",
+        "Local media",
+        "Investors or stakeholders"
+      ],
+      "fullWidth": true
+    },
+    {
+      "key": "releaseStatus",
+      "label": "Editorial status",
+      "group": "distribution_settings",
+      "groupTitle": "Distribution Settings",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select the current status",
+      "hint": "Controls whether incomplete details appear as review notes or clearly marked placeholders.",
+      "help": {
+        "what": "Optional context for the editorial status field.",
+        "why": "The treatment of missing information should differ between an early draft and final publication copy.",
+        "example": "Good example: Draft for review",
+        "avoid": "Avoid guessed facts, promotional exaggeration, fake urgency, fake scarcity, unsupported superlatives, private data, or unapproved claims."
+      },
+      "defaultValue": "Draft for review",
+      "maxLength": 30,
+      "options": [
+        "Draft for review",
+        "Ready for internal approval",
+        "Final publication copy"
+      ]
+    },
+    {
+      "key": "headlineStyle",
+      "label": "Headline style",
+      "group": "distribution_settings",
+      "groupTitle": "Distribution Settings",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select a headline approach",
+      "hint": "Headlines remain factual and avoid clickbait regardless of style.",
+      "help": {
+        "what": "Optional context for the headline style field.",
+        "why": "The preferred angle changes how the same announcement is framed for editors.",
+        "example": "Good example: Straight news",
+        "avoid": "Avoid guessed facts, promotional exaggeration, fake urgency, fake scarcity, unsupported superlatives, private data, or unapproved claims."
+      },
+      "defaultValue": "Straight news",
+      "maxLength": 30,
+      "options": [
+        "Straight news",
+        "Benefit-led",
+        "Data-led",
+        "Product-focused",
+        "Event-focused",
+        "Executive announcement",
+        "Local-news angle",
+        "Auto"
+      ]
+    },
+    {
+      "key": "includeSubheadline",
+      "label": "Include a subheadline",
+      "group": "distribution_settings",
+      "groupTitle": "Distribution Settings",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select whether to include a subheadline",
+      "hint": "A subheadline will be included only when it adds useful context.",
+      "help": {
+        "what": "Optional context for the include a subheadline field.",
+        "why": "Some newsroom and wire formats benefit from a supporting line, while others require a leaner presentation.",
+        "example": "Good example: On",
+        "avoid": "Avoid guessed facts, promotional exaggeration, fake urgency, fake scarcity, unsupported superlatives, private data, or unapproved claims."
+      },
+      "defaultValue": "On",
+      "maxLength": 5,
+      "options": [
+        "On",
+        "Off"
+      ]
+    },
+    {
+      "key": "includeNotesToEditors",
+      "label": "Include notes to editors",
+      "group": "distribution_settings",
+      "groupTitle": "Distribution Settings",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select whether to include notes to editors",
+      "hint": "Use for background details, asset availability, interview access, or editorial clarification.",
+      "help": {
+        "what": "Optional context for the include notes to editors field.",
+        "why": "Notes to editors are useful for media distribution but unnecessary for many public newsroom releases.",
+        "example": "Good example: On",
+        "avoid": "Avoid guessed facts, promotional exaggeration, fake urgency, fake scarcity, unsupported superlatives, private data, or unapproved claims."
+      },
+      "defaultValue": "Off",
+      "maxLength": 5,
+      "options": [
+        "On",
+        "Off"
+      ]
+    },
+    {
+      "key": "notesToEditors",
+      "label": "Notes to editors content",
+      "group": "distribution_settings",
+      "groupTitle": "Distribution Settings",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Add media assets, interview availability, background notes, pronunciations, or access details.",
+      "hint": "Keep information factual and separate from the public release body.",
+      "help": {
+        "what": "Optional context for the notes to editors content field.",
+        "why": "The model cannot infer which additional resources or media arrangements are available.",
+        "example": "Good example: Product screenshots and executive interviews are available by request.",
+        "avoid": "Avoid guessed facts, promotional exaggeration, fake urgency, fake scarcity, unsupported superlatives, private data, or unapproved claims."
+      },
+      "maxLength": 1500,
+      "showWhen": {
+        "key": "includeNotesToEditors",
+        "equals": "On"
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "embargoStatus",
+      "label": "Embargo status",
+      "group": "compliance_final_details",
+      "groupTitle": "Compliance & Final Details",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select release timing",
+      "hint": "Do not select an embargo unless recipients have agreed to respect it.",
+      "help": {
+        "what": "Optional context for the embargo status field.",
+        "why": "Release timing changes the status line and may create a significant distribution restriction.",
+        "example": "Good example: Embargoed",
+        "avoid": "Avoid guessed facts, promotional exaggeration, fake urgency, fake scarcity, unsupported superlatives, private data, or unapproved claims."
+      },
+      "defaultValue": "For immediate release",
+      "maxLength": 30,
+      "options": [
+        "For immediate release",
+        "Embargoed",
+        "Publication date only",
+        "Do not display a status line"
+      ]
+    },
+    {
+      "key": "embargoDate",
+      "label": "Embargo date",
+      "group": "compliance_final_details",
+      "groupTitle": "Compliance & Final Details",
+      "type": "text",
+      "required": false,
+      "placeholder": "Select the embargo end date",
+      "hint": "The exact time and time zone may be added in Additional Requirements.",
+      "help": {
+        "what": "Optional context for the embargo date field.",
+        "why": "An embargo date must be supplied explicitly and must never be guessed.",
+        "example": "Good example: 2026-09-10",
+        "avoid": "Avoid approximate dates, missing time-zone details, or embargoes that recipients have not agreed to respect."
+      },
+      "maxLength": 10,
+      "showWhen": {
+        "key": "embargoStatus",
+        "equals": "Embargoed"
+      }
+    },
+    {
+      "key": "additionalRequirements",
+      "label": "Additional requirements",
+      "group": "compliance_final_details",
+      "groupTitle": "Compliance & Final Details",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Add jurisdiction, time zone, required wording, formatting rules, or other final instructions.",
+      "hint": "Use only for important details not covered elsewhere.",
+      "help": {
+        "what": "Optional context for the additional requirements field.",
+        "why": "It provides one controlled place for legitimate requirements that do not justify separate fields.",
+        "example": "Good example: Embargo lifts at 09:00 CET. Use UK English and avoid unsupported market-size claims.",
+        "avoid": "Avoid guessed facts, promotional exaggeration, fake urgency, fake scarcity, unsupported superlatives, private data, or unapproved claims."
+      },
+      "maxLength": 2000,
+      "fullWidth": true
+    }
+  ]
+}

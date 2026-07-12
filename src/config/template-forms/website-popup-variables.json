@@ -1,0 +1,534 @@
+{
+  "slug": "website-popup",
+  "title": "Website Popup",
+  "fieldCount": 24,
+  "requiredKeys": [
+    "popupGoal",
+    "popupSubject",
+    "targetAudience",
+    "keyDetails",
+    "desiredAction"
+  ],
+  "groups": [
+    {
+      "id": "essentials",
+      "title": "Essentials",
+      "description": "Popup goal, subject, audience, facts, desired action, page context, destination, trigger, tone, and output language.",
+      "defaultOpen": true
+    },
+    {
+      "id": "offer_conversion",
+      "title": "Offer & Conversion",
+      "description": "Incentive, real deadline or availability, and neutral secondary-action controls.",
+      "defaultOpen": false
+    },
+    {
+      "id": "brand_experience",
+      "title": "Brand & Experience",
+      "description": "Brand identification, voice guidance, popup format, and copy-length preference.",
+      "defaultOpen": false
+    },
+    {
+      "id": "privacy_output",
+      "title": "Privacy & Output",
+      "description": "Collected data, privacy link, restrictions, variant count, and remaining context.",
+      "defaultOpen": false
+    }
+  ],
+  "variables": [
+    {
+      "key": "popupGoal",
+      "label": "Popup goal",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": true,
+      "placeholder": "Select the main goal",
+      "hint": "Choose the single most important result this popup should produce.",
+      "help": {
+        "what": "Provide the popup goal for this website popup.",
+        "why": "The goal determines the popup structure, persuasive angle, CTA, and suitable trigger.",
+        "example": "Good example: Grow email list",
+        "avoid": "Avoid mixing several goals, such as list growth, feedback, and product traffic, inside one popup."
+      },
+      "defaultValue": "Grow email list",
+      "options": [
+        "Grow email list",
+        "Promote an offer",
+        "Deliver a free resource",
+        "Announce news or event",
+        "Drive to a page or product",
+        "Recover an exiting visitor",
+        "Collect feedback",
+        "Other"
+      ]
+    },
+    {
+      "key": "popupSubject",
+      "label": "Offer or message",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": true,
+      "placeholder": "Example: 15% welcome discount for first-time customers",
+      "hint": "Describe what the popup is promoting, announcing, offering, or requesting.",
+      "help": {
+        "what": "Provide the offer or message for this website popup.",
+        "why": "The model cannot safely infer the actual offer, announcement, resource, or message.",
+        "example": "Good example: 15% welcome discount for first-time customers",
+        "avoid": "Avoid vague topics, invented offers, fake discounts, or messages that are not actually approved."
+      },
+      "maxLength": 200
+    },
+    {
+      "key": "targetAudience",
+      "label": "Target audience",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "Example: First-time visitors comparing affordable project-management tools",
+      "hint": "Describe the visitors who should see the popup and what matters to them.",
+      "help": {
+        "what": "Provide the target audience for this website popup.",
+        "why": "Audience context materially changes the value proposition, vocabulary, and level of persuasion.",
+        "example": "Good example: First-time visitors comparing affordable project-management tools",
+        "avoid": "Avoid vague placeholders, unsupported claims, multiple competing messages, or changing the popup into a different campaign."
+      },
+      "maxLength": 500,
+      "fullWidth": true
+    },
+    {
+      "key": "keyDetails",
+      "label": "Essential facts",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "Include benefits, conditions, dates, eligibility, prices, or other confirmed details",
+      "hint": "Provide only facts the generated popup may safely state as true.",
+      "help": {
+        "what": "Provide the essential facts for this website popup.",
+        "why": "It supplies the factual basis and prevents the model from inventing claims or offer terms.",
+        "example": "Good example: The discount applies to the first monthly subscription, excludes annual plans, and expires August 31, 2026.",
+        "avoid": "Avoid unsupported claims, fake urgency, invented prices, unverified deadlines, or missing terms."
+      },
+      "maxLength": 1500,
+      "fullWidth": true
+    },
+    {
+      "key": "desiredAction",
+      "label": "Desired visitor action",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": true,
+      "placeholder": "Example: Enter an email address and receive the guide",
+      "hint": "State the one primary action visitors should take after reading the popup.",
+      "help": {
+        "what": "Provide the desired visitor action for this website popup.",
+        "why": "The primary CTA must reflect the user's actual conversion objective.",
+        "example": "Good example: Enter an email address and receive the guide",
+        "avoid": "Avoid several competing actions or CTA wording that hides what happens next."
+      },
+      "maxLength": 180
+    },
+    {
+      "key": "pageContext",
+      "label": "Page or journey context",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": false,
+      "placeholder": "Example: Pricing page after the visitor scrolls through plan comparisons",
+      "hint": "Explain where the popup appears or what the visitor was doing beforehand.",
+      "help": {
+        "what": "Optional context for the page or journey context field.",
+        "why": "Page context helps the popup feel relevant rather than generic or disruptive.",
+        "example": "Good example: Pricing page after the visitor scrolls through plan comparisons",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, unsupported claims, hidden promotion, or sensitive private data."
+      },
+      "maxLength": 240
+    },
+    {
+      "key": "destinationUrl",
+      "label": "Destination URL",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": false,
+      "placeholder": "https://example.com/offer",
+      "hint": "Add the page opened by the primary CTA when the action leads elsewhere.",
+      "help": {
+        "what": "Optional context for the destination url field.",
+        "why": "It keeps the CTA and implementation recommendation aligned with the real destination.",
+        "example": "Good example: https://example.com/offer",
+        "avoid": "Avoid invented, shortened, rewritten, tracking-modified, or unsupported links."
+      },
+      "format": "url",
+      "maxLength": 500
+    },
+    {
+      "key": "triggerType",
+      "label": "Popup trigger",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select when the popup appears",
+      "hint": "Choose a trigger or let the model recommend the least disruptive option.",
+      "help": {
+        "what": "Optional context for the popup trigger field.",
+        "why": "Trigger context changes the opening message and the appropriate level of urgency.",
+        "example": "Good example: After scroll progress",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, unsupported claims, hidden promotion, or sensitive private data."
+      },
+      "defaultValue": "Auto",
+      "options": [
+        "Auto",
+        "Immediately on page load",
+        "After a timed delay",
+        "After scroll progress",
+        "Exit intent",
+        "After a visitor action",
+        "Specific page or event"
+      ]
+    },
+    {
+      "key": "tone",
+      "label": "Tone",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select a tone",
+      "hint": "Choose the overall voice without controlling individual sentences.",
+      "help": {
+        "what": "Optional context for the tone field.",
+        "why": "Tone materially affects the copy while remaining simple enough for non-specialist users.",
+        "example": "Good example: Clear and natural",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, unsupported claims, hidden promotion, or sensitive private data."
+      },
+      "defaultValue": "Clear and natural",
+      "options": [
+        "Clear and natural",
+        "Friendly",
+        "Professional",
+        "Warm",
+        "Playful",
+        "Premium",
+        "Minimal",
+        "Urgent but honest"
+      ]
+    },
+    {
+      "key": "outputLanguage",
+      "label": "Output language",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": false,
+      "placeholder": "Example: English, Ukrainian, Spanish",
+      "hint": "Enter the language in which the complete popup package should be written.",
+      "help": {
+        "what": "Optional context for the output language field.",
+        "why": "A free-text language field supports any language without an oversized select menu.",
+        "example": "Good example: English",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, unsupported claims, hidden promotion, or sensitive private data."
+      },
+      "defaultValue": "English",
+      "maxLength": 80
+    },
+    {
+      "key": "incentiveType",
+      "label": "Incentive type",
+      "group": "offer_conversion",
+      "groupTitle": "Offer & Conversion",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select an incentive",
+      "hint": "Choose the real incentive connected to the visitor action.",
+      "help": {
+        "what": "Optional context for the incentive type field.",
+        "why": "It lets the prompt distinguish between an ordinary message and a value exchange.",
+        "example": "Good example: Discount",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, unsupported claims, hidden promotion, or sensitive private data."
+      },
+      "defaultValue": "None",
+      "options": [
+        "None",
+        "Discount",
+        "Free shipping",
+        "Free resource",
+        "Bonus or gift",
+        "Early access",
+        "Other"
+      ]
+    },
+    {
+      "key": "incentiveDetails",
+      "label": "Incentive details",
+      "group": "offer_conversion",
+      "groupTitle": "Offer & Conversion",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Example: 15% off the first order, excluding gift cards",
+      "hint": "Provide the exact value, conditions, code, exclusions, or delivery method.",
+      "help": {
+        "what": "Optional context for the incentive details field.",
+        "why": "Specific incentive terms must come from the user rather than being fabricated.",
+        "example": "Good example: 15% off the first order, excluding gift cards",
+        "avoid": "Avoid invented discounts, bonuses, eligibility, shipping terms, delivery promises, or offer conditions."
+      },
+      "maxLength": 800,
+      "showWhen": {
+        "key": "incentiveType",
+        "notEquals": "None"
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "timeLimit",
+      "label": "Real deadline or availability",
+      "group": "offer_conversion",
+      "groupTitle": "Offer & Conversion",
+      "type": "text",
+      "required": false,
+      "placeholder": "Example: Valid until August 31, 2026, while the event registration is open",
+      "hint": "Enter only a genuine deadline, stock condition, schedule, or availability limit.",
+      "help": {
+        "what": "Optional context for the real deadline or availability field.",
+        "why": "It allows legitimate urgency while preventing invented countdowns or scarcity.",
+        "example": "Good example: Valid until August 31, 2026, while registration is open",
+        "avoid": "Avoid countdowns, last-chance language, stock claims, or scarcity that is not a real supplied fact."
+      },
+      "maxLength": 300
+    },
+    {
+      "key": "secondaryAction",
+      "label": "Secondary action",
+      "group": "offer_conversion",
+      "groupTitle": "Offer & Conversion",
+      "type": "select",
+      "required": false,
+      "placeholder": "Choose a dismissal option",
+      "hint": "Control the optional alternative to the primary CTA.",
+      "help": {
+        "what": "Optional context for the secondary action field.",
+        "why": "Dismissal wording affects user trust and must not become manipulative.",
+        "example": "Good example: Continue browsing",
+        "avoid": "Avoid confirmshaming, guilt-based dismissals, hidden close controls, or manipulative alternatives."
+      },
+      "defaultValue": "Auto",
+      "options": [
+        "Auto",
+        "Not now",
+        "Continue browsing",
+        "None",
+        "Custom"
+      ]
+    },
+    {
+      "key": "customSecondaryText",
+      "label": "Custom secondary text",
+      "group": "offer_conversion",
+      "groupTitle": "Offer & Conversion",
+      "type": "text",
+      "required": false,
+      "placeholder": "Example: View plans first",
+      "hint": "Enter a neutral alternative action without guilt-based wording.",
+      "help": {
+        "what": "Optional context for the custom secondary text field.",
+        "why": "It supports a legitimate custom path without loading an unnecessary field for every user.",
+        "example": "Good example: View plans first",
+        "avoid": "Avoid confirmshaming, guilt-based dismissals, hidden close controls, or manipulative alternatives."
+      },
+      "maxLength": 60,
+      "showWhen": {
+        "key": "secondaryAction",
+        "equals": "Custom"
+      }
+    },
+    {
+      "key": "brandName",
+      "label": "Brand name",
+      "group": "brand_experience",
+      "groupTitle": "Brand & Experience",
+      "type": "text",
+      "required": false,
+      "placeholder": "Example: Creatornivo",
+      "hint": "Add the brand name only when recognition inside the popup is useful.",
+      "help": {
+        "what": "Optional context for the brand name field.",
+        "why": "Brand identification may improve clarity but is unnecessary for every popup.",
+        "example": "Good example: Creatornivo",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, unsupported claims, hidden promotion, or sensitive private data."
+      },
+      "maxLength": 120
+    },
+    {
+      "key": "brandVoice",
+      "label": "Brand voice guidance",
+      "group": "brand_experience",
+      "groupTitle": "Brand & Experience",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Example: Direct, practical, lightly conversational, never overly enthusiastic",
+      "hint": "Describe established voice rules or provide a short example.",
+      "help": {
+        "what": "Optional context for the brand voice guidance field.",
+        "why": "It allows established brands to preserve a specific voice beyond a general tone selection.",
+        "example": "Good example: Direct, practical, lightly conversational, never overly enthusiastic",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, unsupported claims, hidden promotion, or sensitive private data."
+      },
+      "maxLength": 600,
+      "fullWidth": true
+    },
+    {
+      "key": "popupFormat",
+      "label": "Popup format",
+      "group": "brand_experience",
+      "groupTitle": "Brand & Experience",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select a display format",
+      "hint": "Choose the interface type or let the model recommend one.",
+      "help": {
+        "what": "Optional context for the popup format field.",
+        "why": "The available space and interruption level directly affect copy length and structure.",
+        "example": "Good example: Slide-in",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, unsupported claims, hidden promotion, or sensitive private data."
+      },
+      "defaultValue": "Auto",
+      "options": [
+        "Auto",
+        "Center modal",
+        "Slide-in",
+        "Top or bottom banner",
+        "Full-screen overlay",
+        "Inline or embedded form"
+      ]
+    },
+    {
+      "key": "lengthPreference",
+      "label": "Copy length",
+      "group": "brand_experience",
+      "groupTitle": "Brand & Experience",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select a length",
+      "hint": "Control the amount of copy without requiring exact character knowledge.",
+      "help": {
+        "what": "Optional context for the copy length field.",
+        "why": "Different popup formats and offers require different levels of explanation.",
+        "example": "Good example: Balanced",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, unsupported claims, hidden promotion, or sensitive private data."
+      },
+      "defaultValue": "Balanced",
+      "options": [
+        "Auto",
+        "Very short",
+        "Balanced",
+        "More explanatory"
+      ]
+    },
+    {
+      "key": "dataCollected",
+      "label": "Data collected",
+      "group": "privacy_output",
+      "groupTitle": "Privacy & Output",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Email address, first name",
+      "hint": "List only the information visitors will actually be asked to submit.",
+      "help": {
+        "what": "Optional context for the data collected field.",
+        "why": "The generated form and privacy microcopy must reflect the real requested data.",
+        "example": "Good example: Email address, first name",
+        "avoid": "Avoid requesting sensitive, unnecessary, or undisclosed data fields."
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "privacyUrl",
+      "label": "Privacy policy URL",
+      "group": "privacy_output",
+      "groupTitle": "Privacy & Output",
+      "type": "text",
+      "required": false,
+      "placeholder": "https://example.com/privacy",
+      "hint": "Provide the policy link used near a signup or data-collection form.",
+      "help": {
+        "what": "Optional context for the privacy policy url field.",
+        "why": "It enables useful privacy-link guidance without inventing a policy or compliance claim.",
+        "example": "Good example: https://example.com/privacy",
+        "avoid": "Avoid fake policy links, unsupported privacy promises, or presenting legal compliance as confirmed."
+      },
+      "format": "url",
+      "maxLength": 500,
+      "showWhen": {
+        "key": "dataCollected",
+        "notEquals": ""
+      }
+    },
+    {
+      "key": "restrictions",
+      "label": "Restrictions and claims to avoid",
+      "group": "privacy_output",
+      "groupTitle": "Privacy & Output",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "List prohibited wording, legal restrictions, exclusions, or brand rules",
+      "hint": "Combine all project-specific restrictions in one place.",
+      "help": {
+        "what": "Optional context for the restrictions and claims to avoid field.",
+        "why": "The user may know legal, contractual, product, or brand limitations the model cannot infer.",
+        "example": "Good example: No fake scarcity, no guaranteed results, and no unsupported privacy promises.",
+        "avoid": "Avoid ignoring known legal, brand, product, or contractual restrictions."
+      },
+      "maxLength": 1000,
+      "fullWidth": true
+    },
+    {
+      "key": "variantCount",
+      "label": "Number of variants",
+      "group": "privacy_output",
+      "groupTitle": "Privacy & Output",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select variant count",
+      "hint": "Generate several genuinely different angles without creating an excessive package.",
+      "help": {
+        "what": "Optional context for the number of variants field.",
+        "why": "It controls output volume and supports practical testing or comparison.",
+        "example": "Good example: 3",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, unsupported claims, hidden promotion, or sensitive private data."
+      },
+      "defaultValue": "3",
+      "options": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ]
+    },
+    {
+      "key": "additionalContext",
+      "label": "Additional context",
+      "group": "privacy_output",
+      "groupTitle": "Privacy & Output",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Add any remaining requirement that materially affects the popup",
+      "hint": "Use this for important context not covered by another field.",
+      "help": {
+        "what": "Optional context for the additional context field.",
+        "why": "It handles legitimate edge cases without creating several low-value miscellaneous fields.",
+        "example": "Good example: Keep mobile copy short and avoid intrusive language.",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, unsupported claims, hidden promotion, or sensitive private data."
+      },
+      "maxLength": 2000,
+      "fullWidth": true
+    }
+  ]
+}

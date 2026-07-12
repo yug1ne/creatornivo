@@ -123,6 +123,16 @@ const FULL_FORM_SCHEMAS = {
     ),
     buildHint: "node scripts/build-google-business-profile-post-form.mjs",
   },
+  "in-app-ux-copy": {
+    path: path.join(
+      root,
+      "src",
+      "config",
+      "template-forms",
+      "in-app-ux-copy-variables.json",
+    ),
+    buildHint: "node scripts/build-in-app-ux-copy-form.mjs",
+  },
   "github-readme": {
     path: path.join(
       root,
@@ -213,6 +223,26 @@ const FULL_FORM_SCHEMAS = {
     ),
     buildHint: "node scripts/build-reddit-post-form.mjs",
   },
+  "review-response": {
+    path: path.join(
+      root,
+      "src",
+      "config",
+      "template-forms",
+      "review-response-variables.json",
+    ),
+    buildHint: "node scripts/build-review-response-form.mjs",
+  },
+  "sales-proposal": {
+    path: path.join(
+      root,
+      "src",
+      "config",
+      "template-forms",
+      "sales-proposal-variables.json",
+    ),
+    buildHint: "node scripts/build-sales-proposal-form.mjs",
+  },
   "seo-meta-tags": {
     path: path.join(
       root,
@@ -293,6 +323,16 @@ const FULL_FORM_SCHEMAS = {
     ),
     buildHint: "node scripts/build-webinar-package-form.mjs",
   },
+  "website-popup": {
+    path: path.join(
+      root,
+      "src",
+      "config",
+      "template-forms",
+      "website-popup-variables.json",
+    ),
+    buildHint: "node scripts/build-website-popup-form.mjs",
+  },
   "whatsapp-broadcast": {
     path: path.join(
       root,
@@ -372,6 +412,16 @@ const FULL_FORM_SCHEMAS = {
       "podcast-script-variables.json",
     ),
     buildHint: "node scripts/build-podcast-script-form.mjs",
+  },
+  "press-release": {
+    path: path.join(
+      root,
+      "src",
+      "config",
+      "template-forms",
+      "press-release-variables.json",
+    ),
+    buildHint: "node scripts/build-press-release-form.mjs",
   },
   "product-hunt-launch": {
     path: path.join(
@@ -464,12 +514,16 @@ function loadFullFormVariables(slug) {
       slug === "etsy-listing" ||
       slug === "pinterest-pin" ||
       slug === "podcast-script" ||
+      slug === "press-release" ||
       slug === "product-hunt-launch" ||
       slug === "push-notification" ||
       slug === "quora-answer" ||
       slug === "reddit-post" ||
+      slug === "review-response" ||
+      slug === "sales-proposal" ||
       slug === "email-sequence" ||
       slug === "google-business-profile-post" ||
+      slug === "in-app-ux-copy" ||
       slug === "github-readme" ||
       slug === "indie-hackers-post" ||
       slug === "sms-campaign" ||
@@ -477,6 +531,7 @@ function loadFullFormVariables(slug) {
       slug === "tiktok-caption" ||
       slug === "telegram-post" ||
       slug === "webinar-package" ||
+      slug === "website-popup" ||
       slug === "whatsapp-broadcast" ||
       slug === "youtube-video-package"
     ) {

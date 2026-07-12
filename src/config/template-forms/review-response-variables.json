@@ -1,0 +1,518 @@
+{
+  "slug": "review-response",
+  "title": "Review Response",
+  "fieldCount": 21,
+  "requiredKeys": [
+    "businessName",
+    "reviewText",
+    "reviewSentiment",
+    "responseGoal",
+    "outputLanguage"
+  ],
+  "groups": [
+    {
+      "id": "essentials",
+      "title": "Essentials",
+      "description": "Business name, review platform, review text, sentiment, goal, destination, verified facts, reviewer name, and output language.",
+      "defaultOpen": true
+    },
+    {
+      "id": "review_context_resolution",
+      "title": "Review Context & Resolution",
+      "description": "Issue category, case status, approved resolution, private contact method, and boundaries.",
+      "defaultOpen": false
+    },
+    {
+      "id": "brand_tone",
+      "title": "Brand & Tone",
+      "description": "Response tone, brand voice, sign-off, and words or phrases to avoid.",
+      "defaultOpen": false
+    },
+    {
+      "id": "output_settings",
+      "title": "Output Settings",
+      "description": "Response length, number of variants, and optional internal risk note.",
+      "defaultOpen": false
+    }
+  ],
+  "variables": [
+    {
+      "key": "businessName",
+      "label": "Business or brand name",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": true,
+      "placeholder": "Example: Northside Dental Clinic",
+      "hint": "Identifies the business responding to the review.",
+      "help": {
+        "what": "Provide the business or brand name for this review response.",
+        "why": "The model must know which business is speaking and how to frame the response.",
+        "example": "Good example: Northside Dental Clinic",
+        "avoid": "Avoid invented brand names, unrelated subsidiaries, or legal entity details that are not meant to appear in the response."
+      },
+      "maxLength": 120
+    },
+    {
+      "key": "reviewPlatform",
+      "label": "Review platform",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select the platform",
+      "hint": "Helps adapt the response to the expected platform style.",
+      "help": {
+        "what": "Optional context for the review platform field.",
+        "why": "Public review platforms differ in tone, context, and practical response conventions.",
+        "example": "Good example: Google Business Profile",
+        "avoid": "Avoid guessed facts, unsupported promises, private customer data, accusations, fake urgency, or wording that pressures review changes."
+      },
+      "defaultValue": "Auto",
+      "maxLength": 40,
+      "options": [
+        "Auto",
+        "Google Business Profile",
+        "Trustpilot",
+        "Yelp",
+        "Facebook",
+        "App Store",
+        "Marketplace listing",
+        "Other review platform"
+      ]
+    },
+    {
+      "key": "reviewText",
+      "label": "Customer review",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "Paste the complete customer review here.",
+      "hint": "Include the original wording so the response can acknowledge specific details.",
+      "help": {
+        "what": "Provide the customer review for this review response.",
+        "why": "The review itself is the primary source for sentiment, concerns, and relevant details.",
+        "example": "Good example: The hygienist was kind, but I waited 40 minutes past my appointment time.",
+        "avoid": "Avoid summarizing the review from memory, omitting key complaints, or adding facts the reviewer did not write."
+      },
+      "maxLength": 4000,
+      "fullWidth": true
+    },
+    {
+      "key": "reviewSentiment",
+      "label": "Review sentiment",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": true,
+      "placeholder": "Select or use automatic detection",
+      "hint": "Choose a sentiment only when automatic detection may be misleading.",
+      "help": {
+        "what": "Provide the review sentiment for this review response.",
+        "why": "Sentiment materially changes the acknowledgment, apology level, and response structure.",
+        "example": "Good example: Mixed or neutral",
+        "avoid": "Avoid vague placeholders, missing context, unsupported facts, or conflicting goals that would make the response unsafe."
+      },
+      "defaultValue": "Auto-detect",
+      "maxLength": 32,
+      "options": [
+        "Auto-detect",
+        "Very positive",
+        "Positive",
+        "Mixed or neutral",
+        "Negative",
+        "Severe or sensitive"
+      ]
+    },
+    {
+      "key": "responseGoal",
+      "label": "Primary response goal",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": true,
+      "placeholder": "Choose the desired outcome",
+      "hint": "Defines what the response should achieve without requiring marketing terminology.",
+      "help": {
+        "what": "Provide the primary response goal for this review response.",
+        "why": "A thank-you response, factual correction, and complaint recovery require different approaches.",
+        "example": "Good example: Acknowledge and reassure",
+        "avoid": "Avoid vague placeholders, missing context, unsupported facts, or conflicting goals that would make the response unsafe."
+      },
+      "defaultValue": "Auto",
+      "maxLength": 32,
+      "options": [
+        "Auto",
+        "Thank and reinforce",
+        "Acknowledge and reassure",
+        "De-escalate",
+        "Correct misinformation",
+        "Invite private follow-up",
+        "Explain policy calmly"
+      ]
+    },
+    {
+      "key": "responseVisibility",
+      "label": "Response destination",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": false,
+      "placeholder": "Choose where the response will appear",
+      "hint": "Select whether the output is public, private, or includes both versions.",
+      "help": {
+        "what": "Optional context for the response destination field.",
+        "why": "Public and private responses require different privacy and detail levels.",
+        "example": "Good example: Public reply",
+        "avoid": "Avoid guessed facts, unsupported promises, private customer data, accusations, fake urgency, or wording that pressures review changes."
+      },
+      "defaultValue": "Public reply",
+      "maxLength": 24,
+      "options": [
+        "Public reply",
+        "Private response",
+        "Both"
+      ]
+    },
+    {
+      "key": "verifiedFacts",
+      "label": "Verified facts",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Add confirmed facts, records, dates, actions, or relevant context.",
+      "hint": "Only include information the business can safely and accurately state.",
+      "help": {
+        "what": "Optional context for the verified facts field.",
+        "why": "Verified facts are necessary when clarifying events or correcting misinformation.",
+        "example": "Good example: The appointment ran late because an emergency visit extended the previous slot.",
+        "avoid": "Avoid assumptions, internal guesses, unsupported records-checked claims, or private details that should not appear publicly."
+      },
+      "maxLength": 2000,
+      "fullWidth": true
+    },
+    {
+      "key": "reviewerName",
+      "label": "Reviewer name",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": false,
+      "placeholder": "Example: Maria",
+      "hint": "Used only when a personal greeting feels natural and privacy-safe.",
+      "help": {
+        "what": "Optional context for the reviewer name field.",
+        "why": "A supplied name can make the response more personal without requiring it.",
+        "example": "Good example: Maria",
+        "avoid": "Avoid guessed facts, unsupported promises, private customer data, accusations, fake urgency, or wording that pressures review changes."
+      },
+      "maxLength": 120
+    },
+    {
+      "key": "outputLanguage",
+      "label": "Output language",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": true,
+      "placeholder": "Example: English, German, Ukrainian",
+      "hint": "Sets the language of the complete response package.",
+      "help": {
+        "what": "Provide the output language for this review response.",
+        "why": "The response language cannot always be reliably inferred from the review.",
+        "example": "Good example: English",
+        "avoid": "Avoid vague placeholders, missing context, unsupported facts, or conflicting goals that would make the response unsafe."
+      },
+      "defaultValue": "English",
+      "maxLength": 80
+    },
+    {
+      "key": "issueCategory",
+      "label": "Issue category",
+      "group": "review_context_resolution",
+      "groupTitle": "Review Context & Resolution",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select the closest category",
+      "hint": "Helps the model emphasize the right concern and apply appropriate caution.",
+      "help": {
+        "what": "Optional context for the issue category field.",
+        "why": "Different complaint categories require different acknowledgment and risk handling.",
+        "example": "Good example: Service experience",
+        "avoid": "Avoid guessed facts, unsupported promises, private customer data, accusations, fake urgency, or wording that pressures review changes."
+      },
+      "defaultValue": "Auto",
+      "maxLength": 40,
+      "options": [
+        "Auto",
+        "General praise",
+        "Product quality",
+        "Service experience",
+        "Delivery or order",
+        "Billing or refund",
+        "Technical issue",
+        "Staff conduct",
+        "Policy dispute",
+        "Safety or high-stakes"
+      ]
+    },
+    {
+      "key": "caseStatus",
+      "label": "Current case status",
+      "group": "review_context_resolution",
+      "groupTitle": "Review Context & Resolution",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select the current status",
+      "hint": "Prevents the response from implying progress or resolution that has not occurred.",
+      "help": {
+        "what": "Optional context for the current case status field.",
+        "why": "Case status determines which operational statements can be made truthfully.",
+        "example": "Good example: Investigating",
+        "avoid": "Avoid guessed facts, unsupported promises, private customer data, accusations, fake urgency, or wording that pressures review changes."
+      },
+      "defaultValue": "Not specified",
+      "maxLength": 32,
+      "options": [
+        "Not specified",
+        "No action needed",
+        "Investigating",
+        "In progress",
+        "Resolved",
+        "Unable to verify"
+      ]
+    },
+    {
+      "key": "approvedResolutionDetails",
+      "label": "Approved resolution details",
+      "group": "review_context_resolution",
+      "groupTitle": "Review Context & Resolution",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Describe what was done or what action is currently approved.",
+      "hint": "Add only resolution details that may be communicated to the reviewer.",
+      "help": {
+        "what": "Optional context for the approved resolution details field.",
+        "why": "It prevents the model from inventing refunds, replacements, investigations, or outcomes.",
+        "example": "Good example: The office manager may review the scheduling issue and follow up privately.",
+        "avoid": "Avoid invented refunds, replacements, investigations, callbacks, deadlines, compensation, or outcomes."
+      },
+      "maxLength": 1500,
+      "showWhen": {
+        "key": "caseStatus",
+        "equals": [
+          "In progress",
+          "Resolved"
+        ]
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "contactDetails",
+      "label": "Private contact method",
+      "group": "review_context_resolution",
+      "groupTitle": "Review Context & Resolution",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Example: Email support@example.com with the order number.",
+      "hint": "Provide the approved channel and any safe instructions for private follow-up.",
+      "help": {
+        "what": "Optional context for the private contact method field.",
+        "why": "The model must not invent contact information or unsupported escalation paths.",
+        "example": "Good example: Email support@example.com with the appointment date and preferred contact method.",
+        "avoid": "Avoid fake email addresses, unsupported escalation routes, public requests for sensitive data, or private details in a public reply."
+      },
+      "maxLength": 500,
+      "showWhen": {
+        "anyOf": [
+          {
+            "key": "responseGoal",
+            "equals": "Invite private follow-up"
+          },
+          {
+            "key": "responseVisibility",
+            "equals": "Private response"
+          },
+          {
+            "key": "responseVisibility",
+            "equals": "Both"
+          },
+          {
+            "key": "caseStatus",
+            "equals": "Investigating"
+          },
+          {
+            "key": "caseStatus",
+            "equals": "In progress"
+          }
+        ]
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "boundariesRestrictions",
+      "label": "Boundaries and restrictions",
+      "group": "review_context_resolution",
+      "groupTitle": "Review Context & Resolution",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Add relevant policies, legal boundaries, or details that must remain private.",
+      "hint": "Combine policy limits, prohibited promises, and sensitive topics in one field.",
+      "help": {
+        "what": "Optional context for the boundaries and restrictions field.",
+        "why": "It gives the model necessary operational limits without creating multiple compliance fields.",
+        "example": "Good example: Do not discuss medical details publicly or promise compensation.",
+        "avoid": "Avoid vague warnings that do not explain what the response must not say or promise."
+      },
+      "maxLength": 1500,
+      "fullWidth": true
+    },
+    {
+      "key": "tone",
+      "label": "Response tone",
+      "group": "brand_tone",
+      "groupTitle": "Brand & Tone",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select a tone",
+      "hint": "Choose a tone only when the automatic professional style is not sufficient.",
+      "help": {
+        "what": "Optional context for the response tone field.",
+        "why": "Tone changes how acknowledgment, apology, and boundaries are expressed.",
+        "example": "Good example: Empathetic and calm",
+        "avoid": "Avoid guessed facts, unsupported promises, private customer data, accusations, fake urgency, or wording that pressures review changes."
+      },
+      "defaultValue": "Auto",
+      "maxLength": 40,
+      "options": [
+        "Auto",
+        "Warm and appreciative",
+        "Professional and neutral",
+        "Empathetic and calm",
+        "Friendly and concise",
+        "Formal",
+        "Firm but respectful",
+        "Apologetic without liability"
+      ]
+    },
+    {
+      "key": "brandVoice",
+      "label": "Brand voice",
+      "group": "brand_tone",
+      "groupTitle": "Brand & Tone",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Example: Friendly, practical, calm, and never overly corporate.",
+      "hint": "Describe only the voice qualities that should meaningfully affect the response.",
+      "help": {
+        "what": "Optional context for the brand voice field.",
+        "why": "It allows the response to sound consistent with the business rather than generic.",
+        "example": "Good example: Friendly, practical, calm, and never overly corporate.",
+        "avoid": "Avoid guessed facts, unsupported promises, private customer data, accusations, fake urgency, or wording that pressures review changes."
+      },
+      "maxLength": 600,
+      "fullWidth": true
+    },
+    {
+      "key": "signOff",
+      "label": "Preferred sign-off",
+      "group": "brand_tone",
+      "groupTitle": "Brand & Tone",
+      "type": "text",
+      "required": false,
+      "placeholder": "Example: The Northside Support Team",
+      "hint": "Leave blank when the platform does not require a closing signature.",
+      "help": {
+        "what": "Optional context for the preferred sign-off field.",
+        "why": "Some businesses require a consistent team or representative signature.",
+        "example": "Good example: The Northside Support Team",
+        "avoid": "Avoid guessed facts, unsupported promises, private customer data, accusations, fake urgency, or wording that pressures review changes."
+      },
+      "maxLength": 120
+    },
+    {
+      "key": "wordsToAvoid",
+      "label": "Words or phrases to avoid",
+      "group": "brand_tone",
+      "groupTitle": "Brand & Tone",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Example: valued customer, inconvenience caused, company policy",
+      "hint": "List wording that conflicts with the brand or situation.",
+      "help": {
+        "what": "Optional context for the words or phrases to avoid field.",
+        "why": "Specific prohibited wording cannot always be inferred from general tone instructions.",
+        "example": "Good example: valued customer, inconvenience caused, company policy",
+        "avoid": "Avoid listing every disliked style preference when only a few phrases are truly prohibited."
+      },
+      "maxLength": 500,
+      "fullWidth": true
+    },
+    {
+      "key": "responseLength",
+      "label": "Response length",
+      "group": "output_settings",
+      "groupTitle": "Output Settings",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select a preferred length",
+      "hint": "Controls brevity while allowing the model to preserve essential information.",
+      "help": {
+        "what": "Optional context for the response length field.",
+        "why": "Businesses may need anything from a one-sentence acknowledgment to a fuller recovery response.",
+        "example": "Good example: Short",
+        "avoid": "Avoid guessed facts, unsupported promises, private customer data, accusations, fake urgency, or wording that pressures review changes."
+      },
+      "defaultValue": "Platform-appropriate auto",
+      "maxLength": 32,
+      "options": [
+        "Platform-appropriate auto",
+        "Very short",
+        "Short",
+        "Standard"
+      ]
+    },
+    {
+      "key": "variantCount",
+      "label": "Number of variants",
+      "group": "output_settings",
+      "groupTitle": "Output Settings",
+      "type": "number",
+      "required": false,
+      "placeholder": "1",
+      "hint": "Generate one final response or up to three meaningfully different versions.",
+      "help": {
+        "what": "Optional context for the number of variants field.",
+        "why": "Some users want a final answer, while others need several phrasing options for approval.",
+        "example": "Good example: 2",
+        "avoid": "Avoid guessed facts, unsupported promises, private customer data, accusations, fake urgency, or wording that pressures review changes."
+      },
+      "defaultValue": "1",
+      "min": 1,
+      "max": 3
+    },
+    {
+      "key": "includeInternalNote",
+      "label": "Include internal risk note",
+      "group": "output_settings",
+      "groupTitle": "Output Settings",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select whether to include a private note",
+      "hint": "Adds a private note about missing facts, privacy risks, or escalation needs.",
+      "help": {
+        "what": "Optional context for the include internal risk note field.",
+        "why": "Sensitive reviews may require a concise warning without placing internal analysis in the public reply.",
+        "example": "Good example: On",
+        "avoid": "Avoid guessed facts, unsupported promises, private customer data, accusations, fake urgency, or wording that pressures review changes."
+      },
+      "defaultValue": "Off",
+      "options": [
+        "On",
+        "Off"
+      ]
+    }
+  ]
+}

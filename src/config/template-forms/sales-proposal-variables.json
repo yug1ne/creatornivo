@@ -1,0 +1,889 @@
+{
+  "slug": "sales-proposal",
+  "title": "Sales Proposal",
+  "fieldCount": 42,
+  "requiredKeys": [
+    "providerName",
+    "clientName",
+    "offerName",
+    "offerOverview",
+    "clientSituation",
+    "clientChallenges",
+    "desiredOutcomes",
+    "decisionAudience",
+    "outputLanguage"
+  ],
+  "groups": [
+    {
+      "id": "essentials",
+      "title": "Essentials",
+      "description": "Provider, client, offer, proposal context, client needs, decision audience, goal, next step, language, and length.",
+      "defaultOpen": true
+    },
+    {
+      "id": "client_strategy",
+      "title": "Client Strategy",
+      "description": "Relationship stage, market context, decision criteria, stakeholders, positioning, alternatives, and objections.",
+      "defaultOpen": false
+    },
+    {
+      "id": "scope_delivery",
+      "title": "Scope & Delivery",
+      "description": "Deliverables, method, phases, timeline, start date, client responsibilities, assumptions, and exclusions.",
+      "defaultOpen": false
+    },
+    {
+      "id": "pricing_commercial_terms",
+      "title": "Pricing & Commercial Terms",
+      "description": "Optional pricing model, prices, currency, payment terms, add-ons, validity, and commercial notes.",
+      "defaultOpen": false
+    },
+    {
+      "id": "evidence_brand_output",
+      "title": "Evidence, Brand & Output",
+      "description": "Differentiators, proof, source material, brand voice, tone, proposal features, and final requirements.",
+      "defaultOpen": false
+    }
+  ],
+  "variables": [
+    {
+      "key": "providerName",
+      "label": "Provider or company name",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": true,
+      "placeholder": "Acme Consulting or Jane Smith",
+      "hint": "The business, agency, consultant, or provider submitting the proposal.",
+      "help": {
+        "what": "Provide the provider or company name for this sales proposal.",
+        "why": "The proposal must clearly identify the party offering the solution.",
+        "example": "Good example: Acme Consulting",
+        "avoid": "Avoid vague placeholders, unsupported client knowledge, guaranteed outcomes, or facts not approved for the proposal."
+      },
+      "maxLength": 160
+    },
+    {
+      "key": "clientName",
+      "label": "Client or organization",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": true,
+      "placeholder": "Northstar Retail Group",
+      "hint": "The company, team, or individual receiving the proposal.",
+      "help": {
+        "what": "Provide the client or organization for this sales proposal.",
+        "why": "A sales proposal must be tailored to a specific recipient rather than written generically.",
+        "example": "Good example: Northstar Retail Group",
+        "avoid": "Avoid vague placeholders, unsupported client knowledge, guaranteed outcomes, or facts not approved for the proposal."
+      },
+      "maxLength": 160
+    },
+    {
+      "key": "offerName",
+      "label": "Solution or offer name",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": true,
+      "placeholder": "Customer Support Automation Program",
+      "hint": "Name the service, project, product, package, or solution being proposed.",
+      "help": {
+        "what": "Provide the solution or offer name for this sales proposal.",
+        "why": "The offer name anchors the title, solution description, and scope.",
+        "example": "Good example: Customer Support Automation Program",
+        "avoid": "Avoid vague placeholders, unsupported client knowledge, guaranteed outcomes, or facts not approved for the proposal."
+      },
+      "maxLength": 180
+    },
+    {
+      "key": "offerOverview",
+      "label": "Offer overview",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "Explain what you are proposing, how it works, and what it includes at a high level.",
+      "hint": "Describe the proposed solution without relying on unsupported marketing claims.",
+      "help": {
+        "what": "Provide the offer overview for this sales proposal.",
+        "why": "The model cannot accurately define the proposed solution without the provider’s actual offer details.",
+        "example": "Good example: A six-week implementation that maps support workflows, configures automation, trains the team, and hands over reporting.",
+        "avoid": "Avoid vague placeholders, unsupported client knowledge, guaranteed outcomes, or facts not approved for the proposal."
+      },
+      "maxLength": 1200,
+      "fullWidth": true
+    },
+    {
+      "key": "clientSituation",
+      "label": "Client’s current situation",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "Describe the client’s current process, environment, opportunity, or relevant background.",
+      "hint": "Include only known information and avoid assumptions about the client.",
+      "help": {
+        "what": "Provide the client’s current situation for this sales proposal.",
+        "why": "The proposal must demonstrate an accurate understanding of the client’s starting point.",
+        "example": "Good example: The client handles support through shared inboxes and wants a clearer escalation process before seasonal demand increases.",
+        "avoid": "Avoid inventing client problems, prior conversations, approvals, or internal priorities that were not supplied."
+      },
+      "maxLength": 1500,
+      "fullWidth": true
+    },
+    {
+      "key": "clientChallenges",
+      "label": "Challenges to address",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "List the main problems, constraints, inefficiencies, or risks the proposal should address.",
+      "hint": "Combine related problems instead of listing every minor symptom separately.",
+      "help": {
+        "what": "Provide the challenges to address for this sales proposal.",
+        "why": "The proposal’s argument and scope must connect directly to the client’s actual challenges.",
+        "example": "Good example: Slow response times, inconsistent routing, limited reporting, and manual status updates.",
+        "avoid": "Avoid inventing client problems, prior conversations, approvals, or internal priorities that were not supplied."
+      },
+      "maxLength": 1500,
+      "fullWidth": true
+    },
+    {
+      "key": "desiredOutcomes",
+      "label": "Desired outcomes",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "What should improve, change, or become possible if the project succeeds?",
+      "hint": "Use realistic goals; include measurable targets only when they are approved.",
+      "help": {
+        "what": "Provide the desired outcomes for this sales proposal.",
+        "why": "The proposal must explain the value and intended destination of the engagement.",
+        "example": "Good example: Reduce manual triage, improve visibility into response times, and create a repeatable support workflow.",
+        "avoid": "Avoid guaranteed results, fake ROI, unsupported metrics, or outcomes outside the provider’s control."
+      },
+      "maxLength": 1200,
+      "fullWidth": true
+    },
+    {
+      "key": "decisionAudience",
+      "label": "Decision audience",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "CEO, operations director, procurement team, technical reviewers, or other readers.",
+      "hint": "Describe the people who will review, influence, approve, or use the proposal.",
+      "help": {
+        "what": "Provide the decision audience for this sales proposal.",
+        "why": "Content depth, terminology, evidence, and commercial emphasis depend on the buying audience.",
+        "example": "Good example: COO, head of support, procurement manager, and technical reviewer.",
+        "avoid": "Avoid vague placeholders, unsupported client knowledge, guaranteed outcomes, or facts not approved for the proposal."
+      },
+      "maxLength": 800,
+      "fullWidth": true
+    },
+    {
+      "key": "proposalGoal",
+      "label": "Proposal goal",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select the main goal",
+      "hint": "Choose the primary commercial outcome the proposal should support.",
+      "help": {
+        "what": "Optional context for the proposal goal field.",
+        "why": "Different proposal goals require different emphasis, next steps, and levels of detail.",
+        "example": "Good example: Win approval",
+        "avoid": "Avoid guessed facts, fake urgency, hidden commercial terms, unsupported claims, private data, or manipulative pressure."
+      },
+      "defaultValue": "Win approval",
+      "options": [
+        "Auto",
+        "Win approval",
+        "Secure budget",
+        "Start a pilot",
+        "Replace a provider",
+        "Expand an engagement",
+        "Renew an agreement",
+        "Respond to an RFP"
+      ]
+    },
+    {
+      "key": "primaryNextStep",
+      "label": "Preferred next step",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": false,
+      "placeholder": "Schedule a review call, approve the scope, sign, or start a pilot.",
+      "hint": "Leave as Auto for the model to choose one appropriate low-friction action.",
+      "help": {
+        "what": "Optional context for the preferred next step field.",
+        "why": "A proposal needs one clear and commercially appropriate action for the client.",
+        "example": "Good example: Schedule a proposal review call",
+        "avoid": "Avoid guessed facts, fake urgency, hidden commercial terms, unsupported claims, private data, or manipulative pressure."
+      },
+      "defaultValue": "Auto",
+      "maxLength": 180
+    },
+    {
+      "key": "outputLanguage",
+      "label": "Output language",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": true,
+      "placeholder": "English",
+      "hint": "Enter the language in which the complete proposal should be written.",
+      "help": {
+        "what": "Provide the output language for this sales proposal.",
+        "why": "The language cannot always be inferred from company names or source notes.",
+        "example": "Good example: English",
+        "avoid": "Avoid vague placeholders, unsupported client knowledge, guaranteed outcomes, or facts not approved for the proposal."
+      },
+      "defaultValue": "English",
+      "maxLength": 50
+    },
+    {
+      "key": "proposalLength",
+      "label": "Proposal length",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select the desired depth",
+      "hint": "Standard suits most proposals; Auto chooses the shortest useful length.",
+      "help": {
+        "what": "Optional context for the proposal length field.",
+        "why": "The appropriate depth varies between a simple service offer and a complex multi-phase engagement.",
+        "example": "Good example: Standard",
+        "avoid": "Avoid guessed facts, fake urgency, hidden commercial terms, unsupported claims, private data, or manipulative pressure."
+      },
+      "defaultValue": "Standard",
+      "options": [
+        "Auto",
+        "Brief",
+        "Standard",
+        "Detailed"
+      ]
+    },
+    {
+      "key": "relationshipStage",
+      "label": "Sales relationship stage",
+      "group": "client_strategy",
+      "groupTitle": "Client Strategy",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select the current stage",
+      "hint": "Prevents the proposal from implying conversations or agreements that did not occur.",
+      "help": {
+        "what": "Optional context for the sales relationship stage field.",
+        "why": "A new-prospect proposal should read differently from an RFP, renewal, or post-discovery proposal.",
+        "example": "Good example: After discovery",
+        "avoid": "Avoid guessed facts, fake urgency, hidden commercial terms, unsupported claims, private data, or manipulative pressure."
+      },
+      "defaultValue": "Auto",
+      "options": [
+        "Auto",
+        "New prospect",
+        "After discovery",
+        "Requested proposal",
+        "Formal RFP",
+        "Renewal",
+        "Expansion",
+        "Partnership discussion"
+      ]
+    },
+    {
+      "key": "industryContext",
+      "label": "Industry or market context",
+      "group": "client_strategy",
+      "groupTitle": "Client Strategy",
+      "type": "text",
+      "required": false,
+      "placeholder": "Relevant market conditions, regulations, trends, or operational realities.",
+      "hint": "Add only context that is known and relevant to the decision.",
+      "help": {
+        "what": "Optional context for the industry or market context field.",
+        "why": "Relevant market context can materially affect urgency, positioning, terminology, and risk.",
+        "example": "Good example: Retail support volume increases during Q4 and requires faster escalation handling.",
+        "avoid": "Avoid guessed facts, fake urgency, hidden commercial terms, unsupported claims, private data, or manipulative pressure."
+      },
+      "maxLength": 300
+    },
+    {
+      "key": "decisionCriteria",
+      "label": "Decision criteria",
+      "group": "client_strategy",
+      "groupTitle": "Client Strategy",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Budget, implementation speed, security, expertise, support, scalability, or other criteria.",
+      "hint": "List the factors the client is likely to use when evaluating the proposal.",
+      "help": {
+        "what": "Optional context for the decision criteria field.",
+        "why": "The proposal should make it easy for decision-makers to evaluate the offer against their real criteria.",
+        "example": "Good example: Implementation speed, low disruption, reporting visibility, support quality, and total cost.",
+        "avoid": "Avoid guessed facts, fake urgency, hidden commercial terms, unsupported claims, private data, or manipulative pressure."
+      },
+      "maxLength": 1000,
+      "fullWidth": true
+    },
+    {
+      "key": "stakeholdersAndRoles",
+      "label": "Stakeholders and roles",
+      "group": "client_strategy",
+      "groupTitle": "Client Strategy",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Who approves, evaluates, implements, uses, or funds the proposed work?",
+      "hint": "Include names only when they are appropriate for the client-facing proposal.",
+      "help": {
+        "what": "Optional context for the stakeholders and roles field.",
+        "why": "Different stakeholders may require different evidence, explanations, and implementation details.",
+        "example": "Good example: Head of support owns workflow approval; IT reviews integrations; procurement reviews terms.",
+        "avoid": "Avoid guessed facts, fake urgency, hidden commercial terms, unsupported claims, private data, or manipulative pressure."
+      },
+      "maxLength": 1000,
+      "fullWidth": true
+    },
+    {
+      "key": "positioningPriority",
+      "label": "Primary positioning angle",
+      "group": "client_strategy",
+      "groupTitle": "Client Strategy",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select the main value angle",
+      "hint": "Choose the value dimension that should receive the strongest emphasis.",
+      "help": {
+        "what": "Optional context for the primary positioning angle field.",
+        "why": "A proposal becomes more persuasive when it prioritizes the value dimension most relevant to the client.",
+        "example": "Good example: Risk reduction",
+        "avoid": "Avoid guessed facts, fake urgency, hidden commercial terms, unsupported claims, private data, or manipulative pressure."
+      },
+      "defaultValue": "Auto",
+      "options": [
+        "Auto",
+        "ROI and value",
+        "Speed",
+        "Quality",
+        "Risk reduction",
+        "Expertise",
+        "Flexibility",
+        "Long-term partnership"
+      ]
+    },
+    {
+      "key": "competitorsOrAlternatives",
+      "label": "Alternatives being considered",
+      "group": "client_strategy",
+      "groupTitle": "Client Strategy",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Internal delivery, another provider, delaying the project, or a named alternative.",
+      "hint": "Include only known alternatives; the proposal will avoid unsupported competitor claims.",
+      "help": {
+        "what": "Optional context for the alternatives being considered field.",
+        "why": "The proposal may need to explain relevant trade-offs without attacking competitors.",
+        "example": "Good example: Internal workflow cleanup and one other automation provider.",
+        "avoid": "Avoid unsupported competitor criticism, fake comparisons, or claims that alternatives cannot work."
+      },
+      "maxLength": 1000,
+      "fullWidth": true
+    },
+    {
+      "key": "objectionsAndRisks",
+      "label": "Likely objections or concerns",
+      "group": "client_strategy",
+      "groupTitle": "Client Strategy",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Budget concerns, implementation risk, timing, adoption, security, or internal capacity.",
+      "hint": "List concerns the proposal should address calmly and factually.",
+      "help": {
+        "what": "Optional context for the likely objections or concerns field.",
+        "why": "Known objections materially affect scope explanation, evidence, risk handling, and next steps.",
+        "example": "Good example: Concern about team adoption, migration effort, and unclear ownership after launch.",
+        "avoid": "Avoid guessed facts, fake urgency, hidden commercial terms, unsupported claims, private data, or manipulative pressure."
+      },
+      "maxLength": 1200,
+      "fullWidth": true
+    },
+    {
+      "key": "deliverables",
+      "label": "Deliverables",
+      "group": "scope_delivery",
+      "groupTitle": "Scope & Delivery",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "List the reports, designs, services, systems, sessions, assets, or other outputs.",
+      "hint": "Include quantities and formats only when they are confirmed.",
+      "help": {
+        "what": "Optional context for the deliverables field.",
+        "why": "Clear deliverables reduce uncertainty and define what the client will receive.",
+        "example": "Good example: Workflow map, automation configuration, team training, reporting dashboard, and handover guide.",
+        "avoid": "Avoid invented quantities, service levels, revision rounds, acceptance criteria, or delivery methods."
+      },
+      "maxLength": 2000,
+      "fullWidth": true
+    },
+    {
+      "key": "approachAndMethod",
+      "label": "Approach and method",
+      "group": "scope_delivery",
+      "groupTitle": "Scope & Delivery",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Explain how the work will be performed, managed, reviewed, or validated.",
+      "hint": "Focus on the process details that help the client evaluate delivery confidence.",
+      "help": {
+        "what": "Optional context for the approach and method field.",
+        "why": "The delivery method often differentiates otherwise similar offers.",
+        "example": "Good example: Discovery, configuration, review cycles, pilot testing, training, and handover.",
+        "avoid": "Avoid invented quantities, service levels, revision rounds, acceptance criteria, or delivery methods."
+      },
+      "maxLength": 1500,
+      "fullWidth": true
+    },
+    {
+      "key": "phasesAndMilestones",
+      "label": "Phases and milestones",
+      "group": "scope_delivery",
+      "groupTitle": "Scope & Delivery",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Discovery, planning, implementation, testing, launch, handover, or review stages.",
+      "hint": "Include milestone names, outputs, or approval points when known.",
+      "help": {
+        "what": "Optional context for the phases and milestones field.",
+        "why": "Complex proposals are easier to approve when the work is divided into understandable stages.",
+        "example": "Good example: Week 1 discovery, weeks 2-4 configuration, week 5 pilot, week 6 training and handover.",
+        "avoid": "Avoid guessed facts, fake urgency, hidden commercial terms, unsupported claims, private data, or manipulative pressure."
+      },
+      "maxLength": 1800,
+      "fullWidth": true
+    },
+    {
+      "key": "timeline",
+      "label": "Timeline or duration",
+      "group": "scope_delivery",
+      "groupTitle": "Scope & Delivery",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Eight weeks, phased over Q4, or timing dependent on client approvals.",
+      "hint": "Use ranges or dependencies when exact dates are not confirmed.",
+      "help": {
+        "what": "Optional context for the timeline or duration field.",
+        "why": "Timing is a central evaluation factor in most sales proposals.",
+        "example": "Good example: Six weeks after contract signature and access to required systems.",
+        "avoid": "Avoid guessed facts, fake urgency, hidden commercial terms, unsupported claims, private data, or manipulative pressure."
+      },
+      "maxLength": 1000,
+      "fullWidth": true
+    },
+    {
+      "key": "proposedStartDate",
+      "label": "Proposed start date",
+      "group": "scope_delivery",
+      "groupTitle": "Scope & Delivery",
+      "type": "text",
+      "required": false,
+      "placeholder": "Select a date",
+      "hint": "Leave blank when the start depends on approval, contracting, or availability.",
+      "help": {
+        "what": "Optional context for the proposed start date field.",
+        "why": "A confirmed start date can clarify scheduling without forcing the model to invent one.",
+        "example": "Good example: 2026-09-14",
+        "avoid": "Avoid guessed facts, fake urgency, hidden commercial terms, unsupported claims, private data, or manipulative pressure."
+      },
+      "maxLength": 10
+    },
+    {
+      "key": "clientResponsibilities",
+      "label": "Client responsibilities",
+      "group": "scope_delivery",
+      "groupTitle": "Scope & Delivery",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Access, approvals, source files, data, feedback, staff availability, or decisions.",
+      "hint": "Specify what the client must provide for successful delivery.",
+      "help": {
+        "what": "Optional context for the client responsibilities field.",
+        "why": "Client dependencies can affect schedule, cost, and successful implementation.",
+        "example": "Good example: Provide system access, approve workflows, attend review sessions, and nominate a support owner.",
+        "avoid": "Avoid guessed facts, fake urgency, hidden commercial terms, unsupported claims, private data, or manipulative pressure."
+      },
+      "maxLength": 1200,
+      "fullWidth": true
+    },
+    {
+      "key": "assumptions",
+      "label": "Project assumptions",
+      "group": "scope_delivery",
+      "groupTitle": "Scope & Delivery",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "State conditions on which the scope, timing, or pricing is based.",
+      "hint": "Use assumptions to clarify the offer, not to hide important limitations.",
+      "help": {
+        "what": "Optional context for the project assumptions field.",
+        "why": "Commercial and delivery commitments may depend on specific operating assumptions.",
+        "example": "Good example: Client systems remain available and integration scope stays within the approved support tools.",
+        "avoid": "Avoid guessed facts, fake urgency, hidden commercial terms, unsupported claims, private data, or manipulative pressure."
+      },
+      "maxLength": 1200,
+      "fullWidth": true
+    },
+    {
+      "key": "exclusions",
+      "label": "Out-of-scope items",
+      "group": "scope_delivery",
+      "groupTitle": "Scope & Delivery",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "List work, expenses, licenses, support, or services not included.",
+      "hint": "Include only exclusions that are important for avoiding scope ambiguity.",
+      "help": {
+        "what": "Optional context for the out-of-scope items field.",
+        "why": "Explicit exclusions prevent the proposal from unintentionally promising work that is not included.",
+        "example": "Good example: Custom software development, 24/7 managed support, and third-party license fees.",
+        "avoid": "Avoid guessed facts, fake urgency, hidden commercial terms, unsupported claims, private data, or manipulative pressure."
+      },
+      "maxLength": 1200,
+      "fullWidth": true
+    },
+    {
+      "key": "includePricing",
+      "label": "Include pricing",
+      "group": "pricing_commercial_terms",
+      "groupTitle": "Pricing & Commercial Terms",
+      "type": "select",
+      "required": false,
+      "placeholder": "Not applicable",
+      "hint": "Enable this only when approved pricing or commercial terms should appear.",
+      "help": {
+        "what": "Optional context for the include pricing field.",
+        "why": "Some proposals include full commercial terms, while others intentionally focus on scope and value.",
+        "example": "Good example: On",
+        "avoid": "Avoid guessed facts, fake urgency, hidden commercial terms, unsupported claims, private data, or manipulative pressure."
+      },
+      "defaultValue": "Off",
+      "options": [
+        "Off",
+        "On"
+      ]
+    },
+    {
+      "key": "pricingModel",
+      "label": "Pricing model",
+      "group": "pricing_commercial_terms",
+      "groupTitle": "Pricing & Commercial Terms",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select the pricing structure",
+      "hint": "Choose the commercial model used for the proposed work.",
+      "help": {
+        "what": "Optional context for the pricing model field.",
+        "why": "The pricing structure determines how commercial information should be organized and explained.",
+        "example": "Good example: Fixed fee",
+        "avoid": "Avoid guessed facts, fake urgency, hidden commercial terms, unsupported claims, private data, or manipulative pressure."
+      },
+      "defaultValue": "Auto",
+      "options": [
+        "Auto",
+        "Fixed fee",
+        "Time and materials",
+        "Retainer",
+        "Subscription",
+        "Per unit",
+        "Tiered packages",
+        "Custom or mixed"
+      ],
+      "showWhen": {
+        "key": "includePricing",
+        "equals": "On"
+      }
+    },
+    {
+      "key": "pricingDetails",
+      "label": "Prices and fees",
+      "group": "pricing_commercial_terms",
+      "groupTitle": "Pricing & Commercial Terms",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "List approved prices, rates, package amounts, billing periods, or fee ranges.",
+      "hint": "Include exact figures only; the model will not invent or estimate missing prices.",
+      "help": {
+        "what": "Optional context for the prices and fees field.",
+        "why": "Pricing is factual commercial information that must come directly from the provider.",
+        "example": "Good example: Implementation package: $12,000 fixed fee.",
+        "avoid": "Avoid estimated prices, hidden fees, invented discounts, missing currency, or unclear tax treatment."
+      },
+      "maxLength": 2000,
+      "showWhen": {
+        "key": "includePricing",
+        "equals": "On"
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "currencyAndTax",
+      "label": "Currency and tax treatment",
+      "group": "pricing_commercial_terms",
+      "groupTitle": "Pricing & Commercial Terms",
+      "type": "text",
+      "required": false,
+      "placeholder": "EUR excluding VAT, USD including applicable taxes, or similar wording.",
+      "hint": "Clarify currency and whether taxes are included, excluded, or handled separately.",
+      "help": {
+        "what": "Optional context for the currency and tax treatment field.",
+        "why": "Prices can be misleading or commercially incomplete without currency and tax treatment.",
+        "example": "Good example: USD excluding applicable taxes",
+        "avoid": "Avoid estimated prices, hidden fees, invented discounts, missing currency, or unclear tax treatment."
+      },
+      "maxLength": 300,
+      "showWhen": {
+        "key": "includePricing",
+        "equals": "On"
+      }
+    },
+    {
+      "key": "paymentTerms",
+      "label": "Payment terms",
+      "group": "pricing_commercial_terms",
+      "groupTitle": "Pricing & Commercial Terms",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Deposit, milestone billing, monthly invoicing, due dates, or payment schedule.",
+      "hint": "Enter only approved payment conditions.",
+      "help": {
+        "what": "Optional context for the payment terms field.",
+        "why": "Payment timing and structure can materially affect approval and contract expectations.",
+        "example": "Good example: 50% deposit, 50% on handover.",
+        "avoid": "Avoid guessed facts, fake urgency, hidden commercial terms, unsupported claims, private data, or manipulative pressure."
+      },
+      "maxLength": 900,
+      "showWhen": {
+        "key": "includePricing",
+        "equals": "On"
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "optionalAddOns",
+      "label": "Optional add-ons",
+      "group": "pricing_commercial_terms",
+      "groupTitle": "Pricing & Commercial Terms",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "List optional upgrades, extra services, support plans, or additional packages.",
+      "hint": "Separate optional items clearly from the required proposal price.",
+      "help": {
+        "what": "Optional context for the optional add-ons field.",
+        "why": "Optional items require clear separation so the client can distinguish base scope from upgrades.",
+        "example": "Good example: Monthly reporting review, additional training sessions, and extended support.",
+        "avoid": "Avoid guessed facts, fake urgency, hidden commercial terms, unsupported claims, private data, or manipulative pressure."
+      },
+      "maxLength": 1200,
+      "showWhen": {
+        "key": "includePricing",
+        "equals": "On"
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "proposalValidUntil",
+      "label": "Proposal valid until",
+      "group": "pricing_commercial_terms",
+      "groupTitle": "Pricing & Commercial Terms",
+      "type": "text",
+      "required": false,
+      "placeholder": "Select a date",
+      "hint": "Use only when the pricing or commercial terms have a genuine validity period.",
+      "help": {
+        "what": "Optional context for the proposal valid until field.",
+        "why": "A real validity date may be commercially important, but must never be invented for urgency.",
+        "example": "Good example: 2026-10-01",
+        "avoid": "Avoid artificial scarcity, fake urgency, or arbitrary validity dates used only to pressure the client."
+      },
+      "maxLength": 10,
+      "showWhen": {
+        "key": "includePricing",
+        "equals": "On"
+      }
+    },
+    {
+      "key": "commercialNotes",
+      "label": "Other commercial terms",
+      "group": "pricing_commercial_terms",
+      "groupTitle": "Pricing & Commercial Terms",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Expenses, travel, licensing, renewal, cancellation, or procurement notes.",
+      "hint": "Add important commercial conditions not covered by pricing or payment fields.",
+      "help": {
+        "what": "Optional context for the other commercial terms field.",
+        "why": "Some offers contain material commercial conditions that do not fit the main pricing structure.",
+        "example": "Good example: Third-party software licenses are billed directly by the vendor.",
+        "avoid": "Avoid guessed facts, fake urgency, hidden commercial terms, unsupported claims, private data, or manipulative pressure."
+      },
+      "maxLength": 1200,
+      "showWhen": {
+        "key": "includePricing",
+        "equals": "On"
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "differentiators",
+      "label": "Relevant differentiators",
+      "group": "evidence_brand_output",
+      "groupTitle": "Evidence, Brand & Output",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Explain what makes the offer, team, process, or experience especially suitable.",
+      "hint": "Use specific, supportable differences rather than generic superiority claims.",
+      "help": {
+        "what": "Optional context for the relevant differentiators field.",
+        "why": "Differentiators help explain why the proposed provider is a suitable choice.",
+        "example": "Good example: Prior experience implementing support workflows for retail operations teams.",
+        "avoid": "Avoid guessed facts, fake urgency, hidden commercial terms, unsupported claims, private data, or manipulative pressure."
+      },
+      "maxLength": 1200,
+      "fullWidth": true
+    },
+    {
+      "key": "proofAndCaseExamples",
+      "label": "Approved proof and examples",
+      "group": "evidence_brand_output",
+      "groupTitle": "Evidence, Brand & Output",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Approved results, case examples, testimonials, credentials, or relevant experience.",
+      "hint": "Include only material that may be quoted or summarized in the proposal.",
+      "help": {
+        "what": "Optional context for the approved proof and examples field.",
+        "why": "Credibility evidence must be supplied and approved rather than fabricated by the model.",
+        "example": "Good example: Approved case example: reduced manual routing steps for a regional retailer.",
+        "avoid": "Avoid fabricated testimonials, case studies, client names, metrics, ratings, awards, or credentials."
+      },
+      "maxLength": 2000,
+      "fullWidth": true
+    },
+    {
+      "key": "referencesAndSources",
+      "label": "References or source material",
+      "group": "evidence_brand_output",
+      "groupTitle": "Evidence, Brand & Output",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Paste source facts, links, internal notes, RFP requirements, or approved supporting material.",
+      "hint": "The model will use this material without claiming independent verification.",
+      "help": {
+        "what": "Optional context for the references or source material field.",
+        "why": "Source material improves factual accuracy and helps satisfy formal proposal requirements.",
+        "example": "Good example: Discovery notes, support workflow audit, and approved pricing sheet.",
+        "avoid": "Avoid guessed facts, fake urgency, hidden commercial terms, unsupported claims, private data, or manipulative pressure."
+      },
+      "maxLength": 4000,
+      "fullWidth": true
+    },
+    {
+      "key": "brandVoice",
+      "label": "Brand voice",
+      "group": "evidence_brand_output",
+      "groupTitle": "Evidence, Brand & Output",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Professional and practical, premium and concise, friendly and collaborative, or similar.",
+      "hint": "Describe the established voice rather than general writing-quality rules.",
+      "help": {
+        "what": "Optional context for the brand voice field.",
+        "why": "The proposal should sound consistent with the provider’s existing communication style.",
+        "example": "Good example: Professional, practical, collaborative, and concise.",
+        "avoid": "Avoid guessed facts, fake urgency, hidden commercial terms, unsupported claims, private data, or manipulative pressure."
+      },
+      "maxLength": 800,
+      "fullWidth": true
+    },
+    {
+      "key": "tone",
+      "label": "Proposal tone",
+      "group": "evidence_brand_output",
+      "groupTitle": "Evidence, Brand & Output",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select the tone",
+      "hint": "Choose the overall communication style appropriate for the client and decision.",
+      "help": {
+        "what": "Optional context for the proposal tone field.",
+        "why": "Tone materially affects how the same commercial proposal is perceived by different audiences.",
+        "example": "Good example: Clear and consultative",
+        "avoid": "Avoid guessed facts, fake urgency, hidden commercial terms, unsupported claims, private data, or manipulative pressure."
+      },
+      "defaultValue": "Clear and consultative",
+      "options": [
+        "Auto",
+        "Clear and consultative",
+        "Confident",
+        "Formal",
+        "Warm",
+        "Technical",
+        "Executive",
+        "Direct"
+      ]
+    },
+    {
+      "key": "outputFeatures",
+      "label": "Optional proposal features",
+      "group": "evidence_brand_output",
+      "groupTitle": "Evidence, Brand & Output",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Select any additional components",
+      "hint": "Choose only the structural components useful for this proposal.",
+      "help": {
+        "what": "Optional context for the optional proposal features field.",
+        "why": "Proposal components should reflect the complexity and delivery context rather than follow one fixed document structure.",
+        "example": "Good example: Executive snapshot, Implementation table, Risk table, Acceptance block, Email cover note",
+        "avoid": "Avoid guessed facts, fake urgency, hidden commercial terms, unsupported claims, private data, or manipulative pressure."
+      },
+      "defaultValue": "Executive snapshot, Acceptance block",
+      "options": [
+        "Cover page",
+        "Contents",
+        "Executive snapshot",
+        "Implementation table",
+        "Risk table",
+        "Acceptance block",
+        "Email cover note"
+      ],
+      "fullWidth": true
+    },
+    {
+      "key": "additionalRequirements",
+      "label": "Additional requirements",
+      "group": "evidence_brand_output",
+      "groupTitle": "Evidence, Brand & Output",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Add required sections, wording restrictions, confidentiality notes, or other instructions.",
+      "hint": "Use this for important requirements not already covered by another field.",
+      "help": {
+        "what": "Optional context for the additional requirements field.",
+        "why": "A single controlled field accommodates genuine exceptions without creating several miscellaneous inputs.",
+        "example": "Good example: Avoid guaranteed ROI claims and mark any missing integration details for review.",
+        "avoid": "Avoid guessed facts, fake urgency, hidden commercial terms, unsupported claims, private data, or manipulative pressure."
+      },
+      "maxLength": 2000,
+      "fullWidth": true
+    }
+  ]
+}

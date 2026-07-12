@@ -1,0 +1,553 @@
+{
+  "slug": "in-app-ux-copy",
+  "title": "In-App UX Copy",
+  "fieldCount": 24,
+  "requiredKeys": [
+    "productOrFeature",
+    "interfaceContext",
+    "workflowGoal",
+    "targetUsers",
+    "uxElements",
+    "keyFacts"
+  ],
+  "groups": [
+    {
+      "id": "essentials",
+      "title": "Essentials",
+      "description": "Product context, interface context, user goal, target users, requested UX elements, required facts, task mode, tone, language, and existing copy when relevant.",
+      "defaultOpen": true
+    },
+    {
+      "id": "flow_behavior",
+      "title": "Flow & Behavior",
+      "description": "User state, next action, supported recovery options, and device or flow variations.",
+      "defaultOpen": false
+    },
+    {
+      "id": "voice_accessibility",
+      "title": "Voice & Accessibility",
+      "description": "Brand voice, required terminology, reading level, and accessibility priorities.",
+      "defaultOpen": false
+    },
+    {
+      "id": "constraints_delivery",
+      "title": "Constraints & Delivery",
+      "description": "Length preference, variant count, prohibited content, sensitive-domain controls, compliance notes, and remaining context.",
+      "defaultOpen": false
+    }
+  ],
+  "variables": [
+    {
+      "key": "productOrFeature",
+      "label": "Product or feature",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": true,
+      "placeholder": "Example: Team calendar, payment checkout, password reset",
+      "hint": "Name the product, feature, or area where the copy will appear.",
+      "help": {
+        "what": "Provide the product or feature for this in-app UX copy request.",
+        "why": "The model needs to understand what the interface belongs to and what terminology is appropriate.",
+        "example": "Good example: Team calendar, payment checkout, password reset",
+        "avoid": "Avoid vague product names, internal project codenames, or unsupported feature claims."
+      },
+      "maxLength": 160
+    },
+    {
+      "key": "interfaceContext",
+      "label": "Screen or interface context",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "Describe the screen, modal, form, notification, or step in the workflow.",
+      "hint": "Explain where the text appears and what is happening at that moment.",
+      "help": {
+        "what": "Provide the screen or interface context for this in-app UX copy request.",
+        "why": "UX copy depends heavily on the exact screen, interaction, and surrounding interface.",
+        "example": "Good example: Password reset form after the user opens a recovery link.",
+        "avoid": "Avoid describing the whole product when the copy is needed for one specific screen, state, or component."
+      },
+      "maxLength": 1000,
+      "fullWidth": true
+    },
+    {
+      "key": "workflowGoal",
+      "label": "User goal",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": true,
+      "placeholder": "Example: Complete payment, recover access, invite a teammate",
+      "hint": "State what the user is trying to accomplish in this flow.",
+      "help": {
+        "what": "Provide the user goal for this in-app UX copy request.",
+        "why": "The intended user outcome determines the wording, hierarchy, and primary action.",
+        "example": "Good example: Recover access to the account",
+        "avoid": "Avoid vague placeholders, unsupported behavior, multiple competing workflows, or product claims that are not confirmed."
+      },
+      "maxLength": 200
+    },
+    {
+      "key": "targetUsers",
+      "label": "Target users",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "Example: First-time users with limited technical experience",
+      "hint": "Describe the people who will read and act on this copy.",
+      "help": {
+        "what": "Provide the target users for this in-app UX copy request.",
+        "why": "Audience knowledge affects vocabulary, guidance depth, assumptions, and reading complexity.",
+        "example": "Good example: First-time users with limited technical experience",
+        "avoid": "Avoid vague placeholders, unsupported behavior, multiple competing workflows, or product claims that are not confirmed."
+      },
+      "maxLength": 600,
+      "fullWidth": true
+    },
+    {
+      "key": "uxElements",
+      "label": "UX copy needed",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "Buttons and links, validation messages, error messages",
+      "hint": "List all interface elements you need.",
+      "help": {
+        "what": "Provide the ux copy needed for this in-app UX copy request.",
+        "why": "Different interface elements require different structures, lengths, and information priorities.",
+        "example": "Good example: Buttons and links, validation messages, success states",
+        "avoid": "Avoid asking for unrelated interface elements that are not part of the current screen or workflow."
+      },
+      "maxLength": 800,
+      "options": [
+        "Buttons and links",
+        "Field labels",
+        "Helper text",
+        "Input placeholders",
+        "Onboarding",
+        "Empty states",
+        "Validation messages",
+        "Error messages",
+        "Success states",
+        "System notifications"
+      ],
+      "fullWidth": true
+    },
+    {
+      "key": "keyFacts",
+      "label": "Required facts and details",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "Include product rules, causes, limitations, requirements, and confirmed details.",
+      "hint": "Provide only factual information that the copy may safely communicate.",
+      "help": {
+        "what": "Provide the required facts and details for this in-app UX copy request.",
+        "why": "The model must not invent product behavior, causes, requirements, or resolution details.",
+        "example": "Good example: The reset link expires after 30 minutes. Passwords must be at least 12 characters.",
+        "avoid": "Avoid invented product behavior, unsupported causes, unknown recovery paths, prices, deadlines, or guarantees."
+      },
+      "maxLength": 1500,
+      "fullWidth": true
+    },
+    {
+      "key": "taskMode",
+      "label": "Copy task",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": false,
+      "placeholder": "Choose the type of work.",
+      "hint": "Select whether to create, rewrite, or audit the interface copy.",
+      "help": {
+        "what": "Optional context for the copy task field.",
+        "why": "Creating new microcopy and evaluating existing interface text require different workflows.",
+        "example": "Good example: Create new copy",
+        "avoid": "Avoid guessed facts, fake urgency, manipulative wording, hidden consequences, sensitive private data, or unsupported compliance claims."
+      },
+      "defaultValue": "Create new copy",
+      "options": [
+        "Create new copy",
+        "Rewrite existing copy",
+        "Audit and improve copy"
+      ]
+    },
+    {
+      "key": "tone",
+      "label": "Tone",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": false,
+      "placeholder": "Choose the preferred tone.",
+      "hint": "The tone will be adapted to the situation and severity of the message.",
+      "help": {
+        "what": "Optional context for the tone field.",
+        "why": "Tone materially affects onboarding, errors, warnings, and confirmation messages.",
+        "example": "Good example: Clear and supportive",
+        "avoid": "Avoid guessed facts, fake urgency, manipulative wording, hidden consequences, sensitive private data, or unsupported compliance claims."
+      },
+      "defaultValue": "Clear and supportive",
+      "options": [
+        "Clear and supportive",
+        "Neutral and direct",
+        "Friendly and conversational",
+        "Calm and reassuring",
+        "Professional",
+        "Concise and technical",
+        "Auto"
+      ]
+    },
+    {
+      "key": "outputLanguage",
+      "label": "Output language",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": false,
+      "placeholder": "Example: English, Spanish, Ukrainian",
+      "hint": "Specify the language for all generated interface copy.",
+      "help": {
+        "what": "Optional context for the output language field.",
+        "why": "Interface length, grammar, terminology, and formality vary by language.",
+        "example": "Good example: English",
+        "avoid": "Avoid guessed facts, fake urgency, manipulative wording, hidden consequences, sensitive private data, or unsupported compliance claims."
+      },
+      "defaultValue": "English",
+      "maxLength": 80
+    },
+    {
+      "key": "currentCopy",
+      "label": "Current interface copy",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Paste the existing labels, messages, or interface text.",
+      "hint": "Include the copy that should be rewritten or reviewed.",
+      "help": {
+        "what": "Optional context for the current interface copy field.",
+        "why": "The existing wording is necessary when the user requests a rewrite or copy audit.",
+        "example": "Good example: Reset failed. Try again.",
+        "avoid": "Avoid pasting confidential data, passwords, tokens, full payment details, or private user information."
+      },
+      "maxLength": 4000,
+      "showWhen": {
+        "key": "taskMode",
+        "equals": [
+          "Rewrite existing copy",
+          "Audit and improve copy"
+        ]
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "userState",
+      "label": "User state",
+      "group": "flow_behavior",
+      "groupTitle": "Flow & Behavior",
+      "type": "select",
+      "required": false,
+      "placeholder": "Choose the user's likely state.",
+      "hint": "Helps adjust clarity, reassurance, urgency, and information density.",
+      "help": {
+        "what": "Optional context for the user state field.",
+        "why": "The user's state changes how much explanation, reassurance, or caution is appropriate.",
+        "example": "Good example: Blocked by an error",
+        "avoid": "Avoid guessed facts, fake urgency, manipulative wording, hidden consequences, sensitive private data, or unsupported compliance claims."
+      },
+      "defaultValue": "Auto",
+      "options": [
+        "Auto",
+        "First-time user",
+        "Returning user",
+        "Confused or uncertain",
+        "Blocked by an error",
+        "Completing a risky action",
+        "Successful completion",
+        "Time-sensitive situation"
+      ]
+    },
+    {
+      "key": "nextAction",
+      "label": "Expected next action",
+      "group": "flow_behavior",
+      "groupTitle": "Flow & Behavior",
+      "type": "text",
+      "required": false,
+      "placeholder": "Example: Retry payment, open settings, continue to dashboard",
+      "hint": "Describe the safest or most useful action after reading the copy.",
+      "help": {
+        "what": "Optional context for the expected next action field.",
+        "why": "Good UX copy should guide the user toward a clear and accurate next step.",
+        "example": "Good example: Request a new password reset link",
+        "avoid": "Avoid guessed facts, fake urgency, manipulative wording, hidden consequences, sensitive private data, or unsupported compliance claims."
+      },
+      "defaultValue": "Auto",
+      "maxLength": 240
+    },
+    {
+      "key": "errorRecoveryAction",
+      "label": "Error recovery options",
+      "group": "flow_behavior",
+      "groupTitle": "Flow & Behavior",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Explain what the user can do to fix, retry, or get help.",
+      "hint": "Include only recovery actions that the product actually supports.",
+      "help": {
+        "what": "Optional context for the error recovery options field.",
+        "why": "Error copy should offer a real recovery path rather than a vague failure statement.",
+        "example": "Good example: Users can request a new link or contact support if they no longer have access to the email address.",
+        "avoid": "Avoid recovery steps the product does not actually support, such as retry, contact support, or refresh, unless confirmed."
+      },
+      "maxLength": 800,
+      "showWhen": {
+        "key": "uxElements",
+        "contains": [
+          "Validation messages",
+          "Error messages"
+        ]
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "variantContext",
+      "label": "Device or flow variations",
+      "group": "flow_behavior",
+      "groupTitle": "Flow & Behavior",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Example: Mobile modal, desktop sidebar, guest user, paid-plan variation",
+      "hint": "Describe contexts that require meaningfully different wording.",
+      "help": {
+        "what": "Optional context for the device or flow variations field.",
+        "why": "The same action may require different copy across devices, account states, or workflow branches.",
+        "example": "Good example: Mobile modal, desktop full-page form, guest user",
+        "avoid": "Avoid guessed facts, fake urgency, manipulative wording, hidden consequences, sensitive private data, or unsupported compliance claims."
+      },
+      "maxLength": 800,
+      "fullWidth": true
+    },
+    {
+      "key": "brandVoice",
+      "label": "Brand voice",
+      "group": "voice_accessibility",
+      "groupTitle": "Voice & Accessibility",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Describe the brand personality or provide a short voice example.",
+      "hint": "Include useful voice traits, not general writing instructions.",
+      "help": {
+        "what": "Optional context for the brand voice field.",
+        "why": "Established products may need interface copy to match an existing verbal identity.",
+        "example": "Good example: Direct, calm, practical, and never overly enthusiastic",
+        "avoid": "Avoid guessed facts, fake urgency, manipulative wording, hidden consequences, sensitive private data, or unsupported compliance claims."
+      },
+      "maxLength": 800,
+      "fullWidth": true
+    },
+    {
+      "key": "terminology",
+      "label": "Required terminology",
+      "group": "voice_accessibility",
+      "groupTitle": "Voice & Accessibility",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "List preferred terms, UI names, capitalization, or words to replace.",
+      "hint": "Use this for product-specific labels and terminology consistency.",
+      "help": {
+        "what": "Optional context for the required terminology field.",
+        "why": "Consistent interface terminology prevents confusion and implementation mismatches.",
+        "example": "Good example: Use sign in, not log in. Use workspace, not account group.",
+        "avoid": "Avoid guessed facts, fake urgency, manipulative wording, hidden consequences, sensitive private data, or unsupported compliance claims."
+      },
+      "maxLength": 1000,
+      "fullWidth": true
+    },
+    {
+      "key": "readingLevel",
+      "label": "Reading level",
+      "group": "voice_accessibility",
+      "groupTitle": "Voice & Accessibility",
+      "type": "select",
+      "required": false,
+      "placeholder": "Choose the intended reading level.",
+      "hint": "Controls vocabulary and sentence complexity without oversimplifying meaning.",
+      "help": {
+        "what": "Optional context for the reading level field.",
+        "why": "Some products require simplified language while others use established technical terminology.",
+        "example": "Good example: General audience",
+        "avoid": "Avoid guessed facts, fake urgency, manipulative wording, hidden consequences, sensitive private data, or unsupported compliance claims."
+      },
+      "defaultValue": "General audience",
+      "options": [
+        "General audience",
+        "Very simple",
+        "Professional",
+        "Technical users",
+        "Auto"
+      ]
+    },
+    {
+      "key": "accessibilityNeeds",
+      "label": "Accessibility priorities",
+      "group": "voice_accessibility",
+      "groupTitle": "Voice & Accessibility",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Clear language, screen-reader clarity, avoid color-only references",
+      "hint": "List relevant accessibility priorities.",
+      "help": {
+        "what": "Optional context for the accessibility priorities field.",
+        "why": "These requirements affect labels, instructions, error descriptions, and references to visual controls.",
+        "example": "Good example: Clear language, screen-reader clarity",
+        "avoid": "Avoid claiming WCAG, legal, or formal accessibility compliance unless it has been separately verified."
+      },
+      "defaultValue": "Clear language",
+      "maxLength": 500,
+      "options": [
+        "Clear language",
+        "Screen-reader clarity",
+        "Avoid directional wording",
+        "Avoid color-only references",
+        "Cognitive accessibility",
+        "Translation-friendly wording"
+      ],
+      "fullWidth": true
+    },
+    {
+      "key": "lengthPreference",
+      "label": "Copy length",
+      "group": "constraints_delivery",
+      "groupTitle": "Constraints & Delivery",
+      "type": "select",
+      "required": false,
+      "placeholder": "Choose the preferred level of brevity.",
+      "hint": "Element-specific clarity takes priority over arbitrary uniform length.",
+      "help": {
+        "what": "Optional context for the copy length field.",
+        "why": "Space constraints and user complexity may require different levels of explanation.",
+        "example": "Good example: Concise with context",
+        "avoid": "Avoid guessed facts, fake urgency, manipulative wording, hidden consequences, sensitive private data, or unsupported compliance claims."
+      },
+      "defaultValue": "Auto by element",
+      "options": [
+        "Auto by element",
+        "As short as possible",
+        "Concise with context",
+        "More explanatory"
+      ]
+    },
+    {
+      "key": "numberOfVariants",
+      "label": "Variants per element",
+      "group": "constraints_delivery",
+      "groupTitle": "Constraints & Delivery",
+      "type": "number",
+      "required": false,
+      "placeholder": "1-5",
+      "hint": "Choose how many usable alternatives to generate for each item.",
+      "help": {
+        "what": "Optional context for the variants per element field.",
+        "why": "Some teams need one implementation-ready option while others need alternatives for review.",
+        "example": "Good example: 2",
+        "avoid": "Avoid guessed facts, fake urgency, manipulative wording, hidden consequences, sensitive private data, or unsupported compliance claims."
+      },
+      "defaultValue": "2",
+      "min": 1,
+      "max": 5
+    },
+    {
+      "key": "prohibitedContent",
+      "label": "Words or claims to avoid",
+      "group": "constraints_delivery",
+      "groupTitle": "Constraints & Delivery",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "List prohibited terms, promises, claims, or sensitive wording.",
+      "hint": "Combine all product-specific restrictions in this field.",
+      "help": {
+        "what": "Optional context for the words or claims to avoid field.",
+        "why": "The user may know legal, brand, product, or localization restrictions that cannot be inferred.",
+        "example": "Good example: Avoid secure, instant, guaranteed, free, and any unsupported recovery promise.",
+        "avoid": "Avoid conflicts with required product terminology unless the conflict is explicitly documented."
+      },
+      "maxLength": 1000,
+      "fullWidth": true
+    },
+    {
+      "key": "sensitiveDomain",
+      "label": "Sensitive domain",
+      "group": "constraints_delivery",
+      "groupTitle": "Constraints & Delivery",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select a regulated or sensitive context.",
+      "hint": "Used to apply cautious wording and avoid unsupported high-stakes guidance.",
+      "help": {
+        "what": "Optional context for the sensitive domain field.",
+        "why": "Sensitive product areas require stricter claim, instruction, privacy, and risk handling.",
+        "example": "Good example: Account and privacy",
+        "avoid": "Avoid invented medical, legal, financial, safety, employment, privacy, or compliance guidance."
+      },
+      "defaultValue": "None",
+      "options": [
+        "None",
+        "Health or medical",
+        "Financial",
+        "Legal",
+        "Safety or security",
+        "Employment",
+        "Children or minors",
+        "Account and privacy",
+        "Other regulated context"
+      ]
+    },
+    {
+      "key": "complianceNotes",
+      "label": "Compliance requirements",
+      "group": "constraints_delivery",
+      "groupTitle": "Constraints & Delivery",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Provide approved wording, jurisdiction, warnings, or required disclosures.",
+      "hint": "Include confirmed requirements only; the model will not invent legal language.",
+      "help": {
+        "what": "Optional context for the compliance requirements field.",
+        "why": "Regulated workflows may require exact approved information that only the user can provide.",
+        "example": "Good example: Use approved account-recovery wording and do not expose email addresses in full.",
+        "avoid": "Avoid invented medical, legal, financial, safety, employment, privacy, or compliance guidance."
+      },
+      "maxLength": 1500,
+      "showWhen": {
+        "key": "sensitiveDomain",
+        "notEquals": "None"
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "additionalContext",
+      "label": "Additional context",
+      "group": "constraints_delivery",
+      "groupTitle": "Constraints & Delivery",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Add any remaining requirement that materially affects the interface copy.",
+      "hint": "Do not repeat information already entered in another field.",
+      "help": {
+        "what": "Optional context for the additional context field.",
+        "why": "Provides one controlled place for important edge cases without creating miscellaneous fields.",
+        "example": "Good example: Keep button labels short and avoid blame.",
+        "avoid": "Avoid guessed facts, fake urgency, manipulative wording, hidden consequences, sensitive private data, or unsupported compliance claims."
+      },
+      "maxLength": 2000,
+      "fullWidth": true
+    }
+  ]
+}
