@@ -1,0 +1,898 @@
+{
+  "slug": "kickstarter-campaign",
+  "title": "Kickstarter Campaign",
+  "fieldCount": 43,
+  "requiredKeys": [
+    "projectName",
+    "projectCategory",
+    "projectSummary",
+    "primaryAudience",
+    "fundingGoal",
+    "fundingCurrency",
+    "fundingPurpose",
+    "rewardTiers"
+  ],
+  "groups": [
+    {
+      "id": "essentials",
+      "title": "Essentials",
+      "description": "Project, audience, funding, rewards, creator context, output language, and must-follow requirements needed for a useful first campaign draft.",
+      "defaultOpen": true
+    },
+    {
+      "id": "story_positioning",
+      "title": "Story & Positioning",
+      "description": "Origin, problem, solution, differentiation, current progress, credibility, audience motivation, and approved evidence.",
+      "defaultOpen": false
+    },
+    {
+      "id": "rewards_funding",
+      "title": "Rewards & Funding",
+      "description": "Reward format, limited rewards, shipping, budget, stretch goals, campaign duration, and launch timing.",
+      "defaultOpen": false
+    },
+    {
+      "id": "delivery_risk",
+      "title": "Delivery & Risk",
+      "description": "Production, milestones, fulfillment, suppliers, risks, mitigation, and prototype or manufacturing evidence.",
+      "defaultOpen": false
+    },
+    {
+      "id": "voice_media_compliance",
+      "title": "Voice, Media & Compliance",
+      "description": "Campaign tone, narrative voice, media assets, video output, sources, sensitive claims, evidence support, and restrictions.",
+      "defaultOpen": false
+    }
+  ],
+  "variables": [
+    {
+      "key": "projectName",
+      "label": "Project name",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": true,
+      "placeholder": "Example: Foldlight Modular Desk Lamp",
+      "hint": "Enter the public name of the project or product.",
+      "help": {
+        "what": "Provide the project name before generating the Kickstarter campaign.",
+        "why": "The project name anchors campaign titles, story copy, rewards, and calls to action.",
+        "example": "Good example: Foldlight Modular Desk Lamp",
+        "avoid": "Avoid vague placeholders, unsupported promises, fake urgency, fake scarcity, or changing the campaign into a different project."
+      },
+      "maxLength": 120
+    },
+    {
+      "key": "projectCategory",
+      "label": "Project category",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": true,
+      "placeholder": "Choose the closest category",
+      "hint": "Select the category that best matches what you are creating.",
+      "help": {
+        "what": "Provide the project category before generating the Kickstarter campaign.",
+        "why": "Category affects campaign structure, proof expectations, risks, terminology, and backer questions.",
+        "example": "Good example: Design & Technology",
+        "avoid": "Avoid vague placeholders, unsupported promises, fake urgency, fake scarcity, or changing the campaign into a different project."
+      },
+      "options": [
+        "Design & Technology",
+        "Games",
+        "Film & Video",
+        "Publishing & Comics",
+        "Music & Performance",
+        "Art & Photography",
+        "Food & Craft",
+        "Fashion",
+        "Journalism",
+        "Other Creative Project"
+      ],
+      "maxLength": 40
+    },
+    {
+      "key": "projectSummary",
+      "label": "What are you creating?",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "Describe the project, what it does or contains, and what backers will help bring to life.",
+      "hint": "Focus on the concrete project rather than general company promotion.",
+      "help": {
+        "what": "Provide the what are you creating? before generating the Kickstarter campaign.",
+        "why": "The model cannot safely infer the project’s function, scope, format, or deliverable.",
+        "example": "Good example: A modular desk lamp with adjustable light panels for small creative workspaces.",
+        "avoid": "Avoid vague placeholders, unsupported promises, fake urgency, fake scarcity, or changing the campaign into a different project."
+      },
+      "maxLength": 1200,
+      "fullWidth": true
+    },
+    {
+      "key": "projectPromise",
+      "label": "Core project promise",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": false,
+      "placeholder": "What should a backer understand or feel after seeing the campaign?",
+      "hint": "Use one clear benefit, creative promise, or main takeaway.",
+      "help": {
+        "what": "Optional context for the core project promise field.",
+        "why": "It helps unify the campaign around one memorable backer-facing message.",
+        "example": "Good example: Help backers build a calmer, better-lit workspace without replacing their whole desk setup.",
+        "avoid": "Avoid guessed facts, fake social proof, fake urgency, pressure, hidden assumptions, or unsupported Kickstarter claims."
+      },
+      "maxLength": 220
+    },
+    {
+      "key": "primaryAudience",
+      "label": "Primary backers",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "Describe the people most likely to care about and support this project.",
+      "hint": "Include relevant interests, needs, experience level, or community context.",
+      "help": {
+        "what": "Provide the primary backers before generating the Kickstarter campaign.",
+        "why": "Audience knowledge materially changes positioning, language, proof, rewards, and FAQ topics.",
+        "example": "Good example: Design-conscious remote workers, students, and creators who need flexible lighting in small rooms.",
+        "avoid": "Avoid vague placeholders, unsupported promises, fake urgency, fake scarcity, or changing the campaign into a different project."
+      },
+      "maxLength": 700,
+      "fullWidth": true
+    },
+    {
+      "key": "fundingGoal",
+      "label": "Funding goal",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "number",
+      "required": true,
+      "placeholder": "Example: 25000",
+      "hint": "Enter the intended Kickstarter funding goal without currency symbols.",
+      "help": {
+        "what": "Provide the funding goal before generating the Kickstarter campaign.",
+        "why": "The campaign must explain what the requested amount makes possible without inventing a target.",
+        "example": "Good example: 25000",
+        "avoid": "Avoid unconfirmed prices, quantities, delivery dates, funding details, taxes, customs terms, limits, or scarcity claims."
+      },
+      "maxLength": 12,
+      "min": 1
+    },
+    {
+      "key": "fundingCurrency",
+      "label": "Funding currency",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": true,
+      "placeholder": "Example: USD, EUR, GBP or CAD",
+      "hint": "Use the currency selected in the Kickstarter project editor.",
+      "help": {
+        "what": "Provide the funding currency before generating the Kickstarter campaign.",
+        "why": "Funding and reward amounts must use a consistent, user-confirmed currency.",
+        "example": "Good example: USD",
+        "avoid": "Avoid unconfirmed prices, quantities, delivery dates, funding details, taxes, customs terms, limits, or scarcity claims."
+      },
+      "maxLength": 12
+    },
+    {
+      "key": "fundingPurpose",
+      "label": "What will funding pay for?",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "Explain the main production, development, printing, manufacturing, or fulfillment needs.",
+      "hint": "Include only real planned uses of funds.",
+      "help": {
+        "what": "Provide the what will funding pay for? before generating the Kickstarter campaign.",
+        "why": "Backers need a credible explanation of why funding is necessary and how it supports delivery.",
+        "example": "Good example: Tooling, first production run, quality checks, packaging, and fulfillment preparation.",
+        "avoid": "Avoid vague placeholders, unsupported promises, fake urgency, fake scarcity, or changing the campaign into a different project."
+      },
+      "maxLength": 1000,
+      "fullWidth": true
+    },
+    {
+      "key": "rewardTiers",
+      "label": "Reward tiers",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "List each reward with its pledge amount, contents, limits, and delivery estimate when known.",
+      "hint": "One reward per line is sufficient. Do not include unconfirmed prices or dates.",
+      "help": {
+        "what": "Provide the reward tiers before generating the Kickstarter campaign.",
+        "why": "Rewards determine campaign value, funding logic, fulfillment expectations, and FAQ content.",
+        "example": "Good example: $10 Supporter update pack; $49 Early lamp kit; $79 Standard lamp kit; estimated delivery Q2 2027.",
+        "avoid": "Avoid unconfirmed prices, quantities, delivery dates, funding details, taxes, customs terms, limits, or scarcity claims."
+      },
+      "maxLength": 2000,
+      "fullWidth": true
+    },
+    {
+      "key": "creatorIdentity",
+      "label": "Creator or team",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Describe the creator, team, studio, or organization behind the project.",
+      "hint": "Use only public, approved identity and experience details.",
+      "help": {
+        "what": "Optional context for the creator or team field.",
+        "why": "Kickstarter backers need to understand who is responsible for the project.",
+        "example": "Good example: A small industrial-design team with experience prototyping home-office accessories.",
+        "avoid": "Avoid guessed facts, fake social proof, fake urgency, pressure, hidden assumptions, or unsupported Kickstarter claims."
+      },
+      "maxLength": 600,
+      "fullWidth": true
+    },
+    {
+      "key": "projectStage",
+      "label": "Current project stage",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": false,
+      "placeholder": "Choose the current stage",
+      "hint": "Be honest about whether this is a concept, prototype, production-ready project, or new run.",
+      "help": {
+        "what": "Optional context for the current project stage field.",
+        "why": "Stage controls proof, risk wording, timeline confidence, and Design & Technology review concerns.",
+        "example": "Good example: Prototype or early version",
+        "avoid": "Avoid guessed facts, fake social proof, fake urgency, pressure, hidden assumptions, or unsupported Kickstarter claims."
+      },
+      "defaultValue": "Prototype or early version",
+      "options": [
+        "Concept only",
+        "Prototype or early version",
+        "Validated prototype",
+        "Production-ready",
+        "In production",
+        "Funding a new edition or run"
+      ],
+      "maxLength": 40
+    },
+    {
+      "key": "outputLanguage",
+      "label": "Output language",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": false,
+      "placeholder": "Example: English, Ukrainian, German, or Spanish",
+      "hint": "Enter the language for the generated campaign package.",
+      "help": {
+        "what": "Optional context for the output language field.",
+        "why": "The campaign copy should be generated in the audience-facing language.",
+        "example": "Good example: English",
+        "avoid": "Avoid guessed facts, fake social proof, fake urgency, pressure, hidden assumptions, or unsupported Kickstarter claims."
+      },
+      "defaultValue": "English",
+      "maxLength": 60
+    },
+    {
+      "key": "additionalRequirements",
+      "label": "Additional requirements",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Add remaining instructions, must-use wording, exclusions, or launch constraints.",
+      "hint": "Use only for requirements not already captured in another field.",
+      "help": {
+        "what": "Optional context for the additional requirements field.",
+        "why": "This keeps edge cases controlled without adding unnecessary form fields.",
+        "example": "Good example: No fake urgency, no invented reviews, and no delivery dates beyond supplied estimates.",
+        "avoid": "Avoid guessed facts, fake social proof, fake urgency, pressure, hidden assumptions, or unsupported Kickstarter claims."
+      },
+      "maxLength": 2000,
+      "fullWidth": true
+    },
+    {
+      "key": "originStory",
+      "label": "How the project began",
+      "group": "story_positioning",
+      "groupTitle": "Story & Positioning",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Explain the real moment, need, observation, or creative spark behind the project.",
+      "hint": "Leave blank if the origin story is not public or not relevant.",
+      "help": {
+        "what": "Optional context for the how the project began field.",
+        "why": "A truthful origin story can make the campaign feel creator-led and specific.",
+        "example": "Good example: The project started after the team struggled to keep a shared apartment workspace comfortable after dark.",
+        "avoid": "Avoid guessed facts, fake social proof, fake urgency, pressure, hidden assumptions, or unsupported Kickstarter claims."
+      },
+      "maxLength": 1000,
+      "fullWidth": true
+    },
+    {
+      "key": "backerProblem",
+      "label": "Problem or opportunity",
+      "group": "story_positioning",
+      "groupTitle": "Story & Positioning",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Describe the real need, frustration, creative opportunity, or gap the project addresses.",
+      "hint": "Avoid exaggerating the problem or turning it into fear-based copy.",
+      "help": {
+        "what": "Optional context for the problem or opportunity field.",
+        "why": "The story needs a credible reason for backers to care.",
+        "example": "Good example: Small desks often need focused light without bulky lamps, exposed cables, or harsh glare.",
+        "avoid": "Avoid guessed facts, fake social proof, fake urgency, pressure, hidden assumptions, or unsupported Kickstarter claims."
+      },
+      "maxLength": 900,
+      "fullWidth": true
+    },
+    {
+      "key": "projectSolution",
+      "label": "How the project answers it",
+      "group": "story_positioning",
+      "groupTitle": "Story & Positioning",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Describe how the project works, what it contains, or how it responds to the need.",
+      "hint": "Use factual, project-specific details rather than generic benefits.",
+      "help": {
+        "what": "Optional context for the how the project answers it field.",
+        "why": "This turns the summary into a clear campaign narrative.",
+        "example": "Good example: Interchangeable panels let backers direct light for reading, sketching, video calls, or ambient work.",
+        "avoid": "Avoid guessed facts, fake social proof, fake urgency, pressure, hidden assumptions, or unsupported Kickstarter claims."
+      },
+      "maxLength": 1000,
+      "fullWidth": true
+    },
+    {
+      "key": "keyDifferences",
+      "label": "What makes it distinctive?",
+      "group": "story_positioning",
+      "groupTitle": "Story & Positioning",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "List only confirmed differences, design choices, creative angle, or production approach.",
+      "hint": "Do not invent superiority, awards, or unsupported comparisons.",
+      "help": {
+        "what": "Optional context for the what makes it distinctive? field.",
+        "why": "Differentiation helps positioning without relying on hype.",
+        "example": "Good example: Flat-pack design, replaceable panels, repairable hinges, and warm/cool light presets.",
+        "avoid": "Avoid guessed facts, fake social proof, fake urgency, pressure, hidden assumptions, or unsupported Kickstarter claims."
+      },
+      "maxLength": 800,
+      "fullWidth": true
+    },
+    {
+      "key": "currentProgress",
+      "label": "Progress so far",
+      "group": "story_positioning",
+      "groupTitle": "Story & Positioning",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "List prototypes, drafts, samples, testing, partnerships, production steps, or completed work.",
+      "hint": "Separate confirmed progress from future plans.",
+      "help": {
+        "what": "Optional context for the progress so far field.",
+        "why": "Current progress determines credibility and risk framing.",
+        "example": "Good example: Two working prototypes have been assembled and tested for brightness, hinge stability, and desk fit.",
+        "avoid": "Avoid guessed facts, fake social proof, fake urgency, pressure, hidden assumptions, or unsupported Kickstarter claims."
+      },
+      "maxLength": 1200,
+      "fullWidth": true
+    },
+    {
+      "key": "creatorCredibility",
+      "label": "Relevant experience",
+      "group": "story_positioning",
+      "groupTitle": "Story & Positioning",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Add approved skills, past work, shipped projects, production experience, or collaborators.",
+      "hint": "Do not add credentials or achievements that cannot be published.",
+      "help": {
+        "what": "Optional context for the relevant experience field.",
+        "why": "Backers need evidence that the creator can reasonably attempt the project.",
+        "example": "Good example: The team has previously shipped small-batch desk accessories through a local maker studio.",
+        "avoid": "Avoid invented evidence, credentials, media, supplier relationships, approvals, testimonials, test results, links, or sources."
+      },
+      "maxLength": 900,
+      "fullWidth": true
+    },
+    {
+      "key": "audienceMotivation",
+      "label": "Why will people back it?",
+      "group": "story_positioning",
+      "groupTitle": "Story & Positioning",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Explain why the audience may want to support this project now.",
+      "hint": "Use practical, creative, emotional, community, or collector motivations that are actually supported.",
+      "help": {
+        "what": "Optional context for the why will people back it? field.",
+        "why": "Backer motivation shapes the campaign opening, reward positioning, and CTA.",
+        "example": "Good example: Backers want a practical tool that also feels intentional and good-looking in a visible workspace.",
+        "avoid": "Avoid guessed facts, fake social proof, fake urgency, pressure, hidden assumptions, or unsupported Kickstarter claims."
+      },
+      "maxLength": 700,
+      "fullWidth": true
+    },
+    {
+      "key": "evidenceAndValidation",
+      "label": "Evidence and validation",
+      "group": "story_positioning",
+      "groupTitle": "Story & Positioning",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Add approved prototype evidence, test notes, community feedback, press, samples, or data.",
+      "hint": "Only include proof that really exists and may be used publicly.",
+      "help": {
+        "what": "Optional context for the evidence and validation field.",
+        "why": "Evidence strengthens credibility while preventing invented social proof.",
+        "example": "Good example: Prototype photos, brightness tests, and notes from five informal workspace trials are available.",
+        "avoid": "Avoid invented evidence, credentials, media, supplier relationships, approvals, testimonials, test results, links, or sources."
+      },
+      "maxLength": 1500,
+      "fullWidth": true
+    },
+    {
+      "key": "rewardFormat",
+      "label": "Main reward format",
+      "group": "rewards_funding",
+      "groupTitle": "Rewards & Funding",
+      "type": "select",
+      "required": false,
+      "placeholder": "Choose the closest reward format",
+      "hint": "Select the dominant reward type or let the model infer it from the supplied tiers.",
+      "help": {
+        "what": "Optional context for the main reward format field.",
+        "why": "Reward format controls shipping, fulfillment, access, and risk language.",
+        "example": "Good example: Physical",
+        "avoid": "Avoid guessed facts, fake social proof, fake urgency, pressure, hidden assumptions, or unsupported Kickstarter claims."
+      },
+      "defaultValue": "Auto-detect from rewards",
+      "options": [
+        "Auto-detect from rewards",
+        "Physical",
+        "Digital",
+        "Experience or service",
+        "Mixed",
+        "Support without reward"
+      ],
+      "maxLength": 40
+    },
+    {
+      "key": "rewardLimitsAndEarlyBirds",
+      "label": "Limited or early rewards",
+      "group": "rewards_funding",
+      "groupTitle": "Rewards & Funding",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "List confirmed limited quantities, early-bird tiers, or availability rules.",
+      "hint": "Leave blank if limits are not configured and verified.",
+      "help": {
+        "what": "Optional context for the limited or early rewards field.",
+        "why": "Limited rewards can be mentioned only when the user supplies real limits.",
+        "example": "Good example: Early lamp kit is limited to 200 units only if that quantity is confirmed in the reward setup.",
+        "avoid": "Avoid unconfirmed prices, quantities, delivery dates, funding details, taxes, customs terms, limits, or scarcity claims."
+      },
+      "maxLength": 800,
+      "fullWidth": true
+    },
+    {
+      "key": "shippingPlan",
+      "label": "Shipping plan",
+      "group": "rewards_funding",
+      "groupTitle": "Rewards & Funding",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "List shipping regions, costs, timing assumptions, taxes, customs, VAT, or local pickup notes.",
+      "hint": "Shown only for physical or mixed rewards.",
+      "help": {
+        "what": "Optional context for the shipping plan field.",
+        "why": "Shipping details materially affect reward clarity and fulfillment risk.",
+        "example": "Good example: Ships to the United States, Canada, EU, and United Kingdom; customs and VAT collected where applicable if confirmed.",
+        "avoid": "Avoid unconfirmed prices, quantities, delivery dates, funding details, taxes, customs terms, limits, or scarcity claims."
+      },
+      "maxLength": 1500,
+      "showWhen": {
+        "key": "rewardFormat",
+        "equals": [
+          "Physical",
+          "Mixed"
+        ]
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "budgetBreakdown",
+      "label": "Budget breakdown",
+      "group": "rewards_funding",
+      "groupTitle": "Rewards & Funding",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Explain planned use of funds by category when known.",
+      "hint": "Use exact categories only when they are real; otherwise provide narrative context.",
+      "help": {
+        "what": "Optional context for the budget breakdown field.",
+        "why": "Backers often need a transparent explanation of how funds support delivery.",
+        "example": "Good example: Tooling, materials, assembly, testing, packaging, freight, fulfillment, and contingency.",
+        "avoid": "Avoid unconfirmed prices, quantities, delivery dates, funding details, taxes, customs terms, limits, or scarcity claims."
+      },
+      "maxLength": 1800,
+      "fullWidth": true
+    },
+    {
+      "key": "stretchGoals",
+      "label": "Stretch goals",
+      "group": "rewards_funding",
+      "groupTitle": "Rewards & Funding",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "List only confirmed stretch goals and what they unlock after the base project is viable.",
+      "hint": "Leave blank if stretch goals are not defined.",
+      "help": {
+        "what": "Optional context for the stretch goals field.",
+        "why": "Stretch goals should not distract from or endanger the base project.",
+        "example": "Good example: Additional color panels only after the base lamp is funded and production remains feasible.",
+        "avoid": "Avoid guessed facts, fake social proof, fake urgency, pressure, hidden assumptions, or unsupported Kickstarter claims."
+      },
+      "maxLength": 1200,
+      "fullWidth": true
+    },
+    {
+      "key": "campaignDurationDays",
+      "label": "Campaign duration",
+      "group": "rewards_funding",
+      "groupTitle": "Rewards & Funding",
+      "type": "number",
+      "required": false,
+      "placeholder": "Example: 30",
+      "hint": "Enter a planned duration from 1 to 60 days.",
+      "help": {
+        "what": "Optional context for the campaign duration field.",
+        "why": "Kickstarter campaign timing affects deadline wording and planning notes.",
+        "example": "Good example: 30",
+        "avoid": "Avoid guessed facts, fake social proof, fake urgency, pressure, hidden assumptions, or unsupported Kickstarter claims."
+      },
+      "defaultValue": "30",
+      "maxLength": 2,
+      "min": 1,
+      "max": 60
+    },
+    {
+      "key": "plannedLaunchDate",
+      "label": "Planned launch date",
+      "group": "rewards_funding",
+      "groupTitle": "Rewards & Funding",
+      "type": "text",
+      "required": false,
+      "placeholder": "Example: 2026-09-15",
+      "hint": "Enter an ISO-style date when the launch date is known. Use YYYY-MM-DD when possible.",
+      "help": {
+        "what": "Optional context for the planned launch date field.",
+        "why": "A launch date plus duration can support a tentative end date without inventing timing.",
+        "example": "Good example: 2026-09-15",
+        "avoid": "Avoid unconfirmed prices, quantities, delivery dates, funding details, taxes, customs terms, limits, or scarcity claims."
+      },
+      "maxLength": 10
+    },
+    {
+      "key": "productionPlan",
+      "label": "Production plan",
+      "group": "delivery_risk",
+      "groupTitle": "Delivery & Risk",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Describe how the project will be made after the campaign closes.",
+      "hint": "Include production, development, printing, manufacturing, assembly, QA, or creative work.",
+      "help": {
+        "what": "Optional context for the production plan field.",
+        "why": "Production detail helps make the campaign credible and backer-safe.",
+        "example": "Good example: Finalize tooling, order components, assemble pilot run, complete quality checks, package units, and begin fulfillment.",
+        "avoid": "Avoid guessed facts, fake social proof, fake urgency, pressure, hidden assumptions, or unsupported Kickstarter claims."
+      },
+      "maxLength": 1500,
+      "fullWidth": true
+    },
+    {
+      "key": "timelineMilestones",
+      "label": "Timeline and milestones",
+      "group": "delivery_risk",
+      "groupTitle": "Delivery & Risk",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "List the major steps from campaign close through production and delivery.",
+      "hint": "Use approximate milestones when dates are not confirmed.",
+      "help": {
+        "what": "Optional context for the timeline and milestones field.",
+        "why": "Milestones let the output explain progress without inventing exact dates.",
+        "example": "Good example: Tooling after campaign close, pilot run, production batch, QC, packaging, regional fulfillment.",
+        "avoid": "Avoid guessed facts, fake social proof, fake urgency, pressure, hidden assumptions, or unsupported Kickstarter claims."
+      },
+      "maxLength": 1500,
+      "fullWidth": true
+    },
+    {
+      "key": "fulfillmentPlan",
+      "label": "Fulfillment plan",
+      "group": "delivery_risk",
+      "groupTitle": "Delivery & Risk",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Explain delivery method, access process, fulfillment partners, pickup, or digital delivery.",
+      "hint": "Include only confirmed delivery arrangements.",
+      "help": {
+        "what": "Optional context for the fulfillment plan field.",
+        "why": "Fulfillment details shape rewards, FAQ, shipping notes, and risks.",
+        "example": "Good example: Use a regional fulfillment partner for packed lamp kits and send tracking when available.",
+        "avoid": "Avoid guessed facts, fake social proof, fake urgency, pressure, hidden assumptions, or unsupported Kickstarter claims."
+      },
+      "maxLength": 1300,
+      "fullWidth": true
+    },
+    {
+      "key": "partnersSuppliers",
+      "label": "Partners and suppliers",
+      "group": "delivery_risk",
+      "groupTitle": "Delivery & Risk",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "List confirmed suppliers, manufacturers, collaborators, printers, studios, or fulfillment partners.",
+      "hint": "Do not imply contracts, endorsements, certifications, or capacity not supplied.",
+      "help": {
+        "what": "Optional context for the partners and suppliers field.",
+        "why": "Partner and supplier context affects production credibility and risk.",
+        "example": "Good example: Confirmed hinge supplier and packaging vendor; final assembly partner under review.",
+        "avoid": "Avoid invented evidence, credentials, media, supplier relationships, approvals, testimonials, test results, links, or sources."
+      },
+      "maxLength": 1000,
+      "fullWidth": true
+    },
+    {
+      "key": "knownRisks",
+      "label": "Known risks",
+      "group": "delivery_risk",
+      "groupTitle": "Delivery & Risk",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "List realistic project, production, supplier, software, licensing, customs, or scheduling risks.",
+      "hint": "Be candid; do not promise that uncertainty is eliminated.",
+      "help": {
+        "what": "Optional context for the known risks field.",
+        "why": "Kickstarter requires honest risk communication rather than guaranteed delivery.",
+        "example": "Good example: Tooling delays, component lead times, color consistency, freight changes, and quality-control rework.",
+        "avoid": "Avoid guessed facts, fake social proof, fake urgency, pressure, hidden assumptions, or unsupported Kickstarter claims."
+      },
+      "maxLength": 1500,
+      "fullWidth": true
+    },
+    {
+      "key": "mitigationPlan",
+      "label": "Risk mitigation",
+      "group": "delivery_risk",
+      "groupTitle": "Delivery & Risk",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Explain how the creator will reduce, monitor, communicate, or respond to known risks.",
+      "hint": "Use concrete plans rather than generic reassurance.",
+      "help": {
+        "what": "Optional context for the risk mitigation field.",
+        "why": "Risk sections are stronger when each meaningful risk has an actual response plan.",
+        "example": "Good example: Buffer production time, order sample parts before full production, communicate delays monthly, and hold a small contingency reserve.",
+        "avoid": "Avoid guessed facts, fake social proof, fake urgency, pressure, hidden assumptions, or unsupported Kickstarter claims."
+      },
+      "maxLength": 1500,
+      "fullWidth": true
+    },
+    {
+      "key": "prototypeAndManufacturingEvidence",
+      "label": "Prototype and production proof",
+      "group": "delivery_risk",
+      "groupTitle": "Delivery & Risk",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Add working prototype evidence, manufacturing readiness, samples, tests, or supplier proof.",
+      "hint": "Shown for Design & Technology projects.",
+      "help": {
+        "what": "Optional context for the prototype and production proof field.",
+        "why": "Design and technology campaigns need clear evidence of real project progress.",
+        "example": "Good example: Working prototype photos, hinge stress notes, brightness test chart, and supplier sample invoices.",
+        "avoid": "Avoid guessed facts, fake social proof, fake urgency, pressure, hidden assumptions, or unsupported Kickstarter claims."
+      },
+      "maxLength": 1800,
+      "showWhen": {
+        "key": "projectCategory",
+        "equals": "Design & Technology"
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "tone",
+      "label": "Campaign tone",
+      "group": "voice_media_compliance",
+      "groupTitle": "Voice, Media & Compliance",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select a tone",
+      "hint": "Choose the tone the public campaign should use.",
+      "help": {
+        "what": "Optional context for the campaign tone field.",
+        "why": "Tone controls how the story, risks, CTA, and creator voice feel to backers.",
+        "example": "Good example: Authentic and confident",
+        "avoid": "Avoid guessed facts, fake social proof, fake urgency, pressure, hidden assumptions, or unsupported Kickstarter claims."
+      },
+      "defaultValue": "Authentic and confident",
+      "options": [
+        "Authentic and confident",
+        "Warm and personal",
+        "Bold and energetic",
+        "Calm and transparent",
+        "Playful and creative",
+        "Technical and precise",
+        "Premium and refined",
+        "Community-focused"
+      ],
+      "maxLength": 40
+    },
+    {
+      "key": "campaignVoice",
+      "label": "Narrative voice",
+      "group": "voice_media_compliance",
+      "groupTitle": "Voice, Media & Compliance",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select the narrative voice",
+      "hint": "Choose whose voice the campaign should feel like.",
+      "help": {
+        "what": "Optional context for the narrative voice field.",
+        "why": "Kickstarter campaigns need a credible public voice rather than generic marketing copy.",
+        "example": "Good example: Creator-led and conversational",
+        "avoid": "Avoid guessed facts, fake social proof, fake urgency, pressure, hidden assumptions, or unsupported Kickstarter claims."
+      },
+      "defaultValue": "Creator-led and conversational",
+      "options": [
+        "Creator-led and conversational",
+        "Founder or team-led",
+        "Documentary and factual",
+        "Artist-led and reflective",
+        "Community-centered",
+        "Product-focused"
+      ],
+      "maxLength": 40
+    },
+    {
+      "key": "mediaAssets",
+      "label": "Available media",
+      "group": "voice_media_compliance",
+      "groupTitle": "Voice, Media & Compliance",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "List available photos, prototypes, diagrams, samples, demos, charts, videos, or team images.",
+      "hint": "Do not imply media exists unless it is supplied.",
+      "help": {
+        "what": "Optional context for the available media field.",
+        "why": "Media notes help place existing assets without inventing footage or proof.",
+        "example": "Good example: Prototype photos, exploded-view diagram, desk setup shots, short assembly clip, and team photo.",
+        "avoid": "Avoid invented evidence, credentials, media, supplier relationships, approvals, testimonials, test results, links, or sources."
+      },
+      "maxLength": 1500,
+      "fullWidth": true
+    },
+    {
+      "key": "campaignVideoApproach",
+      "label": "Campaign video output",
+      "group": "voice_media_compliance",
+      "groupTitle": "Voice, Media & Compliance",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select video output",
+      "hint": "Choose whether to generate a full script, short script, outline, or omit the video section.",
+      "help": {
+        "what": "Optional context for the campaign video output field.",
+        "why": "Video output should match the user’s actual campaign needs and available media.",
+        "example": "Good example: Full 2–3 minute script",
+        "avoid": "Avoid guessed facts, fake social proof, fake urgency, pressure, hidden assumptions, or unsupported Kickstarter claims."
+      },
+      "defaultValue": "Auto",
+      "options": [
+        "Auto",
+        "Full 2–3 minute script",
+        "Short 60–90 second script",
+        "Outline only",
+        "No video section"
+      ],
+      "maxLength": 40
+    },
+    {
+      "key": "sourceMaterials",
+      "label": "Sources and reference content",
+      "group": "voice_media_compliance",
+      "groupTitle": "Voice, Media & Compliance",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Paste approved source notes, links, specs, drafts, references, or research.",
+      "hint": "Use source materials as factual reference; do not copy long copyrighted passages.",
+      "help": {
+        "what": "Optional context for the sources and reference content field.",
+        "why": "Source material improves accuracy and helps avoid unsupported claims.",
+        "example": "Good example: Paste approved product notes, prototype data, reward details, budget notes, and source links.",
+        "avoid": "Avoid invented evidence, credentials, media, supplier relationships, approvals, testimonials, test results, links, or sources."
+      },
+      "maxLength": 4000,
+      "fullWidth": true
+    },
+    {
+      "key": "sensitiveClaimArea",
+      "label": "Sensitive claim area",
+      "group": "voice_media_compliance",
+      "groupTitle": "Voice, Media & Compliance",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select if the project touches a sensitive area",
+      "hint": "Use when claims involve health, finance, legal, safety, environmental, political, child-related, or regulated topics.",
+      "help": {
+        "what": "Optional context for the sensitive claim area field.",
+        "why": "Sensitive areas require stricter claim handling and review notes.",
+        "example": "Good example: None",
+        "avoid": "Avoid medical, legal, financial, safety, environmental, political, or child-related claims without supplied support and review."
+      },
+      "defaultValue": "None",
+      "options": [
+        "None",
+        "Medical or health",
+        "Financial or investment",
+        "Legal or regulatory",
+        "Safety or child-related",
+        "Environmental claims",
+        "Political or public-interest",
+        "Other regulated area"
+      ],
+      "maxLength": 40
+    },
+    {
+      "key": "claimSupport",
+      "label": "Evidence for sensitive claims",
+      "group": "voice_media_compliance",
+      "groupTitle": "Voice, Media & Compliance",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Provide approved evidence, review notes, disclaimers, or limits for sensitive claims.",
+      "hint": "Shown only when a sensitive claim area is selected.",
+      "help": {
+        "what": "Optional context for the evidence for sensitive claims field.",
+        "why": "High-stakes claims need explicit support or must be flagged for review.",
+        "example": "Good example: Approved testing notes, certification status, legal review notes, or claims to avoid.",
+        "avoid": "Avoid invented evidence, credentials, media, supplier relationships, approvals, testimonials, test results, links, or sources."
+      },
+      "maxLength": 2000,
+      "showWhen": {
+        "key": "sensitiveClaimArea",
+        "notEquals": "None"
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "restrictions",
+      "label": "Claims and content to avoid",
+      "group": "voice_media_compliance",
+      "groupTitle": "Voice, Media & Compliance",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "List words, claims, promises, topics, proof points, or positioning to avoid.",
+      "hint": "Use this for legal, brand, platform, rights, privacy, or factual limits.",
+      "help": {
+        "what": "Optional context for the claims and content to avoid field.",
+        "why": "Restrictions prevent unsupported claims, rights issues, and misleading campaign copy.",
+        "example": "Good example: Do not claim waterproofing, medical benefits, certified safety approval, existing backers, or guaranteed delivery.",
+        "avoid": "Avoid medical, legal, financial, safety, environmental, political, or child-related claims without supplied support and review."
+      },
+      "maxLength": 1500,
+      "fullWidth": true
+    }
+  ]
+}

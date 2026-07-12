@@ -1,0 +1,516 @@
+{
+  "slug": "discord-announcement",
+  "title": "Discord Announcement",
+  "fieldCount": 23,
+  "requiredKeys": [
+    "announcementSubject",
+    "announcementType",
+    "primaryGoal",
+    "targetAudience",
+    "keyDetails",
+    "outputLanguage"
+  ],
+  "groups": [
+    {
+      "id": "essentials",
+      "title": "Essentials",
+      "description": "Announcement subject, type, goal, audience, facts, language, timing, action, destination, and community context.",
+      "defaultOpen": true
+    },
+    {
+      "id": "message_delivery",
+      "title": "Message & Delivery",
+      "description": "Discord publishing mode, tone, target length, mention behavior, and channel-specific context.",
+      "defaultOpen": false
+    },
+    {
+      "id": "brand_formatting",
+      "title": "Brand & Formatting",
+      "description": "Community voice, emoji level, Discord formatting style, and optional short-version output.",
+      "defaultOpen": false
+    },
+    {
+      "id": "accuracy_restrictions",
+      "title": "Accuracy & Restrictions",
+      "description": "Verified claims, disclosures, privacy restrictions, factual boundaries, and uncommon requirements.",
+      "defaultOpen": false
+    }
+  ],
+  "variables": [
+    {
+      "key": "announcementSubject",
+      "label": "Announcement subject",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": true,
+      "placeholder": "New feature release, scheduled maintenance, community event...",
+      "hint": "State the main subject in one clear phrase.",
+      "help": {
+        "what": "Provide the announcement subject for this Discord announcement.",
+        "why": "It establishes the central topic around which the announcement is written.",
+        "example": "Good example: Scheduled maintenance for the creator dashboard",
+        "avoid": "Avoid vague placeholders, unsupported claims, multiple competing announcements, or changing the topic into a different update."
+      },
+      "maxLength": 160
+    },
+    {
+      "key": "announcementType",
+      "label": "Announcement type",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": true,
+      "placeholder": "Select an announcement type",
+      "hint": "Helps organize the message around the correct Discord use case.",
+      "help": {
+        "what": "Provide the announcement type for this Discord announcement.",
+        "why": "Different announcement types require different priorities, details, and levels of urgency.",
+        "example": "Good example: Maintenance or outage",
+        "avoid": "Avoid vague placeholders, unsupported claims, multiple competing announcements, or changing the topic into a different update."
+      },
+      "defaultValue": "General update",
+      "maxLength": 40,
+      "options": [
+        "General update",
+        "Event",
+        "Product or feature release",
+        "Maintenance or outage",
+        "Policy or rule change",
+        "Community milestone",
+        "Promotion or offer",
+        "Recruitment or opportunity",
+        "Correction or clarification",
+        "Emergency or safety notice"
+      ]
+    },
+    {
+      "key": "primaryGoal",
+      "label": "Primary goal",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": true,
+      "placeholder": "Choose the main outcome",
+      "hint": "Select the single most important result the announcement should achieve.",
+      "help": {
+        "what": "Provide the primary goal for this Discord announcement.",
+        "why": "It determines what information receives the strongest emphasis.",
+        "example": "Good example: Inform members",
+        "avoid": "Avoid vague placeholders, unsupported claims, multiple competing announcements, or changing the topic into a different update."
+      },
+      "defaultValue": "Inform members",
+      "maxLength": 32,
+      "options": [
+        "Inform members",
+        "Drive a specific action",
+        "Increase event attendance",
+        "Explain an important change",
+        "Clarify or restore trust",
+        "Celebrate with the community"
+      ]
+    },
+    {
+      "key": "targetAudience",
+      "label": "Target audience",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": true,
+      "placeholder": "All members, new users, moderators, paid members, developers...",
+      "hint": "Describe who should read and act on the announcement.",
+      "help": {
+        "what": "Provide the target audience for this Discord announcement.",
+        "why": "The model cannot safely infer which server members the message is intended for.",
+        "example": "Good example: All active Creatornivo community members",
+        "avoid": "Avoid vague placeholders, unsupported claims, multiple competing announcements, or changing the topic into a different update."
+      },
+      "maxLength": 200
+    },
+    {
+      "key": "keyDetails",
+      "label": "Essential details",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "Add the confirmed information members need to know.",
+      "hint": "Include the update, impact, dates, requirements, benefits, or changes.",
+      "help": {
+        "what": "Provide the essential details for this Discord announcement.",
+        "why": "It supplies the factual content that cannot be invented or inferred.",
+        "example": "Good example: Maintenance runs July 18, 2026 from 02:00 to 04:00 UTC. Generation and library access may be unavailable during that window.",
+        "avoid": "Avoid assumptions, fake urgency, invented dates, unsupported features, guessed causes, fake links, or vague filler."
+      },
+      "maxLength": 1500,
+      "fullWidth": true
+    },
+    {
+      "key": "outputLanguage",
+      "label": "Output language",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": true,
+      "placeholder": "English, Spanish, Ukrainian, German...",
+      "hint": "The complete generated package will use this language.",
+      "help": {
+        "what": "Provide the output language for this Discord announcement.",
+        "why": "Discord communities may publish in any language, so the correct language cannot always be inferred.",
+        "example": "Good example: English",
+        "avoid": "Avoid vague placeholders, unsupported claims, multiple competing announcements, or changing the topic into a different update."
+      },
+      "defaultValue": "English",
+      "maxLength": 80
+    },
+    {
+      "key": "serverContext",
+      "label": "Server or community context",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": false,
+      "placeholder": "Gaming clan, SaaS community, creator server, customer support...",
+      "hint": "Briefly describe the community so the message sounds appropriate.",
+      "help": {
+        "what": "Optional context for the server or community context field.",
+        "why": "Community context materially affects vocabulary, assumed knowledge, and formality.",
+        "example": "Good example: SaaS product community for creators using AI content workflows.",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, unsupported social proof, private data, repeated CTAs, or unnecessary mass mentions."
+      },
+      "maxLength": 200
+    },
+    {
+      "key": "dateTimeDetails",
+      "label": "Date, time, and timezone",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": false,
+      "placeholder": "July 18, 2026 at 19:00 UTC, maintenance from 02:00-04:00...",
+      "hint": "Include exact scheduling details and a timezone when relevant.",
+      "help": {
+        "what": "Optional context for the date, time, and timezone field.",
+        "why": "Events, maintenance, releases, and deadlines require exact user-supplied timing.",
+        "example": "Good example: July 18, 2026, 02:00-04:00 UTC",
+        "avoid": "Avoid vague relative timing without a date, missing time zones, guessed deadlines, or unverified Discord timestamps."
+      },
+      "maxLength": 300
+    },
+    {
+      "key": "primaryLink",
+      "label": "Primary link",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": false,
+      "placeholder": "https://example.com/event",
+      "hint": "Add the main destination only; the generator will not invent links.",
+      "help": {
+        "what": "Optional context for the primary link field.",
+        "why": "The correct destination URL must come directly from the user.",
+        "example": "Good example: https://www.creatornivo.com/status",
+        "avoid": "Avoid invented, shortened, private, misleading, or unsupported links."
+      },
+      "format": "url",
+      "maxLength": 500
+    },
+    {
+      "key": "desiredAction",
+      "label": "Desired member action",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": false,
+      "placeholder": "Register, read the new rules, update the app, join the event...",
+      "hint": "Leave blank when the announcement is purely informational.",
+      "help": {
+        "what": "Optional context for the desired member action field.",
+        "why": "It defines the CTA without forcing one when no action is required.",
+        "example": "Good example: Check the status page before reporting duplicate issues.",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, unsupported social proof, private data, repeated CTAs, or unnecessary mass mentions."
+      },
+      "maxLength": 200
+    },
+    {
+      "key": "publishingMode",
+      "label": "Publishing mode",
+      "group": "message_delivery",
+      "groupTitle": "Message & Delivery",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select how the announcement will be posted",
+      "hint": "Choose a regular message, crosspost, or bot-ready embed.",
+      "help": {
+        "what": "Optional context for the publishing mode field.",
+        "why": "Standard messages, crossposts, and embeds require different structures and mention handling.",
+        "example": "Good example: Regular server message",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, unsupported social proof, private data, repeated CTAs, or unnecessary mass mentions."
+      },
+      "defaultValue": "Auto",
+      "maxLength": 40,
+      "options": [
+        "Auto",
+        "Regular server message",
+        "Announcement channel (crosspost)",
+        "Bot or webhook embed"
+      ]
+    },
+    {
+      "key": "tone",
+      "label": "Tone",
+      "group": "message_delivery",
+      "groupTitle": "Message & Delivery",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select a tone",
+      "hint": "Choose the overall delivery style without changing the underlying facts.",
+      "help": {
+        "what": "Optional context for the tone field.",
+        "why": "Discord server cultures vary substantially in tone and level of formality.",
+        "example": "Good example: Calm and reassuring",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, unsupported social proof, private data, repeated CTAs, or unnecessary mass mentions."
+      },
+      "defaultValue": "Clear and community-friendly",
+      "maxLength": 40,
+      "options": [
+        "Clear and community-friendly",
+        "Professional",
+        "Casual",
+        "Excited",
+        "Calm and reassuring",
+        "Urgent and direct",
+        "Celebratory",
+        "Technical"
+      ]
+    },
+    {
+      "key": "messageLength",
+      "label": "Message length",
+      "group": "message_delivery",
+      "groupTitle": "Message & Delivery",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select a target length",
+      "hint": "Auto chooses the shortest length that communicates the full update.",
+      "help": {
+        "what": "Optional context for the message length field.",
+        "why": "A brief event reminder and a detailed policy change require different content depth.",
+        "example": "Good example: Standard",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, unsupported social proof, private data, repeated CTAs, or unnecessary mass mentions."
+      },
+      "defaultValue": "Auto",
+      "maxLength": 32,
+      "options": [
+        "Auto",
+        "Short",
+        "Standard",
+        "Detailed",
+        "Maximum safe single message"
+      ]
+    },
+    {
+      "key": "mentionPreference",
+      "label": "Mention preference",
+      "group": "message_delivery",
+      "groupTitle": "Message & Delivery",
+      "type": "select",
+      "required": false,
+      "placeholder": "Choose how mentions should be handled",
+      "hint": "The generator will never invent a role or user mention.",
+      "help": {
+        "what": "Optional context for the mention preference field.",
+        "why": "Discord mentions affect notifications and must be selected deliberately.",
+        "example": "Good example: No mention",
+        "avoid": "Avoid unsupported mass mentions, fake role names, invented user IDs, repeated pings, or engagement bait."
+      },
+      "defaultValue": "Auto recommendation",
+      "maxLength": 40,
+      "options": [
+        "Auto recommendation",
+        "No mention",
+        "Relevant role mention",
+        "Use supplied mention",
+        "@here",
+        "@everyone"
+      ]
+    },
+    {
+      "key": "channelContext",
+      "label": "Channel context",
+      "group": "message_delivery",
+      "groupTitle": "Message & Delivery",
+      "type": "text",
+      "required": false,
+      "placeholder": "#announcements, #events, #status-updates, read-only channel...",
+      "hint": "Describe where the message will appear or how the channel is used.",
+      "help": {
+        "what": "Optional context for the channel context field.",
+        "why": "Channel context helps prevent redundant wording and improves placement guidance.",
+        "example": "Good example: #announcements, read-only update channel",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, unsupported social proof, private data, repeated CTAs, or unnecessary mass mentions."
+      },
+      "maxLength": 160
+    },
+    {
+      "key": "brandVoice",
+      "label": "Brand or community voice",
+      "group": "brand_formatting",
+      "groupTitle": "Brand & Formatting",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Friendly and direct, developer-focused, playful but not childish...",
+      "hint": "Add voice characteristics or a short style example.",
+      "help": {
+        "what": "Optional context for the brand or community voice field.",
+        "why": "It lets established communities preserve a recognizable communication style.",
+        "example": "Good example: Clear, practical, transparent, and support-focused.",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, unsupported social proof, private data, repeated CTAs, or unnecessary mass mentions."
+      },
+      "maxLength": 800,
+      "fullWidth": true
+    },
+    {
+      "key": "emojiLevel",
+      "label": "Emoji use",
+      "group": "brand_formatting",
+      "groupTitle": "Brand & Formatting",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select an emoji level",
+      "hint": "Controls visual emphasis without changing the message structure.",
+      "help": {
+        "what": "Optional context for the emoji use field.",
+        "why": "Emoji expectations differ significantly between professional and informal servers.",
+        "example": "Good example: Minimal",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, unsupported social proof, private data, repeated CTAs, or unnecessary mass mentions."
+      },
+      "defaultValue": "Minimal",
+      "maxLength": 16,
+      "options": [
+        "None",
+        "Minimal",
+        "Moderate",
+        "Expressive"
+      ]
+    },
+    {
+      "key": "formattingStyle",
+      "label": "Formatting style",
+      "group": "brand_formatting",
+      "groupTitle": "Brand & Formatting",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select a Discord formatting style",
+      "hint": "Controls paragraph, heading, and bullet use.",
+      "help": {
+        "what": "Optional context for the formatting style field.",
+        "why": "The same information may need a conversational post or a structured operational update.",
+        "example": "Good example: Structured and scannable",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, unsupported social proof, private data, repeated CTAs, or unnecessary mass mentions."
+      },
+      "defaultValue": "Structured and scannable",
+      "maxLength": 32,
+      "options": [
+        "Structured and scannable",
+        "Plain and concise",
+        "Conversational",
+        "Technical changelog"
+      ]
+    },
+    {
+      "key": "includeShortVersion",
+      "label": "Include short version",
+      "group": "brand_formatting",
+      "groupTitle": "Brand & Formatting",
+      "type": "select",
+      "required": false,
+      "placeholder": "Choose whether to include a short version",
+      "hint": "Adds a compact alternative for reminders or secondary channels.",
+      "help": {
+        "what": "Optional context for the include short version field.",
+        "why": "A reusable reminder version is particularly useful for Discord announcements.",
+        "example": "Good example: Yes",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, unsupported social proof, private data, repeated CTAs, or unnecessary mass mentions."
+      },
+      "defaultValue": "Yes",
+      "maxLength": 5,
+      "options": [
+        "Yes",
+        "No"
+      ]
+    },
+    {
+      "key": "verifiedClaims",
+      "label": "Verified facts or proof",
+      "group": "accuracy_restrictions",
+      "groupTitle": "Accuracy & Restrictions",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Confirmed figures, approved quotations, release status, validated results...",
+      "hint": "Add exact claims that are approved for publication.",
+      "help": {
+        "what": "Optional context for the verified facts or proof field.",
+        "why": "It separates approved evidence from unsupported promotional assumptions.",
+        "example": "Good example: Maintenance window confirmed by the engineering team. No customer data changes are planned.",
+        "avoid": "Avoid unsupported statistics, quotes, reviews, proof, member counts, results, approvals, or partnerships."
+      },
+      "maxLength": 1200,
+      "fullWidth": true
+    },
+    {
+      "key": "disclosureText",
+      "label": "Required disclosure",
+      "group": "accuracy_restrictions",
+      "groupTitle": "Accuracy & Restrictions",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Sponsored event, affiliate relationship, staff affiliation, contest terms...",
+      "hint": "Include any relationship or commercial context members should know.",
+      "help": {
+        "what": "Optional context for the required disclosure field.",
+        "why": "Community promotions and partnerships may require transparent affiliation disclosure.",
+        "example": "Good example: Staff announcement from the Creatornivo team.",
+        "avoid": "Avoid hiding sponsorships, affiliate relationships, staff affiliation, paid promotions, contest terms, or commercial context."
+      },
+      "maxLength": 500,
+      "fullWidth": true
+    },
+    {
+      "key": "restrictions",
+      "label": "Restrictions and must-avoid items",
+      "group": "accuracy_restrictions",
+      "groupTitle": "Accuracy & Restrictions",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Do not mention pricing, avoid specific wording, protect member identities...",
+      "hint": "List prohibited claims, sensitive details, or mandatory limitations.",
+      "help": {
+        "what": "Optional context for the restrictions and must-avoid items field.",
+        "why": "It consolidates factual, privacy, legal, and brand restrictions into one field.",
+        "example": "Good example: Do not imply data loss, security impact, or guaranteed completion time.",
+        "avoid": "Avoid burying privacy, legal, factual, moderation, or brand limits in another field."
+      },
+      "maxLength": 1000,
+      "fullWidth": true
+    },
+    {
+      "key": "additionalContext",
+      "label": "Additional context",
+      "group": "accuracy_restrictions",
+      "groupTitle": "Accuracy & Restrictions",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Add any relevant information not covered above.",
+      "hint": "Use only for context that materially affects the announcement.",
+      "help": {
+        "what": "Optional context for the additional context field.",
+        "why": "It provides one controlled place for uncommon requirements without expanding the main form.",
+        "example": "Good example: Keep the message easy to scan on mobile and avoid fake urgency.",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, unsupported social proof, private data, repeated CTAs, or unnecessary mass mentions."
+      },
+      "maxLength": 2000,
+      "fullWidth": true
+    }
+  ]
+}

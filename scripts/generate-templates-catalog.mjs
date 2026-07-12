@@ -63,6 +63,16 @@ const FULL_FORM_SCHEMAS = {
     ),
     buildHint: "node scripts/build-cold-email-outreach-form.mjs",
   },
+  "discord-announcement": {
+    path: path.join(
+      root,
+      "src",
+      "config",
+      "template-forms",
+      "discord-announcement-variables.json",
+    ),
+    buildHint: "node scripts/build-discord-announcement-form.mjs",
+  },
   "email-sequence": {
     path: path.join(
       root,
@@ -113,6 +123,26 @@ const FULL_FORM_SCHEMAS = {
     ),
     buildHint: "node scripts/build-google-business-profile-post-form.mjs",
   },
+  "github-readme": {
+    path: path.join(
+      root,
+      "src",
+      "config",
+      "template-forms",
+      "github-readme-variables.json",
+    ),
+    buildHint: "node scripts/build-github-readme-form.mjs",
+  },
+  "indie-hackers-post": {
+    path: path.join(
+      root,
+      "src",
+      "config",
+      "template-forms",
+      "indie-hackers-post-variables.json",
+    ),
+    buildHint: "node scripts/build-indie-hackers-post-form.mjs",
+  },
   "instagram-post": {
     path: path.join(
       root,
@@ -132,6 +162,16 @@ const FULL_FORM_SCHEMAS = {
       "instagram-carousel-variables.json",
     ),
     buildHint: "node scripts/build-instagram-carousel-form.mjs",
+  },
+  "kickstarter-campaign": {
+    path: path.join(
+      root,
+      "src",
+      "config",
+      "template-forms",
+      "kickstarter-campaign-variables.json",
+    ),
+    buildHint: "node scripts/build-kickstarter-campaign-form.mjs",
   },
   "linkedin-post": {
     path: path.join(
@@ -252,6 +292,16 @@ const FULL_FORM_SCHEMAS = {
       "webinar-package-variables.json",
     ),
     buildHint: "node scripts/build-webinar-package-form.mjs",
+  },
+  "whatsapp-broadcast": {
+    path: path.join(
+      root,
+      "src",
+      "config",
+      "template-forms",
+      "whatsapp-broadcast-variables.json",
+    ),
+    buildHint: "node scripts/build-whatsapp-broadcast-form.mjs",
   },
   "x-thread": {
     path: path.join(
@@ -407,6 +457,8 @@ function loadFullFormVariables(slug) {
     if (
       slug === "threads-post" ||
       slug === "instagram-carousel" ||
+      slug === "kickstarter-campaign" ||
+      slug === "discord-announcement" ||
       slug === "amazon-listing" ||
       slug === "app-store-listing" ||
       slug === "etsy-listing" ||
@@ -418,11 +470,14 @@ function loadFullFormVariables(slug) {
       slug === "reddit-post" ||
       slug === "email-sequence" ||
       slug === "google-business-profile-post" ||
+      slug === "github-readme" ||
+      slug === "indie-hackers-post" ||
       slug === "sms-campaign" ||
       slug === "substack-post" ||
       slug === "tiktok-caption" ||
       slug === "telegram-post" ||
       slug === "webinar-package" ||
+      slug === "whatsapp-broadcast" ||
       slug === "youtube-video-package"
     ) {
       variable.format = v.format;

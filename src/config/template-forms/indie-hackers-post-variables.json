@@ -1,0 +1,548 @@
+{
+  "slug": "indie-hackers-post",
+  "title": "Indie Hackers Post",
+  "fieldCount": 24,
+  "requiredKeys": [
+    "postType",
+    "projectOrTopic",
+    "projectSummary",
+    "primaryGoal",
+    "targetReaders",
+    "coreStory"
+  ],
+  "groups": [
+    {
+      "id": "essentials",
+      "title": "Essentials",
+      "description": "Post type, project context, readers, post goal, central story, relationship, stage, language, and desired depth.",
+      "defaultOpen": true
+    },
+    {
+      "id": "story_evidence",
+      "title": "Story & Evidence",
+      "description": "Founder background, timeline, challenges, lessons, metrics, and references that make the post concrete and credible.",
+      "defaultOpen": false
+    },
+    {
+      "id": "voice_community_fit",
+      "title": "Voice & Community Fit",
+      "description": "Tone, transparency, title direction, formatting, and the question used to invite useful founder discussion.",
+      "defaultOpen": false
+    },
+    {
+      "id": "promotion_safeguards",
+      "title": "Promotion & Safeguards",
+      "description": "Promotion level, optional project link, and final restrictions that prevent disguised advertising or unsupported claims.",
+      "defaultOpen": false
+    }
+  ],
+  "variables": [
+    {
+      "key": "postType",
+      "label": "Post type",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": true,
+      "placeholder": "Select the kind of post",
+      "hint": "Choose the structure that best matches what you want to share.",
+      "help": {
+        "what": "Provide the post type before generating the Indie Hackers post.",
+        "why": "Different founder stories require materially different structures and closing questions.",
+        "example": "Good example: Build update",
+        "avoid": "Avoid vague placeholders, generic startup stories, fake vulnerability, fake success metrics, or changing the post into an ad."
+      },
+      "defaultValue": "Build update",
+      "options": [
+        "Build update",
+        "Lesson learned",
+        "Feedback request",
+        "Milestone",
+        "Postmortem",
+        "Launch story",
+        "Question or discussion"
+      ]
+    },
+    {
+      "key": "projectOrTopic",
+      "label": "Project or topic",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": true,
+      "placeholder": "Example: Creatornivo, a content-template platform",
+      "hint": "Enter the project name or the specific founder topic being discussed.",
+      "help": {
+        "what": "Provide the project or topic before generating the Indie Hackers post.",
+        "why": "The model needs a clear subject around which to build the post.",
+        "example": "Good example: Creatornivo, a content-template platform",
+        "avoid": "Avoid vague placeholders, generic startup stories, fake vulnerability, fake success metrics, or changing the post into an ad."
+      },
+      "maxLength": 160
+    },
+    {
+      "key": "projectSummary",
+      "label": "What are you building?",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "Describe what it does, who it helps, and its current state.",
+      "hint": "Give readers enough context to understand the project without opening a link.",
+      "help": {
+        "what": "Provide the what are you building? before generating the Indie Hackers post.",
+        "why": "The project’s function and value cannot be safely inferred from its name alone.",
+        "example": "Good example: A structured AI workspace that helps creators turn briefs into platform-ready content.",
+        "avoid": "Avoid vague placeholders, generic startup stories, fake vulnerability, fake success metrics, or changing the post into an ad."
+      },
+      "maxLength": 700,
+      "fullWidth": true
+    },
+    {
+      "key": "primaryGoal",
+      "label": "Goal of this post",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": true,
+      "placeholder": "Select the main outcome",
+      "hint": "Choose one primary goal so the post remains focused.",
+      "help": {
+        "what": "Provide the goal of this post before generating the Indie Hackers post.",
+        "why": "The goal determines what information receives emphasis and how the post closes.",
+        "example": "Good example: Share useful progress",
+        "avoid": "Avoid vague placeholders, generic startup stories, fake vulnerability, fake success metrics, or changing the post into an ad."
+      },
+      "defaultValue": "Share useful progress",
+      "options": [
+        "Share useful progress",
+        "Teach a lesson",
+        "Get practical feedback",
+        "Start a discussion",
+        "Explain a milestone",
+        "Analyze a failure",
+        "Introduce a launch"
+      ]
+    },
+    {
+      "key": "targetReaders",
+      "label": "Who should read it?",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "Example: solo SaaS founders struggling to validate an early product",
+      "hint": "Describe the builders most likely to benefit or provide useful feedback.",
+      "help": {
+        "what": "Provide the who should read it? before generating the Indie Hackers post.",
+        "why": "Audience context changes terminology, examples, depth, and the discussion question.",
+        "example": "Good example: Solo SaaS founders struggling to validate an early product without fake launch hype.",
+        "avoid": "Avoid vague placeholders, generic startup stories, fake vulnerability, fake success metrics, or changing the post into an ad."
+      },
+      "maxLength": 400,
+      "fullWidth": true
+    },
+    {
+      "key": "coreStory",
+      "label": "Main story or message",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "Explain what happened, what changed, or what you want to discuss.",
+      "hint": "Focus on the specific event, decision, realization, or question behind the post.",
+      "help": {
+        "what": "Provide the main story or message before generating the Indie Hackers post.",
+        "why": "This is the unique factual and narrative foundation of the post.",
+        "example": "Good example: We replaced generic prompts with structured template forms and learned that field quality matters more than template count.",
+        "avoid": "Avoid vague placeholders, generic startup stories, fake vulnerability, fake success metrics, or changing the post into an ad."
+      },
+      "maxLength": 1200,
+      "fullWidth": true
+    },
+    {
+      "key": "relationshipToProject",
+      "label": "Your relationship",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select your relationship",
+      "hint": "Used to present your connection transparently and avoid disguised promotion.",
+      "help": {
+        "what": "Optional context for the your relationship field.",
+        "why": "Community posts must not misrepresent a commercial or professional affiliation.",
+        "example": "Good example: Founder or builder",
+        "avoid": "Avoid disguising commercial relationships, pretending independence, link dumping, or asking for votes, signups, praise, or traffic."
+      },
+      "defaultValue": "Founder or builder",
+      "options": [
+        "Founder or builder",
+        "Team member",
+        "Advisor or investor",
+        "Affiliate or partner",
+        "Independent user",
+        "Industry observer"
+      ]
+    },
+    {
+      "key": "buildStage",
+      "label": "Current stage",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select the current stage",
+      "hint": "Helps frame expectations, evidence, and next steps realistically.",
+      "help": {
+        "what": "Optional context for the current stage field.",
+        "why": "Stage controls proof, limitations, and what kind of feedback is appropriate.",
+        "example": "Good example: Private beta",
+        "avoid": "Avoid guessed facts, fake traction, fake community demand, confidential details, manipulative CTAs, or unsupported founder claims."
+      },
+      "defaultValue": "Building",
+      "options": [
+        "Idea",
+        "Validating",
+        "Building",
+        "Private beta",
+        "Public launch",
+        "Growing",
+        "Paused or closed"
+      ]
+    },
+    {
+      "key": "desiredLength",
+      "label": "Post length",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select the preferred depth",
+      "hint": "Auto lets the model choose the length that best fits the story.",
+      "help": {
+        "what": "Optional context for the post length field.",
+        "why": "Length affects how much context, evidence, and explanation should appear.",
+        "example": "Good example: Medium",
+        "avoid": "Avoid guessed facts, fake traction, fake community demand, confidential details, manipulative CTAs, or unsupported founder claims."
+      },
+      "defaultValue": "Auto",
+      "options": [
+        "Auto",
+        "Short",
+        "Medium",
+        "Detailed"
+      ]
+    },
+    {
+      "key": "outputLanguage",
+      "label": "Output language",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select output language",
+      "hint": "Generate the post package in the selected language.",
+      "help": {
+        "what": "Optional context for the output language field.",
+        "why": "The output language should match the intended community audience.",
+        "example": "Good example: English",
+        "avoid": "Avoid guessed facts, fake traction, fake community demand, confidential details, manipulative CTAs, or unsupported founder claims."
+      },
+      "defaultValue": "English",
+      "options": [
+        "English",
+        "Ukrainian",
+        "Russian",
+        "Spanish",
+        "German",
+        "French",
+        "Portuguese",
+        "Italian"
+      ]
+    },
+    {
+      "key": "founderBackground",
+      "label": "Relevant background",
+      "group": "story_evidence",
+      "groupTitle": "Story & Evidence",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Share only background that helps readers understand the decision or lesson.",
+      "hint": "Leave blank when background is not relevant.",
+      "help": {
+        "what": "Optional context for the relevant background field.",
+        "why": "Background can add credibility when it explains context without becoming a biography.",
+        "example": "Good example: Solo founder building a content workflow product while validating with a small beta audience.",
+        "avoid": "Avoid guessed facts, fake traction, fake community demand, confidential details, manipulative CTAs, or unsupported founder claims."
+      },
+      "maxLength": 500,
+      "fullWidth": true
+    },
+    {
+      "key": "contextTimeline",
+      "label": "Context and timeline",
+      "group": "story_evidence",
+      "groupTitle": "Story & Evidence",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Add key dates, sequence of events, or what happened before and after.",
+      "hint": "Use approximate timing if exact dates are not important or not confirmed.",
+      "help": {
+        "what": "Optional context for the context and timeline field.",
+        "why": "Timeline helps readers understand cause, order, and tradeoffs.",
+        "example": "Good example: Started with a simple generator, audited weak templates, and migrated the first batch over two weeks.",
+        "avoid": "Avoid guessed facts, fake traction, fake community demand, confidential details, manipulative CTAs, or unsupported founder claims."
+      },
+      "maxLength": 800,
+      "fullWidth": true
+    },
+    {
+      "key": "challengesMistakes",
+      "label": "Challenges and mistakes",
+      "group": "story_evidence",
+      "groupTitle": "Story & Evidence",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Describe constraints, wrong assumptions, failed attempts, or unresolved issues.",
+      "hint": "Be specific without dramatizing or blaming others.",
+      "help": {
+        "what": "Optional context for the challenges and mistakes field.",
+        "why": "Honest challenges make the post useful instead of promotional.",
+        "example": "Good example: We almost shipped fake-looking social proof and too many vague template fields.",
+        "avoid": "Avoid guessed facts, fake traction, fake community demand, confidential details, manipulative CTAs, or unsupported founder claims."
+      },
+      "maxLength": 1000,
+      "fullWidth": true
+    },
+    {
+      "key": "lessonsLearned",
+      "label": "Lessons learned",
+      "group": "story_evidence",
+      "groupTitle": "Story & Evidence",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "List the practical takeaways other founders can apply.",
+      "hint": "Focus on transferable learning rather than generic motivation.",
+      "help": {
+        "what": "Optional context for the lessons learned field.",
+        "why": "Lessons are what make the post valuable even without clicking a product link.",
+        "example": "Good example: Prompt quality is only useful when every variable has a clear field and examples.",
+        "avoid": "Avoid guessed facts, fake traction, fake community demand, confidential details, manipulative CTAs, or unsupported founder claims."
+      },
+      "maxLength": 1000,
+      "fullWidth": true
+    },
+    {
+      "key": "metricsEvidence",
+      "label": "Metrics or evidence",
+      "group": "story_evidence",
+      "groupTitle": "Story & Evidence",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Add only confirmed metrics, results, screenshots, quotes, or evidence.",
+      "hint": "Include definitions, timeframe, denominator, and uncertainty when relevant.",
+      "help": {
+        "what": "Optional context for the metrics or evidence field.",
+        "why": "Metrics and evidence strengthen the post only when they are accurate and contextualized.",
+        "example": "Good example: Use only confirmed metrics here, such as 15 migrated templates or 5 daily free generations.",
+        "avoid": "Avoid invented metrics, customer quotes, sources, screenshots, links, benchmarks, or unsupported validation."
+      },
+      "maxLength": 1200,
+      "fullWidth": true
+    },
+    {
+      "key": "sourceLinks",
+      "label": "Sources or references",
+      "group": "story_evidence",
+      "groupTitle": "Story & Evidence",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Paste approved links, references, posts, docs, or public sources.",
+      "hint": "Do not include private or unverified sources.",
+      "help": {
+        "what": "Optional context for the sources or references field.",
+        "why": "Source links can support claims, but the model must not invent them.",
+        "example": "Good example: Approved changelog, public post, or product page: https://www.creatornivo.com",
+        "avoid": "Avoid invented metrics, customer quotes, sources, screenshots, links, benchmarks, or unsupported validation."
+      },
+      "maxLength": 1500,
+      "fullWidth": true
+    },
+    {
+      "key": "tone",
+      "label": "Writing tone",
+      "group": "voice_community_fit",
+      "groupTitle": "Voice & Community Fit",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select the writing tone",
+      "hint": "Choose a tone that feels natural for a founder-community post.",
+      "help": {
+        "what": "Optional context for the writing tone field.",
+        "why": "Tone controls whether the post reads as candid, analytical, reflective, or conversational.",
+        "example": "Good example: Clear and candid",
+        "avoid": "Avoid guessed facts, fake traction, fake community demand, confidential details, manipulative CTAs, or unsupported founder claims."
+      },
+      "defaultValue": "Clear and candid",
+      "options": [
+        "Clear and candid",
+        "Conversational",
+        "Reflective",
+        "Analytical",
+        "Humble and open",
+        "Direct and concise",
+        "Lightly humorous"
+      ]
+    },
+    {
+      "key": "transparencyLevel",
+      "label": "Transparency level",
+      "group": "voice_community_fit",
+      "groupTitle": "Voice & Community Fit",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select transparency depth",
+      "hint": "Choose how openly the post should discuss limits, uncertainty, and setbacks.",
+      "help": {
+        "what": "Optional context for the transparency level field.",
+        "why": "Indie Hackers posts work best when transparent without exposing private or unsafe details.",
+        "example": "Good example: Balanced",
+        "avoid": "Avoid guessed facts, fake traction, fake community demand, confidential details, manipulative CTAs, or unsupported founder claims."
+      },
+      "defaultValue": "Balanced",
+      "options": [
+        "Reserved",
+        "Balanced",
+        "Very open",
+        "Auto"
+      ]
+    },
+    {
+      "key": "titleApproach",
+      "label": "Title approach",
+      "group": "voice_community_fit",
+      "groupTitle": "Voice & Community Fit",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select title direction",
+      "hint": "Choose the type of title angle or let the model infer it.",
+      "help": {
+        "what": "Optional context for the title approach field.",
+        "why": "Title direction changes whether the post leads with a result, lesson, question, or story.",
+        "example": "Good example: Lesson-led",
+        "avoid": "Avoid guessed facts, fake traction, fake community demand, confidential details, manipulative CTAs, or unsupported founder claims."
+      },
+      "defaultValue": "Auto",
+      "options": [
+        "Auto",
+        "Lesson-led",
+        "Result-led",
+        "Question-led",
+        "Story-led"
+      ]
+    },
+    {
+      "key": "formattingPreference",
+      "label": "Formatting preference",
+      "group": "voice_community_fit",
+      "groupTitle": "Voice & Community Fit",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Choose formatting preferences; or list preferences separated by commas.",
+      "hint": "Select preferred structure, or leave Auto for a readable founder-community layout. Available options: Auto, Short paragraphs, Section headings, Bullet points, Chronological flow, Narrative-first.",
+      "help": {
+        "what": "Optional context for the formatting preference field.",
+        "why": "Formatting affects scanability and whether the post uses headings, bullets, or narrative flow.",
+        "example": "Good example: Short paragraphs, bullet points",
+        "avoid": "Avoid guessed facts, fake traction, fake community demand, confidential details, manipulative CTAs, or unsupported founder claims."
+      },
+      "defaultValue": "Auto",
+      "fullWidth": true
+    },
+    {
+      "key": "discussionQuestion",
+      "label": "Question for readers",
+      "group": "voice_community_fit",
+      "groupTitle": "Voice & Community Fit",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Add one specific question you want the community to answer.",
+      "hint": "Leave blank when no discussion question is needed.",
+      "help": {
+        "what": "Optional context for the question for readers field.",
+        "why": "A focused question invites useful replies without engagement bait.",
+        "example": "Good example: How do you decide when a feature is useful enough to ship without extra polish?",
+        "avoid": "Avoid guessed facts, fake traction, fake community demand, confidential details, manipulative CTAs, or unsupported founder claims."
+      },
+      "maxLength": 400,
+      "fullWidth": true
+    },
+    {
+      "key": "promotionLevel",
+      "label": "Project promotion",
+      "group": "promotion_safeguards",
+      "groupTitle": "Promotion & Safeguards",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select how much project promotion is appropriate",
+      "hint": "Control whether the post omits links, mentions the project, or asks for direct feedback.",
+      "help": {
+        "what": "Optional context for the project promotion field.",
+        "why": "Promotion level prevents the post from becoming a disguised ad or link drop.",
+        "example": "Good example: Mention only",
+        "avoid": "Avoid disguising commercial relationships, pretending independence, link dumping, or asking for votes, signups, praise, or traffic."
+      },
+      "defaultValue": "Mention only",
+      "options": [
+        "No promotion",
+        "Mention only",
+        "Soft link",
+        "Direct feedback invitation"
+      ]
+    },
+    {
+      "key": "projectUrl",
+      "label": "Project URL",
+      "group": "promotion_safeguards",
+      "groupTitle": "Promotion & Safeguards",
+      "type": "text",
+      "required": false,
+      "placeholder": "https://www.creatornivo.com",
+      "hint": "Shown only when promotion level allows a link.",
+      "help": {
+        "what": "Optional context for the project url field.",
+        "why": "A supplied URL can be included once without inventing or requesting a link.",
+        "example": "Good example: https://www.creatornivo.com",
+        "avoid": "Avoid invented, unrelated, affiliate, shortened, or misleading URLs."
+      },
+      "format": "url",
+      "maxLength": 500,
+      "showWhen": {
+        "key": "promotionLevel",
+        "equals": [
+          "Soft link",
+          "Direct feedback invitation"
+        ]
+      }
+    },
+    {
+      "key": "additionalRequirements",
+      "label": "Additional requirements",
+      "group": "promotion_safeguards",
+      "groupTitle": "Promotion & Safeguards",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Add final restrictions, must-use wording, claims to avoid, or special context.",
+      "hint": "Use this for requirements not already covered by another field.",
+      "help": {
+        "what": "Optional context for the additional requirements field.",
+        "why": "A controlled final field handles edge cases without adding unnecessary form inputs.",
+        "example": "Good example: No fake MRR, users, quotes, launch results, or disguised promotion.",
+        "avoid": "Avoid guessed facts, fake traction, fake community demand, confidential details, manipulative CTAs, or unsupported founder claims."
+      },
+      "maxLength": 2000,
+      "fullWidth": true
+    }
+  ]
+}

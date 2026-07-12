@@ -130,7 +130,7 @@
     "title": "Discord Announcement",
     "category": "community",
     "plan": "pro",
-    "vars": 11
+    "vars": 23
   },
   {
     "slug": "email-sequence",
@@ -151,7 +151,7 @@
     "title": "GitHub README",
     "category": "app_ux",
     "plan": "pro",
-    "vars": 11
+    "vars": 32
   },
   {
     "slug": "in-app-ux-copy",
@@ -165,7 +165,7 @@
     "title": "Indie Hackers Post",
     "category": "community",
     "plan": "pro",
-    "vars": 16
+    "vars": 24
   },
   {
     "slug": "instagram-carousel",
@@ -179,7 +179,7 @@
     "title": "Kickstarter Campaign",
     "category": "product_launch",
     "plan": "pro",
-    "vars": 12
+    "vars": 43
   },
   {
     "slug": "landing-page-copy",
@@ -298,7 +298,7 @@
     "title": "WhatsApp Broadcast",
     "category": "community",
     "plan": "pro",
-    "vars": 11
+    "vars": 24
   },
   {
     "slug": "youtube-script",

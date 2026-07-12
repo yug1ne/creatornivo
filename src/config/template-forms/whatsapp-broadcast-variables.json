@@ -1,0 +1,560 @@
+{
+  "slug": "whatsapp-broadcast",
+  "title": "WhatsApp Broadcast",
+  "fieldCount": 24,
+  "requiredKeys": [
+    "senderName",
+    "subjectOffer",
+    "primaryGoal",
+    "targetAudience",
+    "keyMessage",
+    "consentConfirmed"
+  ],
+  "groups": [
+    {
+      "id": "essentials",
+      "title": "Essentials",
+      "description": "Sender identity, audience, objective, message facts, CTA destination, language, and recipient-consent confirmation.",
+      "defaultOpen": true
+    },
+    {
+      "id": "audience_personalization",
+      "title": "Audience & Personalization",
+      "description": "Recipient relationship and safe personalization controls for WhatsApp broadcast wording.",
+      "defaultOpen": false
+    },
+    {
+      "id": "message_style_timing",
+      "title": "Message Style & Timing",
+      "description": "Supporting facts, tone, length, emoji use, and time-sensitive details.",
+      "defaultOpen": false
+    },
+    {
+      "id": "compliance_output",
+      "title": "Compliance & Output",
+      "description": "Offer terms, opt-out wording, sensitive category, output quantity, and final requirements.",
+      "defaultOpen": false
+    }
+  ],
+  "variables": [
+    {
+      "key": "senderName",
+      "label": "Sender or business name",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": true,
+      "placeholder": "Northside Studio",
+      "hint": "Name recipients should immediately recognize as the sender.",
+      "help": {
+        "what": "Provide the sender or business name for this WhatsApp broadcast.",
+        "why": "WhatsApp broadcasts should clearly identify the person, organization, or business contacting the recipient.",
+        "example": "Good example: Northside Studio",
+        "avoid": "Avoid vague placeholders, unsupported claims, multiple competing topics, or changing the broadcast into a different campaign."
+      },
+      "maxLength": 120
+    },
+    {
+      "key": "broadcastType",
+      "label": "Broadcast type",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select a message type",
+      "hint": "Choose the situation that best matches this broadcast.",
+      "help": {
+        "what": "Optional context for the broadcast type field.",
+        "why": "Different WhatsApp broadcasts require different structures, levels of urgency, and information.",
+        "example": "Good example: Event or reminder",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, hidden promotion, fabricated personalization, extra CTAs, or sensitive private data."
+      },
+      "defaultValue": "Announcement",
+      "maxLength": 40,
+      "options": [
+        "Announcement",
+        "Promotion or offer",
+        "Event or reminder",
+        "Product or service update",
+        "Useful content or tip",
+        "Operational notice"
+      ]
+    },
+    {
+      "key": "subjectOffer",
+      "label": "What is this about?",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": true,
+      "placeholder": "New booking slots for August",
+      "hint": "Name the announcement, offer, event, update, or topic.",
+      "help": {
+        "what": "Provide the what is this about? for this WhatsApp broadcast.",
+        "why": "It establishes the central subject around which the entire message is written.",
+        "example": "Good example: New booking slots for August",
+        "avoid": "Avoid vague placeholders, unsupported claims, multiple competing topics, or changing the broadcast into a different campaign."
+      },
+      "maxLength": 180
+    },
+    {
+      "key": "primaryGoal",
+      "label": "Primary goal",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": true,
+      "placeholder": "Select the desired result",
+      "hint": "Choose the single most important action or outcome.",
+      "help": {
+        "what": "Provide the primary goal for this WhatsApp broadcast.",
+        "why": "The goal determines the message emphasis and primary CTA.",
+        "example": "Good example: Drive purchase or booking",
+        "avoid": "Avoid vague placeholders, unsupported claims, multiple competing topics, or changing the broadcast into a different campaign."
+      },
+      "maxLength": 40,
+      "options": [
+        "Inform recipients",
+        "Drive clicks",
+        "Get replies",
+        "Drive purchase or booking",
+        "Confirm an action",
+        "Re-engage the audience"
+      ]
+    },
+    {
+      "key": "targetAudience",
+      "label": "Target audience",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "Existing customers who booked a service in the past six months",
+      "hint": "Describe who will receive the broadcast and what matters to them.",
+      "help": {
+        "what": "Provide the target audience for this WhatsApp broadcast.",
+        "why": "Audience context materially affects vocabulary, relevance, assumed knowledge, and positioning.",
+        "example": "Good example: Existing customers who booked a service in the past six months.",
+        "avoid": "Avoid vague placeholders, unsupported claims, multiple competing topics, or changing the broadcast into a different campaign."
+      },
+      "maxLength": 500,
+      "fullWidth": true
+    },
+    {
+      "key": "keyMessage",
+      "label": "Key message and facts",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "Explain the main news, value, action, and confirmed details recipients need.",
+      "hint": "Include only information that is accurate and approved for use.",
+      "help": {
+        "what": "Provide the key message and facts for this WhatsApp broadcast.",
+        "why": "The model must receive the factual substance of the broadcast rather than inventing it.",
+        "example": "Good example: August booking slots are now open. Weekend appointments are limited and can be reserved through the booking page.",
+        "avoid": "Avoid assumptions, fake urgency, invented prices, fabricated results, unsupported links, or vague filler."
+      },
+      "maxLength": 1200,
+      "fullWidth": true
+    },
+    {
+      "key": "primaryCTA",
+      "label": "Call to action",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": false,
+      "placeholder": "Reply BOOK, reserve your place, or view the details",
+      "hint": "Leave as Auto to generate one action that matches the goal.",
+      "help": {
+        "what": "Optional context for the call to action field.",
+        "why": "It lets the user specify an exact action while retaining a low-effort automatic option.",
+        "example": "Good example: Reserve your place",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, hidden promotion, fabricated personalization, extra CTAs, or sensitive private data."
+      },
+      "defaultValue": "Auto",
+      "maxLength": 180
+    },
+    {
+      "key": "destinationLink",
+      "label": "Destination link",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": false,
+      "placeholder": "https://example.com/booking",
+      "hint": "Add the exact page recipients should open, when relevant.",
+      "help": {
+        "what": "Optional context for the destination link field.",
+        "why": "The model must never fabricate a booking, product, event, or information link.",
+        "example": "Good example: https://example.com/booking",
+        "avoid": "Avoid invented, shortened, rewritten, tracking-modified, or unsupported links."
+      },
+      "format": "url",
+      "maxLength": 500
+    },
+    {
+      "key": "outputLanguage",
+      "label": "Output language",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": false,
+      "placeholder": "English",
+      "hint": "Enter any language or regional language variant.",
+      "help": {
+        "what": "Optional context for the output language field.",
+        "why": "It supports any required language without an oversized language selector.",
+        "example": "Good example: English",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, hidden promotion, fabricated personalization, extra CTAs, or sensitive private data."
+      },
+      "defaultValue": "English",
+      "maxLength": 60
+    },
+    {
+      "key": "consentConfirmed",
+      "label": "Recipient consent confirmed",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": true,
+      "placeholder": "Select consent status",
+      "hint": "Confirm this audience has valid permission to receive the WhatsApp communication.",
+      "help": {
+        "what": "Provide the recipient consent confirmed for this WhatsApp broadcast.",
+        "why": "The template should not generate unsolicited broadcast marketing without a positive consent confirmation.",
+        "example": "Good example: On",
+        "avoid": "Avoid generating messages for audiences without explicit WhatsApp permission or unclear consent status."
+      },
+      "defaultValue": "Off",
+      "maxLength": 5,
+      "options": [
+        "On",
+        "Off"
+      ]
+    },
+    {
+      "key": "audienceRelationship",
+      "label": "Audience relationship",
+      "group": "audience_personalization",
+      "groupTitle": "Audience & Personalization",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select the audience relationship",
+      "hint": "Clarifies what relationship may be referenced without inventing familiarity.",
+      "help": {
+        "what": "Optional context for the audience relationship field.",
+        "why": "The wording should reflect the actual recipient relationship without pretending a closer connection exists.",
+        "example": "Good example: Existing customers or subscribers",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, hidden promotion, fabricated personalization, extra CTAs, or sensitive private data."
+      },
+      "defaultValue": "Existing customers or subscribers",
+      "maxLength": 40,
+      "options": [
+        "Existing customers or subscribers",
+        "Members or community",
+        "Event registrants or attendees",
+        "Qualified leads with consent",
+        "Employees or internal audience",
+        "Other opted-in audience"
+      ]
+    },
+    {
+      "key": "personalizationMode",
+      "label": "Personalization",
+      "group": "audience_personalization",
+      "groupTitle": "Audience & Personalization",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select personalization level",
+      "hint": "Use only supplied tokens or broad segment context.",
+      "help": {
+        "what": "Optional context for the personalization field.",
+        "why": "It controls useful personalization while preventing fabricated individual details.",
+        "example": "Good example: First-name token",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, hidden promotion, fabricated personalization, extra CTAs, or sensitive private data."
+      },
+      "defaultValue": "None",
+      "maxLength": 32,
+      "options": [
+        "None",
+        "First-name token",
+        "Segment-level wording"
+      ]
+    },
+    {
+      "key": "personalizationToken",
+      "label": "First-name token",
+      "group": "audience_personalization",
+      "groupTitle": "Audience & Personalization",
+      "type": "text",
+      "required": false,
+      "placeholder": "[First name]",
+      "hint": "Enter the exact merge token supported by your sending system.",
+      "help": {
+        "what": "Optional context for the first-name token field.",
+        "why": "Different WhatsApp tools use different merge-token formats that cannot be safely inferred.",
+        "example": "Good example: [First name]",
+        "avoid": "Avoid fake merge fields, unsupported tokens, or personalization based on private behavior that was not supplied."
+      },
+      "defaultValue": "[First name]",
+      "maxLength": 60,
+      "showWhen": {
+        "key": "personalizationMode",
+        "equals": "First-name token"
+      }
+    },
+    {
+      "key": "supportingDetails",
+      "label": "Supporting details",
+      "group": "message_style_timing",
+      "groupTitle": "Message Style & Timing",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Add confirmed prices, locations, instructions, availability, or practical details.",
+      "hint": "Include useful secondary information that does not belong in the main message field.",
+      "help": {
+        "what": "Optional context for the supporting details field.",
+        "why": "It accommodates important facts without expanding the required Essentials form.",
+        "example": "Good example: Appointments are available from August 5. Deposits are refundable until 48 hours before the booking.",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, hidden promotion, fabricated personalization, extra CTAs, or sensitive private data."
+      },
+      "maxLength": 1200,
+      "fullWidth": true
+    },
+    {
+      "key": "tone",
+      "label": "Tone",
+      "group": "message_style_timing",
+      "groupTitle": "Message Style & Timing",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select a tone",
+      "hint": "Choose how the sender should sound.",
+      "help": {
+        "what": "Optional context for the tone field.",
+        "why": "Tone materially affects direct-message trust and brand consistency.",
+        "example": "Good example: Warm and friendly",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, hidden promotion, fabricated personalization, extra CTAs, or sensitive private data."
+      },
+      "defaultValue": "Clear and natural",
+      "maxLength": 32,
+      "options": [
+        "Clear and natural",
+        "Warm and friendly",
+        "Professional",
+        "Casual",
+        "Urgent but calm",
+        "Premium",
+        "Playful"
+      ]
+    },
+    {
+      "key": "length",
+      "label": "Message length",
+      "group": "message_style_timing",
+      "groupTitle": "Message Style & Timing",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select a length",
+      "hint": "Controls detail while keeping the broadcast mobile-friendly.",
+      "help": {
+        "what": "Optional context for the message length field.",
+        "why": "Different announcements require different amounts of explanation.",
+        "example": "Good example: Platform appropriate",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, hidden promotion, fabricated personalization, extra CTAs, or sensitive private data."
+      },
+      "defaultValue": "Platform appropriate",
+      "maxLength": 24,
+      "options": [
+        "Very short",
+        "Platform appropriate",
+        "Detailed"
+      ]
+    },
+    {
+      "key": "emojiUse",
+      "label": "Emoji use",
+      "group": "message_style_timing",
+      "groupTitle": "Message Style & Timing",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select emoji use",
+      "hint": "Controls whether emojis are omitted or used sparingly.",
+      "help": {
+        "what": "Optional context for the emoji use field.",
+        "why": "Emoji expectations vary significantly between brands and audience types.",
+        "example": "Good example: Minimal",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, hidden promotion, fabricated personalization, extra CTAs, or sensitive private data."
+      },
+      "defaultValue": "Minimal",
+      "maxLength": 16,
+      "options": [
+        "None",
+        "Minimal",
+        "Moderate"
+      ]
+    },
+    {
+      "key": "deadlineOrDate",
+      "label": "Date or deadline",
+      "group": "message_style_timing",
+      "groupTitle": "Message Style & Timing",
+      "type": "text",
+      "required": false,
+      "placeholder": "15 August at 18:00, Europe/Kyiv",
+      "hint": "Include the date, time, timezone, deadline, or affected period.",
+      "help": {
+        "what": "Optional context for the date or deadline field.",
+        "why": "Time-sensitive information must come from the user and must not be inferred or fabricated.",
+        "example": "Good example: 15 August at 18:00, Europe/Kyiv",
+        "avoid": "Avoid invented deadlines, vague relative timing, missing time zones, or fake urgency."
+      },
+      "maxLength": 120,
+      "showWhen": {
+        "key": "broadcastType",
+        "equals": [
+          "Promotion or offer",
+          "Event or reminder",
+          "Operational notice"
+        ]
+      }
+    },
+    {
+      "key": "offerTerms",
+      "label": "Offer terms",
+      "group": "compliance_output",
+      "groupTitle": "Compliance & Output",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Eligibility, exclusions, valid dates, stock limits, minimum spend, or other terms",
+      "hint": "Provide the conditions needed to describe the offer accurately.",
+      "help": {
+        "what": "Optional context for the offer terms field.",
+        "why": "Promotional wording can become misleading when important limitations are omitted.",
+        "example": "Good example: Valid for opted-in customers only; subject to available appointment times.",
+        "avoid": "Avoid invented discounts, stock limits, eligibility, expiry dates, bonuses, prices, or scarcity."
+      },
+      "maxLength": 1000,
+      "showWhen": {
+        "key": "broadcastType",
+        "equals": "Promotion or offer"
+      },
+      "fullWidth": true
+    },
+    {
+      "key": "optOutMode",
+      "label": "Opt-out wording",
+      "group": "compliance_output",
+      "groupTitle": "Compliance & Output",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select opt-out behavior",
+      "hint": "Auto includes opt-out wording when the message context calls for it.",
+      "help": {
+        "what": "Optional context for the opt-out wording field.",
+        "why": "Promotional and recurring broadcasts may need a clear, practical way to stop future messages.",
+        "example": "Good example: Custom wording",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, hidden promotion, fabricated personalization, extra CTAs, or sensitive private data."
+      },
+      "defaultValue": "Auto",
+      "maxLength": 32,
+      "options": [
+        "Auto",
+        "Always include",
+        "Custom wording",
+        "Omit only when appropriate"
+      ]
+    },
+    {
+      "key": "customOptOutText",
+      "label": "Custom opt-out text",
+      "group": "compliance_output",
+      "groupTitle": "Compliance & Output",
+      "type": "text",
+      "required": false,
+      "placeholder": "Reply STOP to stop receiving these updates.",
+      "hint": "Enter approved wording supported by your unsubscribe process.",
+      "help": {
+        "what": "Optional context for the custom opt-out text field.",
+        "why": "The opt-out instruction must match the sender's actual process.",
+        "example": "Good example: Reply STOP to stop receiving these updates.",
+        "avoid": "Avoid unsubscribe instructions that the sender's real process cannot honor."
+      },
+      "maxLength": 200,
+      "showWhen": {
+        "key": "optOutMode",
+        "equals": "Custom wording"
+      }
+    },
+    {
+      "key": "sensitiveCategory",
+      "label": "Sensitive category",
+      "group": "compliance_output",
+      "groupTitle": "Compliance & Output",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select only when relevant",
+      "hint": "Applies additional caution to regulated or high-stakes claims.",
+      "help": {
+        "what": "Optional context for the sensitive category field.",
+        "why": "Certain subject areas require more cautious wording and stronger claim controls.",
+        "example": "Good example: None",
+        "avoid": "Avoid unsupported medical, financial, legal, employment, political, or regulated-product claims."
+      },
+      "defaultValue": "None",
+      "maxLength": 40,
+      "options": [
+        "None",
+        "Health or medical",
+        "Financial or investment",
+        "Legal or tax",
+        "Employment or recruitment",
+        "Political or civic",
+        "Age-restricted or regulated"
+      ]
+    },
+    {
+      "key": "variantCount",
+      "label": "Number of variants",
+      "group": "compliance_output",
+      "groupTitle": "Compliance & Output",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select output quantity",
+      "hint": "Generate one focused message or a small set of distinct options.",
+      "help": {
+        "what": "Optional context for the number of variants field.",
+        "why": "It provides useful choice without producing an excessive number of near-duplicate messages.",
+        "example": "Good example: 2",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, hidden promotion, fabricated personalization, extra CTAs, or sensitive private data."
+      },
+      "defaultValue": "2",
+      "maxLength": 1,
+      "options": [
+        "1",
+        "2",
+        "3"
+      ]
+    },
+    {
+      "key": "additionalRequirements",
+      "label": "Additional requirements",
+      "group": "compliance_output",
+      "groupTitle": "Compliance & Output",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Add required wording, restrictions, brand preferences, or details to avoid.",
+      "hint": "Use this for important instructions not covered elsewhere.",
+      "help": {
+        "what": "Optional context for the additional requirements field.",
+        "why": "It provides one controlled place for exceptional requirements without duplicating miscellaneous fields.",
+        "example": "Good example: Avoid fake scarcity and do not mention discounts unless supplied.",
+        "avoid": "Avoid guessed facts, fake urgency, fake scarcity, hidden promotion, fabricated personalization, extra CTAs, or sensitive private data."
+      },
+      "maxLength": 2000,
+      "fullWidth": true
+    }
+  ]
+}

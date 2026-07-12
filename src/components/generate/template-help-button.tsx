@@ -8,13 +8,17 @@ import { APP_STORE_LISTING_GUIDE_PATH } from "@/config/template-forms/app-store-
 import { BLOG_ARTICLE_GUIDE_PATH } from "@/config/template-forms/blog-article";
 import { CASE_STUDY_GUIDE_PATH } from "@/config/template-forms/case-study";
 import { COLD_EMAIL_OUTREACH_GUIDE_PATH } from "@/config/template-forms/cold-email-outreach";
+import { DISCORD_ANNOUNCEMENT_GUIDE_PATH } from "@/config/template-forms/discord-announcement";
 import { EMAIL_SEQUENCE_GUIDE_PATH } from "@/config/template-forms/email-sequence";
 import { ETSY_LISTING_GUIDE_PATH } from "@/config/template-forms/etsy-listing";
 import { FACEBOOK_POST_GUIDE_PATH } from "@/config/template-forms/facebook-post";
 import { FAQ_PAGE_GUIDE_PATH } from "@/config/template-forms/faq-page";
+import { GITHUB_README_GUIDE_PATH } from "@/config/template-forms/github-readme";
 import { GOOGLE_BUSINESS_PROFILE_POST_GUIDE_PATH } from "@/config/template-forms/google-business-profile-post";
+import { INDIE_HACKERS_POST_GUIDE_PATH } from "@/config/template-forms/indie-hackers-post";
 import { INSTAGRAM_CAROUSEL_GUIDE_PATH } from "@/config/template-forms/instagram-carousel";
 import { INSTAGRAM_POST_GUIDE_PATH } from "@/config/template-forms/instagram-post";
+import { KICKSTARTER_CAMPAIGN_GUIDE_PATH } from "@/config/template-forms/kickstarter-campaign";
 import { LANDING_PAGE_COPY_GUIDE_PATH } from "@/config/template-forms/landing-page-copy";
 import { LINKEDIN_CAROUSEL_GUIDE_PATH } from "@/config/template-forms/linkedin-carousel";
 import { LINKEDIN_POST_GUIDE_PATH } from "@/config/template-forms/linkedin-post";
@@ -35,6 +39,7 @@ import { TELEGRAM_POST_GUIDE_PATH } from "@/config/template-forms/telegram-post"
 import { THREADS_POST_GUIDE_PATH } from "@/config/template-forms/threads-post";
 import { TIKTOK_CAPTION_GUIDE_PATH } from "@/config/template-forms/tiktok-caption";
 import { WEBINAR_PACKAGE_GUIDE_PATH } from "@/config/template-forms/webinar-package";
+import { WHATSAPP_BROADCAST_GUIDE_PATH } from "@/config/template-forms/whatsapp-broadcast";
 import { X_THREAD_GUIDE_PATH } from "@/config/template-forms/x-thread";
 import { YOUTUBE_VIDEO_PACKAGE_GUIDE_PATH } from "@/config/template-forms/youtube-video-package";
 import { YOUTUBE_SCRIPT_GUIDE_PATH } from "@/config/template-forms/youtube-script";
@@ -46,13 +51,17 @@ const GUIDE_PATH_BY_SLUG: Record<string, string> = {
   "blog-article": BLOG_ARTICLE_GUIDE_PATH,
   "case-study": CASE_STUDY_GUIDE_PATH,
   "cold-email-outreach": COLD_EMAIL_OUTREACH_GUIDE_PATH,
+  "discord-announcement": DISCORD_ANNOUNCEMENT_GUIDE_PATH,
   "email-sequence": EMAIL_SEQUENCE_GUIDE_PATH,
   "etsy-listing": ETSY_LISTING_GUIDE_PATH,
   "facebook-post": FACEBOOK_POST_GUIDE_PATH,
   "faq-page": FAQ_PAGE_GUIDE_PATH,
+  "github-readme": GITHUB_README_GUIDE_PATH,
   "google-business-profile-post": GOOGLE_BUSINESS_PROFILE_POST_GUIDE_PATH,
+  "indie-hackers-post": INDIE_HACKERS_POST_GUIDE_PATH,
   "instagram-carousel": INSTAGRAM_CAROUSEL_GUIDE_PATH,
   "instagram-post": INSTAGRAM_POST_GUIDE_PATH,
+  "kickstarter-campaign": KICKSTARTER_CAMPAIGN_GUIDE_PATH,
   "landing-page-copy": LANDING_PAGE_COPY_GUIDE_PATH,
   "linkedin-carousel": LINKEDIN_CAROUSEL_GUIDE_PATH,
   "linkedin-post": LINKEDIN_POST_GUIDE_PATH,
@@ -73,6 +82,7 @@ const GUIDE_PATH_BY_SLUG: Record<string, string> = {
   "threads-post": THREADS_POST_GUIDE_PATH,
   "tiktok-caption": TIKTOK_CAPTION_GUIDE_PATH,
   "webinar-package": WEBINAR_PACKAGE_GUIDE_PATH,
+  "whatsapp-broadcast": WHATSAPP_BROADCAST_GUIDE_PATH,
   "x-thread": X_THREAD_GUIDE_PATH,
   "youtube-video-package": YOUTUBE_VIDEO_PACKAGE_GUIDE_PATH,
   "youtube-script": YOUTUBE_SCRIPT_GUIDE_PATH,

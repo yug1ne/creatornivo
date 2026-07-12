@@ -1,0 +1,688 @@
+{
+  "slug": "github-readme",
+  "title": "GitHub README",
+  "fieldCount": 32,
+  "requiredKeys": [
+    "projectName",
+    "projectSummary",
+    "projectType",
+    "primaryAudience",
+    "projectPurpose",
+    "keyFeatures"
+  ],
+  "groups": [
+    {
+      "id": "essentials",
+      "title": "Essentials",
+      "description": "Project identity, summary, type, audience, purpose, verified features, repository link, language, depth, and primary reader action.",
+      "defaultOpen": true
+    },
+    {
+      "id": "setup_usage",
+      "title": "Setup & Usage",
+      "description": "Technical stack, requirements, installation, package manager, commands, configuration, usage instructions, and examples.",
+      "defaultOpen": false
+    },
+    {
+      "id": "project_presentation",
+      "title": "Project Presentation",
+      "description": "Project status, demo and documentation links, badges, media, architecture notes, roadmap, and special requirements.",
+      "defaultOpen": false
+    },
+    {
+      "id": "community_trust",
+      "title": "Community & Trust",
+      "description": "Contribution guidance, issue reporting, security disclosure, license, code of conduct, and acknowledgements.",
+      "defaultOpen": false
+    }
+  ],
+  "variables": [
+    {
+      "key": "projectName",
+      "label": "Project name",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": true,
+      "placeholder": "Example: TaskFlow CLI",
+      "hint": "Enter the public name that should appear at the top of the README.",
+      "help": {
+        "what": "Provide the project name before generating the GitHub README.",
+        "why": "The project name cannot be safely inferred and is required for the README title.",
+        "example": "Good example: TaskFlow CLI",
+        "avoid": "Avoid vague placeholders, marketing slogans, unsupported capabilities, fake status claims, or changing the project into a different tool."
+      },
+      "maxLength": 120
+    },
+    {
+      "key": "projectSummary",
+      "label": "Short project description",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "Describe what the project does in one or two clear sentences.",
+      "hint": "Focus on the project’s function and main value rather than marketing slogans.",
+      "help": {
+        "what": "Provide the short project description before generating the GitHub README.",
+        "why": "A verified summary is necessary to create an accurate opening description.",
+        "example": "Good example: A command-line tool that helps small teams organize recurring project tasks from plain-text files.",
+        "avoid": "Avoid vague placeholders, marketing slogans, unsupported capabilities, fake status claims, or changing the project into a different tool."
+      },
+      "maxLength": 500,
+      "fullWidth": true
+    },
+    {
+      "key": "projectType",
+      "label": "Project type",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": true,
+      "placeholder": "Select the closest project type",
+      "hint": "This changes the README structure, setup instructions, and example format.",
+      "help": {
+        "what": "Provide the project type before generating the GitHub README.",
+        "why": "Different software project types require meaningfully different installation, usage, and documentation structures.",
+        "example": "Good example: Command-line tool",
+        "avoid": "Avoid vague placeholders, marketing slogans, unsupported capabilities, fake status claims, or changing the project into a different tool."
+      },
+      "defaultValue": "Auto-detect from details",
+      "options": [
+        "Auto-detect from details",
+        "Library or package",
+        "Command-line tool",
+        "Web application",
+        "API or service",
+        "Mobile application",
+        "Desktop application",
+        "Template or boilerplate",
+        "Other software project"
+      ],
+      "maxLength": 50
+    },
+    {
+      "key": "primaryAudience",
+      "label": "Primary README audience",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": true,
+      "placeholder": "Choose the main reader",
+      "hint": "Select the people who should understand and act on the README first.",
+      "help": {
+        "what": "Provide the primary readme audience before generating the GitHub README.",
+        "why": "Audience determines the balance between explanation, setup detail, examples, and contribution information.",
+        "example": "Good example: Developers and users",
+        "avoid": "Avoid vague placeholders, marketing slogans, unsupported capabilities, fake status claims, or changing the project into a different tool."
+      },
+      "defaultValue": "Developers and users",
+      "options": [
+        "Developers and users",
+        "Package consumers",
+        "Application users",
+        "API integrators",
+        "Potential contributors",
+        "Technical evaluators",
+        "Internal development team",
+        "Mixed audience"
+      ],
+      "maxLength": 50
+    },
+    {
+      "key": "projectPurpose",
+      "label": "Purpose and use case",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "What problem does the project solve, and when should someone use it?",
+      "hint": "Include the main use case and any important limits on what the project is for.",
+      "help": {
+        "what": "Provide the purpose and use case before generating the GitHub README.",
+        "why": "The README needs a concrete reason for the project to exist without inventing positioning.",
+        "example": "Good example: Use it when a team wants simple local task automation without adopting a hosted project-management system.",
+        "avoid": "Avoid vague placeholders, marketing slogans, unsupported capabilities, fake status claims, or changing the project into a different tool."
+      },
+      "maxLength": 1000,
+      "fullWidth": true
+    },
+    {
+      "key": "keyFeatures",
+      "label": "Key features",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "List the most important verified capabilities, one per line.",
+      "hint": "Include only features that currently exist or clearly label planned features.",
+      "help": {
+        "what": "Provide the key features before generating the GitHub README.",
+        "why": "Feature information is project-specific and must be supplied to prevent fabricated capabilities.",
+        "example": "Good example: Parse task files, group tasks by owner, print due-date summaries, and export a Markdown checklist.",
+        "avoid": "Avoid vague placeholders, marketing slogans, unsupported capabilities, fake status claims, or changing the project into a different tool."
+      },
+      "maxLength": 1500,
+      "fullWidth": true
+    },
+    {
+      "key": "repositoryUrl",
+      "label": "Repository URL",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": false,
+      "placeholder": "https://github.com/owner/repository",
+      "hint": "Used only for accurate repository links, clone commands, and references.",
+      "help": {
+        "what": "Optional context for the repository url field.",
+        "why": "An exact URL allows correct repository-specific commands and links without guessing the owner or repository name.",
+        "example": "Good example: https://github.com/example/taskflow-cli",
+        "avoid": "Avoid invented, private, shortened, misleading, or unrelated URLs."
+      },
+      "format": "url",
+      "maxLength": 500
+    },
+    {
+      "key": "outputLanguage",
+      "label": "README language",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "text",
+      "required": false,
+      "placeholder": "Example: English",
+      "hint": "Enter the language in which the complete README should be written.",
+      "help": {
+        "what": "Optional context for the readme language field.",
+        "why": "The user may need documentation in a language that cannot be inferred from the project details.",
+        "example": "Good example: English",
+        "avoid": "Avoid guessed technical details, unsupported compatibility, fake roadmap promises, secrets, or undocumented behavior."
+      },
+      "defaultValue": "English",
+      "maxLength": 60
+    },
+    {
+      "key": "readmeDepth",
+      "label": "README depth",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": false,
+      "placeholder": "Choose the preferred level of detail",
+      "hint": "The model will omit unnecessary sections even when a detailed option is selected.",
+      "help": {
+        "what": "Optional context for the readme depth field.",
+        "why": "Documentation depth materially changes how much setup, explanation, and example content should be included.",
+        "example": "Good example: Standard",
+        "avoid": "Avoid guessed technical details, unsupported compatibility, fake roadmap promises, secrets, or undocumented behavior."
+      },
+      "defaultValue": "Standard",
+      "options": [
+        "Quick",
+        "Standard",
+        "Detailed",
+        "Auto"
+      ],
+      "maxLength": 30
+    },
+    {
+      "key": "primaryCallToAction",
+      "label": "Primary reader action",
+      "group": "essentials",
+      "groupTitle": "Essentials",
+      "type": "select",
+      "required": false,
+      "placeholder": "Choose what readers should do next",
+      "hint": "Select one main action rather than adding several competing requests.",
+      "help": {
+        "what": "Optional context for the primary reader action field.",
+        "why": "A README should guide readers toward one proportional next step.",
+        "example": "Good example: Install and try the project",
+        "avoid": "Avoid guessed technical details, unsupported compatibility, fake roadmap promises, secrets, or undocumented behavior."
+      },
+      "defaultValue": "Auto",
+      "options": [
+        "Auto",
+        "Install and try the project",
+        "View the live demo",
+        "Read the documentation",
+        "Integrate the package or API",
+        "Contribute to the project",
+        "Star the repository",
+        "No explicit call to action"
+      ],
+      "maxLength": 40
+    },
+    {
+      "key": "techStack",
+      "label": "Technology stack",
+      "group": "setup_usage",
+      "groupTitle": "Setup & Usage",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "List languages, frameworks, libraries, runtime, database, or key services.",
+      "hint": "Include only confirmed technologies used by the project.",
+      "help": {
+        "what": "Optional context for the technology stack field.",
+        "why": "Technical stack helps readers understand requirements and project fit.",
+        "example": "Good example: Node.js, TypeScript, Commander, Vitest",
+        "avoid": "Avoid guessed technical details, unsupported compatibility, fake roadmap promises, secrets, or undocumented behavior."
+      },
+      "maxLength": 1000,
+      "fullWidth": true
+    },
+    {
+      "key": "systemRequirements",
+      "label": "System requirements",
+      "group": "setup_usage",
+      "groupTitle": "Setup & Usage",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "List runtime versions, operating systems, tools, accounts, SDKs, databases, or services required.",
+      "hint": "Do not invent minimum versions or optional tools.",
+      "help": {
+        "what": "Optional context for the system requirements field.",
+        "why": "Readers need verified prerequisites before attempting setup.",
+        "example": "Good example: Node.js 20 or later; pnpm 9 or later.",
+        "avoid": "Avoid guessed technical details, unsupported compatibility, fake roadmap promises, secrets, or undocumented behavior."
+      },
+      "maxLength": 1500,
+      "fullWidth": true
+    },
+    {
+      "key": "installationMethod",
+      "label": "Installation method",
+      "group": "setup_usage",
+      "groupTitle": "Setup & Usage",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select installation style",
+      "hint": "Choose the supported installation path or let the model infer from supplied commands.",
+      "help": {
+        "what": "Optional context for the installation method field.",
+        "why": "Installation style determines whether the README shows package, clone, Docker, release, hosted, or mixed instructions.",
+        "example": "Good example: Package manager",
+        "avoid": "Avoid guessed technical details, unsupported compatibility, fake roadmap promises, secrets, or undocumented behavior."
+      },
+      "defaultValue": "Auto",
+      "options": [
+        "Auto",
+        "Package manager",
+        "Clone and build",
+        "Docker or container",
+        "Downloaded release",
+        "Hosted with no installation",
+        "Multiple methods"
+      ],
+      "maxLength": 40
+    },
+    {
+      "key": "packageManager",
+      "label": "Package manager",
+      "group": "setup_usage",
+      "groupTitle": "Setup & Usage",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select package manager",
+      "hint": "Shown only when package-manager instructions are relevant.",
+      "help": {
+        "what": "Optional context for the package manager field.",
+        "why": "Package-manager syntax must match the actual supported workflow.",
+        "example": "Good example: pnpm",
+        "avoid": "Avoid guessed technical details, unsupported compatibility, fake roadmap promises, secrets, or undocumented behavior."
+      },
+      "defaultValue": "Auto",
+      "options": [
+        "Auto",
+        "npm",
+        "pnpm",
+        "Yarn",
+        "pip",
+        "Poetry",
+        "Composer",
+        "Cargo",
+        "NuGet",
+        "Other"
+      ],
+      "maxLength": 30,
+      "showWhen": {
+        "key": "installationMethod",
+        "equals": [
+          "Package manager",
+          "Multiple methods"
+        ]
+      }
+    },
+    {
+      "key": "installCommands",
+      "label": "Installation commands",
+      "group": "setup_usage",
+      "groupTitle": "Setup & Usage",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Paste verified install, clone, build, Docker, or setup commands exactly.",
+      "hint": "Do not include guessed commands.",
+      "help": {
+        "what": "Optional context for the installation commands field.",
+        "why": "Commands are high-risk documentation and must be supplied or clearly marked for verification.",
+        "example": "Good example: pnpm install\npnpm build",
+        "avoid": "Avoid guessed commands, fake package names, invented environment variables, real secrets, unsupported outputs, or unverified setup steps."
+      },
+      "maxLength": 4000,
+      "fullWidth": true
+    },
+    {
+      "key": "usageInstructions",
+      "label": "Basic usage",
+      "group": "setup_usage",
+      "groupTitle": "Setup & Usage",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Explain the first successful use, command, workflow, or API call.",
+      "hint": "Keep it focused on a real working path.",
+      "help": {
+        "what": "Optional context for the basic usage field.",
+        "why": "Usage instructions turn installation into a practical first result.",
+        "example": "Good example: Run `taskflow scan ./tasks` from the repository root.",
+        "avoid": "Avoid guessed commands, fake package names, invented environment variables, real secrets, unsupported outputs, or unverified setup steps."
+      },
+      "maxLength": 3000,
+      "fullWidth": true
+    },
+    {
+      "key": "configurationDetails",
+      "label": "Configuration and environment",
+      "group": "setup_usage",
+      "groupTitle": "Setup & Usage",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "List real environment variables, config files, defaults, and setup notes.",
+      "hint": "Do not include real secrets or invented variables.",
+      "help": {
+        "what": "Optional context for the configuration and environment field.",
+        "why": "Configuration is often required for a README to be usable.",
+        "example": "Good example: Optional `.taskflowrc` file controls default task directory and output format.",
+        "avoid": "Avoid guessed commands, fake package names, invented environment variables, real secrets, unsupported outputs, or unverified setup steps."
+      },
+      "maxLength": 4000,
+      "fullWidth": true
+    },
+    {
+      "key": "exampleCode",
+      "label": "Code or command examples",
+      "group": "setup_usage",
+      "groupTitle": "Setup & Usage",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Paste verified code, CLI examples, API calls, or expected workflow examples.",
+      "hint": "Label illustrative output when it is not exact.",
+      "help": {
+        "what": "Optional context for the code or command examples field.",
+        "why": "Examples should be accurate enough for readers to adapt safely.",
+        "example": "Good example: taskflow scan ./tasks --owner alex --format markdown",
+        "avoid": "Avoid guessed commands, fake package names, invented environment variables, real secrets, unsupported outputs, or unverified setup steps."
+      },
+      "maxLength": 4000,
+      "fullWidth": true
+    },
+    {
+      "key": "projectStatus",
+      "label": "Project status",
+      "group": "project_presentation",
+      "groupTitle": "Project Presentation",
+      "type": "select",
+      "required": false,
+      "placeholder": "Select project status",
+      "hint": "Choose the honest current status.",
+      "help": {
+        "what": "Optional context for the project status field.",
+        "why": "Status affects whether the README needs beta, archive, maintenance, or stability notices.",
+        "example": "Good example: Beta",
+        "avoid": "Avoid guessed technical details, unsupported compatibility, fake roadmap promises, secrets, or undocumented behavior."
+      },
+      "defaultValue": "Active development",
+      "options": [
+        "Active development",
+        "Stable",
+        "Beta",
+        "Experimental",
+        "Maintenance mode",
+        "Archived or discontinued"
+      ],
+      "maxLength": 40
+    },
+    {
+      "key": "demoUrl",
+      "label": "Demo or live project URL",
+      "group": "project_presentation",
+      "groupTitle": "Project Presentation",
+      "type": "text",
+      "required": false,
+      "placeholder": "https://www.creatornivo.com/demo",
+      "hint": "Add only a verified demo, hosted app, preview, or live project URL.",
+      "help": {
+        "what": "Optional context for the demo or live project url field.",
+        "why": "Do not invent a demo link.",
+        "example": "Good example: https://www.creatornivo.com/demo",
+        "avoid": "Avoid invented, private, shortened, misleading, or unrelated URLs."
+      },
+      "format": "url",
+      "maxLength": 500
+    },
+    {
+      "key": "documentationUrl",
+      "label": "Documentation URL",
+      "group": "project_presentation",
+      "groupTitle": "Project Presentation",
+      "type": "text",
+      "required": false,
+      "placeholder": "https://github.com/owner/repository/docs",
+      "hint": "Add the official docs, wiki, API reference, or website URL.",
+      "help": {
+        "what": "Optional context for the documentation url field.",
+        "why": "Use only real documentation destinations.",
+        "example": "Good example: https://github.com/example/taskflow-cli/docs",
+        "avoid": "Avoid invented, private, shortened, misleading, or unrelated URLs."
+      },
+      "format": "url",
+      "maxLength": 500
+    },
+    {
+      "key": "badgesAndBuildInfo",
+      "label": "Badges and build information",
+      "group": "project_presentation",
+      "groupTitle": "Project Presentation",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Paste verified badge image URLs, target URLs, workflow names, package names, or build facts.",
+      "hint": "Do not invent passing builds, coverage, versions, downloads, stars, or security status.",
+      "help": {
+        "what": "Optional context for the badges and build information field.",
+        "why": "Badges are useful only when they reflect real repository signals.",
+        "example": "Good example: Only include confirmed build, test, package, or license badges with exact image and target URLs.",
+        "avoid": "Avoid invented badges, audits, licenses, contributors, media assets, acknowledgements, or trust claims."
+      },
+      "maxLength": 2500,
+      "fullWidth": true
+    },
+    {
+      "key": "screenshotsAndMedia",
+      "label": "Screenshots and media",
+      "group": "project_presentation",
+      "groupTitle": "Project Presentation",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "List confirmed screenshots, demo GIFs, diagrams, captions, and privacy notes.",
+      "hint": "Avoid implying media exists when it does not.",
+      "help": {
+        "what": "Optional context for the screenshots and media field.",
+        "why": "Visuals can make a README clearer when assets are real and safe to publish.",
+        "example": "Good example: Terminal screenshot showing a sample task summary; hide private project names.",
+        "avoid": "Avoid invented badges, audits, licenses, contributors, media assets, acknowledgements, or trust claims."
+      },
+      "maxLength": 2500,
+      "fullWidth": true
+    },
+    {
+      "key": "architectureNotes",
+      "label": "Architecture notes",
+      "group": "project_presentation",
+      "groupTitle": "Project Presentation",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Describe repository structure, major modules, services, data flow, or design decisions.",
+      "hint": "Keep planned architecture separate from implemented architecture.",
+      "help": {
+        "what": "Optional context for the architecture notes field.",
+        "why": "Architecture context helps technical readers navigate the project.",
+        "example": "Good example: CLI entry point, parser module, reporter module, and file-system adapter.",
+        "avoid": "Avoid guessed technical details, unsupported compatibility, fake roadmap promises, secrets, or undocumented behavior."
+      },
+      "maxLength": 2500,
+      "fullWidth": true
+    },
+    {
+      "key": "roadmap",
+      "label": "Roadmap or planned work",
+      "group": "project_presentation",
+      "groupTitle": "Project Presentation",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "List planned, experimental, or under-consideration work with status labels.",
+      "hint": "Do not present planned items as existing features.",
+      "help": {
+        "what": "Optional context for the roadmap or planned work field.",
+        "why": "Roadmap notes set expectations without overstating current capability.",
+        "example": "Good example: Planned: JSON export and custom grouping. Not yet implemented.",
+        "avoid": "Avoid guessed technical details, unsupported compatibility, fake roadmap promises, secrets, or undocumented behavior."
+      },
+      "maxLength": 2000,
+      "fullWidth": true
+    },
+    {
+      "key": "additionalContext",
+      "label": "Additional context",
+      "group": "project_presentation",
+      "groupTitle": "Project Presentation",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Add special requirements, restrictions, facts to include, or claims to avoid.",
+      "hint": "Use this for information not already covered by another field.",
+      "help": {
+        "what": "Optional context for the additional context field.",
+        "why": "A final controlled context field handles project-specific edge cases.",
+        "example": "Good example: Do not claim production readiness or security audit; keep commands exact.",
+        "avoid": "Avoid guessed technical details, unsupported compatibility, fake roadmap promises, secrets, or undocumented behavior."
+      },
+      "maxLength": 2000,
+      "fullWidth": true
+    },
+    {
+      "key": "contributionGuidelines",
+      "label": "Contribution guidelines",
+      "group": "community_trust",
+      "groupTitle": "Community & Trust",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Explain who can contribute, how to propose changes, and required checks.",
+      "hint": "Do not invent contribution acceptance or maintainer availability.",
+      "help": {
+        "what": "Optional context for the contribution guidelines field.",
+        "why": "Contribution guidance helps readers participate appropriately.",
+        "example": "Good example: Open an issue before large changes; run tests before submitting a pull request.",
+        "avoid": "Avoid guessed technical details, unsupported compatibility, fake roadmap promises, secrets, or undocumented behavior."
+      },
+      "maxLength": 3000,
+      "fullWidth": true
+    },
+    {
+      "key": "issueTrackerUrl",
+      "label": "Issue tracker URL",
+      "group": "community_trust",
+      "groupTitle": "Community & Trust",
+      "type": "text",
+      "required": false,
+      "placeholder": "https://github.com/owner/repository/issues",
+      "hint": "Add the confirmed place to report bugs or request features.",
+      "help": {
+        "what": "Optional context for the issue tracker url field.",
+        "why": "Do not invent support destinations.",
+        "example": "Good example: https://github.com/example/taskflow-cli/issues",
+        "avoid": "Avoid invented, private, shortened, misleading, or unrelated URLs."
+      },
+      "format": "url",
+      "maxLength": 500
+    },
+    {
+      "key": "securityPolicy",
+      "label": "Security reporting",
+      "group": "community_trust",
+      "groupTitle": "Community & Trust",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Explain how vulnerabilities should be reported and what should not be posted publicly.",
+      "hint": "Do not invent private disclosure methods or audits.",
+      "help": {
+        "what": "Optional context for the security reporting field.",
+        "why": "Security reporting needs exact, safe instructions.",
+        "example": "Good example: Report vulnerabilities privately through the repository security policy.",
+        "avoid": "Avoid invented badges, audits, licenses, contributors, media assets, acknowledgements, or trust claims."
+      },
+      "maxLength": 2000,
+      "fullWidth": true
+    },
+    {
+      "key": "licenseInfo",
+      "label": "License information",
+      "group": "community_trust",
+      "groupTitle": "Community & Trust",
+      "type": "text",
+      "required": false,
+      "placeholder": "Example: MIT, Apache-2.0, Proprietary, or See LICENSE",
+      "hint": "State the confirmed license or where to find it.",
+      "help": {
+        "what": "Optional context for the license information field.",
+        "why": "License information affects whether readers can use, modify, or distribute the project.",
+        "example": "Good example: MIT",
+        "avoid": "Avoid invented badges, audits, licenses, contributors, media assets, acknowledgements, or trust claims."
+      },
+      "maxLength": 300
+    },
+    {
+      "key": "codeOfConductUrl",
+      "label": "Code of conduct URL",
+      "group": "community_trust",
+      "groupTitle": "Community & Trust",
+      "type": "text",
+      "required": false,
+      "placeholder": "https://github.com/owner/repository/blob/main/CODE_OF_CONDUCT.md",
+      "hint": "Add only a confirmed code-of-conduct URL.",
+      "help": {
+        "what": "Optional context for the code of conduct url field.",
+        "why": "Do not imply a policy exists when it does not.",
+        "example": "Good example: https://github.com/example/taskflow-cli/blob/main/CODE_OF_CONDUCT.md",
+        "avoid": "Avoid invented, private, shortened, misleading, or unrelated URLs."
+      },
+      "format": "url",
+      "maxLength": 500
+    },
+    {
+      "key": "acknowledgements",
+      "label": "Acknowledgements",
+      "group": "community_trust",
+      "groupTitle": "Community & Trust",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "List libraries, contributors, sponsors, inspirations, or third-party assets to acknowledge.",
+      "hint": "Use only approved attributions.",
+      "help": {
+        "what": "Optional context for the acknowledgements field.",
+        "why": "Acknowledgements should be accurate and rights-safe.",
+        "example": "Good example: Thanks to contributors who tested early task-file formats.",
+        "avoid": "Avoid invented badges, audits, licenses, contributors, media assets, acknowledgements, or trust claims."
+      },
+      "maxLength": 2000,
+      "fullWidth": true
+    }
+  ]
+}
