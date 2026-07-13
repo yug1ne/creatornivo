@@ -25,6 +25,7 @@ const OPTIONAL_FIELD_RISK_CATEGORY_ORDER = [
   "proof",
   "timing",
   "disclosure",
+  "contact",
   "visual",
 ] as const;
 
@@ -100,6 +101,7 @@ const OPTIONAL_FIELD_RISK_TOKENS = {
     "relationship",
     "relationships",
   ],
+  contact: ["phone", "phones", "handle", "handles"],
   visual: [
     "visual",
     "visuals",
@@ -404,6 +406,21 @@ export function classifyOptionalFieldRiskCategories(
       return hasTokenSequence(tokenList, ["alt", "text"]);
     }
 
+    if (category === "contact") {
+      return (
+        hasTokenSequence(tokenList, ["contact", "details"]) ||
+        hasTokenSequence(tokenList, ["contact", "method"]) ||
+        hasTokenSequence(tokenList, ["media", "contact"]) ||
+        hasTokenSequence(tokenList, ["email", "address"]) ||
+        hasTokenSequence(tokenList, ["sender", "email"]) ||
+        hasTokenSequence(tokenList, ["email", "sender", "name"]) ||
+        hasTokenSequence(tokenList, ["business", "postal", "address"]) ||
+        hasTokenSequence(tokenList, ["postal", "address"]) ||
+        hasTokenSequence(tokenList, ["mailing", "address"]) ||
+        hasTokenSequence(tokenList, ["sender", "name"])
+      );
+    }
+
     return false;
   });
 }
@@ -466,6 +483,12 @@ function buildBlankOptionalFieldRules(
   if (categories.has("disclosure")) {
     lines.push(
       "For blank disclosure or affiliation fields, do not add disclosures, sponsorship language, affiliate wording, partnership claims, or relationship claims unless another supplied input explicitly requires them.",
+    );
+  }
+
+  if (categories.has("contact")) {
+    lines.push(
+      "For blank contact fields, do not invent email addresses, phone numbers, postal addresses, social handles, contact names, or placeholder contact details.",
     );
   }
 

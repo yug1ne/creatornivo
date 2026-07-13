@@ -4,6 +4,23 @@ import { requireSession } from "@/lib/auth/session";
 import { prisma } from "@/lib/db";
 import { canSavePrompt } from "@/lib/subscriptions/limits";
 import { getSaveLimitMessage } from "@/lib/subscriptions/messages";
+import {
+  getGeneratedOutputValidationMessage,
+  validateGeneratedOutput,
+} from "@/lib/templates/output-validation";
+import { parseTemplateVariables } from "@/lib/templates/utils";
+
+function parseStringRecord(value: unknown): Record<string, string> {
+  if (typeof value !== "object" || value === null || Array.isArray(value)) {
+    return {};
+  }
+
+  return Object.fromEntries(
+    Object.entries(value).filter(
+      (entry): entry is [string, string] => typeof entry[1] === "string",
+    ),
+  );
+}
 
 export async function GET() {
   try {
@@ -34,11 +51,34 @@ export async function POST(request: Request) {
       title?: string;
       content?: string;
       templateId?: string | null;
+      templateValues?: unknown;
     };
 
     if (!title?.trim() || !content?.trim()) {
       return NextResponse.json(
         { error: "Title and content are required" },
+        { status: 400 },
+      );
+    }
+
+    const template =
+      templateId
+        ? await prisma.template.findUnique({
+            where: { id: templateId },
+            select: { variables: true },
+          })
+        : null;
+    const outputValidation = validateGeneratedOutput(
+      content,
+      template ? parseTemplateVariables(template.variables) : [],
+      parseStringRecord((body as { templateValues?: unknown }).templateValues),
+    );
+    const outputValidationMessage =
+      getGeneratedOutputValidationMessage(outputValidation);
+
+    if (outputValidationMessage) {
+      return NextResponse.json(
+        { error: outputValidationMessage, code: "output_validation_failed" },
         { status: 400 },
       );
     }

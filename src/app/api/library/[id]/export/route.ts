@@ -9,6 +9,10 @@ import {
 import { canExportContent, EXPORT_UPGRADE_MESSAGE } from "@/lib/export/permissions";
 import { requireSession } from "@/lib/auth/session";
 import { prisma } from "@/lib/db";
+import {
+  getGeneratedOutputValidationMessage,
+  validateGeneratedOutput,
+} from "@/lib/templates/output-validation";
 
 interface RouteParams {
   params: Promise<{ id: string }>;
@@ -40,6 +44,17 @@ export async function GET(request: Request, { params }: RouteParams) {
 
     if (!prompt) {
       return NextResponse.json({ error: "Prompt not found" }, { status: 404 });
+    }
+
+    const outputValidation = validateGeneratedOutput(prompt.content);
+    const outputValidationMessage =
+      getGeneratedOutputValidationMessage(outputValidation);
+
+    if (outputValidationMessage) {
+      return NextResponse.json(
+        { error: outputValidationMessage, code: "output_validation_failed" },
+        { status: 400 },
+      );
     }
 
     const exportContent = prepareExportContent(prompt.content, format);

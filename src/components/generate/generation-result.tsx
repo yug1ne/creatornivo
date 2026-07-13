@@ -19,6 +19,7 @@ interface GenerationResultProps {
   saveLimitMessage: string | null;
   onSave: () => Promise<{ error?: string; id?: string }>;
   savedPromptId?: string | null;
+  outputValidationMessage?: string | null;
 }
 
 function isSaveLimitError(message: string): boolean {
@@ -35,6 +36,7 @@ export function GenerationResult({
   saveLimitMessage,
   onSave,
   savedPromptId: initialSavedId,
+  outputValidationMessage,
 }: GenerationResultProps) {
   const [copied, setCopied] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
@@ -44,12 +46,18 @@ export function GenerationResult({
 
   useEffect(() => {
     if (initialSavedId) {
+      // Keep the local saved-link state synchronized with the server response.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setSavedId(initialSavedId);
     }
   }, [initialSavedId]);
 
   async function handleCopy() {
     if (!content) return;
+    if (outputValidationMessage) {
+      setSaveError(outputValidationMessage);
+      return;
+    }
 
     await navigator.clipboard.writeText(content);
     setCopied(true);
@@ -77,6 +85,7 @@ export function GenerationResult({
   }
 
   if (!content && !isStreaming) return null;
+  const hasOutputValidationError = Boolean(outputValidationMessage);
 
   return (
     <Card className="overflow-hidden">
@@ -93,6 +102,11 @@ export function GenerationResult({
             {saveSuccessFlash && (
               <Badge variant="success">Saved to library</Badge>
             )}
+            {hasOutputValidationError && (
+              <Badge className="bg-destructive/10 text-destructive">
+                Output validation failed
+              </Badge>
+            )}
           </div>
           <p className="mt-1 font-mono text-xs text-muted-foreground">{model}</p>
         </div>
@@ -104,6 +118,8 @@ export function GenerationResult({
               variant={copied ? "secondary" : "outline"}
               size="sm"
               onClick={handleCopy}
+              disabled={hasOutputValidationError}
+              title={outputValidationMessage ?? undefined}
             >
               {copied ? "✓ Copied" : "Copy"}
             </Button>
@@ -120,8 +136,8 @@ export function GenerationResult({
                 type="button"
                 size="sm"
                 onClick={handleSave}
-                disabled={isSaving || !canSave}
-                title={saveLimitMessage ?? undefined}
+                disabled={isSaving || !canSave || hasOutputValidationError}
+                title={outputValidationMessage ?? saveLimitMessage ?? undefined}
                 data-onboarding="save-to-library"
               >
                 {isSaving ? "Saving..." : "Save to library"}
@@ -132,12 +148,21 @@ export function GenerationResult({
               canExport={canExport}
               title={exportTitle}
               content={content}
+              contentValidationMessage={outputValidationMessage}
             />
           </div>
         )}
       </CardHeader>
 
       <CardContent className="scrollbar-thin max-h-[36rem] overflow-y-auto p-0">
+        {outputValidationMessage && !isStreaming && (
+          <div
+            className="border-b border-destructive/20 bg-destructive/10 px-6 py-3 text-sm text-destructive"
+            role="alert"
+          >
+            {outputValidationMessage}
+          </div>
+        )}
         <div className="px-6 py-6">
           <MarkdownContent content={content} isStreaming={isStreaming} />
         </div>

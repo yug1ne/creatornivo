@@ -12,6 +12,10 @@ import {
   parseTemplateVariables,
   validateVariableValues,
 } from "../src/lib/templates/utils";
+import {
+  getGeneratedOutputValidationMessage,
+  validateGeneratedOutput,
+} from "../src/lib/templates/output-validation";
 import type { TemplateVariable } from "../src/types/template";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -267,6 +271,12 @@ test("optional risk classifier keeps exact-token positive matches", () => {
       variable: optionalField("commercialRelationship"),
       categories: ["disclosure"],
     },
+    { variable: optionalField("contactDetails"), categories: ["contact"] },
+    {
+      variable: optionalField("senderPostalAddress", "Business postal address"),
+      categories: ["contact"],
+    },
+    { variable: optionalField("mediaContact"), categories: ["contact"] },
     { variable: optionalField("visualDetails"), categories: ["visual"] },
     { variable: optionalField("altText"), categories: ["visual"] },
     { variable: optionalField("imageAsset"), categories: ["visual"] },
@@ -475,6 +485,207 @@ test("blank optional rules are a single deduplicated block", () => {
     [defaultOnlyVariable],
   );
   assert.doesNotMatch(defaultOnlyRendered, /BLANK OPTIONAL FIELD RULES/);
+});
+
+test("generated output validator blocks confirmed placeholder artifacts", () => {
+  const variables: TemplateVariable[] = [
+    optionalField("destinationUrl", "Destination URL"),
+    optionalField("offerDetails", "Offer details"),
+    optionalField("eventDate", "Event date"),
+    optionalField("location", "Location"),
+    optionalField("proofPoints", "Proof points"),
+    optionalField("affiliationDetails", "Affiliation details"),
+    optionalField("contactDetails", "Contact details"),
+    optionalField("visualDetails", "Visual details"),
+  ];
+  const values = buildDefaultValues(variables);
+  const cases: Array<{ content: string; category: string }> = [
+    { content: "Read more [here](#).", category: "url" },
+    { content: "Use [link if allowed] after the CTA.", category: "url" },
+    { content: "Add [insert link] before publishing.", category: "url" },
+    { content: "Visit URL_HERE for details.", category: "url" },
+    { content: "Check the link below.", category: "url" },
+    { content: "Price: $99", category: "commercial" },
+    { content: "Discount: [insert price]", category: "commercial" },
+    { content: "Ends tonight.", category: "commercial" },
+    { content: "Use promo code SAVE20.", category: "commercial" },
+    { content: "Event date: [date]", category: "timing" },
+    { content: "Location: TBD", category: "timing" },
+    { content: "Venue: [location]", category: "timing" },
+    { content: "Proof: [insert statistic]", category: "proof" },
+    { content: "According to research, this is proven.", category: "proof" },
+    { content: "Testimonial: \"This changed everything.\"", category: "proof" },
+    { content: "Sponsored by [sponsor name].", category: "disclosure" },
+    { content: "Affiliate disclosure: paid partner.", category: "disclosure" },
+    { content: "Email name@example.com.", category: "contact" },
+    { content: "Call 555-123-4567.", category: "contact" },
+    { content: "Follow @yourhandle.", category: "contact" },
+    { content: "Image: [insert image]", category: "visual" },
+    { content: "Screenshot: [add screenshot]", category: "visual" },
+  ];
+
+  for (const { content, category } of cases) {
+    const result = validateGeneratedOutput(content, variables, values);
+    assert.equal(result.ok, false, `${content} should fail validation`);
+    assert.ok(
+      result.issues.some((issue) => issue.category === category),
+      `${content} should produce a ${category} issue`,
+    );
+    assert.match(
+      getGeneratedOutputValidationMessage(result) ?? "",
+      /Output validation failed/,
+    );
+  }
+});
+
+test("generated output validator preserves supplied values and normal notes", () => {
+  const variables: TemplateVariable[] = [
+    optionalField("destinationUrl", "Destination URL"),
+    optionalField("offerDetails", "Offer details"),
+    optionalField("eventDate", "Event date"),
+    optionalField("proofPoints", "Proof points"),
+    {
+      ...optionalField("visualSuggestion", "Include visual suggestion"),
+      defaultValue: "Yes",
+    },
+  ];
+  const values = buildDefaultValues(variables);
+  values.destinationUrl = "https://www.creatornivo.com/reddit-resource";
+  values.offerDetails = "Founding price: $4.90/month.";
+  values.eventDate = "July 31, 2026";
+  values.proofPoints = "203 template tests passed.";
+
+  const result = validateGeneratedOutput(
+    [
+      "Posting Notes: Check whether links are allowed in the subreddit.",
+      "Use https://www.creatornivo.com/reddit-resource exactly once.",
+      "The supplied founding price is $4.90/month.",
+      "Date: July 31, 2026.",
+      "Proof: 203 template tests passed.",
+      "Visual suggestion: use a simple product workflow illustration.",
+    ].join("\n"),
+    variables,
+    values,
+  );
+
+  assert.deepEqual(result, { ok: true, issues: [] });
+});
+
+test("output validator has required-only risk coverage across all 45 templates", () => {
+  const placeholderByCategory = {
+    url: "Read more [here](#).",
+    commercial: "Price: [insert price].",
+    proof: "Proof: [insert statistic].",
+    timing: "Date: [date].",
+    disclosure: "Sponsored by [sponsor name].",
+    contact: "Contact: name@example.com.",
+    visual: "Image: [insert image].",
+  };
+
+  for (const template of catalog) {
+    const variables = parseTemplateVariables(template.variables);
+    const values = buildRequiredOnlyValues(template.slug, variables);
+    const blankCategories = new Set(
+      variables
+        .filter(
+          (variable) =>
+            !variable.required &&
+            !variable.defaultValue?.trim() &&
+            !values[variable.key]?.trim(),
+        )
+        .flatMap((variable) => classifyOptionalFieldRiskCategories(variable)),
+    );
+
+    for (const category of blankCategories) {
+      const result = validateGeneratedOutput(
+        placeholderByCategory[category],
+        variables,
+        values,
+      );
+      assert.equal(
+        result.ok,
+        false,
+        `${template.slug} should validate ${category} placeholder output`,
+      );
+      assert.ok(
+        result.issues.some((issue) => issue.category === category),
+        `${template.slug} should report ${category}`,
+      );
+    }
+  }
+});
+
+test("generation route validates final output before saving and usage increment", () => {
+  const route = readProjectFile("src", "app", "api", "ai", "generate", "route.ts");
+  const validator = readProjectFile(
+    "src",
+    "lib",
+    "templates",
+    "output-validation.ts",
+  );
+  const createContentStreamIndex = route.indexOf("await createContentStream");
+  const outputValidationIndex = route.indexOf("validateGeneratedOutput(");
+  const failIndex = route.indexOf("prismaGenerationReservationStore.fail", outputValidationIndex);
+  const completeIndex = route.indexOf("prismaGenerationReservationStore.complete");
+  const incrementUsageIndex = route.indexOf("await incrementUsage");
+
+  assert.ok(createContentStreamIndex >= 0);
+  assert.ok(outputValidationIndex > createContentStreamIndex);
+  assert.ok(failIndex > outputValidationIndex);
+  assert.ok(completeIndex > outputValidationIndex);
+  assert.ok(outputValidationIndex < completeIndex);
+  assert.ok(outputValidationIndex < incrementUsageIndex);
+  assert.equal(route.match(/await createContentStream/g)?.length, 1);
+  assert.equal(route.match(/await reserveGeneration/g)?.length, 1);
+  assert.doesNotMatch(validator, /createContentStream|reserveGeneration|incrementUsage/);
+});
+
+test("copy, save, and export paths are guarded by output validation", () => {
+  const workspace = readProjectFile(
+    "src",
+    "components",
+    "generate",
+    "generate-workspace.tsx",
+  );
+  const generationResult = readProjectFile(
+    "src",
+    "components",
+    "generate",
+    "generation-result.tsx",
+  );
+  const exportButtons = readProjectFile(
+    "src",
+    "components",
+    "export",
+    "export-buttons.tsx",
+  );
+  const copyButton = readProjectFile(
+    "src",
+    "components",
+    "library",
+    "copy-content-button.tsx",
+  );
+  const libraryRoute = readProjectFile("src", "app", "api", "library", "route.ts");
+  const exportRoute = readProjectFile("src", "app", "api", "export", "route.ts");
+  const savedExportRoute = readProjectFile(
+    "src",
+    "app",
+    "api",
+    "library",
+    "[id]",
+    "export",
+    "route.ts",
+  );
+
+  assert.match(workspace, /validateGeneratedOutput\(/);
+  assert.match(workspace, /templateValues: resultValidationContext\?\.values/);
+  assert.match(generationResult, /outputValidationMessage/);
+  assert.match(generationResult, /navigator\.clipboard\.writeText/);
+  assert.match(exportButtons, /contentValidationMessage/);
+  assert.match(copyButton, /validateGeneratedOutput\(content\)/);
+  assert.match(libraryRoute, /validateGeneratedOutput\(/);
+  assert.match(exportRoute, /validateGeneratedOutput\(content\)/);
+  assert.match(savedExportRoute, /validateGeneratedOutput\(prompt\.content\)/);
 });
 
 test("meaningful defaults are treated as values, not blank optional fields", () => {

@@ -355,7 +355,7 @@ test("filled prompts and prompt preview mapping handle required, optional, unico
   );
   assert.match(
     route,
-    /fillPromptTemplate\(\s*template\.prompt,\s*body\.values,\s*variables,\s*\)/,
+    /fillPromptTemplate\(\s*template\.prompt,\s*templateValues,\s*variables,\s*\)/,
   );
   assert.match(
     preview,

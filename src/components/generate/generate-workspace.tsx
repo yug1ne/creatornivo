@@ -27,6 +27,10 @@ import {
   validateVariableValues,
 } from "@/lib/templates/utils";
 import {
+  getGeneratedOutputValidationMessage,
+  validateGeneratedOutput,
+} from "@/lib/templates/output-validation";
+import {
   getGenerationLimitMessage,
   getSaveLimitMessage,
 } from "@/lib/subscriptions/messages";
@@ -142,6 +146,11 @@ export function GenerateWorkspace({
     });
   const [savedCount, setSavedCount] = useState(initialUsage.savedCount);
   const [savedPromptId, setSavedPromptId] = useState<string | null>(null);
+  const [resultValidationContext, setResultValidationContext] = useState<{
+    templateId: string;
+    variables: TemplateVariable[];
+    values: Record<string, string>;
+  } | null>(null);
   const requestIdRef = useRef<string | null>(null);
   const inFlightRef = useRef(false);
   const resetButtonRef = useRef<HTMLButtonElement | null>(null);
@@ -153,6 +162,17 @@ export function GenerateWorkspace({
   const isFormAtDefaults = selected
     ? areTemplateValuesAtDefaults(selected.variables, values)
     : true;
+  const outputValidation = useMemo(() => {
+    if (!streamedContent || !resultValidationContext) return null;
+    return validateGeneratedOutput(
+      streamedContent,
+      resultValidationContext.variables,
+      resultValidationContext.values,
+    );
+  }, [resultValidationContext, streamedContent]);
+  const outputValidationMessage = outputValidation
+    ? getGeneratedOutputValidationMessage(outputValidation)
+    : null;
 
   const canGenerate = generationUsage.remaining > 0;
 
@@ -196,6 +216,7 @@ export function GenerateWorkspace({
       setModel("");
       setError(null);
       setSavedPromptId(null);
+      setResultValidationContext(null);
 
       const url = new URL(window.location.href);
       url.searchParams.set("template", template.slug);
@@ -264,6 +285,11 @@ export function GenerateWorkspace({
     setStreamedContent("");
     setModel(MODEL_BY_PLAN[userPlan]);
     setSavedPromptId(null);
+    setResultValidationContext({
+      templateId: selected.id,
+      variables: selected.variables,
+      values: { ...values },
+    });
 
     try {
       const response = await fetch("/api/ai/generate", {
@@ -333,6 +359,18 @@ export function GenerateWorkspace({
       return { error: "No content to save" };
     }
 
+    const validation = resultValidationContext
+      ? validateGeneratedOutput(
+          streamedContent,
+          resultValidationContext.variables,
+          resultValidationContext.values,
+        )
+      : validateGeneratedOutput(streamedContent);
+    const validationMessage = getGeneratedOutputValidationMessage(validation);
+    if (validationMessage) {
+      return { error: validationMessage };
+    }
+
     if (!canSave) {
       return { error: saveLimitMessage ?? "Save limit reached" };
     }
@@ -344,6 +382,7 @@ export function GenerateWorkspace({
         title: `${selected.title} — ${new Date().toLocaleDateString("en-US")}`,
         content: streamedContent,
         templateId: selected.id,
+        templateValues: resultValidationContext?.values,
       }),
     });
 
@@ -551,6 +590,7 @@ export function GenerateWorkspace({
                 exportTitle={selected.title}
                 saveLimitMessage={saveLimitMessage}
                 savedPromptId={savedPromptId}
+                outputValidationMessage={outputValidationMessage}
                 onSave={handleSave}
               />
             </div>

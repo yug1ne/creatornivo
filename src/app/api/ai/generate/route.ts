@@ -33,6 +33,10 @@ import {
   parseTemplateVariables,
   validateVariableValues,
 } from "@/lib/templates/utils";
+import {
+  getGeneratedOutputValidationMessage,
+  validateGeneratedOutput,
+} from "@/lib/templates/output-validation";
 
 function isValidRequestId(value: unknown): value is string {
   return (
@@ -133,9 +137,10 @@ export async function POST(request: Request) {
     }
 
     validateUserInput(user.plan, body.values);
+    const templateValues = body.values;
 
     const variables = parseTemplateVariables(template.variables);
-    const validationError = validateVariableValues(variables, body.values);
+    const validationError = validateVariableValues(variables, templateValues);
 
     if (validationError) {
       return NextResponse.json({ error: validationError }, { status: 400 });
@@ -143,7 +148,7 @@ export async function POST(request: Request) {
 
     const filledPrompt = fillPromptTemplate(
       template.prompt,
-      body.values,
+      templateValues,
       variables,
     );
     const renderIssues = findRenderedPromptIssues(filledPrompt, variables);
@@ -227,6 +232,34 @@ export async function POST(request: Request) {
           inputTokens,
           outputTokens,
         }) => {
+          const outputValidation = validateGeneratedOutput(
+            text,
+            variables,
+            templateValues,
+          );
+
+          if (!outputValidation.ok) {
+            console.error("Generated output validation failed:", {
+              templateId: template.id,
+              templateSlug: template.slug,
+              requestId,
+              issues: outputValidation.issues.map((issue) => ({
+                code: issue.code,
+                category: issue.category,
+                match: issue.match,
+              })),
+              message: getGeneratedOutputValidationMessage(outputValidation),
+            });
+
+            await prismaGenerationReservationStore.fail(
+              session.id,
+              requestId!,
+              { inputTokens, outputTokens },
+              new Date(),
+            );
+            return;
+          }
+
           await prismaGenerationReservationStore.complete(
             session.id,
             requestId!,

@@ -15,6 +15,7 @@ interface ExportButtonsProps {
   content?: string;
   promptId?: string;
   size?: "sm" | "md";
+  contentValidationMessage?: string | null;
 }
 
 const EXPORT_OPTIONS: {
@@ -75,6 +76,7 @@ export function ExportButtons({
   content,
   promptId,
   size = "sm",
+  contentValidationMessage,
 }: ExportButtonsProps) {
   const [isExporting, setIsExporting] = useState<ExportFormat | null>(null);
   const [message, setMessage] = useState("");
@@ -97,6 +99,11 @@ export function ExportButtons({
     setMessage("");
 
     if (!canExport) {
+      return;
+    }
+
+    if (contentValidationMessage) {
+      setMessage(contentValidationMessage);
       return;
     }
 
@@ -143,8 +150,8 @@ export function ExportButtons({
               key={option.format}
               type="button"
               onClick={() => handleExport(option.format)}
-              disabled={Boolean(isExporting)}
-              title={option.title}
+              disabled={Boolean(isExporting) || Boolean(contentValidationMessage)}
+              title={contentValidationMessage ?? option.title}
               className={buttonClass}
             >
               {isExporting === option.format

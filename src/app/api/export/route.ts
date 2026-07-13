@@ -8,6 +8,10 @@ import {
 } from "@/lib/export/utils";
 import { canExportContent, EXPORT_UPGRADE_MESSAGE } from "@/lib/export/permissions";
 import { requireSession } from "@/lib/auth/session";
+import {
+  getGeneratedOutputValidationMessage,
+  validateGeneratedOutput,
+} from "@/lib/templates/output-validation";
 
 export async function POST(request: Request) {
   try {
@@ -34,6 +38,17 @@ export async function POST(request: Request) {
     if (format !== "md" && format !== "txt") {
       return NextResponse.json(
         { error: "Format must be md or txt" },
+        { status: 400 },
+      );
+    }
+
+    const outputValidation = validateGeneratedOutput(content);
+    const outputValidationMessage =
+      getGeneratedOutputValidationMessage(outputValidation);
+
+    if (outputValidationMessage) {
+      return NextResponse.json(
+        { error: outputValidationMessage, code: "output_validation_failed" },
         { status: 400 },
       );
     }
