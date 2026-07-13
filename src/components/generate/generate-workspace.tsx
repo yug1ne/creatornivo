@@ -2,7 +2,15 @@
 
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type RefObject,
+} from "react";
+import { createPortal } from "react-dom";
 
 import {
   getCategoryColor,
@@ -12,7 +20,7 @@ import {
 import { getPlanLimits } from "@/config/plans";
 import { MODEL_BY_PLAN } from "@/lib/ai/provider";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   buildDefaultValues,
@@ -29,7 +37,7 @@ import {
   parseGenerationApiError,
   type ParsedGenerationError,
 } from "@/lib/usage/quota-exceeded";
-import type { TemplateListItem } from "@/types/template";
+import type { TemplateListItem, TemplateVariable } from "@/types/template";
 
 import { GenerationResult } from "./generation-result";
 import { PromptPreview } from "./prompt-preview";
@@ -58,6 +66,16 @@ export function acquireGenerationAttempt(
 ): string | null {
   if (isInFlight) return null;
   return currentRequestId ?? createRequestId();
+}
+
+export function areTemplateValuesAtDefaults(
+  variables: TemplateVariable[],
+  values: Record<string, string>,
+): boolean {
+  const defaults = buildDefaultValues(variables);
+  return variables.every(
+    (variable) => (values[variable.key] ?? "") === (defaults[variable.key] ?? ""),
+  );
 }
 
 export async function fetchGenerationUsageSnapshot(
@@ -126,8 +144,15 @@ export function GenerateWorkspace({
   const [savedPromptId, setSavedPromptId] = useState<string | null>(null);
   const requestIdRef = useRef<string | null>(null);
   const inFlightRef = useRef(false);
+  const resetButtonRef = useRef<HTMLButtonElement | null>(null);
+  const cancelResetButtonRef = useRef<HTMLButtonElement | null>(null);
+  const [resetConfirmOpen, setResetConfirmOpen] = useState(false);
+  const [formResetVersion, setFormResetVersion] = useState(0);
 
   const selected = templates.find((t) => t.id === selectedId) ?? null;
+  const isFormAtDefaults = selected
+    ? areTemplateValuesAtDefaults(selected.variables, values)
+    : true;
 
   const canGenerate = generationUsage.remaining > 0;
 
@@ -192,6 +217,33 @@ export function GenerateWorkspace({
       selectTemplate(preselected);
     }
   }, [initialSlug, accessibleTemplates, selectedId, selectTemplate]);
+
+  const closeResetDialog = useCallback(() => {
+    setResetConfirmOpen(false);
+    window.setTimeout(() => resetButtonRef.current?.focus(), 0);
+  }, []);
+
+  const resetCurrentForm = useCallback(() => {
+    if (!selected) return;
+
+    if (!inFlightRef.current) {
+      requestIdRef.current = null;
+    }
+
+    setValues(buildDefaultValues(selected.variables));
+    setError(null);
+    setFormResetVersion((current) => current + 1);
+  }, [selected]);
+
+  const handleResetRequest = useCallback(() => {
+    if (!selected || isFormAtDefaults) return;
+    setResetConfirmOpen(true);
+  }, [isFormAtDefaults, selected]);
+
+  const handleResetConfirm = useCallback(() => {
+    resetCurrentForm();
+    closeResetDialog();
+  }, [closeResetDialog, resetCurrentForm]);
 
   async function handleGenerate() {
     if (!selected || !isFormValid || !canGenerate || inFlightRef.current) {
@@ -362,13 +414,36 @@ export function GenerateWorkspace({
                 <CardHeader>
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <CardTitle className="text-sm">Parameters</CardTitle>
-                    <TemplateHelpButton templateSlug={selected.slug} />
                   </div>
                 </CardHeader>
                 <CardContent className="pt-0">
                   <TemplateParametersForm
+                    key={`${selected.id}-${formResetVersion}`}
                     variables={selected.variables}
                     values={values}
+                    toolbarAction={
+                      <button
+                        ref={resetButtonRef}
+                        type="button"
+                        onClick={handleResetRequest}
+                        disabled={isFormAtDefaults}
+                        aria-label="Reset form to default values"
+                        className={buttonVariants({
+                          variant: "outline",
+                          size: "sm",
+                          className:
+                            "border-destructive/30 text-destructive hover:bg-destructive/10",
+                        })}
+                      >
+                        <span className="hidden sm:inline">Reset form</span>
+                        <span className="sm:hidden" aria-hidden>
+                          Reset
+                        </span>
+                      </button>
+                    }
+                    toolbarEndAction={
+                      <TemplateHelpButton templateSlug={selected.slug} />
+                    }
                     onChange={(key, value) => {
                       if (!inFlightRef.current) {
                         requestIdRef.current = null;
@@ -496,6 +571,96 @@ export function GenerateWorkspace({
           )}
         </div>
       </div>
+      <ResetFormConfirmationDialog
+        open={resetConfirmOpen}
+        cancelButtonRef={cancelResetButtonRef}
+        onCancel={closeResetDialog}
+        onConfirm={handleResetConfirm}
+      />
     </div>
+  );
+}
+
+function ResetFormConfirmationDialog({
+  open,
+  cancelButtonRef,
+  onCancel,
+  onConfirm,
+}: {
+  open: boolean;
+  cancelButtonRef: RefObject<HTMLButtonElement | null>;
+  onCancel: () => void;
+  onConfirm: () => void;
+}) {
+  useEffect(() => {
+    if (!open) return;
+
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        onCancel();
+      }
+    }
+
+    const focusTimer = window.setTimeout(
+      () => cancelButtonRef.current?.focus(),
+      0,
+    );
+    document.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      window.clearTimeout(focusTimer);
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [cancelButtonRef, onCancel, open]);
+
+  if (!open || typeof document === "undefined") return null;
+
+  return createPortal(
+    <div
+      className="fixed inset-0 z-[110] flex items-center justify-center p-4"
+      role="presentation"
+    >
+      <button
+        type="button"
+        className="absolute inset-0 bg-black/50 backdrop-blur-[1px]"
+        aria-label="Cancel reset form"
+        onClick={onCancel}
+      />
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="reset-form-dialog-title"
+        aria-describedby="reset-form-dialog-description"
+        className="relative w-full max-w-sm rounded-[var(--radius-xl)] border border-border bg-card p-6 shadow-[var(--shadow-md)]"
+      >
+        <h2
+          id="reset-form-dialog-title"
+          className="text-lg font-semibold text-foreground"
+        >
+          Reset form?
+        </h2>
+        <p
+          id="reset-form-dialog-description"
+          className="mt-2 text-sm text-muted-foreground"
+        >
+          Reset all fields to their default values? Your current form entries
+          will be removed.
+        </p>
+        <div className="mt-6 flex justify-end gap-2">
+          <button
+            ref={cancelButtonRef}
+            type="button"
+            onClick={onCancel}
+            className={buttonVariants({ variant: "outline" })}
+          >
+            Cancel
+          </button>
+          <Button type="button" variant="destructive" onClick={onConfirm}>
+            Reset fields
+          </Button>
+        </div>
+      </div>
+    </div>,
+    document.body,
   );
 }

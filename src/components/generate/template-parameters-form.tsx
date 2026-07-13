@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, type ReactNode } from "react";
 
 import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
@@ -18,6 +18,8 @@ interface TemplateParametersFormProps {
   onChange: (key: string, value: string) => void;
   /** Group ids that start expanded. When omitted, essentials + first group open. */
   defaultOpenGroups?: string[];
+  toolbarAction?: ReactNode;
+  toolbarEndAction?: ReactNode;
 }
 
 function FieldControl({
@@ -88,6 +90,8 @@ export function TemplateParametersForm({
   values,
   onChange,
   defaultOpenGroups,
+  toolbarAction,
+  toolbarEndAction,
 }: TemplateParametersFormProps) {
   const groups = useMemo(
     () => groupTemplateVariables(variables),
@@ -145,24 +149,40 @@ export function TemplateParametersForm({
     isTemplateFieldVisible(v, values),
   );
   const hasGroups = groups.length > 1 || groups[0]?.groupId !== "parameters";
+  const fieldSummary = (
+    <span className="text-muted-foreground">
+      {variables.filter((v) => v.required).length} required ·{" "}
+      {visibleVariables.length} fields shown
+      {visibleVariables.length !== variables.length
+        ? ` (${variables.length} total)`
+        : ""}
+    </span>
+  );
 
   if (!hasGroups) {
     return (
-      <div className="grid gap-4 sm:grid-cols-2">
-        {visibleVariables.map((variable) => (
-          <FieldBlock
-            key={variable.key}
-            variable={variable}
-            value={values[variable.key] ?? ""}
-            onChange={(v) => onChange(variable.key, v)}
-            wide={
-              variable.fullWidth ||
-              variable.type === "textarea" ||
-              (visibleVariables.length % 2 !== 0 &&
-                variable.key === visibleVariables.at(-1)?.key)
-            }
-          />
-        ))}
+      <div className="space-y-3">
+        <TemplateParametersToolbar
+          fieldSummary={fieldSummary}
+          toolbarAction={toolbarAction}
+          toolbarEndAction={toolbarEndAction}
+        />
+        <div className="grid gap-4 sm:grid-cols-2">
+          {visibleVariables.map((variable) => (
+            <FieldBlock
+              key={variable.key}
+              variable={variable}
+              value={values[variable.key] ?? ""}
+              onChange={(v) => onChange(variable.key, v)}
+              wide={
+                variable.fullWidth ||
+                variable.type === "textarea" ||
+                (visibleVariables.length % 2 !== 0 &&
+                  variable.key === visibleVariables.at(-1)?.key)
+              }
+            />
+          ))}
+        </div>
       </div>
     );
   }
@@ -184,6 +204,7 @@ export function TemplateParametersForm({
         >
           Essentials only
         </button>
+        {toolbarAction}
         <span className="text-muted-foreground">
           {variables.filter((v) => v.required).length} required ·{" "}
           {visibleVariables.length} fields shown
@@ -191,6 +212,7 @@ export function TemplateParametersForm({
             ? ` (${variables.length} total)`
             : ""}
         </span>
+        {toolbarEndAction}
       </div>
 
       {groups.map((group) => {
@@ -254,6 +276,24 @@ export function TemplateParametersForm({
           </div>
         );
       })}
+    </div>
+  );
+}
+
+function TemplateParametersToolbar({
+  fieldSummary,
+  toolbarAction,
+  toolbarEndAction,
+}: {
+  fieldSummary: ReactNode;
+  toolbarAction?: ReactNode;
+  toolbarEndAction?: ReactNode;
+}) {
+  return (
+    <div className="flex flex-wrap items-center gap-2 text-xs">
+      {toolbarAction}
+      {fieldSummary}
+      {toolbarEndAction}
     </div>
   );
 }
