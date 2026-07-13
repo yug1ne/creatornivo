@@ -20,7 +20,11 @@ export function PromptPreview({ template, values }: PromptPreviewProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [showProtectedNotice, setShowProtectedNotice] = useState(false);
   const noticeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const filledPrompt = fillPromptTemplate(template.prompt, values);
+  const filledPrompt = fillPromptTemplate(
+    template.prompt,
+    values,
+    template.variables,
+  );
   const hasEmptyRequired = template.variables.some(
     (v) => v.required && !values[v.key]?.trim(),
   );

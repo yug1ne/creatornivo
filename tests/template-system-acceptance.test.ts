@@ -353,8 +353,14 @@ test("filled prompts and prompt preview mapping handle required, optional, unico
     "generate",
     "prompt-preview.tsx",
   );
-  assert.match(route, /fillPromptTemplate\(template\.prompt, body\.values\)/);
-  assert.match(preview, /fillPromptTemplate\(template\.prompt, values\)/);
+  assert.match(
+    route,
+    /fillPromptTemplate\(\s*template\.prompt,\s*body\.values,\s*variables,\s*\)/,
+  );
+  assert.match(
+    preview,
+    /fillPromptTemplate\(\s*template\.prompt,\s*values,\s*template\.variables,\s*\)/,
+  );
   assert.doesNotMatch(preview, /highlightVariables/);
 
   for (const template of catalog) {
@@ -373,7 +379,7 @@ test("filled prompts and prompt preview mapping handle required, optional, unico
       `${template.slug} filled values should pass validation`,
     );
 
-    const rendered = fillPromptTemplate(template.prompt, values);
+    const rendered = fillPromptTemplate(template.prompt, values, formVariables);
     assert.deepEqual(
       findRenderedPromptIssues(rendered, formVariables),
       { unresolvedVariables: [], unsafeTokens: [] },
@@ -407,6 +413,7 @@ test("filled prompts and prompt preview mapping handle required, optional, unico
     const requiredOnlyRendered = fillPromptTemplate(
       template.prompt,
       requiredOnly,
+      formVariables,
     );
     assert.doesNotMatch(requiredOnlyRendered, /\{\{[a-zA-Z0-9_]+\}\}/);
     assert.deepEqual(

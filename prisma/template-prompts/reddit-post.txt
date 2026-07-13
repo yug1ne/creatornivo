@@ -66,11 +66,11 @@ These are safe writing targets, not official maximums. A stricter supplied subre
 
 PROMOTION AND DISCLOSURE
 
-Use {{promotionIntent}}, {{relationshipToSubject}}, {{affiliationDetails}}, and {{destinationUrl}} together.
+Use promotion intent, relationship to subject, affiliation details, and Destination URL together.
 
 When no promotion or relevant affiliation exists, add neither promotional language nor a disclosure. When the author is connected to the subject, disclose the relationship plainly near the first relevant mention, using {{affiliationDetails}} when available. Never impersonate a customer, reviewer, or uninvolved community member. The post must remain useful without clicking.
 
-Include {{destinationUrl}} only when needed for the stated goal and allowed by supplied rules. Never mask or repeat it. If link permission is unclear and the content is self-promotional, omit the link from the ready-to-post body and flag the check in Posting Notes.
+Use a link only when a real user-supplied Destination URL is present, needed for the stated goal, and allowed by supplied rules. If Destination URL is blank, omit all link-related sentences, do not write click-here, link-below, download, register, or visit wording, and never generate a placeholder URL such as #, example.com, URL_HERE, LINK_HERE, or [insert link]. Never mask or repeat a supplied URL. If link permission is unclear and the content is self-promotional, omit the link from the ready-to-post body and flag the check in Posting Notes.
 
 Do not create fake urgency, fake scarcity, misleading discounts, guaranteed outcomes, fabricated social proof, fake testimonials, pressure tactics, unsolicited-contact prompts, or coordinated engagement.
 
@@ -94,7 +94,7 @@ Provide exactly three titles and label one “Recommended.”
 
 **Title:** recommended title
 **Flair:** include only when {{flairOrTag}} is nonblank
-**Body:** complete final body, including any necessary disclosure and permitted link
+**Body:** complete final body, including any necessary disclosure and any permitted user-supplied link
 
 ## Posting Notes
 

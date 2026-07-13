@@ -19,11 +19,108 @@ const UNSAFE_RENDERED_TOKEN_PATTERNS = [
   { token: "N/A", pattern: /\bN\/A\b/i },
   { token: "[object Object]", pattern: /\[object Object\]/i },
 ] as const;
+const OPTIONAL_FIELD_RISK_CATEGORY_ORDER = [
+  "url",
+  "commercial",
+  "proof",
+  "timing",
+  "disclosure",
+  "visual",
+] as const;
+
+const OPTIONAL_FIELD_RISK_TOKENS = {
+  url: ["url", "urls", "link", "links"],
+  commercial: [
+    "offer",
+    "offers",
+    "price",
+    "prices",
+    "pricing",
+    "discount",
+    "discounts",
+    "promo",
+    "promos",
+    "coupon",
+    "coupons",
+    "availability",
+    "bonus",
+    "bonuses",
+    "scarcity",
+  ],
+  proof: [
+    "proof",
+    "proofs",
+    "evidence",
+    "source",
+    "sources",
+    "citation",
+    "citations",
+    "research",
+    "credential",
+    "credentials",
+    "testimonial",
+    "testimonials",
+    "quote",
+    "quotes",
+    "quotation",
+    "quotations",
+    "statistic",
+    "statistics",
+    "stats",
+  ],
+  timing: [
+    "date",
+    "dates",
+    "deadline",
+    "deadlines",
+    "time",
+    "times",
+    "timezone",
+    "timezones",
+    "location",
+    "locations",
+    "jurisdiction",
+    "jurisdictions",
+  ],
+  disclosure: [
+    "affiliation",
+    "affiliations",
+    "affiliate",
+    "sponsor",
+    "sponsors",
+    "sponsored",
+    "sponsorship",
+    "sponsorships",
+    "partner",
+    "partners",
+    "partnership",
+    "partnerships",
+    "disclosure",
+    "disclosures",
+    "relationship",
+    "relationships",
+  ],
+  visual: [
+    "visual",
+    "visuals",
+    "image",
+    "images",
+    "asset",
+    "assets",
+    "screenshot",
+    "screenshots",
+    "photo",
+    "photos",
+  ],
+} as const;
 
 export interface TemplateRenderCheck {
   unresolvedVariables: string[];
   unsafeTokens: string[];
 }
+
+export type OptionalFieldRiskCategory =
+  (typeof OPTIONAL_FIELD_RISK_CATEGORY_ORDER)[number];
 
 function parseHelp(raw: unknown): TemplateVariableHelp | undefined {
   if (!raw || typeof raw !== "object") return undefined;
@@ -249,18 +346,155 @@ function getStringValue(values: Record<string, string>, key: string): string {
   return trimmed;
 }
 
+function getVariableLabel(variable: TemplateVariable): string {
+  return variable.label.trim() || variable.key;
+}
+
+function hasMeaningfulDefault(variable: TemplateVariable): boolean {
+  return Boolean(variable.defaultValue?.trim());
+}
+
+function normalizeOptionalFieldTokens(variable: TemplateVariable): string[] {
+  const raw = `${variable.key} ${variable.label}`;
+  const spaced = raw
+    .replace(/([A-Z]+)([A-Z][a-z])/g, "$1 $2")
+    .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
+    .replace(/[_\-\s/]+/g, " ")
+    .replace(/[^a-zA-Z0-9]+/g, " ");
+
+  return [
+    ...new Set(
+      spaced
+        .toLowerCase()
+        .split(/\s+/)
+        .map((token) => token.trim())
+        .filter(Boolean),
+    ),
+  ];
+}
+
+function hasAnyToken(tokens: Set<string>, candidates: readonly string[]): boolean {
+  return candidates.some((candidate) => tokens.has(candidate));
+}
+
+function hasTokenSequence(tokens: string[], sequence: readonly string[]): boolean {
+  if (sequence.length === 0 || sequence.length > tokens.length) return false;
+
+  return tokens.some((_, index) =>
+    sequence.every((token, offset) => tokens[index + offset] === token),
+  );
+}
+
+export function classifyOptionalFieldRiskCategories(
+  variable: TemplateVariable,
+): OptionalFieldRiskCategory[] {
+  const tokenList = normalizeOptionalFieldTokens(variable);
+  const tokens = new Set(tokenList);
+
+  return OPTIONAL_FIELD_RISK_CATEGORY_ORDER.filter((category) => {
+    if (hasAnyToken(tokens, OPTIONAL_FIELD_RISK_TOKENS[category])) {
+      return true;
+    }
+
+    if (category === "timing") {
+      return hasTokenSequence(tokenList, ["service", "area"]);
+    }
+
+    if (category === "visual") {
+      return hasTokenSequence(tokenList, ["alt", "text"]);
+    }
+
+    return false;
+  });
+}
+
+function getBlankOptionalVariables(
+  variables: TemplateVariable[],
+  values: Record<string, string>,
+): TemplateVariable[] {
+  return variables.filter(
+    (variable) =>
+      !variable.required &&
+      !hasMeaningfulDefault(variable) &&
+      !getStringValue(values, variable.key),
+  );
+}
+
+function buildBlankOptionalFieldRules(
+  variables: TemplateVariable[],
+  values: Record<string, string>,
+): string[] {
+  const blankVariables = getBlankOptionalVariables(variables, values);
+  if (blankVariables.length === 0) return [];
+
+  const labels = [...new Set(blankVariables.map(getVariableLabel))].sort();
+  const categories = new Set(
+    blankVariables.flatMap((variable) =>
+      classifyOptionalFieldRiskCategories(variable),
+    ),
+  );
+  const lines = [
+    "BLANK OPTIONAL FIELD RULES",
+    "The following optional fields are blank. Do not invent, infer, or output details that depend on them unless another supplied input explicitly provides the same fact:",
+    ...labels.map((label) => `- ${label}`),
+  ];
+
+  if (categories.has("url")) {
+    lines.push(
+      "For blank URL or link fields, do not create links, click-here wording, link-below wording, download-here wording, # anchors, example.com, URL_HERE, LINK_HERE, [insert link], or any other placeholder destination.",
+    );
+  }
+
+  if (categories.has("commercial")) {
+    lines.push(
+      "For blank offer or commercial fields, do not invent prices, discounts, promo codes, bonuses, deadlines, availability, scarcity, eligibility, guarantees, or commercial relationships.",
+    );
+  }
+
+  if (categories.has("proof")) {
+    lines.push(
+      "For blank proof, source, or evidence fields, do not invent statistics, testimonials, ratings, quotations, studies, citations, credentials, awards, customer stories, or source names.",
+    );
+  }
+
+  if (categories.has("timing")) {
+    lines.push(
+      "For blank date, time, location, area, or jurisdiction fields, do not invent dates, times, addresses, service areas, locations, time zones, or jurisdiction-specific claims.",
+    );
+  }
+
+  if (categories.has("disclosure")) {
+    lines.push(
+      "For blank disclosure or affiliation fields, do not add disclosures, sponsorship language, affiliate wording, partnership claims, or relationship claims unless another supplied input explicitly requires them.",
+    );
+  }
+
+  if (categories.has("visual")) {
+    lines.push(
+      "For blank visual or alt-text fields, do not describe a specific supplied asset, screenshot, customer image, result image, interface, or visual proof as fact.",
+    );
+  }
+
+  return lines;
+}
+
 function renderPromptLine(
   line: string,
   values: Record<string, string>,
+  variablesByKey: Map<string, TemplateVariable>,
 ): {
   renderedLine: string;
   hasVariable: boolean;
   hasEmptyVariable: boolean;
   hasFilledVariable: boolean;
+  emptyKeys: string[];
 } {
   let hasVariable = false;
   let hasEmptyVariable = false;
   let hasFilledVariable = false;
+  const emptyKeys: string[] = [];
+  const lineWithEmptyVariables = line.replace(TEMPLATE_VARIABLE_PATTERN, "");
+  const rendersAsInputLine = isEmptyOptionalInputLine(lineWithEmptyVariables);
 
   TEMPLATE_VARIABLE_PATTERN.lastIndex = 0;
   const renderedLine = line.replace(
@@ -275,6 +509,19 @@ function renderPromptLine(
       }
 
       hasEmptyVariable = true;
+      emptyKeys.push(key);
+      if (!rendersAsInputLine) {
+        const variable = variablesByKey.get(key);
+        if (variable && !variable.required) {
+          const label = getVariableLabel(variable);
+          const isUrlLike =
+            classifyOptionalFieldRiskCategories(variable).includes("url");
+          return isUrlLike
+            ? `a real user-supplied ${label}`
+            : `user-supplied ${label}`;
+        }
+      }
+
       return "";
     },
   );
@@ -284,6 +531,7 @@ function renderPromptLine(
     hasVariable,
     hasEmptyVariable,
     hasFilledVariable,
+    emptyKeys,
   };
 }
 
@@ -299,6 +547,37 @@ function isEmptyOptionalInputLine(line: string): boolean {
   if (!withoutListMarker) return true;
 
   return /^[A-Za-z0-9 _/&()[\],.'’"“”+-]+:\s*$/.test(withoutListMarker);
+}
+
+function cleanEmptyVariableArtifacts(line: string): string {
+  const leadingWhitespace = line.match(/^\s*/)?.[0] ?? "";
+  let cleaned = line.slice(leadingWhitespace.length);
+
+  cleaned = cleaned
+    .replace(/``/g, "")
+    .replace(/\(\s*\)/g, "")
+    .replace(/\[\s*\]/g, "")
+    .replace(/\s+([,.;:])/g, "$1")
+    .replace(/,\s*,+/g, ",")
+    .replace(/,\s*(and|or)\s*(?=[,.;:])/gi, "")
+    .replace(/\b(and|or)\s*(?=[,.;:])/gi, "")
+    .replace(/\b(from|with|using|in|by)\s+(?=[,.;:])/gi, "")
+    .replace(/\s{2,}/g, " ")
+    .replace(/\s+([)\]])/g, "$1")
+    .replace(/([(])\s+/g, "$1")
+    .trimEnd();
+
+  cleaned = cleaned
+    .replace(/,\s*\./g, ".")
+    .replace(/,\s*;/g, ";")
+    .replace(/,\s*:/g, ":")
+    .replace(/\s+,/g, ",")
+    .replace(/\bUse\s+only\s+/gi, "Use only ")
+    .replace(/\bInclude\s+only\s+/gi, "Include only ")
+    .replace(/\bApply\s+only\s+/gi, "Apply only ")
+    .replace(/\bTreat\s+only\s+/gi, "Treat only ");
+
+  return `${leadingWhitespace}${cleaned}`;
 }
 
 function collapseExcessBlankLines(lines: string[]): string[] {
@@ -326,16 +605,23 @@ function sanitizeRenderedPromptText(prompt: string): string {
 export function fillPromptTemplate(
   prompt: string,
   values: Record<string, string>,
+  variables: TemplateVariable[] = [],
 ): string {
   const renderedLines: string[] = [];
+  const variablesByKey = new Map(
+    variables.map((variable) => [variable.key, variable]),
+  );
 
   for (const line of prompt.split(/\r?\n/)) {
     const {
-      renderedLine,
+      renderedLine: rawRenderedLine,
       hasVariable,
       hasEmptyVariable,
       hasFilledVariable,
-    } = renderPromptLine(line, values);
+    } = renderPromptLine(line, values, variablesByKey);
+    const renderedLine = hasEmptyVariable
+      ? cleanEmptyVariableArtifacts(rawRenderedLine)
+      : rawRenderedLine;
 
     if (hasVariable && hasEmptyVariable && !hasFilledVariable) {
       if (isEmptyOptionalInputLine(renderedLine)) {
@@ -350,12 +636,23 @@ export function fillPromptTemplate(
       }
     }
 
+    if (hasVariable && hasEmptyVariable && !renderedLine.trim()) {
+      continue;
+    }
+
     renderedLines.push(renderedLine);
   }
 
-  return sanitizeRenderedPromptText(
-    collapseExcessBlankLines(renderedLines).join("\n").trim(),
-  );
+  const renderedPrompt = collapseExcessBlankLines(renderedLines)
+    .join("\n")
+    .trim();
+  const blankOptionalRules = buildBlankOptionalFieldRules(variables, values);
+  const promptWithRules =
+    blankOptionalRules.length > 0
+      ? `${blankOptionalRules.join("\n")}\n\n${renderedPrompt}`
+      : renderedPrompt;
+
+  return sanitizeRenderedPromptText(promptWithRules);
 }
 
 export function findRenderedPromptIssues(

@@ -141,7 +141,11 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: validationError }, { status: 400 });
     }
 
-    const filledPrompt = fillPromptTemplate(template.prompt, body.values);
+    const filledPrompt = fillPromptTemplate(
+      template.prompt,
+      body.values,
+      variables,
+    );
     const renderIssues = findRenderedPromptIssues(filledPrompt, variables);
 
     if (
