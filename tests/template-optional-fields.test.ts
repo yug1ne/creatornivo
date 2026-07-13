@@ -628,6 +628,94 @@ test("post-generation sanitizer removes safe URL artifacts without deleting norm
   assert.match(sanitized.content, /This link between the problem/);
 });
 
+test("post-generation sanitizer removes an empty Posting Notes section only", () => {
+  const content = [
+    "Body",
+    "This should stay.",
+    "",
+    "Posting Notes",
+    "None",
+  ].join("\n");
+
+  const sanitized = sanitizeGeneratedOutput(content);
+
+  assert.equal(sanitized.changed, true);
+  assert.equal(
+    sanitized.content,
+    [
+      "Body",
+      "This should stay.",
+    ].join("\n"),
+  );
+  assert.ok(
+    sanitized.changes.some((change) => change.category === "empty_section"),
+  );
+});
+
+test("post-generation sanitizer preserves Posting Notes with real text", () => {
+  const content = [
+    "Body",
+    "This should stay.",
+    "",
+    "Posting Notes",
+    "Check whether external links are allowed before posting.",
+  ].join("\n");
+
+  const sanitized = sanitizeGeneratedOutput(content);
+
+  assert.equal(sanitized.changed, false);
+  assert.equal(sanitized.content, content);
+});
+
+test("post-generation sanitizer removes empty Posting Notes without changing Body or links", () => {
+  const variables: TemplateVariable[] = [
+    {
+      ...optionalField("destinationUrl", "Destination URL"),
+      format: "url",
+    },
+  ];
+  const values = buildDefaultValues(variables);
+  values.destinationUrl = "https://www.creatornivo.com/reddit-resource";
+  const content = [
+    "Body",
+    "Use https://www.creatornivo.com/reddit-resource exactly once.",
+    "This main body sentence should stay exactly as written.",
+    "",
+    "Posting Notes",
+    "Not provided",
+  ].join("\n");
+
+  const sanitized = sanitizeGeneratedOutput(content, variables, values);
+
+  assert.equal(
+    sanitized.content,
+    [
+      "Body",
+      "Use https://www.creatornivo.com/reddit-resource exactly once.",
+      "This main body sentence should stay exactly as written.",
+    ].join("\n"),
+  );
+  assert.match(
+    sanitized.content,
+    /Use https:\/\/www\.creatornivo\.com\/reddit-resource exactly once\./,
+  );
+});
+
+test("post-generation sanitizer does not remove none inside ordinary sentences", () => {
+  const content = [
+    "Body",
+    "None of these tradeoffs should be treated as empty posting notes.",
+    "",
+    "Posting Notes",
+    "Check subreddit rules; none of this changes the core body.",
+  ].join("\n");
+
+  const sanitized = sanitizeGeneratedOutput(content);
+
+  assert.equal(sanitized.changed, false);
+  assert.equal(sanitized.content, content);
+});
+
 test("post-generation sanitizer preserves real user supplied URL and commercial values", () => {
   const variables: TemplateVariable[] = [
     optionalField("destinationUrl", "Destination URL"),

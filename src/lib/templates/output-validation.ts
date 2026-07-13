@@ -34,7 +34,7 @@ export interface GeneratedOutputValidationResult {
 }
 
 export interface GeneratedOutputSanitizationChange {
-  category: OptionalFieldRiskCategory;
+  category: OptionalFieldRiskCategory | "empty_section";
   removed: string;
   reason: string;
 }
@@ -619,6 +619,34 @@ function collapseOutputBlankLines(content: string): string {
   return collapsed.join("\n").trim();
 }
 
+function removeEmptyPostingNotesSection(
+  content: string,
+): GeneratedOutputSanitizationResult | null {
+  const pattern =
+    /(^|\n)([ \t]*(?:#{1,6}[ \t]+)?(?:\*\*)?Posting Notes(?:\*\*)?:?[ \t]*\r?\n[ \t]*(?:[-*вЂў][ \t]*)?(?:None|N\/A|Not provided|Not specified)[ \t]*)(?=(?:\r?\n[ \t]*){2,}|\r?\n?$)/gi;
+  const removedBlocks: string[] = [];
+  const contentWithoutEmptyNotes = content.replace(
+    pattern,
+    (match, leadingNewline: string, block: string) => {
+      removedBlocks.push(block.trim());
+      return leadingNewline === "\n" ? "\n" : "";
+    },
+  );
+
+  if (removedBlocks.length === 0) return null;
+
+  const sanitizedContent = collapseOutputBlankLines(contentWithoutEmptyNotes);
+  return {
+    content: sanitizedContent,
+    changed: sanitizedContent !== content,
+    changes: removedBlocks.map((block) => ({
+      category: "empty_section",
+      removed: block,
+      reason: "Removed empty Posting Notes section.",
+    })),
+  };
+}
+
 export function sanitizeGeneratedOutput(
   content: string,
   variables: TemplateVariable[] = [],
@@ -627,8 +655,15 @@ export function sanitizeGeneratedOutput(
   const context = buildOutputValidationContext(variables, values);
   const changes: GeneratedOutputSanitizationChange[] = [];
   const sanitizedLines: string[] = [];
+  const emptyPostingNotesResult = removeEmptyPostingNotesSection(content);
+  const sourceContent = emptyPostingNotesResult?.content ?? content;
 
-  for (const line of content.split(/\r?\n/)) {
+  if (emptyPostingNotesResult) {
+    changes.push(...emptyPostingNotesResult.changes);
+  }
+  const initialChangeCount = changes.length;
+
+  for (const line of sourceContent.split(/\r?\n/)) {
     if (!line.trim()) {
       sanitizedLines.push(line);
       continue;
@@ -667,6 +702,10 @@ export function sanitizeGeneratedOutput(
     if (cleanedLine) {
       sanitizedLines.push(cleanedLine);
     }
+  }
+
+  if (emptyPostingNotesResult && changes.length === initialChangeCount) {
+    return emptyPostingNotesResult;
   }
 
   if (changes.length === 0) {
