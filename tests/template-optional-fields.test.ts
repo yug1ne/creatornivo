@@ -20,6 +20,7 @@ import {
   sanitizeGeneratedOutput,
   validateGeneratedOutput,
 } from "../src/lib/templates/output-validation";
+import { prepareExportContent } from "../src/lib/export/utils";
 import type { TemplateVariable } from "../src/types/template";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -628,6 +629,121 @@ test("post-generation sanitizer removes safe URL artifacts without deleting norm
   assert.match(sanitized.content, /This link between the problem/);
 });
 
+const productionPostingNotesExpected = [
+  "## Title Options",
+  "",
+  "1. **Recommended: Seeking Feedback on a Free Weekly Content Planner for Solo Creators**",
+  "",
+  "## Ready-to-Post Version",
+  "",
+  "**Title:** Seeking Feedback on a Free Weekly Content Planner for Solo Creators",
+  "",
+  "**Body:**",
+  "",
+  "Thanks in advance for your feedback. Looking forward to hearing your thoughts!",
+].join("\n");
+
+function productionPostingNotesInput(
+  heading: string,
+  sentinel: string,
+  lineEnding = "\n",
+  blankLinesBetweenHeadingAndSentinel = 1,
+): string {
+  return [
+    "## Title Options",
+    "",
+    "1. **Recommended: Seeking Feedback on a Free Weekly Content Planner for Solo Creators**",
+    "",
+    "## Ready-to-Post Version",
+    "",
+    "**Title:** Seeking Feedback on a Free Weekly Content Planner for Solo Creators",
+    "",
+    "**Body:**",
+    "",
+    "Thanks in advance for your feedback. Looking forward to hearing your thoughts!",
+    "",
+    heading,
+    ...Array(blankLinesBetweenHeadingAndSentinel).fill(""),
+    sentinel,
+  ].join(lineEnding);
+}
+
+test("post-generation sanitizer removes production Markdown Posting Notes sentinel block", () => {
+  const sanitized = sanitizeGeneratedOutput(
+    productionPostingNotesInput("## Posting Notes", "None"),
+  );
+
+  assert.equal(sanitized.changed, true);
+  assert.equal(sanitized.content, productionPostingNotesExpected);
+  assert.doesNotMatch(sanitized.content, /Posting Notes|None/);
+});
+
+test("post-generation sanitizer recognizes production Posting Notes variants", () => {
+  const cases = [
+    {
+      name: "LF with one blank line and Markdown heading",
+      input: productionPostingNotesInput("## Posting Notes", "None", "\n", 1),
+    },
+    {
+      name: "CRLF with one blank line and Markdown heading",
+      input: productionPostingNotesInput("## Posting Notes", "None", "\r\n", 1),
+    },
+    {
+      name: "LF with two blank lines and Markdown heading",
+      input: productionPostingNotesInput("## Posting Notes", "N/A", "\n", 2),
+    },
+    {
+      name: "CRLF with two blank lines and Markdown heading",
+      input: productionPostingNotesInput(
+        "## Posting Notes",
+        "Not provided",
+        "\r\n",
+        2,
+      ),
+    },
+    {
+      name: "bold heading",
+      input: productionPostingNotesInput("**Posting Notes**", "Not specified"),
+    },
+    {
+      name: "plain heading",
+      input: productionPostingNotesInput("Posting Notes", "None"),
+    },
+  ];
+
+  for (const { name, input } of cases) {
+    const sanitized = sanitizeGeneratedOutput(input);
+    assert.equal(sanitized.content, productionPostingNotesExpected, name);
+    assert.doesNotMatch(sanitized.content, /Posting Notes/i, name);
+  }
+});
+
+test("Posting Notes cleanup is shared by Result, Copy, and Export paths", () => {
+  const rawStreamedOutput = productionPostingNotesInput("## Posting Notes", "None");
+  const generationFinish = sanitizeGeneratedOutput(rawStreamedOutput);
+  const savedGenerationContent = generationFinish.content;
+  const resultUiContent = savedGenerationContent;
+  const copiedMarkdown = resultUiContent;
+  const exportMarkdown = prepareExportContent(
+    sanitizeGeneratedOutput(resultUiContent).content,
+    "md",
+  );
+  const exportPlainText = prepareExportContent(
+    sanitizeGeneratedOutput(resultUiContent).content,
+    "txt",
+  );
+
+  assert.equal(savedGenerationContent, productionPostingNotesExpected);
+  assert.equal(resultUiContent, productionPostingNotesExpected);
+  assert.equal(copiedMarkdown, productionPostingNotesExpected);
+  assert.equal(exportMarkdown, productionPostingNotesExpected);
+  assert.equal(
+    exportPlainText,
+    prepareExportContent(productionPostingNotesExpected, "txt"),
+  );
+  assert.doesNotMatch(exportPlainText, /Posting Notes|None/);
+});
+
 test("post-generation sanitizer removes an empty Posting Notes section only", () => {
   const content = [
     "Body",
@@ -657,7 +773,8 @@ test("post-generation sanitizer preserves Posting Notes with real text", () => {
     "Body",
     "This should stay.",
     "",
-    "Posting Notes",
+    "## Posting Notes",
+    "",
     "Check whether external links are allowed before posting.",
   ].join("\n");
 

@@ -619,9 +619,90 @@ function collapseOutputBlankLines(content: string): string {
   return collapsed.join("\n").trim();
 }
 
+function isPostingNotesHeading(line: string): boolean {
+  return /^\s*(?:#{1,6}\s+)?(?:\*\*)?Posting Notes(?:\*\*)?:?\s*$/i.test(
+    line,
+  );
+}
+
+function isEmptyPostingNotesSentinel(line: string): boolean {
+  return /^\s*(?:[-*•]\s*)?(?:None|N\/A|Not provided|Not specified)\s*$/i.test(
+    line,
+  );
+}
+
+function isLikelyOutputSectionHeading(line: string): boolean {
+  return (
+    /^\s*#{1,6}\s+\S/.test(line) ||
+    /^\s*\*\*[^*\r\n]{2,80}\*\*:?\s*$/.test(line)
+  );
+}
+
+function removeEmptyPostingNotesSectionByLines(
+  content: string,
+): GeneratedOutputSanitizationResult | null {
+  const lines = content.split(/\r?\n/);
+  const removedBlocks: string[] = [];
+  const keptLines: string[] = [];
+
+  for (let index = 0; index < lines.length; index += 1) {
+    const line = lines[index];
+
+    if (!isPostingNotesHeading(line)) {
+      keptLines.push(line);
+      continue;
+    }
+
+    let sentinelIndex = index + 1;
+    while (sentinelIndex < lines.length && !lines[sentinelIndex].trim()) {
+      sentinelIndex += 1;
+    }
+
+    if (
+      sentinelIndex >= lines.length ||
+      !isEmptyPostingNotesSentinel(lines[sentinelIndex])
+    ) {
+      keptLines.push(line);
+      continue;
+    }
+
+    let nextContentIndex = sentinelIndex + 1;
+    while (nextContentIndex < lines.length && !lines[nextContentIndex].trim()) {
+      nextContentIndex += 1;
+    }
+
+    if (
+      nextContentIndex < lines.length &&
+      !isLikelyOutputSectionHeading(lines[nextContentIndex])
+    ) {
+      keptLines.push(line);
+      continue;
+    }
+
+    removedBlocks.push(lines.slice(index, nextContentIndex).join("\n").trim());
+    index = nextContentIndex - 1;
+  }
+
+  if (removedBlocks.length === 0) return null;
+
+  const sanitizedContent = collapseOutputBlankLines(keptLines.join("\n"));
+  return {
+    content: sanitizedContent,
+    changed: sanitizedContent !== content,
+    changes: removedBlocks.map((block) => ({
+      category: "empty_section",
+      removed: block,
+      reason: "Removed empty Posting Notes section.",
+    })),
+  };
+}
+
 function removeEmptyPostingNotesSection(
   content: string,
 ): GeneratedOutputSanitizationResult | null {
+  const lineBasedResult = removeEmptyPostingNotesSectionByLines(content);
+  if (lineBasedResult) return lineBasedResult;
+
   const pattern =
     /(^|\n)([ \t]*(?:#{1,6}[ \t]+)?(?:\*\*)?Posting Notes(?:\*\*)?:?[ \t]*\r?\n[ \t]*(?:[-*вЂў][ \t]*)?(?:None|N\/A|Not provided|Not specified)[ \t]*)(?=(?:\r?\n[ \t]*){2,}|\r?\n?$)/gi;
   const removedBlocks: string[] = [];
