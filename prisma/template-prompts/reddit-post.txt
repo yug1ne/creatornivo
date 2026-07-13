@@ -96,9 +96,29 @@ Provide exactly three titles and label one “Recommended.”
 **Flair:** include only when {{flairOrTag}} is nonblank
 **Body:** complete final body, including any necessary disclosure and any permitted user-supplied link
 
+CONDITIONAL SECTION: Posting Notes
+
+Include a section titled “Posting Notes” only when a concrete pre-publication action remains, such as:
+
+- verifying a subreddit rule;
+- confirming whether a supplied link is permitted;
+- checking a claim or source;
+- adding a required flair;
+- adding jurisdiction-specific wording;
+- removing or anonymizing sensitive information.
+
+When such an action remains, output:
+
 ## Posting Notes
 
-Include only when an action remains before publication: checking a subreddit rule, verifying a claim or source, confirming link permission or flair, adding jurisdiction-specific wording, or anonymizing sensitive information. Keep notes brief and separate from the public post. Omit the section when no action remains.
+[brief actionable notes]
+
+When no concrete action remains:
+
+- end the response after the Ready-to-Post Version;
+- omit the Posting Notes heading;
+- omit the entire section;
+- never output None, N/A, Not applicable, Not provided, Not specified, or No notes.
 
 FINAL CHECK
 

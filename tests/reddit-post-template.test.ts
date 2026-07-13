@@ -110,13 +110,33 @@ function sorted(values: readonly string[]): string[] {
   return [...values].sort();
 }
 
+function promptSegment(startMarker: string, endMarker: string): string {
+  const start = prompt.indexOf(startMarker);
+  const end = prompt.indexOf(endMarker, start + startMarker.length);
+  assert.notEqual(start, -1, `Missing prompt marker: ${startMarker}`);
+  assert.notEqual(end, -1, `Missing prompt marker: ${endMarker}`);
+  return prompt.slice(start, end);
+}
+
+function assertRenderedPromptIsSafe(rendered: string): void {
+  assert.doesNotMatch(rendered, /\{\{[a-zA-Z0-9_]+\}\}/);
+  assert.doesNotMatch(
+    rendered,
+    new RegExp(`\\[(${expectedKeys.join("|")})\\]`),
+  );
+  assert.doesNotMatch(rendered, /\bundefined\b/i);
+  assert.doesNotMatch(rendered, /\bnull\b/i);
+  assert.doesNotMatch(rendered, /\bN\/A\b/i);
+  assert.doesNotMatch(rendered, /\[object Object\]/i);
+}
+
 test("Reddit Post prompt is replaced with the approved 23-variable prompt", () => {
   assert.match(prompt, /senior Reddit community copywriter/);
   assert.match(prompt, /Topic or situation: \{\{topicOrSituation\}\}/);
   assert.match(prompt, /Destination URL: \{\{destinationUrl\}\}/);
   assert.match(prompt, /## Title Options/);
   assert.match(prompt, /## Ready-to-Post Version/);
-  assert.match(prompt, /Posting Notes/);
+  assert.match(prompt, /CONDITIONAL SECTION: Posting Notes/);
 
   assert.doesNotMatch(prompt, /experienced Reddit community writer/);
   assert.doesNotMatch(prompt, /COMMUNITY DETAILS/);
@@ -126,6 +146,53 @@ test("Reddit Post prompt is replaced with the approved 23-variable prompt", () =
   assert.doesNotMatch(prompt, /\n---\s*$/);
 
   assert.deepEqual(sorted(extractVariables(prompt)), sorted(expectedKeys));
+});
+
+test("Reddit Post keeps Posting Notes outside the always-output skeleton", () => {
+  const alwaysOutputSkeleton = promptSegment(
+    "OUTPUT ONLY",
+    "CONDITIONAL SECTION: Posting Notes",
+  );
+  const conditionalPostingNotes = promptSegment(
+    "CONDITIONAL SECTION: Posting Notes",
+    "FINAL CHECK",
+  );
+
+  assert.match(alwaysOutputSkeleton, /## Title Options/);
+  assert.match(
+    alwaysOutputSkeleton,
+    /Provide exactly three titles and label one .Recommended./,
+  );
+  assert.match(alwaysOutputSkeleton, /## Ready-to-Post Version/);
+  assert.match(alwaysOutputSkeleton, /\*\*Title:\*\* recommended title/);
+  assert.match(
+    alwaysOutputSkeleton,
+    /\*\*Flair:\*\* include only when \{\{flairOrTag\}\} is nonblank/,
+  );
+  assert.match(
+    alwaysOutputSkeleton,
+    /\*\*Body:\*\* complete final body, including any necessary disclosure and any permitted user-supplied link/,
+  );
+  assert.doesNotMatch(alwaysOutputSkeleton, /^## Posting Notes$/m);
+
+  assert.match(
+    conditionalPostingNotes,
+    /only when a concrete pre-publication action remains/,
+  );
+  assert.match(conditionalPostingNotes, /When such an action remains, output:/);
+  assert.match(conditionalPostingNotes, /^## Posting Notes$/m);
+  assert.match(conditionalPostingNotes, /\[brief actionable notes\]/);
+  assert.match(conditionalPostingNotes, /When no concrete action remains:/);
+  assert.match(
+    conditionalPostingNotes,
+    /end the response after the Ready-to-Post Version/,
+  );
+  assert.match(conditionalPostingNotes, /omit the Posting Notes heading/);
+  assert.match(conditionalPostingNotes, /omit the entire section/);
+  assert.match(
+    conditionalPostingNotes,
+    /never output None, N\/A, Not applicable, Not provided, Not specified, or No notes/,
+  );
 });
 
 test("Reddit Post form fields match prompt variables and required fields", () => {
@@ -345,16 +412,50 @@ test("Reddit Post prompt filling does not invent optional field placeholders", (
     sourceMaterial: "",
     jurisdictionOrScope: "",
   };
-  const filled = fillPromptTemplate(prompt, values);
+  const filled = fillPromptTemplate(prompt, values, variables);
 
-  assert.doesNotMatch(filled, /\{\{[a-zA-Z0-9_]+\}\}/);
-  assert.doesNotMatch(
-    filled,
-    new RegExp(`\\[(${expectedKeys.join("|")})\\]`),
+  assertRenderedPromptIsSafe(filled);
+});
+
+test("Reddit Post required-only and full-field rendering stay safe", () => {
+  const requiredOnlyValues = {
+    ...buildDefaultValues(variables),
+    topicOrSituation: "I want feedback on a weekly content planning workflow.",
+    primaryGoal: "Request feedback",
+    targetSubreddit: "r/Entrepreneur",
+    intendedReaders: "solo creators and founders",
+    keyFactsAndContext:
+      "The workflow uses reusable templates and a personal prompt library.",
+  };
+  assertRenderedPromptIsSafe(
+    fillPromptTemplate(prompt, requiredOnlyValues, variables),
   );
-  assert.doesNotMatch(filled, /\bundefined\b/i);
-  assert.doesNotMatch(filled, /\bnull\b/i);
-  assert.doesNotMatch(filled, /\bN\/A\b/i);
+
+  const fullFieldValues = {
+    ...requiredOnlyValues,
+    authorPerspective: "Founder or creator",
+    desiredResponse: "Constructive critique",
+    tone: "Natural and candid",
+    outputLanguage: "English",
+    subredditRules: "Feedback posts are allowed; direct sales are not.",
+    titleConstraints: "Avoid clickbait and include the word feedback.",
+    flairOrTag: "Feedback",
+    lengthPreference: "Standard",
+    formattingPreference: "Plain paragraphs",
+    promotionIntent: "Request feedback on own work",
+    relationshipToSubject: "Creator or owner",
+    affiliationDetails: "I built the workflow and want feedback on clarity.",
+    destinationUrl: "https://creatornivo.com",
+    sourceMaterial: "Internal notes from five manual workflow tests.",
+    sensitiveDetailsToExclude: "Do not mention private user names.",
+    highStakesArea: "None",
+    jurisdictionOrScope: "General information only",
+    additionalContext: "Keep the ask community-first and low pressure.",
+  };
+  assert.equal(validateVariableValues(variables, fullFieldValues), null);
+  assertRenderedPromptIsSafe(
+    fillPromptTemplate(prompt, fullFieldValues, variables),
+  );
 });
 
 test("Reddit Post catalog, summary, builder, and Help integration are in sync", () => {
