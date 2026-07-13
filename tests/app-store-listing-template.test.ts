@@ -354,6 +354,7 @@ test("App Store Listing options, conditions, and technical adaptations match the
 test("App Store Listing validation and prompt rendering use form metadata", () => {
   const values = {
     ...buildDefaultValues(variables),
+    platformTarget: "Apple App Store",
     appName: "Creatornivo",
     appSummary:
       "A structured AI content workspace that turns briefs into platform-ready drafts.",

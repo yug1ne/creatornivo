@@ -6,9 +6,11 @@ import { fileURLToPath } from "node:url";
 
 import {
   buildDefaultValues,
+  classifyTemplateFieldDefault,
   classifyOptionalFieldRiskCategories,
   findRenderedPromptIssues,
   fillPromptTemplate,
+  isTemplateDefaultActive,
   parseTemplateVariables,
   validateVariableValues,
 } from "../src/lib/templates/utils";
@@ -85,7 +87,19 @@ function requiredValueFor(
 
 function fullValueFor(slug: string, variable: TemplateVariable): string {
   if (variable.type === "select" && variable.options?.length) {
-    return variable.defaultValue ?? variable.options[0] ?? "";
+    if (
+      variable.defaultValue &&
+      !/^(No preference|Not specified)$/i.test(variable.defaultValue.trim())
+    ) {
+      return variable.defaultValue;
+    }
+    return (
+      variable.options.find(
+        (option) => !/^(No preference|Not specified)$/i.test(option.trim()),
+      ) ??
+      variable.options[0] ??
+      ""
+    );
   }
 
   const byKey: Record<string, string> = {
@@ -972,7 +986,7 @@ test("copy, save, and export paths are guarded by output validation", () => {
   assert.match(savedExportRoute, /validateGeneratedOutput\(sanitizedOutput\.content\)/);
 });
 
-test("meaningful defaults are treated as values, not blank optional fields", () => {
+test("classified defaults distinguish active values from no-preference empty state", () => {
   const optionalFields = catalog.flatMap((template) =>
     parseTemplateVariables(template.variables).filter((variable) => !variable.required),
   );
@@ -990,7 +1004,101 @@ test("meaningful defaults are treated as values, not blank optional fields", () 
   const variables = parseTemplateVariables(googleBusiness.variables);
   const values = buildRequiredOnlyValues(googleBusiness.slug, variables);
   const rendered = fillPromptTemplate(googleBusiness.prompt, values, variables);
+  const visualSuggestion = variables.find(
+    (variable) => variable.key === "visualSuggestion",
+  );
+  assert.ok(visualSuggestion);
 
-  assert.match(rendered, /Include visual suggestion:\s*Yes/);
-  assert.doesNotMatch(rendered, /- Include visual suggestion/);
+  assert.equal(
+    classifyTemplateFieldDefault(visualSuggestion),
+    "optional_no_preference",
+  );
+  assert.equal(isTemplateDefaultActive(visualSuggestion), false);
+  assert.doesNotMatch(rendered, /Include visual suggestion:\s*Yes/);
+  assert.match(rendered, /- Include visual suggestion/);
+
+  const reddit = templateBySlug("reddit-post");
+  const redditVariables = parseTemplateVariables(reddit.variables);
+  const redditValues = buildRequiredOnlyValues(reddit.slug, redditVariables);
+  const redditRendered = fillPromptTemplate(
+    reddit.prompt,
+    redditValues,
+    redditVariables,
+  );
+
+  assert.match(redditRendered, /Promotion intent:\s*No promotion/);
+  assert.match(redditRendered, /Relationship to subject:\s*No affiliation/);
+  assert.doesNotMatch(redditRendered, /Mention own project if relevant/);
+});
+
+test("cross-field URL dependencies block link-dependent actions before generation", () => {
+  const variables: TemplateVariable[] = [
+    {
+      ...optionalField("destinationUrl", "Destination URL"),
+      format: "url",
+    },
+    {
+      ...optionalField("desiredAction", "Desired reader action"),
+      type: "select",
+      options: ["Auto", "No preference", "Comment", "Download the guide"],
+      defaultValue: "Auto",
+    },
+  ];
+
+  assert.equal(
+    validateVariableValues(variables, {
+      destinationUrl: "",
+      desiredAction: "",
+    }),
+    null,
+  );
+  assert.equal(
+    validateVariableValues(variables, {
+      destinationUrl: "",
+      desiredAction: "Auto",
+    }),
+    null,
+  );
+  assert.match(
+    validateVariableValues(variables, {
+      destinationUrl: "",
+      desiredAction: "Download the guide",
+    }) ?? "",
+    /requires a URL or link field/,
+  );
+  assert.equal(
+    validateVariableValues(variables, {
+      destinationUrl: "https://www.creatornivo.com/download",
+      desiredAction: "Download the guide",
+    }),
+    null,
+  );
+});
+
+test("representative templates reset risky optional defaults to no-preference where needed", () => {
+  const expectations = [
+    ["reddit-post", "promotionIntent", "No promotion", true],
+    ["reddit-post", "relationshipToSubject", "No affiliation", true],
+    ["facebook-post", "includeVisualConcept", "", false],
+    ["google-business-profile-post", "visualSuggestion", "", false],
+    ["instagram-post", "hashtagPreference", "Auto", true],
+    ["linkedin-post", "desiredAction", "Auto", true],
+    ["product-hunt-launch", "ctaFocus", "", false],
+    ["webinar-package", "offerType", "No commercial offer", true],
+  ] as const;
+
+  for (const [slug, key, expectedInitial, expectedActive] of expectations) {
+    const template = templateBySlug(slug);
+    const variables = parseTemplateVariables(template.variables);
+    const variable = variables.find((item) => item.key === key);
+    assert.ok(variable, `${slug}.${key} exists`);
+    const values = buildDefaultValues(variables);
+
+    assert.equal(values[key], expectedInitial, `${slug}.${key} initial state`);
+    assert.equal(
+      isTemplateDefaultActive(variable),
+      expectedActive,
+      `${slug}.${key} active default`,
+    );
+  }
 });

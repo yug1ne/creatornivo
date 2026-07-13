@@ -280,6 +280,7 @@ test("Telegram Post validation and prompt rendering use form metadata", () => {
   const values = {
     ...buildDefaultValues(variables),
     topicOrOffer: "Creatornivo Early Access update",
+    primaryGoal: "Inform or update",
     targetAudience:
       "Existing Creatornivo users and creators following product updates.",
     keyMessage:

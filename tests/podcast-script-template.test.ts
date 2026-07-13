@@ -310,6 +310,9 @@ test("Podcast Script validation and prompt rendering use form metadata", () => {
   const values = {
     ...buildDefaultValues(variables),
     episodeTopic: "Why small creators struggle to stay consistent",
+    primaryGoal: "Educate or explain",
+    episodeFormat: "Solo monologue",
+    episodeLength: "20–40 minutes",
     targetAudience:
       "Solo creators who understand content strategy but struggle to publish every week.",
     coreMessage:

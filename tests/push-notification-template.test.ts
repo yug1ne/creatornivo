@@ -304,6 +304,7 @@ test("Push Notification validation and prompt rendering use form metadata", () =
   const values = {
     ...buildDefaultValues(variables),
     campaignSubject: "Order update for a confirmed purchase",
+    primaryGoal: "Inform",
     targetAudience:
       "Existing customers waiting for an order update inside the mobile app.",
     keyMessage:

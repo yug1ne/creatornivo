@@ -280,6 +280,8 @@ test("SMS Campaign validation and prompt rendering use form metadata", () => {
     ...buildDefaultValues(variables),
     campaignSubject: "Appointment reminder for confirmed customers",
     senderName: "Creatornivo",
+    campaignObjective: "Promote an offer",
+    recipientPermission: "Explicit opt-in",
     targetAudience:
       "Existing customers who booked a consultation and opted in to SMS reminders.",
     essentialDetails:

@@ -9,7 +9,10 @@ import {
 } from "../src/components/generate/generate-workspace";
 import {
   buildDefaultValues,
+  classifyTemplateFieldDefault,
   fillPromptTemplate,
+  getTemplateInitialValue,
+  isTemplateDefaultActive,
   parseTemplateVariables,
   validateVariableValues,
 } from "../src/lib/templates/utils";
@@ -53,7 +56,8 @@ test("reset defaults clear text and textarea values while restoring select and n
   assert.equal(facebookDefaults.subjectOrOffer, "");
   assert.equal(facebookDefaults.offerDetails, "");
   assert.equal(facebookDefaults.postType, "Auto");
-  assert.equal(facebookDefaults.primaryGoal, "Engagement");
+  assert.equal(facebookDefaults.primaryGoal, "");
+  assert.equal(facebookDefaults.includeVisualConcept, "");
   assert.equal(areTemplateValuesAtDefaults(facebookVariables, facebookDefaults), true);
   assert.equal(
     areTemplateValuesAtDefaults(facebookVariables, {
@@ -86,7 +90,7 @@ test("reset default builder is schema-driven for checkbox-like and boolean-like 
   ] satisfies TemplateVariable[];
 
   assert.deepEqual(buildDefaultValues(variables), {
-    includeVisualConcept: "true",
+    includeVisualConcept: "",
     extraNotes: "",
   });
 });
@@ -138,11 +142,44 @@ test("all 45 templates have stable schema-based reset defaults", () => {
     for (const variable of variables) {
       assert.equal(
         defaults[variable.key],
-        variable.defaultValue?.trim() ? variable.defaultValue : "",
-        `${template.slug}.${variable.key} must use its schema default`,
+        getTemplateInitialValue(variable),
+        `${template.slug}.${variable.key} must use its classified initial value`,
       );
     }
   }
+});
+
+test("default classification separates no-preference, absence, auto, and technical defaults", () => {
+  const catalog = readJson<CatalogTemplate[]>("prisma", "templates-catalog.json");
+  const variables = catalog.flatMap((template) =>
+    parseTemplateVariables(template.variables),
+  );
+  const choiceAndDefaultFields = variables.filter(
+    (variable) =>
+      variable.type === "select" ||
+      variable.type === "number" ||
+      variable.defaultValue !== undefined,
+  );
+  const counts = choiceAndDefaultFields.reduce<Record<string, number>>(
+    (acc, variable) => {
+      const classification = classifyTemplateFieldDefault(variable);
+      acc[classification] = (acc[classification] ?? 0) + 1;
+      return acc;
+    },
+    {},
+  );
+
+  assert.equal(choiceAndDefaultFields.length, 551);
+  assert.equal(counts.required_user_choice, 64);
+  assert.equal(counts.optional_no_preference, 16);
+  assert.equal(counts.explicit_absence, 52);
+  assert.equal(counts.auto_behavior, 168);
+  assert.equal(counts.safe_technical_default, 251);
+
+  const inactiveSchemaDefaults = choiceAndDefaultFields.filter(
+    (variable) => variable.defaultValue?.trim() && !isTemplateDefaultActive(variable),
+  );
+  assert.equal(inactiveSchemaDefaults.length, 63);
 });
 
 test("reset form UI asks for confirmation only for dirty forms and keeps the current template", () => {

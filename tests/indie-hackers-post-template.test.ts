@@ -266,6 +266,8 @@ test("Indie Hackers Post options, conditional URL, and type adaptations match th
 test("Indie Hackers Post validation and prompt rendering use form metadata", () => {
   const values = {
     ...buildDefaultValues(variables),
+    postType: "Build update",
+    primaryGoal: "Share useful progress",
     projectOrTopic: "Creatornivo, a content-template platform",
     projectSummary:
       "A structured AI workspace that helps creators turn briefs into platform-ready content.",

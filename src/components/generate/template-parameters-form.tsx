@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import {
   groupTemplateVariables,
   isTemplateFieldVisible,
+  isTemplateFieldValueFilled,
 } from "@/lib/templates/utils";
 import type { TemplateVariable } from "@/types/template";
 import { cn } from "@/lib/utils/cn";
@@ -40,7 +41,9 @@ function FieldControl({
         id={commonId}
         value={value}
         options={variable.options}
-        emptyLabel="— Leave blank —"
+        emptyLabel={
+          variable.required ? "— Select an option —" : "— No preference —"
+        }
         onChange={(e) => onChange(e.target.value)}
       />
     );
@@ -224,7 +227,7 @@ export function TemplateParametersForm({
         const isOpen = openGroups.has(group.groupId);
         const requiredCount = visibleInGroup.filter((v) => v.required).length;
         const filledCount = visibleInGroup.filter(
-          (v) => values[v.key]?.trim(),
+          (v) => isTemplateFieldValueFilled(values[v.key]),
         ).length;
 
         return (

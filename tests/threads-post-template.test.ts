@@ -239,6 +239,7 @@ test("Threads Post validation enforces required, URL, select, length, and number
   const values = {
     ...buildDefaultValues(variables),
     topic: "Content workflow simplification",
+    goal: "Start a conversation",
     audience: "Solo founders publishing weekly",
     keyMessage: "A smaller repeatable workflow is easier to maintain than a perfect system.",
   };

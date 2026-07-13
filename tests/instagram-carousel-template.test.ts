@@ -267,6 +267,7 @@ test("Instagram Carousel validation enforces required, URL, select, and length r
   const values = {
     ...buildDefaultValues(variables),
     carouselTopic: "A reusable content planning workflow",
+    primaryGoal: "Educate or explain",
     targetAudience: "Independent creators who publish weekly",
     keyMessage: "Reusable structures make content creation more consistent.",
     essentialPoints: "Choose a template. Add audience and facts. Save reusable outputs.",

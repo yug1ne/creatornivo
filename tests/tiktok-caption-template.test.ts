@@ -246,6 +246,7 @@ test("TikTok Caption validation enforces required, select, and length rules", ()
     ...buildDefaultValues(variables),
     videoTopic: "Three editing mistakes beginners make",
     videoSummary: "A creator shows three common jump cut and caption timing mistakes.",
+    primaryGoal: "Engagement",
     targetAudience: "Freelance designers learning short-form video",
     keyMessage: "Clear editing choices matter more than over-polished effects.",
   };

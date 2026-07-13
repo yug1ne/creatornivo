@@ -339,6 +339,8 @@ test("Email Sequence validation and prompt rendering use server-side form metada
   const values = {
     ...buildDefaultValues(variables),
     sequenceName: "New customer onboarding",
+    sequenceType: "Lead nurture",
+    primaryGoal: "Build trust",
     businessName: "Acme Studio",
     offerOrTopic: "Client-management tool for independent designers",
     targetAudience:
@@ -347,6 +349,7 @@ test("Email Sequence validation and prompt rendering use server-side form metada
       "A calmer way to manage client work without losing creative focus.",
     primaryCta: "Visit page",
     destinationUrl: "https://example.com/product",
+    consentStatus: "Confirmed subscribers",
   };
 
   assert.equal(validateVariableValues(variables, values), null);

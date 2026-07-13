@@ -307,6 +307,7 @@ test("Substack Post validation and prompt rendering use form metadata", () => {
   const values = {
     ...buildDefaultValues(variables),
     postTopic: "Why small creators struggle to stay consistent",
+    primaryGoal: "Inform or explain",
     targetAudience:
       "Solo creators who publish weekly and want a calmer editorial workflow.",
     centralThesis:

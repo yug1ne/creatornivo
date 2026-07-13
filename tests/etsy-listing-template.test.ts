@@ -384,6 +384,8 @@ test("Etsy Listing options and conditional fields match the specification", () =
 test("Etsy Listing validation and prompt rendering use form metadata", () => {
   const values = {
     ...buildDefaultValues(variables),
+    productFormat: "Physical item",
+    sellerRole: "Made by seller",
     productName: "Printable Weekly Meal Planner",
     productOverview:
       "A printable PDF meal-planning bundle with weekly menus, grocery lists, pantry inventory pages, and simple prep notes.",

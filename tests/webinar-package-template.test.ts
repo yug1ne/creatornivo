@@ -329,6 +329,8 @@ test("Webinar Package validation and prompt rendering use server form metadata",
   const values = {
     ...buildDefaultValues(variables),
     webinarTopic: "How small agencies can automate client reporting",
+    primaryGoal: "Educate the audience",
+    webinarFormat: "Live webinar",
     targetAudience:
       "Small agency owners and account managers who manually prepare recurring client updates.",
     audienceProblem:

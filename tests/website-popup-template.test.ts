@@ -277,6 +277,7 @@ test("Website Popup options, conditional fields, and type adaptations match the 
 test("Website Popup validation and prompt rendering use form metadata", () => {
   const values = {
     ...buildDefaultValues(variables),
+    popupGoal: "Grow email list",
     popupSubject: "15% welcome discount for first-time customers",
     targetAudience:
       "First-time visitors comparing affordable project-management tools",

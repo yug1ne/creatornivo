@@ -2,6 +2,7 @@ import type { TemplateVariable } from "@/types/template";
 
 import {
   classifyOptionalFieldRiskCategories,
+  getTemplateInitialValue,
   type OptionalFieldRiskCategory,
 } from "./utils";
 
@@ -459,7 +460,11 @@ export const OUTPUT_SANITIZER_PATTERN_COUNT = OUTPUT_SANITIZER_RULES.length;
 
 function getStringValue(value: unknown): string {
   const trimmed = typeof value === "string" ? value.trim() : "";
-  if (/^(undefined|null|N\/A|\[object Object\])$/i.test(trimmed)) {
+  if (
+    /^(undefined|null|N\/A|\[object Object\]|No preference|Not specified)$/i.test(
+      trimmed,
+    )
+  ) {
     return "";
   }
   return trimmed;
@@ -494,7 +499,7 @@ function buildOutputValidationContext(
 
   for (const variable of variables) {
     const suppliedValue = getStringValue(values[variable.key]);
-    const defaultValue = getStringValue(variable.defaultValue);
+    const defaultValue = getStringValue(getTemplateInitialValue(variable));
     const effectiveValue = suppliedValue || defaultValue;
 
     if (effectiveValue) {

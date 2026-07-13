@@ -233,6 +233,7 @@ test("Facebook Post validation enforces required, URL, select, length, and numbe
   const values = {
     ...buildDefaultValues(variables),
     subjectOrOffer: "New scheduling feature",
+    primaryGoal: "Engagement",
     targetAudience: "Small business owners who publish Facebook updates weekly",
     keyMessage: "Scheduling helps them plan posts without rushing.",
     essentialFacts: "The feature is available in beta and supports Facebook Page posts.",

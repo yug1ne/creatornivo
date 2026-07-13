@@ -124,6 +124,13 @@ export interface TemplateRenderCheck {
 export type OptionalFieldRiskCategory =
   (typeof OPTIONAL_FIELD_RISK_CATEGORY_ORDER)[number];
 
+export type TemplateFieldDefaultClassification =
+  | "required_user_choice"
+  | "optional_no_preference"
+  | "explicit_absence"
+  | "auto_behavior"
+  | "safe_technical_default";
+
 function parseHelp(raw: unknown): TemplateVariableHelp | undefined {
   if (!raw || typeof raw !== "object") return undefined;
   const h = raw as Record<string, unknown>;
@@ -341,19 +348,213 @@ function getStringValue(values: Record<string, string>, key: string): string {
   const value = values[key];
   const trimmed = typeof value === "string" ? value.trim() : "";
 
-  if (/^(undefined|null|N\/A|\[object Object\])$/i.test(trimmed)) {
+  if (
+    /^(undefined|null|N\/A|\[object Object\]|No preference|Not specified)$/i.test(
+      trimmed,
+    )
+  ) {
     return "";
   }
 
   return trimmed;
 }
 
+export function isTemplateFieldValueFilled(value: unknown): boolean {
+  if (typeof value !== "string") return false;
+  return !/^(|undefined|null|N\/A|\[object Object\]|No preference|Not specified)$/i.test(
+    value.trim(),
+  );
+}
+
 function getVariableLabel(variable: TemplateVariable): string {
   return variable.label.trim() || variable.key;
 }
 
+function normalizeFieldText(value: string): string {
+  return value
+    .replace(/([A-Z]+)([A-Z][a-z])/g, "$1 $2")
+    .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
+    .replace(/[_\-\s/]+/g, " ")
+    .replace(/[^a-zA-Z0-9]+/g, " ")
+    .toLowerCase()
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function fieldText(variable: TemplateVariable): string {
+  return normalizeFieldText(`${variable.key} ${variable.label}`);
+}
+
+function defaultText(variable: TemplateVariable): string {
+  return normalizeFieldText(variable.defaultValue ?? "");
+}
+
+function fieldHasAny(
+  variable: TemplateVariable,
+  words: readonly string[],
+): boolean {
+  const text = fieldText(variable);
+  return words.some((word) => new RegExp(`\\b${word}\\b`, "i").test(text));
+}
+
+function defaultIsExplicitAbsence(value: string): boolean {
+  return (
+    /^(none|off|false|no)$/i.test(value) ||
+    /^no\b/i.test(value) ||
+    /\bno (?:promotion|affiliation|disclosure|button|hashtags?|visual|commercial offer|material affiliation|prior relationship)\b/i.test(value) ||
+    /\borganic\b.*\bno promotion\b/i.test(value)
+  );
+}
+
+function defaultIsNoPreference(value: string): boolean {
+  return (
+    /^(no preference|not specified)$/i.test(value) ||
+    /\bnot specified\b/i.test(value) ||
+    /\bor unknown\b/i.test(value) ||
+    /\bunknown\b/i.test(value)
+  );
+}
+
+function defaultIsAutoBehavior(value: string): boolean {
+  return /\bauto\b|auto-detect|platform appropriate|platform-appropriate/i.test(value);
+}
+
+function isRequiredTechnicalDefault(variable: TemplateVariable): boolean {
+  return fieldHasAny(variable, [
+    "language",
+    "duration",
+    "minutes",
+    "count",
+    "variants",
+    "versions",
+  ]);
+}
+
+function isSafeTechnicalDefault(variable: TemplateVariable): boolean {
+  if (!variable.defaultValue?.trim()) return false;
+  if (variable.type === "number") return true;
+
+  const text = fieldText(variable);
+  const value = defaultText(variable);
+
+  if (fieldHasAny(variable, ["language"])) return true;
+  if (
+    fieldHasAny(variable, ["count", "variants", "versions", "minutes"]) &&
+    /^\d+(?:\s*[–-]\s*\d+)?$/.test(value)
+  ) {
+    return true;
+  }
+  if (
+    /\b(markdown|plain text|clean web copy|guidance only|standard|balanced)\b/.test(
+      value,
+    ) &&
+    /\b(format|formatting|output|structure|length|duration|detail|depth|pacing)\b/.test(
+      text,
+    )
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
+function isOptionalOptInDefault(variable: TemplateVariable): boolean {
+  const value = defaultText(variable);
+  if (!/^(yes|on|enabled|true)$/.test(value)) return false;
+
+  return fieldHasAny(variable, [
+    "visual",
+    "image",
+    "screenshot",
+    "subheadline",
+    "quotes",
+    "faq",
+    "hook",
+    "description",
+    "chapters",
+    "comment",
+  ]);
+}
+
+function isOptionalActionDefault(variable: TemplateVariable): boolean {
+  const value = variable.defaultValue?.trim() ?? "";
+  if (!value) return false;
+  if (
+    defaultIsAutoBehavior(value) ||
+    defaultIsExplicitAbsence(value) ||
+    defaultIsNoPreference(value)
+  ) {
+    return false;
+  }
+
+  return fieldHasAny(variable, [
+    "action",
+    "cta",
+    "button",
+    "promotion",
+    "offer",
+    "relationship",
+    "affiliation",
+    "disclosure",
+  ]);
+}
+
+export function classifyTemplateFieldDefault(
+  variable: TemplateVariable,
+): TemplateFieldDefaultClassification {
+  const value = variable.defaultValue?.trim() ?? "";
+
+  if (!value) {
+    return variable.required
+      ? "required_user_choice"
+      : "optional_no_preference";
+  }
+
+  if (isSafeTechnicalDefault(variable)) {
+    return "safe_technical_default";
+  }
+
+  if (variable.required && variable.type === "select") {
+    return isRequiredTechnicalDefault(variable)
+      ? "safe_technical_default"
+      : "required_user_choice";
+  }
+
+  if (defaultIsNoPreference(value)) {
+    return "optional_no_preference";
+  }
+
+  if (defaultIsExplicitAbsence(value)) {
+    return "explicit_absence";
+  }
+
+  if (defaultIsAutoBehavior(value)) {
+    return "auto_behavior";
+  }
+
+  if (!variable.required && (isOptionalOptInDefault(variable) || isOptionalActionDefault(variable))) {
+    return "optional_no_preference";
+  }
+
+  return "safe_technical_default";
+}
+
+export function isTemplateDefaultActive(variable: TemplateVariable): boolean {
+  if (!variable.defaultValue?.trim()) return false;
+  const classification = classifyTemplateFieldDefault(variable);
+  return (
+    classification === "explicit_absence" ||
+    classification === "auto_behavior" ||
+    classification === "safe_technical_default"
+  );
+}
+
+export function getTemplateInitialValue(variable: TemplateVariable): string {
+  return isTemplateDefaultActive(variable) ? variable.defaultValue ?? "" : "";
+}
+
 function hasMeaningfulDefault(variable: TemplateVariable): boolean {
-  return Boolean(variable.defaultValue?.trim());
+  return isTemplateDefaultActive(variable);
 }
 
 function normalizeOptionalFieldTokens(variable: TemplateVariable): string[] {
@@ -711,13 +912,71 @@ export function isRenderedPromptSafe(
   return issues.unresolvedVariables.length === 0 && issues.unsafeTokens.length === 0;
 }
 
+function isUrlLikeField(variable: TemplateVariable): boolean {
+  return (
+    variable.format === "url" ||
+    classifyOptionalFieldRiskCategories(variable).includes("url")
+  );
+}
+
+function isActionLikeField(variable: TemplateVariable): boolean {
+  return fieldHasAny(variable, [
+    "action",
+    "cta",
+    "button",
+    "step",
+    "link",
+    "url",
+  ]);
+}
+
+function isLinkDependentActionValue(value: string): boolean {
+  if (!value) return false;
+  if (
+    defaultIsNoPreference(value) ||
+    defaultIsAutoBehavior(value) ||
+    defaultIsExplicitAbsence(value)
+  ) {
+    return false;
+  }
+
+  return /\b(?:download|visit|click|book|register|sign up|subscribe|buy|shop|order|learn more|link in bio|website|url|landing page|profile|read more)\b/i.test(
+    value,
+  );
+}
+
+function validateLinkActionDependencies(
+  variables: TemplateVariable[],
+  values: Record<string, string>,
+): string | null {
+  const visibleVariables = variables.filter((variable) =>
+    isTemplateFieldVisible(variable, values),
+  );
+  const hasVisibleUrlValue = visibleVariables
+    .filter(isUrlLikeField)
+    .some((variable) => isHttpUrl(getStringValue(values, variable.key)));
+
+  for (const variable of visibleVariables) {
+    if (isUrlLikeField(variable)) continue;
+    if (!isActionLikeField(variable)) continue;
+    const value = getStringValue(values, variable.key);
+    if (!isLinkDependentActionValue(value)) continue;
+
+    if (!hasVisibleUrlValue) {
+      return `Field "${variable.label}" requires a URL or link field when it asks for a link-dependent action.`;
+    }
+  }
+
+  return null;
+}
+
 export function validateVariableValues(
   variables: TemplateVariable[],
   values: Record<string, string>,
 ): string | null {
   for (const variable of variables) {
     if (!isTemplateFieldVisible(variable, values)) continue;
-    const value = values[variable.key]?.trim() ?? "";
+    const value = getStringValue(values, variable.key);
 
     if (variable.required && !value) {
       return `Field "${variable.label}" is required`;
@@ -755,16 +1014,14 @@ export function validateVariableValues(
     }
   }
 
-  return null;
+  return validateLinkActionDependencies(variables, values);
 }
 
 export function buildDefaultValues(
   variables: TemplateVariable[],
 ): Record<string, string> {
   return variables.reduce<Record<string, string>>((acc, variable) => {
-    acc[variable.key] = variable.defaultValue?.trim()
-      ? variable.defaultValue
-      : "";
+    acc[variable.key] = getTemplateInitialValue(variable);
     return acc;
   }, {});
 }

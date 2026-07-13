@@ -312,6 +312,8 @@ test("Quora Answer validation and prompt rendering use form metadata", () => {
     ...buildDefaultValues(variables),
     quoraQuestion:
       "What is the best way for solo founders to stay consistent with content?",
+    answerGoal: "Explain clearly",
+    perspectiveType: "Neutral explainer",
     directAnswer:
       "A simple repeatable system is more reliable than waiting for motivation.",
     keyPoints:
