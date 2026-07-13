@@ -28,6 +28,7 @@ import { maybeSendQuotaExhaustedEmail } from "@/lib/email/send-quota-exhausted";
 import { maybeSendQuotaWarningEmail } from "@/lib/email/send-quota-warning";
 import { assertTemplateAccess } from "@/lib/templates/queries";
 import {
+  findRenderedPromptIssues,
   fillPromptTemplate,
   parseTemplateVariables,
   validateVariableValues,
@@ -140,6 +141,29 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: validationError }, { status: 400 });
     }
 
+    const filledPrompt = fillPromptTemplate(template.prompt, body.values);
+    const renderIssues = findRenderedPromptIssues(filledPrompt, variables);
+
+    if (
+      renderIssues.unresolvedVariables.length > 0 ||
+      renderIssues.unsafeTokens.length > 0
+    ) {
+      console.error("Template rendering failed:", {
+        templateId: template.id,
+        templateSlug: template.slug,
+        unresolvedVariables: renderIssues.unresolvedVariables,
+        unsafeTokens: renderIssues.unsafeTokens,
+      });
+
+      return NextResponse.json(
+        {
+          error: "Template rendering failed. Please try another template or contact support.",
+          code: "template_render_error",
+        },
+        { status: 500 },
+      );
+    }
+
     if (!isAIProviderConfigured()) {
       return NextResponse.json(
         {
@@ -177,7 +201,6 @@ export async function POST(request: Request) {
       return quotaExceededResponse(usageSnapshot);
     }
 
-    const filledPrompt = fillPromptTemplate(template.prompt, body.values);
     const reservation = await reserveGeneration({
       requestId,
       userId: session.id,

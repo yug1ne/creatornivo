@@ -6,6 +6,7 @@ import { fileURLToPath } from "node:url";
 
 import {
   buildDefaultValues,
+  findRenderedPromptIssues,
   fillPromptTemplate,
   isTemplateFieldVisible,
   parseTemplateVariables,
@@ -324,6 +325,49 @@ test("Facebook Post prompt filling does not invent optional placeholders", () =>
   assert.doesNotMatch(filled, /\bundefined\b/i);
   assert.doesNotMatch(filled, /\bnull\b/i);
   assert.doesNotMatch(filled, /\bN\/A\b/i);
+});
+
+test("Facebook Post rendering removes an empty optional offerDetails input block", () => {
+  const values = {
+    ...buildDefaultValues(variables),
+    subjectOrOffer: "A beta product update",
+    targetAudience: "Solo founders who use Facebook Pages",
+    keyMessage: "The update helps them write more consistent posts.",
+    essentialFacts: "Creatornivo is in Early Access Beta.",
+    primaryGoal: "Sales or bookings",
+    offerDetails: "",
+  };
+
+  assert.equal(validateVariableValues(variables, values), null);
+
+  const filled = fillPromptTemplate(prompt, values);
+  const issues = findRenderedPromptIssues(filled, variables);
+
+  assert.equal(issues.unresolvedVariables.includes("offerDetails"), false);
+  assert.deepEqual(issues.unsafeTokens, []);
+  assert.doesNotMatch(filled, /Offer details:\s*(?:\r?\n){1,2}Approved proof points:/);
+});
+
+test("Facebook Post rendering includes a filled offerDetails value", () => {
+  const values = {
+    ...buildDefaultValues(variables),
+    subjectOrOffer: "A beta product update",
+    targetAudience: "Solo founders who use Facebook Pages",
+    keyMessage: "The update helps them write more consistent posts.",
+    essentialFacts: "Creatornivo is in Early Access Beta.",
+    primaryGoal: "Sales or bookings",
+    offerDetails:
+      "Early Access founding price is available for a limited time.",
+  };
+
+  assert.equal(validateVariableValues(variables, values), null);
+
+  const filled = fillPromptTemplate(prompt, values);
+  const issues = findRenderedPromptIssues(filled, variables);
+
+  assert.deepEqual(issues.unresolvedVariables, []);
+  assert.deepEqual(issues.unsafeTokens, []);
+  assert.match(filled, /Offer details:\nEarly Access founding price is available/);
 });
 
 test("Facebook Post catalog, summary, builder, and Help integration are in sync", () => {

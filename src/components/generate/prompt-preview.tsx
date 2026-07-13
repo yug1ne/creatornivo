@@ -13,48 +13,6 @@ interface PromptPreviewProps {
   values: Record<string, string>;
 }
 
-function highlightVariables(
-  prompt: string,
-  values: Record<string, string>,
-): React.ReactNode[] {
-  const parts: React.ReactNode[] = [];
-  const regex = /\{\{(\w+)\}\}/g;
-  let lastIndex = 0;
-  let match: RegExpExecArray | null;
-
-  while ((match = regex.exec(prompt)) !== null) {
-    if (match.index > lastIndex) {
-      parts.push(prompt.slice(lastIndex, match.index));
-    }
-
-    const key = match[1];
-    const value = values[key]?.trim();
-    const isFilled = Boolean(value);
-
-    parts.push(
-      <span
-        key={`${key}-${match.index}`}
-        className={cn(
-          "rounded px-1 py-0.5 font-semibold",
-          isFilled
-            ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300"
-            : "bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300",
-        )}
-      >
-        {isFilled ? value : `{{${key}}}`}
-      </span>,
-    );
-
-    lastIndex = match.index + match[0].length;
-  }
-
-  if (lastIndex < prompt.length) {
-    parts.push(prompt.slice(lastIndex));
-  }
-
-  return parts;
-}
-
 const PROTECTED_NOTICE = "Промпт защищён";
 const NOTICE_MS = 2200;
 
@@ -197,7 +155,7 @@ export function PromptPreview({ template, values }: PromptPreviewProps) {
               }
             }}
           >
-            {highlightVariables(template.prompt, values)}
+            {filledPrompt}
           </pre>
 
           {showProtectedNotice && (

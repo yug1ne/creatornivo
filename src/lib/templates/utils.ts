@@ -12,6 +12,18 @@ const FIELD_TYPES: TemplateFieldType[] = [
   "select",
   "number",
 ];
+const TEMPLATE_VARIABLE_PATTERN = /\{\{([a-zA-Z0-9_]+)\}\}/g;
+const UNSAFE_RENDERED_TOKEN_PATTERNS = [
+  { token: "undefined", pattern: /\bundefined\b/i },
+  { token: "null", pattern: /\bnull\b/i },
+  { token: "N/A", pattern: /\bN\/A\b/i },
+  { token: "[object Object]", pattern: /\[object Object\]/i },
+] as const;
+
+export interface TemplateRenderCheck {
+  unresolvedVariables: string[];
+  unsafeTokens: string[];
+}
 
 function parseHelp(raw: unknown): TemplateVariableHelp | undefined {
   if (!raw || typeof raw !== "object") return undefined;
@@ -222,14 +234,161 @@ export function parseTemplateVariables(raw: unknown): TemplateVariable[] {
     });
 }
 
+function unique(values: string[]): string[] {
+  return [...new Set(values)].sort();
+}
+
+function getStringValue(values: Record<string, string>, key: string): string {
+  const value = values[key];
+  const trimmed = typeof value === "string" ? value.trim() : "";
+
+  if (/^(undefined|null|N\/A|\[object Object\])$/i.test(trimmed)) {
+    return "";
+  }
+
+  return trimmed;
+}
+
+function renderPromptLine(
+  line: string,
+  values: Record<string, string>,
+): {
+  renderedLine: string;
+  hasVariable: boolean;
+  hasEmptyVariable: boolean;
+  hasFilledVariable: boolean;
+} {
+  let hasVariable = false;
+  let hasEmptyVariable = false;
+  let hasFilledVariable = false;
+
+  TEMPLATE_VARIABLE_PATTERN.lastIndex = 0;
+  const renderedLine = line.replace(
+    TEMPLATE_VARIABLE_PATTERN,
+    (_, key: string) => {
+      hasVariable = true;
+      const value = getStringValue(values, key);
+
+      if (value) {
+        hasFilledVariable = true;
+        return value;
+      }
+
+      hasEmptyVariable = true;
+      return "";
+    },
+  );
+
+  return {
+    renderedLine,
+    hasVariable,
+    hasEmptyVariable,
+    hasFilledVariable,
+  };
+}
+
+function isEmptyOptionalInputLine(line: string): boolean {
+  const trimmed = line.trim();
+  if (!trimmed) return true;
+
+  const withoutListMarker = trimmed
+    .replace(/^[-*•]\s+/, "")
+    .replace(/^\d+[.)]\s+/, "")
+    .trim();
+
+  if (!withoutListMarker) return true;
+
+  return /^[A-Za-z0-9 _/&()[\],.'’"“”+-]+:\s*$/.test(withoutListMarker);
+}
+
+function collapseExcessBlankLines(lines: string[]): string[] {
+  const collapsed: string[] = [];
+
+  for (const line of lines) {
+    const isBlank = line.trim() === "";
+    const previous = collapsed[collapsed.length - 1];
+    const previousIsBlank = previous !== undefined && previous.trim() === "";
+    const beforePrevious = collapsed[collapsed.length - 2];
+    const beforePreviousIsBlank =
+      beforePrevious !== undefined && beforePrevious.trim() === "";
+
+    if (isBlank && previousIsBlank && beforePreviousIsBlank) continue;
+    collapsed.push(line);
+  }
+
+  return collapsed;
+}
+
+function sanitizeRenderedPromptText(prompt: string): string {
+  return prompt.replace(/\bN\/A\b/gi, "not applicable");
+}
+
 export function fillPromptTemplate(
   prompt: string,
   values: Record<string, string>,
 ): string {
-  return prompt.replace(/\{\{(\w+)\}\}/g, (_, key: string) => {
-    const value = values[key]?.trim();
-    return value || "";
-  });
+  const renderedLines: string[] = [];
+
+  for (const line of prompt.split(/\r?\n/)) {
+    const {
+      renderedLine,
+      hasVariable,
+      hasEmptyVariable,
+      hasFilledVariable,
+    } = renderPromptLine(line, values);
+
+    if (hasVariable && hasEmptyVariable && !hasFilledVariable) {
+      if (isEmptyOptionalInputLine(renderedLine)) {
+        const previousLine = renderedLines[renderedLines.length - 1];
+        if (
+          previousLine !== undefined &&
+          isEmptyOptionalInputLine(previousLine)
+        ) {
+          renderedLines.pop();
+        }
+        continue;
+      }
+    }
+
+    renderedLines.push(renderedLine);
+  }
+
+  return sanitizeRenderedPromptText(
+    collapseExcessBlankLines(renderedLines).join("\n").trim(),
+  );
+}
+
+export function findRenderedPromptIssues(
+  renderedPrompt: string,
+  declaredVariables: TemplateVariable[] = [],
+): TemplateRenderCheck {
+  const declaredKeys = new Set(declaredVariables.map((variable) => variable.key));
+  const unresolvedVariables: string[] = [];
+
+  TEMPLATE_VARIABLE_PATTERN.lastIndex = 0;
+  for (const match of renderedPrompt.matchAll(TEMPLATE_VARIABLE_PATTERN)) {
+    const key = match[1];
+    if (declaredKeys.size === 0 || declaredKeys.has(key)) {
+      unresolvedVariables.push(key);
+    }
+  }
+
+  const unsafeTokens = UNSAFE_RENDERED_TOKEN_PATTERNS.filter(({ pattern }) =>
+    pattern.test(renderedPrompt),
+  ).map(({ token }) => token);
+
+  return {
+    unresolvedVariables: unique(unresolvedVariables),
+    unsafeTokens: unique(unsafeTokens),
+  };
+}
+
+export function isRenderedPromptSafe(
+  renderedPrompt: string,
+  declaredVariables: TemplateVariable[] = [],
+): boolean {
+  const issues = findRenderedPromptIssues(renderedPrompt, declaredVariables);
+  return issues.unresolvedVariables.length === 0 && issues.unsafeTokens.length === 0;
 }
 
 export function validateVariableValues(
