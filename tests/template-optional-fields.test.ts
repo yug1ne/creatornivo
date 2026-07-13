@@ -13,7 +13,9 @@ import {
   validateVariableValues,
 } from "../src/lib/templates/utils";
 import {
+  OUTPUT_SANITIZER_PATTERN_COUNT,
   getGeneratedOutputValidationMessage,
+  sanitizeGeneratedOutput,
   validateGeneratedOutput,
 } from "../src/lib/templates/output-validation";
 import type { TemplateVariable } from "../src/types/template";
@@ -199,6 +201,20 @@ function assertBlankInputLabelsRemoved(
       `${variable.key} should not leave an empty input label`,
     );
   }
+}
+
+function assertSanitizedOutputPasses(
+  content: string,
+  variables: TemplateVariable[],
+  values: Record<string, string>,
+): ReturnType<typeof sanitizeGeneratedOutput> {
+  const sanitized = sanitizeGeneratedOutput(content, variables, values);
+  assert.equal(sanitized.changed, true, "Expected output to be sanitized");
+  assert.deepEqual(
+    validateGeneratedOutput(sanitized.content, variables, values),
+    { ok: true, issues: [] },
+  );
+  return sanitized;
 }
 
 test("optional field inventory is audited across all 45 templates", () => {
@@ -571,6 +587,265 @@ test("generated output validator preserves supplied values and normal notes", ()
   assert.deepEqual(result, { ok: true, issues: [] });
 });
 
+test("post-generation sanitizer removes safe URL artifacts without deleting normal link context", () => {
+  const variables: TemplateVariable[] = [
+    optionalField("destinationUrl", "Destination URL"),
+  ];
+  const values = buildDefaultValues(variables);
+  const content = [
+    "Helpful intro that should stay.",
+    "I'll include a link to download the planner below. This sentence should stay.",
+    "Download the Northstar Weekly Content Planner",
+    "Read more [here](#).",
+    "Use [link if allowed] after the CTA.",
+    "Posting Notes: Check whether external links are allowed before posting.",
+    "This link between the problem and the solution should remain.",
+  ].join("\n");
+
+  const sanitized = assertSanitizedOutputPasses(content, variables, values);
+
+  assert.doesNotMatch(sanitized.content, /include a link/i);
+  assert.doesNotMatch(sanitized.content, /Download the Northstar/i);
+  assert.doesNotMatch(sanitized.content, /\[here\]\(#\)/);
+  assert.doesNotMatch(sanitized.content, /\[link if allowed\]/);
+  assert.match(sanitized.content, /Helpful intro/);
+  assert.match(sanitized.content, /This sentence should stay/);
+  assert.match(sanitized.content, /Posting Notes: Check whether external links are allowed/);
+  assert.match(sanitized.content, /This link between the problem/);
+});
+
+test("post-generation sanitizer preserves real user supplied URL and commercial values", () => {
+  const variables: TemplateVariable[] = [
+    optionalField("destinationUrl", "Destination URL"),
+    optionalField("price", "Price"),
+    optionalField("promoCode", "Promo code"),
+  ];
+  const values = buildDefaultValues(variables);
+  values.destinationUrl = "https://www.creatornivo.com/reddit-resource";
+  values.price = "$4.90/month";
+  values.promoCode = "FOUNDING490";
+  const content = [
+    "Use https://www.creatornivo.com/reddit-resource exactly once.",
+    "Price: $4.90/month.",
+    "Use promo code FOUNDING490.",
+    "A discount explanation can stay when the actual terms were supplied.",
+  ].join("\n");
+
+  const sanitized = sanitizeGeneratedOutput(content, variables, values);
+
+  assert.equal(sanitized.changed, false);
+  assert.equal(sanitized.content, content);
+  assert.deepEqual(validateGeneratedOutput(content, variables, values), {
+    ok: true,
+    issues: [],
+  });
+});
+
+test("post-generation sanitizer removes commercial placeholders but leaves non-removable invented prices blocked", () => {
+  const variables: TemplateVariable[] = [
+    optionalField("price", "Price"),
+    optionalField("promoCode", "Promo code"),
+  ];
+  const values = buildDefaultValues(variables);
+  const sanitized = assertSanitizedOutputPasses(
+    [
+      "Price: [insert price].",
+      "Use code [CODE] at checkout.",
+      "Save XX% before the offer ends.",
+      "A discount strategy can reduce friction when you already have approved pricing.",
+    ].join("\n"),
+    variables,
+    values,
+  );
+
+  assert.doesNotMatch(sanitized.content, /\[insert price\]|\[CODE\]|XX%/);
+  assert.match(sanitized.content, /discount strategy can reduce friction/i);
+
+  const inventedPrice = sanitizeGeneratedOutput(
+    "The offer is only $99 today.",
+    variables,
+    values,
+  );
+  assert.equal(inventedPrice.changed, false);
+  assert.equal(
+    validateGeneratedOutput(inventedPrice.content, variables, values).ok,
+    false,
+  );
+});
+
+test("post-generation sanitizer handles timing, proof, disclosure, contact, and visual placeholders safely", () => {
+  const variables: TemplateVariable[] = [
+    optionalField("eventDate", "Event date"),
+    optionalField("location", "Location"),
+    optionalField("proofPoints", "Proof points"),
+    optionalField("affiliationDetails", "Affiliation details"),
+    optionalField("contactDetails", "Contact details"),
+    optionalField("visualDetails", "Visual details"),
+  ];
+  const values = buildDefaultValues(variables);
+  const content = [
+    "Join us on [date].",
+    "Venue: [location].",
+    "Proof: [insert statistic].",
+    "Testimonial: [customer quote].",
+    "Sponsored by [sponsor name].",
+    "Contact: name@example.com or 555-123-4567.",
+    "Follow @yourhandle.",
+    "Image: [insert image].",
+    "Screenshot: [add screenshot].",
+    "The project started on July 4, 2026 and this historical date should stay.",
+  ].join("\n");
+
+  const sanitized = assertSanitizedOutputPasses(content, variables, values);
+
+  assert.doesNotMatch(sanitized.content, /\[date\]|\[location\]/);
+  assert.doesNotMatch(sanitized.content, /\[insert statistic\]|\[customer quote\]/);
+  assert.doesNotMatch(sanitized.content, /\[sponsor name\]/);
+  assert.doesNotMatch(sanitized.content, /name@example\.com|555-123-4567|@yourhandle/);
+  assert.doesNotMatch(sanitized.content, /\[insert image\]|\[add screenshot\]/);
+  assert.match(sanitized.content, /July 4, 2026/);
+});
+
+test("post-generation sanitizer preserves provided date, proof, disclosure, contact, and visual values", () => {
+  const variables: TemplateVariable[] = [
+    optionalField("eventDate", "Event date"),
+    optionalField("location", "Location"),
+    optionalField("proofPoints", "Proof points"),
+    optionalField("affiliationDetails", "Affiliation details"),
+    optionalField("contactDetails", "Contact details"),
+    optionalField("visualDetails", "Visual details"),
+  ];
+  const values = buildDefaultValues(variables);
+  values.eventDate = "July 31, 2026";
+  values.location = "Online";
+  values.proofPoints = "203 template tests passed.";
+  values.affiliationDetails = "Disclosure: founder account.";
+  values.contactDetails = "support@creatornivo.com";
+  values.visualDetails = "Use an abstract workflow illustration.";
+  const content = [
+    "Date: July 31, 2026.",
+    "Location: Online.",
+    "Proof: 203 template tests passed.",
+    "Disclosure: founder account.",
+    "Contact: support@creatornivo.com.",
+    "Visual concept: Use an abstract workflow illustration.",
+  ].join("\n");
+
+  const sanitized = sanitizeGeneratedOutput(content, variables, values);
+
+  assert.equal(sanitized.changed, false);
+  assert.equal(sanitized.content, content);
+  assert.deepEqual(validateGeneratedOutput(content, variables, values), {
+    ok: true,
+    issues: [],
+  });
+});
+
+test("post-generation sanitizer leaves ambiguous proof issues blocked when cleanup is unsafe", () => {
+  const variables: TemplateVariable[] = [
+    optionalField("sourceMaterial", "Source material"),
+  ];
+  const values = buildDefaultValues(variables);
+  const sanitized = sanitizeGeneratedOutput(
+    "According to research, this approach is proven to work.",
+    variables,
+    values,
+  );
+
+  assert.equal(sanitized.changed, false);
+  assert.equal(
+    validateGeneratedOutput(sanitized.content, variables, values).ok,
+    false,
+  );
+});
+
+test("Reddit Post production URL artifacts are sanitized when Destination URL is blank", () => {
+  const template = templateBySlug("reddit-post");
+  const variables = parseTemplateVariables(template.variables);
+  const values = buildRequiredOnlyValues(template.slug, variables);
+  values.promotionIntent = "Share a free resource";
+  const content = [
+    "Here's a practical planner you can adapt this week.",
+    "I'll include a link to download the planner below.",
+    "Download the Northstar Weekly Content Planner",
+  ].join("\n");
+
+  const sanitized = assertSanitizedOutputPasses(content, variables, values);
+
+  assert.match(sanitized.content, /practical planner/);
+  assert.doesNotMatch(sanitized.content, /include a link/i);
+  assert.doesNotMatch(sanitized.content, /Download the Northstar Weekly Content Planner/);
+  assert.ok(
+    sanitized.changes.some((change) => change.category === "url"),
+    "Reddit cleanup should be classified as URL cleanup",
+  );
+});
+
+test("post-generation sanitizer has representative coverage across all 45 templates", () => {
+  const sampleByCategory = {
+    url: "Read more [here](#).",
+    commercial: "Price: [insert price].",
+    proof: "Proof: [insert statistic].",
+    timing: "Date: [date].",
+    disclosure: "Sponsored by [sponsor name].",
+    contact: "Contact: name@example.com.",
+    visual: "Image: [insert image].",
+  };
+
+  const coverageTable = catalog.map((template) => {
+    const variables = parseTemplateVariables(template.variables);
+    const values = buildRequiredOnlyValues(template.slug, variables);
+    const categories = new Set(
+      variables
+        .filter(
+          (variable) =>
+            !variable.required &&
+            !variable.defaultValue?.trim() &&
+            !values[variable.key]?.trim(),
+        )
+        .flatMap((variable) => classifyOptionalFieldRiskCategories(variable)),
+    );
+
+    const categoryCoverage = Object.fromEntries(
+      Object.entries(sampleByCategory).map(([category, sample]) => {
+        if (!categories.has(category as keyof typeof sampleByCategory)) {
+          return [category, true];
+        }
+        const sanitized = sanitizeGeneratedOutput(sample, variables, values);
+        const validation = validateGeneratedOutput(
+          sanitized.content,
+          variables,
+          values,
+        );
+        return [category, sanitized.changed && validation.ok];
+      }),
+    ) as Record<keyof typeof sampleByCategory, boolean>;
+
+    return {
+      templateSlug: template.slug,
+      urlCleanupCovered: categoryCoverage.url,
+      commercialCleanupCovered: categoryCoverage.commercial,
+      dateLocationCleanupCovered: categoryCoverage.timing,
+      proofCleanupCovered: categoryCoverage.proof,
+      disclosureCleanupCovered: categoryCoverage.disclosure,
+      contactCleanupCovered: categoryCoverage.contact,
+      visualCleanupCovered: categoryCoverage.visual,
+      safeSanitizationTest: Object.values(categoryCoverage).every(Boolean),
+      validationFailureFallbackTest: true,
+      status: Object.values(categoryCoverage).every(Boolean)
+        ? "covered"
+        : "needs review",
+    };
+  });
+
+  assert.equal(coverageTable.length, 45);
+  assert.deepEqual(
+    coverageTable.filter((row) => row.status !== "covered"),
+    [],
+  );
+  assert.ok(OUTPUT_SANITIZER_PATTERN_COUNT >= 20);
+});
+
 test("output validator has required-only risk coverage across all 45 templates", () => {
   const placeholderByCategory = {
     url: "Read more [here](#).",
@@ -624,17 +899,20 @@ test("generation route validates final output before saving and usage increment"
     "output-validation.ts",
   );
   const createContentStreamIndex = route.indexOf("await createContentStream");
+  const sanitizerIndex = route.indexOf("sanitizeGeneratedOutput(");
   const outputValidationIndex = route.indexOf("validateGeneratedOutput(");
   const failIndex = route.indexOf("prismaGenerationReservationStore.fail", outputValidationIndex);
   const completeIndex = route.indexOf("prismaGenerationReservationStore.complete");
   const incrementUsageIndex = route.indexOf("await incrementUsage");
 
   assert.ok(createContentStreamIndex >= 0);
-  assert.ok(outputValidationIndex > createContentStreamIndex);
+  assert.ok(sanitizerIndex > createContentStreamIndex);
+  assert.ok(outputValidationIndex > sanitizerIndex);
   assert.ok(failIndex > outputValidationIndex);
   assert.ok(completeIndex > outputValidationIndex);
   assert.ok(outputValidationIndex < completeIndex);
   assert.ok(outputValidationIndex < incrementUsageIndex);
+  assert.match(route, /result:\s*sanitizedOutput\.content/);
   assert.equal(route.match(/await createContentStream/g)?.length, 1);
   assert.equal(route.match(/await reserveGeneration/g)?.length, 1);
   assert.doesNotMatch(validator, /createContentStream|reserveGeneration|incrementUsage/);
@@ -678,14 +956,20 @@ test("copy, save, and export paths are guarded by output validation", () => {
   );
 
   assert.match(workspace, /validateGeneratedOutput\(/);
+  assert.match(workspace, /sanitizeGeneratedOutput\(/);
   assert.match(workspace, /templateValues: resultValidationContext\?\.values/);
+  assert.match(workspace, /content:\s*sanitizedContent/);
   assert.match(generationResult, /outputValidationMessage/);
   assert.match(generationResult, /navigator\.clipboard\.writeText/);
   assert.match(exportButtons, /contentValidationMessage/);
-  assert.match(copyButton, /validateGeneratedOutput\(content\)/);
+  assert.match(copyButton, /sanitizeGeneratedOutput\(content\)/);
+  assert.match(copyButton, /validateGeneratedOutput\(sanitizedOutput\.content\)/);
+  assert.match(libraryRoute, /sanitizeGeneratedOutput\(/);
   assert.match(libraryRoute, /validateGeneratedOutput\(/);
-  assert.match(exportRoute, /validateGeneratedOutput\(content\)/);
-  assert.match(savedExportRoute, /validateGeneratedOutput\(prompt\.content\)/);
+  assert.match(exportRoute, /sanitizeGeneratedOutput\(content\)/);
+  assert.match(exportRoute, /validateGeneratedOutput\(sanitizedOutput\.content\)/);
+  assert.match(savedExportRoute, /sanitizeGeneratedOutput\(prompt\.content\)/);
+  assert.match(savedExportRoute, /validateGeneratedOutput\(sanitizedOutput\.content\)/);
 });
 
 test("meaningful defaults are treated as values, not blank optional fields", () => {

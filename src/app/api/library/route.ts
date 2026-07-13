@@ -6,6 +6,7 @@ import { canSavePrompt } from "@/lib/subscriptions/limits";
 import { getSaveLimitMessage } from "@/lib/subscriptions/messages";
 import {
   getGeneratedOutputValidationMessage,
+  sanitizeGeneratedOutput,
   validateGeneratedOutput,
 } from "@/lib/templates/output-validation";
 import { parseTemplateVariables } from "@/lib/templates/utils";
@@ -68,10 +69,19 @@ export async function POST(request: Request) {
             select: { variables: true },
           })
         : null;
-    const outputValidation = validateGeneratedOutput(
+    const variables = template ? parseTemplateVariables(template.variables) : [];
+    const templateValues = parseStringRecord(
+      (body as { templateValues?: unknown }).templateValues,
+    );
+    const sanitizedOutput = sanitizeGeneratedOutput(
       content,
-      template ? parseTemplateVariables(template.variables) : [],
-      parseStringRecord((body as { templateValues?: unknown }).templateValues),
+      variables,
+      templateValues,
+    );
+    const outputValidation = validateGeneratedOutput(
+      sanitizedOutput.content,
+      variables,
+      templateValues,
     );
     const outputValidationMessage =
       getGeneratedOutputValidationMessage(outputValidation);
@@ -102,7 +112,7 @@ export async function POST(request: Request) {
       data: {
         userId: session.id,
         title: title.trim(),
-        content: content.trim(),
+        content: sanitizedOutput.content.trim(),
         templateId: templateId ?? null,
       },
       include: {

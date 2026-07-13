@@ -28,6 +28,7 @@ import {
 } from "@/lib/templates/utils";
 import {
   getGeneratedOutputValidationMessage,
+  sanitizeGeneratedOutput,
   validateGeneratedOutput,
 } from "@/lib/templates/output-validation";
 import {
@@ -163,13 +164,13 @@ export function GenerateWorkspace({
     ? areTemplateValuesAtDefaults(selected.variables, values)
     : true;
   const outputValidation = useMemo(() => {
-    if (!streamedContent || !resultValidationContext) return null;
+    if (isStreaming || !streamedContent || !resultValidationContext) return null;
     return validateGeneratedOutput(
       streamedContent,
       resultValidationContext.variables,
       resultValidationContext.values,
     );
-  }, [resultValidationContext, streamedContent]);
+  }, [isStreaming, resultValidationContext, streamedContent]);
   const outputValidationMessage = outputValidation
     ? getGeneratedOutputValidationMessage(outputValidation)
     : null;
@@ -279,6 +280,8 @@ export function GenerateWorkspace({
 
     requestIdRef.current = requestId;
     inFlightRef.current = true;
+    const generationVariables = selected.variables;
+    const generationValues = { ...values };
 
     setError(null);
     setIsStreaming(true);
@@ -287,19 +290,19 @@ export function GenerateWorkspace({
     setSavedPromptId(null);
     setResultValidationContext({
       templateId: selected.id,
-      variables: selected.variables,
-      values: { ...values },
+      variables: generationVariables,
+      values: generationValues,
     });
 
     try {
       const response = await fetch("/api/ai/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          requestId,
-          templateId: selected.id,
-          values,
-        }),
+          body: JSON.stringify({
+            requestId,
+            templateId: selected.id,
+            values: generationValues,
+          }),
       });
 
       if (!response.ok) {
@@ -340,6 +343,15 @@ export function GenerateWorkspace({
         setStreamedContent(accumulated);
       }
 
+      const sanitizedOutput = sanitizeGeneratedOutput(
+        accumulated,
+        generationVariables,
+        generationValues,
+      );
+      if (sanitizedOutput.changed) {
+        setStreamedContent(sanitizedOutput.content);
+      }
+
       requestIdRef.current = null;
       await refreshGenerationUsage();
     } catch {
@@ -359,16 +371,28 @@ export function GenerateWorkspace({
       return { error: "No content to save" };
     }
 
-    const validation = resultValidationContext
-      ? validateGeneratedOutput(
+    const sanitizedOutput = resultValidationContext
+      ? sanitizeGeneratedOutput(
           streamedContent,
           resultValidationContext.variables,
           resultValidationContext.values,
         )
-      : validateGeneratedOutput(streamedContent);
-    const validationMessage = getGeneratedOutputValidationMessage(validation);
+      : sanitizeGeneratedOutput(streamedContent);
+    const sanitizedContent = sanitizedOutput.content;
+    const outputValidation = resultValidationContext
+      ? validateGeneratedOutput(
+          sanitizedContent,
+          resultValidationContext.variables,
+          resultValidationContext.values,
+        )
+      : validateGeneratedOutput(sanitizedContent);
+    const validationMessage =
+      getGeneratedOutputValidationMessage(outputValidation);
     if (validationMessage) {
       return { error: validationMessage };
+    }
+    if (sanitizedOutput.changed) {
+      setStreamedContent(sanitizedContent);
     }
 
     if (!canSave) {
@@ -380,7 +404,7 @@ export function GenerateWorkspace({
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         title: `${selected.title} — ${new Date().toLocaleDateString("en-US")}`,
-        content: streamedContent,
+        content: sanitizedContent,
         templateId: selected.id,
         templateValues: resultValidationContext?.values,
       }),

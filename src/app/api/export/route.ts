@@ -10,6 +10,7 @@ import { canExportContent, EXPORT_UPGRADE_MESSAGE } from "@/lib/export/permissio
 import { requireSession } from "@/lib/auth/session";
 import {
   getGeneratedOutputValidationMessage,
+  sanitizeGeneratedOutput,
   validateGeneratedOutput,
 } from "@/lib/templates/output-validation";
 
@@ -42,7 +43,8 @@ export async function POST(request: Request) {
       );
     }
 
-    const outputValidation = validateGeneratedOutput(content);
+    const sanitizedOutput = sanitizeGeneratedOutput(content);
+    const outputValidation = validateGeneratedOutput(sanitizedOutput.content);
     const outputValidationMessage =
       getGeneratedOutputValidationMessage(outputValidation);
 
@@ -53,7 +55,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const exportContent = prepareExportContent(content, format);
+    const exportContent = prepareExportContent(sanitizedOutput.content, format);
     const filename = buildExportFilename(title ?? "generation", format);
 
     return new Response(exportContent, {

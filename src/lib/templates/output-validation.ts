@@ -32,9 +32,22 @@ export interface GeneratedOutputValidationResult {
   issues: GeneratedOutputValidationIssue[];
 }
 
+export interface GeneratedOutputSanitizationChange {
+  category: OptionalFieldRiskCategory;
+  removed: string;
+  reason: string;
+}
+
+export interface GeneratedOutputSanitizationResult {
+  content: string;
+  changed: boolean;
+  changes: GeneratedOutputSanitizationChange[];
+}
+
 interface OutputValidationContext {
   blankOptionalCategories: Set<OptionalFieldRiskCategory>;
   providedValues: string[];
+  hasTemplateContext: boolean;
 }
 
 interface OutputPatternRule {
@@ -44,6 +57,15 @@ interface OutputPatternRule {
   message: string;
   requiresBlankOptionalCategory?: boolean;
   ignoreWhenUserProvided?: boolean;
+}
+
+interface OutputSanitizerRule {
+  category: OptionalFieldRiskCategory;
+  pattern: RegExp;
+  reason: string;
+  scope: "line" | "sentence";
+  requiresBlankOptionalCategory?: boolean;
+  allowWithoutTemplateContext?: boolean;
 }
 
 const OUTPUT_PLACEHOLDER_RULES: OutputPatternRule[] = [
@@ -83,10 +105,36 @@ const OUTPUT_PLACEHOLDER_RULES: OutputPatternRule[] = [
     ignoreWhenUserProvided: true,
   },
   {
+    code: "unsupported_url_instruction",
+    category: "url",
+    pattern:
+      /\b(?:i(?:'|’)ll|i will|we(?:'|’)ll|we will)\s+include\s+(?:a\s+)?link\b[^.!?\n]*\bbelow\b/gi,
+    message: "Generated output asks the reader to use a missing link.",
+    requiresBlankOptionalCategory: true,
+    ignoreWhenUserProvided: true,
+  },
+  {
+    code: "unsupported_url_instruction",
+    category: "url",
+    pattern: /\blink in bio\b/gi,
+    message: "Generated output references a missing profile or bio link.",
+    requiresBlankOptionalCategory: true,
+    ignoreWhenUserProvided: true,
+  },
+  {
+    code: "unsupported_url_instruction",
+    category: "url",
+    pattern:
+      /^\s*(?:[-*•]\s*)?(?:download|get|visit|book|click|follow)\s+(?!whether\b|if\b)[^\n.?!]{2,100}$/gim,
+    message: "Generated output contains a standalone CTA that depends on a missing link.",
+    requiresBlankOptionalCategory: true,
+    ignoreWhenUserProvided: true,
+  },
+  {
     code: "placeholder_commercial",
     category: "commercial",
     pattern:
-      /\[(?:insert price|price|insert discount|discount|promo code|coupon code|insert promo code)\]/gi,
+      /\[(?:insert price|price|insert discount|discount|promo code|coupon code|insert promo code|offer details|insert offer details)\]/gi,
     message: "Generated output contains a commercial placeholder.",
   },
   {
@@ -154,7 +202,7 @@ const OUTPUT_PLACEHOLDER_RULES: OutputPatternRule[] = [
     code: "placeholder_proof",
     category: "proof",
     pattern:
-      /\[(?:insert statistic|statistic|insert proof|proof point|testimonial|citation|source)\]/gi,
+      /\[(?:insert statistic|statistic|insert proof|proof point|add source|customer quote|testimonial|citation|source)\]/gi,
     message: "Generated output contains a proof or evidence placeholder.",
   },
   {
@@ -196,13 +244,13 @@ const OUTPUT_PLACEHOLDER_RULES: OutputPatternRule[] = [
   {
     code: "placeholder_contact",
     category: "contact",
-    pattern: /\[(?:contact details|insert contact|phone number|email address)\]/gi,
+    pattern: /\[(?:contact details|insert contact|phone number|email address|contact)\]/gi,
     message: "Generated output contains a contact placeholder.",
   },
   {
     code: "placeholder_contact",
     category: "contact",
-    pattern: /\bname@example\.com\b/gi,
+    pattern: /\b(?:name|email)@example\.com\b/gi,
     message: "Generated output contains a placeholder email address.",
   },
   {
@@ -221,7 +269,7 @@ const OUTPUT_PLACEHOLDER_RULES: OutputPatternRule[] = [
     code: "placeholder_visual",
     category: "visual",
     pattern:
-      /\[(?:insert image|add image|insert screenshot|add screenshot|image|screenshot)\]/gi,
+      /\[(?:insert image|add image|insert screenshot|add screenshot|upload product photo|image|screenshot)\]/gi,
     message: "Generated output contains a visual placeholder.",
   },
   {
@@ -239,6 +287,175 @@ const OUTPUT_PLACEHOLDER_RULES: OutputPatternRule[] = [
     ignoreWhenUserProvided: true,
   },
 ];
+
+const OUTPUT_SANITIZER_RULES: OutputSanitizerRule[] = [
+  {
+    category: "url",
+    pattern:
+      /\[(?:here|link|click here)\]\(\s*#\s*\)|\[(?:link if allowed|insert link|add link|insert url|add url|link|url)\]|\b(?:URL_HERE|LINK_HERE|YOUR_URL|INSERT_LINK|ADD_LINK)\b|\b(?:https?:\/\/)?(?:www\.)?example\.com(?:\/[^\s)]*)?/i,
+    reason: "placeholder URL or link",
+    scope: "line",
+    requiresBlankOptionalCategory: true,
+    allowWithoutTemplateContext: true,
+  },
+  {
+    category: "url",
+    pattern:
+      /\b(?:i(?:'|’)ll|i will|we(?:'|’)ll|we will)\s+include\s+(?:a\s+)?link\b.*\bbelow\b/i,
+    reason: "missing link-below instruction",
+    scope: "sentence",
+    requiresBlankOptionalCategory: true,
+  },
+  {
+    category: "url",
+    pattern:
+      /\b(?:check|click|visit|open|see|use|book|download|follow)\s+(?:this\s+|the\s+)?(?:link|url)\s+(?:below|here)\b/i,
+    reason: "missing link CTA",
+    scope: "sentence",
+    requiresBlankOptionalCategory: true,
+  },
+  {
+    category: "url",
+    pattern: /\blink in bio\b/i,
+    reason: "missing profile link",
+    scope: "sentence",
+    requiresBlankOptionalCategory: true,
+  },
+  {
+    category: "url",
+    pattern:
+      /^\s*(?:[-*•]\s*)?(?:download|get|visit|book|click|follow)\s+(?!whether\b|if\b)[^\n.?!]{2,100}$/i,
+    reason: "standalone CTA without supplied destination",
+    scope: "line",
+    requiresBlankOptionalCategory: true,
+  },
+  {
+    category: "commercial",
+    pattern:
+      /\[(?:insert price|price|insert discount|discount|promo code|coupon code|insert promo code|offer details|insert offer details)\]|\b(?:PRICE_HERE|DISCOUNT_HERE|PROMO_CODE|PROMO_CODE_HERE|COUPON_CODE|OFFER_HERE)\b/i,
+    reason: "commercial placeholder",
+    scope: "line",
+    requiresBlankOptionalCategory: true,
+    allowWithoutTemplateContext: true,
+  },
+  {
+    category: "commercial",
+    pattern: /\buse\s+(?:promo\s+|coupon\s+)?code\s+\[[^\]]+\]/i,
+    reason: "placeholder promo code",
+    scope: "sentence",
+    requiresBlankOptionalCategory: true,
+  },
+  {
+    category: "commercial",
+    pattern: /\bsave\s+(?:XX|X{1,3})\s?%|\b(?:XX|X{1,3})\s?%\s+(?:off|discount|savings)\b/i,
+    reason: "placeholder discount",
+    scope: "sentence",
+    requiresBlankOptionalCategory: true,
+  },
+  {
+    category: "commercial",
+    pattern: /\boffer\s+(?:ends|expires)\s+\[(?:date|deadline|time)\]/i,
+    reason: "placeholder offer deadline",
+    scope: "sentence",
+    requiresBlankOptionalCategory: true,
+  },
+  {
+    category: "commercial",
+    pattern: /^\s*(?:[-*•]\s*)?limited spots available\.?\s*$/i,
+    reason: "unsupplied scarcity line",
+    scope: "line",
+    requiresBlankOptionalCategory: true,
+  },
+  {
+    category: "timing",
+    pattern:
+      /\[(?:date|time|location|address|insert date|insert time|insert location|insert address)\]|\b(?:DATE_HERE|TIME_HERE|LOCATION_HERE|ADDRESS_HERE)\b|\bTBD\s+(?:date|time|location|address)\b/i,
+    reason: "timing or location placeholder",
+    scope: "line",
+    requiresBlankOptionalCategory: true,
+    allowWithoutTemplateContext: true,
+  },
+  {
+    category: "timing",
+    pattern: /\b(?:join us on|visit us at)\s+\[(?:date|time|location|address)\]/i,
+    reason: "missing date or location sentence",
+    scope: "sentence",
+    requiresBlankOptionalCategory: true,
+  },
+  {
+    category: "proof",
+    pattern:
+      /\[(?:insert statistic|statistic|insert proof|proof point|add source|customer quote|testimonial|citation|source)\]|\b(?:STATISTIC_HERE|SOURCE_HERE|CITATION_HERE|PROOF_HERE)\b/i,
+    reason: "proof or evidence placeholder",
+    scope: "line",
+    requiresBlankOptionalCategory: true,
+    allowWithoutTemplateContext: true,
+  },
+  {
+    category: "proof",
+    pattern: /\baccording to\s+\[(?:source|citation|study|research)\]/i,
+    reason: "placeholder source citation",
+    scope: "sentence",
+    requiresBlankOptionalCategory: true,
+  },
+  {
+    category: "proof",
+    pattern: /\bXX\s?%\s+of\s+(?:customers|users|creators|teams)\b/i,
+    reason: "placeholder statistic",
+    scope: "sentence",
+    requiresBlankOptionalCategory: true,
+  },
+  {
+    category: "proof",
+    pattern: /\b(?:award-winning|certified by)\s+\[(?:name|organization|source)\]/i,
+    reason: "placeholder credential",
+    scope: "sentence",
+    requiresBlankOptionalCategory: true,
+  },
+  {
+    category: "disclosure",
+    pattern:
+      /\[(?:sponsor name|affiliate disclosure|partnership details|disclosure|partner name)\]/i,
+    reason: "disclosure placeholder",
+    scope: "line",
+    requiresBlankOptionalCategory: true,
+    allowWithoutTemplateContext: true,
+  },
+  {
+    category: "disclosure",
+    pattern: /\bsponsored by\s+\[(?:brand|sponsor name|company)\]/i,
+    reason: "placeholder sponsor",
+    scope: "sentence",
+    requiresBlankOptionalCategory: true,
+  },
+  {
+    category: "disclosure",
+    pattern: /\buse my affiliate link\b/i,
+    reason: "unsupplied affiliate link",
+    scope: "sentence",
+    requiresBlankOptionalCategory: true,
+  },
+  {
+    category: "contact",
+    pattern:
+      /\b(?:name|email)@example\.com\b|\b555[-.\s]?\d{3}[-.\s]?\d{4}\b|@yourhandle\b|\[(?:phone number|email address|contact details|insert contact|contact)\]|\bCONTACT_HERE\b/i,
+    reason: "contact placeholder",
+    scope: "line",
+    requiresBlankOptionalCategory: true,
+    allowWithoutTemplateContext: true,
+  },
+  {
+    category: "visual",
+    pattern:
+      /\[(?:insert image|add image|insert screenshot|add screenshot|upload product photo|image|screenshot)\]|\b(?:IMAGE_HERE|SCREENSHOT_HERE|VISUAL_HERE)\b/i,
+    reason: "visual placeholder",
+    scope: "line",
+    requiresBlankOptionalCategory: true,
+    allowWithoutTemplateContext: true,
+  },
+];
+
+export const OUTPUT_SANITIZER_PATTERN_COUNT = OUTPUT_SANITIZER_RULES.length;
 
 function getStringValue(value: unknown): string {
   const trimmed = typeof value === "string" ? value.trim() : "";
@@ -293,7 +510,11 @@ function buildOutputValidationContext(
     }
   }
 
-  return { blankOptionalCategories, providedValues };
+  return {
+    blankOptionalCategories,
+    providedValues,
+    hasTemplateContext: variables.length > 0,
+  };
 }
 
 function collectMatches(pattern: RegExp, content: string): string[] {
@@ -304,6 +525,160 @@ function collectMatches(pattern: RegExp, content: string): string[] {
   return [...content.matchAll(matcher)]
     .map((match) => match[0]?.trim() ?? "")
     .filter(Boolean);
+}
+
+function testPattern(pattern: RegExp, content: string): boolean {
+  const flags = pattern.flags.replace("g", "");
+  return new RegExp(pattern.source, flags).test(content);
+}
+
+function isRuleEnabled(
+  rule: OutputSanitizerRule,
+  context: OutputValidationContext,
+): boolean {
+  if (!rule.requiresBlankOptionalCategory) return true;
+  if (context.blankOptionalCategories.has(rule.category)) return true;
+
+  return !context.hasTemplateContext && rule.allowWithoutTemplateContext === true;
+}
+
+function isProtectedOutputLine(line: string): boolean {
+  return (
+    /^\s*(?:[-*•]\s*)?posting notes?\s*:/i.test(line) ||
+    /\bcheck whether external links are allowed\b/i.test(line) ||
+    /\bcheck (?:the )?(?:platform|subreddit|community) link rules\b/i.test(line)
+  );
+}
+
+function getPreservableProvidedValues(
+  context: OutputValidationContext,
+): string[] {
+  return context.providedValues.filter((value) => {
+    const normalized = normalizeForComparison(value);
+    return (
+      normalized.length >= 4 &&
+      !/^(auto|yes|no|minimal|no button|1)$/.test(normalized)
+    );
+  });
+}
+
+function containsProvidedValue(
+  content: string,
+  context: OutputValidationContext,
+): boolean {
+  return isCoveredByProvidedValue(content, getPreservableProvidedValues(context));
+}
+
+function matchingRule(
+  content: string,
+  context: OutputValidationContext,
+  scope: OutputSanitizerRule["scope"],
+): OutputSanitizerRule | null {
+  if (!content.trim()) return null;
+  if (containsProvidedValue(content, context)) return null;
+
+  return (
+    OUTPUT_SANITIZER_RULES.find(
+      (rule) =>
+        rule.scope === scope &&
+        isRuleEnabled(rule, context) &&
+        testPattern(rule.pattern, content),
+    ) ?? null
+  );
+}
+
+function splitIntoSentences(line: string): string[] {
+  const parts = line.match(/[^.!?]+[.!?]+(?:\s+|$)|[^.!?]+$/g);
+  return parts && parts.length > 0 ? parts : [line];
+}
+
+function cleanLineAfterSentenceRemoval(line: string): string {
+  return line
+    .replace(/\s{2,}/g, " ")
+    .replace(/\s+([,.;:!?])/g, "$1")
+    .trim();
+}
+
+function collapseOutputBlankLines(content: string): string {
+  const lines = content.split(/\r?\n/);
+  const collapsed: string[] = [];
+
+  for (const line of lines) {
+    const previous = collapsed[collapsed.length - 1];
+    if (!line.trim() && previous !== undefined && !previous.trim()) {
+      continue;
+    }
+    collapsed.push(line);
+  }
+
+  return collapsed.join("\n").trim();
+}
+
+export function sanitizeGeneratedOutput(
+  content: string,
+  variables: TemplateVariable[] = [],
+  values: Record<string, string> = {},
+): GeneratedOutputSanitizationResult {
+  const context = buildOutputValidationContext(variables, values);
+  const changes: GeneratedOutputSanitizationChange[] = [];
+  const sanitizedLines: string[] = [];
+
+  for (const line of content.split(/\r?\n/)) {
+    if (!line.trim()) {
+      sanitizedLines.push(line);
+      continue;
+    }
+
+    if (isProtectedOutputLine(line)) {
+      sanitizedLines.push(line);
+      continue;
+    }
+
+    const lineRule = matchingRule(line, context, "line");
+    if (lineRule) {
+      changes.push({
+        category: lineRule.category,
+        removed: line.trim(),
+        reason: lineRule.reason,
+      });
+      continue;
+    }
+
+    const keptSentences: string[] = [];
+    for (const sentence of splitIntoSentences(line)) {
+      const sentenceRule = matchingRule(sentence, context, "sentence");
+      if (sentenceRule) {
+        changes.push({
+          category: sentenceRule.category,
+          removed: sentence.trim(),
+          reason: sentenceRule.reason,
+        });
+        continue;
+      }
+      keptSentences.push(sentence.trim());
+    }
+
+    const cleanedLine = cleanLineAfterSentenceRemoval(keptSentences.join(" "));
+    if (cleanedLine) {
+      sanitizedLines.push(cleanedLine);
+    }
+  }
+
+  if (changes.length === 0) {
+    return {
+      content,
+      changed: false,
+      changes,
+    };
+  }
+
+  const sanitizedContent = collapseOutputBlankLines(sanitizedLines.join("\n"));
+
+  return {
+    content: sanitizedContent,
+    changed: sanitizedContent !== content,
+    changes,
+  };
 }
 
 export function validateGeneratedOutput(

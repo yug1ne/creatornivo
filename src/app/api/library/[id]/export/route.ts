@@ -11,6 +11,7 @@ import { requireSession } from "@/lib/auth/session";
 import { prisma } from "@/lib/db";
 import {
   getGeneratedOutputValidationMessage,
+  sanitizeGeneratedOutput,
   validateGeneratedOutput,
 } from "@/lib/templates/output-validation";
 
@@ -46,7 +47,8 @@ export async function GET(request: Request, { params }: RouteParams) {
       return NextResponse.json({ error: "Prompt not found" }, { status: 404 });
     }
 
-    const outputValidation = validateGeneratedOutput(prompt.content);
+    const sanitizedOutput = sanitizeGeneratedOutput(prompt.content);
+    const outputValidation = validateGeneratedOutput(sanitizedOutput.content);
     const outputValidationMessage =
       getGeneratedOutputValidationMessage(outputValidation);
 
@@ -57,7 +59,7 @@ export async function GET(request: Request, { params }: RouteParams) {
       );
     }
 
-    const exportContent = prepareExportContent(prompt.content, format);
+    const exportContent = prepareExportContent(sanitizedOutput.content, format);
     const filename = buildExportFilename(prompt.title, format);
 
     return new Response(exportContent, {

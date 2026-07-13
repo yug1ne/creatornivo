@@ -35,6 +35,7 @@ import {
 } from "@/lib/templates/utils";
 import {
   getGeneratedOutputValidationMessage,
+  sanitizeGeneratedOutput,
   validateGeneratedOutput,
 } from "@/lib/templates/output-validation";
 
@@ -232,8 +233,13 @@ export async function POST(request: Request) {
           inputTokens,
           outputTokens,
         }) => {
-          const outputValidation = validateGeneratedOutput(
+          const sanitizedOutput = sanitizeGeneratedOutput(
             text,
+            variables,
+            templateValues,
+          );
+          const outputValidation = validateGeneratedOutput(
+            sanitizedOutput.content,
             variables,
             templateValues,
           );
@@ -243,6 +249,11 @@ export async function POST(request: Request) {
               templateId: template.id,
               templateSlug: template.slug,
               requestId,
+              sanitized: sanitizedOutput.changed,
+              removedArtifacts: sanitizedOutput.changes.map((change) => ({
+                category: change.category,
+                reason: change.reason,
+              })),
               issues: outputValidation.issues.map((issue) => ({
                 code: issue.code,
                 category: issue.category,
@@ -267,7 +278,7 @@ export async function POST(request: Request) {
               userId: session.id,
               templateId: template.id,
               prompt: filledPrompt,
-              result: text,
+              result: sanitizedOutput.content,
               model: usedModel,
               inputTokens,
               outputTokens,

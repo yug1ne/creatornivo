@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   getGeneratedOutputValidationMessage,
+  sanitizeGeneratedOutput,
   validateGeneratedOutput,
 } from "@/lib/templates/output-validation";
 
@@ -14,13 +15,14 @@ interface CopyContentButtonProps {
 
 export function CopyContentButton({ content }: CopyContentButtonProps) {
   const [copied, setCopied] = useState(false);
+  const sanitizedOutput = sanitizeGeneratedOutput(content);
   const validationMessage = getGeneratedOutputValidationMessage(
-    validateGeneratedOutput(content),
+    validateGeneratedOutput(sanitizedOutput.content),
   );
 
   async function handleCopy() {
     if (validationMessage) return;
-    await navigator.clipboard.writeText(content);
+    await navigator.clipboard.writeText(sanitizedOutput.content);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   }
