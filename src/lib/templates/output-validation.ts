@@ -19,11 +19,16 @@ export type GeneratedOutputIssueCode =
   | "unsupported_timing_detail"
   | "unsupported_proof_detail"
   | "unsupported_disclosure_detail"
-  | "unsupported_visual_detail";
+  | "unsupported_visual_detail"
+  | "user_prohibited_phrase";
+
+export type GeneratedOutputIssueCategory =
+  | OptionalFieldRiskCategory
+  | "restriction";
 
 export interface GeneratedOutputValidationIssue {
   code: GeneratedOutputIssueCode;
-  category: OptionalFieldRiskCategory;
+  category: GeneratedOutputIssueCategory;
   match: string;
   message: string;
 }
@@ -537,6 +542,139 @@ function testPattern(pattern: RegExp, content: string): boolean {
   return new RegExp(pattern.source, flags).test(content);
 }
 
+const USER_RESTRICTION_FIELD_KEYS = new Set([
+  "additionalRequirements",
+  "avoidTopicsAndPhrases",
+  "brandSafetyRestrictions",
+  "claimsAndEvidence",
+  "claimsAndRestrictions",
+  "claimsRestrictions",
+  "claimsToSupport",
+  "complianceNotes",
+  "contentToAvoid",
+  "doNotUse",
+  "mandatoryRestrictions",
+  "policyRestrictions",
+  "privacyRestrictions",
+  "prohibitedClaims",
+  "regulatedRequirements",
+  "restrictions",
+  "restrictionsAndDisclosures",
+  "sensitiveRequirements",
+  "wordsToAvoid",
+]);
+
+const USER_RESTRICTION_KEY_PATTERN =
+  /(?:avoid|doNotUse|do_not_use|restriction|prohibited|forbidden|compliance|privacy|sensitive|regulated|claimsAndRestrictions|claimsRestrictions|contentToAvoid|wordsToAvoid|additionalRequirements)/i;
+
+const RESTRICTION_LEAD_PATTERN =
+  /\b(?:avoid|do not use|don't use|dont use|do not include|don't include|dont include|never use|must not include|exclude|prohibited|forbidden)\b/i;
+
+const QUOTED_PHRASE_PATTERN = /["“”'‘’]([^"“”'‘’\r\n]{2,120})["“”'‘’]/g;
+
+function isUserRestrictionField(variable: TemplateVariable): boolean {
+  const key = variable.key.trim();
+  if (USER_RESTRICTION_FIELD_KEYS.has(key)) return true;
+
+  return USER_RESTRICTION_KEY_PATTERN.test(
+    `${variable.key} ${variable.label}`,
+  );
+}
+
+function cleanForbiddenPhraseCandidate(candidate: string): string {
+  return candidate
+    .replace(/^\s*(?:[-*•]|\d+[.)])\s*/, "")
+    .replace(
+      /^(?:avoid|do not use|don't use|dont use|do not include|don't include|dont include|never use|must not include|exclude|prohibited|forbidden)\s*/i,
+      "",
+    )
+    .replace(/^(?:the\s+)?(?:word|words|phrase|phrases)\s+/i, "")
+    .trim()
+    .replace(/^["“”'‘’]+|["“”'‘’]+$/g, "")
+    .replace(/[.:;,\s]+$/g, "")
+    .replace(/^["“”'‘’]+|["“”'‘’]+$/g, "")
+    .trim();
+}
+
+function splitForbiddenPhraseList(value: string): string[] {
+  return value
+    .split(/\r?\n|,|;|\s+\|\s+/)
+    .map(cleanForbiddenPhraseCandidate)
+    .filter(Boolean);
+}
+
+function collectForbiddenPhrasesFromValue(value: string): string[] {
+  const phrases = new Set<string>();
+
+  for (const match of value.matchAll(QUOTED_PHRASE_PATTERN)) {
+    const phrase = cleanForbiddenPhraseCandidate(match[1] ?? "");
+    if (phrase) phrases.add(phrase);
+  }
+
+  for (const line of value.split(/\r?\n/)) {
+    if (!RESTRICTION_LEAD_PATTERN.test(line)) continue;
+    for (const phrase of splitForbiddenPhraseList(line)) {
+      phrases.add(phrase);
+    }
+  }
+
+  return [...phrases].filter((phrase) => phrase.length >= 2);
+}
+
+export function extractUserProhibitedPhrases(
+  variables: TemplateVariable[] = [],
+  values: Record<string, string> = {},
+): string[] {
+  const phrases = new Map<string, string>();
+
+  for (const variable of variables) {
+    if (!isUserRestrictionField(variable)) continue;
+
+    const value = getStringValue(values[variable.key]);
+    if (!value) continue;
+
+    for (const phrase of collectForbiddenPhrasesFromValue(value)) {
+      const normalized = normalizeForComparison(phrase);
+      if (!normalized) continue;
+      phrases.set(normalized, phrase);
+    }
+  }
+
+  return [...phrases.values()];
+}
+
+function buildExactPhrasePattern(phrase: string): RegExp {
+  const escaped = phrase
+    .trim()
+    .replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+    .replace(/\s+/g, "\\s+");
+  const hasWordBoundaryStart = /^\w/.test(phrase);
+  const hasWordBoundaryEnd = /\w$/.test(phrase);
+
+  return new RegExp(
+    `${hasWordBoundaryStart ? "\\b" : ""}${escaped}${
+      hasWordBoundaryEnd ? "\\b" : ""
+    }`,
+    "i",
+  );
+}
+
+function findUserProhibitedPhraseMatches(
+  content: string,
+  variables: TemplateVariable[],
+  values: Record<string, string>,
+): string[] {
+  const matches: string[] = [];
+
+  for (const phrase of extractUserProhibitedPhrases(variables, values)) {
+    if (buildExactPhrasePattern(phrase).test(content)) {
+      matches.push(phrase);
+    }
+  }
+
+  return matches;
+}
+
 function isRuleEnabled(
   rule: OutputSanitizerRule,
   context: OutputValidationContext,
@@ -815,6 +953,23 @@ export function validateGeneratedOutput(
   const issues: GeneratedOutputValidationIssue[] = [];
   const seen = new Set<string>();
 
+  for (const match of findUserProhibitedPhraseMatches(
+    content,
+    variables,
+    values,
+  )) {
+    const key = `user_prohibited_phrase:restriction:${match.toLowerCase()}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    issues.push({
+      code: "user_prohibited_phrase",
+      category: "restriction",
+      match,
+      message:
+        "Generated output contains a phrase explicitly prohibited by the user.",
+    });
+  }
+
   for (const rule of OUTPUT_PLACEHOLDER_RULES) {
     if (
       rule.requiresBlankOptionalCategory &&
@@ -853,6 +1008,13 @@ export function getGeneratedOutputValidationMessage(
   result: GeneratedOutputValidationResult,
 ): string | null {
   if (result.ok) return null;
+
+  const prohibitedPhrase = result.issues.find(
+    (issue) => issue.code === "user_prohibited_phrase",
+  );
+  if (prohibitedPhrase) {
+    return `Output validation failed: generated content contains a phrase explicitly prohibited by the user: "${prohibitedPhrase.match}".`;
+  }
 
   const categories = [
     ...new Set(result.issues.map((issue) => issue.category)),
