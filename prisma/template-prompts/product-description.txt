@@ -281,6 +281,7 @@ Avoid:
 
 * generic openings such as “In today’s fast-paced world”;
 * “revolutionary,” “game-changing,” “look no further,” “unlock the power of,” or similar default marketing clichés;
+* common unsupported product-description hype such as streamline, streamlined, effortlessly, seamless, seamlessly, transform, boost, enhance, game-changing, guaranteed, save time, capture attention, drive engagement, increase sales, never run out, take the uncertainty out, and clarity and ease — unless the exact phrase was supplied and allowed;
 * excessive enthusiasm;
 * repeated rhetorical questions;
 * empty luxury language;
@@ -291,11 +292,24 @@ Avoid:
 
 Do not invent an emotional personal story, customer scenario, or first-hand experience and present it as real.
 
+Prefer grounded product language. Use verbs such as organize, keep in one place, outline, plan, draft, review, use, include, and support when they fit the facts.
+
 ### BENEFITS AND FEATURES
 
 Create a Key Benefits section using the supplied benefits and supported implications of verified features.
 
 Each benefit should answer why the feature matters to the intended customer. Keep the wording proportional to the evidence.
+
+Frame benefits as possible uses or supported capabilities, not guaranteed outcomes. Prefer grounded verbs such as organize, keep in one place, outline, plan, draft, review, use, include, and support.
+
+Preferred replacement style:
+
+* Bad: “Use 10 hook starters to capture your audience’s attention effortlessly.”
+* Good: “Use the 10 hook starters as prompts for drafting post openings.”
+* Bad: “Transform scattered ideas into a clear strategy.”
+* Good: “Keep content ideas, calls to action, and campaign notes in one place.”
+
+When the product is a free digital planner, checklist, template pack, or similar resource, describe only the supplied contents and uses. Do not invent productivity, engagement, sales, growth, or “never miss a post” results.
 
 Create a Key Features section when useful information was supplied. Keep technical details accurate and distinguish features from outcomes.
 
@@ -303,6 +317,7 @@ Do not claim that the product:
 
 * saves a specific amount of time or money;
 * improves performance by a specific percentage;
+* boosts engagement, increases sales, drives growth, or guarantees outcomes;
 * produces medical, financial, legal, educational, employment, safety, or business results;
 * is universally compatible;
 * is risk-free;
@@ -365,7 +380,15 @@ When supplied evidence lacks important context, use cautious wording or place a 
 
 Never turn “designed to,” “may help,” “intended for,” or “tested under specific conditions” into a guaranteed outcome.
 
-Follow all instructions in {{claimsRestrictions}}. Required qualification language must remain close to the relevant claim rather than being hidden at the end.
+Treat {{claimsRestrictions}} and {{additionalRequirements}} as hard user restrictions, not optional style notes.
+
+When either field lists words or phrases to avoid:
+
+* do not use those exact words or phrases anywhere in the package (titles, summary, description, benefits, features, CTA, SEO, or notes);
+* do not use close variants that keep the same banned wording (for example, if “streamline” is prohibited, do not write “streamlined” or “streamlining” unless a different form was explicitly allowed);
+* replace banned wording with grounded substitutes that still match only the supplied product facts.
+
+Required qualification language from {{claimsRestrictions}} must remain close to the relevant claim rather than being hidden at the end.
 
 For medical, health, wellness, cosmetic, supplement, legal, financial, insurance, safety, children’s, employment, or other regulated categories:
 
@@ -531,7 +554,11 @@ Before producing the answer, silently verify that:
 
 * every factual statement is supported by the supplied input;
 * features and benefits are clearly distinguished;
-* no price, offer, review, certification, statistic, result, deadline, policy, or capability was invented;
+* Claims and restrictions and Additional requirements were treated as hard exclusions, including exact user-prohibited phrases and close banned variants;
+* no unsupported hype such as streamline, effortlessly, seamless, transform, boost, enhance, guaranteed, save time, capture attention, drive engagement, or increase sales was introduced without support;
+* no price, offer, review, rating, testimonial, certification, statistic, performance result, award, guarantee, customer outcome, deadline, scarcity claim, policy, or capability was invented;
+* benefits are framed as possible uses, not guaranteed outcomes;
+* no heading exists for an empty section, and no None / N/A / Not provided-only section appears;
 * the product format and destination are handled correctly;
 * material limitations and recurring terms are not hidden;
 * title, summary, description, bullets, CTA, and SEO text do not contradict one another;
