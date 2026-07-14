@@ -39,6 +39,7 @@ TIKTOK WRITING RULES
 * Adapt to {{videoFormat}}. Tutorials should foreground practical value; storytime should add context or tension; product demos should connect supplied features to truthful benefits; behind-the-scenes and vlog captions should feel candid; trends or reactions must not copy another creator; before-and-after content must not imply unsupported causation.
 * “Auto” tone means clear, conversational, and lightly energetic without forced enthusiasm.
 * Avoid clichés such as “unlock the power,” “game-changing,” “look no further,” and “take it to the next level” unless explicitly required.
+* For planning, productivity, and workflow topics, avoid generic phrases such as “streamline the process” and “Plan smarter, not harder!” Prefer specific casual wording such as “keep ideas, hooks, CTAs, and notes in one place,” “make planning feel more organized,” or “reduce scattered planning.”
 
 GOAL AND CTA
 Adapt to {{primaryGoal}}:

@@ -177,6 +177,8 @@ Write naturally for {{targetAudience}}. Match the requested {{tone}}, {{brandVoi
 
 Avoid unnecessary corporate language, inflated enthusiasm, empty motivational statements, and generic AI phrasing. Avoid expressions such as “in today’s fast-paced world,” “unlock the power,” “game-changing,” “revolutionary,” “dive into,” “delve into,” “take it to the next level,” and “the possibilities are endless” unless the wording is genuinely justified and natural.
 
+For planning, productivity, and workflow topics, soften broad promises such as “Never face a blank page again,” “effortlessly,” “Create content with ease,” and “you’ll plan with clarity.” Prefer grounded wording such as “reduce blank-page friction,” “keep ideas, hooks, CTAs, and notes in one place,” or “make planning feel more organized.”
+
 Do not use anything listed in {{wordsToAvoid}}.
 
 CTA RULES
@@ -206,6 +208,8 @@ Maintain consistent typography hierarchy, spacing, contrast, illustration or pho
 The cover should have the clearest visual hierarchy. Middle slides should prioritise comprehension. The final slide should visually signal completion and make the CTA easy to identify.
 
 When {{includeVisualPrompts}} is Yes, provide one concise prompt per slide. Each prompt must state the subject, composition, mood, asset style, orientation, and meaningful visual details. For text-led designs, instruct the designer or generator to preserve clean text-safe areas rather than asking an image model to render long paragraphs. Avoid random lettering, fake logos, unreadable interface text, unsupported product packaging, or invented branded assets.
+
+Do not say “screenshot” unless {{visualDirection}}, {{assetType}}, or another supplied asset field explicitly provides a real screenshot or approved product screenshot. When no real asset is supplied, use terms such as “mockup-style visual,” “illustrated grid,” or “simple grid layout.”
 
 Do not include identifiable private people, personal data, confidential documents, faces of minors, medical records, financial records, addresses, phone numbers, email addresses, account credentials, or private conversations unless the user has clearly supplied lawful permission and the information is essential. Prefer anonymised or generic visual representations.
 

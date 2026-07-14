@@ -128,6 +128,26 @@ test("Pinterest Pin prompt is replaced with the approved 24-variable prompt", ()
   assert.deepEqual(sorted(extractVariables(prompt)), sorted(expectedKeys));
 });
 
+test("Pinterest Pin omits empty disclosure, handles ownership naturally, and keeps URL once", () => {
+  assert.match(prompt, /omit disclosure language and omit the Disclosure line entirely/);
+  assert.match(prompt, /never output .Disclosure: None./);
+  assert.match(prompt, /Creator-owned free resource/);
+  assert.match(prompt, /include the exact URL once in the final package/);
+  assert.match(prompt, /Do not repeat the URL in every variant/);
+  assert.match(
+    prompt,
+    /Destination URL: \[include the supplied Destination URL exactly once when nonblank/,
+  );
+  assert.doesNotMatch(prompt, /CTA:\s*\r?\n\[short CTA, or/);
+  assert.doesNotMatch(prompt, /Disclosure:\s*\r?\n\[Include only when required/);
+  assert.match(prompt, /VARIANT \[number\]/);
+  assert.match(prompt, /Pin title:/);
+  assert.match(prompt, /Image-overlay text:/);
+  assert.match(prompt, /Pin description:/);
+  assert.match(prompt, /Visual direction:/);
+  assert.match(prompt, /fake interface screenshots/);
+});
+
 test("Pinterest Pin form fields match prompt variables and required fields", () => {
   assert.equal(schema.slug, "pinterest-pin");
   assert.equal(schema.title, "Pinterest Pin");

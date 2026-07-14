@@ -137,6 +137,19 @@ test("Instagram Carousel prompt is replaced with the approved 34-variable prompt
   assert.deepEqual(sorted(extractVariables(prompt)), sorted(expectedKeys));
 });
 
+test("Instagram Carousel avoids unsupported screenshots and softened planning promises", () => {
+  assert.match(prompt, /Do not say .screenshot. unless/);
+  assert.match(prompt, /real screenshot or approved product screenshot/);
+  assert.match(prompt, /mockup-style visual/);
+  assert.match(prompt, /illustrated grid/);
+  assert.match(prompt, /simple grid layout/);
+  assert.match(prompt, /reduce blank-page friction/);
+  assert.match(prompt, /keep ideas, hooks, CTAs, and notes in one place/);
+  assert.match(prompt, /make planning feel more organized/);
+  assert.match(prompt, /Provide the publication-ready caption/);
+  assert.match(prompt, /Alt text according to/);
+});
+
 test("Instagram Carousel form fields match prompt variables and required fields", () => {
   assert.equal(schema.slug, "instagram-carousel");
   assert.equal(schema.title, "Instagram Carousel");

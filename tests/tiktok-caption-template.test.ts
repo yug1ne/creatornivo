@@ -126,6 +126,16 @@ test("TikTok Caption prompt is replaced with the approved 24-variable prompt", (
   assert.deepEqual(sorted(extractVariables(prompt)), sorted(expectedKeys));
 });
 
+test("TikTok Caption keeps planning copy casual without generic productivity slogans", () => {
+  assert.match(prompt, /For planning, productivity, and workflow topics/);
+  assert.match(prompt, /streamline the process/);
+  assert.match(prompt, /Plan smarter, not harder/);
+  assert.match(prompt, /keep ideas, hooks, CTAs, and notes in one place/);
+  assert.match(prompt, /make planning feel more organized/);
+  assert.match(prompt, /reduce scattered planning/);
+  assert.match(prompt, /caption work with the video/);
+});
+
 test("TikTok Caption form fields match prompt variables and required fields", () => {
   assert.equal(schema.slug, "tiktok-caption");
   assert.equal(schema.title, "TikTok Caption");

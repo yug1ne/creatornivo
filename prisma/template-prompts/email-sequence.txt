@@ -90,6 +90,8 @@ Use {{proofPoints}} only when the input gives verifiable support. Use {{testimon
 
 Use one primary CTA per email, guided by {{primaryCta}}. If “Auto” is selected, choose the lowest-friction relevant next step for each stage of the sequence. Use {{destinationUrl}} only when a click destination is appropriate and supplied. Never invent or alter a URL. A sequence may build toward a stronger final CTA, but earlier emails should not contain several competing actions. Make CTA wording specific and honest. Do not imply that clicking, buying, registering, replying, or booking guarantees an outcome.
 
+If the selected CTA requires a destination URL but {{destinationUrl}} is blank, do not invent a link and do not write renderer-style explanations in the email body. Either use a reply-based CTA when it fits the goal, or add a concise Implementation Notes item: "No destination URL was supplied. Add the correct planner link before sending if the CTA requires one."
+
 PERSONALIZATION AND PRIVACY
 
 Use {{personalizationData}} only for legitimate, supplied personalization. Do not invent a recipient name, company, job title, behavior, purchase, location, personal problem, or previous conversation. Do not use sensitive personal data, protected traits, health details, financial circumstances, or inferred vulnerabilities to pressure the reader. If personalization tokens are useful but exact values are unavailable, use clearly labeled implementation tokens such as [First name] only in the implementation-ready version, and list each token once in the implementation notes.
@@ -116,6 +118,8 @@ Do not use deceptive subject lines, fake “Re:” or “Fwd:” prefixes, false
 
 Apply {{regulatedTopic}}, {{jurisdiction}}, and {{restrictions}} when relevant. For medical, health, legal, financial, tax, insurance, employment, safety, political, child-related, or other regulated topics, use cautious factual language, avoid personalized professional advice, avoid diagnosis, avoid guarantees, and avoid unsupported compliance claims. Include only a concise relevant disclaimer when needed; do not use disclaimers to excuse misleading copy. Do not claim the sequence is legally compliant, approved, verified, certified, researched, or reviewed unless the input explicitly establishes that fact.
 
+Do not invent unsubscribe URLs, sender postal addresses, consent records, or legal-footer details. When an opt-in or unsubscribe reminder is useful, keep it concise, for example: "You are receiving this because you requested the planner. You can unsubscribe anytime." If the sending platform supplies the unsubscribe link, do not fabricate one in the generated copy.
+
 TRUTHFULNESS
 
 Never invent facts, statistics, studies, quotations, testimonials, reviews, ratings, customer identities, case studies, revenue, user numbers, conversion rates, prices, discounts, deadlines, capabilities, certifications, awards, partnerships, clients, media mentions, funding, legal approvals, medical results, first-hand experience, personal stories, or links.
@@ -125,6 +129,8 @@ When an important claim lacks support, either remove it, replace it with a modes
 STYLE AND READABILITY
 
 Write naturally and specifically. Avoid generic AI language, inflated marketing clichés, unnecessary enthusiasm, corporate filler, and repetitive rhetorical questions. Vary sentence length and openings across emails. Use short paragraphs suitable for mobile reading, usually one to three sentences per paragraph. Prefer concrete nouns and verbs over vague claims.
+
+Avoid hype or unsupported outcome language such as "Unleash Simplicity," "with ease," "boost your creativity," "captivate your audience," "save you time," "streamline your planning," "You have got this," "transform how you organize your ideas," "seamless execution," "watch your week unfold smoothly," "Looking forward to your success," "Keep the Momentum Going," "enhance your content planning," "enhance creativity," and "You are never alone." Prefer calm educational wording such as "make planning feel more organized," "try a simple planning routine," "keep ideas, hooks, CTAs, and notes in one place," "use the planner as a light structure," or "adjust it to fit your workflow."
 
 Apply {{emojiUse}} conservatively. Apply {{formattingPreferences}} without making the email visually noisy. Use bullets only when they improve scanning. Do not generate raw HTML unless explicitly requested in {{additionalContext}} or {{formattingPreferences}}. Avoid excessive bolding, all caps, multiple exclamation marks, decorative separators, and long blocks of text.
 
@@ -149,7 +155,7 @@ Follow {{outputMode}}:
 * Strategy and outline: provide the progression, timing, and detailed purpose/content outline for each email, but do not write full bodies.
 * A/B subject lines: provide the complete package with five subject options and two preview-text options per email; write one final body per email.
 
-If {{includePlainTextVersions}} is enabled, add a simplified plain-text version after each formatted body, preserving meaning, links, CTA, and required footer language. If it is disabled, provide only the standard body.
+If {{includePlainTextVersions}} is enabled, this is mandatory: add a simplified plain-text version for each email after its formatted body, preserving meaning, links, CTA, and required footer language. Label each one "Plain-text version:" or provide a dedicated "Plain-Text Versions" section with one matching plain-text version per email. If it is disabled, provide only the standard body.
 
 REQUIRED OUTPUT FORMAT
 

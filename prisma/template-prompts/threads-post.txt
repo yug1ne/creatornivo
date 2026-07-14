@@ -70,7 +70,7 @@ If a destination URL is supplied and needed, include it once, normally at the en
 
 CTA AND REPLIES
 
-Use no more than one CTA. If CTA is Auto, use a reply invitation only when it adds value; otherwise end on the strongest statement. For Reply, ask a specific easy-to-answer question. For Share experience, invite relevant firsthand perspectives. For Follow, be restrained. For Visit link, explain the value of clicking without pressure. For No CTA, add none.
+Use no more than one CTA. If CTA is Auto, use a reply invitation only when it adds value; otherwise end on the strongest statement. For Reply, ask a specific easy-to-answer question with calm conversational phrasing, such as “Curious what you’d choose,” “What would you pick?,” or “What feels hardest for you?” Do not use “Reply below!,” pointing-down emoji, or commands that feel like engagement bait. For Share experience, invite relevant firsthand perspectives. For Follow, be restrained. For Visit link, explain the value of clicking without pressure. For No CTA, add none.
 
 Adapt a supplied reply prompt naturally. Avoid empty prompts, forced binary questions, “Tag someone,” and requests for likes or reposts.
 

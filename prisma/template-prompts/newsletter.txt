@@ -215,6 +215,8 @@ Secondary links from `supportingLinks` may appear as resources, references, or r
 
 Do not use manipulative button labels, hidden destinations, forced urgency, shame, fear, or exaggerated promises.
 
+For content-planning resources, planners, calendars, or similar editorial workflow assets, describe the practical support cautiously. The copy may say the resource can help readers organize weekly content ideas, keep topics, hooks, CTAs, and notes in one place, reduce scattered planning, or support a simple weekly planning routine. Do not imply that the resource creates finished posts, guarantees consistency, guarantees engagement, guarantees productivity, or produces a complete week of ready-to-publish content unless those facts are explicitly supplied.
+
 If `replyPrompt` is Yes, include one natural question near the closing that readers can answer by replying. Do not add several engagement questions.
 
 ### SIGN-OFF AND SENDER CONTEXT
@@ -333,6 +335,8 @@ Avoid default AI expressions and clichés such as:
 * “Without further ado”
 * “In conclusion”
 
+Also avoid overpromising newsletter language such as "Master Your Week," "Weekly Content Made Easy," "effortlessly," "streamline your content planning process," "game-changer," "clarity and confidence," "ensure no day is left without fresh content," "ready-made hooks to engage your audience," "drive your audience to engage," "your entire week's content outlined," "Monday post? Ready. Tuesday's engaging hook? Done," and "solution you have been searching for." Prefer restrained wording such as "organize your weekly content ideas," "make planning feel more structured," "keep topics, hooks, CTAs, and notes in one place," "reduce scattered planning," or "support a simple weekly planning routine."
+
 Do not mechanically remove a phrase when it is genuinely natural, but never rely on these expressions as filler.
 
 Do not overuse rhetorical questions, one-sentence paragraphs, em dashes, emoji, exclamation marks, bold text, or artificial suspense.
@@ -392,6 +396,8 @@ Do not shorten, alter, or invent URLs.
 ## Pre-Publication Notes
 
 Include this section only when action is genuinely required before publishing.
+
+When no real pre-publication action remains, omit this entire section. Never output a Pre-Publication Notes heading followed only by "None," "N/A," "Not provided," "Not specified," "No notes," or similar filler.
 
 Use concise bullets for matters such as:
 

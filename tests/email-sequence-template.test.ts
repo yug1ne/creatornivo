@@ -129,6 +129,56 @@ function getField(key: string): TemplateVariable {
   return field;
 }
 
+function valueForField(field: TemplateVariable): string {
+  if (field.format === "url") {
+    return "https://www.creatornivo.com/email-sequence/cta";
+  }
+
+  if (field.type === "number") {
+    return field.defaultValue ?? String(field.min ?? 1);
+  }
+
+  if (field.type === "select") {
+    return field.defaultValue ?? field.options?.[0] ?? "Auto";
+  }
+
+  return `${field.label} example`;
+}
+
+function requiredOnlyValues(): Record<string, string> {
+  const values = buildDefaultValues(variables);
+
+  for (const field of variables) {
+    if (field.required) {
+      values[field.key] = valueForField(field);
+    }
+  }
+
+  return values;
+}
+
+function fullFieldValues(): Record<string, string> {
+  const values = buildDefaultValues(variables);
+
+  for (const field of variables) {
+    values[field.key] = valueForField(field);
+  }
+
+  values.sequenceName = "Planner nurture sequence";
+  values.offerOrTopic = "A free weekly content planner";
+  values.primaryCta = "Visit page";
+  values.destinationUrl = "https://www.creatornivo.com/planner";
+  values.emailCount = "3";
+  values.includePlainTextVersions = "Yes";
+
+  return values;
+}
+
+function assertCleanRenderedPrompt(rendered: string): void {
+  assert.doesNotMatch(rendered, /\{\{[a-zA-Z0-9_]+\}\}/);
+  assert.doesNotMatch(rendered, /\bundefined\b|\bnull\b|\[object Object\]/);
+}
+
 test("Email Sequence prompt is replaced with the approved 43-variable prompt", () => {
   assert.match(prompt, /lifecycle email strategist, conversion copywriter/);
   assert.match(prompt, /Sequence name: \{\{sequenceName\}\}/);
@@ -367,6 +417,42 @@ test("Email Sequence validation and prompt rendering use server-side form metada
   assert.doesNotMatch(rendered, /\bundefined\b|\bnull\b|\bN\/A\b/);
   assert.match(rendered, /New customer onboarding/);
   assert.match(rendered, /https:\/\/example\.com\/product/);
+});
+
+test("Email Sequence prompt respects plain-text, count, cadence, and missing URL controls", () => {
+  assert.match(prompt, /If \{\{includePlainTextVersions\}\} is enabled, this is mandatory/);
+  assert.match(prompt, /Label each one "Plain-text version:"/);
+  assert.match(prompt, /one matching plain-text version per email/);
+  assert.match(prompt, /the number of emails matches \{\{emailCount\}\}/);
+  assert.match(prompt, /Recommend timing for each email based on \{\{cadenceStyle\}\}, \{\{timingConstraints\}\}/);
+  assert.match(prompt, /No destination URL was supplied\. Add the correct planner link before sending if the CTA requires one\./);
+  assert.match(prompt, /do not write renderer-style explanations in the email body/);
+});
+
+test("Email Sequence prompt avoids invented unsubscribe details and unsupported hype", () => {
+  assert.match(prompt, /Do not invent unsubscribe URLs, sender postal addresses, consent records/);
+  assert.match(prompt, /You can unsubscribe anytime/);
+  assert.match(prompt, /If the sending platform supplies the unsubscribe link, do not fabricate one/);
+  assert.match(prompt, /Unleash Simplicity/);
+  assert.match(prompt, /boost your creativity/);
+  assert.match(prompt, /save you time/);
+  assert.match(prompt, /seamless execution/);
+  assert.match(prompt, /unsupported outcome language/);
+});
+
+test("Email Sequence renders required-only and full-field prompts cleanly", () => {
+  const required = requiredOnlyValues();
+  assert.equal(validateVariableValues(variables, required), null);
+  assertCleanRenderedPrompt(fillPromptTemplate(prompt, required));
+
+  const full = fullFieldValues();
+  assert.equal(validateVariableValues(variables, full), null);
+  const rendered = fillPromptTemplate(prompt, full);
+  assertCleanRenderedPrompt(rendered);
+  assert.match(rendered, /Planner nurture sequence/);
+  assert.match(rendered, /A free weekly content planner/);
+  assert.match(rendered, /https:\/\/www\.creatornivo\.com\/planner/);
+  assert.match(rendered, /Plain-text versions: Yes/);
 });
 
 test("Email Sequence catalog and Help integration use the full form", () => {

@@ -36,6 +36,8 @@ Treat supplied facts as the source of truth. Do not claim to have opened or veri
 
 When an optional setting is Auto or blank, choose the best fit from the subject, goal, audience, and facts. Write all audience-facing copy in {{outputLanguage}}, while preserving brand names and URLs. Follow {{tone}} and {{brandVoice}} without forcing slang, hype, emojis, or a corporate voice. Use {{brandName}} only where natural and avoid repeating it.
 
+If a destination URL is supplied, include the exact URL once in the final package, preferably in the Implementation Notes destination field. Do not repeat the URL in every variant.
+
 PINTEREST WRITING RULES
 
 1. Make the title and overlay communicate one clear idea, benefit, question, result, or reason to save or click.
@@ -45,8 +47,9 @@ PINTEREST WRITING RULES
 5. Make variants distinct through approved angles such as how-to, checklist, inspiration, problem-solution, product benefit, educational, or seasonal framing. Do not change the underlying facts.
 6. Use hashtags only when explicitly required by {{additionalRequirements}}.
 7. Avoid generic AI clichés, empty superlatives, excessive punctuation, all caps, forced urgency, vague hype, and repetitive phrasing.
-8. Respect {{ctaPreference}}. When it is None, do not insert a click request.
-9. Use {{mustInclude}}, {{seasonalTiming}}, and {{timingDetails}} only when relevant and supported. Do not invent dates, deadlines, or seasonal availability.
+8. For planning, productivity, and workflow topics, avoid generic phrases such as “streamline your process,” “everything you need,” “effortlessly,” “Unlock,” “enhance content strategy,” “Visit now,” and “Check it out now.” Prefer grounded phrasing such as “organize content ideas,” “keep planning details in one place,” “make weekly planning feel more structured,” “visit the page,” or “save this planning resource.”
+9. Respect {{ctaPreference}}. When it is None, do not insert a click request.
+10. Use {{mustInclude}}, {{seasonalTiming}}, and {{timingDetails}} only when relevant and supported. Do not invent dates, deadlines, or seasonal availability.
 
 FORMAT ADAPTATION
 
@@ -81,7 +84,7 @@ For medical, legal, financial, insurance, tax, employment, safety, political, ch
 
 Protect privacy. Do not expose personal contact details, customer identities, private addresses, account data, or sensitive information unless intentionally supplied for public use and essential.
 
-Handle {{promotionRelationship}} transparently. If there is no relationship, omit disclosure language. For an owned product or service, never pose as an independent reviewer. For affiliate or sponsored content, use {{disclosureText}}. If that field is blank, use a short generic disclosure such as “Affiliate link” or “Sponsored,” without claiming legal sufficiency.
+Handle {{promotionRelationship}} transparently. If there is no relationship, omit disclosure language and omit the Disclosure line entirely. For an owned product or service, never pose as an independent reviewer and never output “Disclosure: None.” If a plain ownership note is useful, use natural wording such as “Creator-owned free resource.” For affiliate or sponsored content, use {{disclosureText}}. If that field is blank, use a short generic disclosure such as “Affiliate link” or “Sponsored,” without claiming legal sufficiency.
 
 OUTPUT FORMAT
 
@@ -106,7 +109,7 @@ Pin description:
 [final description]
 
 CTA:
-[short CTA, or “None” when required]
+[short CTA. Omit this line when {{ctaPreference}} is None or no meaningful CTA applies. Never write “CTA: None.”]
 
 Natural search phrases:
 
@@ -118,14 +121,17 @@ Visual direction:
 Destination alignment:
 [One sentence describing what the click or save promise leads to. Omit when both destination fields are blank.]
 
-Disclosure:
-[Include only when required by the promotion relationship.]
+Conditional disclosure:
+When disclosure is required by the promotion relationship, include one line:
+Disclosure: [brief disclosure text]
+When no disclosure is needed, omit this line entirely. Never write “Disclosure: None.”
 
 After all variants:
 
 IMPLEMENTATION NOTES
 
 * Recommended variant to publish first: [variant number and one concise reason]
+* Destination URL: [include the supplied Destination URL exactly once when nonblank; omit when blank]
 * Character review: [exact title and description character counts for each variant]
 * Verification note: [include only when a supplied claim, high-stakes topic, timing detail, restriction, or disclosure requires human review]
 

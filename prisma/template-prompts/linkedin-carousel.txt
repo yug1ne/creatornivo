@@ -203,6 +203,8 @@ Do not invent first-hand experience. Do not write “I learned,” “we achieve
 
 Avoid routine AI clichés, inflated adjectives, repetitive sentence patterns, forced inspiration, empty thought-leadership language, and unnecessary jargon. Prefer concrete nouns, active verbs, useful distinctions, and specific explanations.
 
+Soften unsupported productivity and transformation promises. Avoid phrases such as “with ease,” “in minutes,” “Say Goodbye,” “transform your LinkedIn presence,” “No more daily brainstorming,” “make all the difference,” and “streamlined posting schedule” unless the supplied facts justify that exact claim. Prefer grounded wording such as “organize a week of content ideas,” “reduce last-minute planning pressure,” “make planning feel more structured,” or “keep topics, hooks, CTAs, and notes in one place.”
+
 Use emojis according to {{emojiUse}}. None means no emojis. Minimal means zero to two in the caption and normally none on slides. Moderate still requires restraint and professional relevance.
 
 FACTS, CLAIMS, SOURCES, AND PRIVACY
@@ -257,6 +259,8 @@ Do not create:
 - repetitive spam language or several competing CTAs.
 
 When {{primaryGoal}} is Promote an offer or Support a launch, explain genuine value before presenting the CTA. Clearly identify the commercial relationship when required by {{requiredDisclosure}}.
+
+When {{requiredDisclosure}} is supplied, include it naturally in the public caption or slide copy where readers will see it. Do not place a required public disclosure only in Verification Notes or Production Notes.
 
 VISUAL DIRECTION
 
@@ -329,6 +333,8 @@ When {{includeAltText}} is enabled, add:
 
 Do not call this a native LinkedIn alt-text field. Present it as accessibility text that can support an accessible PDF or publishing workflow.
 
+When {{includeAltText}} is enabled, never output “Accessibility note: None.” If an individual slide has no separate visual information beyond its text, omit that slide’s Accessibility note line and rely on the document-level Accessibility Text.
+
 OUTPUT FORMAT
 
 Return the package in this exact order:
@@ -354,7 +360,7 @@ Visual direction:
 [Include only when {{includeDesignNotes}} is enabled.]
 
 Accessibility note:
-[Include only when {{includeAltText}} is enabled and the proposed visual adds meaning not already expressed by the text.]
+[Include only when {{includeAltText}} is enabled and the proposed visual adds meaning not already expressed by the text. Never write “None”; omit this line when no slide-specific note applies.]
 
 Ensure the total number of slides matches the final selected slide count.
 

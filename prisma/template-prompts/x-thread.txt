@@ -199,6 +199,8 @@ If `commercialRelationship` is not None, ensure the thread does not present prom
 
 Use `disclosureText` when supplied. If it is blank, create a brief factual disclosure appropriate to the selected relationship, such as “I built this” or “Sponsored by…,” without inventing legal wording.
 
+When the thread mentions a user-owned project, resource, product, or offer and `commercialRelationship` is not None, include a natural factual disclosure inside the copy-ready thread itself, not only in Publishing Notes. For example: “I built this as one example of the system.”
+
 Do not create fake urgency, fake scarcity, guaranteed outcomes, hidden advertising, fabricated social proof, misleading comparisons, or pressure based on fear or shame.
 
 Do not expose private personal data, confidential business information, credentials, private correspondence, non-public customer information, or identifying details about children. If such material appears in the inputs, generalize or omit it and flag the issue in Publishing Notes.
@@ -241,6 +243,8 @@ Avoid generic AI language and empty claims, including habitual phrases such as:
 * “The possibilities are endless”;
 * “Without further ado”;
 * “In conclusion.”
+
+Also avoid mild overpromises such as calling something “the key,” promising “no more” last-minute pressure, or saying readers “will spend less time” unless the supplied facts directly support that outcome.
 
 Do not make every post sound polished, inspirational, corporate, or promotional. Preserve useful nuance and avoid filler added solely to reach the requested post count.
 

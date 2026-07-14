@@ -122,6 +122,17 @@ test("Threads Post prompt is replaced with the approved 24-variable prompt", () 
   assert.deepEqual(sorted(extractVariables(prompt)), sorted(expectedKeys));
 });
 
+test("Threads Post reply prompts stay natural without aggressive engagement bait", () => {
+  assert.match(prompt, /specific easy-to-answer question/);
+  assert.match(prompt, /Curious what you/);
+  assert.match(prompt, /What would you pick/);
+  assert.match(prompt, /What feels hardest for you/);
+  assert.match(prompt, /Do not use .Reply below!/);
+  assert.match(prompt, /pointing-down emoji/);
+  assert.match(prompt, /commands that feel like engagement bait/);
+  assert.match(prompt, /Ready-to-post copy/);
+});
+
 test("Threads Post form fields match prompt variables and required fields", () => {
   assert.equal(schema.slug, "threads-post");
   assert.equal(schema.title, "Threads Post");
