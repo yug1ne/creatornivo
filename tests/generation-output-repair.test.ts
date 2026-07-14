@@ -47,7 +47,11 @@ function repairResult(text: string) {
 
 test("generation auto-repair is disabled by default", () => {
   assert.equal(isGenerationAutoRepairEnabled(undefined), false);
+  assert.equal(isGenerationAutoRepairEnabled(""), false);
   assert.equal(isGenerationAutoRepairEnabled("false"), false);
+  assert.equal(isGenerationAutoRepairEnabled("TRUE"), false);
+  assert.equal(isGenerationAutoRepairEnabled("1"), false);
+  assert.equal(isGenerationAutoRepairEnabled("yes"), false);
   assert.equal(isGenerationAutoRepairEnabled("true"), true);
 });
 
