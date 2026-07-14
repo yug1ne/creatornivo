@@ -69,7 +69,7 @@ export default async function DashboardPage() {
       >
         <StatsCard
           label={`Generations ${
-            usageSnapshot.period === "daily" ? "today" : "this month"
+            usageSnapshot.period === "daily" ? "today" : "this calendar month"
           }`}
           value={getRemainingGenerationsLabel(
             session.plan,

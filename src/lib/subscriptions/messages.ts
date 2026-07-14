@@ -14,7 +14,7 @@ export function getRemainingGenerationsLabel(
 
   return plan === "free"
     ? `${remaining} ${noun} left today`
-    : `${remaining} ${noun} left this month`;
+    : `${remaining} ${noun} left this calendar month`;
 }
 
 export function getGenerationLimitMessage(
@@ -32,14 +32,14 @@ export function getGenerationLimitMessage(
 
     return plan === "free"
       ? "You've reached today's free generation limit."
-      : "You've reached your monthly generation limit.";
+      : "You've reached this calendar month's generation limit.";
   }
 
   const remaining = policy.maxGenerationsPerPeriod - generationsUsed;
 
   if (remaining <= 3) {
     return `${remaining} ${remaining === 1 ? "generation" : "generations"} left ${
-      policy.period === "day" ? "today" : "this month"
+      policy.period === "day" ? "today" : "this calendar month"
     }.`;
   }
 

@@ -48,6 +48,29 @@ function formatUtcTime(resetDate: Date): string {
   });
 }
 
+/** Human-readable UTC calendar date, e.g. "Aug 10, 2026". */
+export function formatHumanUtcDate(
+  value: string | Date,
+  options?: { includeYear?: boolean },
+): string {
+  const date = value instanceof Date ? value : new Date(value);
+  if (Number.isNaN(date.getTime())) {
+    return "unknown date";
+  }
+
+  return date.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    ...(options?.includeYear === false ? {} : { year: "numeric" }),
+    timeZone: "UTC",
+  });
+}
+
+/** Compact month/day UTC label for quota reset lines, e.g. "Aug 1". */
+export function formatQuotaResetUtcDate(value: string | Date): string {
+  return formatHumanUtcDate(value, { includeYear: false });
+}
+
 /** Compact reset label for usage cards (banner, stats). */
 export function getQuotaResetHint(
   period: UsagePeriod,
@@ -56,7 +79,9 @@ export function getQuotaResetHint(
 ): string {
   const resetDate = new Date(resetAt);
   if (Number.isNaN(resetDate.getTime())) {
-    return period === "daily" ? "Resets at midnight UTC" : "Resets monthly UTC";
+    return period === "daily"
+      ? "Quota resets at midnight UTC"
+      : "Quota resets by UTC calendar month";
   }
 
   const countdown = getQuotaResetCountdown(resetAt, now);
@@ -64,23 +89,16 @@ export function getQuotaResetHint(
   if (period === "daily") {
     const time = formatUtcTime(resetDate);
     if (isSameUtcDay(resetDate, now)) {
-      return `Resets today at ${time} UTC (${countdown})`;
+      return `Quota resets today at ${time} UTC (${countdown})`;
     }
 
-    const dateLabel = resetDate.toLocaleDateString("en-US", {
-      month: "short",
-      day: "numeric",
-      timeZone: "UTC",
-    });
-    return `Resets at ${time} UTC on ${dateLabel} (${countdown})`;
+    const dateLabel = formatQuotaResetUtcDate(resetDate);
+    return `Quota resets at ${time} UTC on ${dateLabel} (${countdown})`;
   }
 
-  const dateLabel = resetDate.toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    timeZone: "UTC",
-  });
-  return `Resets on ${dateLabel} UTC (${countdown})`;
+  // Pro: calendar-month bucket — keep wording explicit and free of billing-period confusion.
+  const dateLabel = formatQuotaResetUtcDate(resetDate);
+  return `Quota resets on ${dateLabel} UTC`;
 }
 
 /** Short banner line when quota is exhausted (usage banner, button title). */
@@ -108,14 +126,10 @@ export function getQuotaExhaustedBannerMessage(
 
   const resetDate = new Date(resetAt);
   const dateLabel = Number.isNaN(resetDate.getTime())
-    ? "the next month"
-    : resetDate.toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-        timeZone: "UTC",
-      });
+    ? "the next calendar month"
+    : formatQuotaResetUtcDate(resetDate);
 
-  return `You've reached your monthly generation limit. Resets on ${dateLabel} UTC (${countdown}).`;
+  return `You've reached this calendar month's generation limit. Quota resets on ${dateLabel} UTC (${countdown}).`;
 }
 
 /** Headline + body for API 429 / inline error on Generate. */
@@ -140,22 +154,18 @@ export function getQuotaExceededCopy(
 
     return {
       error: "Daily generation limit reached",
-      message: `You've used all 5 free generations today. Resets ${resetPhrase} (${countdown}). Upgrade to Pro for 100 generations per month.`,
+      message: `You've used all 5 free generations today. Quota resets ${resetPhrase} (${countdown}). Upgrade to Pro for 100 generations per UTC calendar month.`,
     };
   }
 
   const resetDate = new Date(resetAt);
   const dateLabel = Number.isNaN(resetDate.getTime())
-    ? "the start of next month"
-    : resetDate.toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-        timeZone: "UTC",
-      });
+    ? "the start of next calendar month"
+    : formatQuotaResetUtcDate(resetDate);
 
   return {
-    error: "Monthly generation limit reached",
-    message: `You've used all 100 Pro generations this month. Resets on ${dateLabel} UTC (${countdown}).`,
+    error: "Calendar-month generation limit reached",
+    message: `You've used all 100 Pro generations this calendar month. Quota resets on ${dateLabel} UTC (${countdown}).`,
   };
 }
 

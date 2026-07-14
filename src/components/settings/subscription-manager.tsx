@@ -8,10 +8,18 @@ import { Suspense, useEffect, useState } from "react";
 import type { BillingProvider } from "@/config/billing";
 import { PLANS, type Plan } from "@/config/plans";
 import { buttonVariants } from "@/components/ui/button";
+import { formatHumanUtcDate } from "@/lib/usage/quota-copy";
 
 export const CHECKOUT_PENDING_MESSAGE =
   "Payment received. Pro access will appear after Paddle webhook confirmation.";
 export const PRO_ACTIVE_MESSAGE = "Your Pro subscription is active.";
+export const QUOTA_RESETS_SEPARATELY_MESSAGE =
+  "Generation quota resets separately by UTC calendar month.";
+
+/** Billing-period end for Settings (human-readable UTC date). */
+export function formatSubscriptionAccessDate(isoDate: string): string {
+  return formatHumanUtcDate(isoDate);
+}
 
 export function getPostCheckoutMessage(
   isPro: boolean,
@@ -135,16 +143,20 @@ function SubscriptionManagerContent({
       {subscription?.status && (
         <p className="mt-1 text-xs text-muted-foreground">
           Status: {subscription.status}
-          {subscription.currentPeriodEnd && (
-            <>
-              {" · "}
-              until{" "}
-              {new Date(subscription.currentPeriodEnd).toLocaleDateString(
-                "en-US",
-              )}
-            </>
-          )}
           {subscription.cancelAtPeriodEnd && " (cancels at end of period)"}
+        </p>
+      )}
+
+      {subscription?.currentPeriodEnd && (
+        <p className="mt-1 text-xs text-muted-foreground">
+          Access active until{" "}
+          {formatSubscriptionAccessDate(subscription.currentPeriodEnd)}
+        </p>
+      )}
+
+      {isPro && (
+        <p className="mt-1 text-xs text-muted-foreground">
+          {QUOTA_RESETS_SEPARATELY_MESSAGE}
         </p>
       )}
 
