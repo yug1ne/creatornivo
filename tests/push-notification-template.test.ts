@@ -11,6 +11,7 @@ import {
   parseTemplateVariables,
   validateVariableValues,
 } from "../src/lib/templates/utils";
+import { assertGeneratedOutputQuality } from "../src/lib/templates/generation-qa";
 import type { TemplateVariable } from "../src/types/template";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -368,4 +369,53 @@ test("Push Notification catalog and Help integration use the full form", () => {
   );
   assert.match(guidePage, /Push Notification - field guide/);
   assert.match(guidePage, /templateSlug="push-notification"/);
+});
+
+test("Push Notification marketing guardrails preserve disclosures, restrictions, and lock-screen privacy", () => {
+  assert.match(prompt, /do not expose unnecessary sensitive information/);
+  assert.match(prompt, /private locations, eligibility status/);
+  assert.match(prompt, /Do not omit a supplied required disclosure/);
+  assert.match(prompt, /exact prohibited phrases in those fields as hard exclusions/);
+  assert.match(prompt, /“now,” “last chance,” “limited,” or deadline language appear only when supported/);
+
+  const values = {
+    requiredDisclosure: "Eligibility terms apply.",
+    claimsAndRestrictions: 'Avoid "last chance private diagnosis".',
+  };
+
+  const prohibited = assertGeneratedOutputQuality(
+    "Title: Last chance private diagnosis",
+    { variables, values },
+  );
+  assert.equal(prohibited.ok, false);
+  assert.ok(
+    prohibited.hardFailures.some(
+      (issue) => issue.code === "user_prohibited_phrase",
+    ),
+  );
+
+  const missingDisclosure = assertGeneratedOutputQuality(
+    "Title: Account update\nBody: Open the app for details.",
+    {
+      variables,
+      values,
+      requiredDisclosurePhrases: ["Eligibility terms apply."],
+    },
+  );
+  assert.equal(missingDisclosure.ok, false);
+  assert.ok(
+    missingDisclosure.hardFailures.some(
+      (issue) => issue.code === "required_disclosure_missing",
+    ),
+  );
+
+  const emptySection = assertGeneratedOutputQuality(
+    ["### Compliance and Accuracy Note", "", "None"].join("\n"),
+  );
+  assert.equal(emptySection.ok, false);
+  assert.ok(
+    emptySection.hardFailures.some(
+      (issue) => issue.code === "empty_sentinel_section",
+    ),
+  );
 });

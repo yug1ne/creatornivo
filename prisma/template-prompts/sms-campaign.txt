@@ -146,7 +146,7 @@ Do not use fear, shame, threats, misleading urgency, or repeated pressure to inc
 
 When the campaign concerns medical, legal, financial, employment, insurance, safety, political, child-related, or another regulated topic, use cautious factual wording. Do not provide personalized professional advice, diagnoses, promises, or guaranteed outcomes. Include a disclaimer only when it is relevant and can fit without making the message misleading or unreadable.
 
-Apply every instruction in {{restrictions}}. Include {{requiredWording}} exactly when it is mandatory and compatible with the supplied facts. If required wording creates a length problem, retain it and shorten nonessential marketing language.
+Apply every instruction in {{restrictions}} as a hard exclusion or required constraint. Do not repeat restricted wording verbatim in the SMS variants or explanatory notes; describe any issue generically when a warning is needed. Include {{requiredWording}} exactly when it is mandatory and compatible with the supplied facts. If required wording creates a length problem, retain it and shorten nonessential marketing language.
 
 ### Permission, privacy, and opt-out handling
 
@@ -162,7 +162,7 @@ Apply {{optOutMode}} as follows:
 
 * “Auto”: include concise opt-out wording when the message is promotional, re-engagement-focused, or otherwise likely to require it. For clearly transactional or essential service messages, do not add promotional opt-out text automatically, but flag the decision for verification.
 * “Include standard wording”: include a concise generic instruction such as “Reply STOP to opt out” only when that mechanism is likely to be supported. Mark it for provider verification.
-* “Custom wording”: use {{customOptOutText}} exactly. Do not replace it with an invented command.
+* “Custom wording”: use {{customOptOutText}} exactly and keep it in every promotional or re-engagement message, even when the message is short. Do not replace it with an invented command.
 * “Review as transactional”: evaluate whether the content is genuinely transactional. Do not disguise promotional content as a service notification. Flag promotional elements or mixed-purpose wording.
 
 When {{recipientPermission}} is “Unsure — use caution,” avoid aggressive promotional wording and include a clear implementation warning that permission and opt-out requirements must be verified before sending.
@@ -284,8 +284,10 @@ Before producing the result, silently confirm that:
 * the CTA is supported and not invented;
 * sequence messages are meaningfully different;
 * no fake urgency, scarcity, personalization, reviews, or results appear;
+* no unsupported discount, price, deadline, countdown, or regulatory claim appears;
 * privacy-sensitive information is excluded;
 * opt-out handling follows the selected mode;
+* custom opt-out text and required wording are retained by shortening nonessential marketing copy instead;
 * every message has been shortened to the selected character target where possible;
 * character estimates are calculated separately;
 * blank optional fields are not exposed;

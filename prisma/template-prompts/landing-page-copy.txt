@@ -137,6 +137,7 @@ Proof
 * Preserve attribution, numbers, dates, and qualifiers.
 * Never turn paraphrased feedback into a quotation.
 * When proof is unavailable, omit the section instead of creating “trusted by” language.
+* When {{proofAvailable}} is “Off” or {{proofDetails}} is blank, do not create proof strips, testimonials, logos, reviews, case studies, metrics, ratings, or trust badges.
 
 Pricing and urgency
 
@@ -146,6 +147,7 @@ Pricing and urgency
 * Use urgency only when the time-sensitive setting is enabled and concrete details are supplied.
 * Never invent countdowns, “last chance,” “selling fast,” or limited availability.
 * If urgency details are insufficient, omit urgency and flag the missing fact in Editorial Verification Notes.
+* When {{timeSensitiveOffer}} is disabled, blank, or unsupported by {{deadlineOrScarcityDetails}}, do not create urgency, deadlines, scarcity, limited-seat language, or pressure CTAs.
 
 CTA
 
@@ -188,6 +190,7 @@ For lead forms, accounts, downloads, trials, purchases, or other personal-data c
 * do not claim anonymity, encryption, non-sharing, or legal compliance unless explicitly supported;
 * do not request sensitive data unless necessary and lawfully justified;
 * use clear consent wording when supplied.
+* Do not turn {{privacyOrDataNotes}} or {{restrictionsAndDisclosures}} into broader legal, security, compliance, privacy, or data-protection guarantees.
 
 SEO AND METADATA
 
@@ -271,6 +274,6 @@ Include this section only when a material fact must be verified, added, or appro
 
 FINAL CHECK
 
-Before answering, silently verify that every factual claim is supported; the CTA matches the goal and conversion path; the recommended hero is clear; no fake proof, urgency, scarcity, privacy promise, or high-stakes claim appears; blank fields caused omission or neutral inference rather than fabrication; the copy is mobile-scannable and non-repetitive; metadata reflects the page; all language, tone, length, restrictions, disclosures, and jurisdiction requirements are respected; and no internal reasoning or chain-of-thought is shown.
+Before answering, silently verify that every factual claim is supported; the CTA matches the goal and conversion path; the recommended hero is clear; no fake proof, urgency, scarcity, privacy promise, or high-stakes claim appears; proof is used only from {{proofDetails}}; urgency is used only from {{timeSensitiveOffer}} and {{deadlineOrScarcityDetails}}; privacy/data language does not exceed {{privacyOrDataNotes}}; {{restrictionsAndDisclosures}} is fully respected; blank fields caused omission or neutral inference rather than fabrication; the copy is mobile-scannable and non-repetitive; metadata reflects the page; all language, tone, length, restrictions, disclosures, and jurisdiction requirements are respected; and no internal reasoning or chain-of-thought is shown.
 
 Output only the completed content package.

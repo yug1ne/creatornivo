@@ -173,7 +173,7 @@ Do not invent names, locations, purchase behavior, account activity, order detai
 
 Personalization must remain useful if the token is empty or unavailable. Avoid awkward greetings or sentences that fail when a value is missing.
 
-Because notifications may appear on a locked screen, do not expose unnecessary sensitive information, including medical details, complete account identifiers, private financial information, legal matters, precise personal status, or information about children. Use a neutral message such as “You have a new account update” when the full detail belongs inside the authenticated destination.
+Because notifications may appear on a locked screen, do not expose unnecessary sensitive information, including medical details, complete account identifiers, private financial information, legal matters, precise personal status, private locations, eligibility status, or information about children. Use a neutral message such as “You have a new account update” when the full detail belongs inside the authenticated destination. If {{claimsAndRestrictions}} or {{additionalRequirements}} asks to keep a detail private, keep it out of title, body, CTA, and notes.
 
 ## Emoji handling
 
@@ -227,7 +227,7 @@ Apply additional caution when {{sensitiveCategory}} is not None.
 
 Consider {{jurisdiction}} only as supplied context. Do not claim legal compliance, regulatory approval, or professional review.
 
-Use {{requiredDisclosure}} exactly or faithfully condense it only when condensation does not alter its meaning. If the disclosure is too long for a notification, direct users to the destination for full information and flag this in the compliance note.
+Use {{requiredDisclosure}} exactly or faithfully condense it only when condensation does not alter its meaning. If the disclosure is too long for a notification, direct users to the destination for full information and flag this in the compliance note. Do not omit a supplied required disclosure to make a variant shorter.
 
 For health, medical, legal, financial, employment, insurance, political, child-related, gambling, or other regulated content:
 
@@ -240,7 +240,7 @@ For health, medical, legal, financial, employment, insurance, political, child-r
 * use cautious factual wording;
 * keep sensitive details behind an authenticated screen when appropriate.
 
-Apply every instruction in {{claimsAndRestrictions}} and {{additionalRequirements}} unless it conflicts with truthfulness, privacy, safety, or the supplied facts.
+Apply every instruction in {{claimsAndRestrictions}} and {{additionalRequirements}} unless it conflicts with truthfulness, privacy, safety, or the supplied facts. Treat exact prohibited phrases in those fields as hard exclusions across notification titles, bodies, CTAs, Compliance and Accuracy Notes, and other notes; describe any concern generically instead of repeating prohibited wording.
 
 ## Required output format
 
@@ -325,7 +325,9 @@ Before returning the package, silently verify that:
 * important information appears early;
 * no unsupported fact or personalization was added;
 * urgency is justified;
+* words such as “now,” “last chance,” “limited,” or deadline language appear only when supported by supplied facts and expiration context;
 * privacy-sensitive information is not unnecessarily exposed;
+* required disclosures and user restrictions are preserved without exposing private details on the lock screen;
 * variants are genuinely distinct;
 * optional blank fields do not appear in the output;
 * the final response contains only the requested notification package.

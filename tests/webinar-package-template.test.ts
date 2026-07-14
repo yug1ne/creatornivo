@@ -11,6 +11,7 @@ import {
   parseTemplateVariables,
   validateVariableValues,
 } from "../src/lib/templates/utils";
+import { assertGeneratedOutputQuality } from "../src/lib/templates/generation-qa";
 import type { TemplateVariable } from "../src/types/template";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -401,4 +402,49 @@ test("Webinar Package catalog and Help integration use the full form", () => {
   );
   assert.match(guidePage, /Webinar Package - field guide/);
   assert.match(guidePage, /templateSlug="webinar-package"/);
+});
+
+test("Webinar Package marketing guardrails prevent invented proof, credentials, URLs, dates, and resources", () => {
+  assert.match(prompt, /not permission to invent proof, examples, data, presenter credentials/);
+  assert.match(prompt, /Never convert general source notes into testimonials, attendance numbers, sponsor names/);
+  assert.match(prompt, /When \{\{registrationUrl\}\} is blank, use descriptive CTA wording without inventing a link/);
+  assert.match(prompt, /When \{\{eventDate\}\}, \{\{eventTime\}\}, or \{\{timeZone\}\} is blank/);
+  assert.match(prompt, /When \{\{postWebinarResource\}\} is blank, omit post-webinar resource links/);
+  assert.match(prompt, /compliance notes are followed without repeating prohibited wording verbatim/);
+
+  const values = {
+    complianceNotes: 'Avoid "certified investment advice".',
+  };
+
+  const prohibited = assertGeneratedOutputQuality(
+    "This webinar provides certified investment advice.",
+    { variables, values },
+  );
+  assert.equal(prohibited.ok, false);
+  assert.ok(
+    prohibited.hardFailures.some(
+      (issue) => issue.code === "user_prohibited_phrase",
+    ),
+  );
+
+  const fakeUrlAndEmptyNotes = assertGeneratedOutputQuality(
+    [
+      "CTA: Register at https://example.com/webinar",
+      "",
+      "## Implementation and Verification Notes",
+      "",
+      "Not provided",
+    ].join("\n"),
+  );
+  assert.equal(fakeUrlAndEmptyNotes.ok, false);
+  assert.ok(
+    fakeUrlAndEmptyNotes.hardFailures.some(
+      (issue) => issue.code === "placeholder_url",
+    ),
+  );
+  assert.ok(
+    fakeUrlAndEmptyNotes.hardFailures.some(
+      (issue) => issue.code === "empty_sentinel_section",
+    ),
+  );
 });

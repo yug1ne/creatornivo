@@ -11,6 +11,7 @@ import {
   parseTemplateVariables,
   validateVariableValues,
 } from "../src/lib/templates/utils";
+import { assertGeneratedOutputQuality } from "../src/lib/templates/generation-qa";
 import type { TemplateVariable } from "../src/types/template";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -357,4 +358,46 @@ test("SMS Campaign catalog and Help integration use the full form", () => {
   );
   assert.match(guidePage, /SMS Campaign - field guide/);
   assert.match(guidePage, /templateSlug="sms-campaign"/);
+});
+
+test("SMS Campaign marketing guardrails preserve opt-out handling and restrictions", () => {
+  assert.match(prompt, /Apply every instruction in \{\{restrictions\}\} as a hard exclusion/);
+  assert.match(prompt, /use \{\{customOptOutText\}\} exactly and keep it in every promotional or re-engagement message/);
+  assert.match(prompt, /no unsupported discount, price, deadline, countdown, or regulatory claim appears/);
+  assert.match(prompt, /custom opt-out text and required wording are retained/);
+
+  const values = {
+    restrictions: 'Avoid "flash sale ends tonight".',
+    customOptOutText: "Reply END to stop.",
+  };
+
+  const prohibited = assertGeneratedOutputQuality(
+    "Creatornivo: Flash sale ends tonight. Reply END to stop.",
+    { variables, values },
+  );
+  assert.equal(prohibited.ok, false);
+  assert.ok(
+    prohibited.hardFailures.some(
+      (issue) => issue.code === "user_prohibited_phrase",
+    ),
+  );
+
+  const missingOptOut = assertGeneratedOutputQuality(
+    "Creatornivo: Your planning worksheet is ready.",
+    {
+      variables,
+      values,
+      requiredDisclosurePhrases: ["Reply END to stop."],
+    },
+  );
+  assert.equal(missingOptOut.ok, false);
+  assert.ok(
+    missingOptOut.hardFailures.some(
+      (issue) => issue.code === "required_disclosure_missing",
+    ),
+  );
+
+  const safeLengthExample =
+    "Creatornivo: Your planning worksheet is ready. Reply END to stop.";
+  assert.ok(safeLengthExample.length <= 160);
 });

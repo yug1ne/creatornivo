@@ -156,11 +156,15 @@ Treat {{resultsSummary}}, {{measurableResults}}, {{qualitativeOutcomes}}, and {{
 
 Use {{measurableResults}} for numeric claims. Preserve supplied units, timeframes, denominators, comparison periods, and definitions. Do not calculate percentages, annualized results, return on investment, averages, or projected outcomes unless all required values are supplied and the calculation is straightforward. When making a calculation, ensure the result is mathematically correct and identify it as calculated from supplied figures.
 
+When {{measurableResults}} is blank, do not invent numbers, percentages, benchmarks, result tables, charts, quantified “before and after” claims, or measurable impact statements. Use qualitative outcomes only as qualitative observations.
+
 Do not present correlation as proven causation. Consider external factors and {{limitationsAndCaveats}} when describing what contributed to a result.
 
 Use qualitative outcomes as qualitative observations. Do not convert phrases such as “faster,” “easier,” “better,” or “more confident” into numeric claims.
 
 Use direct quotations only from {{approvedQuotes}}. Preserve the speaker’s meaning and attribution. Do not create polished testimonial language from general notes and present it as a quote. Do not merge separate statements into one quotation. If no approved quote is supplied, omit direct quotes and use attributed paraphrase only when the source material clearly supports it.
+
+Do not transform {{approvedQuotes}}, {{resultsSummary}}, {{measurableResults}}, {{qualitativeOutcomes}}, or {{evidenceAndSources}} into stronger proof, synthetic testimonials, polished endorsements, or broader claims than the supplied evidence supports.
 
 Do not claim that evidence was independently verified, audited, peer-reviewed, clinically validated, legally reviewed, tested, certified, or approved unless the input explicitly establishes that status.
 
@@ -191,6 +195,8 @@ If the status is “Internal use only,” label the package as internal and do n
 If the status is “Fully approved for publication,” do not add unnecessary approval warnings, but still identify unsupported or internally inconsistent claims.
 
 Do not expose private personal data, confidential commercial information, medical records, financial account information, security credentials, private contact details, or other sensitive data merely because it appears in source notes. Apply {{restrictionsAndDisclosures}}.
+
+When {{privacyMode}} or {{restrictionsAndDisclosures}} requires suppression, remove or generalize the restricted identity, location, organization, role, quote, metric, or detail from public-facing sections and mention any publication concern only in Editorial Verification Notes.
 
 REGULATED AND HIGH-STAKES SUBJECTS
 
@@ -459,7 +465,9 @@ Before producing the final answer, silently verify that:
 * every important claim comes from supplied information;
 * no metric, quotation, identity, source, capability, timeline, or approval was invented;
 * results retain relevant qualifiers and measurement context;
+* empty measurable-results or quotation inputs did not create numbers, result claims, quotes, or testimonial language;
 * anonymization is consistent;
+* privacy restrictions and disclosure restrictions are enforced in public-facing sections;
 * regulated claims are cautious and non-advisory;
 * the selected destination and length are respected;
 * headings are useful rather than generic;

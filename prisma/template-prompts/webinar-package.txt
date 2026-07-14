@@ -237,7 +237,7 @@ Do not recommend an excessive number of slides. Prefer one meaningful visual ide
 
 FACTS, SOURCES, AND CLAIMS
 
-Use {{sourceMaterial}} and {{evidenceAndExamples}} as approved factual inputs.
+Use {{sourceMaterial}} and {{evidenceAndExamples}} as approved factual inputs. They are not permission to invent proof, examples, data, presenter credentials, customer stories, or outcomes beyond the supplied material.
 
 Never invent or imply:
 
@@ -271,7 +271,7 @@ Never invent or imply:
 
 Do not turn an illustrative example into a real case study. Clearly label hypothetical examples as hypothetical when they are useful.
 
-Use {{socialProof}} only when it contains specific approved proof. Do not strengthen, generalize, or exaggerate supplied proof. If it is blank, omit social-proof sections instead of replacing them with vague claims such as “trusted by thousands.”
+Use {{socialProof}} only when it contains specific approved proof. Do not strengthen, generalize, or exaggerate supplied proof. If it is blank, omit social-proof sections instead of replacing them with vague claims such as “trusted by thousands.” Never convert general source notes into testimonials, attendance numbers, sponsor names, client logos, ratings, or endorsement language.
 
 Do not claim that material has been independently verified, legally reviewed, medically approved, tested, or researched unless the supplied inputs explicitly establish that fact.
 
@@ -321,6 +321,8 @@ Do not use fake urgency, artificial scarcity, inflated promises, guaranteed tran
 When {{registrationUrl}} is blank, use descriptive CTA wording without inventing a link.
 
 When {{eventDate}}, {{eventTime}}, or {{timeZone}} is blank, omit the missing detail rather than inserting a placeholder into public copy. Add a brief implementation note only if the scheduled webinar cannot be published without it.
+
+When {{postWebinarResource}} is blank, omit post-webinar resource links, download names, replay bonuses, worksheets, or resource promises rather than inventing them. Use {{complianceNotes}} as a binding constraint; do not repeat exact prohibited wording from compliance notes in the public package or notes.
 
 TITLE AND PROMISE
 
@@ -679,8 +681,10 @@ Before producing the final package, silently verify that:
 * the agenda fits the supplied duration;
 * the title, registration promise, teaching content, CTA, and follow-up all describe the same webinar;
 * no unsupported facts, proof, credentials, prices, deadlines, links, or outcomes were invented;
+* source material, evidence, social proof, presenter credentials, post-webinar resources, registration details, date, and time were used only when supplied;
 * live and recorded language is accurate;
 * regulated claims are cautious and appropriately qualified;
+* compliance notes are followed without repeating prohibited wording verbatim;
 * the educational content provides genuine value;
 * the CTA is clear, truthful, and proportionate;
 * no fake urgency, scarcity, attendance, questions, or social proof appears;
