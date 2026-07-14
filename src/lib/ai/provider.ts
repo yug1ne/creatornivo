@@ -1,5 +1,5 @@
 import { createOpenAI } from "@ai-sdk/openai";
-import { streamText } from "ai";
+import { generateText, streamText } from "ai";
 
 import {
   generationPolicies,
@@ -22,6 +22,19 @@ export interface StreamContentInput {
     inputTokens?: number;
     outputTokens?: number;
   }) => Promise<void>;
+}
+
+export interface TextContentInput {
+  prompt: string;
+  plan: Plan;
+  onStart?: () => Promise<void>;
+}
+
+export interface TextContentResult {
+  text: string;
+  model: string;
+  inputTokens: number;
+  outputTokens: number;
 }
 
 export const MODEL_BY_PLAN: Record<Plan, string> = {
@@ -97,6 +110,29 @@ async function createOpenAIStream(
   });
 }
 
+async function createOpenAIText(
+  input: TextContentInput,
+  model: string,
+  maxTokens: number,
+): Promise<TextContentResult> {
+  const openai = createOpenAI({ apiKey: process.env.OPENAI_API_KEY });
+
+  await input.onStart?.();
+
+  const result = await generateText({
+    model: openai(model),
+    prompt: input.prompt,
+    maxOutputTokens: maxTokens,
+  });
+
+  return {
+    text: result.text,
+    model,
+    inputTokens: result.usage?.inputTokens ?? estimateTokens(input.prompt),
+    outputTokens: result.usage?.outputTokens ?? estimateTokens(result.text),
+  };
+}
+
 export async function createContentStream(input: StreamContentInput) {
   const policy = getGenerationPolicy(input.plan);
   const model = policy.model;
@@ -108,4 +144,16 @@ export async function createContentStream(input: StreamContentInput) {
 
   const stream = await createOpenAIStream(input, model, maxTokens);
   return { stream, model };
+}
+
+export async function createContentText(input: TextContentInput) {
+  const policy = getGenerationPolicy(input.plan);
+  const model = policy.model;
+  const maxTokens = policy.maxOutputTokens;
+
+  if (!isAIProviderConfigured()) {
+    throw new Error("AI generation is not configured");
+  }
+
+  return createOpenAIText(input, model, maxTokens);
 }

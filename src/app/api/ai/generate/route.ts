@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 
 import { PLANS, type Plan } from "@/config/plans";
 import {
+  createContentText,
   createContentStream,
   isAIProviderConfigured,
 } from "@/lib/ai/provider";
@@ -38,6 +39,12 @@ import {
   sanitizeGeneratedOutput,
   validateGeneratedOutput,
 } from "@/lib/templates/output-validation";
+import {
+  getAutoRepairFailureMessage,
+  isGeneratedOutputValidAfterRepair,
+  isGenerationAutoRepairEnabled,
+  repairGeneratedOutputOnce,
+} from "@/lib/templates/output-repair";
 
 function isValidRequestId(value: unknown): value is string {
   return (
@@ -217,16 +224,222 @@ export async function POST(request: Request) {
       plan: user.plan,
     });
 
+    const markGenerationStarted = () =>
+      prismaGenerationReservationStore.markStarted(
+        session.id,
+        requestId!,
+        new Date(),
+      );
+
+    const completeAndRecordUsage = async ({
+      content,
+      usedModel,
+      inputTokens,
+      outputTokens,
+    }: {
+      content: string;
+      usedModel: string;
+      inputTokens: number;
+      outputTokens: number;
+    }) => {
+      await prismaGenerationReservationStore.complete(
+        session.id,
+        requestId!,
+        {
+          userId: session.id,
+          templateId: template.id,
+          prompt: filledPrompt,
+          result: content,
+          model: usedModel,
+          inputTokens,
+          outputTokens,
+        },
+        new Date(),
+      );
+
+      // Count only completed generations toward UserUsage (after DB persist)
+      try {
+        await incrementUsage(userId, getUsagePeriodForPlan(user.plan));
+
+        if (user.plan === PLANS.FREE) {
+          const snapshot = await getUserUsageSnapshot(userId, user.plan);
+          if (snapshot.remaining === 0) {
+            void maybeSendQuotaExhaustedEmail({
+              userId,
+              resetAt: snapshot.resetAt,
+            }).catch((emailError) => {
+              console.error(
+                "[email] Quota exhausted email task failed:",
+                emailError,
+              );
+            });
+          } else if (snapshot.remaining === 1) {
+            void maybeSendQuotaWarningEmail(
+              userId,
+              snapshot.resetAt,
+            ).catch((emailError) => {
+              console.error(
+                "[email] Quota warning email task failed:",
+                emailError,
+              );
+            });
+          }
+        }
+      } catch (error) {
+        // Stream already succeeded — log for manual reconciliation
+        console.error(
+          "Failed to increment UserUsage after successful generation:",
+          error,
+        );
+      }
+    };
+
     try {
+      if (isGenerationAutoRepairEnabled()) {
+        const generated = await createContentText({
+          prompt: filledPrompt,
+          plan: user.plan,
+          onStart: markGenerationStarted,
+        });
+        const sanitizedOutput = sanitizeGeneratedOutput(
+          generated.text,
+          variables,
+          templateValues,
+        );
+        const outputValidation = validateGeneratedOutput(
+          sanitizedOutput.content,
+          variables,
+          templateValues,
+        );
+
+        let finalContent = sanitizedOutput.content;
+        let finalValidation = outputValidation;
+        let finalInputTokens = generated.inputTokens;
+        let finalOutputTokens = generated.outputTokens;
+
+        if (
+          !isGeneratedOutputValidAfterRepair(
+            sanitizedOutput.content,
+            outputValidation,
+          )
+        ) {
+          const repairResult = await repairGeneratedOutputOnce({
+            content: sanitizedOutput.content,
+            validation: outputValidation,
+            variables,
+            values: templateValues,
+            repairModel: (repairPrompt) =>
+              createContentText({
+                prompt: repairPrompt,
+                plan: user.plan,
+              }),
+          });
+
+          finalContent = repairResult.content;
+          finalValidation = repairResult.validation;
+          finalInputTokens += repairResult.repairInputTokens;
+          finalOutputTokens += repairResult.repairOutputTokens;
+
+          if (repairResult.repaired) {
+            console.info("Generated output auto-repaired:", {
+              templateId: template.id,
+              templateSlug: template.slug,
+              requestId,
+              issues: repairResult.assessment.repairableIssues.map((issue) => ({
+                code: issue.code,
+                category: issue.category,
+              })),
+            });
+          } else {
+            console.error("Generated output validation failed:", {
+              templateId: template.id,
+              templateSlug: template.slug,
+              requestId,
+              sanitized: sanitizedOutput.changed,
+              autoRepairAttempted: repairResult.attempted,
+              removedArtifacts: sanitizedOutput.changes.map((change) => ({
+                category: change.category,
+                reason: change.reason,
+              })),
+              issues: repairResult.assessment.repairableIssues.map((issue) => ({
+                code: issue.code,
+                category: issue.category,
+              })),
+              unrepairableIssues:
+                repairResult.assessment.unrepairableIssues.map((issue) => ({
+                  code: issue.code,
+                  category: issue.category,
+                })),
+              message: getAutoRepairFailureMessage(
+                finalContent,
+                finalValidation,
+              ),
+            });
+
+            await prismaGenerationReservationStore.fail(
+              session.id,
+              requestId!,
+              {
+                inputTokens: finalInputTokens,
+                outputTokens: finalOutputTokens,
+              },
+              new Date(),
+            );
+
+            return NextResponse.json(
+              {
+                error: getAutoRepairFailureMessage(
+                  finalContent,
+                  finalValidation,
+                ),
+                code: "output_validation_failed",
+              },
+              { status: 422 },
+            );
+          }
+        }
+
+        if (!isGeneratedOutputValidAfterRepair(finalContent, finalValidation)) {
+          await prismaGenerationReservationStore.fail(
+            session.id,
+            requestId!,
+            {
+              inputTokens: finalInputTokens,
+              outputTokens: finalOutputTokens,
+            },
+            new Date(),
+          );
+
+          return NextResponse.json(
+            {
+              error: getAutoRepairFailureMessage(finalContent, finalValidation),
+              code: "output_validation_failed",
+            },
+            { status: 422 },
+          );
+        }
+
+        await completeAndRecordUsage({
+          content: finalContent,
+          usedModel: generated.model,
+          inputTokens: finalInputTokens,
+          outputTokens: finalOutputTokens,
+        });
+
+        return new Response(finalContent, {
+          headers: {
+            "Content-Type": "text/plain; charset=utf-8",
+            "Cache-Control": "no-cache",
+            "X-Model": generated.model,
+            "X-Request-Id": reservation.requestId,
+          },
+        });
+      }
+
       const { stream, model } = await createContentStream({
         prompt: filledPrompt,
         plan: user.plan,
-        onStart: () =>
-          prismaGenerationReservationStore.markStarted(
-            session.id,
-            requestId!,
-            new Date(),
-          ),
+        onStart: markGenerationStarted,
         onFinish: async ({
           text,
           model: usedModel,
@@ -271,56 +484,12 @@ export async function POST(request: Request) {
             return;
           }
 
-          await prismaGenerationReservationStore.complete(
-            session.id,
-            requestId!,
-            {
-              userId: session.id,
-              templateId: template.id,
-              prompt: filledPrompt,
-              result: sanitizedOutput.content,
-              model: usedModel,
-              inputTokens,
-              outputTokens,
-            },
-            new Date(),
-          );
-
-          // Count only completed generations toward UserUsage (after DB persist)
-          try {
-            await incrementUsage(userId, getUsagePeriodForPlan(user.plan));
-
-            if (user.plan === PLANS.FREE) {
-              const snapshot = await getUserUsageSnapshot(userId, user.plan);
-              if (snapshot.remaining === 0) {
-                void maybeSendQuotaExhaustedEmail({
-                  userId,
-                  resetAt: snapshot.resetAt,
-                }).catch((emailError) => {
-                  console.error(
-                    "[email] Quota exhausted email task failed:",
-                    emailError,
-                  );
-                });
-              } else if (snapshot.remaining === 1) {
-                void maybeSendQuotaWarningEmail(
-                  userId,
-                  snapshot.resetAt,
-                ).catch((emailError) => {
-                  console.error(
-                    "[email] Quota warning email task failed:",
-                    emailError,
-                  );
-                });
-              }
-            }
-          } catch (error) {
-            // Stream already succeeded — log for manual reconciliation
-            console.error(
-              "Failed to increment UserUsage after successful generation:",
-              error,
-            );
-          }
+          await completeAndRecordUsage({
+            content: sanitizedOutput.content,
+            usedModel,
+            inputTokens,
+            outputTokens,
+          });
         },
         onError: ({ error: streamError, inputTokens, outputTokens }) =>
           prismaGenerationReservationStore.fail(

@@ -1117,21 +1117,71 @@ test("generation route validates final output before saving and usage increment"
     "templates",
     "output-validation.ts",
   );
+  const autoRepairBranchIndex = route.indexOf(
+    "if (isGenerationAutoRepairEnabled())",
+  );
+  const createContentTextIndex = route.indexOf(
+    "await createContentText",
+    autoRepairBranchIndex,
+  );
+  const bufferedSanitizerIndex = route.indexOf(
+    "sanitizeGeneratedOutput(",
+    createContentTextIndex,
+  );
+  const bufferedOutputValidationIndex = route.indexOf(
+    "validateGeneratedOutput(",
+    bufferedSanitizerIndex,
+  );
+  const bufferedFailIndex = route.indexOf(
+    "prismaGenerationReservationStore.fail",
+    bufferedOutputValidationIndex,
+  );
+  const bufferedCompleteCallIndex = route.indexOf(
+    "await completeAndRecordUsage",
+    bufferedOutputValidationIndex,
+  );
+  const finalResponseIndex = route.indexOf(
+    "return new Response(finalContent",
+    bufferedOutputValidationIndex,
+  );
   const createContentStreamIndex = route.indexOf("await createContentStream");
-  const sanitizerIndex = route.indexOf("sanitizeGeneratedOutput(");
-  const outputValidationIndex = route.indexOf("validateGeneratedOutput(");
-  const failIndex = route.indexOf("prismaGenerationReservationStore.fail", outputValidationIndex);
+  const sanitizerIndex = route.indexOf(
+    "sanitizeGeneratedOutput(",
+    createContentStreamIndex,
+  );
+  const outputValidationIndex = route.indexOf(
+    "validateGeneratedOutput(",
+    sanitizerIndex,
+  );
+  const failIndex = route.indexOf(
+    "prismaGenerationReservationStore.fail",
+    outputValidationIndex,
+  );
+  const streamingCompleteCallIndex = route.indexOf(
+    "await completeAndRecordUsage",
+    outputValidationIndex,
+  );
   const completeIndex = route.indexOf("prismaGenerationReservationStore.complete");
   const incrementUsageIndex = route.indexOf("await incrementUsage");
 
+  assert.ok(autoRepairBranchIndex >= 0);
+  assert.ok(createContentTextIndex > autoRepairBranchIndex);
+  assert.ok(bufferedSanitizerIndex > createContentTextIndex);
+  assert.ok(bufferedOutputValidationIndex > bufferedSanitizerIndex);
+  assert.ok(bufferedFailIndex > bufferedOutputValidationIndex);
+  assert.ok(bufferedCompleteCallIndex > bufferedOutputValidationIndex);
+  assert.ok(finalResponseIndex > bufferedCompleteCallIndex);
+  assert.ok(finalResponseIndex < createContentStreamIndex);
   assert.ok(createContentStreamIndex >= 0);
   assert.ok(sanitizerIndex > createContentStreamIndex);
   assert.ok(outputValidationIndex > sanitizerIndex);
   assert.ok(failIndex > outputValidationIndex);
-  assert.ok(completeIndex > outputValidationIndex);
-  assert.ok(outputValidationIndex < completeIndex);
-  assert.ok(outputValidationIndex < incrementUsageIndex);
-  assert.match(route, /result:\s*sanitizedOutput\.content/);
+  assert.ok(streamingCompleteCallIndex > outputValidationIndex);
+  assert.ok(completeIndex >= 0);
+  assert.ok(incrementUsageIndex > completeIndex);
+  assert.match(route, /result:\s*content/);
+  assert.match(route, /content:\s*finalContent/);
+  assert.match(route, /content:\s*sanitizedOutput\.content/);
   assert.equal(route.match(/await createContentStream/g)?.length, 1);
   assert.equal(route.match(/await reserveGeneration/g)?.length, 1);
   assert.doesNotMatch(validator, /createContentStream|reserveGeneration|incrementUsage/);
