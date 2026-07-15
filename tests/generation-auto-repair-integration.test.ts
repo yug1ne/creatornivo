@@ -504,6 +504,39 @@ test("repair success: one reservation, one usage increment, final repaired body 
   assert.match(result.providerPrompts[1]!, /streamline/i);
 });
 
+test("transform headline smoke: repair once, no second reservation or usage, validated body", async () => {
+  const variables = [
+    optionalField("restrictionsAndDisclosures", "Restrictions and disclosures"),
+  ];
+  const values = {
+    restrictionsAndDisclosures: "Do not use the phrases: transform",
+  };
+  const invalidMain = "Headline: Transform Ideas into Structured Content";
+  const repaired = "Headline: Turn Ideas into Structured Content";
+
+  const result = await runBufferedAutoRepairPath({
+    requestId: "66666666-6666-4666-8666-666666666666",
+    variables,
+    values,
+    mainText: invalidMain,
+    repairText: repaired,
+  });
+
+  assert.equal(result.status, 200);
+  assert.equal(result.body, repaired);
+  assert.doesNotMatch(result.body, /\btransform\b/i);
+  assert.match(result.body, /Turn Ideas into Structured Content/);
+  assert.equal(result.savedResult, repaired);
+
+  assert.equal(result.reservationCount, 1, "no second reservation");
+  assert.equal(result.reservationStatus, GENERATION_RESERVATION_STATUS.COMPLETED);
+  assert.equal(result.usageIncrements, 1, "no second usage increment");
+  assert.equal(result.providerCallCount, 2, "main + one repair only");
+  assert.equal(result.repairCalls, 1);
+  assert.match(result.providerPrompts[1]!, /case-insensitive/i);
+  assert.match(result.providerPrompts[1]!, /transform/i);
+});
+
 test("failed repair: 422, reservation failed, usage not incremented", async () => {
   const variables = [optionalField("wordsToAvoid", "Words to avoid")];
   const values = { wordsToAvoid: 'Avoid "streamline".' };

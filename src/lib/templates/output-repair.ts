@@ -144,7 +144,10 @@ function formatUserRestrictions(
   }
 
   return prohibitedPhrases
-    .map((phrase) => `- Do not use the exact phrase: ${phrase}`)
+    .map(
+      (phrase) =>
+        `- Never use the exact phrase "${phrase}" (case-insensitive; e.g. Transform is also banned if transform is listed)`,
+    )
     .join("\n");
 }
 
@@ -160,6 +163,8 @@ export function buildGeneratedOutputRepairPrompt(input: {
     "Rewrite the generated content only to fix the listed validation errors.",
     "Preserve the same sections, facts, offer, tone, and format.",
     "Remove or replace exact prohibited phrases with grounded wording.",
+    "Matching is case-insensitive: if \"transform\" is forbidden, also remove \"Transform\", \"TRANSFORM\", and the same phrase inside headlines or CTAs.",
+    "Prefer concrete rewrites (e.g. \"Turn Ideas into Structured Content\" instead of \"Transform Ideas into Structured Content\").",
     "Remove empty None/N/A/Not provided-only sections when listed.",
     "Remove fake placeholder URLs or placeholder disclosure text when listed.",
     "",

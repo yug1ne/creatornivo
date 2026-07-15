@@ -78,6 +78,7 @@ test("exact user-prohibited phrase can be repaired once and pass final validatio
       assert.match(prompt, /Do not add new claims/);
       assert.match(prompt, /Do not add URLs/);
       assert.match(prompt, /streamline/);
+      assert.match(prompt, /case-insensitive/i);
       return repairResult(
         "This planner helps teams organize weekly planning in one place.",
       );
@@ -89,6 +90,94 @@ test("exact user-prohibited phrase can be repaired once and pass final validatio
   assert.equal(result.repaired, true);
   assert.equal(result.content, "This planner helps teams organize weekly planning in one place.");
   assert.equal(result.validation.ok, true);
+});
+
+test("smoke fixture: headline Transform is repairable once without second model loop", async () => {
+  const variables = [
+    optionalField("restrictionsAndDisclosures", "Restrictions and disclosures"),
+  ];
+  const values = {
+    restrictionsAndDisclosures: "Do not use the phrases: transform",
+  };
+  const original = "Headline: Transform Ideas into Structured Content";
+  const validation = validateGeneratedOutput(original, variables, values);
+  let repairCalls = 0;
+
+  assert.equal(validation.ok, false);
+  assert.ok(
+    validation.issues.some(
+      (issue) =>
+        issue.code === "user_prohibited_phrase" &&
+        issue.match.toLowerCase() === "transform",
+    ),
+  );
+  assert.equal(
+    assessGeneratedOutputAutoRepair(original, validation).repairable,
+    true,
+  );
+
+  const result = await repairGeneratedOutputOnce({
+    content: original,
+    validation,
+    variables,
+    values,
+    repairModel: async (prompt) => {
+      repairCalls += 1;
+      assert.match(prompt, /transform/i);
+      assert.match(prompt, /case-insensitive/i);
+      assert.match(prompt, /Do not invent proof, testimonials, metrics, prices, dates/);
+      assert.match(prompt, /ORIGINAL GENERATED OUTPUT/);
+      return repairResult("Headline: Turn Ideas into Structured Content");
+    },
+  });
+
+  assert.equal(repairCalls, 1, "repair runs at most once");
+  assert.equal(result.attempted, true);
+  assert.equal(result.repaired, true);
+  assert.doesNotMatch(result.content, /\btransform\b/i);
+  assert.match(result.content, /Turn Ideas into Structured Content/i);
+  assert.equal(result.validation.ok, true);
+  assert.equal(
+    isGeneratedOutputValidAfterRepair(result.content, result.validation),
+    true,
+  );
+
+  // Second validation of the same repaired content stays green (no extra repair needed).
+  const revalidated = validateGeneratedOutput(
+    result.content,
+    variables,
+    values,
+  );
+  assert.equal(revalidated.ok, true);
+});
+
+test("smoke fixture: unrepaired Transform headline remains invalid", async () => {
+  const variables = [
+    optionalField("restrictionsAndDisclosures", "Restrictions and disclosures"),
+  ];
+  const values = {
+    restrictionsAndDisclosures: "Do not use the phrases: transform",
+  };
+  const original = "Headline: Transform Ideas into Structured Content";
+  const validation = validateGeneratedOutput(original, variables, values);
+
+  const result = await repairGeneratedOutputOnce({
+    content: original,
+    validation,
+    variables,
+    values,
+    repairModel: async () =>
+      repairResult("Headline: Transform Ideas into Structured Content"),
+  });
+
+  assert.equal(result.attempted, true);
+  assert.equal(result.repaired, false);
+  assert.equal(result.validation.ok, false);
+  assert.match(
+    result.validation.issues.find((i) => i.code === "user_prohibited_phrase")
+      ?.match ?? "",
+    /transform/i,
+  );
 });
 
 test("Product Description fixture repairs explicit prohibited marketing wording", async () => {
@@ -278,8 +367,11 @@ test("repair prompt forbids new claims, URLs, proof, prices, dates, testimonials
   });
 
   assert.match(prompt, /Do not add new claims/);
+  assert.match(prompt, /Do not add new facts/);
   assert.match(prompt, /Do not add URLs/);
   assert.match(prompt, /Do not invent proof, testimonials, metrics, prices, dates, deadlines, discounts, credentials/);
+  assert.match(prompt, /approvals, or sources/);
+  assert.match(prompt, /case-insensitive/i);
   assert.match(prompt, /Output only the repaired final content/);
 });
 
