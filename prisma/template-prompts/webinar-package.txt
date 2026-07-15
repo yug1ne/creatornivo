@@ -337,7 +337,7 @@ Rules for every prohibited word or phrase:
 * Do not repeat prohibited phrases in notes, examples, metadata, or review sections; describe concerns generically without restating banned words.
 * Replace banned wording with plain functional alternatives grounded only in supplied webinar facts.
 
-Unless the user supplied and explicitly allowed the wording, do not introduce default webinar/marketing hype such as unlock, elevate, revolutionary, game-changing, seamless, effortlessly, streamline, transform, boost, increase, guaranteed, or “unlock the power of.” Prefer concrete verbs: teach, explain, demonstrate, practice, review, plan, draft, and support.
+Unless the user supplied and explicitly allowed the wording, avoid app/marketing filler and soft hype such as seamlessly, seamless, unlock, elevate, effortless, effortlessly, transform, streamline, boost, increase, guaranteed, revolutionary, game-changing, “unlock the power of,” “dive deeper,” “keep your creativity flowing,” and “master your week.” Prefer plain webinar copy verbs: plan, explain, show, prepare, organize, review, discuss, outline, guide, support, help, create, teach, and demonstrate.
 
 TITLE AND PROMISE
 
@@ -400,6 +400,15 @@ Do not recommend decorative visuals that distract from comprehension. Do not use
 
 PRESENTER CONTENT
 
+PRESENTER CREDENTIALS AND BIO
+
+Use only {{presenterName}}, {{presenterRole}}, {{presenterBio}}, and {{coPresenters}} as supplied.
+
+* Do not call the presenter an expert, authority, award-winning, certified, trusted, famous, leading, top, or experienced unless that exact credential or wording is explicitly supplied in the inputs.
+* Do not invent specializations such as “expert in creator workflow strategies,” industry leadership, years of experience, client results, awards, certifications, media features, or endorsements.
+* If only a founder, host, or job title is supplied, use that exact role neutrally (for example, “founder of Creatornivo” or “host”).
+* If {{presenterBio}} is blank, write a short neutral introduction from name and role only, or omit embellished bio language.
+
 Use {{outputDetail}} to control depth.
 
 For Concise outline:
@@ -428,6 +437,7 @@ Do not default to expressions such as:
 * “In today’s fast-paced world”
 * “In the ever-evolving landscape”
 * “Dive into”
+* “Dive deeper”
 * “Delve into”
 * “Unlock the power of”
 * “Game-changing”
@@ -436,8 +446,12 @@ Do not default to expressions such as:
 * “Look no further”
 * “The possibilities are endless”
 * “Without further ado”
+* “Keep your creativity flowing”
+* “Master your week”
+* “Seamlessly”
+* “Effortlessly”
 
-Use natural alternatives appropriate to the topic.
+Use natural alternatives appropriate to the topic. Prefer plan, explain, show, prepare, organize, review, discuss, outline, guide, support, help, and create.
 
 INTERACTION PLAN
 
@@ -479,6 +493,8 @@ When an offer is supplied:
 * do not guarantee outcomes.
 
 Address {{objectionsToAddress}} through useful clarification, not pressure, shame, fear, or manipulative urgency.
+
+For CTA and closing language, prefer concrete next steps over motivational hype. Avoid soft filler such as “dive deeper,” “keep your creativity flowing,” “master your week,” “seamlessly,” or “effortlessly” unless the user explicitly supplied and allowed that wording. Good examples: “Register for the live session,” “Download the planning checklist,” “Book a follow-up walkthrough,” or “Review the outline and try one planning block this week.”
 
 Create:
 
@@ -526,6 +542,8 @@ If a replay window is supplied, mention it clearly without turning it into manip
 Include {{postWebinarResource}} only when it exists.
 
 Do not imply that the recipient attended, watched the full webinar, asked a question, or showed purchase intent unless that fact is supplied. Use neutral wording suitable for registered participants.
+
+Keep subject lines, preview text, and email closings practical. Avoid hype closings such as “dive deeper,” “keep your creativity flowing,” or “master your week” unless the user explicitly requested that tone and wording. Prefer concrete next steps.
 
 PRIVACY, EMAIL, AND PROMOTIONAL ETHICS
 
@@ -695,14 +713,16 @@ Before producing the final package, silently verify that:
 * optional blank fields have been omitted or handled safely;
 * the agenda fits the supplied duration;
 * the title, registration promise, teaching content, CTA, and follow-up all describe the same webinar;
-* no unsupported facts, proof, credentials, prices, deadlines, links, or outcomes were invented;
+* no unsupported facts, proof, credentials, prices, deadlines, links, outcomes, attendance numbers, registration counts, testimonials, or results were invented;
 * source material, evidence, social proof, presenter credentials, post-webinar resources, registration details, date, and time were used only when supplied;
+* presenter was not called expert, authority, award-winning, certified, trusted, famous, leading, or experienced unless that exact credential was supplied; founder/title-only inputs stay neutral;
 * live and recorded language is accurate;
 * regulated claims are cautious and appropriately qualified;
 * compliance notes and additional context were treated as HARD EXCLUSIONS: no exact prohibited words/phrases (any capitalization) and no close banned variants appear in titles, scripts, registration copy, emails, slides, or notes;
-* default hype such as streamline, transform, unlock, seamless, effortlessly, boost, and guaranteed was not introduced unless the user supplied and allowed it;
+* soft hype such as seamlessly, seamless, effortless, effortlessly, streamline, transform, unlock, elevate, boost, increase, guaranteed, revolutionary, game-changing, “dive deeper,” “keep your creativity flowing,” and “master your week” was not introduced unless the user supplied and allowed it;
+* preferred plain verbs (plan, explain, show, prepare, organize, review, discuss, outline, guide, support, help, create) were used instead of filler hype;
 * the educational content provides genuine value;
-* the CTA is clear, truthful, and proportionate;
+* the CTA and closings are clear, practical, and proportionate;
 * no fake urgency, scarcity, attendance, questions, or social proof appears;
 * the writing sounds natural when spoken;
 * the output contains only the requested webinar package.

@@ -420,12 +420,76 @@ test("Webinar Package hard-excludes compliance notes and bans streamline/transfo
   );
   assert.match(
     prompt,
-    /do not introduce default webinar\/marketing hype such as unlock, elevate, revolutionary, game-changing, seamless, effortlessly, streamline, transform, boost, increase, guaranteed/,
+    /avoid app\/marketing filler and soft hype such as seamlessly, seamless, unlock, elevate, effortless, effortlessly, transform, streamline, boost, increase, guaranteed, revolutionary, game-changing/,
+  );
+  assert.match(
+    prompt,
+    /Prefer plain webinar copy verbs: plan, explain, show, prepare, organize, review, discuss, outline, guide, support, help, create/,
   );
   assert.match(
     prompt,
     /compliance notes and additional context were treated as HARD EXCLUSIONS/,
   );
+});
+
+test("Webinar Package blocks soft hype, unsupported expert credentials, and invented proof", () => {
+  assert.match(prompt, /PRESENTER CREDENTIALS AND BIO/);
+  assert.match(
+    prompt,
+    /Do not call the presenter an expert, authority, award-winning, certified, trusted, famous, leading, top, or experienced unless that exact credential or wording is explicitly supplied/,
+  );
+  assert.match(
+    prompt,
+    /Do not invent specializations such as “expert in creator workflow strategies,”/,
+  );
+  assert.match(
+    prompt,
+    /If only a founder, host, or job title is supplied, use that exact role neutrally/,
+  );
+  assert.match(prompt, /Avoid soft filler such as “dive deeper,” “keep your creativity flowing,” “master your week,” “seamlessly,” or “effortlessly”/);
+  assert.match(prompt, /Prefer concrete next steps/);
+  assert.match(prompt, /soft hype such as seamlessly, seamless, effortless, effortlessly/);
+  assert.match(
+    prompt,
+    /presenter was not called expert, authority, award-winning, certified, trusted, famous, leading, or experienced unless that exact credential was supplied/,
+  );
+  assert.match(
+    prompt,
+    /no unsupported facts, proof, credentials, prices, deadlines, links, outcomes, attendance numbers, registration counts, testimonials, or results were invented/,
+  );
+
+  // Soft hype words are instructed as avoid-list, not recommended copy patterns.
+  assert.match(prompt, /\bseamlessly\b/i);
+  assert.doesNotMatch(prompt, /recommend[^\n]{0,40}\bseamlessly\b/i);
+
+  const values = {
+    complianceNotes: 'Avoid "streamline", "transform".',
+  };
+
+  const prohibited = assertGeneratedOutputQuality(
+    "Transform your week and streamline planning in this live session.",
+    { variables, values },
+  );
+  assert.equal(prohibited.ok, false);
+  assert.ok(
+    prohibited.hardFailures.some(
+      (issue) =>
+        issue.code === "user_prohibited_phrase" &&
+        /streamline|transform/i.test(issue.match ?? ""),
+    ),
+  );
+
+  // Clean practical copy with founder-only framing should not hard-fail on exact bans.
+  const clean = assertGeneratedOutputQuality(
+    [
+      "Host: Alex, founder of Creatornivo.",
+      "In this session we will plan a weekly outline, explain one drafting method, and show a short checklist.",
+      "Next step: register for the live session.",
+    ].join("\n"),
+    { variables, values },
+  );
+  assert.equal(clean.ok, true);
+  assert.doesNotMatch(clean.hardFailures.map((i) => i.match).join(" "), /streamline|transform/i);
 });
 
 test("Webinar Package marketing guardrails prevent invented proof, credentials, URLs, dates, and resources", () => {
