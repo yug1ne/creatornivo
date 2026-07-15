@@ -40,6 +40,7 @@ import {
   validateVariableValues,
 } from "@/lib/templates/utils";
 import {
+  composeGenerationPromptWithForbiddenPhrases,
   getGeneratedOutputValidationMessage,
   sanitizeGeneratedOutput,
   validateGeneratedOutput,
@@ -170,12 +171,15 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: validationError }, { status: 400 });
     }
 
-    const filledPrompt = fillPromptTemplate(
+    const filledTemplatePrompt = fillPromptTemplate(
       template.prompt,
       templateValues,
       variables,
     );
-    const renderIssues = findRenderedPromptIssues(filledPrompt, variables);
+    const renderIssues = findRenderedPromptIssues(
+      filledTemplatePrompt,
+      variables,
+    );
 
     if (
       renderIssues.unresolvedVariables.length > 0 ||
@@ -196,6 +200,13 @@ export async function POST(request: Request) {
         { status: 500 },
       );
     }
+
+    // Structured exact bans first; free-text restrictions remain in filled template.
+    const filledPrompt = composeGenerationPromptWithForbiddenPhrases(
+      filledTemplatePrompt,
+      variables,
+      templateValues,
+    );
 
     if (!isAIProviderConfigured()) {
       return NextResponse.json(

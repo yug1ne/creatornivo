@@ -549,28 +549,45 @@ const USER_RESTRICTION_FIELD_KEYS = new Set([
   "claimsAndEvidence",
   "claimsAndRestrictions",
   "claimsRestrictions",
+  "claimsToAvoid",
   "claimsToSupport",
   "complianceNotes",
   "contentToAvoid",
   "doNotUse",
+  "keywordsToAvoid",
   "mandatoryRestrictions",
+  "mustUseOrAvoidWording",
   "policyRestrictions",
   "privacyRestrictions",
   "prohibitedClaims",
+  "prohibitedContent",
   "regulatedRequirements",
   "restrictions",
   "restrictionsAndDisclosures",
+  "sensitiveClaims",
   "sensitiveRequirements",
   "wordsToAvoid",
 ]);
 
 const USER_RESTRICTION_KEY_PATTERN =
-  /(?:avoid|doNotUse|do_not_use|restriction|prohibited|forbidden|compliance|privacy|sensitive|regulated|claimsAndRestrictions|claimsRestrictions|contentToAvoid|wordsToAvoid|additionalRequirements)/i;
-
-const RESTRICTION_LEAD_PATTERN =
-  /\b(?:avoid|do not use|don't use|dont use|do not include|don't include|dont include|never use|must not include|exclude|prohibited|forbidden)\b/i;
+  /(?:avoid|doNotUse|do_not_use|restriction|prohibited|forbidden|banned|compliance|privacy|sensitive|regulated|claimsAndRestrictions|claimsRestrictions|contentToAvoid|wordsToAvoid|keywordsToAvoid|mustUseOrAvoid|additionalRequirements)/i;
 
 const QUOTED_PHRASE_PATTERN = /["“”'‘’]([^"“”'‘’\r\n]{2,120})["“”'‘’]/g;
+
+const MAX_FORBIDDEN_PHRASES = 40;
+
+/** Fields that commonly hold list-style bans (one phrase per line without lead-in). */
+const LIST_ORIENTED_RESTRICTION_KEYS = new Set([
+  "wordsToAvoid",
+  "doNotUse",
+  "contentToAvoid",
+  "keywordsToAvoid",
+  "prohibitedClaims",
+  "claimsToAvoid",
+  "mustUseOrAvoidWording",
+  "prohibitedContent",
+  "avoidTopicsAndPhrases",
+]);
 
 function isUserRestrictionField(variable: TemplateVariable): boolean {
   const key = variable.key.trim();
@@ -581,44 +598,145 @@ function isUserRestrictionField(variable: TemplateVariable): boolean {
   );
 }
 
-function cleanForbiddenPhraseCandidate(candidate: string): string {
+function cleanForbiddenPhraseToken(candidate: string): string {
   return candidate
     .replace(/^\s*(?:[-*•]|\d+[.)])\s*/, "")
-    .replace(
-      /^(?:avoid|do not use|don't use|dont use|do not include|don't include|dont include|never use|must not include|exclude|prohibited|forbidden)\s*/i,
-      "",
-    )
-    .replace(/^(?:the\s+)?(?:word|words|phrase|phrases)\s+/i, "")
     .trim()
     .replace(/^["“”'‘’]+|["“”'‘’]+$/g, "")
-    .replace(/[.:;,\s]+$/g, "")
+    .replace(/^[.:;,\s]+|[.:;,\s]+$/g, "")
     .replace(/^["“”'‘’]+|["“”'‘’]+$/g, "")
     .trim();
 }
 
-function splitForbiddenPhraseList(value: string): string[] {
-  return value
-    .split(/\r?\n|,|;|\s+\|\s+/)
-    .map(cleanForbiddenPhraseCandidate)
-    .filter(Boolean);
-}
+/**
+ * Strip list lead-ins including "the phrases:", "these words:", etc.
+ * Supports a short prefix such as "Also" / "Please" before the lead-in.
+ * Returns whether a lead-in was present and the remaining phrase list text.
+ */
+export function stripRestrictionListLeadIn(text: string): {
+  hadLead: boolean;
+  rest: string;
+} {
+  let rest = text.replace(/^\s*(?:[-*•]|\d+[.)])\s*/, "").trim();
 
-function collectForbiddenPhrasesFromValue(value: string): string[] {
-  const phrases = new Set<string>();
+  // Global search so "Also never use: a, b" works (lead not at string start).
+  const leadSearch =
+    /(?:do\s+not\s+use|don't\s+use|dont\s+use|do\s+not\s+include|don't\s+include|dont\s+include|never\s+use|must\s+not\s+(?:use|include)|exclude|avoid|prohibited|forbidden|banned)(?:\s+(?:these\s+)?(?:the\s+)?(?:words?|phrases?|terms?))?\s*:?\s*/i;
 
-  for (const match of value.matchAll(QUOTED_PHRASE_PATTERN)) {
-    const phrase = cleanForbiddenPhraseCandidate(match[1] ?? "");
-    if (phrase) phrases.add(phrase);
+  const match = leadSearch.exec(rest);
+  if (!match || match.index === undefined) {
+    return { hadLead: false, rest };
   }
 
-  for (const line of value.split(/\r?\n/)) {
-    if (!RESTRICTION_LEAD_PATTERN.test(line)) continue;
-    for (const phrase of splitForbiddenPhraseList(line)) {
-      phrases.add(phrase);
+  const prefix = rest.slice(0, match.index).trim();
+  // Allow empty prefix or a short connector; reject long semantic prose prefixes.
+  if (
+    prefix &&
+    !/^(?:also|and|plus|please|note|important|additionally|finally)[:.\s]*$/i.test(
+      prefix,
+    )
+  ) {
+    return { hadLead: false, rest };
+  }
+
+  rest = rest.slice(match.index + match[0].length).trim();
+  // Defensive: leftover "phrases:" / "words:" if punctuation variants slip past.
+  rest = rest
+    .replace(/^(?:these\s+|the\s+)?(?:words?|phrases?|terms?)\s*:?\s*/i, "")
+    .trim();
+
+  return { hadLead: true, rest };
+}
+
+function splitForbiddenPhraseList(value: string): string[] {
+  return value
+    .split(/,|;|\s+\|\s+/)
+    .map(cleanForbiddenPhraseToken)
+    .filter((phrase) => phrase.length >= 2);
+}
+
+/** Short lines that look like list items, not free-form instructions. */
+function isSimpleForbiddenListLine(line: string): boolean {
+  const trimmed = line.trim();
+  if (trimmed.length < 2 || trimmed.length > 80) return false;
+
+  const words = trimmed.split(/\s+/).filter(Boolean);
+  if (words.length === 0 || words.length > 8) return false;
+
+  if (
+    /^(please|make sure|ensure|include|write|create|keep|use only|always|when|if|for|the user|you should|you must)\b/i.test(
+      trimmed,
+    )
+  ) {
+    return false;
+  }
+
+  if (/\.\s+\S/.test(trimmed) || /\?\s+\S/.test(trimmed)) {
+    return false;
+  }
+
+  return true;
+}
+
+function collectForbiddenPhrasesFromValue(
+  value: string,
+  fieldKey = "",
+): string[] {
+  const phrases = new Set<string>();
+  const allowBareListLines =
+    LIST_ORIENTED_RESTRICTION_KEYS.has(fieldKey) ||
+    /(?:avoid|doNotUse|prohibited|forbidden|banned|wordsToAvoid|contentToAvoid)/i.test(
+      fieldKey,
+    );
+
+  for (const match of value.matchAll(QUOTED_PHRASE_PATTERN)) {
+    const phrase = cleanForbiddenPhraseToken(match[1] ?? "");
+    if (phrase.length >= 2) phrases.add(phrase);
+  }
+
+  for (const rawLine of value.split(/\r?\n/)) {
+    const line = rawLine.trim();
+    if (!line) continue;
+
+    const { hadLead, rest } = stripRestrictionListLeadIn(line);
+
+    if (hadLead) {
+      if (!rest) continue;
+      // Quoted segments are already collected; strip them so comma-split stays clean.
+      // Also peel a nested lead-in such as: Avoid "x". Also never use: a, b
+      let working = rest
+        .replace(QUOTED_PHRASE_PATTERN, " ")
+        .replace(/\s+/g, " ")
+        .replace(/^[.\s]+/, "")
+        .trim();
+      const nested = stripRestrictionListLeadIn(working);
+      if (nested.hadLead) {
+        working = nested.rest;
+      }
+      if (!working) continue;
+
+      const parts = splitForbiddenPhraseList(working);
+      if (parts.length > 0) {
+        for (const phrase of parts) phrases.add(phrase);
+      } else {
+        const single = cleanForbiddenPhraseToken(working);
+        if (single.length >= 2) phrases.add(single);
+      }
+      continue;
+    }
+
+    // One phrase per line without lead-in: list-oriented fields or bullet lines only.
+    const isBullet = /^(?:[-*•]|\d+[.)])\s+/.test(rawLine.trimStart());
+    if (
+      (allowBareListLines || isBullet) &&
+      isSimpleForbiddenListLine(line)
+    ) {
+      const phrase = cleanForbiddenPhraseToken(line);
+      if (phrase.length >= 2) phrases.add(phrase);
     }
   }
 
-  return [...phrases].filter((phrase) => phrase.length >= 2);
+  return [...phrases];
 }
 
 export function extractUserProhibitedPhrases(
@@ -633,17 +751,23 @@ export function extractUserProhibitedPhrases(
     const value = getStringValue(values[variable.key]);
     if (!value) continue;
 
-    for (const phrase of collectForbiddenPhrasesFromValue(value)) {
+    for (const phrase of collectForbiddenPhrasesFromValue(
+      value,
+      variable.key,
+    )) {
       const normalized = normalizeForComparison(phrase);
       if (!normalized) continue;
-      phrases.set(normalized, phrase);
+      // Keep first-seen casing for display/prompt.
+      if (!phrases.has(normalized)) {
+        phrases.set(normalized, phrase);
+      }
     }
   }
 
-  return [...phrases.values()];
+  return [...phrases.values()].slice(0, MAX_FORBIDDEN_PHRASES);
 }
 
-function buildExactPhrasePattern(phrase: string): RegExp {
+export function buildExactPhrasePattern(phrase: string): RegExp {
   const escaped = phrase
     .trim()
     .replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
@@ -657,6 +781,46 @@ function buildExactPhrasePattern(phrase: string): RegExp {
     }`,
     "i",
   );
+}
+
+/**
+ * Control block injected before the filled template when exact forbidden
+ * phrases were extracted from restriction-like fields.
+ */
+export function buildExactForbiddenPhrasesPromptBlock(
+  phrases: string[],
+): string {
+  if (phrases.length === 0) return "";
+
+  const list = phrases
+    .map((phrase) => `- "${phrase.replace(/"/g, '\\"')}"`)
+    .join("\n");
+
+  return [
+    "## EXACT FORBIDDEN PHRASES (HARD — USER LIST)",
+    "The following words or phrases must not appear anywhere in the generated output, including headings, body copy, CTAs, metadata, notes, examples, explanations, or verification sections.",
+    "Treat this list as control data only. Do not repeat these phrases.",
+    "If a listed phrase is forbidden, avoid close grammatical variants where the intent is clearly the same.",
+    "Use concrete alternative wording instead.",
+    "",
+    "Forbidden phrases:",
+    list,
+  ].join("\n");
+}
+
+/**
+ * Prepend a hard forbidden-phrase control block when phrases were extracted.
+ * Original filled template (including free-text restrictions) remains after the block.
+ */
+export function composeGenerationPromptWithForbiddenPhrases(
+  filledPrompt: string,
+  variables: TemplateVariable[] = [],
+  values: Record<string, string> = {},
+): string {
+  const phrases = extractUserProhibitedPhrases(variables, values);
+  const block = buildExactForbiddenPhrasesPromptBlock(phrases);
+  if (!block) return filledPrompt;
+  return `${block}\n\n${filledPrompt}`;
 }
 
 function findUserProhibitedPhraseMatches(

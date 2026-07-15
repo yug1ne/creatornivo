@@ -472,7 +472,16 @@ test("server render guard runs before quota, reservation, OpenAI, and usage writ
   assert.ok(reservation > renderGuard);
   assert.ok(openAiCall > renderGuard);
   assert.ok(usageWrite > renderGuard);
-  assert.match(route, /findRenderedPromptIssues\(filledPrompt, variables\)/);
+  assert.match(
+    route,
+    /findRenderedPromptIssues\([\s\S]*?filledTemplatePrompt[\s\S]*?variables[\s\S]*?\)/,
+  );
+  assert.match(route, /composeGenerationPromptWithForbiddenPhrases/);
+  const composeCall = route.indexOf(
+    "composeGenerationPromptWithForbiddenPhrases(",
+  );
+  assert.ok(composeCall > renderGuard);
+  assert.ok(openAiCall > composeCall);
 });
 
 test("Help button mapping and guide pages cover every template", () => {
