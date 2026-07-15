@@ -66,13 +66,22 @@ const OUTPUT_CONTRACT_HEADINGS = [
 ] as const;
 
 test("Product Description prompt treats claims and additional requirements as hard restrictions", () => {
+  assert.match(prompt, /USER AVOID \/ CLAIM RESTRICTIONS — HARD EXCLUSIONS/);
   assert.match(
     prompt,
-    /Treat \{\{claimsRestrictions\}\} and \{\{additionalRequirements\}\} as hard user restrictions/,
+    /Treat \{\{claimsRestrictions\}\} and \{\{additionalRequirements\}\} as HARD EXCLUSIONS and hard user restrictions/,
   );
   assert.match(
     prompt,
-    /do not use those exact words or phrases anywhere in the package/,
+    /Do not soften this as “respect,” “consider,” “try to avoid,” or “where possible\.”/,
+  );
+  assert.match(
+    prompt,
+    /Exact prohibited words and phrases from those fields must not appear anywhere in the generated package/,
+  );
+  assert.match(
+    prompt,
+    /Matching is case-insensitive: if “streamline,” “transform,” or “effortlessly” is prohibited/,
   );
   assert.match(
     prompt,
@@ -80,7 +89,11 @@ test("Product Description prompt treats claims and additional requirements as ha
   );
   assert.match(
     prompt,
-    /Claims and restrictions and Additional requirements were treated as hard exclusions/,
+    /\{\{claimsRestrictions\}\} and \{\{additionalRequirements\}\} were treated as HARD EXCLUSIONS/,
+  );
+  assert.match(
+    prompt,
+    /Prefer plain functional verbs: create, organize, draft, save, export, choose, edit, manage, support, plan, review, outline, and keep in one place/,
   );
 });
 
@@ -193,10 +206,41 @@ test("Product Description renders required inputs without unresolved placeholder
 test("Product Description deterministic QA catches prohibited phrases, empty sentinels, and fake commercial invent", () => {
   const values = {
     claimsRestrictions:
-      'Avoid the words: streamline, transform, effortlessly, guaranteed.',
+      "Do not use the phrases: streamline, transform, effortlessly, guaranteed.",
     priceOfferInfo: "",
     proofCredentials: "",
   };
+
+  for (const sample of [
+    "This free planner helps creators streamline weekly planning.",
+    "Transform Ideas into Structured Content with reusable prompts.",
+    "Create content effortlessly from one weekly outline.",
+    "Verification note: Removed streamline language from the summary.",
+  ]) {
+    const sampleResult = assertGeneratedOutputQuality(sample, {
+      variables,
+      values,
+    });
+    assert.equal(sampleResult.ok, false, `expected hard fail for: ${sample}`);
+    assert.ok(
+      sampleResult.hardFailures.some(
+        (issue) =>
+          issue.code === "user_prohibited_phrase" &&
+          /streamline|transform|effortlessly/i.test(issue.match ?? ""),
+      ),
+      `missing prohibited-phrase fail for: ${sample}`,
+    );
+  }
+
+  const clean = assertGeneratedOutputQuality(
+    [
+      "Title: Weekly content planner for solo creators",
+      "Summary: Organize hooks, CTAs, and notes in one reusable structure.",
+      "Description: Plan and draft next week’s posts without starting from a blank page.",
+    ].join("\n"),
+    { variables, values },
+  );
+  assert.equal(clean.ok, true);
 
   const prohibited = assertGeneratedOutputQuality(
     [

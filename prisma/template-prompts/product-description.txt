@@ -380,13 +380,20 @@ When supplied evidence lacks important context, use cautious wording or place a 
 
 Never turn “designed to,” “may help,” “intended for,” or “tested under specific conditions” into a guaranteed outcome.
 
-Treat {{claimsRestrictions}} and {{additionalRequirements}} as hard user restrictions, not optional style notes.
+USER AVOID / CLAIM RESTRICTIONS — HARD EXCLUSIONS
 
-When either field lists words or phrases to avoid:
+Treat {{claimsRestrictions}} and {{additionalRequirements}} as HARD EXCLUSIONS and hard user restrictions, not optional style notes. Do not soften this as “respect,” “consider,” “try to avoid,” or “where possible.”
 
-* do not use those exact words or phrases anywhere in the package (titles, summary, description, benefits, features, CTA, SEO, or notes);
-* do not use close variants that keep the same banned wording (for example, if “streamline” is prohibited, do not write “streamlined” or “streamlining” unless a different form was explicitly allowed);
-* replace banned wording with grounded substitutes that still match only the supplied product facts.
+Exact prohibited words and phrases from those fields must not appear anywhere in the generated package, including titles, summary, description, benefits, features, specifications, CTA, SEO metadata, examples, headings, and verification notes.
+
+Rules for every prohibited word or phrase:
+
+* Matching is case-insensitive: if “streamline,” “transform,” or “effortlessly” is prohibited, also ban “Streamline,” “Transform,” “Effortlessly,” and similar capitalization.
+* Do not use close grammatical variants that keep the same banned wording (for example, if “streamline” is prohibited, do not write “streamlined” or “streamlining” unless a different form was explicitly allowed).
+* Do not repeat prohibited phrases in verification notes, examples, or metadata; describe concerns generically without restating banned words.
+* Replace banned wording with grounded substitutes that still match only the supplied product facts.
+
+Unless the user supplied and explicitly allowed the wording, avoid default product-description hype such as unlock, elevate, revolutionary, game-changing, seamless, seamlessly, effortless, effortlessly, streamline, transform, boost, enhance, increase, guaranteed, save time, capture attention, drive engagement, increase sales, never run out, take the uncertainty out, and clarity and ease. Prefer plain functional verbs: create, organize, draft, save, export, choose, edit, manage, support, plan, review, outline, and keep in one place.
 
 Required qualification language from {{claimsRestrictions}} must remain close to the relevant claim rather than being hidden at the end.
 
@@ -554,8 +561,9 @@ Before producing the answer, silently verify that:
 
 * every factual statement is supported by the supplied input;
 * features and benefits are clearly distinguished;
-* Claims and restrictions and Additional requirements were treated as hard exclusions, including exact user-prohibited phrases and close banned variants;
-* no unsupported hype such as streamline, effortlessly, seamless, transform, boost, enhance, guaranteed, save time, capture attention, drive engagement, or increase sales was introduced without support;
+* {{claimsRestrictions}} and {{additionalRequirements}} were treated as HARD EXCLUSIONS: no exact prohibited words/phrases (any capitalization) and no close banned variants appear in titles, summary, description, benefits, features, CTA, SEO, examples, headings, or verification notes;
+* default product hype such as streamline, transform, effortlessly, seamless, unlock, boost, enhance, guaranteed, save time, capture attention, drive engagement, or increase sales was not introduced unless the user supplied and allowed it;
+* preferred functional verbs were used instead of banned or hype wording;
 * no price, offer, review, rating, testimonial, certification, statistic, performance result, award, guarantee, customer outcome, deadline, scarcity claim, policy, or capability was invented;
 * benefits are framed as possible uses, not guaranteed outcomes;
 * no heading exists for an empty section, and no None / N/A / Not provided-only section appears;

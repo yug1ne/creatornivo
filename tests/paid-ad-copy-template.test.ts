@@ -49,11 +49,82 @@ const schema = readJson<PaidAdCopyFormSchema>(
 const variables = parseTemplateVariables(schema.variables);
 
 test("Paid Ad Copy guardrails cover prohibited claims, disclosures, regulated wording, and fake proof", () => {
-  assert.match(prompt, /hard exclusion across all generated assets/);
-  assert.match(prompt, /headlines, primary text, descriptions, CTAs, creative notes, testing variations/);
+  assert.match(prompt, /USER AVOID \/ CLAIM RESTRICTIONS — HARD EXCLUSIONS/);
+  assert.match(
+    prompt,
+    /Treat \{\{prohibitedClaims\}\} and \{\{additionalRequirements\}\} as HARD EXCLUSIONS/,
+  );
+  assert.match(
+    prompt,
+    /Do not soften this as “respect,” “consider,” “try to avoid,” or “where possible\.”/,
+  );
+  assert.match(
+    prompt,
+    /Exact prohibited words and phrases from those fields must not appear anywhere in the generated package/,
+  );
+  assert.match(
+    prompt,
+    /headlines, primary text, descriptions, and CTAs/,
+  );
+  assert.match(prompt, /Claim & Policy Review and Implementation Notes/);
+  assert.match(
+    prompt,
+    /Matching is case-insensitive: if “streamline,” “transform,” or “effortlessly” is prohibited/,
+  );
+  assert.match(
+    prompt,
+    /if “streamline” is prohibited, do not write “streamlined” or “streamlining”/,
+  );
+  assert.match(
+    prompt,
+    /avoid default paid-ad hype such as unlock, elevate, revolutionary, game-changing, seamless, seamlessly, effortless, effortlessly, streamline, transform, boost, increase, guaranteed/,
+  );
+  assert.match(
+    prompt,
+    /Prefer concrete verbs: plan, create, organize, draft, choose, save, export, manage, support, compare, and learn/,
+  );
   assert.match(prompt, /Do not drop mandatory disclosures to satisfy brevity/);
   assert.match(prompt, /regulated-category handling uses cautious wording without claiming compliance/);
   assert.match(prompt, /Never invent or imply statistics[\s\S]*campaign performance[\s\S]*discounts[\s\S]*deadlines[\s\S]*scarcity/);
+  assert.match(
+    prompt,
+    /\{\{prohibitedClaims\}\} and \{\{additionalRequirements\}\} were treated as HARD EXCLUSIONS/,
+  );
+});
+
+test("Paid Ad Copy blocks streamline/transform/effortlessly when user lists them", () => {
+  const values = {
+    prohibitedClaims:
+      "Do not use the phrases: streamline, transform, effortlessly.",
+  };
+
+  for (const sample of [
+    "Headline: Transform your content workflow effortlessly.",
+    "Primary text: Streamline weekly planning with one reusable structure.",
+    "Description: Effortlessly plan hooks, CTAs, and notes.",
+    "Implementation note: Avoided claims that used streamline language.",
+  ]) {
+    const result = assertGeneratedOutputQuality(sample, { variables, values });
+    assert.equal(result.ok, false, `expected hard fail for: ${sample}`);
+    assert.ok(
+      result.hardFailures.some(
+        (issue) =>
+          issue.code === "user_prohibited_phrase" &&
+          /streamline|transform|effortlessly/i.test(issue.match ?? ""),
+      ),
+      `missing prohibited-phrase fail for: ${sample}`,
+    );
+  }
+
+  const clean = assertGeneratedOutputQuality(
+    [
+      "Headline: Plan weekly content from one structure.",
+      "Primary text: Organize hooks, CTAs, and notes in one place.",
+      "Description: Draft next week’s posts with reusable prompts.",
+    ].join("\n"),
+    { variables, values },
+  );
+  assert.equal(clean.ok, true);
 });
 
 test("Paid Ad Copy renders required inputs without unresolved placeholders", () => {

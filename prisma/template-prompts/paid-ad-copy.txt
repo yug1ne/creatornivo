@@ -49,7 +49,7 @@ Create {{variantCount}} distinct testing angles, with a practical maximum of fiv
 
 Align the copy with the campaign goal, awareness level, audience need, desired outcome, differentiators, objections, creative context, target market, and one primary CTA. When {{ctaPreference}} is Auto, choose the lowest-friction standard platform CTA that fits the goal. Do not invent a custom button label that may not exist.
 
-Write naturally, specifically, and in a platform-native rhythm. Use {{brandVoice}} and {{toneModifiers}} without making every version loud, polished, or corporate. Avoid filler and default AI clichés such as “unlock the power,” “game-changing,” “revolutionary,” “look no further,” “seamless solution,” and “take it to the next level.” Keep the opening concrete and useful.
+Write naturally, specifically, and in a platform-native rhythm. Use {{brandVoice}} and {{toneModifiers}} without making every version loud, polished, or corporate. Keep the opening concrete and useful.
 
 Do not exploit insecurity, shame, fear, or private circumstances. Never write as though the advertiser knows an individual’s health, finances, identity, employment status, browsing behavior, or other sensitive attribute. Prefer neutral framing such as “For people looking to…” rather than “We know you have…” or “Are you suffering from…”.
 
@@ -57,9 +57,36 @@ TRUTHFULNESS AND INTEGRITY
 
 Never invent or imply statistics, studies, rankings, ratings, awards, reviews, testimonials, customer identities, user counts, revenue, campaign performance, savings, prices, discounts, deadlines, scarcity, inventory, product capabilities, certifications, approvals, partnerships, clients, media coverage, delivery times, guarantees, health outcomes, financial outcomes, legal outcomes, employment outcomes, first-hand experience, or independent endorsement.
 
-Use {{proofPoints}} only as approved source material. Preserve qualifiers and never turn a fact into a stronger claim or testimonial quotation. Use prices, dates, discounts, bonuses, or availability only when explicitly supplied in {{offerDetails}}. Do not calculate savings unless the necessary figures are present. Treat {{prohibitedClaims}} as a strict exclusion list. Avoid unsupported absolutes such as “best,” “number one,” “guaranteed,” “instant,” “always,” “perfect,” and “cure.”
+Use {{proofPoints}} only as approved source material. Preserve qualifiers and never turn a fact into a stronger claim or testimonial quotation. Use prices, dates, discounts, bonuses, or availability only when explicitly supplied in {{offerDetails}}. Do not calculate savings unless the necessary figures are present. Avoid unsupported absolutes such as “best,” “number one,” “guaranteed,” “instant,” “always,” “perfect,” and “cure.”
 
-Treat every exact phrase or claim listed in {{prohibitedClaims}} as a hard exclusion across all generated assets, including headlines, primary text, descriptions, CTAs, creative notes, testing variations, Claim & Policy Review, and Implementation Notes. Do not repeat prohibited wording verbatim in explanatory notes; describe the issue generically when a warning is needed.
+USER AVOID / CLAIM RESTRICTIONS — HARD EXCLUSIONS
+
+Treat {{prohibitedClaims}} and {{additionalRequirements}} as HARD EXCLUSIONS and hard user restrictions, not optional style notes. Do not soften this as “respect,” “consider,” “try to avoid,” or “where possible.”
+
+Exact prohibited words and phrases from those fields must not appear anywhere in the generated package, including:
+
+* headlines, primary text, descriptions, and CTAs;
+* Meta, Google, LinkedIn, and other platform assets;
+* carousel cards, video hooks, and creative notes;
+* testing variations and angle options;
+* Claim & Policy Review and Implementation Notes;
+* metadata, examples, headings, and any verification or review section.
+
+Rules for every prohibited word or phrase:
+
+* Matching is case-insensitive: if “streamline,” “transform,” or “effortlessly” is prohibited, also ban “Streamline,” “Transform,” “Effortlessly,” and similar capitalization.
+* Do not use close grammatical variants that keep the same banned wording (for example, if “streamline” is prohibited, do not write “streamlined” or “streamlining” unless a different form was explicitly allowed).
+* Do not repeat prohibited phrases in notes, review sections, examples, or metadata; describe concerns generically without restating banned words.
+* Replace banned wording with plain functional alternatives grounded only in supplied offer facts.
+
+Unless the user supplied and explicitly allowed the wording, avoid default paid-ad hype such as unlock, elevate, revolutionary, game-changing, seamless, seamlessly, effortless, effortlessly, streamline, transform, boost, increase, guaranteed, “unlock the power,” “look no further,” and “take it to the next level.” Prefer concrete verbs: plan, create, organize, draft, choose, save, export, manage, support, compare, and learn.
+
+Examples when those words are not allowed:
+
+* Bad: “Transform your content workflow effortlessly.”
+* Good: “Plan and draft weekly content from one reusable structure.”
+* Bad: “Streamline planning and boost engagement.”
+* Good: “Organize planning steps and keep hooks, CTAs, and notes in one place.”
 
 Do not create fake urgency, fake scarcity, deceptive comparisons, fake comments, hidden promotion, impersonation, cloaking, discriminatory targeting language, or platform manipulation. Do not pretend the ad is an organic customer post, independent review, news report, or existing personal conversation. Do not expose personal data or imply surveillance.
 
@@ -194,11 +221,14 @@ List only actionable publishing issues: missing brand name or destination, incom
 
 FINAL CHECK
 
-Before responding, silently verify that:
+Before responding, silently re-scan the entire package and verify that:
 
 * every factual statement is supplied or clearly presented as a suggestion;
 * live copy has no fabricated proof, fake urgency, fake scarcity, deceptive personalization, sensitive-attribute assertion, or unsupported guarantee;
-* prohibited claims are absent from every asset and note, while mandatory disclosures remain visible when supplied;
+* {{prohibitedClaims}} and {{additionalRequirements}} were treated as HARD EXCLUSIONS: no exact prohibited words/phrases (any capitalization) and no close banned variants appear in headlines, primary text, descriptions, CTAs, creative notes, testing variations, Claim & Policy Review, Implementation Notes, or any other section;
+* default paid-ad hype such as streamline, transform, effortlessly, seamless, unlock, elevate, boost, increase, guaranteed, revolutionary, and game-changing was not introduced unless the user supplied and allowed it;
+* preferred functional verbs were used instead of banned or hype wording;
+* mandatory disclosures remain visible when supplied;
 * regulated-category handling uses cautious wording without claiming compliance, platform approval, or legal review;
 * every asset fits the applicable limit or safe target;
 * angles are meaningfully different;
