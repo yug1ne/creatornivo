@@ -20,7 +20,8 @@ export const authRateLimitPolicies = {
     account: { windowSeconds: 15 * 60, maxAttempts: 10 },
   },
   register: {
-    ip: { windowSeconds: 60 * 60, maxAttempts: 10 },
+    /** Launch-safe: 5 registrations per IP per hour (was 10). */
+    ip: { windowSeconds: 60 * 60, maxAttempts: 5 },
     account: { windowSeconds: 60 * 60, maxAttempts: 5 },
   },
   forgot_password: {

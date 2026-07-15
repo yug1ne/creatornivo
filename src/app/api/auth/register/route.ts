@@ -4,9 +4,15 @@ import { NextResponse } from "next/server";
 import { AUTH_RATE_LIMIT_GENERIC_MESSAGE } from "@/config/auth-rate-limit";
 import {
   CredentialsRegistrationError,
+  REGISTRATION_EMAIL_NOT_ALLOWED_MESSAGE,
   registerCredentialsUser,
 } from "@/lib/auth/credentials";
-import { AuthRateLimitError, enforceAuthRateLimit } from "@/lib/auth/rate-limit";
+import {
+  AuthRateLimitError,
+  AuthRateLimitUnavailableError,
+  AUTH_RATE_LIMIT_UNAVAILABLE_MESSAGE,
+  enforceAuthRateLimit,
+} from "@/lib/auth/rate-limit";
 import { sendWelcomeEmail } from "@/lib/email/send-welcome";
 import { prisma } from "@/lib/db";
 
@@ -74,6 +80,13 @@ export async function postAuthRegister(
       { status: 201 },
     );
   } catch (error) {
+    if (error instanceof AuthRateLimitUnavailableError) {
+      return NextResponse.json(
+        { error: AUTH_RATE_LIMIT_UNAVAILABLE_MESSAGE },
+        { status: 503 },
+      );
+    }
+
     if (error instanceof AuthRateLimitError) {
       return NextResponse.json(
         { error: AUTH_RATE_LIMIT_GENERIC_MESSAGE },
@@ -91,6 +104,12 @@ export async function postAuthRegister(
       if (error.code === "password_too_short") {
         return NextResponse.json(
           { error: "Password must be at least 8 characters" },
+          { status: 400 },
+        );
+      }
+      if (error.code === "email_not_allowed") {
+        return NextResponse.json(
+          { error: REGISTRATION_EMAIL_NOT_ALLOWED_MESSAGE },
           { status: 400 },
         );
       }

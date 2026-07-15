@@ -8,7 +8,10 @@ import {
 import { postAuthRegister } from "../src/app/api/auth/register/route";
 import {
   AuthRateLimitError,
+  AuthRateLimitUnavailableError,
+  AUTH_RATE_LIMIT_UNAVAILABLE_MESSAGE,
   checkAuthRateLimits,
+  shouldFailClosedWhenRateLimitUnavailable,
 } from "../src/lib/auth/rate-limit";
 import bcrypt from "bcryptjs";
 
@@ -208,4 +211,175 @@ test("checkAuthRateLimits enforces delete_account ip and account buckets", async
 test("auth rate limit policies keep privacy action limits documented", () => {
   assert.equal(authRateLimitPolicies.export_data.account?.maxAttempts, 3);
   assert.equal(authRateLimitPolicies.delete_account.account?.maxAttempts, 3);
+});
+
+test("register IP limit is tightened to 5 per hour for launch", () => {
+  assert.equal(authRateLimitPolicies.register.ip.maxAttempts, 5);
+  assert.equal(authRateLimitPolicies.register.ip.windowSeconds, 60 * 60);
+  assert.equal(authRateLimitPolicies.register.account?.maxAttempts, 5);
+});
+
+test("shouldFailClosedWhenRateLimitUnavailable only for register in production", () => {
+  assert.equal(
+    shouldFailClosedWhenRateLimitUnavailable("register", "production"),
+    true,
+  );
+  assert.equal(
+    shouldFailClosedWhenRateLimitUnavailable("register", "development"),
+    false,
+  );
+  assert.equal(
+    shouldFailClosedWhenRateLimitUnavailable("register", "test"),
+    false,
+  );
+  assert.equal(
+    shouldFailClosedWhenRateLimitUnavailable("login", "production"),
+    false,
+  );
+  assert.equal(
+    shouldFailClosedWhenRateLimitUnavailable("forgot_password", "production"),
+    false,
+  );
+  assert.equal(
+    shouldFailClosedWhenRateLimitUnavailable("export_data", "production"),
+    false,
+  );
+  assert.equal(
+    shouldFailClosedWhenRateLimitUnavailable("delete_account", "production"),
+    false,
+  );
+});
+
+test("register fails closed in production when rate limiting is disabled", async () => {
+  let calls = 0;
+
+  await assert.rejects(
+    checkAuthRateLimits({
+      action: "register",
+      ipKey: "203.0.113.10",
+      email: "user@example.com",
+      enabled: false,
+      nodeEnv: "production",
+      consume: async () => {
+        calls += 1;
+        return true;
+      },
+    }),
+    (error: unknown) => {
+      assert.ok(error instanceof AuthRateLimitUnavailableError);
+      assert.equal(error.status, 503);
+      assert.equal(error.message, AUTH_RATE_LIMIT_UNAVAILABLE_MESSAGE);
+      return true;
+    },
+  );
+
+  assert.equal(calls, 0);
+});
+
+test("login remains fail-open in production when rate limiting is disabled", async () => {
+  let calls = 0;
+
+  await checkAuthRateLimits({
+    action: "login",
+    ipKey: "203.0.113.10",
+    email: "user@example.com",
+    enabled: false,
+    nodeEnv: "production",
+    consume: async () => {
+      calls += 1;
+      return true;
+    },
+  });
+
+  assert.equal(calls, 0);
+});
+
+test("register remains fail-open in development when rate limiting is disabled", async () => {
+  let calls = 0;
+
+  await checkAuthRateLimits({
+    action: "register",
+    ipKey: "203.0.113.10",
+    email: "user@example.com",
+    enabled: false,
+    nodeEnv: "development",
+    consume: async () => {
+      calls += 1;
+      return true;
+    },
+  });
+
+  assert.equal(calls, 0);
+});
+
+test("register fails closed in production when Upstash consume errors", async () => {
+  await assert.rejects(
+    checkAuthRateLimits({
+      action: "register",
+      ipKey: "203.0.113.10",
+      email: "user@example.com",
+      enabled: true,
+      nodeEnv: "production",
+      consume: async () => {
+        throw new Error("upstash unavailable");
+      },
+    }),
+    (error: unknown) => {
+      assert.ok(error instanceof AuthRateLimitUnavailableError);
+      assert.equal(error.status, 503);
+      return true;
+    },
+  );
+});
+
+test("login remains fail-open in production when Upstash consume errors", async () => {
+  await checkAuthRateLimits({
+    action: "login",
+    ipKey: "203.0.113.10",
+    email: "user@example.com",
+    enabled: true,
+    nodeEnv: "production",
+    consume: async () => {
+      throw new Error("upstash unavailable");
+    },
+  });
+});
+
+test("register remains fail-open in development when Upstash consume errors", async () => {
+  await checkAuthRateLimits({
+    action: "register",
+    ipKey: "203.0.113.10",
+    email: "user@example.com",
+    enabled: true,
+    nodeEnv: "development",
+    consume: async () => {
+      throw new Error("upstash unavailable");
+    },
+  });
+});
+
+test("register route returns 503 when rate limiting is unavailable", async () => {
+  const response = await postAuthRegister(
+    new Request("https://www.creatornivo.com/api/auth/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-forwarded-for": "203.0.113.99",
+      },
+      body: JSON.stringify({
+        name: "Unavailable",
+        email: "unavailable@example.com",
+        password: "password-12345",
+      }),
+    }),
+    {
+      enforceRateLimit: async () => {
+        throw new AuthRateLimitUnavailableError();
+      },
+    },
+  );
+
+  assert.equal(response.status, 503);
+  const payload = await response.json();
+  assert.equal(payload.error, AUTH_RATE_LIMIT_UNAVAILABLE_MESSAGE);
 });

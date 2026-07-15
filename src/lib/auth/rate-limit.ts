@@ -20,6 +20,19 @@ export class AuthRateLimitError extends Error {
   }
 }
 
+/** Register is fail-closed in production when rate limiting is unavailable. */
+export const AUTH_RATE_LIMIT_UNAVAILABLE_MESSAGE =
+  "Registration is temporarily unavailable. Please try again later.";
+
+export class AuthRateLimitUnavailableError extends Error {
+  readonly status = 503;
+
+  constructor(message = AUTH_RATE_LIMIT_UNAVAILABLE_MESSAGE) {
+    super(message);
+    this.name = "AuthRateLimitUnavailableError";
+  }
+}
+
 export type AuthRateLimitConsume = (
   bucket: string,
   policy: AuthRateLimitPolicy,
@@ -35,6 +48,17 @@ function warnRateLimitDisabled(): void {
     );
     warnedDisabled = true;
   }
+}
+
+/**
+ * Register is the only action that fails closed when rate limiting cannot run
+ * in production. Login/reset/export/delete stay fail-open for availability.
+ */
+export function shouldFailClosedWhenRateLimitUnavailable(
+  action: AuthRateLimitAction,
+  nodeEnv: string | undefined = process.env.NODE_ENV,
+): boolean {
+  return action === "register" && nodeEnv === "production";
 }
 
 function getUpstashLimiter(
@@ -73,10 +97,19 @@ export async function checkAuthRateLimits(input: {
   email?: string;
   enabled?: boolean;
   consume?: AuthRateLimitConsume;
+  /** Override NODE_ENV for tests. Defaults to process.env.NODE_ENV. */
+  nodeEnv?: string;
 }): Promise<void> {
+  const nodeEnv = input.nodeEnv ?? process.env.NODE_ENV;
   const enabled = input.enabled ?? isAuthRateLimitEnabled();
   if (!enabled) {
     warnRateLimitDisabled();
+    if (shouldFailClosedWhenRateLimitUnavailable(input.action, nodeEnv)) {
+      console.error(
+        "[auth-rate-limit] Register blocked: rate limiting is not configured in production",
+      );
+      throw new AuthRateLimitUnavailableError();
+    }
     return;
   }
 
@@ -106,12 +139,19 @@ export async function checkAuthRateLimits(input: {
       }
     }
   } catch (error) {
-    if (error instanceof AuthRateLimitError) {
+    if (
+      error instanceof AuthRateLimitError ||
+      error instanceof AuthRateLimitUnavailableError
+    ) {
       throw error;
     }
 
     console.error("[auth-rate-limit] Upstash check failed", error);
-    if (process.env.NODE_ENV === "development") {
+    if (shouldFailClosedWhenRateLimitUnavailable(input.action, nodeEnv)) {
+      throw new AuthRateLimitUnavailableError();
+    }
+
+    if (nodeEnv === "development") {
       console.warn(
         "[auth-rate-limit] Skipping auth rate limit after Upstash error in development",
       );

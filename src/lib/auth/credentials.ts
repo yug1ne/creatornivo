@@ -1,5 +1,6 @@
 import { createHash, randomUUID } from "node:crypto";
 
+import { isDisposableEmailDomain } from "@/config/disposable-email-domains";
 import type { Plan } from "@/config/plans";
 import type { UserRole } from "@/types/user";
 import {
@@ -66,12 +67,17 @@ export class CredentialsRegistrationError extends Error {
     public readonly code:
       | "missing_credentials"
       | "password_too_short"
-      | "user_exists",
+      | "user_exists"
+      | "email_not_allowed",
   ) {
     super(code);
     this.name = "CredentialsRegistrationError";
   }
 }
+
+/** Generic client-facing copy for blocked disposable / temporary emails. */
+export const REGISTRATION_EMAIL_NOT_ALLOWED_MESSAGE =
+  "Unable to create an account with this email. Please try a different email address.";
 
 export function normalizeEmail(email: string): string {
   return email.trim().toLowerCase();
@@ -285,6 +291,10 @@ export async function registerCredentialsUser<TUser>(
   const email = normalizeEmail(input.email);
   if (!email) {
     throw new CredentialsRegistrationError("missing_credentials");
+  }
+
+  if (isDisposableEmailDomain(email)) {
+    throw new CredentialsRegistrationError("email_not_allowed");
   }
 
   const existingUser = await dependencies.findUserByEmail(email);
