@@ -729,6 +729,55 @@ test("missing OpenAI API key disables generation before reservation", () => {
   assert.match(routeSource, /buildQuotaExceededBody/);
 });
 
+test("email verification is required before usage, reservation, and OpenAI", () => {
+  const routeSource = readFileSync(
+    "src/app/api/ai/generate/route.ts",
+    "utf8",
+  );
+
+  const verificationGate = routeSource.indexOf(
+    "if (!isEmailVerified(user.emailVerified))",
+  );
+  const bodyParse = routeSource.indexOf(
+    "parseGenerationRequestBody(await request.json())",
+  );
+  const configurationCheck = routeSource.indexOf(
+    "if (!isAIProviderConfigured())",
+  );
+  const usageCheck = routeSource.indexOf(
+    "await getUserUsageSnapshot(userId, user.plan)",
+  );
+  const reservation = routeSource.indexOf("await reserveGeneration");
+  const openAiStream = routeSource.indexOf("await createContentStream");
+  const openAiText = routeSource.indexOf("await createContentText");
+  const usageIncrement = routeSource.indexOf(
+    "await incrementUsage(userId, getUsagePeriodForPlan",
+  );
+
+  assert.ok(verificationGate >= 0, "email verification gate missing");
+  assert.ok(bodyParse > verificationGate, "gate must run before body parse");
+  assert.ok(
+    configurationCheck > verificationGate,
+    "gate must run before provider check",
+  );
+  assert.ok(usageCheck > verificationGate, "gate must run before usage check");
+  assert.ok(
+    reservation > verificationGate,
+    "gate must run before reservation",
+  );
+  assert.ok(
+    openAiStream > verificationGate || openAiText > verificationGate,
+    "gate must run before OpenAI calls",
+  );
+  assert.ok(
+    usageIncrement > verificationGate,
+    "gate must run before usage increment",
+  );
+  assert.match(routeSource, /EMAIL_VERIFICATION_REQUIRED_CODE/);
+  assert.match(routeSource, /EMAIL_VERIFICATION_REQUIRED_MESSAGE/);
+  assert.match(routeSource, /isEmailVerified\(user\.emailVerified\)/);
+});
+
 test("successful generation usage is reconciled from the server", async () => {
   const usage = await fetchGenerationUsageSnapshot(async () =>
     Response.json({

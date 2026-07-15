@@ -14,11 +14,17 @@ export const dynamic = "force-dynamic";
 export default async function GeneratePage() {
   const session = await requireSession();
 
-  const [templates, usageSnapshot, savedCount] = await Promise.all([
+  const [templates, usageSnapshot, savedCount, user] = await Promise.all([
     getTemplatesForUser(session),
     getUserUsageSnapshot(session.id, session.plan),
     prisma.savedPrompt.count({ where: { userId: session.id } }),
+    prisma.user.findUnique({
+      where: { id: session.id },
+      select: { emailVerified: true },
+    }),
   ]);
+
+  const emailVerified = Boolean(user?.emailVerified);
 
   return (
     <>
@@ -32,6 +38,7 @@ export default async function GeneratePage() {
           templates={templates}
           userPlan={session.plan}
           canExport={canExportContent(session)}
+          emailVerified={emailVerified}
           usage={{
             ...usageSnapshot,
             savedCount,

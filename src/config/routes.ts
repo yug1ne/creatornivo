@@ -6,6 +6,7 @@ export const publicRoutes = [
   "/register",
   "/forgot-password",
   "/reset-password",
+  "/verify-email",
 ] as const;
 
 /** Маршруты, требующие авторизации */

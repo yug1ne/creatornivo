@@ -5,7 +5,8 @@ export type AuthRateLimitAction =
   | "reset_password"
   | "change_password"
   | "export_data"
-  | "delete_account";
+  | "delete_account"
+  | "resend_verification";
 
 export interface AuthRateLimitPolicy {
   /** Sliding window duration in seconds. */
@@ -40,6 +41,10 @@ export const authRateLimitPolicies = {
   },
   delete_account: {
     ip: { windowSeconds: 60 * 60, maxAttempts: 5 },
+    account: { windowSeconds: 60 * 60, maxAttempts: 3 },
+  },
+  resend_verification: {
+    ip: { windowSeconds: 60 * 60, maxAttempts: 10 },
     account: { windowSeconds: 60 * 60, maxAttempts: 3 },
   },
 } as const satisfies Record<

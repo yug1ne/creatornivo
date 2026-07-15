@@ -211,6 +211,10 @@ test("checkAuthRateLimits enforces delete_account ip and account buckets", async
 test("auth rate limit policies keep privacy action limits documented", () => {
   assert.equal(authRateLimitPolicies.export_data.account?.maxAttempts, 3);
   assert.equal(authRateLimitPolicies.delete_account.account?.maxAttempts, 3);
+  assert.equal(
+    authRateLimitPolicies.resend_verification.account?.maxAttempts,
+    3,
+  );
 });
 
 test("register IP limit is tightened to 5 per hour for launch", () => {

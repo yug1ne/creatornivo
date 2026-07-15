@@ -2,6 +2,10 @@ import { PLANS, type Plan } from "@/config/plans";
 
 import type { UserUsageSnapshot } from "@/lib/usage";
 import {
+  EMAIL_VERIFICATION_REQUIRED_CODE,
+  EMAIL_VERIFICATION_REQUIRED_MESSAGE,
+} from "@/lib/auth/email-verification";
+import {
   GENERATION_DISABLED_MESSAGE,
   getQuotaExceededCopy,
 } from "@/lib/usage/quota-copy";
@@ -57,6 +61,17 @@ export function parseGenerationApiError(
     return {
       message: GENERATION_DISABLED_MESSAGE,
       code: "generation_disabled",
+      showUpgradeLink: false,
+    };
+  }
+
+  if (data.code === EMAIL_VERIFICATION_REQUIRED_CODE) {
+    return {
+      message:
+        typeof data.error === "string"
+          ? data.error
+          : EMAIL_VERIFICATION_REQUIRED_MESSAGE,
+      code: EMAIL_VERIFICATION_REQUIRED_CODE,
       showUpgradeLink: false,
     };
   }

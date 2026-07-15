@@ -6,6 +6,11 @@ import {
   createContentStream,
   isAIProviderConfigured,
 } from "@/lib/ai/provider";
+import {
+  EMAIL_VERIFICATION_REQUIRED_CODE,
+  EMAIL_VERIFICATION_REQUIRED_MESSAGE,
+  isEmailVerified,
+} from "@/lib/auth/email-verification";
 import { requireSession } from "@/lib/auth/session";
 import { prisma } from "@/lib/db";
 import {
@@ -114,7 +119,7 @@ export async function POST(request: Request) {
   try {
     const user = await prisma.user.findUnique({
       where: { id: session.id },
-      select: { plan: true },
+      select: { plan: true, emailVerified: true },
     });
 
     if (!user) {
@@ -122,6 +127,17 @@ export async function POST(request: Request) {
     }
 
     userPlan = user.plan;
+
+    // Gate before body work, quota, reservation, and OpenAI — no quota cost.
+    if (!isEmailVerified(user.emailVerified)) {
+      return NextResponse.json(
+        {
+          error: EMAIL_VERIFICATION_REQUIRED_MESSAGE,
+          code: EMAIL_VERIFICATION_REQUIRED_CODE,
+        },
+        { status: 403 },
+      );
+    }
 
     const body = parseGenerationRequestBody(await request.json());
     const { templateId, requestId: suppliedRequestId } = body;

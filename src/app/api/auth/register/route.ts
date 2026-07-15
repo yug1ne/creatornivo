@@ -7,6 +7,7 @@ import {
   REGISTRATION_EMAIL_NOT_ALLOWED_MESSAGE,
   registerCredentialsUser,
 } from "@/lib/auth/credentials";
+import { issueAndSendEmailVerification } from "@/lib/auth/issue-email-verification";
 import {
   AuthRateLimitError,
   AuthRateLimitUnavailableError,
@@ -18,6 +19,8 @@ import { prisma } from "@/lib/db";
 
 type RegisterRouteDependencies = {
   enforceRateLimit?: typeof enforceAuthRateLimit;
+  issueVerification?: typeof issueAndSendEmailVerification;
+  sendWelcome?: typeof sendWelcomeEmail;
 };
 
 export async function postAuthRegister(
@@ -25,6 +28,9 @@ export async function postAuthRegister(
   dependencies: RegisterRouteDependencies = {},
 ) {
   const enforceRateLimit = dependencies.enforceRateLimit ?? enforceAuthRateLimit;
+  const issueVerification =
+    dependencies.issueVerification ?? issueAndSendEmailVerification;
+  const sendWelcome = dependencies.sendWelcome ?? sendWelcomeEmail;
 
   try {
     const body = await request.json();
@@ -67,7 +73,14 @@ export async function postAuthRegister(
       },
     );
 
-    void sendWelcomeEmail({
+    void issueVerification({
+      email: user.email,
+      name: user.name,
+    }).catch((error) => {
+      console.error("[email] Verification email task failed:", error);
+    });
+
+    void sendWelcome({
       userId: user.id,
       email: user.email,
       name: user.name,

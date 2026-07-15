@@ -44,6 +44,7 @@ import {
 } from "@/lib/usage/quota-exceeded";
 import type { TemplateListItem, TemplateVariable } from "@/types/template";
 
+import { EmailVerificationBanner } from "./email-verification-banner";
 import { GenerationResult } from "./generation-result";
 import { PromptPreview } from "./prompt-preview";
 import { TemplateHelpButton } from "./template-help-button";
@@ -61,6 +62,8 @@ interface GenerateWorkspaceProps {
   templates: TemplateListItem[];
   userPlan: Plan;
   canExport: boolean;
+  /** Server-loaded flag — unverified users may browse but cannot generate. */
+  emailVerified?: boolean;
   usage: UsageStats;
 }
 
@@ -122,12 +125,14 @@ export function GenerateWorkspace({
   templates,
   userPlan,
   canExport,
+  emailVerified = true,
   usage: initialUsage,
 }: GenerateWorkspaceProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const initialSlug = searchParams.get("template");
   const limits = getPlanLimits(userPlan);
+  const canGenerateByEmail = emailVerified;
 
   const accessibleTemplates = templates.filter((t) => !t.isLocked);
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -175,7 +180,8 @@ export function GenerateWorkspace({
     ? getGeneratedOutputValidationMessage(outputValidation)
     : null;
 
-  const canGenerate = generationUsage.remaining > 0;
+  const canGenerate =
+    canGenerateByEmail && generationUsage.remaining > 0;
 
   const canSave =
     limits.maxSavedPrompts === Infinity ||
@@ -268,7 +274,13 @@ export function GenerateWorkspace({
   }, [closeResetDialog, resetCurrentForm]);
 
   async function handleGenerate() {
-    if (!selected || !isFormValid || !canGenerate || inFlightRef.current) {
+    if (
+      !selected ||
+      !isFormValid ||
+      !canGenerate ||
+      !canGenerateByEmail ||
+      inFlightRef.current
+    ) {
       return;
     }
 
@@ -423,6 +435,8 @@ export function GenerateWorkspace({
 
   return (
     <div className="space-y-6">
+      <EmailVerificationBanner initialVerified={emailVerified} />
+
       <UsageBanner
         plan={userPlan}
         remaining={generationUsage.remaining}
@@ -529,13 +543,15 @@ export function GenerateWorkspace({
                   onClick={handleGenerate}
                   disabled={isStreaming || !isFormValid || !canGenerate}
                   title={
-                    !canGenerate
-                      ? getGenerationLimitMessage(
-                          userPlan,
-                          generationUsage.used,
-                          generationUsage.resetAt,
-                        ) ?? undefined
-                      : generateDisabledHint ?? undefined
+                    !canGenerateByEmail
+                      ? "Confirm your email to generate content."
+                      : !canGenerate
+                        ? getGenerationLimitMessage(
+                            userPlan,
+                            generationUsage.used,
+                            generationUsage.resetAt,
+                          ) ?? undefined
+                        : generateDisabledHint ?? undefined
                   }
                 >
                   {isStreaming ? (
@@ -548,13 +564,19 @@ export function GenerateWorkspace({
                   )}
                 </Button>
 
-                {!canGenerate && (
-                  <Link
-                    href="/pricing"
-                    className="text-sm font-medium text-primary hover:underline"
-                  >
-                    Upgrade to Pro
-                  </Link>
+                {!canGenerateByEmail ? (
+                  <span className="text-sm text-muted-foreground">
+                    Confirm your email to generate content.
+                  </span>
+                ) : (
+                  !canGenerate && (
+                    <Link
+                      href="/pricing"
+                      className="text-sm font-medium text-primary hover:underline"
+                    >
+                      Upgrade to Pro
+                    </Link>
+                  )
                 )}
               </div>
 
@@ -575,7 +597,9 @@ export function GenerateWorkspace({
                 >
                   <div className="flex flex-wrap items-start justify-between gap-3">
                     <p className="min-w-0 flex-1">{error.message}</p>
-                    {error.code !== "quota_exceeded" && error.code !== "quota" && (
+                    {error.code !== "quota_exceeded" &&
+                      error.code !== "quota" &&
+                      error.code !== "email_verification_required" && (
                       <Button
                         type="button"
                         variant="outline"
