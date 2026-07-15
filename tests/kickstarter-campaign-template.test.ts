@@ -377,6 +377,27 @@ test("Kickstarter Campaign validation and prompt rendering use server form metad
   assert.match(rendered, /USD/);
 });
 
+test("Kickstarter Campaign hard-excludes restrictions and bans streamline/transform hype", () => {
+  assert.match(prompt, /USER AVOID \/ CLAIM RESTRICTIONS — HARD EXCLUSIONS/);
+  assert.match(
+    prompt,
+    /Treat \{\{restrictions\}\} and \{\{additionalRequirements\}\} as HARD EXCLUSIONS/,
+  );
+  assert.match(
+    prompt,
+    /Do not soften this as “respect,” “consider,” “try to avoid,” or “where possible\.”/,
+  );
+  assert.match(
+    prompt,
+    /Matching is case-insensitive: if “streamline” or “transform” is prohibited/,
+  );
+  assert.match(
+    prompt,
+    /do not introduce default campaign hype such as unlock, elevate, revolutionary, game-changing, seamless, effortlessly, streamline, transform, boost, increase, guaranteed/,
+  );
+  assert.doesNotMatch(prompt, /Respect \{\{restrictions\}\}/);
+});
+
 test("Kickstarter Campaign catalog and Help integration use the full form", () => {
   const catalog = readJson<CatalogTemplate[]>("prisma", "templates-catalog.json");
   const item = catalog.find((template) => template.slug === "kickstarter-campaign");
@@ -387,6 +408,7 @@ test("Kickstarter Campaign catalog and Help integration use the full form", () =
   assert.match(item.description, /credible Kickstarter campaign page/);
   assert.equal(item.variables.length, 43);
   assert.deepEqual(sorted(item.variables.map((variable) => variable.key)), sorted(expectedKeys));
+  assert.equal(item.prompt.trim(), prompt.trim());
 
   const helpButton = readProjectFile(
     "src",

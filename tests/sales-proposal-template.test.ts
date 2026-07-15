@@ -384,6 +384,26 @@ test("Sales Proposal validation and prompt rendering use form metadata", () => {
   assert.match(rendered, /Proposal valid until: 2026-10-01/);
 });
 
+test("Sales Proposal hard-excludes commercial restrictions and bans streamline/transform hype", () => {
+  assert.match(prompt, /USER AVOID \/ CLAIM RESTRICTIONS — HARD EXCLUSIONS/);
+  assert.match(
+    prompt,
+    /Treat \{\{additionalRequirements\}\} and \{\{commercialNotes\}\} as HARD EXCLUSIONS/,
+  );
+  assert.match(
+    prompt,
+    /Do not soften this as “respect,” “consider,” “try to avoid,” or “where possible\.”/,
+  );
+  assert.match(
+    prompt,
+    /Matching is case-insensitive: if “streamline” or “transform” is prohibited/,
+  );
+  assert.match(
+    prompt,
+    /do not introduce default proposal hype such as unlock, elevate, revolutionary, game-changing, seamless, effortlessly, streamline, transform, boost, increase, guaranteed/,
+  );
+});
+
 test("Sales Proposal catalog and Help integration use the full form", () => {
   const catalog = readJson<CatalogTemplate[]>("prisma", "templates-catalog.json");
   const item = catalog.find((template) => template.slug === "sales-proposal");

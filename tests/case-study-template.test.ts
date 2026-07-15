@@ -113,6 +113,49 @@ test("Case Study deterministic QA catches exact restricted phrases and empty sen
   );
 });
 
+test("Case Study hard-excludes restrictions and bans streamline/transform hype", () => {
+  assert.match(prompt, /USER AVOID \/ CLAIM RESTRICTIONS — HARD EXCLUSIONS/);
+  assert.match(
+    prompt,
+    /Treat \{\{restrictionsAndDisclosures\}\} as HARD EXCLUSIONS/,
+  );
+  assert.match(
+    prompt,
+    /Do not soften this as “respect,” “consider,” “try to avoid,” or “where possible\.”/,
+  );
+  assert.match(
+    prompt,
+    /Matching is case-insensitive: if “streamline” or “transform” is prohibited/,
+  );
+  assert.match(
+    prompt,
+    /do not introduce default marketing hype such as unlock, elevate, revolutionary, game-changing, seamless, effortlessly, streamline, transform, boost, increase, or guaranteed/,
+  );
+  assert.match(
+    prompt,
+    /\{\{restrictionsAndDisclosures\}\} was treated as HARD EXCLUSIONS/,
+  );
+
+  const result = assertGeneratedOutputQuality(
+    "The program helped transform delivery and streamline operations.",
+    {
+      variables,
+      values: {
+        restrictionsAndDisclosures:
+          "Do not use the phrases: streamline, transform.",
+      },
+    },
+  );
+  assert.equal(result.ok, false);
+  assert.ok(
+    result.hardFailures.some(
+      (issue) =>
+        issue.code === "user_prohibited_phrase" &&
+        /streamline|transform/i.test(issue.match ?? ""),
+    ),
+  );
+});
+
 test("Case Study runtime catalog stays synced with the source prompt", () => {
   const catalog = readJson<CatalogTemplate[]>("prisma", "templates-catalog.json");
   const item = catalog.find((template) => template.slug === "case-study");

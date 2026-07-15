@@ -362,6 +362,27 @@ test("Review Response validation and prompt rendering use form metadata", () => 
   assert.match(rendered, /Internal note: On/);
 });
 
+test("Review Response hard-excludes words to avoid and bans streamline/transform hype", () => {
+  assert.match(prompt, /USER AVOID \/ CLAIM RESTRICTIONS — HARD EXCLUSIONS/);
+  assert.match(
+    prompt,
+    /Treat \{\{wordsToAvoid\}\} and \{\{boundariesRestrictions\}\} as HARD EXCLUSIONS/,
+  );
+  assert.match(
+    prompt,
+    /Do not soften this as “respect,” “consider,” “try to avoid,” or “where possible\.”/,
+  );
+  assert.match(
+    prompt,
+    /Matching is case-insensitive: if “streamline” or “transform” is prohibited/,
+  );
+  assert.match(
+    prompt,
+    /do not introduce default marketing hype such as unlock, elevate, revolutionary, game-changing, seamless, effortlessly, streamline, transform, boost, increase, or guaranteed/,
+  );
+  assert.doesNotMatch(prompt, /Avoid every item in \{\{wordsToAvoid\}\}/);
+});
+
 test("Review Response catalog and Help integration use the full form", () => {
   const catalog = readJson<CatalogTemplate[]>("prisma", "templates-catalog.json");
   const item = catalog.find((template) => template.slug === "review-response");

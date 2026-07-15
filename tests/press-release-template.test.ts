@@ -398,6 +398,27 @@ test("Press Release validation and prompt rendering use form metadata", () => {
   assert.match(rendered, /Embargo date: 2026-09-10/);
 });
 
+test("Press Release hard-excludes sensitive claims and bans streamline/transform hype", () => {
+  assert.match(prompt, /USER AVOID \/ CLAIM RESTRICTIONS — HARD EXCLUSIONS/);
+  assert.match(
+    prompt,
+    /Treat \{\{sensitiveClaims\}\} and \{\{additionalRequirements\}\} as HARD EXCLUSIONS/,
+  );
+  assert.match(
+    prompt,
+    /Do not soften this as “respect,” “consider,” “try to avoid,” or “where possible\.”/,
+  );
+  assert.match(
+    prompt,
+    /Matching is case-insensitive: if “streamline” or “transform” is prohibited/,
+  );
+  assert.match(
+    prompt,
+    /do not introduce default PR hype such as unlock, elevate, revolutionary, game-changing, seamless, effortlessly, streamline, transform, boost, increase, guaranteed/,
+  );
+  assert.doesNotMatch(prompt, /Respect all wording restrictions in \{\{sensitiveClaims\}\}/);
+});
+
 test("Press Release catalog and Help integration use the full form", () => {
   const catalog = readJson<CatalogTemplate[]>("prisma", "templates-catalog.json");
   const item = catalog.find((template) => template.slug === "press-release");

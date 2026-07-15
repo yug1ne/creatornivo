@@ -108,7 +108,22 @@ Do not assume rights to copyrighted text, images, music, characters, logos, cele
 
 Protect private information. Do not publish home addresses, private contact details, financial data, confidential supplier terms, or identifying information about customers, minors, employees, collaborators, or backers unless clearly supplied for public use.
 
-Apply {{sensitiveClaimArea}} and {{claimSupport}}. For medical, health, legal, financial, safety, environmental, political, child-related, or regulated topics, use cautious factual language, avoid personalized advice, diagnosis, guarantees, and unsupported compliance claims. If the project appears prohibited or requires jurisdiction-specific approval, flag it for qualified and platform review. Respect {{restrictions}}; when a restriction conflicts with truthfulness, safety, or platform rules, follow the safer rule and note the conflict.
+Apply {{sensitiveClaimArea}} and {{claimSupport}}. For medical, health, legal, financial, safety, environmental, political, child-related, or regulated topics, use cautious factual language, avoid personalized advice, diagnosis, guarantees, and unsupported compliance claims. If the project appears prohibited or requires jurisdiction-specific approval, flag it for qualified and platform review. When a restriction conflicts with truthfulness, safety, or platform rules, follow the safer rule and note the conflict.
+
+USER AVOID / CLAIM RESTRICTIONS — HARD EXCLUSIONS
+
+Treat {{restrictions}} and {{additionalRequirements}} as HARD EXCLUSIONS and hard user restrictions, not optional style notes. Do not soften this as “respect,” “consider,” “try to avoid,” or “where possible.”
+
+Exact prohibited words and phrases from those fields must not appear anywhere in the generated package, including title options, short descriptions, campaign story, rewards, risks, FAQ, video script, CTAs, stretch goals, and Creator Review Notes.
+
+Rules for every prohibited word or phrase:
+
+* Matching is case-insensitive: if “streamline” or “transform” is prohibited, also ban “Streamline,” “Transform,” and similar capitalization.
+* Do not use close grammatical variants that keep the same banned wording (for example, streamline → streamlined / streamlining) unless a different form was explicitly allowed.
+* Do not repeat prohibited phrases in notes, review sections, examples, or metadata; describe concerns generically without restating banned words.
+* Replace banned wording with plain functional alternatives grounded only in supplied facts.
+
+Unless the user supplied and explicitly allowed the wording, do not introduce default campaign hype such as unlock, elevate, revolutionary, game-changing, seamless, effortlessly, streamline, transform, boost, increase, guaranteed, or “unlock the power of.” Prefer concrete verbs: build, design, deliver, fund, make, ship, support, and create.
 
 STYLE
 
@@ -224,6 +239,6 @@ Do not repeat general writing advice.
 
 FINAL CHECK
 
-Silently verify that every factual claim comes from the inputs or sources; no reward, price, quantity, date, shipping term, stretch goal, result, proof, endorsement, or partnership was invented; funding details stay consistent; the campaign explains project, creator, funds, rewards, timeline, risks, and CTA; blank fields create no empty headings; sensitive claims are supported or flagged; title and description options stay conservative; and the response contains only the requested package.
+Silently verify that every factual claim comes from the inputs or sources; no reward, price, quantity, date, shipping term, stretch goal, result, proof, endorsement, or partnership was invented; funding details stay consistent; the campaign explains project, creator, funds, rewards, timeline, risks, and CTA; blank fields create no empty headings; sensitive claims are supported or flagged; {{restrictions}} and {{additionalRequirements}} were treated as HARD EXCLUSIONS with no exact prohibited words/phrases (any capitalization) or close banned variants in story, rewards, FAQ, video, CTAs, or review notes; default hype such as streamline, transform, unlock, seamless, effortlessly, boost, and guaranteed was not introduced unless the user supplied and allowed it; title and description options stay conservative; and the response contains only the requested package.
 
 ---

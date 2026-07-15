@@ -4,6 +4,7 @@ import path from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 
+import { assertGeneratedOutputQuality } from "../src/lib/templates/generation-qa";
 import {
   buildDefaultValues,
   fillPromptTemplate,
@@ -389,23 +390,32 @@ test("App Store Listing hard-excludes claim restrictions and invent bans for ran
   assert.match(prompt, /USER AVOID \/ CLAIM RESTRICTIONS — HARD EXCLUSIONS/);
   assert.match(
     prompt,
-    /Treat \{\{claimsRestrictions\}\} and \{\{keywordsToAvoid\}\} as hard user restrictions, not optional style notes/,
+    /Treat \{\{keywordsToAvoid\}\}, \{\{claimsRestrictions\}\}, and \{\{additionalRequirements\}\} as HARD EXCLUSIONS/,
   );
   assert.match(
     prompt,
-    /Do not soften this as “respect,” “consider,” or “try to avoid\.”/,
+    /Do not soften this as “respect,” “consider,” “try to avoid,” or “where possible\.”/,
   );
   assert.match(
     prompt,
-    /do not use those exact words or phrases anywhere in the package/,
+    /Exact prohibited words and phrases from those fields must not appear anywhere in the generated package/,
   );
+  assert.match(prompt, /Apple App Store output/);
+  assert.match(prompt, /Google Play output/);
+  assert.match(prompt, /screenshot messages/);
+  assert.match(prompt, /keyword and search-theme lists/);
+  assert.match(prompt, /verification, review, compliance, and developer-facing notes/);
   assert.match(
     prompt,
-    /do not use close variants that keep the same banned wording/,
+    /Matching is case-insensitive: if “streamline” or “transform” is prohibited/,
   );
   assert.match(
     prompt,
     /if “streamline” is prohibited, do not write “streamlined” or “streamlining”/,
+  );
+  assert.match(
+    prompt,
+    /Do not repeat prohibited phrases in notes, review sections, examples, metadata, screenshot copy/,
   );
   assert.match(
     prompt,
@@ -419,11 +429,98 @@ test("App Store Listing hard-excludes claim restrictions and invent bans for ran
     prompt,
     /Do not fabricate or imply ratings, reviews, testimonials, awards, rankings, downloads/,
   );
+  assert.match(prompt, /no invented downloads, rankings, ratings, awards, Apple endorsement/);
   assert.match(prompt, /None \/ N\/A \/ Not provided-only headings/);
   assert.doesNotMatch(
     prompt,
     /Respect claimsRestrictions and keywordsToAvoid/,
   );
+});
+
+test("App Store Listing bans streamline/transform hype and requires functional alternatives", () => {
+  assert.match(
+    prompt,
+    /do not use default app-store hype such as unlock, elevate, revolutionary, game-changing, seamless, seamlessly, effortlessly, streamline, streamlined, streamlining, transform, transformed, transforming, boost, increase, guaranteed/,
+  );
+  assert.match(
+    prompt,
+    /Prefer plain functional verbs: create, organize, draft, save, export, choose, edit, manage, support, plan, review, and keep in one place/,
+  );
+  assert.match(prompt, /Bad: “Transform how you plan and create content\.”/);
+  assert.match(prompt, /Good: “Plan and draft content with reusable structures\.”/);
+  assert.match(prompt, /Bad: “Streamline your drafting process\.”/);
+  assert.match(prompt, /Good: “Organize drafting steps and keep notes in one place\.”/);
+
+  // Contract: hard exclusions apply across Apple/Google descriptions, screenshots, notes.
+  assert.match(
+    prompt,
+    /no exact prohibited words\/phrases \(any capitalization\) and no close banned variants appear in Apple output, Google Play output, promotional text, descriptions, keywords\/search themes, screenshot messages, release notes, verification\/review notes/,
+  );
+
+  // Static anti-contract: these banned stems must be instructed as exclusions, not as recommended copy.
+  assert.match(prompt, /\bstreamline\b/i);
+  assert.match(prompt, /\btransform\b/i);
+  assert.doesNotMatch(
+    prompt,
+    /recommend[^\n]{0,40}\bstreamline\b/i,
+  );
+  assert.doesNotMatch(
+    prompt,
+    /use phrases such as “streamline”/i,
+  );
+});
+
+test("App Store Listing restriction fields hard-fail extracted streamline/transform in sample package text", () => {
+  const variables = parseTemplateVariables(schema.variables);
+  const values = {
+    keywordsToAvoid: "streamline, transform",
+    claimsRestrictions:
+      "Do not use the phrases: streamline, transform, effortlessly.",
+    additionalRequirements: "Keep copy plain and functional.",
+  };
+
+  const forbidden = ["streamline", "transform", "effortlessly"];
+  for (const phrase of forbidden) {
+    for (const sample of [
+      `Short description: Transform how you plan and create content.`,
+      `Full description: Streamline your drafting process with reusable templates.`,
+      `Screenshot 1: Transform Ideas into Structured Content`,
+      `Review note: Removed claim that used streamline language.`,
+      `Apple description: Streamline weekly planning.`,
+      `Google Play description: Transform your content workflow.`,
+    ]) {
+      if (!new RegExp(`\\b${phrase}\\b`, "i").test(sample)) continue;
+      const result = assertGeneratedOutputQuality(sample, {
+        variables,
+        values,
+      });
+      assert.equal(
+        result.ok,
+        false,
+        `expected hard fail for "${phrase}" in: ${sample}`,
+      );
+      assert.ok(
+        result.hardFailures.some(
+          (issue) =>
+            issue.code === "user_prohibited_phrase" &&
+            issue.match.toLowerCase() === phrase,
+        ),
+        `missing user_prohibited_phrase for ${phrase} in: ${sample}`,
+      );
+    }
+  }
+
+  const clean = assertGeneratedOutputQuality(
+    [
+      "Short description: Plan and draft content with reusable structures.",
+      "Full description: Organize drafting steps and keep notes in one place.",
+      "Screenshot 1: Turn Ideas into Structured Content",
+      "Review note: Softened unsupported superiority language.",
+    ].join("\n"),
+    { variables, values },
+  );
+  assert.equal(clean.ok, true);
+  assert.doesNotMatch(clean.warnings.map((w) => w.match).join(" "), /streamline|transform/i);
 });
 
 test("App Store Listing catalog stays synced and Help integration uses the full form", () => {

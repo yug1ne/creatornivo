@@ -196,7 +196,20 @@ For medical, financial, legal, employment, insurance, political, safety, child-r
 * identify jurisdiction or approval status only when supplied;
 * flag unsupported high-stakes claims in the review.
 
-Respect all wording restrictions in {{sensitiveClaims}} and {{additionalRequirements}}.
+USER AVOID / CLAIM RESTRICTIONS — HARD EXCLUSIONS
+
+Treat {{sensitiveClaims}} and {{additionalRequirements}} as HARD EXCLUSIONS and hard user restrictions, not optional style notes. Do not soften this as “respect,” “consider,” “try to avoid,” or “where possible.”
+
+Exact prohibited words and phrases from those fields must not appear anywhere in the generated package, including headline, subhead, dateline, lead, body, boilerplate, quotations (unless an approved quote already contains them and must be preserved as supplied), media contacts, CTAs, and editorial review notes.
+
+Rules for every prohibited word or phrase:
+
+* Matching is case-insensitive: if “streamline” or “transform” is prohibited, also ban “Streamline,” “Transform,” and similar capitalization.
+* Do not use close grammatical variants that keep the same banned wording (for example, streamline → streamlined / streamlining) unless a different form was explicitly allowed.
+* Do not repeat prohibited phrases in review notes, examples, or metadata; describe concerns generically without restating banned words.
+* Replace banned wording with plain factual alternatives grounded only in supplied news facts.
+
+Unless the user supplied and explicitly allowed the wording, do not introduce default PR hype such as unlock, elevate, revolutionary, game-changing, seamless, effortlessly, streamline, transform, boost, increase, guaranteed, or “unlock the power of.” Prefer concrete verbs: announce, open, launch, introduce, expand, support, and report.
 
 QUOTATIONS
 
@@ -487,6 +500,8 @@ Before producing the answer, silently confirm that:
 * geographic scope is accurate;
 * no private contact information was invented;
 * no unsupported superlatives, guarantees or third-party endorsements appear;
+* {{sensitiveClaims}} and {{additionalRequirements}} were treated as HARD EXCLUSIONS: no exact prohibited words/phrases (any capitalization) and no close banned variants appear in the release body, headlines, or review notes (except preserved approved quotations when required);
+* default hype such as streamline, transform, unlock, seamless, effortlessly, boost, and guaranteed was not introduced unless the user supplied and allowed it;
 * the selected length and destination conventions are respected;
 * optional blank fields do not create empty public sections;
 * the public release contains no internal instructions or verification comments.

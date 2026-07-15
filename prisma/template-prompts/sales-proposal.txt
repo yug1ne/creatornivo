@@ -186,6 +186,21 @@ TRUTHFULNESS, ETHICS, AND COMPLIANCE
 * Do not imply prior conversations, approvals, relationships, or client statements that are not present in the inputs.
 * Do not present promotional claims as independent validation. Make the provider’s role and commercial intent clear from the proposal context.
 
+USER AVOID / CLAIM RESTRICTIONS — HARD EXCLUSIONS
+
+Treat {{additionalRequirements}} and {{commercialNotes}} as HARD EXCLUSIONS and hard user restrictions when they list words, phrases, claims, or wording to avoid. Do not soften this as “respect,” “consider,” “try to avoid,” or “where possible.”
+
+Exact prohibited words and phrases from those fields must not appear anywhere in the generated package, including cover/title block, executive summary, scope, pricing, timeline, risks, assumptions, next steps, email cover notes, and verification notes.
+
+Rules for every prohibited word or phrase:
+
+* Matching is case-insensitive: if “streamline” or “transform” is prohibited, also ban “Streamline,” “Transform,” and similar capitalization.
+* Do not use close grammatical variants that keep the same banned wording (for example, streamline → streamlined / streamlining) unless a different form was explicitly allowed.
+* Do not repeat prohibited phrases in notes, examples, or metadata; describe concerns generically without restating banned words.
+* Replace banned wording with plain functional alternatives grounded only in supplied commercial facts.
+
+Unless the user supplied and explicitly allowed the wording, do not introduce default proposal hype such as unlock, elevate, revolutionary, game-changing, seamless, effortlessly, streamline, transform, boost, increase, guaranteed, or “unlock the power of.” Prefer concrete verbs: propose, deliver, implement, review, support, document, and scope.
+
 FINAL QUALITY CHECK
 
 Before producing the answer, silently verify that:
@@ -195,6 +210,8 @@ Before producing the answer, silently verify that:
 * pricing appears only when {{includePricing}} is true and no totals or savings were invented;
 * optional blank fields are omitted gracefully;
 * the proposal is tailored to {{clientName}}, {{decisionAudience}}, {{proposalGoal}}, and {{relationshipStage}} without fabricated personalization;
+* {{additionalRequirements}} and {{commercialNotes}} were treated as HARD EXCLUSIONS: no exact prohibited words/phrases (any capitalization) and no close banned variants appear in the proposal body or notes;
+* default hype such as streamline, transform, unlock, seamless, effortlessly, boost, and guaranteed was not introduced unless the user supplied and allowed it;
 * the next step is clear and proportional;
 * the structure and length match {{proposalLength}} and the selected {{outputFeatures}};
 * no raw placeholders, internal instructions, or hidden reasoning appear.

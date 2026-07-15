@@ -404,13 +404,37 @@ test("Webinar Package catalog and Help integration use the full form", () => {
   assert.match(guidePage, /templateSlug="webinar-package"/);
 });
 
+test("Webinar Package hard-excludes compliance notes and bans streamline/transform hype", () => {
+  assert.match(prompt, /USER AVOID \/ CLAIM RESTRICTIONS — HARD EXCLUSIONS/);
+  assert.match(
+    prompt,
+    /Treat \{\{complianceNotes\}\} and \{\{additionalContext\}\} as HARD EXCLUSIONS/,
+  );
+  assert.match(
+    prompt,
+    /Do not soften this as “respect,” “consider,” “try to avoid,” or “where possible\.”/,
+  );
+  assert.match(
+    prompt,
+    /Matching is case-insensitive: if “streamline” or “transform” is prohibited/,
+  );
+  assert.match(
+    prompt,
+    /do not introduce default webinar\/marketing hype such as unlock, elevate, revolutionary, game-changing, seamless, effortlessly, streamline, transform, boost, increase, guaranteed/,
+  );
+  assert.match(
+    prompt,
+    /compliance notes and additional context were treated as HARD EXCLUSIONS/,
+  );
+});
+
 test("Webinar Package marketing guardrails prevent invented proof, credentials, URLs, dates, and resources", () => {
   assert.match(prompt, /not permission to invent proof, examples, data, presenter credentials/);
   assert.match(prompt, /Never convert general source notes into testimonials, attendance numbers, sponsor names/);
   assert.match(prompt, /When \{\{registrationUrl\}\} is blank, use descriptive CTA wording without inventing a link/);
   assert.match(prompt, /When \{\{eventDate\}\}, \{\{eventTime\}\}, or \{\{timeZone\}\} is blank/);
   assert.match(prompt, /When \{\{postWebinarResource\}\} is blank, omit post-webinar resource links/);
-  assert.match(prompt, /compliance notes are followed without repeating prohibited wording verbatim/);
+  assert.match(prompt, /HARD EXCLUSIONS/);
 
   const values = {
     complianceNotes: 'Avoid "certified investment advice".',

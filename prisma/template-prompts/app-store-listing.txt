@@ -60,16 +60,26 @@ Use proofCredentials exactly and conservatively. Do not strengthen “designed t
 
 USER AVOID / CLAIM RESTRICTIONS — HARD EXCLUSIONS
 
-Treat {{claimsRestrictions}} and {{keywordsToAvoid}} as hard user restrictions, not optional style notes. Do not soften this as “respect,” “consider,” or “try to avoid.”
+Treat {{keywordsToAvoid}}, {{claimsRestrictions}}, and {{additionalRequirements}} as HARD EXCLUSIONS and hard user restrictions, not optional style notes. Do not soften this as “respect,” “consider,” “try to avoid,” or “where possible.”
 
-When either field lists words, phrases, claims, or terms to avoid:
+Exact prohibited words and phrases from those fields must not appear anywhere in the generated package, including:
 
-* do not use those exact words or phrases anywhere in the package (titles, subtitles, descriptions, promotional text, keywords, screenshot messages, release notes, review report, or other notes);
-* do not use close variants that keep the same banned wording (for example, if “streamline” is prohibited, do not write “streamlined” or “streamlining” unless a different form was explicitly allowed);
-* do not repeat prohibited wording verbatim in explanatory notes; describe any concern generically when a warning is needed;
-* replace banned wording with grounded substitutes that still match only the supplied app facts.
+* Apple App Store output (name, subtitle, promotional text, description, keywords, What’s New);
+* Google Play output (name, short description, full description, search themes, promotional copy, release notes);
+* screenshot messages and on-image headlines/support lines for either store;
+* keyword and search-theme lists;
+* release notes and What’s New;
+* verification, review, compliance, and developer-facing notes;
+* positioning summaries, examples, CTAs, metadata, and any other section.
 
-Required qualification language from {{claimsRestrictions}} must remain close to the relevant claim rather than being hidden at the end.
+Rules for every prohibited word or phrase:
+
+* Matching is case-insensitive: if “streamline” or “transform” is prohibited, also ban “Streamline,” “STREAMLINE,” “Transform,” and “TRANSFORM.”
+* Do not use close grammatical variants that keep the same banned wording (for example, if “streamline” is prohibited, do not write “streamlined” or “streamlining” unless a different form was explicitly allowed).
+* Do not repeat prohibited phrases in notes, review sections, examples, metadata, screenshot copy, or explanatory warnings. If a concern must be mentioned, describe it generically without restating the banned word.
+* Replace banned wording with plain functional alternatives that still match only the supplied app facts.
+
+Required qualification language from {{claimsRestrictions}} must remain close to the relevant claim rather than being hidden at the end. Follow non-conflicting instructions in {{additionalRequirements}}, but never override these hard exclusions, factual accuracy, or store-safety rules.
 
 For sensitiveCategory content, use cautious factual language. Do not provide personalized medical, legal, financial, safety, political, or other professional advice. Do not promise diagnosis, treatment, prevention, earnings, legal outcomes, guaranteed protection, or emergency response. Add a short disclaimer only when genuinely relevant; a disclaimer never makes an unsupported claim acceptable. For children or mixed-age audiences, avoid manipulative purchase pressure and unsafe social claims.
 
@@ -81,7 +91,16 @@ MARKETING AND STYLE
 
 Be persuasive without fake urgency, scarcity, fear, shame, misleading discounts, clickbait, fabricated proof, keyword stuffing, repeated exclamation marks, or guaranteed outcomes. Do not call the app “best,” “#1,” “top-rated,” “award-winning,” “official,” “free,” or “new” unless the exact statement is supplied, supportable, current, and allowed in that field.
 
-Match {{brandVoice}} while staying natural, specific, concise, and easy to scan on mobile. Lead with what the app helps {{targetAudience}} do. Translate features into benefits without changing their meaning. Use concrete verbs, short paragraphs, and useful headings where appropriate. Avoid corporate filler, vague hype, and default AI phrases such as “revolutionary,” “game-changing,” “unlock the power of,” and “look no further.”
+Match {{brandVoice}} while staying natural, specific, concise, and easy to scan on mobile. Lead with what the app helps {{targetAudience}} do. Translate features into benefits without changing their meaning. Use short paragraphs and useful headings where appropriate.
+
+App Store–specific anti-hype guidance: unless the user supplied and explicitly allowed the wording, do not use default app-store hype such as unlock, elevate, revolutionary, game-changing, seamless, seamlessly, effortlessly, streamline, streamlined, streamlining, transform, transformed, transforming, boost, increase, guaranteed, or “unlock the power of.” Prefer plain functional verbs: create, organize, draft, save, export, choose, edit, manage, support, plan, review, and keep in one place.
+
+Examples of preferred rewrites when hype is not allowed:
+
+* Bad: “Transform how you plan and create content.”
+* Good: “Plan and draft content with reusable structures.”
+* Bad: “Streamline your drafting process.”
+* Good: “Organize drafting steps and keep notes in one place.”
 
 LOCALIZATION
 
@@ -191,12 +210,14 @@ Do not claim legal approval or guaranteed store acceptance. Note that current ru
 
 FINAL CHECK
 
-Before answering, verify that:
+Before answering, silently re-scan the entire package and verify that:
 
 * every factual statement is supported by the inputs;
-* content matches {{platformTarget}}, {{outputLanguage}}, {{primaryGoal}}, {{brandVoice}}, {{ageAudience}}, and {{additionalRequirements}};
-* {{claimsRestrictions}} and {{keywordsToAvoid}} were treated as hard exclusions, including exact prohibited phrases and close banned variants, across all customer-facing fields and notes;
-* no invented downloads, rankings, ratings, awards, “#1 app,” or store-approval language appears;
+* content matches {{platformTarget}}, {{outputLanguage}}, {{primaryGoal}}, {{brandVoice}}, {{ageAudience}}, and non-conflicting {{additionalRequirements}};
+* {{keywordsToAvoid}}, {{claimsRestrictions}}, and {{additionalRequirements}} were treated as HARD EXCLUSIONS: no exact prohibited words/phrases (any capitalization) and no close banned variants appear in Apple output, Google Play output, promotional text, descriptions, keywords/search themes, screenshot messages, release notes, verification/review notes, or any other section;
+* default app-store hype such as streamline, transform, unlock, elevate, revolutionary, game-changing, seamless, effortlessly, boost, increase, and guaranteed was not introduced unless the user supplied and allowed it;
+* preferred functional verbs were used instead of banned or hype wording;
+* no invented downloads, rankings, ratings, awards, Apple endorsement, store approval, review counts, or guaranteed outcomes appear;
 * each limited element stays within its own limit with a safety margin;
 * features, benefits, pricing, privacy, devices, and release details agree across sections;
 * duplicates and keyword stuffing are removed;

@@ -322,7 +322,22 @@ When {{registrationUrl}} is blank, use descriptive CTA wording without inventing
 
 When {{eventDate}}, {{eventTime}}, or {{timeZone}} is blank, omit the missing detail rather than inserting a placeholder into public copy. Add a brief implementation note only if the scheduled webinar cannot be published without it.
 
-When {{postWebinarResource}} is blank, omit post-webinar resource links, download names, replay bonuses, worksheets, or resource promises rather than inventing them. Use {{complianceNotes}} as a binding constraint; do not repeat exact prohibited wording from compliance notes in the public package or notes.
+When {{postWebinarResource}} is blank, omit post-webinar resource links, download names, replay bonuses, worksheets, or resource promises rather than inventing them.
+
+USER AVOID / CLAIM RESTRICTIONS — HARD EXCLUSIONS
+
+Treat {{complianceNotes}} and {{additionalContext}} as HARD EXCLUSIONS and hard user restrictions when they list words, phrases, claims, or wording to avoid. Do not soften this as “respect,” “consider,” “try to avoid,” or “where possible.”
+
+Exact prohibited words and phrases from those fields must not appear anywhere in the generated package, including titles, registration copy, agenda, speaker scripts, slides, CTAs, follow-up emails, implementation notes, and verification notes.
+
+Rules for every prohibited word or phrase:
+
+* Matching is case-insensitive: if “streamline” or “transform” is prohibited, also ban “Streamline,” “Transform,” and similar capitalization.
+* Do not use close grammatical variants that keep the same banned wording (for example, streamline → streamlined / streamlining) unless a different form was explicitly allowed.
+* Do not repeat prohibited phrases in notes, examples, metadata, or review sections; describe concerns generically without restating banned words.
+* Replace banned wording with plain functional alternatives grounded only in supplied webinar facts.
+
+Unless the user supplied and explicitly allowed the wording, do not introduce default webinar/marketing hype such as unlock, elevate, revolutionary, game-changing, seamless, effortlessly, streamline, transform, boost, increase, guaranteed, or “unlock the power of.” Prefer concrete verbs: teach, explain, demonstrate, practice, review, plan, draft, and support.
 
 TITLE AND PROMISE
 
@@ -684,7 +699,8 @@ Before producing the final package, silently verify that:
 * source material, evidence, social proof, presenter credentials, post-webinar resources, registration details, date, and time were used only when supplied;
 * live and recorded language is accurate;
 * regulated claims are cautious and appropriately qualified;
-* compliance notes are followed without repeating prohibited wording verbatim;
+* compliance notes and additional context were treated as HARD EXCLUSIONS: no exact prohibited words/phrases (any capitalization) and no close banned variants appear in titles, scripts, registration copy, emails, slides, or notes;
+* default hype such as streamline, transform, unlock, seamless, effortlessly, boost, and guaranteed was not introduced unless the user supplied and allowed it;
 * the educational content provides genuine value;
 * the CTA is clear, truthful, and proportionate;
 * no fake urgency, scarcity, attendance, questions, or social proof appears;

@@ -342,6 +342,27 @@ test("Google Business Profile Post prompt filling does not invent optional field
   assert.doesNotMatch(filled, /\bN\/A\b/i);
 });
 
+test("Google Business Profile Post hard-excludes words to avoid and bans streamline/transform hype", () => {
+  assert.match(prompt, /USER AVOID \/ CLAIM RESTRICTIONS — HARD EXCLUSIONS/);
+  assert.match(
+    prompt,
+    /Treat \{\{wordsToAvoid\}\} and \{\{additionalContext\}\} as HARD EXCLUSIONS/,
+  );
+  assert.match(
+    prompt,
+    /Do not soften this as “respect,” “consider,” “try to avoid,” or “where possible\.”/,
+  );
+  assert.match(
+    prompt,
+    /Matching is case-insensitive: if “streamline” or “transform” is prohibited/,
+  );
+  assert.match(
+    prompt,
+    /do not introduce default local\/promo hype such as unlock, elevate, revolutionary, game-changing, seamless, effortlessly, streamline, transform, boost, increase, guaranteed/,
+  );
+  assert.doesNotMatch(prompt, /Respect \{\{wordsToAvoid\}\}/);
+});
+
 test("Google Business Profile Post catalog, summary, builder, and Help integration are in sync", () => {
   const catalog = readJson<CatalogTemplate[]>("prisma", "templates-catalog.json");
   const matches = catalog.filter(

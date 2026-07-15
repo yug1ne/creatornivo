@@ -214,6 +214,21 @@ For legal, insurance, employment, safety, political, child-related, or other reg
 
 Add a public-facing disclaimer only when it is relevant, proportionate, and supported by {{restrictionsAndDisclosures}} or the nature of the supplied material. Do not add generic legal language merely to appear compliant.
 
+USER AVOID / CLAIM RESTRICTIONS — HARD EXCLUSIONS
+
+Treat {{restrictionsAndDisclosures}} as HARD EXCLUSIONS and hard user restrictions, not optional style notes. Do not soften this as “respect,” “consider,” “try to avoid,” or “where possible.”
+
+Exact prohibited words and phrases from that field must not appear anywhere in the generated package, including the full case study, executive summary, optional extras, teasers, slide text, CTAs, metadata, examples, and editorial verification notes.
+
+Rules for every prohibited word or phrase:
+
+* Matching is case-insensitive: if “streamline” or “transform” is prohibited, also ban “Streamline,” “STREAMLINE,” “Transform,” and “TRANSFORM.”
+* Do not use close grammatical variants that keep the same banned wording (for example, if “streamline” is prohibited, do not write “streamlined” or “streamlining” unless a different form was explicitly allowed).
+* Do not repeat prohibited phrases in notes, review sections, examples, or metadata. If a concern must be mentioned, describe it generically without restating the banned word.
+* Replace banned wording with plain functional alternatives that still match only the supplied evidence.
+
+Unless the user supplied and explicitly allowed the wording, do not introduce default marketing hype such as unlock, elevate, revolutionary, game-changing, seamless, effortlessly, streamline, transform, boost, increase, or guaranteed. Prefer concrete verbs: describe, implement, measure, support, organize, improve (only when evidence supports), and document.
+
 NARRATIVE AND WRITING QUALITY
 
 Write naturally, specifically, and professionally.
@@ -468,6 +483,8 @@ Before producing the final answer, silently verify that:
 * empty measurable-results or quotation inputs did not create numbers, result claims, quotes, or testimonial language;
 * anonymization is consistent;
 * privacy restrictions and disclosure restrictions are enforced in public-facing sections;
+* {{restrictionsAndDisclosures}} was treated as HARD EXCLUSIONS: no exact prohibited words/phrases (any capitalization) and no close banned variants appear in the case study body, extras, CTAs, or editorial notes;
+* default hype such as streamline, transform, unlock, seamless, effortlessly, boost, and guaranteed was not introduced unless the user supplied and allowed it;
 * regulated claims are cautious and non-advisory;
 * the selected destination and length are respected;
 * headings are useful rather than generic;
