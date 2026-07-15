@@ -385,7 +385,48 @@ test("App Store Listing validation and prompt rendering use form metadata", () =
   assert.match(rendered, /Apple App Store/);
 });
 
-test("App Store Listing catalog and Help integration use the full form", () => {
+test("App Store Listing hard-excludes claim restrictions and invent bans for rankings", () => {
+  assert.match(prompt, /USER AVOID \/ CLAIM RESTRICTIONS — HARD EXCLUSIONS/);
+  assert.match(
+    prompt,
+    /Treat \{\{claimsRestrictions\}\} and \{\{keywordsToAvoid\}\} as hard user restrictions, not optional style notes/,
+  );
+  assert.match(
+    prompt,
+    /Do not soften this as “respect,” “consider,” or “try to avoid\.”/,
+  );
+  assert.match(
+    prompt,
+    /do not use those exact words or phrases anywhere in the package/,
+  );
+  assert.match(
+    prompt,
+    /do not use close variants that keep the same banned wording/,
+  );
+  assert.match(
+    prompt,
+    /if “streamline” is prohibited, do not write “streamlined” or “streamlining”/,
+  );
+  assert.match(
+    prompt,
+    /Enforce \{\{keywordsToAvoid\}\} as hard exclusions \(exact phrases and close banned variants\)/,
+  );
+  assert.match(
+    prompt,
+    /Do not invent “#1 app,” “top-rated,” “best app,” “editor’s choice,” store approval/,
+  );
+  assert.match(
+    prompt,
+    /Do not fabricate or imply ratings, reviews, testimonials, awards, rankings, downloads/,
+  );
+  assert.match(prompt, /None \/ N\/A \/ Not provided-only headings/);
+  assert.doesNotMatch(
+    prompt,
+    /Respect claimsRestrictions and keywordsToAvoid/,
+  );
+});
+
+test("App Store Listing catalog stays synced and Help integration uses the full form", () => {
   const catalog = readJson<CatalogTemplate[]>("prisma", "templates-catalog.json");
   const item = catalog.find((template) => template.slug === "app-store-listing");
   assert.ok(item, "Catalog should include App Store Listing");
@@ -395,6 +436,7 @@ test("App Store Listing catalog and Help integration use the full form", () => {
   assert.match(item.description, /Apple App Store and Google Play listing copy/);
   assert.equal(item.variables.length, 34);
   assert.deepEqual(sorted(item.variables.map((variable) => variable.key)), sorted(expectedKeys));
+  assert.equal(item.prompt.trim(), prompt.trim());
 
   const helpButton = readProjectFile(
     "src",

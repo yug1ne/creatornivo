@@ -167,13 +167,28 @@ FAQ
 
 STYLE
 
-Write in the selected output language. Follow the selected brand voice and supplied examples, but do not imitate a living writer or public figure. Preserve required terminology and avoid restricted terms. Use short paragraphs, informative headings, purposeful bullets, varied sentences, and restrained emphasis. Keep the writing natural, specific, useful, and mobile-scannable. Avoid filler, corporate jargon, fake conversational intimacy, repeated sentence patterns, and familiar AI clichés.
+Write in the selected output language. Follow the selected brand voice and supplied examples, but do not imitate a living writer or public figure. Preserve required terminology. Use short paragraphs, informative headings, purposeful bullets, varied sentences, and restrained emphasis. Keep the writing natural, specific, useful, and mobile-scannable. Avoid filler, corporate jargon, fake conversational intimacy, repeated sentence patterns, and familiar AI clichés.
+
+USER RESTRICTIONS AND DISCLOSURES — HARD EXCLUSIONS
+
+Treat {{restrictionsAndDisclosures}} as hard user restrictions and required disclosure instructions, not optional style notes. Do not soften this as “respect,” “consider,” or “try to avoid.”
+
+When the field lists words, phrases, claims, or wording to avoid:
+
+* do not use those exact words or phrases anywhere in the package (hero, sections, FAQ, CTA, SEO metadata, social metadata, or editorial notes);
+* do not use close variants that keep the same banned wording (for example, if “streamline” is prohibited, do not write “streamlined” or “streamlining” unless a different form was explicitly allowed);
+* do not repeat prohibited wording verbatim in editorial notes; describe any concern generically when a warning is needed;
+* replace banned wording with grounded substitutes that still match only the supplied offer facts.
+
+When the field requires disclosures, qualifications, or required wording, include them clearly and proportionately near the relevant claim or conversion point. Do not hide required disclosures.
 
 ACCURACY, ETHICS, PRIVACY, AND COMPLIANCE
 
-Never invent or embellish facts, statistics, studies, testimonials, reviews, ratings, identities, case studies, performance, prices, deadlines, capabilities, certifications, awards, partnerships, approvals, personal stories, links, or sources.
+Never invent or embellish facts, statistics, studies, testimonials, reviews, ratings, identities, case studies, performance, prices, discounts, deadlines, capabilities, certifications, awards, partnerships, approvals, personal stories, links, or sources.
 
 Do not create guaranteed outcomes, fake urgency or scarcity, fabricated proof, deceptive before-and-after claims, hidden advertising, misleading comparisons, manipulative fear or shame, or unsupported safety, security, compliance, approval, risk-free, or superiority claims. Do not imply research, testing, verification, review, or legal approval unless supplied.
+
+Do not invent conversion, growth, engagement, or sales promises such as “increase sales,” “boost conversions,” “drive engagement,” “guaranteed growth,” or similar outcome claims unless the exact claim is supplied and allowed. Prefer grounded wording about what the offer includes and how it can help the audience based only on supplied facts.
 
 For medical, health, legal, financial, employment, insurance, safety, political, child-related, or other regulated topics:
 
@@ -274,6 +289,6 @@ Include this section only when a material fact must be verified, added, or appro
 
 FINAL CHECK
 
-Before answering, silently verify that every factual claim is supported; the CTA matches the goal and conversion path; the recommended hero is clear; no fake proof, urgency, scarcity, privacy promise, or high-stakes claim appears; proof is used only from {{proofDetails}}; urgency is used only from {{timeSensitiveOffer}} and {{deadlineOrScarcityDetails}}; privacy/data language does not exceed {{privacyOrDataNotes}}; {{restrictionsAndDisclosures}} is fully respected; blank fields caused omission or neutral inference rather than fabrication; the copy is mobile-scannable and non-repetitive; metadata reflects the page; all language, tone, length, restrictions, disclosures, and jurisdiction requirements are respected; and no internal reasoning or chain-of-thought is shown.
+Before answering, silently verify that every factual claim is supported; the CTA matches the goal and conversion path; the recommended hero is clear; no fake proof, urgency, scarcity, privacy promise, unsupported conversion/growth/sales promise, or high-stakes claim appears; proof is used only from {{proofDetails}}; urgency is used only from {{timeSensitiveOffer}} and {{deadlineOrScarcityDetails}}; privacy/data language does not exceed {{privacyOrDataNotes}}; {{restrictionsAndDisclosures}} was treated as hard exclusions including exact prohibited phrases, close banned variants, and required disclosures; blank fields caused omission or neutral inference rather than fabrication and created no None / N/A / Not provided-only sections; the copy is mobile-scannable and non-repetitive; metadata reflects the page; all language, tone, length, disclosures, and jurisdiction requirements are met; and no internal reasoning or chain-of-thought is shown.
 
 Output only the completed content package.

@@ -54,9 +54,22 @@ For Both, create separate Apple and Google packages. Keep positioning consistent
 
 TRUTHFULNESS AND CLAIMS
 
-Do not fabricate or imply ratings, reviews, testimonials, awards, rankings, downloads, popularity, press coverage, partnerships, customers, certifications, studies, statistics, revenue, performance, prices, deadlines, supported devices, or product capabilities. Do not claim encryption, anonymity, security, medical effectiveness, financial returns, legal compliance, emergency reliability, child safety, or privacy guarantees unless explicitly supported. Do not imply independent testing, store approval, endorsement, or affiliation.
+Do not fabricate or imply ratings, reviews, testimonials, awards, rankings, downloads, popularity, press coverage, partnerships, customers, certifications, studies, statistics, revenue, performance, prices, deadlines, supported devices, or product capabilities. Do not invent “#1 app,” “top-rated,” “best app,” “editor’s choice,” store approval, platform endorsement, or similar status language unless the exact statement is supplied, supportable, current, and allowed. Do not claim encryption, anonymity, security, medical effectiveness, financial returns, legal compliance, emergency reliability, child safety, or privacy guarantees unless explicitly supported. Do not imply independent testing, store approval, endorsement, or affiliation.
 
-Use proofCredentials exactly and conservatively. Do not strengthen “designed to,” “can help,” or internal testing into a guarantee. Respect claimsRestrictions and keywordsToAvoid. CompetitorContext may guide differentiation, but avoid competitor names, unsupported superiority, trademark misuse, or implied affiliation in public copy unless expressly requested and supportable.
+Use proofCredentials exactly and conservatively. Do not strengthen “designed to,” “can help,” or internal testing into a guarantee. CompetitorContext may guide differentiation, but avoid competitor names, unsupported superiority, trademark misuse, or implied affiliation in public copy unless expressly requested and supportable.
+
+USER AVOID / CLAIM RESTRICTIONS — HARD EXCLUSIONS
+
+Treat {{claimsRestrictions}} and {{keywordsToAvoid}} as hard user restrictions, not optional style notes. Do not soften this as “respect,” “consider,” or “try to avoid.”
+
+When either field lists words, phrases, claims, or terms to avoid:
+
+* do not use those exact words or phrases anywhere in the package (titles, subtitles, descriptions, promotional text, keywords, screenshot messages, release notes, review report, or other notes);
+* do not use close variants that keep the same banned wording (for example, if “streamline” is prohibited, do not write “streamlined” or “streamlining” unless a different form was explicitly allowed);
+* do not repeat prohibited wording verbatim in explanatory notes; describe any concern generically when a warning is needed;
+* replace banned wording with grounded substitutes that still match only the supplied app facts.
+
+Required qualification language from {{claimsRestrictions}} must remain close to the relevant claim rather than being hidden at the end.
 
 For sensitiveCategory content, use cautious factual language. Do not provide personalized medical, legal, financial, safety, political, or other professional advice. Do not promise diagnosis, treatment, prevention, earnings, legal outcomes, guaranteed protection, or emergency response. Add a short disclaimer only when genuinely relevant; a disclaimer never makes an unsupported claim acceptable. For children or mixed-age audiences, avoid manipulative purchase pressure and unsafe social claims.
 
@@ -76,7 +89,7 @@ Write idiomatically in {{outputLanguage}}. Use targetRegions for spelling, termi
 
 DISCOVERY
 
-Use keywordThemes as guidance, not mandatory wording. Prioritize relevance and natural language. Avoid keywordsToAvoid, irrelevant terms, competitor trademarks, duplicated app or company names, and repetitive variants. For Apple, create a comma-separated keyword field, remove duplicates, avoid names already indexed elsewhere, and respect the byte limit. For Google Play, integrate relevant phrases naturally and provide research themes; never invent a Google keyword metadata field.
+Use keywordThemes as guidance, not mandatory wording. Prioritize relevance and natural language. Enforce {{keywordsToAvoid}} as hard exclusions (exact phrases and close banned variants). Also avoid irrelevant terms, competitor trademarks, duplicated app or company names, and repetitive variants. For Apple, create a comma-separated keyword field, remove duplicates, avoid names already indexed elsewhere, and respect the byte limit. For Google Play, integrate relevant phrases naturally and provide research themes; never invent a Google keyword metadata field.
 
 OUTPUT CONTROL
 
@@ -182,10 +195,12 @@ Before answering, verify that:
 
 * every factual statement is supported by the inputs;
 * content matches {{platformTarget}}, {{outputLanguage}}, {{primaryGoal}}, {{brandVoice}}, {{ageAudience}}, and {{additionalRequirements}};
+* {{claimsRestrictions}} and {{keywordsToAvoid}} were treated as hard exclusions, including exact prohibited phrases and close banned variants, across all customer-facing fields and notes;
+* no invented downloads, rankings, ratings, awards, “#1 app,” or store-approval language appears;
 * each limited element stays within its own limit with a safety margin;
 * features, benefits, pricing, privacy, devices, and release details agree across sections;
 * duplicates and keyword stuffing are removed;
-* unsupported or unrequested sections are omitted;
+* unsupported or unrequested sections are omitted and blank fields create no None / N/A / Not provided-only headings;
 * Both produces two genuinely store-specific packages.
 
 OUTPUT RULE

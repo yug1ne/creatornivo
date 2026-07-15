@@ -328,7 +328,44 @@ test("Amazon Listing validation and prompt rendering use form metadata", () => {
   assert.match(rendered, /Adjustable Bamboo Drawer Organizer/);
 });
 
-test("Amazon Listing catalog and Help integration use the full form", () => {
+test("Amazon Listing hard-excludes avoid wording and marketplace claim invention", () => {
+  assert.match(prompt, /USER AVOID \/ REQUIRED WORDING — HARD EXCLUSIONS/);
+  assert.match(
+    prompt,
+    /Treat \{\{mustUseOrAvoidWording\}\} as hard user restrictions, not optional style notes/,
+  );
+  assert.match(
+    prompt,
+    /Do not soften this as “respect,” “consider,” or “try to avoid\.”/,
+  );
+  assert.match(
+    prompt,
+    /do not use those exact words or phrases anywhere in the package/,
+  );
+  assert.match(
+    prompt,
+    /do not use close variants that keep the same banned wording/,
+  );
+  assert.match(
+    prompt,
+    /if “streamline” is prohibited, do not write “streamlined” or “streamlining”/,
+  );
+  assert.match(prompt, /Never fabricate reviews, ratings, testimonials/);
+  assert.match(
+    prompt,
+    /Never invent marketplace status such as best seller, best-selling, Amazon’s Choice, top-rated/,
+  );
+  assert.match(prompt, /trusted by thousands/);
+  assert.match(prompt, /search rank, review count, star rating, or sales volume/);
+  assert.match(prompt, /no invented best-seller, top-rated, rating, ranking/);
+  assert.match(prompt, /None \/ N\/A \/ Not provided-only headings/);
+  assert.doesNotMatch(
+    prompt,
+    /Interpret \{\{mustUseOrAvoidWording\}\} carefully\. Include required wording only when supported and always honor avoid instructions/,
+  );
+});
+
+test("Amazon Listing catalog stays synced and Help integration uses the full form", () => {
   const catalog = readJson<CatalogTemplate[]>("prisma", "templates-catalog.json");
   const item = catalog.find((template) => template.slug === "amazon-listing");
   assert.ok(item, "Catalog should include Amazon Listing");
@@ -338,6 +375,7 @@ test("Amazon Listing catalog and Help integration use the full form", () => {
   assert.match(item.description, /claim-safe Amazon title/);
   assert.equal(item.variables.length, 31);
   assert.deepEqual(sorted(item.variables.map((variable) => variable.key)), sorted(expectedKeys));
+  assert.equal(item.prompt.trim(), prompt.trim());
 
   const helpButton = readProjectFile(
     "src",

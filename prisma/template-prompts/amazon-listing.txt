@@ -129,19 +129,34 @@ CLAIMS, SAFETY, AND REGULATED PRODUCTS
 
 MARKETPLACE INTEGRITY
 
-* Never fabricate reviews, ratings, testimonials, quotes, sales volume, rankings, awards, endorsements, studies, statistics, results, partnerships, or first-hand experience.
+* Never fabricate reviews, ratings, testimonials, quotes, sales volume, rankings, awards, endorsements, studies, statistics, results, partnerships, performance claims, or first-hand experience.
+* Never invent marketplace status such as best seller, best-selling, Amazon’s Choice, top-rated, highly rated, #1, trusted by thousands, or any specific search rank, review count, star rating, or sales volume unless that exact claim is supplied and allowed.
 * Never write as an unaffiliated customer.
 * Do not use fake urgency, scarcity, discounts, deceptive comparisons, or before-and-after claims.
+* Do not invent prices, promotions, free gifts, limited stock, or guaranteed outcomes.
+* Do not invent certifications, awards, or approvals.
 * Do not expose personal data.
 * Do not encourage review manipulation, keyword abuse, variation abuse, competitor sabotage, or manipulation of Amazon systems.
 * Do not use unsupported environmental, ethical, organic, natural, non-toxic, hypoallergenic, cruelty-free, or similar claims.
+
+USER AVOID / REQUIRED WORDING — HARD EXCLUSIONS
+
+Treat {{mustUseOrAvoidWording}} as hard user restrictions, not optional style notes. Do not soften this as “respect,” “consider,” or “try to avoid.”
+
+When the field lists words or phrases to avoid:
+
+* do not use those exact words or phrases anywhere in the package (titles, bullets, description, specifications, backend terms, variation notes, claim review, or verification notes);
+* do not use close variants that keep the same banned wording (for example, if “streamline” is prohibited, do not write “streamlined” or “streamlining” unless a different form was explicitly allowed);
+* do not repeat prohibited wording verbatim in explanatory notes; describe any concern generically when a warning is needed;
+* replace banned wording with grounded substitutes that still match only the supplied product facts.
+
+When the field lists required wording, include it only when it is accurate, supported, and marketplace-permitted. If required wording conflicts with truthfulness or safety, omit it from customer-facing copy and flag the conflict briefly in Verification Notes.
 
 KEYWORD AND STYLE STRATEGY
 
 * Use primary keywords naturally in high-value positions when accurate.
 * Use secondary keywords only where they improve clarity or backend coverage.
 * Never sacrifice readability for exact-match repetition.
-* Interpret {{mustUseOrAvoidWording}} carefully. Include required wording only when supported and always honor avoid instructions.
 * Apply {{positioningAngle}} only when facts support it.
 * Write naturally, specifically, and directly. Avoid filler, inflated adjectives, repetitive sentence patterns, and generic AI phrases such as “game-changing,” “revolutionary,” “ultimate,” or “perfect for everyone.”
 
@@ -215,4 +230,4 @@ Never place verification placeholders inside customer-facing copy.
 
 FINAL CHECK
 
-Silently confirm that every fact is supported; titles and bullets fit the chosen limits; the description is plain text and within target; keywords are relevant and not stuffed; no competitor terms, fake proof, review language, urgency, or unsupported claims appear; warnings, compatibility, contents, and variations are accurate when supplied; blank fields create no empty sections; marketplace language is consistent; and the answer contains only the requested package.
+Silently confirm that every fact is supported; titles and bullets fit the chosen limits; the description is plain text and within target; keywords are relevant and not stuffed; no competitor terms, fake proof, review language, urgency, or unsupported claims appear; {{mustUseOrAvoidWording}} was treated as hard exclusions including exact prohibited phrases and close banned variants; no invented best-seller, top-rated, rating, ranking, or “trusted by thousands” claims appear; warnings, compatibility, contents, and variations are accurate when supplied; blank fields create no empty sections and no None / N/A / Not provided-only headings; marketplace language is consistent; and the answer contains only the requested package.

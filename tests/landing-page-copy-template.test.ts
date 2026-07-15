@@ -60,6 +60,52 @@ test("Landing Page Copy guardrails cover proof, urgency, privacy, and disclosure
   assert.match(prompt, /proof is used only from \{\{proofDetails\}\}/);
 });
 
+test("Landing Page Copy hard-excludes restrictions and bans fake conversion promises", () => {
+  assert.match(prompt, /USER RESTRICTIONS AND DISCLOSURES — HARD EXCLUSIONS/);
+  assert.match(
+    prompt,
+    /Treat \{\{restrictionsAndDisclosures\}\} as hard user restrictions and required disclosure instructions, not optional style notes/,
+  );
+  assert.match(
+    prompt,
+    /Do not soften this as “respect,” “consider,” or “try to avoid\.”/,
+  );
+  assert.match(
+    prompt,
+    /do not use those exact words or phrases anywhere in the package/,
+  );
+  assert.match(
+    prompt,
+    /do not use close variants that keep the same banned wording/,
+  );
+  assert.match(
+    prompt,
+    /if “streamline” is prohibited, do not write “streamlined” or “streamlining”/,
+  );
+  assert.match(
+    prompt,
+    /Do not create guaranteed outcomes, fake urgency or scarcity, fabricated proof/,
+  );
+  assert.match(
+    prompt,
+    /Do not invent conversion, growth, engagement, or sales promises such as/,
+  );
+  assert.match(prompt, /increase sales/);
+  assert.match(prompt, /boost conversions/);
+  assert.match(prompt, /drive engagement/);
+  assert.match(prompt, /guaranteed growth/);
+  assert.match(
+    prompt,
+    /\{\{restrictionsAndDisclosures\}\} was treated as hard exclusions including exact prohibited phrases, close banned variants/,
+  );
+  assert.match(prompt, /None \/ N\/A \/ Not provided-only sections/);
+  assert.doesNotMatch(prompt, /Preserve required terminology and avoid restricted terms\./);
+  assert.doesNotMatch(
+    prompt,
+    /\{\{restrictionsAndDisclosures\}\} is fully respected/,
+  );
+});
+
 test("Landing Page Copy renders required inputs without unresolved placeholders", () => {
   const values = {
     ...buildDefaultValues(variables),
