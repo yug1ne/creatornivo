@@ -143,8 +143,10 @@ Creatornivo — честный Early Access продукт.
 ### Генерации и лимиты
 - Free: 5 генераций в UTC-день
 - Pro: 100 генераций в UTC-месяц
-- Учёт только при `status = completed` ИЛИ `startedAt IS NOT NULL`
-- Ошибки до `startedAt` не должны тратить квоту.
+- **Постоянный user-facing quota** (UI banner + `UserUsage` + reservation `countUsed`): только **успешные completed** генерации (`UserUsage.count` / `GenerationReservation.status = completed`).
+- **In-flight capacity**: active non-expired `reserved`/`started` reservations count toward the gate as `completed + active` so concurrency cannot overshoot the period limit.
+- Failed / validation-failed / refusal / timeout / expired-without-complete **must not** permanently consume monthly/daily quota (do not count historical `startedAt` after `failed`).
+- Ошибки до usable completed output не должны увеличивать `UserUsage`.
 
 ### Общие технические правила
 - TypeScript strict + ESLint — прогонять после любых изменений.

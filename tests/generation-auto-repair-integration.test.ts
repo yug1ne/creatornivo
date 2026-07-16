@@ -90,8 +90,7 @@ class MemoryReservationStore implements GenerationReservationStore {
               reservation.userId === userId &&
               reservation.createdAt >= start &&
               reservation.createdAt < end &&
-              (reservation.status === GENERATION_RESERVATION_STATUS.COMPLETED ||
-                reservation.startedAt !== null),
+              reservation.status === GENERATION_RESERVATION_STATUS.COMPLETED,
           ).length,
         countRecent: async (userId, since) =>
           this.reservations.filter(
@@ -177,6 +176,16 @@ class MemoryReservationStore implements GenerationReservationStore {
     reservation.actualOutputTokens =
       usage.outputTokens ?? reservation.actualOutputTokens;
     reservation.completedAt = now;
+  }
+
+  async countUsed(userId: string, start: Date, end: Date): Promise<number> {
+    return this.reservations.filter(
+      (reservation) =>
+        reservation.userId === userId &&
+        reservation.createdAt >= start &&
+        reservation.createdAt < end &&
+        reservation.status === GENERATION_RESERVATION_STATUS.COMPLETED,
+    ).length;
   }
 
   private find(userId: string, requestId: string): ReservationRecord {

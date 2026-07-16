@@ -186,15 +186,18 @@ function createPrismaTransaction(
       });
       return reservation ? toReservationRecord(reservation) : null;
     },
+    /**
+     * Permanent period usage for the reservation gate / metrics.
+     * Counts only successfully completed reservations — NOT failed, not
+     * expired, not historical startedAt rows. Active in-flight work is
+     * counted separately via countActive so concurrency cannot overshoot.
+     */
     countUsed(userId, start, end) {
       return transaction.generationReservation.count({
         where: {
           userId,
           createdAt: { gte: start, lt: end },
-          OR: [
-            { status: GENERATION_RESERVATION_STATUS.COMPLETED },
-            { startedAt: { not: null } },
-          ],
+          status: GENERATION_RESERVATION_STATUS.COMPLETED,
         },
       });
     },
@@ -323,14 +326,21 @@ export const prismaGenerationReservationStore: GenerationReservationStore = {
       where: {
         userId,
         createdAt: { gte: start, lt: end },
-        OR: [
-          { status: GENERATION_RESERVATION_STATUS.COMPLETED },
-          { startedAt: { not: null } },
-        ],
+        status: GENERATION_RESERVATION_STATUS.COMPLETED,
       },
     });
   },
 };
+
+/**
+ * Whether a reservation row permanently consumes monthly/daily quota.
+ * Failed / cancelled / expired-without-complete must not.
+ */
+export function reservationCountsTowardPeriodQuota(reservation: {
+  status: string;
+}): boolean {
+  return reservation.status === GENERATION_RESERVATION_STATUS.COMPLETED;
+}
 
 export function getGenerationPeriodWindow(
   plan: Plan,
@@ -453,13 +463,17 @@ export async function reserveGeneration(
       );
     }
 
-    const used = await transaction.countUsed(
+    // Permanent quota = completed only (aligns with UserUsage / UI).
+    // Active non-expired reserved|started slots also hold capacity so concurrent
+    // requests cannot overshoot the period limit.
+    const completed = await transaction.countUsed(
       input.userId,
       period.start,
       period.end,
     );
+    const active = await transaction.countActive(input.userId, now);
 
-    if (used >= policy.maxGenerationsPerPeriod) {
+    if (completed + active >= policy.maxGenerationsPerPeriod) {
       throw new GenerationPolicyError(
         "quota",
         429,
@@ -468,8 +482,6 @@ export async function reserveGeneration(
           : "You’ve reached your monthly generation limit.",
       );
     }
-
-    const active = await transaction.countActive(input.userId, now);
 
     if (active >= policy.maxConcurrentGenerations) {
       throw new GenerationPolicyError(

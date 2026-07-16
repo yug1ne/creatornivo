@@ -548,7 +548,9 @@ export async function POST(request: Request) {
     }
   } catch (error) {
     if (error instanceof GenerationPolicyError) {
-      // Reservation layer may still hit quota (legacy rows / drift) — return same rich 429
+      // Reservation layer quota: report the real UserUsage snapshot (UI source of
+      // truth). Never force remaining:0 when the counter still has headroom —
+      // that lied about 100/100 while the banner showed e.g. 85/100.
       if (
         error.code === "quota" &&
         session?.id &&
@@ -556,7 +558,30 @@ export async function POST(request: Request) {
       ) {
         try {
           const snapshot = await getUserUsageSnapshot(session.id, userPlan);
-          return quotaExceededResponse({ ...snapshot, remaining: 0 });
+          if (snapshot.remaining <= 0) {
+            return quotaExceededResponse(snapshot);
+          }
+          // completed+active full (or rare drift) while UserUsage still shows remaining
+          return NextResponse.json(
+            {
+              error: error.message,
+              message: error.message,
+              code: "quota_exceeded",
+              plan: snapshot.plan,
+              limit: snapshot.limit,
+              remaining: snapshot.remaining,
+              used: snapshot.used,
+              period: snapshot.period,
+              resetAt: snapshot.resetAt,
+              gate: "reservation_completed_plus_active",
+            },
+            {
+              status: 429,
+              headers: {
+                "Cache-Control": "no-store",
+              },
+            },
+          );
         } catch (usageLoadError) {
           console.error("Failed to build quota exceeded response:", usageLoadError);
         }

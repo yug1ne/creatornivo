@@ -67,9 +67,7 @@ class MemoryReservationStore implements GenerationReservationStore {
               reservation.userId === userId &&
               reservation.createdAt >= start &&
               reservation.createdAt < end &&
-              (reservation.status ===
-                GENERATION_RESERVATION_STATUS.COMPLETED ||
-                reservation.startedAt !== null),
+              reservation.status === GENERATION_RESERVATION_STATUS.COMPLETED,
           ).length,
         countRecent: async (userId, since) =>
           this.reservations.filter(
@@ -169,8 +167,7 @@ class MemoryReservationStore implements GenerationReservationStore {
         reservation.userId === userId &&
         reservation.createdAt >= start &&
         reservation.createdAt < end &&
-        (reservation.status === GENERATION_RESERVATION_STATUS.COMPLETED ||
-          reservation.startedAt !== null),
+        reservation.status === GENERATION_RESERVATION_STATUS.COMPLETED,
     ).length;
   }
 
@@ -727,6 +724,35 @@ test("missing OpenAI API key disables generation before reservation", () => {
   assert.match(routeSource, /await incrementUsage\(userId, getUsagePeriodForPlan/);
   assert.match(routeSource, /quotaExceededResponse/);
   assert.match(routeSource, /buildQuotaExceededBody/);
+  // Must not force remaining:0 when UserUsage still has headroom (UI/API mismatch bug).
+  assert.doesNotMatch(
+    routeSource,
+    /quotaExceededResponse\(\{\s*\.\.\.snapshot,\s*remaining:\s*0\s*\}\)/,
+  );
+  assert.match(routeSource, /gate: "reservation_completed_plus_active"/);
+});
+
+test("route and usage-service agree: permanent quota is completed-only", () => {
+  const serviceSource = readFileSync(
+    "src/lib/generation/usage-service.ts",
+    "utf8",
+  );
+  const usageSource = readFileSync("src/lib/usage.ts", "utf8");
+
+  // Reservation permanent count = COMPLETED only (no startedAt OR branch).
+  assert.match(
+    serviceSource,
+    /status:\s*GENERATION_RESERVATION_STATUS\.COMPLETED/,
+  );
+  assert.doesNotMatch(
+    serviceSource,
+    /startedAt:\s*\{\s*not:\s*null\s*\}/,
+  );
+  assert.match(serviceSource, /completed \+ active >= policy\.maxGenerationsPerPeriod/);
+
+  // UI snapshot uses UserUsage.count (incremented only after successful complete).
+  assert.match(usageSource, /const used = usage\.count/);
+  assert.match(usageSource, /incrementUsage/);
 });
 
 test("email verification is required before usage, reservation, and OpenAI", () => {
@@ -931,7 +957,7 @@ test("multiple failures before provider start do not increase usage", async () =
   assert.equal(usage.used, 0);
 });
 
-test("failure after provider start consumes quota", async () => {
+test("failure after provider start does not permanently consume quota", async () => {
   const store = new MemoryReservationStore();
   const start = new Date("2026-07-03T00:00:00.000Z");
   await reserveGeneration(
@@ -951,6 +977,7 @@ test("failure after provider start consumes quota", async () => {
     start,
   );
 
+  // 4 completed + 1 failed-after-start must not look like Free 5/5 used.
   for (let index = 0; index < 4; index += 1) {
     store.seed({
       requestId: `successful-${index}`,
@@ -958,19 +985,97 @@ test("failure after provider start consumes quota", async () => {
     });
   }
 
+  const usage = await getGenerationUsage("user-1", "free", start, store);
+  assert.equal(usage.used, 4);
+
+  await assert.doesNotReject(() =>
+    reserveGeneration(
+      {
+        requestId: "fifth-after-failed-start",
+        userId: "user-1",
+        plan: "free",
+        now: new Date(start.getTime() + 10 * 61_000),
+      },
+      store,
+    ),
+  );
+});
+
+test("completed=limit blocks; failed reservations do not fill the period", async () => {
+  const store = new MemoryReservationStore();
+  const start = new Date("2026-07-03T12:00:00.000Z");
+
+  for (let index = 0; index < 5; index += 1) {
+    store.seed({
+      requestId: `completed-${index}`,
+      status: GENERATION_RESERVATION_STATUS.COMPLETED,
+      createdAt: new Date(start.getTime() + index * 61_000),
+    });
+  }
+  for (let index = 0; index < 15; index += 1) {
+    store.seed({
+      requestId: `failed-${index}`,
+      status: GENERATION_RESERVATION_STATUS.FAILED,
+      createdAt: new Date(start.getTime() + (index + 5) * 61_000),
+      startedAt: new Date(start.getTime() + (index + 5) * 61_000),
+    });
+  }
+
+  const usage = await getGenerationUsage("user-1", "free", start, store);
+  assert.equal(usage.used, 5);
+
   await expectPolicyError(
     () =>
       reserveGeneration(
         {
-          requestId: "over-quota",
+          requestId: "blocked-at-completed-limit",
           userId: "user-1",
           plan: "free",
-          now: new Date(start.getTime() + 10 * 61_000),
+          now: new Date(start.getTime() + 30 * 61_000),
         },
         store,
       ),
     "quota",
   );
+});
+
+test("completed=4 + active=1 blocks Free limit without counting failed history", async () => {
+  const store = new MemoryReservationStore();
+  const now = new Date("2026-07-03T14:00:00.000Z");
+
+  for (let index = 0; index < 4; index += 1) {
+    store.seed({
+      requestId: `done-${index}`,
+      status: GENERATION_RESERVATION_STATUS.COMPLETED,
+      createdAt: new Date(now.getTime() - (index + 2) * 61_000),
+    });
+  }
+  store.seed({
+    requestId: "in-flight",
+    status: GENERATION_RESERVATION_STATUS.STARTED,
+    createdAt: now,
+    startedAt: now,
+    expiresAt: new Date(now.getTime() + GENERATION_RESERVATION_TTL_MS),
+  });
+  store.seed({
+    requestId: "old-failed",
+    status: GENERATION_RESERVATION_STATUS.FAILED,
+    createdAt: new Date(now.getTime() - 120_000),
+    startedAt: new Date(now.getTime() - 120_000),
+  });
+
+  // 4 completed + 1 active = Free limit 5 → block another reserve.
+  await expectPolicyError(
+    () =>
+      reserveGeneration(
+        { requestId: "one-more", userId: "user-1", plan: "free", now },
+        store,
+      ),
+    "quota",
+  );
+
+  const usage = await getGenerationUsage("user-1", "free", now, store);
+  assert.equal(usage.used, 4);
 });
 
 test("expired reservation is retained but no longer blocks the user", async () => {
@@ -996,7 +1101,7 @@ test("expired reservation is retained but no longer blocks the user", async () =
   assert.equal(usage.used, 0);
 });
 
-test("expired started reservation still consumes quota", async () => {
+test("expired started reservation does not permanently consume quota", async () => {
   const store = new MemoryReservationStore();
   const now = new Date("2026-07-03T10:00:00.000Z");
   const startedAt = new Date(now.getTime() - 11 * 60_000);
@@ -1009,7 +1114,7 @@ test("expired started reservation still consumes quota", async () => {
   });
 
   const usage = await getGenerationUsage("user-1", "free", now, store);
-  assert.equal(usage.used, 1);
+  assert.equal(usage.used, 0);
   await assert.doesNotReject(() =>
     reserveGeneration(
       {
