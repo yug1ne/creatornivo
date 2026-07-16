@@ -15,7 +15,7 @@ export const pricingPlans = [
       `Up to ${planLimits.free.maxSavedPrompts} saved prompts`,
       `${planLimits.free.maxGenerationsPerPeriod} generations per day`,
       `${TEMPLATE_CATALOG_COUNTS.free} core templates`,
-      "GPT-4o mini generation",
+      "GPT-5.6 generation",
       "Personal prompt library",
     ],
   },
@@ -32,7 +32,7 @@ export const pricingPlans = [
       "100 generations per month",
       "Unlimited saved prompts",
       `All ${TEMPLATE_CATALOG_COUNTS.total} templates`,
-      "GPT-4o generation",
+      "GPT-5.6 generation",
       "Export to .md and .txt",
       "Email support",
     ],
@@ -97,7 +97,7 @@ export const howItWorksSteps = [
     step: "02",
     title: "Fill in the blanks",
     description:
-      "Add your topic, tone, and audience. Preview the exact prompt before you generate.",
+      "Add your topic, tone, and audience. Creatornivo assembles the final prompt securely on the server.",
   },
   {
     step: "03",

@@ -1,11 +1,7 @@
 import { createOpenAI } from "@ai-sdk/openai";
 import { generateText, streamText } from "ai";
 
-import {
-  generationPolicies,
-  getGenerationPolicy,
-  type Plan,
-} from "@/config/plans";
+import { getGenerationPolicy, type Plan } from "@/config/plans";
 
 export interface StreamContentInput {
   prompt: string;
@@ -37,9 +33,19 @@ export interface TextContentResult {
   outputTokens: number;
 }
 
+/** Resolved model ids for UI labels (respects env override via getGenerationPolicy). */
+export function getModelByPlan(plan: Plan): string {
+  return getGenerationPolicy(plan).model;
+}
+
+/** @deprecated Prefer getModelByPlan — kept for call sites expecting a map. */
 export const MODEL_BY_PLAN: Record<Plan, string> = {
-  free: generationPolicies.free.model,
-  pro: generationPolicies.pro.model,
+  get free() {
+    return getModelByPlan("free");
+  },
+  get pro() {
+    return getModelByPlan("pro");
+  },
 };
 
 function estimateTokens(text: string): number {

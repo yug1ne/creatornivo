@@ -7,7 +7,7 @@ export function ResultMockup() {
             Result
           </p>
           <p className="font-mono text-[10px] text-muted-foreground">
-            gpt-4o-mini
+            GPT-5.6
           </p>
         </div>
         <div className="flex gap-1.5">

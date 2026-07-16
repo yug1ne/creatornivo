@@ -265,7 +265,7 @@ function serializationConflict(): Prisma.PrismaClientKnownRequestError {
 
 test("Free policy has the required server-owned limits", () => {
   assert.deepEqual(generationPolicies.free, {
-    model: "gpt-4o-mini",
+    model: "gpt-5.6-luna",
     maxGenerationsPerPeriod: 5,
     period: "day",
     maxOutputTokens: 1000,
@@ -277,7 +277,7 @@ test("Free policy has the required server-owned limits", () => {
 
 test("Pro policy has the required server-owned limits", () => {
   assert.deepEqual(generationPolicies.pro, {
-    model: "gpt-4o",
+    model: "gpt-5.6-terra",
     maxGenerationsPerPeriod: 100,
     period: "month",
     maxOutputTokens: 2000,
@@ -285,6 +285,27 @@ test("Pro policy has the required server-owned limits", () => {
     requestsPerMinute: 5,
     maxConcurrentGenerations: 1,
   });
+});
+
+test("getGenerationPolicy allows optional env model override", () => {
+  const previousFree = process.env.OPENAI_MODEL_FREE;
+  const previousPro = process.env.OPENAI_MODEL_PRO;
+  try {
+    delete process.env.OPENAI_MODEL_FREE;
+    delete process.env.OPENAI_MODEL_PRO;
+    assert.equal(getGenerationPolicy("free").model, "gpt-5.6-luna");
+    assert.equal(getGenerationPolicy("pro").model, "gpt-5.6-terra");
+
+    process.env.OPENAI_MODEL_FREE = "gpt-5.6-custom-free";
+    process.env.OPENAI_MODEL_PRO = "gpt-5.6-custom-pro";
+    assert.equal(getGenerationPolicy("free").model, "gpt-5.6-custom-free");
+    assert.equal(getGenerationPolicy("pro").model, "gpt-5.6-custom-pro");
+  } finally {
+    if (previousFree === undefined) delete process.env.OPENAI_MODEL_FREE;
+    else process.env.OPENAI_MODEL_FREE = previousFree;
+    if (previousPro === undefined) delete process.env.OPENAI_MODEL_PRO;
+    else process.env.OPENAI_MODEL_PRO = previousPro;
+  }
 });
 
 test("Free requests 1 through 5 are allowed", async () => {

@@ -72,7 +72,9 @@ test("public plan copy matches implemented Free and Pro limits", () => {
   assert.ok(pro?.features.includes("100 generations per month"));
   assert.match(pricing, /Up to \$\{planLimits\.free\.maxSavedPrompts\}/);
   assert.match(pricing, /Unlimited saved prompts/);
-  assert.match(pricing, /GPT-4o generation/);
+  assert.match(pricing, /GPT-5\.6 generation/);
+  assert.doesNotMatch(pricing, /GPT-4o/i);
+  assert.doesNotMatch(pricing, /\bSol\b/);
   assert.match(pricing, /Export to \.md and \.txt/);
   assert.match(pricing, /Email support/);
 });
