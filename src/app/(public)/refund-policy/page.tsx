@@ -10,7 +10,7 @@ import { siteConfig } from "@/config/site";
 export const metadata: Metadata = {
   title: `Refund Policy | ${siteConfig.name}`,
   description:
-    "Creatornivo refund policy including our 14-day money-back guarantee for new Pro subscribers.",
+    "Creatornivo refund policy: how to contact support about Pro subscription refunds, case-by-case review, and Paddle’s role as payment provider.",
 };
 
 export default function RefundPolicyPage() {
@@ -18,7 +18,7 @@ export default function RefundPolicyPage() {
     <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
       <LegalDocument
         title={refundPolicyMeta.title}
-        description={`This Refund Policy explains Creatornivo's 14-day money-back guarantee, eligibility requirements, and how to request a refund for Pro subscriptions.`}
+        description={`This Refund Policy explains how to request a refund for paid Creatornivo subscriptions, how requests are reviewed, and Paddle’s role as Merchant of Record.`}
         effectiveDate={refundPolicyMeta.effectiveDate}
         lastUpdated={refundPolicyMeta.lastUpdated}
         sections={refundPolicySections}

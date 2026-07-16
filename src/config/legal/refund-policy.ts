@@ -5,7 +5,7 @@ import type { LegalSection } from "./types";
 export const refundPolicyMeta = {
   title: "Refund Policy",
   effectiveDate: "July 2, 2026",
-  lastUpdated: "July 3, 2026",
+  lastUpdated: "July 16, 2026",
 } as const;
 
 export const refundPolicySections: LegalSection[] = [
@@ -13,109 +13,110 @@ export const refundPolicySections: LegalSection[] = [
     id: "introduction",
     title: "Introduction",
     paragraphs: [
-      `This Refund Policy explains when and how you may request a refund for paid subscriptions to ${siteConfig.name} ("Creatornivo," "we," "us," or "our"). It applies to purchases made through our website. Payments are processed by Paddle, our payment processor and Merchant of Record.`,
-      "We want you to be confident when upgrading to Pro. If the Service is not a good fit, our 14-day money-back guarantee gives you a fair window to try it — while protecting against abuse of AI generation resources.",
-      "This policy supplements our Terms of Service. Where they conflict on refund matters, this Refund Policy controls.",
-    ],
-  },
-  {
-    id: "money-back-guarantee",
-    title: "14-Day Money-Back Guarantee",
-    paragraphs: [
-      "If you are a new Pro subscriber, you may request a full refund of your first Pro subscription payment within fourteen (14) calendar days of the initial charge date (the \"Guarantee Period\").",
-      "This guarantee applies only to the first paid Pro subscription for your Creatornivo account. It does not apply to subscription renewals, add-ons, taxes, currency conversion fees charged by your bank, or a later purchase after a prior refund.",
-      "Promotional and early-access pricing (including discounted introductory rates) is eligible for the same 14-day guarantee and individual review process.",
-    ],
-  },
-  {
-    id: "eligibility",
-    title: "Eligibility",
-    paragraphs: [
-      "To qualify for a refund under the money-back guarantee, all of the following must be true at the time of your request:",
-    ],
-    list: [
-      "Your request is submitted within 14 calendar days of your first Pro payment.",
-      "This is the first paid Pro subscription associated with your Creatornivo account.",
-      "Your account is in good standing and has not violated our Terms of Service or Acceptable Use policy.",
-      "You have not initiated a chargeback or payment dispute with your bank or card issuer before contacting us.",
-    ],
-  },
-  {
-    id: "individual-review",
-    title: "Individual Review",
-    paragraphs: [
-      "Refund requests submitted within 14 days of the initial purchase will be reviewed individually. Refunds may be denied in cases of fraud, abuse, repeated refund requests, chargeback misuse, or other clear misuse of the service.",
-    ],
-    subsections: [
-      {
-        title: "Renewals and cancellation",
-        paragraphs: [
-          "Subscription renewals are generally non-refundable. You may cancel at any time through your account billing portal to prevent future charges. After cancellation, you retain Pro access through the end of the current paid billing period.",
-          "Canceling a subscription is not the same as requesting a refund. Cancellation stops future billing; a refund returns payment for an eligible first-time purchase as described in this policy.",
-        ],
-      },
+      `This Refund Policy explains how refund requests for paid ${siteConfig.name} subscriptions are handled. Payments are processed by Paddle, our payment processor and Merchant of Record.`,
+      "This policy supplements our Terms of Service. It does not replace Paddle’s buyer terms, checkout terms, or Paddle’s own refund policies where they apply to your purchase.",
+      "We aim to handle billing concerns fairly. We do not promise automatic refunds for every purchase or every situation.",
     ],
   },
   {
     id: "how-to-request",
     title: "How to Request a Refund",
     paragraphs: [
-      "To request a refund, email us at the address below with the subject line \"Refund Request\" and include:",
+      "To request a refund, contact support by email. Please include:",
     ],
     list: [
-      "The email address associated with your Creatornivo account.",
-      "The date of your Pro subscription payment.",
-      "A brief explanation of why the Service did not meet your needs (optional but helpful).",
+      "The email address on your Creatornivo account.",
+      "Approximate purchase date or other order details you have.",
+      "A short description of the issue (optional but helpful).",
     ],
     subsections: [
       {
-        title: "Review process",
+        title: "Contact",
         paragraphs: [
-          "Refund requests are reviewed individually. We may ask clarifying questions or verify relevant account and transaction information. Refunds, when approved, are issued to the original payment method through Paddle.",
-          "The time for an approved refund to appear depends on Paddle, the payment method, and your financial institution.",
-        ],
-      },
-      {
-        title: "After approval",
-        paragraphs: [
-          "Approved refunds are processed through Paddle, and account access may be adjusted after Paddle confirms the outcome. A refund does not currently trigger an automatic downgrade or cancellation inside Creatornivo. Any required subscription or access change is handled separately after confirmation.",
+          `Email: ${siteConfig.legal.billingEmail}`,
+          "Use a clear subject such as “Refund request” so we can route the message correctly.",
         ],
       },
     ],
   },
   {
-    id: "chargebacks",
-    title: "Chargebacks and Disputes",
+    id: "review",
+    title: "Case-by-Case Review",
     paragraphs: [
-      "Please contact support before filing a chargeback or payment dispute with your bank so the billing concern can be reviewed.",
-      "If a chargeback is filed while a refund request is pending or without contacting us first, we may suspend your account pending resolution and decline future refund requests associated with that payment method or identity.",
+      "Refund requests are reviewed individually. Outcomes may depend on factors such as:",
+    ],
+    list: [
+      "How recently the purchase was made.",
+      "How the subscription has been used (for example, generation volume or patterns that suggest abuse).",
+      "Evidence of fraud, chargeback misuse, policy violations, or Terms of Service violations.",
+      "Applicable consumer law in your location.",
+      "Paddle’s rules and processes as Merchant of Record for the transaction.",
+    ],
+    subsections: [
+      {
+        title: "No automatic guarantee",
+        paragraphs: [
+          "Creatornivo does not advertise or guarantee automatic refunds on demand. Approval is discretionary except where mandatory law requires a specific remedy.",
+        ],
+      },
+    ],
+  },
+  {
+    id: "paddle",
+    title: "Paddle’s Role",
+    paragraphs: [
+      "Paddle processes payments and may handle order support, invoices, taxes, and refund processing for purchases made through Paddle checkout.",
+      "Approved refunds, when issued, are typically returned to the original payment method through Paddle. Timing depends on Paddle, the payment method, and your financial institution.",
+      "You may also be able to contact Paddle about an order using the channels Paddle provides for buyers. This policy is not intended to conflict with Paddle’s Refund Policy or buyer protections; where Paddle’s rules apply to the payment, those rules govern the payment relationship.",
+    ],
+  },
+  {
+    id: "cancellation-vs-refund",
+    title: "Cancellation Is Not a Refund",
+    paragraphs: [
+      "Canceling a subscription stops future renewals according to the billing portal and subscription status. Cancellation does not automatically refund amounts already paid.",
+      "After cancellation, access to paid features may continue until the end of the paid period shown in your account, depending on subscription status.",
+    ],
+  },
+  {
+    id: "after-refund",
+    title: "After a Refund",
+    paragraphs: [
+      "Approved refunds are processed through Paddle, and account access may be adjusted after the refund is confirmed.",
+      "After a refund is confirmed, account access may be adjusted, limited, or ended according to the subscription status, the reason for the refund, and applicable provider rules.",
+    ],
+  },
+  {
+    id: "chargebacks",
+    title: "Chargebacks",
+    paragraphs: [
+      "Please contact support before filing a chargeback so we can review the billing concern.",
+      "Chargebacks filed without prior contact may lead to account review or suspension pending resolution, to the extent permitted by law and provider rules.",
     ],
   },
   {
     id: "legal-rights",
     title: "Statutory Rights",
     paragraphs: [
-      "Nothing in this policy limits your mandatory consumer rights under applicable law. If you are located in the European Union, United Kingdom, or another jurisdiction with statutory cooling-off or withdrawal rights, you may have additional remedies independent of this voluntary guarantee.",
-      "Where local law requires refunds in circumstances not covered here, we will comply with those legal obligations.",
+      "Nothing in this policy limits mandatory consumer rights under applicable law. Where local law requires a refund or other remedy, we will follow those requirements.",
     ],
   },
   {
     id: "changes",
     title: "Changes to This Policy",
     paragraphs: [
-      'We may update this Refund Policy from time to time. Changes will be posted on this page with an updated "Last updated" date. Material changes will not retroactively reduce refund rights for payments already made under a prior version without your consent where prohibited by law.',
+      'We may update this Refund Policy from time to time. Changes will be posted on this page with an updated "Last updated" date.',
     ],
   },
   {
     id: "contact",
     title: "Contact",
-    paragraphs: [
-      "Refund requests and billing questions:",
-    ],
+    paragraphs: ["Refund and billing questions:"],
     list: [
       `Email: ${siteConfig.legal.billingEmail}`,
-      `Product: ${siteConfig.name} — AI Prompt Toolkit`,
+      `Product: ${siteConfig.name}`,
       "Website: https://www.creatornivo.com/refund-policy",
+      "Pricing page: https://www.creatornivo.com/pricing",
     ],
   },
 ];
