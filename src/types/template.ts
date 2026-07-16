@@ -117,7 +117,11 @@ export interface TemplateListItem {
   title: string;
   description: string;
   category: TemplateCategory;
-  prompt: string;
+  /**
+   * Full prompt text must never be sent to the browser.
+   * Omitted (or empty) on all client-facing list DTOs; generate loads prompt from DB server-side.
+   */
+  prompt?: string;
   variables: TemplateVariable[];
   requiredPlan: Plan;
   isLocked: boolean;

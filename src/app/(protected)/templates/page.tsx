@@ -10,7 +10,8 @@ export const dynamic = "force-dynamic";
 
 export default async function TemplatesPage() {
   const session = await getSession();
-  const templates = await getTemplatesForUser(session);
+  // Catalog grid only needs metadata — never full prompts.
+  const templates = await getTemplatesForUser(session, { includePrompt: false });
 
   return (
     <>

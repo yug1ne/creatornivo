@@ -345,7 +345,7 @@ test("all form fields have usable metadata, validation, groups, and conditional 
   }
 });
 
-test("filled prompts and prompt preview mapping handle required, optional, unicode, quotes, and newlines", () => {
+test("filled prompts are server-side only; client readiness panel never maps full prompts", () => {
   const route = readProjectFile("src", "app", "api", "ai", "generate", "route.ts");
   const preview = readProjectFile(
     "src",
@@ -357,11 +357,11 @@ test("filled prompts and prompt preview mapping handle required, optional, unico
     route,
     /fillPromptTemplate\(\s*template\.prompt,\s*templateValues,\s*variables,\s*\)/,
   );
-  assert.match(
-    preview,
-    /fillPromptTemplate\(\s*template\.prompt,\s*values,\s*template\.variables,\s*\)/,
-  );
+  // Client panel must not reconstruct internal prompts (H1).
+  assert.doesNotMatch(preview, /fillPromptTemplate/);
+  assert.doesNotMatch(preview, /template\.prompt/);
   assert.doesNotMatch(preview, /highlightVariables/);
+  assert.match(preview, /assembles the final prompt securely/i);
 
   for (const template of catalog) {
     const schema = readJson<FormSchema>(

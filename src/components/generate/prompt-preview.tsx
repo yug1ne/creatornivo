@@ -1,10 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
-
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { fillPromptTemplate } from "@/lib/templates/utils";
+import { isTemplateFieldVisible } from "@/lib/templates/utils";
 import { cn } from "@/lib/utils/cn";
 import type { TemplateListItem } from "@/types/template";
 
@@ -13,169 +10,86 @@ interface PromptPreviewProps {
   values: Record<string, string>;
 }
 
-const PROTECTED_NOTICE = "Промпт защищён";
-const NOTICE_MS = 2200;
-
+/**
+ * Safe readiness panel — does not receive or display full template prompts.
+ * The real prompt is assembled server-side in POST /api/ai/generate.
+ */
 export function PromptPreview({ template, values }: PromptPreviewProps) {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [showProtectedNotice, setShowProtectedNotice] = useState(false);
-  const noticeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const filledPrompt = fillPromptTemplate(
-    template.prompt,
-    values,
-    template.variables,
+  const visibleVariables = template.variables.filter((variable) =>
+    isTemplateFieldVisible(variable, values),
   );
-  const hasEmptyRequired = template.variables.some(
-    (v) => v.required && !values[v.key]?.trim(),
+  const requiredVisible = visibleVariables.filter((v) => v.required);
+  const filledRequired = requiredVisible.filter(
+    (v) => (values[v.key] ?? "").trim().length > 0,
   );
-  const charCount = filledPrompt.length;
-
-  const flashProtectedNotice = useCallback(() => {
-    setShowProtectedNotice(true);
-    if (noticeTimerRef.current) {
-      clearTimeout(noticeTimerRef.current);
-    }
-    noticeTimerRef.current = setTimeout(() => {
-      setShowProtectedNotice(false);
-      noticeTimerRef.current = null;
-    }, NOTICE_MS);
-  }, []);
-
-  useEffect(() => {
-    return () => {
-      if (noticeTimerRef.current) {
-        clearTimeout(noticeTimerRef.current);
-      }
-    };
-  }, []);
-
-  const handleContextMenu = useCallback(
-    (event: React.MouseEvent) => {
-      event.preventDefault();
-      flashProtectedNotice();
-    },
-    [flashProtectedNotice],
+  const optionalFilled = visibleVariables.filter(
+    (v) => !v.required && (values[v.key] ?? "").trim().length > 0,
   );
-
-  const handleCopy = useCallback(
-    (event: React.ClipboardEvent) => {
-      event.preventDefault();
-      event.clipboardData?.setData("text/plain", "");
-      flashProtectedNotice();
-    },
-    [flashProtectedNotice],
+  const missingRequired = requiredVisible.filter(
+    (v) => !(values[v.key] ?? "").trim(),
   );
-
-  const handleCut = useCallback(
-    (event: React.ClipboardEvent) => {
-      event.preventDefault();
-      event.clipboardData?.setData("text/plain", "");
-      flashProtectedNotice();
-    },
-    [flashProtectedNotice],
-  );
-
-  const handleKeyDown = useCallback(
-    (event: React.KeyboardEvent) => {
-      const key = event.key.toLowerCase();
-      const isMod = event.ctrlKey || event.metaKey;
-      if (!isMod) return;
-
-      // Block common copy shortcuts while focus is in the preview body
-      if (key === "c" || key === "x" || key === "a") {
-        event.preventDefault();
-        event.stopPropagation();
-        flashProtectedNotice();
-      }
-    },
-    [flashProtectedNotice],
-  );
+  const ready = missingRequired.length === 0;
 
   return (
     <Card className="overflow-hidden">
-      <CardHeader className="flex-row items-center justify-between space-y-0 border-b border-border pb-4">
-        <div>
-          <CardTitle className="text-sm">Prompt preview</CardTitle>
-          <p className="mt-0.5 text-xs text-muted-foreground">
-            This exact text will be sent to AI · {charCount} characters
-          </p>
-        </div>
-        <Button
-          type="button"
-          variant="ghost"
-          size="sm"
-          onClick={() => setIsExpanded((prev) => !prev)}
-        >
-          {isExpanded ? "Collapse" : "Expand"}
-        </Button>
+      <CardHeader className="space-y-1 border-b border-border pb-4">
+        <CardTitle className="text-sm">Ready to generate</CardTitle>
+        <p className="text-xs text-muted-foreground">
+          Your inputs are ready. Creatornivo assembles the final prompt securely
+          on the server.
+        </p>
       </CardHeader>
 
-      <CardContent className="p-0">
-        <div
-          className={cn(
-            "relative scrollbar-thin overflow-y-auto px-5 py-4",
-            isExpanded ? "max-h-96" : "max-h-40",
-          )}
-          onContextMenu={handleContextMenu}
-          onCopy={handleCopy}
-          onCut={handleCut}
-          onKeyDown={handleKeyDown}
-          // tabIndex so keydown works when the block is focused
-          tabIndex={0}
-          role="region"
-          aria-label="Protected prompt preview"
-        >
-          {/* Watermark overlay — visual friction, does not block scroll */}
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-0 z-10 overflow-hidden select-none"
-          >
-            <div
-              className="absolute inset-[-20%] flex flex-wrap content-center justify-center gap-x-10 gap-y-8 opacity-[0.07] dark:opacity-[0.1]"
-              style={{ transform: "rotate(-18deg)" }}
-            >
-              {Array.from({ length: 24 }).map((_, i) => (
-                <span
-                  key={i}
-                  className="whitespace-nowrap text-sm font-semibold tracking-widest text-foreground"
-                >
-                  Creatornivo
-                </span>
-              ))}
-            </div>
-          </div>
-
-          <pre
+      <CardContent className="space-y-3 px-5 py-4">
+        <div className="flex flex-wrap gap-2 text-xs">
+          <span
             className={cn(
-              "relative z-0 whitespace-pre-wrap font-mono text-xs leading-relaxed text-foreground/80",
-              "select-none",
-              "[-webkit-user-select:none] [-moz-user-select:none] [user-select:none]",
+              "rounded-full border px-2.5 py-0.5 font-medium",
+              ready
+                ? "border-success/30 bg-success/10 text-success"
+                : "border-warning/30 bg-warning/10 text-warning",
             )}
-            // Extra hard block for selection APIs
-            onMouseDown={(e) => {
-              // Allow focusing the region for keyboard handling, but avoid drag-select
-              if (e.detail > 1) {
-                e.preventDefault();
-              }
-            }}
           >
-            {filledPrompt}
-          </pre>
-
-          {showProtectedNotice && (
-            <div
-              className="pointer-events-none absolute bottom-3 left-1/2 z-20 -translate-x-1/2 rounded-md border border-border bg-background/95 px-3 py-1.5 text-xs font-medium text-foreground shadow-md backdrop-blur-sm"
-              role="status"
-              aria-live="polite"
-            >
-              {PROTECTED_NOTICE}
-            </div>
+            {ready ? "Inputs complete" : "Required fields missing"}
+          </span>
+          <span className="rounded-full border border-border bg-muted/40 px-2.5 py-0.5 text-muted-foreground">
+            {filledRequired.length}/{requiredVisible.length} required
+          </span>
+          {optionalFilled.length > 0 && (
+            <span className="rounded-full border border-border bg-muted/40 px-2.5 py-0.5 text-muted-foreground">
+              {optionalFilled.length} optional filled
+            </span>
           )}
         </div>
 
-        {hasEmptyRequired && (
-          <p className="border-t border-border bg-warning/10 px-5 py-2.5 text-xs text-warning">
+        <dl className="space-y-1.5 text-xs">
+          <div className="flex justify-between gap-3">
+            <dt className="text-muted-foreground">Template</dt>
+            <dd className="truncate font-medium text-foreground">
+              {template.title}
+            </dd>
+          </div>
+          <div className="flex justify-between gap-3">
+            <dt className="text-muted-foreground">Visible fields</dt>
+            <dd className="font-medium text-foreground">
+              {visibleVariables.length}
+            </dd>
+          </div>
+        </dl>
+
+        {missingRequired.length > 0 ? (
+          <p className="rounded-md border border-warning/20 bg-warning/10 px-3 py-2 text-xs text-warning">
             Fill in required fields before generating
+            {missingRequired.length <= 4
+              ? `: ${missingRequired.map((v) => v.label).join(", ")}`
+              : ` (${missingRequired.length} remaining)`}
+            .
+          </p>
+        ) : (
+          <p className="text-xs text-muted-foreground">
+            When you click Generate, the server loads the protected template and
+            combines it with your form values. The full prompt never leaves the
+            server.
           </p>
         )}
       </CardContent>

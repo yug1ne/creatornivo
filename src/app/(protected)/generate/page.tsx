@@ -15,7 +15,8 @@ export default async function GeneratePage() {
   const session = await requireSession();
 
   const [templates, usageSnapshot, savedCount, user] = await Promise.all([
-    getTemplatesForUser(session),
+    // Client metadata only — full prompts stay server-side in /api/ai/generate.
+    getTemplatesForUser(session, { includePrompt: false }),
     getUserUsageSnapshot(session.id, session.plan),
     prisma.savedPrompt.count({ where: { userId: session.id } }),
     prisma.user.findUnique({
@@ -30,7 +31,7 @@ export default async function GeneratePage() {
     <>
       <PageHeader
         title="Generate"
-        description="Fill in parameters, review the prompt, and get content in real time"
+        description="Fill in parameters and generate content. The final prompt is assembled securely on the server."
       />
 
       <Suspense fallback={<GenerateWorkspaceSkeleton />}>
