@@ -16,7 +16,7 @@ const screenshots = [
     label: "Generate",
     title: "Template picker + parameters",
     description:
-      "Choose a template, fill in your topic and tone, and preview the exact prompt before hitting generate.",
+      "Choose a template, fill in your topic and tone, and generate a draft. The final prompt is assembled securely on the server.",
     url: "creatornivo.com/generate",
     Mockup: GenerateMockup,
   },
