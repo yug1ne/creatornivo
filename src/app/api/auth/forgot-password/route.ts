@@ -6,7 +6,12 @@ import {
   requestPasswordResetForEmail,
 } from "@/lib/auth/password-reset";
 import { prismaPasswordResetStore } from "@/lib/auth/password-reset-store";
-import { AuthRateLimitError, enforceAuthRateLimit } from "@/lib/auth/rate-limit";
+import {
+  AuthRateLimitError,
+  AuthRateLimitUnavailableError,
+  AUTH_RATE_LIMIT_UNAVAILABLE_MESSAGE,
+  enforceAuthRateLimit,
+} from "@/lib/auth/rate-limit";
 import { sendPasswordResetEmail } from "@/lib/email/send-password-reset";
 
 export async function POST(request: Request) {
@@ -34,6 +39,13 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ message: FORGOT_PASSWORD_SUCCESS_MESSAGE });
   } catch (error) {
+    if (error instanceof AuthRateLimitUnavailableError) {
+      return NextResponse.json(
+        { error: AUTH_RATE_LIMIT_UNAVAILABLE_MESSAGE },
+        { status: 503 },
+      );
+    }
+
     if (error instanceof AuthRateLimitError) {
       return NextResponse.json(
         { error: AUTH_RATE_LIMIT_GENERIC_MESSAGE },

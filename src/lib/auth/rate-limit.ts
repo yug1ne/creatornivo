@@ -20,9 +20,9 @@ export class AuthRateLimitError extends Error {
   }
 }
 
-/** Register is fail-closed in production when rate limiting is unavailable. */
+/** Shown when real Production cannot enforce Upstash limits (fail-closed). */
 export const AUTH_RATE_LIMIT_UNAVAILABLE_MESSAGE =
-  "Registration is temporarily unavailable. Please try again later.";
+  "This action is temporarily unavailable. Please try again later.";
 
 export class AuthRateLimitUnavailableError extends Error {
   readonly status = 503;
@@ -38,6 +38,25 @@ export type AuthRateLimitConsume = (
   policy: AuthRateLimitPolicy,
 ) => Promise<boolean>;
 
+export type AuthRateLimitEnv = {
+  /** Vercel deployment target: production | preview | development */
+  vercelEnv?: string | undefined;
+  /** Node environment; used only when VERCEL_ENV is unset (non-Vercel hosts). */
+  nodeEnv?: string | undefined;
+};
+
+/**
+ * Auth abuse endpoints that must not run without rate limiting on real Production.
+ * export_data / delete_account / change_password stay fail-open for availability.
+ */
+export const AUTH_RATE_LIMIT_FAIL_CLOSED_ACTIONS = new Set<AuthRateLimitAction>([
+  "login",
+  "register",
+  "forgot_password",
+  "reset_password",
+  "resend_verification",
+]);
+
 let warnedDisabled = false;
 const limiterCache = new Map<string, Ratelimit>();
 
@@ -51,14 +70,30 @@ function warnRateLimitDisabled(): void {
 }
 
 /**
- * Register is the only action that fails closed when rate limiting cannot run
- * in production. Login/reset/export/delete stay fail-open for availability.
+ * True only for the real Production deployment.
+ * - Prefer VERCEL_ENV === "production" (Preview is NOT production even if NODE_ENV=production).
+ * - If VERCEL_ENV is unset (local / non-Vercel), fall back to NODE_ENV === "production".
+ */
+export function isRealProductionDeployment(
+  env: AuthRateLimitEnv = {},
+): boolean {
+  const vercelEnv = env.vercelEnv ?? process.env.VERCEL_ENV;
+  if (vercelEnv === "production") return true;
+  if (vercelEnv === "preview" || vercelEnv === "development") return false;
+  const nodeEnv = env.nodeEnv ?? process.env.NODE_ENV;
+  return nodeEnv === "production";
+}
+
+/**
+ * Whether this action must fail closed when Upstash is missing or errors.
+ * Real Production only; Vercel Preview and local dev remain fail-open.
  */
 export function shouldFailClosedWhenRateLimitUnavailable(
   action: AuthRateLimitAction,
-  nodeEnv: string | undefined = process.env.NODE_ENV,
+  env: AuthRateLimitEnv = {},
 ): boolean {
-  return action === "register" && nodeEnv === "production";
+  if (!AUTH_RATE_LIMIT_FAIL_CLOSED_ACTIONS.has(action)) return false;
+  return isRealProductionDeployment(env);
 }
 
 function getUpstashLimiter(
@@ -99,14 +134,19 @@ export async function checkAuthRateLimits(input: {
   consume?: AuthRateLimitConsume;
   /** Override NODE_ENV for tests. Defaults to process.env.NODE_ENV. */
   nodeEnv?: string;
+  /** Override VERCEL_ENV for tests. Defaults to process.env.VERCEL_ENV. */
+  vercelEnv?: string;
 }): Promise<void> {
-  const nodeEnv = input.nodeEnv ?? process.env.NODE_ENV;
+  const env: AuthRateLimitEnv = {
+    nodeEnv: input.nodeEnv ?? process.env.NODE_ENV,
+    vercelEnv: input.vercelEnv ?? process.env.VERCEL_ENV,
+  };
   const enabled = input.enabled ?? isAuthRateLimitEnabled();
   if (!enabled) {
     warnRateLimitDisabled();
-    if (shouldFailClosedWhenRateLimitUnavailable(input.action, nodeEnv)) {
+    if (shouldFailClosedWhenRateLimitUnavailable(input.action, env)) {
       console.error(
-        "[auth-rate-limit] Register blocked: rate limiting is not configured in production",
+        `[auth-rate-limit] ${input.action} blocked: rate limiting is not configured in real Production`,
       );
       throw new AuthRateLimitUnavailableError();
     }
@@ -147,11 +187,11 @@ export async function checkAuthRateLimits(input: {
     }
 
     console.error("[auth-rate-limit] Upstash check failed", error);
-    if (shouldFailClosedWhenRateLimitUnavailable(input.action, nodeEnv)) {
+    if (shouldFailClosedWhenRateLimitUnavailable(input.action, env)) {
       throw new AuthRateLimitUnavailableError();
     }
 
-    if (nodeEnv === "development") {
+    if (env.nodeEnv === "development") {
       console.warn(
         "[auth-rate-limit] Skipping auth rate limit after Upstash error in development",
       );

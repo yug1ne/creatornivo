@@ -11,6 +11,7 @@ import {
   AuthRateLimitUnavailableError,
   AUTH_RATE_LIMIT_UNAVAILABLE_MESSAGE,
   checkAuthRateLimits,
+  isRealProductionDeployment,
   shouldFailClosedWhenRateLimitUnavailable,
 } from "../src/lib/auth/rate-limit";
 import bcrypt from "bcryptjs";
@@ -223,38 +224,82 @@ test("register IP limit is tightened to 5 per hour for launch", () => {
   assert.equal(authRateLimitPolicies.register.account?.maxAttempts, 5);
 });
 
-test("shouldFailClosedWhenRateLimitUnavailable only for register in production", () => {
+test("isRealProductionDeployment prefers VERCEL_ENV over NODE_ENV", () => {
   assert.equal(
-    shouldFailClosedWhenRateLimitUnavailable("register", "production"),
+    isRealProductionDeployment({
+      vercelEnv: "production",
+      nodeEnv: "production",
+    }),
     true,
   );
   assert.equal(
-    shouldFailClosedWhenRateLimitUnavailable("register", "development"),
+    isRealProductionDeployment({
+      vercelEnv: "preview",
+      nodeEnv: "production",
+    }),
     false,
   );
   assert.equal(
-    shouldFailClosedWhenRateLimitUnavailable("register", "test"),
+    isRealProductionDeployment({
+      vercelEnv: "development",
+      nodeEnv: "production",
+    }),
     false,
   );
+  // Non-Vercel: fall back to NODE_ENV
   assert.equal(
-    shouldFailClosedWhenRateLimitUnavailable("login", "production"),
-    false,
+    isRealProductionDeployment({ vercelEnv: undefined, nodeEnv: "production" }),
+    true,
   );
   assert.equal(
-    shouldFailClosedWhenRateLimitUnavailable("forgot_password", "production"),
-    false,
-  );
-  assert.equal(
-    shouldFailClosedWhenRateLimitUnavailable("export_data", "production"),
-    false,
-  );
-  assert.equal(
-    shouldFailClosedWhenRateLimitUnavailable("delete_account", "production"),
+    isRealProductionDeployment({
+      vercelEnv: undefined,
+      nodeEnv: "development",
+    }),
     false,
   );
 });
 
-test("register fails closed in production when rate limiting is disabled", async () => {
+test("shouldFailClosed covers abuse endpoints only on real Production", () => {
+  const realProd = { vercelEnv: "production", nodeEnv: "production" };
+  const preview = { vercelEnv: "preview", nodeEnv: "production" };
+  const localDev = { vercelEnv: undefined, nodeEnv: "development" };
+
+  for (const action of [
+    "login",
+    "register",
+    "forgot_password",
+    "reset_password",
+    "resend_verification",
+  ] as const) {
+    assert.equal(
+      shouldFailClosedWhenRateLimitUnavailable(action, realProd),
+      true,
+      `${action} should fail closed on real Production`,
+    );
+    assert.equal(
+      shouldFailClosedWhenRateLimitUnavailable(action, preview),
+      false,
+      `${action} should stay fail-open on Vercel Preview`,
+    );
+    assert.equal(
+      shouldFailClosedWhenRateLimitUnavailable(action, localDev),
+      false,
+      `${action} should stay fail-open in local development`,
+    );
+  }
+
+  assert.equal(
+    shouldFailClosedWhenRateLimitUnavailable("export_data", realProd),
+    false,
+  );
+  assert.equal(
+    shouldFailClosedWhenRateLimitUnavailable("delete_account", realProd),
+    false,
+  );
+});
+
+test("register fails closed in real Production when rate limiting is disabled", async () => {
   let calls = 0;
 
   await assert.rejects(
@@ -263,6 +308,7 @@ test("register fails closed in production when rate limiting is disabled", async
       ipKey: "203.0.113.10",
       email: "user@example.com",
       enabled: false,
+      vercelEnv: "production",
       nodeEnv: "production",
       consume: async () => {
         calls += 1;
@@ -280,25 +326,70 @@ test("register fails closed in production when rate limiting is disabled", async
   assert.equal(calls, 0);
 });
 
-test("login remains fail-open in production when rate limiting is disabled", async () => {
-  let calls = 0;
-
-  await checkAuthRateLimits({
-    action: "login",
-    ipKey: "203.0.113.10",
-    email: "user@example.com",
-    enabled: false,
-    nodeEnv: "production",
-    consume: async () => {
-      calls += 1;
-      return true;
-    },
-  });
-
-  assert.equal(calls, 0);
+test("login fails closed in real Production when rate limiting is disabled", async () => {
+  await assert.rejects(
+    checkAuthRateLimits({
+      action: "login",
+      ipKey: "203.0.113.10",
+      email: "user@example.com",
+      enabled: false,
+      vercelEnv: "production",
+      nodeEnv: "production",
+      consume: async () => true,
+    }),
+    AuthRateLimitUnavailableError,
+  );
 });
 
-test("register remains fail-open in development when rate limiting is disabled", async () => {
+test("forgot/reset/resend fail closed in real Production when Upstash missing", async () => {
+  for (const action of [
+    "forgot_password",
+    "reset_password",
+    "resend_verification",
+  ] as const) {
+    await assert.rejects(
+      checkAuthRateLimits({
+        action,
+        ipKey: "203.0.113.10",
+        email: "user@example.com",
+        enabled: false,
+        vercelEnv: "production",
+        nodeEnv: "production",
+        consume: async () => true,
+      }),
+      (error: unknown) => {
+        assert.ok(error instanceof AuthRateLimitUnavailableError);
+        assert.equal(error.status, 503);
+        return true;
+      },
+      `${action} should fail closed`,
+    );
+  }
+});
+
+test("Vercel Preview stays fail-open when Upstash is missing", async () => {
+  for (const action of [
+    "login",
+    "register",
+    "forgot_password",
+    "reset_password",
+    "resend_verification",
+  ] as const) {
+    await checkAuthRateLimits({
+      action,
+      ipKey: "203.0.113.10",
+      email: "user@example.com",
+      enabled: false,
+      vercelEnv: "preview",
+      nodeEnv: "production",
+      consume: async () => {
+        throw new Error("should not be called");
+      },
+    });
+  }
+});
+
+test("local development stays fail-open when Upstash is missing", async () => {
   let calls = 0;
 
   await checkAuthRateLimits({
@@ -306,6 +397,7 @@ test("register remains fail-open in development when rate limiting is disabled",
     ipKey: "203.0.113.10",
     email: "user@example.com",
     enabled: false,
+    vercelEnv: undefined,
     nodeEnv: "development",
     consume: async () => {
       calls += 1;
@@ -316,13 +408,14 @@ test("register remains fail-open in development when rate limiting is disabled",
   assert.equal(calls, 0);
 });
 
-test("register fails closed in production when Upstash consume errors", async () => {
+test("register fails closed in real Production when Upstash consume errors", async () => {
   await assert.rejects(
     checkAuthRateLimits({
       action: "register",
       ipKey: "203.0.113.10",
       email: "user@example.com",
       enabled: true,
+      vercelEnv: "production",
       nodeEnv: "production",
       consume: async () => {
         throw new Error("upstash unavailable");
@@ -336,16 +429,50 @@ test("register fails closed in production when Upstash consume errors", async ()
   );
 });
 
-test("login remains fail-open in production when Upstash consume errors", async () => {
+test("login fails closed in real Production when Upstash consume errors", async () => {
+  await assert.rejects(
+    checkAuthRateLimits({
+      action: "login",
+      ipKey: "203.0.113.10",
+      email: "user@example.com",
+      enabled: true,
+      vercelEnv: "production",
+      nodeEnv: "production",
+      consume: async () => {
+        throw new Error("upstash unavailable");
+      },
+    }),
+    AuthRateLimitUnavailableError,
+  );
+});
+
+test("healthy Upstash path still allows login and register", async () => {
+  const buckets: string[] = [];
+
   await checkAuthRateLimits({
     action: "login",
     ipKey: "203.0.113.10",
     email: "user@example.com",
     enabled: true,
+    vercelEnv: "production",
     nodeEnv: "production",
-    consume: async () => {
-      throw new Error("upstash unavailable");
+    consume: async (bucket) => {
+      buckets.push(bucket);
+      return true;
     },
+  });
+
+  assert.equal(buckets.length, 2);
+  assert.match(buckets[0], /^login:ip:/);
+
+  await checkAuthRateLimits({
+    action: "register",
+    ipKey: "203.0.113.11",
+    email: "new@example.com",
+    enabled: true,
+    vercelEnv: "production",
+    nodeEnv: "production",
+    consume: async () => true,
   });
 });
 
@@ -355,6 +482,7 @@ test("register remains fail-open in development when Upstash consume errors", as
     ipKey: "203.0.113.10",
     email: "user@example.com",
     enabled: true,
+    vercelEnv: undefined,
     nodeEnv: "development",
     consume: async () => {
       throw new Error("upstash unavailable");

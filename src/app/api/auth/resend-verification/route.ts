@@ -10,6 +10,8 @@ import {
 import { prismaEmailVerificationStore } from "@/lib/auth/email-verification-store";
 import {
   AuthRateLimitError,
+  AuthRateLimitUnavailableError,
+  AUTH_RATE_LIMIT_UNAVAILABLE_MESSAGE,
   enforceAuthRateLimit,
 } from "@/lib/auth/rate-limit";
 import { requireSession } from "@/lib/auth/session";
@@ -66,6 +68,13 @@ export async function postResendVerification(
       alreadyVerified: false,
     });
   } catch (error) {
+    if (error instanceof AuthRateLimitUnavailableError) {
+      return NextResponse.json(
+        { error: AUTH_RATE_LIMIT_UNAVAILABLE_MESSAGE },
+        { status: 503 },
+      );
+    }
+
     if (error instanceof AuthRateLimitError) {
       return NextResponse.json(
         { error: AUTH_RATE_LIMIT_GENERIC_MESSAGE },
