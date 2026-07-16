@@ -13,6 +13,8 @@
 # testing
 /coverage
 qa-results/
+smoke-reports/
+scripts/template-smoke/.auth/
 
 # next.js
 /.next/
