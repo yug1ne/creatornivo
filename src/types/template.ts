@@ -111,6 +111,37 @@ export interface Template {
   updatedAt: Date;
 }
 
+/**
+ * Lightweight catalog card/picker item.
+ * Never includes full form variables or prompt text.
+ */
+export interface TemplateCatalogItem {
+  id: string;
+  slug: string;
+  title: string;
+  description: string;
+  category: TemplateCategory;
+  requiredPlan: Plan;
+  isLocked: boolean;
+  /** Field count only — full schemas load per selected template. */
+  variableCount: number;
+}
+
+/**
+ * Selected-template form DTO for the generate UI / form API.
+ * Includes variables for the form; never includes prompt.
+ */
+export interface TemplateFormDetail {
+  id: string;
+  slug: string;
+  title: string;
+  description: string;
+  category: TemplateCategory;
+  variables: TemplateVariable[];
+  requiredPlan: Plan;
+  isLocked: boolean;
+}
+
 export interface TemplateListItem {
   id: string;
   slug: string;

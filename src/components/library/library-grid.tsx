@@ -7,26 +7,35 @@ import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils/cn";
 
 export interface LibraryPromptItem {
   id: string;
   title: string;
-  content: string;
+  /** Short snippet for cards — full content is on the detail page. */
+  contentPreview: string;
   updatedAt: string;
   templateTitle: string | null;
 }
 
 interface LibraryGridProps {
   prompts: LibraryPromptItem[];
+  /** Total saved prompts for this user (may exceed the list page limit). */
+  totalCount?: number;
+  listLimit?: number;
 }
 
 type SortOption = "newest" | "oldest" | "title";
 
-export function LibraryGrid({ prompts }: LibraryGridProps) {
+export function LibraryGrid({
+  prompts,
+  totalCount,
+  listLimit,
+}: LibraryGridProps) {
   const [search, setSearch] = useState("");
   const [templateFilter, setTemplateFilter] = useState<string>("all");
   const [sort, setSort] = useState<SortOption>("newest");
+
+  const effectiveTotal = totalCount ?? prompts.length;
 
   const templateOptions = useMemo(() => {
     const titles = new Set<string>();
@@ -45,7 +54,7 @@ export function LibraryGrid({ prompts }: LibraryGridProps) {
       const matchesSearch =
         !query ||
         prompt.title.toLowerCase().includes(query) ||
-        prompt.content.toLowerCase().includes(query) ||
+        prompt.contentPreview.toLowerCase().includes(query) ||
         (prompt.templateTitle?.toLowerCase().includes(query) ?? false);
 
       return matchesTemplate && matchesSearch;
@@ -85,7 +94,7 @@ export function LibraryGrid({ prompts }: LibraryGridProps) {
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
         <Input
           type="search"
-          placeholder="Search by title or content..."
+          placeholder="Search by title or preview..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="flex-1"
@@ -119,7 +128,12 @@ export function LibraryGrid({ prompts }: LibraryGridProps) {
       </div>
 
       <p className="text-xs text-muted-foreground">
-        {filtered.length} of {prompts.length} prompts
+        {filtered.length} of {prompts.length} shown
+        {listLimit != null && effectiveTotal > prompts.length
+          ? ` · ${effectiveTotal} total (showing latest ${listLimit})`
+          : effectiveTotal !== prompts.length
+            ? ` · ${effectiveTotal} total`
+            : null}
       </p>
 
       {filtered.length === 0 ? (
@@ -150,7 +164,7 @@ export function LibraryGrid({ prompts }: LibraryGridProps) {
                   )}
 
                   <p className="mt-3 line-clamp-3 flex-1 text-sm leading-relaxed text-muted-foreground">
-                    {prompt.content}
+                    {prompt.contentPreview}
                   </p>
 
                   <p className="mt-4 text-xs text-muted-foreground">

@@ -7,16 +7,25 @@ import { canExportContent } from "@/lib/export/permissions";
 import { requireSession } from "@/lib/auth/session";
 import { prisma } from "@/lib/db";
 import { getUserUsageSnapshot } from "@/lib/usage";
-import { getTemplatesForUser } from "@/lib/templates/queries";
+import {
+  getTemplateCatalogForUser,
+  getTemplateFormBySlug,
+  resolveInitialCatalogTemplate,
+} from "@/lib/templates/queries";
 
 export const dynamic = "force-dynamic";
 
-export default async function GeneratePage() {
-  const session = await requireSession();
+interface GeneratePageProps {
+  searchParams: Promise<{ template?: string }>;
+}
 
-  const [templates, usageSnapshot, savedCount, user] = await Promise.all([
-    // Client metadata only — full prompts stay server-side in /api/ai/generate.
-    getTemplatesForUser(session, { includePrompt: false }),
+export default async function GeneratePage({ searchParams }: GeneratePageProps) {
+  const session = await requireSession();
+  const { template: templateSlug } = await searchParams;
+
+  const [catalog, usageSnapshot, savedCount, user] = await Promise.all([
+    // Lightweight catalog for the picker — full form loads for the selected template only.
+    getTemplateCatalogForUser(session),
     getUserUsageSnapshot(session.id, session.plan),
     prisma.savedPrompt.count({ where: { userId: session.id } }),
     prisma.user.findUnique({
@@ -24,6 +33,20 @@ export default async function GeneratePage() {
       select: { emailVerified: true },
     }),
   ]);
+
+  const initialCatalogItem = resolveInitialCatalogTemplate(
+    catalog,
+    templateSlug,
+  );
+
+  // Form schema only for the initial selection (never includes prompt).
+  const initialForm = initialCatalogItem
+    ? await getTemplateFormBySlug(session, initialCatalogItem.slug)
+    : null;
+
+  // Never hand a locked form into the workspace as the active selection.
+  const safeInitialForm =
+    initialForm && !initialForm.isLocked ? initialForm : null;
 
   const emailVerified = Boolean(user?.emailVerified);
 
@@ -36,7 +59,8 @@ export default async function GeneratePage() {
 
       <Suspense fallback={<GenerateWorkspaceSkeleton />}>
         <GenerateWorkspace
-          templates={templates}
+          catalog={catalog}
+          initialForm={safeInitialForm}
           userPlan={session.plan}
           canExport={canExportContent(session)}
           emailVerified={emailVerified}

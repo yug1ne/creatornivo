@@ -4,14 +4,14 @@ import { TemplatesGrid } from "@/components/templates/templates-grid";
 import { PageHeader } from "@/components/ui/page-header";
 import { buttonVariants } from "@/components/ui/button";
 import { getSession } from "@/lib/auth/session";
-import { getTemplatesForUser } from "@/lib/templates/queries";
+import { getTemplateCatalogForUser } from "@/lib/templates/queries";
 
 export const dynamic = "force-dynamic";
 
 export default async function TemplatesPage() {
   const session = await getSession();
-  // Catalog grid only needs metadata — never full prompts.
-  const templates = await getTemplatesForUser(session, { includePrompt: false });
+  // Catalog grid only needs lightweight metadata — never prompts or full form schemas.
+  const templates = await getTemplateCatalogForUser(session);
 
   return (
     <>

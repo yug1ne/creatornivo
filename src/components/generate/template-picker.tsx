@@ -19,7 +19,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Tooltip } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils/cn";
-import type { TemplateListItem } from "@/types/template";
+import type { TemplateCatalogItem } from "@/types/template";
 
 function LockIcon() {
   return (
@@ -42,10 +42,10 @@ function LockIcon() {
 }
 
 interface TemplatePickerProps {
-  templates: TemplateListItem[];
+  templates: TemplateCatalogItem[];
   selectedId: string | null;
   userPlan: "free" | "pro";
-  onSelect: (template: TemplateListItem) => void;
+  onSelect: (template: TemplateCatalogItem) => void;
 }
 
 export function TemplatePicker({

@@ -5,26 +5,38 @@ import { PageHeader } from "@/components/ui/page-header";
 import { buttonVariants } from "@/components/ui/button";
 import { requireSession } from "@/lib/auth/session";
 import { prisma } from "@/lib/db";
+import {
+  LIBRARY_LIST_LIMIT,
+  toLibraryContentPreview,
+} from "@/lib/library/list";
 
 export const dynamic = "force-dynamic";
 
 export default async function LibraryPage() {
   const session = await requireSession();
 
-  const prompts = await prisma.savedPrompt.findMany({
-    where: { userId: session.id },
-    orderBy: { updatedAt: "desc" },
-    include: {
-      template: {
-        select: { title: true, slug: true },
+  const [prompts, totalCount] = await Promise.all([
+    prisma.savedPrompt.findMany({
+      where: { userId: session.id },
+      orderBy: { updatedAt: "desc" },
+      take: LIBRARY_LIST_LIMIT,
+      select: {
+        id: true,
+        title: true,
+        content: true,
+        updatedAt: true,
+        template: {
+          select: { title: true },
+        },
       },
-    },
-  });
+    }),
+    prisma.savedPrompt.count({ where: { userId: session.id } }),
+  ]);
 
   const items = prompts.map((prompt) => ({
     id: prompt.id,
     title: prompt.title,
-    content: prompt.content,
+    contentPreview: toLibraryContentPreview(prompt.content),
     updatedAt: prompt.updatedAt.toISOString(),
     templateTitle: prompt.template?.title ?? null,
   }));
@@ -42,7 +54,11 @@ export default async function LibraryPage() {
       />
 
       <div data-onboarding="library-content">
-        <LibraryGrid prompts={items} />
+        <LibraryGrid
+          prompts={items}
+          totalCount={totalCount}
+          listLimit={LIBRARY_LIST_LIMIT}
+        />
       </div>
     </>
   );

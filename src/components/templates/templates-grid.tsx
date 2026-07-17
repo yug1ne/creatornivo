@@ -21,7 +21,7 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Tooltip } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils/cn";
-import type { TemplateListItem } from "@/types/template";
+import type { TemplateCatalogItem } from "@/types/template";
 
 function LockIcon() {
   return (
@@ -44,7 +44,7 @@ function LockIcon() {
 }
 
 interface TemplatesGridProps {
-  templates: TemplateListItem[];
+  templates: TemplateCatalogItem[];
 }
 
 export function TemplatesGrid({ templates }: TemplatesGridProps) {
@@ -196,10 +196,10 @@ export function TemplatesGrid({ templates }: TemplatesGridProps) {
                     {template.description}
                   </p>
 
-                  {template.variables.length > 0 && (
+                  {template.variableCount > 0 && (
                     <p className="mt-3 text-xs text-muted-foreground">
-                      {template.variables.length} variable
-                      {template.variables.length === 1 ? "" : "s"}
+                      {template.variableCount} variable
+                      {template.variableCount === 1 ? "" : "s"}
                     </p>
                   )}
                 </CardContent>

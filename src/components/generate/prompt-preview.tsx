@@ -3,10 +3,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { isTemplateFieldVisible } from "@/lib/templates/utils";
 import { cn } from "@/lib/utils/cn";
-import type { TemplateListItem } from "@/types/template";
+import type { TemplateFormDetail } from "@/types/template";
 
 interface PromptPreviewProps {
-  template: TemplateListItem;
+  template: TemplateFormDetail;
   values: Record<string, string>;
 }
 

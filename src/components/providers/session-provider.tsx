@@ -7,5 +7,9 @@ export function AuthSessionProvider({
 }: {
   children: React.ReactNode;
 }) {
-  return <SessionProvider>{children}</SessionProvider>;
+  // Avoid refetching /api/auth/session on every tab focus (JWT refresh hits DB).
+  // Explicit session.update() after checkout still works.
+  return (
+    <SessionProvider refetchOnWindowFocus={false}>{children}</SessionProvider>
+  );
 }

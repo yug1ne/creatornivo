@@ -42,7 +42,11 @@ import {
   parseGenerationApiError,
   type ParsedGenerationError,
 } from "@/lib/usage/quota-exceeded";
-import type { TemplateListItem, TemplateVariable } from "@/types/template";
+import type {
+  TemplateCatalogItem,
+  TemplateFormDetail,
+  TemplateVariable,
+} from "@/types/template";
 
 import { EmailVerificationBanner } from "./email-verification-banner";
 import { GenerationResult } from "./generation-result";
@@ -59,12 +63,49 @@ interface UsageStats extends UserUsageSnapshot {
 export type GenerationUsageSnapshot = UserUsageSnapshot;
 
 interface GenerateWorkspaceProps {
-  templates: TemplateListItem[];
+  /** Lightweight catalog for the picker — no form variables or prompts. */
+  catalog: TemplateCatalogItem[];
+  /** SSR form for the initial selection (?template= or first accessible). */
+  initialForm: TemplateFormDetail | null;
   userPlan: Plan;
   canExport: boolean;
   /** Server-loaded flag — unverified users may browse but cannot generate. */
   emailVerified?: boolean;
   usage: UsageStats;
+}
+
+function isTemplateFormDetail(value: unknown): value is TemplateFormDetail {
+  if (typeof value !== "object" || value === null) return false;
+  const record = value as Record<string, unknown>;
+  return (
+    typeof record.id === "string" &&
+    typeof record.slug === "string" &&
+    typeof record.title === "string" &&
+    Array.isArray(record.variables) &&
+    // Prompt must never appear on client form payloads.
+    !("prompt" in record && record.prompt != null && record.prompt !== "")
+  );
+}
+
+export async function fetchTemplateFormBySlug(
+  slug: string,
+  fetcher: typeof fetch = fetch,
+): Promise<TemplateFormDetail | null> {
+  const response = await fetcher(`/api/templates/${encodeURIComponent(slug)}`, {
+    method: "GET",
+    cache: "no-store",
+  });
+  if (!response.ok) return null;
+
+  const data = (await response.json()) as { template?: unknown };
+  if (!isTemplateFormDetail(data.template)) return null;
+
+  // Defense-in-depth: drop prompt if a buggy response includes it.
+  const { prompt: _drop, ...safe } = data.template as TemplateFormDetail & {
+    prompt?: unknown;
+  };
+  void _drop;
+  return safe as TemplateFormDetail;
 }
 
 export function acquireGenerationAttempt(
@@ -122,7 +163,8 @@ export async function fetchGenerationUsageSnapshot(
 }
 
 export function GenerateWorkspace({
-  templates,
+  catalog,
+  initialForm,
   userPlan,
   canExport,
   emailVerified = true,
@@ -134,9 +176,24 @@ export function GenerateWorkspace({
   const limits = getPlanLimits(userPlan);
   const canGenerateByEmail = emailVerified;
 
-  const accessibleTemplates = templates.filter((t) => !t.isLocked);
-  const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [values, setValues] = useState<Record<string, string>>({});
+  const accessibleCatalog = useMemo(
+    () => catalog.filter((t) => !t.isLocked),
+    [catalog],
+  );
+  const formCacheRef = useRef<Map<string, TemplateFormDetail>>(new Map());
+  const selectRequestRef = useRef(0);
+
+  const [selectedId, setSelectedId] = useState<string | null>(
+    initialForm?.id ?? null,
+  );
+  const [selectedForm, setSelectedForm] = useState<TemplateFormDetail | null>(
+    initialForm,
+  );
+  const [formLoading, setFormLoading] = useState(false);
+  const [formLoadError, setFormLoadError] = useState<string | null>(null);
+  const [values, setValues] = useState<Record<string, string>>(() =>
+    initialForm ? buildDefaultValues(initialForm.variables) : {},
+  );
   const [streamedContent, setStreamedContent] = useState("");
   const [model, setModel] = useState("");
   const [error, setError] = useState<ParsedGenerationError | null>(null);
@@ -163,8 +220,16 @@ export function GenerateWorkspace({
   const cancelResetButtonRef = useRef<HTMLButtonElement | null>(null);
   const [resetConfirmOpen, setResetConfirmOpen] = useState(false);
   const [formResetVersion, setFormResetVersion] = useState(0);
+  const didSyncUrlRef = useRef(false);
 
-  const selected = templates.find((t) => t.id === selectedId) ?? null;
+  // Seed client cache with SSR form (no prompt).
+  useEffect(() => {
+    if (initialForm) {
+      formCacheRef.current.set(initialForm.id, initialForm);
+    }
+  }, [initialForm]);
+
+  const selected = selectedForm;
   const isFormAtDefaults = selected
     ? areTemplateValuesAtDefaults(selected.variables, values)
     : true;
@@ -212,39 +277,97 @@ export function GenerateWorkspace({
     isStreaming,
   });
 
+  const applyForm = useCallback((form: TemplateFormDetail) => {
+    formCacheRef.current.set(form.id, form);
+    setSelectedId(form.id);
+    setSelectedForm(form);
+    setValues(buildDefaultValues(form.variables));
+    setFormLoading(false);
+    setFormLoadError(null);
+    setStreamedContent("");
+    setModel("");
+    setError(null);
+    setSavedPromptId(null);
+    setResultValidationContext(null);
+    setFormResetVersion((current) => current + 1);
+  }, []);
+
   const selectTemplate = useCallback(
-    (template: TemplateListItem) => {
+    async (template: TemplateCatalogItem) => {
       if (template.isLocked) return;
       if (!inFlightRef.current) requestIdRef.current = null;
 
+      const url = new URL(window.location.href);
+      url.searchParams.set("template", template.slug);
+      router.replace(url.pathname + url.search, { scroll: false });
+
+      const cached = formCacheRef.current.get(template.id);
+      if (cached) {
+        applyForm(cached);
+        return;
+      }
+
+      // Optimistically mark selection while form schema loads.
+      const requestId = ++selectRequestRef.current;
       setSelectedId(template.id);
-      setValues(buildDefaultValues(template.variables));
+      setSelectedForm(null);
+      setValues({});
+      setFormLoading(true);
+      setFormLoadError(null);
       setStreamedContent("");
       setModel("");
       setError(null);
       setSavedPromptId(null);
       setResultValidationContext(null);
 
-      const url = new URL(window.location.href);
-      url.searchParams.set("template", template.slug);
-      router.replace(url.pathname + url.search, { scroll: false });
+      try {
+        const form = await fetchTemplateFormBySlug(template.slug);
+        if (selectRequestRef.current !== requestId) return;
+
+        if (!form || form.isLocked) {
+          setFormLoading(false);
+          setFormLoadError(
+            form?.isLocked
+              ? "This template is only available on the Pro plan."
+              : "Could not load template form. Please try again.",
+          );
+          return;
+        }
+
+        applyForm(form);
+      } catch {
+        if (selectRequestRef.current !== requestId) return;
+        setFormLoading(false);
+        setFormLoadError("Could not load template form. Please try again.");
+      }
     },
-    [router],
+    [applyForm, router],
   );
 
+  // Sync URL when SSR already selected a form without ?template=.
   useEffect(() => {
-    if (selectedId) return;
+    if (didSyncUrlRef.current || !initialForm) return;
+    didSyncUrlRef.current = true;
+    if (initialSlug === initialForm.slug) return;
+
+    const url = new URL(window.location.href);
+    url.searchParams.set("template", initialForm.slug);
+    router.replace(url.pathname + url.search, { scroll: false });
+  }, [initialForm, initialSlug, router]);
+
+  // If SSR had no form, pick first accessible catalog item and load its form.
+  useEffect(() => {
+    if (selectedId || initialForm) return;
 
     const preselected = initialSlug
-      ? accessibleTemplates.find((t) => t.slug === initialSlug)
-      : accessibleTemplates[0];
+      ? accessibleCatalog.find((t) => t.slug === initialSlug)
+      : accessibleCatalog[0];
 
     if (preselected) {
       // The initial selection synchronizes local state with the URL/default.
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      selectTemplate(preselected);
+      void selectTemplate(preselected);
     }
-  }, [initialSlug, accessibleTemplates, selectedId, selectTemplate]);
+  }, [accessibleCatalog, initialForm, initialSlug, selectedId, selectTemplate]);
 
   const closeResetDialog = useCallback(() => {
     setResetConfirmOpen(false);
@@ -451,15 +574,37 @@ export function GenerateWorkspace({
       <div className="grid gap-6 lg:grid-cols-[300px_1fr]">
         <aside className="lg:sticky lg:top-6 lg:self-start">
           <TemplatePicker
-            templates={templates}
+            templates={catalog}
             selectedId={selectedId}
             userPlan={userPlan}
-            onSelect={selectTemplate}
+            onSelect={(template) => {
+              void selectTemplate(template);
+            }}
           />
         </aside>
 
         <div className="min-w-0 space-y-6">
-          {selected ? (
+          {formLoading && !selected ? (
+            <Card className="border-dashed">
+              <CardContent className="flex flex-col items-center justify-center py-16 text-center">
+                <span
+                  className="mb-4 h-8 w-8 animate-spin rounded-full border-2 border-primary/30 border-t-primary"
+                  aria-hidden
+                />
+                <p className="text-sm font-medium text-foreground">
+                  Loading template form…
+                </p>
+              </CardContent>
+            </Card>
+          ) : formLoadError && !selected ? (
+            <Card className="border-dashed">
+              <CardContent className="flex flex-col items-center justify-center py-16 text-center">
+                <p className="text-sm font-medium text-destructive">
+                  {formLoadError}
+                </p>
+              </CardContent>
+            </Card>
+          ) : selected ? (
             <div data-onboarding="generate-flow" className="space-y-6">
               <div className="flex items-start gap-4">
                 <span

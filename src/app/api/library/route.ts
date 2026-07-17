@@ -2,6 +2,10 @@ import { NextResponse } from "next/server";
 
 import { requireSession } from "@/lib/auth/session";
 import { prisma } from "@/lib/db";
+import {
+  LIBRARY_LIST_LIMIT,
+  toLibraryContentPreview,
+} from "@/lib/library/list";
 import { canSavePrompt } from "@/lib/subscriptions/limits";
 import { getSaveLimitMessage } from "@/lib/subscriptions/messages";
 import {
@@ -27,17 +31,44 @@ export async function GET() {
   try {
     const session = await requireSession();
 
-    const prompts = await prisma.savedPrompt.findMany({
-      where: { userId: session.id },
-      orderBy: { updatedAt: "desc" },
-      include: {
-        template: {
-          select: { title: true, slug: true },
+    const [prompts, totalCount] = await Promise.all([
+      prisma.savedPrompt.findMany({
+        where: { userId: session.id },
+        orderBy: { updatedAt: "desc" },
+        take: LIBRARY_LIST_LIMIT,
+        select: {
+          id: true,
+          title: true,
+          content: true,
+          updatedAt: true,
+          createdAt: true,
+          templateId: true,
+          tags: true,
+          template: {
+            select: { title: true, slug: true },
+          },
         },
-      },
-    });
+      }),
+      prisma.savedPrompt.count({ where: { userId: session.id } }),
+    ]);
 
-    return NextResponse.json({ prompts });
+    // List responses use previews only — full content stays on detail/export routes.
+    const listItems = prompts.map((prompt) => ({
+      id: prompt.id,
+      title: prompt.title,
+      contentPreview: toLibraryContentPreview(prompt.content),
+      updatedAt: prompt.updatedAt,
+      createdAt: prompt.createdAt,
+      templateId: prompt.templateId,
+      tags: prompt.tags,
+      template: prompt.template,
+    }));
+
+    return NextResponse.json({
+      prompts: listItems,
+      totalCount,
+      limit: LIBRARY_LIST_LIMIT,
+    });
   } catch {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
