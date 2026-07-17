@@ -15,6 +15,7 @@ const publicCopyFiles = [
   "src/components/landing/showcase-section.tsx",
   "src/components/landing/social-proof-section.tsx",
   "src/components/pricing/pro-plan-pricing.tsx",
+  "src/components/pricing/request-early-access-cta.tsx",
   "src/components/pricing/upgrade-button.tsx",
   "src/config/early-access.ts",
   "src/config/featured-templates.ts",
@@ -61,6 +62,36 @@ test("Early Access copy uses a neutral limited-time founding price", () => {
     /Early Access founding price — available for a limited time\./,
   );
   assert.match(copy, /discountPercent: 50/);
+});
+
+test("public Pro CTA is request-early-access mailto, not live checkout", () => {
+  const pricingPage = readFileSync("src/app/(public)/pricing/page.tsx", "utf8");
+  const landingPricing = readFileSync(
+    "src/components/landing/pricing-section.tsx",
+    "utf8",
+  );
+  const cta = readFileSync(
+    "src/components/pricing/request-early-access-cta.tsx",
+    "utf8",
+  );
+
+  for (const source of [pricingPage, landingPricing]) {
+    assert.match(source, /RequestEarlyAccessCta/);
+    assert.doesNotMatch(source, /UpgradeButton/);
+  }
+
+  assert.match(cta, /Request Early Access/);
+  assert.match(
+    cta,
+    /mailto:\$\{siteConfig\.legal\.billingEmail\}\?subject=CreatorNivo%20Early%20Access/,
+  );
+  assert.match(
+    cta,
+    /Paid checkout is temporarily unavailable while we finalize our payment provider/,
+  );
+  assert.doesNotMatch(cta, /Checkout powered by Paddle/i);
+  assert.doesNotMatch(pricingPage, /Checkout powered by Paddle/i);
+  assert.doesNotMatch(landingPricing, /Checkout powered by Paddle/i);
 });
 
 test("public plan copy matches implemented Free and Pro limits", () => {

@@ -2,22 +2,15 @@ import Link from "next/link";
 
 import { earlyAccessConfig } from "@/config/early-access";
 import { pricingPlans } from "@/config/pricing-display";
-import {
-  getActiveBillingProvider,
-  isBillingCheckoutConfigured,
-} from "@/config/billing";
 import { PLANS } from "@/config/plans";
-import { paddleConfig } from "@/config/paddle";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ProPlanPricing } from "@/components/pricing/pro-plan-pricing";
-import { UpgradeButton } from "@/components/pricing/upgrade-button";
+import { RequestEarlyAccessCta } from "@/components/pricing/request-early-access-cta";
 import { getEarlyAccessStatus } from "@/lib/early-access/status";
 import { cn } from "@/lib/utils/cn";
 
 export default async function PricingPage() {
-  const billingReady = isBillingCheckoutConfigured();
-  const billingProvider = getActiveBillingProvider();
   const earlyAccessStatus = await getEarlyAccessStatus();
 
   return (
@@ -80,13 +73,7 @@ export default async function PricingPage() {
               </ul>
 
               {plan.id === PLANS.PRO ? (
-                <UpgradeButton
-                  isConfigured={billingReady}
-                  billingProvider={billingProvider}
-                  earlyAccessAvailable={earlyAccessStatus.isAvailable}
-                  earlyAccessPrice={earlyAccessStatus.price}
-                  paddleEnvironment={paddleConfig.environment}
-                />
+                <RequestEarlyAccessCta />
               ) : (
                 <Link
                   href={plan.cta.href}

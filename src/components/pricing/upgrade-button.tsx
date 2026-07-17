@@ -146,11 +146,13 @@ export function UpgradeButton({
       >
         {buttonLabel}
       </button>
-      {billingProvider === "paddle" && (
+      {/* Public Paddle checkout branding removed while self-serve checkout is paused.
+          Backend Paddle routes remain available for later re-enable. */}
+      {billingProvider === "paddle" &&
+        paddleEnvironment === "sandbox" &&
+        process.env.NODE_ENV === "development" && (
         <p className="mt-2 text-center text-xs text-muted-foreground">
-          Checkout powered by Paddle
-          {paddleEnvironment === "sandbox" &&
-            " · Sandbox test card: 4242 4242 4242 4242"}
+          Dev only · Sandbox test card: 4242 4242 4242 4242
         </p>
       )}
       {error && (
