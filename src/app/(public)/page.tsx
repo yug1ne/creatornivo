@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { Suspense } from "react";
 
 import { EarlyAccessStatusBanner } from "@/components/layout/early-access-status-banner";
@@ -10,6 +11,23 @@ import { HowItWorksSection } from "@/components/landing/how-it-works-section";
 import { PricingSection } from "@/components/landing/pricing-section";
 import { ShowcaseSection } from "@/components/landing/showcase-section";
 import { SocialProofSection } from "@/components/landing/social-proof-section";
+import { siteMetadata } from "@/config/site";
+
+/** Homepage uses absolute title so the tab is never brand-only. */
+export const metadata: Metadata = {
+  title: {
+    absolute: siteMetadata.title,
+  },
+  description: siteMetadata.description,
+  openGraph: {
+    title: siteMetadata.title,
+    description: siteMetadata.description,
+  },
+  twitter: {
+    title: siteMetadata.title,
+    description: siteMetadata.description,
+  },
+};
 
 export default function HomePage() {
   return (

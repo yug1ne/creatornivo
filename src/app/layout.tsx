@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 
 import { AuthSessionProvider } from "@/components/providers/session-provider";
 import { ThemeProvider } from "@/components/providers/theme-provider";
+import { siteConfig, siteMetadata } from "@/config/site";
 import { themeInitScript } from "@/config/theme";
 
 import "./globals.css";
@@ -17,26 +18,56 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+function resolveMetadataBase(): URL {
+  const raw = siteConfig.url;
+  try {
+    if (raw.startsWith("http://") || raw.startsWith("https://")) {
+      return new URL(raw);
+    }
+  } catch {
+    // fall through
+  }
+  return new URL("https://www.creatornivo.com");
+}
+
 export const metadata: Metadata = {
+  metadataBase: resolveMetadataBase(),
   title: {
-    default: "Creatornivo",
-    template: "%s | Creatornivo",
+    default: siteMetadata.title,
+    template: "%s | CreatorNivo",
   },
-  description:
-    "AI-assisted text content SaaS: structured business drafts from predefined templates. Review and edit before use.",
+  description: siteMetadata.description,
+  openGraph: {
+    title: siteMetadata.title,
+    description: siteMetadata.description,
+    type: "website",
+    siteName: "CreatorNivo",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteMetadata.title,
+    description: siteMetadata.description,
+  },
   icons: {
     icon: [
-          { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
-          { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
-          { url: '/android-chrome-192x192.png', sizes: '192x192', type: 'image/png' },
-          { url: '/android-chrome-512x512.png', sizes: '512x512', type: 'image/png' },
-          { url: '/favicon.ico' },
-        ],
-        apple: [
-          { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
-        ],
-        shortcut: [{ url: '/favicon.ico' }],
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      {
+        url: "/android-chrome-192x192.png",
+        sizes: "192x192",
+        type: "image/png",
       },
+      {
+        url: "/android-chrome-512x512.png",
+        sizes: "512x512",
+        type: "image/png",
+      },
+      { url: "/favicon.ico" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+    shortcut: [{ url: "/favicon.ico" }],
+  },
 };
 
 export default function RootLayout({

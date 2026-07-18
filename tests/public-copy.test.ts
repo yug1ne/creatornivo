@@ -126,13 +126,13 @@ test("public marketing copy frames AI-assisted template drafting, not open-ended
   const register = readFileSync("src/app/(public)/register/page.tsx", "utf8");
 
   assert.match(
-    layout,
-    /AI-assisted text content SaaS: structured business drafts from predefined templates/,
-  );
-  assert.match(
     site,
-    /AI-assisted text content SaaS: structured business drafts from predefined templates/,
+    /AI-assisted text content SaaS for structured business drafts from predefined templates/,
   );
+  assert.match(layout, /siteMetadata\.title/);
+  assert.match(layout, /siteMetadata\.description/);
+  assert.match(layout, /openGraph:/);
+  assert.match(layout, /twitter:/);
   assert.match(
     hero,
     /AI-assisted text content workflow for marketers &amp; founders/,
@@ -152,4 +152,39 @@ test("public marketing copy frames AI-assisted template drafting, not open-ended
     register,
     /start drafting with AI-assisted business templates/,
   );
+});
+
+test("homepage and root SEO/social metadata use CreatorNivo positioning title", () => {
+  const site = readFileSync("src/config/site.ts", "utf8");
+  const layout = readFileSync("src/app/layout.tsx", "utf8");
+  const home = readFileSync("src/app/(public)/page.tsx", "utf8");
+
+  assert.match(
+    site,
+    /title: "CreatorNivo \| AI-assisted text content SaaS"/,
+  );
+  assert.match(
+    site,
+    /description:\s*"AI-assisted text content SaaS for structured business drafts from predefined templates\. Review, edit, and save drafts before use\."/,
+  );
+  assert.doesNotMatch(site, /AI Content Generator/i);
+  assert.doesNotMatch(site, /Creative Generative AI/i);
+
+  assert.match(layout, /openGraph:\s*\{[\s\S]*title: siteMetadata\.title/);
+  assert.match(
+    layout,
+    /openGraph:\s*\{[\s\S]*description: siteMetadata\.description/,
+  );
+  assert.match(layout, /twitter:\s*\{[\s\S]*title: siteMetadata\.title/);
+  assert.match(
+    layout,
+    /twitter:\s*\{[\s\S]*description: siteMetadata\.description/,
+  );
+  assert.match(layout, /default: siteMetadata\.title/);
+  assert.match(layout, /description: siteMetadata\.description/);
+
+  assert.match(home, /absolute: siteMetadata\.title/);
+  assert.match(home, /description: siteMetadata\.description/);
+  assert.match(home, /openGraph:/);
+  assert.match(home, /twitter:/);
 });
