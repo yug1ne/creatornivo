@@ -27,22 +27,23 @@ export function HeroSection() {
           <div className="text-center lg:text-left">
             <p className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-card/80 px-4 py-1.5 text-xs font-medium text-muted-foreground shadow-[var(--shadow-sm)] backdrop-blur-sm">
               <span className="h-1.5 w-1.5 rounded-full bg-success" />
-              Built for AI-native creators
+              AI-assisted text content workflow for marketers &amp; founders
             </p>
 
             <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-[3.25rem] lg:leading-[1.08]">
-              Create content faster{" "}
+              Draft business content faster{" "}
               <span className="bg-gradient-to-r from-primary via-primary to-primary/50 bg-clip-text text-transparent">
-                with reusable
+                with template-based
               </span>{" "}
-              AI workflows
+              AI assistance
             </h1>
 
             <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground lg:mx-0">
               {siteConfig.name} gives marketers, indie hackers, and creators
-              ready-made templates, streaming generation, and a personal
-              library — so you can move from an idea to an editable draft
-              without starting every prompt from scratch.
+              predefined business templates, AI-assisted text drafting, and a
+              personal library — so you can go from structured inputs to an
+              editable draft you review and finish, without rebuilding every
+              brief from scratch.
             </p>
 
             <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row lg:justify-start">
@@ -68,7 +69,7 @@ export function HeroSection() {
             </div>
 
             <p className="mt-4 text-xs text-muted-foreground">
-              No credit card required · 5 free generations per day
+              No credit card required · 5 free AI-assisted drafts per day
             </p>
 
             <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-xs text-muted-foreground lg:justify-start">

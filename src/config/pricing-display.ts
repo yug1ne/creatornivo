@@ -7,16 +7,16 @@ export const pricingPlans = [
     name: "Free",
     price: "$0",
     period: "forever",
-    description: "A simple way to try the Creatornivo workflow.",
+    description: "Try the template-based drafting workspace.",
     badge: "free" as const,
     highlighted: false,
     cta: { label: "Get started for free", href: "/register" },
     features: [
-      `Up to ${planLimits.free.maxSavedPrompts} saved prompts`,
-      `${planLimits.free.maxGenerationsPerPeriod} generations per day`,
+      `Up to ${planLimits.free.maxSavedPrompts} saved drafts`,
+      `${planLimits.free.maxGenerationsPerPeriod} AI-assisted drafts per day`,
       `${TEMPLATE_CATALOG_COUNTS.free} core templates`,
-      "GPT-5.6 generation",
-      "Personal prompt library",
+      "AI-assisted drafting (GPT-5.6)",
+      "Personal draft library",
     ],
   },
   {
@@ -24,15 +24,16 @@ export const pricingPlans = [
     name: "Pro",
     price: "$9.90",
     period: "per month",
-    description: "For creators, marketers, and indie hackers who publish every week.",
+    description:
+      "For marketers, founders, and indie hackers who need more monthly drafts and all business templates.",
     badge: "pro" as const,
     highlighted: true,
     cta: { label: "Upgrade to Pro", href: "/pricing" },
     features: [
-      "100 generations per month",
-      "Unlimited saved prompts",
+      "100 AI-assisted drafts per month",
+      "Unlimited saved drafts",
       `All ${TEMPLATE_CATALOG_COUNTS.total} templates`,
-      "GPT-5.6 generation",
+      "AI-assisted drafting (GPT-5.6)",
       "Export to .md and .txt",
       "Email support",
     ],
@@ -52,7 +53,7 @@ export const generationExamples = [
       ],
     },
     after: {
-      title: "Generated output",
+      title: "AI-assisted draft (review before use)",
       preview: `I spent 6 months building in public.
 
 Here's what nobody tells you about launching a SaaS as a solo founder:
@@ -70,16 +71,16 @@ What's the hardest lesson you learned after launch?`,
     before: {
       title: "Your inputs",
       lines: [
-        "Topic: AI tools for content creators",
+        "Topic: Template-based drafting for marketers",
         "Audience: indie hackers & marketers",
         "Tweets: 5",
       ],
     },
     after: {
-      title: "Generated output",
-      preview: `1/ Creators don't need more ideas. They need a repeatable workflow.
+      title: "AI-assisted draft (review before use)",
+      preview: `1/ Marketers don't need more ideas. They need a repeatable workflow.
 
-Here are 5 reusable AI workflows for drafting content:
+Here are 5 template workflows for drafting marketing text:
 
 2/ Start with a structured template — not a blank page...`,
     },
@@ -97,13 +98,13 @@ export const howItWorksSteps = [
     step: "02",
     title: "Fill in the blanks",
     description:
-      "Add your topic, tone, and audience. Creatornivo assembles the final prompt securely on the server.",
+      "Add your topic, tone, and audience. Creatornivo builds the structured request securely on the server.",
   },
   {
     step: "03",
     title: "Generate a draft",
     description:
-      "Stream editable AI-generated content. Review, copy, or save it to your library.",
+      "Get an editable AI-assisted text draft. Review, edit, verify, then copy or save to your library.",
   },
   {
     step: "04",

@@ -10,8 +10,8 @@ export function HowItWorksSection() {
             Four steps from idea to editable draft
           </h2>
           <p className="mt-4 text-muted-foreground">
-            No prompt engineering degree required. Just pick, customize, and
-            generate.
+            No blank-page struggle. Pick a business template, fill the fields,
+            and get an AI-assisted draft to review.
           </p>
         </div>
 

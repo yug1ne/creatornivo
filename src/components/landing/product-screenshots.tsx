@@ -16,16 +16,16 @@ const screenshots = [
     label: "Generate",
     title: "Template picker + parameters",
     description:
-      "Choose a template, fill in your topic and tone, and generate a draft. The final prompt is assembled securely on the server.",
+      "Choose a predefined business template, fill topic and tone, and create an AI-assisted draft. Structured inputs are assembled securely on the server.",
     url: "creatornivo.com/generate",
     Mockup: GenerateMockup,
   },
   {
     id: "result",
     label: "Result",
-    title: "Streaming AI output",
+    title: "AI-assisted draft in progress",
     description:
-      "Watch content stream in real time. Copy, save to your library, or export on Pro.",
+      "Watch a structured text draft stream in. Review it, edit it, then copy, save to your library, or export on Pro.",
     url: "creatornivo.com/generate",
     Mockup: ResultMockup,
   },
@@ -43,7 +43,7 @@ const screenshots = [
     label: "Dashboard",
     title: "Limits at a glance",
     description:
-      "Track usage at a glance: Free includes 5 generations per day, while Pro includes 100 generations per month.",
+      "Track usage at a glance: Free includes 5 AI-assisted drafts per day; Pro includes 100 per month.",
     url: "creatornivo.com/dashboard",
     Mockup: DashboardMockup,
   },

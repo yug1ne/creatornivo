@@ -40,7 +40,7 @@ What's the hardest lesson you learned after launch?`,
     variables: ["Topic", "Tone", "Tweet count"],
     preview: `1/ Creators don't need more ideas. They need a system.
 
-Here are 7 reusable AI workflows for drafting content:
+Here are 7 template workflows for drafting marketing text:
 
 2/ Start with a structured template — not a blank page...
 
@@ -54,11 +54,11 @@ Here are 7 reusable AI workflows for drafting content:
     groupLabel: "Email",
     requiredPlan: "free",
     variables: ["Topic", "Brand", "Goal", "Tone"],
-    preview: `Subject: 3 AI workflows that cut content time in half
+    preview: `Subject: 3 template workflows that speed up first drafts
 
 Hey there,
 
-This week I tested three prompts for turning a rough outline into an editable draft...
+This week I tested three template workflows for turning a rough outline into an editable draft...
 
 [Register for the live walkthrough →]`,
   },
@@ -74,7 +74,7 @@ This week I tested three prompts for turning a rough outline into an editable dr
 
 Hi there — I noticed your team is publishing more consistently.
 
-Drafting consistently can slow down a small marketing team. Structured AI workflows can help organize the first draft.
+Drafting consistently can slow down a small marketing team. Structured AI-assisted templates can help organize the first draft.
 
 Worth a 15-min chat this week?`,
   },
@@ -92,7 +92,7 @@ Worth a 15-min chat this week?`,
 The problem isn't ideas — it's the blank page...
 
 ## The 3-part system that actually sticks
-1. Template library  2. Batch generation  3. Reuse what works`,
+1. Template library  2. Batch drafting  3. Reuse what works`,
   },
   {
     slug: "seo-meta-tags",
@@ -103,10 +103,10 @@ The problem isn't ideas — it's the blank page...
     requiredPlan: "free",
     variables: ["Page topic", "Keyword", "Search intent"],
     preview: `Title (58 chars):
-AI Content Tools for Marketers | Creatornivo
+Template-Based Content Drafting for Marketers | Creatornivo
 
 Meta (152 chars):
-Compare AI content tools for marketers, including templates, workflows, and example outputs.`,
+Compare template-based drafting tools for marketers, including templates, workflows, and example drafts.`,
   },
   {
     slug: "youtube-script",
@@ -134,9 +134,9 @@ Section 2: Fill three fields...
     groupLabel: "Marketing",
     requiredPlan: "pro",
     variables: ["Product", "Audience", "Pain point"],
-    preview: `Headline: Create content faster with reusable AI workflows
+    preview: `Headline: Draft business pages faster with AI-assisted templates
 
-Subhead: Structured AI templates for LinkedIn, email, SEO, and more.
+Subhead: Structured AI-assisted templates for LinkedIn, email, SEO, and more.
 
 ✓ 45 templates  ✓ Real-time preview  ✓ Personal library
 

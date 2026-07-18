@@ -3,7 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 const workflowBenefits = [
   {
     title: "Start with a reusable structure",
-    text: "Choose a template instead of rebuilding every prompt from scratch.",
+    text: "Choose a predefined template instead of starting every brief from scratch.",
   },
   {
     title: "Keep your content consistent",
@@ -11,7 +11,7 @@ const workflowBenefits = [
   },
   {
     title: "Save what actually works",
-    text: "Store useful prompts and generated content in one personal library.",
+    text: "Store useful inputs and AI-assisted drafts in one personal library.",
   },
 ] as const;
 
@@ -28,7 +28,7 @@ export function SocialProofSection() {
             Built for real content workflows
           </p>
           <h2 className="mt-2 text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
-            Less prompt rewriting. More finished content.
+            Less blank-page rewriting. More structured drafts you can finish.
           </h2>
         </div>
 

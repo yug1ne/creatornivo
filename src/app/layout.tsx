@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     template: "%s | Creatornivo",
   },
   description:
-    "AI prompt toolkit and content generation platform",
+    "AI-assisted text content SaaS: structured business drafts from predefined templates. Review and edit before use.",
   icons: {
     icon: [
           { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },

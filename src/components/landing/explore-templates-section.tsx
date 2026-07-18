@@ -26,7 +26,8 @@ export function ExploreTemplatesSection() {
           <p className="mt-4 text-muted-foreground">
             {TEMPLATE_CATALOG_COUNTS.total} structured templates across social,
             email, marketing, SEO, video, e-commerce, launch, and more. Pick
-            one, fill in a few fields, and generate an editable draft.
+            one, fill in a few fields, and get an AI-assisted editable draft to
+            review.
           </p>
         </div>
 

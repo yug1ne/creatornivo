@@ -28,11 +28,11 @@ export function ShowcaseSection() {
           <div className="mx-auto max-w-2xl text-center">
             <p className="text-sm font-medium text-primary">Before → After</p>
             <h3 className="mt-2 text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
-              From structured inputs to an editable AI-generated draft
+              From structured template inputs to an AI-assisted text draft
             </h3>
             <p className="mt-3 text-sm text-muted-foreground">
-              Add the context, generate a draft, then review and edit it for
-              your use case.
+              Fill the template, get a draft, then review, edit, and verify it
+              for your use case.
             </p>
           </div>
 

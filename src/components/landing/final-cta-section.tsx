@@ -12,11 +12,11 @@ export function FinalCtaSection() {
             aria-hidden
           />
           <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-            Ready to create your first piece?
+            Ready to draft your first template-based piece?
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
-            Start building a faster, more consistent content workflow — without
-            starting every prompt from scratch.
+            Start building a faster, more consistent AI-assisted text content
+            workflow — without starting every brief from scratch.
           </p>
           <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link

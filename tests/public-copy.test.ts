@@ -99,13 +99,57 @@ test("public plan copy matches implemented Free and Pro limits", () => {
   const free = pricingPlans.find((plan) => plan.id === "free");
   const pro = pricingPlans.find((plan) => plan.id === "pro");
 
-  assert.ok(free?.features.includes("5 generations per day"));
-  assert.ok(pro?.features.includes("100 generations per month"));
+  assert.ok(free?.features.includes("5 AI-assisted drafts per day"));
+  assert.ok(pro?.features.includes("100 AI-assisted drafts per month"));
   assert.match(pricing, /Up to \$\{planLimits\.free\.maxSavedPrompts\}/);
-  assert.match(pricing, /Unlimited saved prompts/);
-  assert.match(pricing, /GPT-5\.6 generation/);
+  assert.match(pricing, /Unlimited saved drafts/);
+  assert.match(pricing, /AI-assisted drafting \(GPT-5\.6\)/);
   assert.doesNotMatch(pricing, /GPT-4o/i);
   assert.doesNotMatch(pricing, /\bSol\b/);
   assert.match(pricing, /Export to \.md and \.txt/);
   assert.match(pricing, /Email support/);
+});
+
+test("public marketing copy frames AI-assisted template drafting, not open-ended generative AI", () => {
+  const hero = readFileSync("src/components/landing/hero-section.tsx", "utf8");
+  const layout = readFileSync("src/app/layout.tsx", "utf8");
+  const site = readFileSync("src/config/site.ts", "utf8");
+  const social = readFileSync(
+    "src/components/landing/social-proof-section.tsx",
+    "utf8",
+  );
+  const screenshots = readFileSync(
+    "src/components/landing/product-screenshots.tsx",
+    "utf8",
+  );
+  const featured = readFileSync("src/config/featured-templates.ts", "utf8");
+  const register = readFileSync("src/app/(public)/register/page.tsx", "utf8");
+
+  assert.match(
+    layout,
+    /AI-assisted text content SaaS: structured business drafts from predefined templates/,
+  );
+  assert.match(
+    site,
+    /AI-assisted text content SaaS: structured business drafts from predefined templates/,
+  );
+  assert.match(
+    hero,
+    /AI-assisted text content workflow for marketers &amp; founders/,
+  );
+  assert.match(hero, /Draft business content faster/);
+  assert.match(hero, /template-based/);
+  assert.match(hero, /AI assistance/);
+  assert.doesNotMatch(hero, /AI-native creators/);
+  assert.doesNotMatch(hero, /Create content faster/);
+  assert.match(social, /Less blank-page rewriting/);
+  assert.match(social, /structured drafts you can finish/);
+  assert.match(screenshots, /AI-assisted draft in progress/);
+  assert.doesNotMatch(screenshots, /Streaming AI output/);
+  assert.match(featured, /Template-Based Content Drafting for Marketers/);
+  assert.doesNotMatch(featured, /AI Content Tools for Marketers/);
+  assert.match(
+    register,
+    /start drafting with AI-assisted business templates/,
+  );
 });

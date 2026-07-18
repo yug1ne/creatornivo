@@ -9,7 +9,7 @@ export default function RegisterPage() {
         Sign up
       </h1>
       <p className="mt-2 text-sm text-muted-foreground">
-        Create an account and start working with AI prompts
+        Create an account and start drafting with AI-assisted business templates
       </p>
 
       <RegisterForm />
