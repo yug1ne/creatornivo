@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CreatorNivo
 
-## Getting Started
+**AI-assisted text content SaaS** for structured business drafts from predefined templates.
 
-First, run the development server:
+**Website:** [https://www.creatornivo.com](https://www.creatornivo.com)
+
+CreatorNivo helps marketers, founders, and indie makers draft professional text in a **template-based drafting workspace**. You pick a business template, fill structured fields, and get an **AI-assisted draft** to **review, edit, and verify** before use. Save drafts to a personal library. Free and Pro plans use transparent generation limits.
+
+## What it is
+
+- AI-assisted **text** drafting (not image, video, voice, or deepfake tools)
+- Predefined **business and marketing templates**
+- Subscription SaaS with Free and Pro limits
+- Early Access product with honest limits and no fake social proof
+
+## What it is not
+
+- Not an open-ended “generate anything” creative studio
+- Not legal, medical, or financial advice
+- Outputs are **drafts** — users remain responsible for review and compliance
+
+## Legal & responsible use
+
+- [Responsible Use](https://www.creatornivo.com/responsible-use)
+- [Terms of Service](https://www.creatornivo.com/terms)
+- [Privacy Policy](https://www.creatornivo.com/privacy)
+- [Refund Policy](https://www.creatornivo.com/refund-policy)
+
+## Stack
+
+- Next.js (App Router)
+- TypeScript
+- Prisma + PostgreSQL
+- Auth.js
+- Resend (transactional email)
+- Billing providers configured via environment (see `.env.example`)
+
+## Local development
 
 ```bash
+npm install
+cp .env.example .env
+# Fill required placeholders: DATABASE_URL, AUTH_SECRET, AUTH_URL, OPENAI_API_KEY, etc.
+npx prisma migrate dev
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Useful commands
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Command | Purpose |
+|---------|---------|
+| `npm run dev` | Development server |
+| `npm run build` | Production build |
+| `npm run lint` | ESLint |
+| `npm run db:migrate` | Prisma migrate (dev) |
+| `npm run db:seed` | Seed data |
 
-## Learn More
+## Configuration
 
-To learn more about Next.js, take a look at the following resources:
+- **`.env.example`** documents all supported variables with **placeholder values only**.
+- Copy it to `.env` or `.env.local` for local work. Never commit real credentials.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Security
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Never commit** `.env`, `.env.local`, API keys, webhook secrets, database passwords, session secrets, or backup private keys.
+- Do not commit backup artifacts (`*.dump`, `*.age`, `backup-key*.txt`, `restore-work/`).
+- Production secrets belong only in your host’s secret store (for example Vercel / GitHub Actions secrets), not in the repository.
 
-## Deploy on Vercel
+## Agent / contributor notes
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Coding conventions for automated agents live in `AGENTS.md` (and `CLAUDE.md`, which points there). Template form standards live under `docs/`.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## License
+
+**Private / proprietary.** All rights reserved unless the owner states otherwise.
