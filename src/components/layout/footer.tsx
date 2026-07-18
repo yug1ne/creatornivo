@@ -28,6 +28,12 @@ export function Footer() {
           >
             Privacy Policy
           </Link>
+          <Link
+            href="/responsible-use"
+            className="transition-colors hover:text-foreground"
+          >
+            Responsible Use
+          </Link>
         </nav>
       </div>
     </footer>

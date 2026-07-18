@@ -4,6 +4,7 @@ import test from "node:test";
 
 import { privacyPolicySections } from "../src/config/legal/privacy-policy";
 import { refundPolicySections } from "../src/config/legal/refund-policy";
+import { responsibleUseSections } from "../src/config/legal/responsible-use";
 import { termsOfServiceSections } from "../src/config/legal/terms-of-service";
 
 interface LegalTextSection {
@@ -100,11 +101,30 @@ test("Refund Policy is case-by-case and does not invent automatic guarantees", (
   );
 });
 
+test("Responsible Use describes AI-assisted drafting, human review, and prohibited uses", () => {
+  const responsible = legalText(responsibleUseSections);
+
+  assert.match(responsible, /AI-assisted text drafting SaaS/i);
+  assert.match(responsible, /predefined business templates/i);
+  assert.match(responsible, /review, edit, and verify/i);
+  assert.match(responsible, /Adult or sexual content/i);
+  assert.match(responsible, /Deepfakes|impersonat/i);
+  assert.match(responsible, /Scams, phishing/i);
+  assert.match(responsible, /Gambling/i);
+  assert.match(responsible, /Cryptocurrency|financial trading advice/i);
+  assert.match(responsible, /Legal, medical/i);
+  assert.match(responsible, /regulated goods or services/i);
+  assert.match(responsible, /Hate, harassment/i);
+  assert.match(responsible, /Political persuasion or manipulation/i);
+  assert.doesNotMatch(responsible, /app\.creatornivo/i);
+});
+
 test("all legal documents use support@creatornivo.com and production URLs", () => {
   const allLegal = legalText([
     ...termsOfServiceSections,
     ...privacyPolicySections,
     ...refundPolicySections,
+    ...responsibleUseSections,
   ]);
 
   assert.doesNotMatch(allLegal, /localhost|legal@|billing@|privacy@/i);
@@ -112,6 +132,7 @@ test("all legal documents use support@creatornivo.com and production URLs", () =
   assert.match(allLegal, /https:\/\/www\.creatornivo\.com\/terms/);
   assert.match(allLegal, /https:\/\/www\.creatornivo\.com\/privacy/);
   assert.match(allLegal, /https:\/\/www\.creatornivo\.com\/refund-policy/);
+  assert.match(allLegal, /https:\/\/www\.creatornivo\.com\/responsible-use/);
 });
 
 test("public legal routes and footer links remain present", () => {
@@ -119,11 +140,14 @@ test("public legal routes and footer links remain present", () => {
   assert.match(footer, /href="\/terms"/);
   assert.match(footer, /href="\/privacy"/);
   assert.match(footer, /href="\/refund-policy"/);
+  assert.match(footer, /href="\/responsible-use"/);
+  assert.match(footer, /Responsible Use/);
 
   for (const route of [
     "src/app/(public)/terms/page.tsx",
     "src/app/(public)/privacy/page.tsx",
     "src/app/(public)/refund-policy/page.tsx",
+    "src/app/(public)/responsible-use/page.tsx",
   ]) {
     const src = readFileSync(route, "utf8");
     assert.match(src, /LegalDocument/);
