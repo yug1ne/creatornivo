@@ -5,7 +5,7 @@ import type { LegalSection } from "./types";
 export const refundPolicyMeta = {
   title: "Refund Policy",
   effectiveDate: "July 2, 2026",
-  lastUpdated: "July 16, 2026",
+  lastUpdated: "July 22, 2026",
 } as const;
 
 export const refundPolicySections: LegalSection[] = [
@@ -13,8 +13,9 @@ export const refundPolicySections: LegalSection[] = [
     id: "introduction",
     title: "Introduction",
     paragraphs: [
-      `This Refund Policy explains how refund requests for paid ${siteConfig.name} subscriptions are handled. Payments are processed by Paddle, our payment processor and Merchant of Record.`,
-      "This policy supplements our Terms of Service. It does not replace Paddle’s buyer terms, checkout terms, or Paddle’s own refund policies where they apply to your purchase.",
+      `This Refund Policy explains how refund requests for paid ${siteConfig.name} subscriptions are handled if and when a paid purchase exists through our designated payment provider.`,
+      "Self-serve paid checkout is currently unavailable while we finalize our payment provider. Early Access and paid access requests are handled via support, as described on the Pricing page. This policy applies when a paid purchase has been completed through the designated payment provider acting as Merchant of Record.",
+      "This policy supplements our Terms of Service. It does not replace the payment provider’s buyer terms, checkout terms, or refund policies where they apply to your purchase.",
       "We aim to handle billing concerns fairly. We do not promise automatic refunds for every purchase or every situation.",
     ],
   },
@@ -22,7 +23,7 @@ export const refundPolicySections: LegalSection[] = [
     id: "how-to-request",
     title: "How to Request a Refund",
     paragraphs: [
-      "To request a refund, contact support by email. Please include:",
+      "If you completed a paid purchase and want to request a refund, contact support by email. Please include:",
     ],
     list: [
       "The email address on your Creatornivo account.",
@@ -50,7 +51,7 @@ export const refundPolicySections: LegalSection[] = [
       "How the subscription has been used (for example, generation volume or patterns that suggest abuse).",
       "Evidence of fraud, chargeback misuse, policy violations, or Terms of Service violations.",
       "Applicable consumer law in your location.",
-      "Paddle’s rules and processes as Merchant of Record for the transaction.",
+      "The payment provider’s rules and processes as Merchant of Record for the transaction, when a paid purchase exists.",
     ],
     subsections: [
       {
@@ -62,19 +63,19 @@ export const refundPolicySections: LegalSection[] = [
     ],
   },
   {
-    id: "paddle",
-    title: "Paddle’s Role",
+    id: "payment-provider",
+    title: "Payment Provider / Merchant of Record",
     paragraphs: [
-      "Paddle processes payments and may handle order support, invoices, taxes, and refund processing for purchases made through Paddle checkout.",
-      "Approved refunds, when issued, are typically returned to the original payment method through Paddle. Timing depends on Paddle, the payment method, and your financial institution.",
-      "You may also be able to contact Paddle about an order using the channels Paddle provides for buyers. This policy is not intended to conflict with Paddle’s Refund Policy or buyer protections; where Paddle’s rules apply to the payment, those rules govern the payment relationship.",
+      "When paid checkout is available, paid subscriptions will be processed by our designated third-party payment provider acting as Merchant of Record. That provider may handle order support, invoices, taxes, and refund processing for purchases made through its checkout.",
+      "If a refund is approved for a paid purchase, it is typically returned to the original payment method through the payment provider. Timing depends on the provider, the payment method, and your financial institution.",
+      "You may also be able to contact the payment provider about an order using the channels that provider makes available to buyers. This policy is not intended to conflict with the provider’s refund policy or buyer protections; where the provider’s rules apply to the payment, those rules govern the payment relationship.",
     ],
   },
   {
     id: "cancellation-vs-refund",
     title: "Cancellation Is Not a Refund",
     paragraphs: [
-      "Canceling a subscription stops future renewals according to the billing portal and subscription status. Cancellation does not automatically refund amounts already paid.",
+      "When paid subscriptions are available, canceling a subscription stops future renewals according to the billing portal and subscription status. Cancellation does not automatically refund amounts paid for a completed purchase, if any.",
       "After cancellation, access to paid features may continue until the end of the paid period shown in your account, depending on subscription status.",
     ],
   },
@@ -82,7 +83,7 @@ export const refundPolicySections: LegalSection[] = [
     id: "after-refund",
     title: "After a Refund",
     paragraphs: [
-      "Approved refunds are processed through Paddle, and account access may be adjusted after the refund is confirmed.",
+      "If a refund is approved for a paid purchase, it is processed through the designated payment provider, and account access may be adjusted after the refund is confirmed.",
       "After a refund is confirmed, account access may be adjusted, limited, or ended according to the subscription status, the reason for the refund, and applicable provider rules.",
     ],
   },

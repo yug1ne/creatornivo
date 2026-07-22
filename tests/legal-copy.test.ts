@@ -25,6 +25,9 @@ function legalText(sections: LegalTextSection[]): string {
     .join("\n");
 }
 
+const namedProviderBrands =
+  /Paddle|Freemius|FastSpring|Stripe/i;
+
 test("Terms describe real product basics without overclaiming", () => {
   const terms = legalText(termsOfServiceSections);
 
@@ -36,7 +39,6 @@ test("Terms describe real product basics without overclaiming", () => {
   assert.match(terms, /AI-generated content may be inaccurate/i);
   assert.match(terms, /review, edit, and verify/i);
   assert.match(terms, /circumvent usage limits/i);
-  assert.match(terms, /Paddle/i);
   assert.match(terms, /one hundred/i);
   assert.match(terms, /five per day/i);
   assert.match(terms, /mandatory consumer rights/i);
@@ -47,13 +49,36 @@ test("Terms describe real product basics without overclaiming", () => {
   );
 });
 
-test("Terms describe self-service account deletion and subscription prerequisites", () => {
+test("Terms use provider-neutral payments language while checkout is paused", () => {
+  const terms = legalText(termsOfServiceSections);
+
+  assert.match(
+    terms,
+    /Self-serve paid checkout is currently unavailable while we finalize our payment provider/i,
+  );
+  assert.match(
+    terms,
+    /Early Access and paid access requests are handled via support/i,
+  );
+  assert.match(
+    terms,
+    /When paid checkout is available, paid subscriptions will be processed by our designated third-party payment provider acting as Merchant of Record/i,
+  );
+  assert.match(
+    terms,
+    /Pricing, taxes, and checkout details will be presented at purchase/i,
+  );
+  assert.doesNotMatch(terms, namedProviderBrands);
+  assert.doesNotMatch(terms, /authorize charges.*Paddle|Paddle checkout/i);
+});
+
+test("Terms describe self-service account deletion and conditional billing prerequisites", () => {
   const terms = legalText(termsOfServiceSections);
 
   assert.match(terms, /Settings → Privacy & Data/i);
   assert.match(terms, /typing DELETE/i);
   assert.match(terms, /permanent/i);
-  assert.match(terms, /Customer Portal/i);
+  assert.match(terms, /customer portal|with support/i);
 });
 
 test("Privacy reflects actual processors and product data categories", () => {
@@ -61,7 +86,6 @@ test("Privacy reflects actual processors and product data categories", () => {
 
   assert.match(privacy, /optional name, email address/i);
   assert.match(privacy, /OpenAI/i);
-  assert.match(privacy, /Paddle/i);
   assert.match(privacy, /Supabase/i);
   assert.match(privacy, /Vercel/i);
   assert.match(privacy, /Resend/i);
@@ -73,7 +97,6 @@ test("Privacy reflects actual processors and product data categories", () => {
   assert.match(privacy, /Download my data|Download a machine-readable/i);
   assert.match(privacy, /Delete account|delete your account/i);
   assert.match(privacy, /5,000 records per category/i);
-  assert.match(privacy, /Customer Portal/i);
   assert.doesNotMatch(privacy, /Namecheap/i);
   assert.doesNotMatch(
     privacy,
@@ -81,24 +104,54 @@ test("Privacy reflects actual processors and product data categories", () => {
   );
 });
 
+test("Privacy uses provider-neutral payment metadata language", () => {
+  const privacy = legalText(privacyPolicySections);
+
+  assert.match(
+    privacy,
+    /When paid subscriptions are enabled, we may receive subscription status, transaction identifiers, and billing metadata from our payment provider \/ Merchant of Record/i,
+  );
+  assert.match(privacy, /We do not store full payment card numbers/i);
+  assert.match(
+    privacy,
+    /designated third-party payment provider acting as Merchant of Record/i,
+  );
+  assert.match(
+    privacy,
+    /when paid checkout is available, our designated payment provider/i,
+  );
+  assert.doesNotMatch(privacy, namedProviderBrands);
+  assert.doesNotMatch(privacy, /received from Paddle|billing events with Paddle/i);
+});
+
 test("Refund Policy is case-by-case and does not invent automatic guarantees", () => {
   const refund = legalText(refundPolicySections);
 
   assert.match(refund, /case-by-case|reviewed individually/i);
   assert.match(refund, /contact support|Email:/i);
-  assert.match(refund, /Paddle/i);
   assert.match(refund, /Merchant of Record/i);
   assert.match(
     refund,
     /After a refund is confirmed, account access may be adjusted/i,
   );
-  assert.match(refund, /Approved refunds are processed through Paddle/i);
+  assert.match(
+    refund,
+    /if and when a paid purchase exists through our designated payment provider/i,
+  );
+  assert.match(
+    refund,
+    /Self-serve paid checkout is currently unavailable while we finalize our payment provider/i,
+  );
+  assert.match(refund, /Payment Provider \/ Merchant of Record/i);
   assert.doesNotMatch(refund, /14-day money-back guarantee/i);
   assert.match(refund, /do not promise automatic refunds/i);
   assert.doesNotMatch(
     refund,
     /will be canceled immediately|will be downgraded|within 3.?5 business days/i,
   );
+  assert.doesNotMatch(refund, namedProviderBrands);
+  assert.doesNotMatch(refund, /Approved refunds are processed through Paddle/i);
+  assert.doesNotMatch(refund, /Paddle.?s Role/i);
 });
 
 test("Responsible Use describes AI-assisted drafting, human review, and prohibited uses", () => {
@@ -117,6 +170,17 @@ test("Responsible Use describes AI-assisted drafting, human review, and prohibit
   assert.match(responsible, /Hate, harassment/i);
   assert.match(responsible, /Political persuasion or manipulation/i);
   assert.doesNotMatch(responsible, /app\.creatornivo/i);
+});
+
+test("all public legal documents avoid named payment brands", () => {
+  const allLegal = legalText([
+    ...termsOfServiceSections,
+    ...privacyPolicySections,
+    ...refundPolicySections,
+    ...responsibleUseSections,
+  ]);
+
+  assert.doesNotMatch(allLegal, namedProviderBrands);
 });
 
 test("all legal documents use support@creatornivo.com and production URLs", () => {
@@ -152,6 +216,13 @@ test("public legal routes and footer links remain present", () => {
     const src = readFileSync(route, "utf8");
     assert.match(src, /LegalDocument/);
   }
+
+  const refundPage = readFileSync(
+    "src/app/(public)/refund-policy/page.tsx",
+    "utf8",
+  );
+  assert.doesNotMatch(refundPage, /Paddle/i);
+  assert.match(refundPage, /Merchant of Record|payment provider/i);
 
   const refundRedirect = readFileSync(
     "src/app/(public)/refund/page.tsx",

@@ -7,7 +7,7 @@ export type { LegalSection } from "./types";
 export const privacyPolicyMeta = {
   title: "Privacy Policy",
   effectiveDate: "July 2, 2026",
-  lastUpdated: "July 16, 2026",
+  lastUpdated: "July 22, 2026",
 } as const;
 
 export const privacyPolicySections: LegalSection[] = [
@@ -48,7 +48,7 @@ export const privacyPolicySections: LegalSection[] = [
       {
         title: "Subscription and payment metadata",
         list: [
-          "Subscription status, plan indicators, and customer or transaction identifiers received from Paddle (Merchant of Record).",
+          "When paid subscriptions are enabled, we may receive subscription status, transaction identifiers, and billing metadata from our payment provider / Merchant of Record.",
           "We do not store full payment card numbers on Creatornivo servers.",
         ],
       },
@@ -83,7 +83,7 @@ export const privacyPolicySections: LegalSection[] = [
       "Provide authentication, accounts, generation, library, and export features.",
       "Process generation requests through AI providers and return results.",
       "Enforce quotas, rate limits, and security controls, and prevent abuse.",
-      "Process subscriptions and billing events with Paddle.",
+      "When paid subscriptions are enabled, process subscription status and billing events with our designated payment provider / Merchant of Record.",
       "Send transactional emails (verification, password reset, important account or quota notices) when those features are enabled.",
       "Respond to support requests and improve reliability.",
       "Comply with legal obligations where applicable.",
@@ -97,7 +97,7 @@ export const privacyPolicySections: LegalSection[] = [
     ],
     list: [
       "OpenAI — AI model processing for content generation (prompt and related context for the request).",
-      "Paddle — payment processing and Merchant of Record for paid subscriptions.",
+      "A designated third-party payment provider acting as Merchant of Record — payment processing for paid subscriptions when paid checkout is available.",
       "Supabase / PostgreSQL — hosted database for account and Service data.",
       "Vercel — application hosting and delivery.",
       "Resend — transactional email delivery for product emails.",
@@ -145,7 +145,7 @@ export const privacyPolicySections: LegalSection[] = [
     paragraphs: [
       "We retain account, generation, usage, and library data while your account is active or as needed to provide the Service and meet legal obligations.",
       "You can download a machine-readable copy of your account data from Settings → Privacy & Data (JSON export). Large histories may be truncated (for example, up to 5,000 records per category); the export indicates when truncation occurred.",
-      "You can delete your account from Settings → Privacy & Data by re-entering your password and typing DELETE. Deletion removes account profile data, generations, saved library items, sessions, and related account data subject to limited retention for legal, security, or billing dispute needs. If you have an active paid subscription, you may need to cancel or resolve billing in the Customer Portal before deletion can complete.",
+      "You can delete your account from Settings → Privacy & Data by re-entering your password and typing DELETE. Deletion removes account profile data, generations, saved library items, sessions, and related account data subject to limited retention for legal, security, or billing dispute needs. If you later have an active paid subscription through our payment provider, you may need to cancel or resolve billing through the provider’s customer portal or with support before deletion can complete.",
       "If self-service tools are unavailable for your account type, contact support so we can verify your identity and help process your request.",
     ],
   },
@@ -170,7 +170,7 @@ export const privacyPolicySections: LegalSection[] = [
     id: "international-transfers",
     title: "International Processing",
     paragraphs: [
-      "Service providers may process data in countries other than yours (including infrastructure used by OpenAI, Paddle, Supabase, Vercel, Resend, Sentry, and Upstash). By using the Service, you understand that processing may occur internationally subject to provider practices and applicable law.",
+      "Service providers may process data in countries other than yours (including infrastructure used by OpenAI, Supabase, Vercel, Resend, Sentry, Upstash, and, when paid checkout is available, our designated payment provider). By using the Service, you understand that processing may occur internationally subject to provider practices and applicable law.",
     ],
   },
   {

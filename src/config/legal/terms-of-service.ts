@@ -5,7 +5,7 @@ import type { LegalSection } from "./types";
 export const termsOfServiceMeta = {
   title: "Terms of Service",
   effectiveDate: "July 2, 2026",
-  lastUpdated: "July 16, 2026",
+  lastUpdated: "July 22, 2026",
 } as const;
 
 export const termsOfServiceSections: LegalSection[] = [
@@ -32,7 +32,7 @@ export const termsOfServiceSections: LegalSection[] = [
     title: "Early Access / Beta",
     paragraphs: [
       "Creatornivo may be offered as Early Access or beta software. Features, usage limits, availability, pricing, and integrations may change. You should keep your own copies of important content.",
-      "Current plan prices and promotional Early Access pricing, when offered, are shown on the Pricing page and at checkout. For example, the product may display an Early Access monthly price and a regular monthly Pro price; the amounts shown in the product control.",
+      "Current plan prices and promotional Early Access pricing, when offered, are shown on the Pricing page. For example, the product may display an Early Access monthly price and a regular monthly Pro price; the amounts shown in the product control. When self-serve paid checkout is re-enabled, applicable prices and taxes will also be shown at purchase.",
     ],
   },
   {
@@ -47,7 +47,7 @@ export const termsOfServiceSections: LegalSection[] = [
       "Notify us promptly at the contact address below if you suspect unauthorized access.",
       "You must be at least 16 years old to use the Service.",
       "Do not create multiple free accounts to circumvent plan limits.",
-      "Access to paid features depends on successful payment processing and an active eligible subscription status from our payment provider, as well as compliance with these Terms.",
+      "When paid checkout is available, access to paid features depends on successful payment processing and an active eligible subscription status from our designated payment provider, as well as compliance with these Terms. While self-serve paid checkout is unavailable, early access or paid access may be granted only through support as described on the Pricing page.",
     ],
   },
   {
@@ -99,13 +99,14 @@ export const termsOfServiceSections: LegalSection[] = [
     id: "payments-and-subscriptions",
     title: "Payments and Subscriptions",
     paragraphs: [
-      "Paid subscriptions are processed by Paddle as payment processor and Merchant of Record. Pricing, taxes, and checkout details are presented at purchase and may include Early Access promotional pricing when available.",
+      "Self-serve paid checkout is currently unavailable while we finalize our payment provider. Early Access and paid access requests are handled via support, as described on the Pricing page.",
+      "When paid checkout is available, paid subscriptions will be processed by our designated third-party payment provider acting as Merchant of Record. Pricing, taxes, and checkout details will be presented at purchase and may include Early Access promotional pricing when available.",
     ],
     list: [
       "Prices are typically shown in U.S. dollars unless otherwise noted and may change with notice through the product or communications.",
-      "Subscriptions renew according to the plan and Paddle checkout terms unless you cancel before renewal through the customer billing portal or other available cancellation path.",
-      "You authorize charges for recurring fees and applicable taxes through Paddle.",
-      "Refunds, if any, are handled as described in our Refund Policy and may involve Paddle’s buyer and refund processes.",
+      "When paid checkout is available, subscriptions will renew according to the plan and the payment provider’s checkout and buyer terms unless you cancel before renewal through the provider’s customer billing portal or another available cancellation path.",
+      "By completing a purchase when checkout is available, you authorize charges for applicable fees and taxes through the designated payment provider.",
+      "Refunds, if any, are handled as described in our Refund Policy and may involve the payment provider’s buyer and refund processes when a paid purchase exists.",
       "Access to paid features may change when subscription status is unpaid, past due, paused, canceled, or otherwise ineligible.",
     ],
   },
@@ -114,7 +115,7 @@ export const termsOfServiceSections: LegalSection[] = [
     title: "Termination",
     paragraphs: [
       "You may stop using the Service at any time. Where available, you may delete your account from Settings → Privacy & Data by confirming your password and typing DELETE. Deletion is permanent.",
-      "If you have an active paid subscription, cancel or resolve billing in the Customer Portal before deleting your account when the product requires it.",
+      "If you later have an active paid subscription through our payment provider, you may need to cancel or resolve billing through the provider’s customer portal or with support before deleting your account when the product requires it.",
       "We may suspend or terminate access if you violate these Terms, abuse the Service, fail to pay required fees, or if required by law. We may also discontinue the Service with notice where practicable.",
     ],
   },
