@@ -201,6 +201,8 @@ test("all legal documents use support@creatornivo.com and production URLs", () =
 
 test("public legal routes and footer links remain present", () => {
   const footer = readFileSync("src/components/layout/footer.tsx", "utf8");
+  assert.match(footer, /href="\/guides"/);
+  assert.match(footer, /Guides/);
   assert.match(footer, /href="\/terms"/);
   assert.match(footer, /href="\/privacy"/);
   assert.match(footer, /href="\/refund-policy"/);

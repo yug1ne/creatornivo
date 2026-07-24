@@ -11,6 +11,12 @@ export function Footer() {
         </p>
         <nav className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm text-muted-foreground sm:gap-x-6">
           <Link
+            href="/guides"
+            className="transition-colors hover:text-foreground"
+          >
+            Guides
+          </Link>
+          <Link
             href="/terms"
             className="transition-colors hover:text-foreground"
           >
