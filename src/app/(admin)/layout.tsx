@@ -5,6 +5,7 @@ import { requireAdminPage } from "@/lib/admin/session";
 
 const adminNav = [
   { href: "/admin", label: "Overview" },
+  { href: "/admin/users", label: "Users" },
   { href: "/admin/templates", label: "Templates" },
 ];
 

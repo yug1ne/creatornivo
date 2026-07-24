@@ -50,20 +50,22 @@ export default async function AdminPage() {
       </p>
 
       <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <Card>
-          <CardContent className="p-6">
-            <CardTitle>Users</CardTitle>
-            <p className="mt-2 text-2xl font-bold text-foreground">
-              {userCount}
-            </p>
-            <CardDescription className="mt-1">
-              Total accounts (count only)
-            </CardDescription>
-            <p className="mt-3 text-xs text-muted-foreground">
-              User list and detail views come in a later phase.
-            </p>
-          </CardContent>
-        </Card>
+        <Link href="/admin/users">
+          <Card hover className="h-full">
+            <CardContent className="p-6">
+              <CardTitle>Users</CardTitle>
+              <p className="mt-2 text-2xl font-bold text-foreground">
+                {userCount}
+              </p>
+              <CardDescription className="mt-1">
+                Read-only accounts list and detail
+              </CardDescription>
+              <p className="mt-3 text-xs font-medium text-primary">
+                Open users →
+              </p>
+            </CardContent>
+          </Card>
+        </Link>
 
         <Link href="/admin/templates">
           <Card hover className="h-full">
@@ -143,9 +145,9 @@ export default async function AdminPage() {
         <CardContent className="p-5">
           <CardTitle className="text-base">Coming later</CardTitle>
           <ul className="mt-2 list-inside list-disc text-sm text-muted-foreground">
-            <li>User list and read-only user detail</li>
             <li>Support inbox</li>
-            <li>Subscription ops views</li>
+            <li>Subscription ops actions (still read-only IDs on user detail)</li>
+            <li>Destructive admin tools (not available)</li>
           </ul>
         </CardContent>
       </Card>
