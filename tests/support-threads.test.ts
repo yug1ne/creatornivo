@@ -7,9 +7,14 @@ import {
   SUPPORT_SUBJECT_MAX_LENGTH,
 } from "../src/config/support";
 import {
+  adminCloseSupportThread,
+  adminReopenSupportThread,
+  adminReplyToSupportThread,
   canUserReplyToStatus,
   createUserSupportThread,
+  getAdminSupportThreadDetail,
   getUserSupportThreadDetail,
+  listAdminSupportThreads,
   listUserSupportThreads,
   replyToUserSupportThread,
   resolveUserMessageSenderType,
@@ -17,6 +22,11 @@ import {
   SupportAccessError,
   type SupportStore,
 } from "../src/lib/support/service";
+import {
+  parseAdminSupportListParams,
+  resolveAdminMessageSenderType,
+  statusAfterAdminReply,
+} from "../src/lib/support/admin-query";
 import {
   normalizeSupportBody,
   normalizeSupportSubject,
@@ -43,10 +53,55 @@ type MessageRow = {
   createdAt: Date;
 };
 
+type UserRow = {
+  id: string;
+  email: string;
+  name: string | null;
+  plan: "free" | "pro";
+  role: "user" | "admin";
+  createdAt: Date;
+  password: string | null;
+  accounts: { provider: string }[];
+};
+
 class MemorySupportStore implements SupportStore {
   threads = new Map<string, ThreadRow>();
   messages: MessageRow[] = [];
+  users = new Map<string, UserRow>();
   private seq = 0;
+
+  constructor() {
+    this.users.set("user-a", {
+      id: "user-a",
+      email: "a@example.com",
+      name: "User A",
+      plan: "free",
+      role: "user",
+      createdAt: new Date("2026-01-01T00:00:00.000Z"),
+      password: "hash",
+      accounts: [],
+    });
+    this.users.set("user-b", {
+      id: "user-b",
+      email: "b@example.com",
+      name: "User B",
+      plan: "pro",
+      role: "user",
+      createdAt: new Date("2026-01-02T00:00:00.000Z"),
+      password: null,
+      accounts: [{ provider: "google" }],
+    });
+    this.users.set("admin-1", {
+      id: "admin-1",
+      email: "admin@example.com",
+      name: "Admin",
+      plan: "pro",
+      role: "admin",
+      createdAt: new Date("2026-01-01T00:00:00.000Z"),
+      password: "hash",
+      accounts: [],
+    });
+  }
 
   private nextId(prefix: string) {
     this.seq += 1;
@@ -116,6 +171,7 @@ class MemorySupportStore implements SupportStore {
         authorUserId: m.authorUserId,
         body: m.body,
         createdAt: m.createdAt,
+        isInternal: m.isInternal,
       }));
   }
 
@@ -143,6 +199,119 @@ class MemorySupportStore implements SupportStore {
       thread.closedAt = null;
     }
     return { id };
+  }
+
+  async listThreadsForAdmin(input: {
+    status?: "open" | "answered" | "closed";
+    q: string;
+    skip: number;
+    take: number;
+  }) {
+    let rows = Array.from(this.threads.values());
+    if (input.status) {
+      rows = rows.filter((t) => t.status === input.status);
+    }
+    if (input.q) {
+      const q = input.q.toLowerCase();
+      rows = rows.filter((t) => {
+        const user = this.users.get(t.userId);
+        return (
+          t.subject.toLowerCase().includes(q) ||
+          (user?.email.toLowerCase().includes(q) ?? false)
+        );
+      });
+    }
+    rows.sort((a, b) => b.lastMessageAt.getTime() - a.lastMessageAt.getTime());
+    const total = rows.length;
+    const page = rows.slice(input.skip, input.skip + input.take);
+    return {
+      total,
+      rows: page.map((t) => {
+        const user = this.users.get(t.userId)!;
+        return {
+          id: t.id,
+          subject: t.subject,
+          status: t.status,
+          lastMessageAt: t.lastMessageAt,
+          createdAt: t.createdAt,
+          messageCount: this.messages.filter((m) => m.threadId === t.id).length,
+          user: {
+            id: user.id,
+            email: user.email,
+            plan: user.plan,
+          },
+        };
+      }),
+    };
+  }
+
+  async findThreadForAdmin(threadId: string) {
+    const thread = this.threads.get(threadId);
+    if (!thread) return null;
+    const user = this.users.get(thread.userId);
+    if (!user) return null;
+    return {
+      id: thread.id,
+      userId: thread.userId,
+      subject: thread.subject,
+      status: thread.status,
+      lastMessageAt: thread.lastMessageAt,
+      createdAt: thread.createdAt,
+      closedAt: thread.closedAt,
+      user: { ...user, accounts: [...user.accounts] },
+    };
+  }
+
+  async listAdminMessages(threadId: string) {
+    return this.messages
+      .filter((m) => m.threadId === threadId)
+      .sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime())
+      .map((m) => ({
+        id: m.id,
+        senderType: m.senderType,
+        authorUserId: m.authorUserId,
+        body: m.body,
+        createdAt: m.createdAt,
+        isInternal: m.isInternal,
+      }));
+  }
+
+  async addAdminReply(input: {
+    threadId: string;
+    adminUserId: string;
+    body: string;
+    now: Date;
+    setStatus: "open" | "answered" | "closed";
+  }) {
+    const id = this.nextId("msg");
+    this.messages.push({
+      id,
+      threadId: input.threadId,
+      senderType: "ADMIN",
+      authorUserId: input.adminUserId,
+      body: input.body,
+      isInternal: false,
+      createdAt: input.now,
+    });
+    const thread = this.threads.get(input.threadId);
+    if (thread) {
+      thread.status = input.setStatus;
+      thread.lastMessageAt = input.now;
+      thread.closedAt = null;
+    }
+    return { id };
+  }
+
+  async setThreadStatus(input: {
+    threadId: string;
+    status: "open" | "answered" | "closed";
+    closedAt: Date | null;
+    now: Date;
+  }) {
+    const thread = this.threads.get(input.threadId);
+    if (!thread) return;
+    thread.status = input.status;
+    thread.closedAt = input.closedAt;
   }
 }
 
@@ -353,9 +522,177 @@ test("support routes and UI enforce session ownership patterns", () => {
   assert.match(rateConfig, /support_create_thread/);
   assert.match(rateConfig, /support_reply/);
 
-  // No admin inbox in Phase C.
-  assert.doesNotMatch(listPage, /admin\/support/);
   assert.doesNotMatch(createApi, /senderType:\s*"ADMIN"/);
+});
+
+test("admin can list all threads, reply as ADMIN, close and reopen", async () => {
+  const store = new MemorySupportStore();
+  const created = await createUserSupportThread(
+    {
+      userId: "user-a",
+      subject: "Need help with account",
+      body: "Please help me understand why my generation failed yesterday.",
+    },
+    store,
+    () => new Date("2026-07-18T10:00:00.000Z"),
+  );
+
+  const inbox = await listAdminSupportThreads(
+    { status: "all", q: "", page: 1 },
+    store,
+  );
+  assert.equal(inbox.total, 1);
+  assert.equal(inbox.threads[0]?.user.email, "a@example.com");
+
+  assert.equal(resolveAdminMessageSenderType("USER"), "ADMIN");
+  assert.equal(statusAfterAdminReply("open"), "answered");
+
+  await adminReplyToSupportThread(
+    {
+      adminUserId: "admin-1",
+      threadId: created.id,
+      body: "Thanks for writing in — we are looking at this for you now.",
+      attemptedSenderType: "USER",
+    },
+    store,
+    () => new Date("2026-07-18T11:00:00.000Z"),
+  );
+
+  const userView = await getUserSupportThreadDetail(
+    { userId: "user-a", threadId: created.id },
+    store,
+  );
+  assert.equal(userView.status, "answered");
+  assert.ok(userView.messages.some((m) => m.senderType === "ADMIN"));
+  assert.equal(userView.canReply, true);
+
+  await adminCloseSupportThread(
+    created.id,
+    store,
+    () => new Date("2026-07-18T12:00:00.000Z"),
+  );
+
+  const closedUserView = await getUserSupportThreadDetail(
+    { userId: "user-a", threadId: created.id },
+    store,
+  );
+  assert.equal(closedUserView.status, "closed");
+  assert.equal(closedUserView.canReply, false);
+
+  await assert.rejects(
+    () =>
+      replyToUserSupportThread(
+        {
+          userId: "user-a",
+          threadId: created.id,
+          body: "Trying to reply after admin closed this support thread.",
+        },
+        store,
+      ),
+    (error: unknown) =>
+      error instanceof SupportAccessError && error.code === "closed",
+  );
+
+  await adminReopenSupportThread(
+    created.id,
+    store,
+    () => new Date("2026-07-18T13:00:00.000Z"),
+  );
+
+  const reopened = await getUserSupportThreadDetail(
+    { userId: "user-a", threadId: created.id },
+    store,
+  );
+  assert.equal(reopened.status, "open");
+  assert.equal(reopened.canReply, true);
+
+  const adminDetail = await getAdminSupportThreadDetail(
+    created.id,
+    store,
+    ({ hasPassword, oauthProviders }) =>
+      [hasPassword ? "password" : null, ...oauthProviders]
+        .filter(Boolean)
+        .join(","),
+  );
+  assert.equal(adminDetail.user.email, "a@example.com");
+  assert.ok(adminDetail.messages.some((m) => m.senderType === "ADMIN"));
+});
+
+test("admin cannot open missing thread; user still cannot see others", async () => {
+  const store = new MemorySupportStore();
+  await assert.rejects(
+    () =>
+      getAdminSupportThreadDetail("missing", store, () => "x"),
+    (error: unknown) =>
+      error instanceof SupportAccessError && error.code === "not_found",
+  );
+
+  const created = await createUserSupportThread(
+    {
+      userId: "user-a",
+      subject: "Only for A",
+      body: "This thread belongs to user A and must stay private from B.",
+    },
+    store,
+  );
+
+  await assert.rejects(
+    () =>
+      getUserSupportThreadDetail(
+        { userId: "user-b", threadId: created.id },
+        store,
+      ),
+    (error: unknown) =>
+      error instanceof SupportAccessError && error.code === "not_found",
+  );
+});
+
+test("admin support pages and APIs require admin guards", () => {
+  const inbox = readFileSync("src/app/(admin)/admin/support/page.tsx", "utf8");
+  const threadPage = readFileSync(
+    "src/app/(admin)/admin/support/[threadId]/page.tsx",
+    "utf8",
+  );
+  const replyApi = readFileSync(
+    "src/app/api/admin/support/threads/[id]/messages/route.ts",
+    "utf8",
+  );
+  const statusApi = readFileSync(
+    "src/app/api/admin/support/threads/[id]/status/route.ts",
+    "utf8",
+  );
+  const listApi = readFileSync(
+    "src/app/api/admin/support/threads/route.ts",
+    "utf8",
+  );
+  const layout = readFileSync("src/app/(admin)/layout.tsx", "utf8");
+  const store = readFileSync("src/lib/support/store.ts", "utf8");
+
+  assert.match(inbox, /requireAdminPage/);
+  assert.match(threadPage, /requireAdminPage/);
+  assert.match(listApi, /requireAdmin/);
+  assert.match(replyApi, /requireAdmin/);
+  assert.match(statusApi, /requireAdmin/);
+  assert.match(replyApi, /adminReplyToSupportThread|senderType/);
+  assert.match(store, /senderType: "ADMIN"/);
+  assert.match(layout, /\/admin\/support/);
+
+  assert.doesNotMatch(inbox, /passwordHash|refresh_token|OPENAI/);
+  assert.doesNotMatch(threadPage, /passwordHash|generation\.result|prompt:/);
+  assert.doesNotMatch(threadPage, /impersonat|grant Pro|delete user/i);
+});
+
+test("parseAdminSupportListParams normalizes status and page", () => {
+  assert.deepEqual(parseAdminSupportListParams({}), {
+    status: "all",
+    q: "",
+    page: 1,
+  });
+  assert.equal(
+    parseAdminSupportListParams({ status: "OPEN" }).status,
+    "open",
+  );
+  assert.equal(parseAdminSupportListParams({ page: "0" }).page, 1);
 });
 
 test("schema includes support models", () => {

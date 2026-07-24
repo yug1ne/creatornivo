@@ -212,9 +212,15 @@ export default async function AdminUserDetailPage({
         <CardContent className="p-5">
           <CardTitle className="text-base">Support</CardTitle>
           <CardDescription className="mt-2">
-            Support inbox is not implemented yet. Users contact{" "}
-            <span className="text-foreground">support@creatornivo.com</span>{" "}
-            via Settings Help &amp; contact.
+            User support threads are managed in the{" "}
+            <Link
+              href="/admin/support"
+              className="font-medium text-primary hover:underline"
+            >
+              support inbox
+            </Link>
+            . Users can also email{" "}
+            <span className="text-foreground">support@creatornivo.com</span>.
           </CardDescription>
         </CardContent>
       </Card>

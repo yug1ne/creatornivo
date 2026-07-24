@@ -1,3 +1,5 @@
+import type { Prisma, SupportThreadStatus } from "@prisma/client";
+
 import { prisma } from "@/lib/db";
 import type { SupportStore } from "@/lib/support/service";
 
@@ -15,7 +17,6 @@ export const prismaSupportStore: SupportStore = {
         createdAt: true,
         _count: {
           select: {
-            // User never sees internal messages; count only public ones.
             messages: { where: { isInternal: false } },
           },
         },
@@ -73,6 +74,7 @@ export const prismaSupportStore: SupportStore = {
         authorUserId: true,
         body: true,
         createdAt: true,
+        isInternal: true,
       },
     });
   },
@@ -95,12 +97,148 @@ export const prismaSupportStore: SupportStore = {
         data: {
           status: setStatus,
           lastMessageAt: now,
-          // User replies never close a thread.
           closedAt: null,
         },
       }),
     ]);
 
     return message;
+  },
+
+  async listThreadsForAdmin({ status, q, skip, take }) {
+    const where: Prisma.SupportThreadWhereInput = {};
+    if (status) {
+      where.status = status;
+    }
+    if (q) {
+      where.OR = [
+        { subject: { contains: q, mode: "insensitive" } },
+        { user: { email: { contains: q, mode: "insensitive" } } },
+      ];
+    }
+
+    const [total, rows] = await Promise.all([
+      prisma.supportThread.count({ where }),
+      prisma.supportThread.findMany({
+        where,
+        orderBy: { lastMessageAt: "desc" },
+        skip,
+        take,
+        select: {
+          id: true,
+          subject: true,
+          status: true,
+          lastMessageAt: true,
+          createdAt: true,
+          user: {
+            select: {
+              id: true,
+              email: true,
+              plan: true,
+            },
+          },
+          _count: {
+            select: {
+              messages: true,
+            },
+          },
+        },
+      }),
+    ]);
+
+    return {
+      total,
+      rows: rows.map((row) => ({
+        id: row.id,
+        subject: row.subject,
+        status: row.status,
+        lastMessageAt: row.lastMessageAt,
+        createdAt: row.createdAt,
+        messageCount: row._count.messages,
+        user: row.user,
+      })),
+    };
+  },
+
+  async findThreadForAdmin(threadId) {
+    return prisma.supportThread.findUnique({
+      where: { id: threadId },
+      select: {
+        id: true,
+        userId: true,
+        subject: true,
+        status: true,
+        lastMessageAt: true,
+        createdAt: true,
+        closedAt: true,
+        user: {
+          select: {
+            id: true,
+            email: true,
+            name: true,
+            plan: true,
+            role: true,
+            createdAt: true,
+            password: true,
+            accounts: {
+              select: { provider: true },
+              orderBy: { provider: "asc" },
+            },
+          },
+        },
+      },
+    });
+  },
+
+  async listAdminMessages(threadId) {
+    return prisma.supportMessage.findMany({
+      where: { threadId },
+      orderBy: { createdAt: "asc" },
+      select: {
+        id: true,
+        senderType: true,
+        authorUserId: true,
+        body: true,
+        createdAt: true,
+        isInternal: true,
+      },
+    });
+  },
+
+  async addAdminReply({ threadId, adminUserId, body, now, setStatus }) {
+    const [message] = await prisma.$transaction([
+      prisma.supportMessage.create({
+        data: {
+          threadId,
+          senderType: "ADMIN",
+          authorUserId: adminUserId,
+          body,
+          isInternal: false,
+          createdAt: now,
+        },
+        select: { id: true },
+      }),
+      prisma.supportThread.update({
+        where: { id: threadId },
+        data: {
+          status: setStatus,
+          lastMessageAt: now,
+          closedAt: null,
+        },
+      }),
+    ]);
+
+    return message;
+  },
+
+  async setThreadStatus({ threadId, status, closedAt, now }) {
+    await prisma.supportThread.update({
+      where: { id: threadId },
+      data: {
+        status: status as SupportThreadStatus,
+        closedAt,
+        updatedAt: now,
+      },
+    });
   },
 };

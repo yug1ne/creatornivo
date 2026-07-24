@@ -3,6 +3,17 @@ import type {
   SupportThreadStatus,
 } from "@prisma/client";
 
+import {
+  ADMIN_SUPPORT_PAGE_SIZE,
+  adminSupportSkip,
+  adminSupportTotalPages,
+  resolveAdminMessageSenderType,
+  statusAfterAdminClose,
+  statusAfterAdminReopen,
+  statusAfterAdminReply,
+  type AdminSupportListParams,
+  type AdminSupportStatusFilter,
+} from "@/lib/support/admin-query";
 import { SUPPORT_THREAD_LIST_LIMIT } from "@/config/support";
 import {
   normalizeSupportBody,
@@ -11,7 +22,7 @@ import {
 
 export class SupportAccessError extends Error {
   constructor(
-    public readonly code: "not_found" | "closed" | "forbidden",
+    public readonly code: "not_found" | "closed" | "forbidden" | "invalid_status",
   ) {
     super(code);
     this.name = "SupportAccessError";
@@ -34,6 +45,7 @@ export type SupportMessageView = {
   createdAt: string;
   /** Present only for non-internal, non-system messages when known. */
   authorUserId: string | null;
+  isInternal?: boolean;
 };
 
 export type SupportThreadDetail = {
@@ -44,6 +56,39 @@ export type SupportThreadDetail = {
   createdAt: string;
   closedAt: string | null;
   canReply: boolean;
+  messages: SupportMessageView[];
+};
+
+export type AdminSupportThreadListItem = {
+  id: string;
+  subject: string;
+  status: SupportThreadStatus;
+  lastMessageAt: string;
+  createdAt: string;
+  messageCount: number;
+  user: {
+    id: string;
+    email: string;
+    plan: "free" | "pro";
+  };
+};
+
+export type AdminSupportThreadDetail = {
+  id: string;
+  subject: string;
+  status: SupportThreadStatus;
+  lastMessageAt: string;
+  createdAt: string;
+  closedAt: string | null;
+  user: {
+    id: string;
+    email: string;
+    name: string | null;
+    plan: "free" | "pro";
+    role: "user" | "admin";
+    createdAt: string;
+    signInMethods: string;
+  };
   messages: SupportMessageView[];
 };
 
@@ -83,6 +128,7 @@ export interface SupportStore {
       authorUserId: string | null;
       body: string;
       createdAt: Date;
+      isInternal?: boolean;
     }>
   >;
   addUserReply(input: {
@@ -90,16 +136,75 @@ export interface SupportStore {
     userId: string;
     body: string;
     now: Date;
-    /** When status is answered, reopen to open so admin sees new activity. */
     setStatus: SupportThreadStatus;
   }): Promise<{ id: string }>;
+
+  /** Admin inbox */
+  listThreadsForAdmin(input: {
+    status?: SupportThreadStatus;
+    q: string;
+    skip: number;
+    take: number;
+  }): Promise<{
+    total: number;
+    rows: Array<{
+      id: string;
+      subject: string;
+      status: SupportThreadStatus;
+      lastMessageAt: Date;
+      createdAt: Date;
+      messageCount: number;
+      user: { id: string; email: string; plan: "free" | "pro" };
+    }>;
+  }>;
+  findThreadForAdmin(threadId: string): Promise<{
+    id: string;
+    userId: string;
+    subject: string;
+    status: SupportThreadStatus;
+    lastMessageAt: Date;
+    createdAt: Date;
+    closedAt: Date | null;
+    user: {
+      id: string;
+      email: string;
+      name: string | null;
+      plan: "free" | "pro";
+      role: "user" | "admin";
+      createdAt: Date;
+      password: string | null;
+      accounts: { provider: string }[];
+    };
+  } | null>;
+  listAdminMessages(threadId: string): Promise<
+    Array<{
+      id: string;
+      senderType: SupportMessageSenderType;
+      authorUserId: string | null;
+      body: string;
+      createdAt: Date;
+      isInternal: boolean;
+    }>
+  >;
+  addAdminReply(input: {
+    threadId: string;
+    adminUserId: string;
+    body: string;
+    now: Date;
+    setStatus: SupportThreadStatus;
+  }): Promise<{ id: string }>;
+  setThreadStatus(input: {
+    threadId: string;
+    status: SupportThreadStatus;
+    closedAt: Date | null;
+    now: Date;
+  }): Promise<void>;
 }
 
 /** Pure: only USER sender is allowed for end-user writes. */
 export function resolveUserMessageSenderType(
   attempted?: string | null,
 ): "USER" {
-  // Ignore client-supplied senderType entirely.
   void attempted;
   return "USER";
 }
@@ -188,7 +293,6 @@ export async function replyToUserSupportThread(
     userId: string;
     threadId: string;
     body: unknown;
-    /** Rejected if present and not USER — callers should not forward it. */
     attemptedSenderType?: string | null;
   },
   store: SupportStore,
@@ -213,5 +317,167 @@ export async function replyToUserSupportThread(
     body,
     now: current,
     setStatus: statusAfterUserReply(thread.status),
+  });
+}
+
+// ——— Admin ———
+
+export async function listAdminSupportThreads(
+  params: AdminSupportListParams,
+  store: SupportStore,
+): Promise<{
+  threads: AdminSupportThreadListItem[];
+  total: number;
+  page: number;
+  pageSize: number;
+  totalPages: number;
+  status: AdminSupportStatusFilter;
+  q: string;
+}> {
+  const status =
+    params.status === "all"
+      ? undefined
+      : (params.status as SupportThreadStatus);
+
+  const result = await store.listThreadsForAdmin({
+    status,
+    q: params.q,
+    skip: adminSupportSkip(params.page),
+    take: ADMIN_SUPPORT_PAGE_SIZE,
+  });
+
+  return {
+    threads: result.rows.map((row) => ({
+      id: row.id,
+      subject: row.subject,
+      status: row.status,
+      lastMessageAt: row.lastMessageAt.toISOString(),
+      createdAt: row.createdAt.toISOString(),
+      messageCount: row.messageCount,
+      user: row.user,
+    })),
+    total: result.total,
+    page: params.page,
+    pageSize: ADMIN_SUPPORT_PAGE_SIZE,
+    totalPages: adminSupportTotalPages(result.total),
+    status: params.status,
+    q: params.q,
+  };
+}
+
+export async function getAdminSupportThreadDetail(
+  threadId: string,
+  store: SupportStore,
+  formatSignIn: (input: {
+    hasPassword: boolean;
+    oauthProviders: string[];
+  }) => string,
+): Promise<AdminSupportThreadDetail> {
+  const thread = await store.findThreadForAdmin(threadId);
+  if (!thread) {
+    throw new SupportAccessError("not_found");
+  }
+
+  const messages = await store.listAdminMessages(thread.id);
+
+  return {
+    id: thread.id,
+    subject: thread.subject,
+    status: thread.status,
+    lastMessageAt: thread.lastMessageAt.toISOString(),
+    createdAt: thread.createdAt.toISOString(),
+    closedAt: thread.closedAt?.toISOString() ?? null,
+    user: {
+      id: thread.user.id,
+      email: thread.user.email,
+      name: thread.user.name,
+      plan: thread.user.plan,
+      role: thread.user.role,
+      createdAt: thread.user.createdAt.toISOString(),
+      signInMethods: formatSignIn({
+        hasPassword: Boolean(thread.user.password),
+        oauthProviders: thread.user.accounts.map((a) => a.provider),
+      }),
+    },
+    messages: messages.map((message) => ({
+      id: message.id,
+      senderType: message.senderType,
+      body: message.body,
+      createdAt: message.createdAt.toISOString(),
+      authorUserId: message.authorUserId,
+      isInternal: message.isInternal,
+    })),
+  };
+}
+
+export async function adminReplyToSupportThread(
+  input: {
+    adminUserId: string;
+    threadId: string;
+    body: unknown;
+    attemptedSenderType?: string | null;
+  },
+  store: SupportStore,
+  now = () => new Date(),
+): Promise<{ id: string }> {
+  void resolveAdminMessageSenderType(input.attemptedSenderType);
+
+  const body = normalizeSupportBody(input.body);
+  const thread = await store.findThreadForAdmin(input.threadId);
+  if (!thread) {
+    throw new SupportAccessError("not_found");
+  }
+
+  const current = now();
+  return store.addAdminReply({
+    threadId: thread.id,
+    adminUserId: input.adminUserId,
+    body,
+    now: current,
+    setStatus: statusAfterAdminReply(thread.status),
+  });
+}
+
+export async function adminCloseSupportThread(
+  threadId: string,
+  store: SupportStore,
+  now = () => new Date(),
+): Promise<void> {
+  const thread = await store.findThreadForAdmin(threadId);
+  if (!thread) {
+    throw new SupportAccessError("not_found");
+  }
+  if (thread.status === "closed") {
+    return;
+  }
+
+  const current = now();
+  await store.setThreadStatus({
+    threadId: thread.id,
+    status: statusAfterAdminClose(),
+    closedAt: current,
+    now: current,
+  });
+}
+
+export async function adminReopenSupportThread(
+  threadId: string,
+  store: SupportStore,
+  now = () => new Date(),
+): Promise<void> {
+  const thread = await store.findThreadForAdmin(threadId);
+  if (!thread) {
+    throw new SupportAccessError("not_found");
+  }
+  if (thread.status !== "closed") {
+    return;
+  }
+
+  const current = now();
+  await store.setThreadStatus({
+    threadId: thread.id,
+    status: statusAfterAdminReopen(),
+    closedAt: null,
+    now: current,
   });
 }

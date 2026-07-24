@@ -84,6 +84,20 @@ export default async function AdminPage() {
           </Card>
         </Link>
 
+        <Link href="/admin/support">
+          <Card hover className="h-full">
+            <CardContent className="p-6">
+              <CardTitle>Support</CardTitle>
+              <CardDescription className="mt-2">
+                Inbox, reply, close / reopen user threads
+              </CardDescription>
+              <p className="mt-3 text-xs font-medium text-primary">
+                Open support inbox →
+              </p>
+            </CardContent>
+          </Card>
+        </Link>
+
         <Card>
           <CardContent className="p-6">
             <CardTitle>System</CardTitle>
@@ -145,7 +159,12 @@ export default async function AdminPage() {
         <CardContent className="p-5">
           <CardTitle className="text-base">Coming later</CardTitle>
           <ul className="mt-2 list-inside list-disc text-sm text-muted-foreground">
-            <li>Support inbox</li>
+            <li>
+              <Link href="/admin/support" className="text-primary hover:underline">
+                Support inbox
+              </Link>{" "}
+              (available)
+            </li>
             <li>Subscription ops actions (still read-only IDs on user detail)</li>
             <li>Destructive admin tools (not available)</li>
           </ul>
