@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
+import { memo, useMemo, useState } from "react";
 
 import {
   getCategoryColor,
@@ -48,7 +48,7 @@ interface TemplatePickerProps {
   onSelect: (template: TemplateCatalogItem) => void;
 }
 
-export function TemplatePicker({
+export const TemplatePicker = memo(function TemplatePicker({
   templates,
   selectedId,
   userPlan,
@@ -210,4 +210,4 @@ export function TemplatePicker({
       </div>
     </div>
   );
-}
+});

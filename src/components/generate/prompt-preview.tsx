@@ -1,5 +1,7 @@
 "use client";
 
+import { memo } from "react";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { isTemplateFieldVisible } from "@/lib/templates/utils";
 import { cn } from "@/lib/utils/cn";
@@ -14,7 +16,10 @@ interface PromptPreviewProps {
  * Safe readiness panel — does not receive or display full template prompts.
  * The real prompt is assembled server-side in POST /api/ai/generate.
  */
-export function PromptPreview({ template, values }: PromptPreviewProps) {
+export const PromptPreview = memo(function PromptPreview({
+  template,
+  values,
+}: PromptPreviewProps) {
   const visibleVariables = template.variables.filter((variable) =>
     isTemplateFieldVisible(variable, values),
   );
@@ -95,4 +100,4 @@ export function PromptPreview({ template, values }: PromptPreviewProps) {
       </CardContent>
     </Card>
   );
-}
+});

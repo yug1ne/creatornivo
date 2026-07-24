@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { memo } from "react";
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -22,7 +23,7 @@ interface UsageBannerProps {
   maxSavedPrompts: number;
 }
 
-export function UsageBanner({
+export const UsageBanner = memo(function UsageBanner({
   plan,
   remaining,
   used,
@@ -108,4 +109,4 @@ export function UsageBanner({
       )}
     </div>
   );
-}
+});

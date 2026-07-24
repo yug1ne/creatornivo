@@ -126,6 +126,53 @@ test("toTemplateFormDetail includes variables and never prompt", () => {
   assert.equal(JSON.stringify(form).includes("secret system prompt"), false);
 });
 
+test("toTemplateFormDetail strips guide help blocks from client form DTO", () => {
+  const withHelp = {
+    ...sampleTemplate,
+    variables: [
+      {
+        key: "productName",
+        label: "Product name",
+        required: true,
+        type: "text",
+        hint: "Short product name",
+        help: {
+          what: "Product name help",
+          why: "Why it matters for SEO copy",
+          example: "Acme Notes",
+          avoid: "Long marketing slogans",
+        },
+      },
+    ],
+  };
+  const form = toTemplateFormDetail(withHelp, { canAccessPro: true });
+  assert.equal(form.variables[0]?.hint, "Short product name");
+  assert.equal(form.variables[0]?.help, undefined);
+  assert.equal(JSON.stringify(form).includes("Why it matters"), false);
+});
+
+test("generate workspace isolates form typing from template picker", () => {
+  const workspace = readFileSync(
+    "src/components/generate/generate-workspace.tsx",
+    "utf8",
+  );
+  const formSection = readFileSync(
+    "src/components/generate/generate-form-section.tsx",
+    "utf8",
+  );
+  assert.match(workspace, /GenerateFormSection/);
+  assert.match(workspace, /dynamic\(/);
+  assert.match(workspace, /GenerationResult/);
+  assert.match(formSection, /useState.*buildDefaultValues|buildDefaultValues\(selected\.variables\)/);
+  assert.match(formSection, /onGenerate/);
+  // Form values live in the form section, not the workspace chrome.
+  assert.match(formSection, /setValues/);
+  assert.doesNotMatch(
+    workspace,
+    /const \[values, setValues\] = useState/,
+  );
+});
+
 test("resolveInitialCatalogTemplate respects lock and ?template=slug", () => {
   const free = toTemplateCatalogItem(sampleTemplate, { canAccessPro: false });
   const pro = toTemplateCatalogItem(

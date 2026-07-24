@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
@@ -8,36 +9,21 @@ import {
   useMemo,
   useRef,
   useState,
-  type RefObject,
 } from "react";
-import { createPortal } from "react-dom";
 
-import {
-  getCategoryColor,
-  getCategoryIcon,
-  getCategoryLabel,
-} from "@/config/template-categories";
 import { getPlanLimits } from "@/config/plans";
 import { MODEL_BY_PLAN } from "@/lib/ai/provider";
-import { Badge } from "@/components/ui/badge";
-import { Button, buttonVariants } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  buildDefaultValues,
-  validateVariableValues,
-} from "@/lib/templates/utils";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { areTemplateValuesAtDefaults } from "@/lib/templates/utils";
 import {
   getGeneratedOutputValidationMessage,
   sanitizeGeneratedOutput,
   validateGeneratedOutput,
 } from "@/lib/templates/output-validation";
-import {
-  getGenerationLimitMessage,
-  getSaveLimitMessage,
-} from "@/lib/subscriptions/messages";
+import { getSaveLimitMessage } from "@/lib/subscriptions/messages";
 import type { Plan } from "@/config/plans";
 import type { UserUsageSnapshot } from "@/lib/usage";
-import { getGenerateDisabledHint } from "@/lib/usage/quota-copy";
 import {
   parseGenerationApiError,
   type ParsedGenerationError,
@@ -49,12 +35,18 @@ import type {
 } from "@/types/template";
 
 import { EmailVerificationBanner } from "./email-verification-banner";
-import { GenerationResult } from "./generation-result";
-import { PromptPreview } from "./prompt-preview";
-import { TemplateHelpButton } from "./template-help-button";
-import { TemplateParametersForm } from "./template-parameters-form";
+import { GenerateFormSection } from "./generate-form-section";
 import { TemplatePicker } from "./template-picker";
 import { UsageBanner } from "./usage-banner";
+
+/** Lazy-load result UI only when generation is active or output exists. */
+const GenerationResult = dynamic(
+  () =>
+    import("./generation-result").then((mod) => ({
+      default: mod.GenerationResult,
+    })),
+  { ssr: false, loading: () => null },
+);
 
 interface UsageStats extends UserUsageSnapshot {
   savedCount: number;
@@ -117,15 +109,8 @@ export function acquireGenerationAttempt(
   return currentRequestId ?? createRequestId();
 }
 
-export function areTemplateValuesAtDefaults(
-  variables: TemplateVariable[],
-  values: Record<string, string>,
-): boolean {
-  const defaults = buildDefaultValues(variables);
-  return variables.every(
-    (variable) => (values[variable.key] ?? "") === (defaults[variable.key] ?? ""),
-  );
-}
+/** @deprecated Prefer import from @/lib/templates/utils — re-exported for tests. */
+export { areTemplateValuesAtDefaults };
 
 export async function fetchGenerationUsageSnapshot(
   fetcher: typeof fetch = fetch,
@@ -191,9 +176,6 @@ export function GenerateWorkspace({
   );
   const [formLoading, setFormLoading] = useState(false);
   const [formLoadError, setFormLoadError] = useState<string | null>(null);
-  const [values, setValues] = useState<Record<string, string>>(() =>
-    initialForm ? buildDefaultValues(initialForm.variables) : {},
-  );
   const [streamedContent, setStreamedContent] = useState("");
   const [model, setModel] = useState("");
   const [error, setError] = useState<ParsedGenerationError | null>(null);
@@ -216,9 +198,6 @@ export function GenerateWorkspace({
   } | null>(null);
   const requestIdRef = useRef<string | null>(null);
   const inFlightRef = useRef(false);
-  const resetButtonRef = useRef<HTMLButtonElement | null>(null);
-  const cancelResetButtonRef = useRef<HTMLButtonElement | null>(null);
-  const [resetConfirmOpen, setResetConfirmOpen] = useState(false);
   const [formResetVersion, setFormResetVersion] = useState(0);
   const didSyncUrlRef = useRef(false);
 
@@ -230,9 +209,7 @@ export function GenerateWorkspace({
   }, [initialForm]);
 
   const selected = selectedForm;
-  const isFormAtDefaults = selected
-    ? areTemplateValuesAtDefaults(selected.variables, values)
-    : true;
+
   const outputValidation = useMemo(() => {
     if (isStreaming || !streamedContent || !resultValidationContext) return null;
     return validateGeneratedOutput(
@@ -245,8 +222,7 @@ export function GenerateWorkspace({
     ? getGeneratedOutputValidationMessage(outputValidation)
     : null;
 
-  const canGenerate =
-    canGenerateByEmail && generationUsage.remaining > 0;
+  const canGenerateQuota = generationUsage.remaining > 0;
 
   const canSave =
     limits.maxSavedPrompts === Infinity ||
@@ -263,25 +239,10 @@ export function GenerateWorkspace({
     }
   }, []);
 
-  const isFormValid = useMemo(() => {
-    if (!selected) return false;
-    return validateVariableValues(selected.variables, values) === null;
-  }, [selected, values]);
-
-  const generateDisabledHint = getGenerateDisabledHint({
-    hasTemplate: Boolean(selected),
-    values,
-    variableCount: selected?.variables.length ?? 0,
-    isFormValid,
-    canGenerate,
-    isStreaming,
-  });
-
   const applyForm = useCallback((form: TemplateFormDetail) => {
     formCacheRef.current.set(form.id, form);
     setSelectedId(form.id);
     setSelectedForm(form);
-    setValues(buildDefaultValues(form.variables));
     setFormLoading(false);
     setFormLoadError(null);
     setStreamedContent("");
@@ -311,7 +272,6 @@ export function GenerateWorkspace({
       const requestId = ++selectRequestRef.current;
       setSelectedId(template.id);
       setSelectedForm(null);
-      setValues({});
       setFormLoading(true);
       setFormLoadError(null);
       setStreamedContent("");
@@ -364,144 +324,133 @@ export function GenerateWorkspace({
       : accessibleCatalog[0];
 
     if (preselected) {
-      // The initial selection synchronizes local state with the URL/default.
       void selectTemplate(preselected);
     }
   }, [accessibleCatalog, initialForm, initialSlug, selectedId, selectTemplate]);
 
-  const closeResetDialog = useCallback(() => {
-    setResetConfirmOpen(false);
-    window.setTimeout(() => resetButtonRef.current?.focus(), 0);
-  }, []);
-
-  const resetCurrentForm = useCallback(() => {
-    if (!selected) return;
-
+  const handleFormEdit = useCallback(() => {
     if (!inFlightRef.current) {
       requestIdRef.current = null;
     }
+  }, []);
 
-    setValues(buildDefaultValues(selected.variables));
-    setError(null);
-    setFormResetVersion((current) => current + 1);
-  }, [selected]);
+  const handleGenerate = useCallback(
+    async (values: Record<string, string>) => {
+      if (
+        !selected ||
+        !canGenerateByEmail ||
+        !canGenerateQuota ||
+        inFlightRef.current
+      ) {
+        return;
+      }
 
-  const handleResetRequest = useCallback(() => {
-    if (!selected || isFormAtDefaults) return;
-    setResetConfirmOpen(true);
-  }, [isFormAtDefaults, selected]);
+      const requestId = acquireGenerationAttempt(
+        requestIdRef.current,
+        inFlightRef.current,
+      );
+      if (!requestId) return;
 
-  const handleResetConfirm = useCallback(() => {
-    resetCurrentForm();
-    closeResetDialog();
-  }, [closeResetDialog, resetCurrentForm]);
+      requestIdRef.current = requestId;
+      inFlightRef.current = true;
+      const generationVariables = selected.variables;
+      const generationValues = { ...values };
 
-  async function handleGenerate() {
-    if (
-      !selected ||
-      !isFormValid ||
-      !canGenerate ||
-      !canGenerateByEmail ||
-      inFlightRef.current
-    ) {
-      return;
-    }
+      setError(null);
+      setIsStreaming(true);
+      setStreamedContent("");
+      setModel(MODEL_BY_PLAN[userPlan]);
+      setSavedPromptId(null);
+      setResultValidationContext({
+        templateId: selected.id,
+        variables: generationVariables,
+        values: generationValues,
+      });
 
-    const requestId = acquireGenerationAttempt(
-      requestIdRef.current,
-      inFlightRef.current,
-    );
-    if (!requestId) return;
-
-    requestIdRef.current = requestId;
-    inFlightRef.current = true;
-    const generationVariables = selected.variables;
-    const generationValues = { ...values };
-
-    setError(null);
-    setIsStreaming(true);
-    setStreamedContent("");
-    setModel(MODEL_BY_PLAN[userPlan]);
-    setSavedPromptId(null);
-    setResultValidationContext({
-      templateId: selected.id,
-      variables: generationVariables,
-      values: generationValues,
-    });
-
-    try {
-      const response = await fetch("/api/ai/generate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      try {
+        const response = await fetch("/api/ai/generate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             requestId,
             templateId: selected.id,
             values: generationValues,
           }),
-      });
+        });
 
-      if (!response.ok) {
-        const data = await response.json();
-        if (
-          response.status === 400 ||
-          data.code === "generation_already_completed" ||
-          data.code === "generation_request_failed"
-        ) {
-          requestIdRef.current = null;
+        if (!response.ok) {
+          const data = await response.json();
+          if (
+            response.status === 400 ||
+            data.code === "generation_already_completed" ||
+            data.code === "generation_request_failed"
+          ) {
+            requestIdRef.current = null;
+          }
+          setError(parseGenerationApiError(data));
+          await refreshGenerationUsage();
+          return;
         }
-        setError(parseGenerationApiError(data));
+
+        const responseModel = response.headers.get("X-Model");
+        if (responseModel) setModel(responseModel);
+
+        const reader = response.body?.getReader();
+        if (!reader) {
+          setError({
+            message: "Failed to receive data stream. Please try again.",
+            showUpgradeLink: false,
+          });
+          await refreshGenerationUsage();
+          return;
+        }
+
+        const decoder = new TextDecoder();
+        let accumulated = "";
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+
+          accumulated += decoder.decode(value, { stream: true });
+          setStreamedContent(accumulated);
+        }
+
+        const sanitizedOutput = sanitizeGeneratedOutput(
+          accumulated,
+          generationVariables,
+          generationValues,
+        );
+        if (sanitizedOutput.changed) {
+          setStreamedContent(sanitizedOutput.content);
+        }
+
+        requestIdRef.current = null;
         await refreshGenerationUsage();
-        return;
-      }
-
-      const responseModel = response.headers.get("X-Model");
-      if (responseModel) setModel(responseModel);
-
-      const reader = response.body?.getReader();
-      if (!reader) {
+      } catch {
         setError({
-          message: "Failed to receive data stream. Please try again.",
+          message: "Network error. Please retry this generation.",
           showUpgradeLink: false,
         });
         await refreshGenerationUsage();
-        return;
+      } finally {
+        inFlightRef.current = false;
+        setIsStreaming(false);
       }
+    },
+    [
+      canGenerateByEmail,
+      canGenerateQuota,
+      refreshGenerationUsage,
+      selected,
+      userPlan,
+    ],
+  );
 
-      const decoder = new TextDecoder();
-      let accumulated = "";
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-
-        accumulated += decoder.decode(value, { stream: true });
-        setStreamedContent(accumulated);
-      }
-
-      const sanitizedOutput = sanitizeGeneratedOutput(
-        accumulated,
-        generationVariables,
-        generationValues,
-      );
-      if (sanitizedOutput.changed) {
-        setStreamedContent(sanitizedOutput.content);
-      }
-
-      requestIdRef.current = null;
-      await refreshGenerationUsage();
-    } catch {
-      setError({
-        message: "Network error. Please retry this generation.",
-        showUpgradeLink: false,
-      });
-      await refreshGenerationUsage();
-    } finally {
-      inFlightRef.current = false;
-      setIsStreaming(false);
-    }
-  }
-
-  async function handleSave(): Promise<{ error?: string; id?: string }> {
+  const handleSave = useCallback(async (): Promise<{
+    error?: string;
+    id?: string;
+  }> => {
     if (!selected || !streamedContent) {
       return { error: "No content to save" };
     }
@@ -554,7 +503,18 @@ export function GenerateWorkspace({
     setSavedCount((prev) => prev + 1);
     setSavedPromptId(data.prompt.id);
     return { id: data.prompt.id };
-  }
+  }, [
+    canSave,
+    resultValidationContext,
+    saveLimitMessage,
+    selected,
+    streamedContent,
+  ]);
+
+  const handleGenerateRetry = useCallback(() => {
+    if (!resultValidationContext?.values) return;
+    void handleGenerate(resultValidationContext.values);
+  }, [handleGenerate, resultValidationContext]);
 
   return (
     <div className="space-y-6">
@@ -577,9 +537,7 @@ export function GenerateWorkspace({
             templates={catalog}
             selectedId={selectedId}
             userPlan={userPlan}
-            onSelect={(template) => {
-              void selectTemplate(template);
-            }}
+            onSelect={selectTemplate}
           />
         </aside>
 
@@ -605,131 +563,19 @@ export function GenerateWorkspace({
               </CardContent>
             </Card>
           ) : selected ? (
-            <div data-onboarding="generate-flow" className="space-y-6">
-              <div className="flex items-start gap-4">
-                <span
-                  className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-[var(--radius-lg)] text-sm font-bold ${getCategoryColor(selected.category)}`}
-                  aria-hidden
-                >
-                  {getCategoryIcon(selected.category)}
-                </span>
-                <div className="min-w-0">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <h2 className="text-xl font-bold text-foreground">
-                      {selected.title}
-                    </h2>
-                    <Badge
-                      variant={
-                        selected.requiredPlan === "pro" ? "pro" : "free"
-                      }
-                    >
-                      {getCategoryLabel(selected.category)}
-                    </Badge>
-                  </div>
-                  <p className="mt-1 text-sm text-muted-foreground">
-                    {selected.description}
-                  </p>
-                </div>
-              </div>
-
-              <Card>
-                <CardHeader>
-                  <div className="flex flex-wrap items-center justify-between gap-2">
-                    <CardTitle className="text-sm">Parameters</CardTitle>
-                  </div>
-                </CardHeader>
-                <CardContent className="pt-0">
-                  <TemplateParametersForm
-                    key={`${selected.id}-${formResetVersion}`}
-                    variables={selected.variables}
-                    values={values}
-                    toolbarAction={
-                      <button
-                        ref={resetButtonRef}
-                        type="button"
-                        onClick={handleResetRequest}
-                        disabled={isFormAtDefaults}
-                        aria-label="Reset form to default values"
-                        className={buttonVariants({
-                          variant: "outline",
-                          size: "sm",
-                          className:
-                            "border-destructive/30 text-destructive hover:bg-destructive/10",
-                        })}
-                      >
-                        <span className="hidden sm:inline">Reset form</span>
-                        <span className="sm:hidden" aria-hidden>
-                          Reset
-                        </span>
-                      </button>
-                    }
-                    toolbarEndAction={
-                      <TemplateHelpButton templateSlug={selected.slug} />
-                    }
-                    onChange={(key, value) => {
-                      if (!inFlightRef.current) {
-                        requestIdRef.current = null;
-                      }
-                      setValues((prev) => ({
-                        ...prev,
-                        [key]: value,
-                      }));
-                    }}
-                  />
-                </CardContent>
-              </Card>
-
-              <PromptPreview template={selected} values={values} />
-
-              <div className="flex flex-wrap items-center gap-3">
-                <Button
-                  type="button"
-                  size="lg"
-                  onClick={handleGenerate}
-                  disabled={isStreaming || !isFormValid || !canGenerate}
-                  title={
-                    !canGenerateByEmail
-                      ? "Confirm your email to generate content."
-                      : !canGenerate
-                        ? getGenerationLimitMessage(
-                            userPlan,
-                            generationUsage.used,
-                            generationUsage.resetAt,
-                          ) ?? undefined
-                        : generateDisabledHint ?? undefined
-                  }
-                >
-                  {isStreaming ? (
-                    <>
-                      <span className="h-4 w-4 animate-spin rounded-full border-2 border-primary-foreground/30 border-t-primary-foreground" />
-                      Generating...
-                    </>
-                  ) : (
-                    "Generate"
-                  )}
-                </Button>
-
-                {!canGenerateByEmail ? (
-                  <span className="text-sm text-muted-foreground">
-                    Confirm your email to generate content.
-                  </span>
-                ) : (
-                  !canGenerate && (
-                    <Link
-                      href="/pricing"
-                      className="text-sm font-medium text-primary hover:underline"
-                    >
-                      Upgrade to Pro
-                    </Link>
-                  )
-                )}
-              </div>
-
-              {generateDisabledHint && (
-                <p className="text-sm text-muted-foreground">
-                  {generateDisabledHint}
-                </p>
-              )}
+            <>
+              <GenerateFormSection
+                key={`${selected.id}-${formResetVersion}`}
+                selected={selected}
+                formResetVersion={formResetVersion}
+                userPlan={userPlan}
+                canGenerateByEmail={canGenerateByEmail}
+                canGenerateQuota={canGenerateQuota}
+                isStreaming={isStreaming}
+                generationUsage={generationUsage}
+                onGenerate={handleGenerate}
+                onFormEdit={handleFormEdit}
+              />
 
               {error && (
                 <div
@@ -745,23 +591,25 @@ export function GenerateWorkspace({
                     {error.code !== "quota_exceeded" &&
                       error.code !== "quota" &&
                       error.code !== "email_verification_required" && (
-                      <Button
-                        type="button"
-                        variant="outline"
-                        size="sm"
-                        onClick={handleGenerate}
-                        disabled={
-                          isStreaming || !isFormValid || !canGenerate
-                        }
-                        className={
-                          error.code === "generation_disabled"
-                            ? "border-warning/40 bg-background/80 hover:bg-background"
-                            : "bg-background/80 hover:bg-background"
-                        }
-                      >
-                        Try again
-                      </Button>
-                    )}
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={handleGenerateRetry}
+                          disabled={
+                            isStreaming ||
+                            !canGenerateByEmail ||
+                            !canGenerateQuota
+                          }
+                          className={
+                            error.code === "generation_disabled"
+                              ? "border-warning/40 bg-background/80 hover:bg-background"
+                              : "bg-background/80 hover:bg-background"
+                          }
+                        >
+                          Try again
+                        </Button>
+                      )}
                   </div>
                   {error.showUpgradeLink && (
                     <Link
@@ -774,19 +622,21 @@ export function GenerateWorkspace({
                 </div>
               )}
 
-              <GenerationResult
-                content={streamedContent}
-                model={model || MODEL_BY_PLAN[userPlan]}
-                isStreaming={isStreaming}
-                canSave={canSave}
-                canExport={canExport}
-                exportTitle={selected.title}
-                saveLimitMessage={saveLimitMessage}
-                savedPromptId={savedPromptId}
-                outputValidationMessage={outputValidationMessage}
-                onSave={handleSave}
-              />
-            </div>
+              {(isStreaming || streamedContent) && (
+                <GenerationResult
+                  content={streamedContent}
+                  model={model || MODEL_BY_PLAN[userPlan]}
+                  isStreaming={isStreaming}
+                  canSave={canSave}
+                  canExport={canExport}
+                  exportTitle={selected.title}
+                  saveLimitMessage={saveLimitMessage}
+                  savedPromptId={savedPromptId}
+                  outputValidationMessage={outputValidationMessage}
+                  onSave={handleSave}
+                />
+              )}
+            </>
           ) : (
             <Card className="border-dashed">
               <CardContent className="flex flex-col items-center justify-center py-16 text-center">
@@ -804,96 +654,6 @@ export function GenerateWorkspace({
           )}
         </div>
       </div>
-      <ResetFormConfirmationDialog
-        open={resetConfirmOpen}
-        cancelButtonRef={cancelResetButtonRef}
-        onCancel={closeResetDialog}
-        onConfirm={handleResetConfirm}
-      />
     </div>
-  );
-}
-
-function ResetFormConfirmationDialog({
-  open,
-  cancelButtonRef,
-  onCancel,
-  onConfirm,
-}: {
-  open: boolean;
-  cancelButtonRef: RefObject<HTMLButtonElement | null>;
-  onCancel: () => void;
-  onConfirm: () => void;
-}) {
-  useEffect(() => {
-    if (!open) return;
-
-    function onKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") {
-        onCancel();
-      }
-    }
-
-    const focusTimer = window.setTimeout(
-      () => cancelButtonRef.current?.focus(),
-      0,
-    );
-    document.addEventListener("keydown", onKeyDown);
-
-    return () => {
-      window.clearTimeout(focusTimer);
-      document.removeEventListener("keydown", onKeyDown);
-    };
-  }, [cancelButtonRef, onCancel, open]);
-
-  if (!open || typeof document === "undefined") return null;
-
-  return createPortal(
-    <div
-      className="fixed inset-0 z-[110] flex items-center justify-center p-4"
-      role="presentation"
-    >
-      <button
-        type="button"
-        className="absolute inset-0 bg-black/50 backdrop-blur-[1px]"
-        aria-label="Cancel reset form"
-        onClick={onCancel}
-      />
-      <div
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="reset-form-dialog-title"
-        aria-describedby="reset-form-dialog-description"
-        className="relative w-full max-w-sm rounded-[var(--radius-xl)] border border-border bg-card p-6 shadow-[var(--shadow-md)]"
-      >
-        <h2
-          id="reset-form-dialog-title"
-          className="text-lg font-semibold text-foreground"
-        >
-          Reset form?
-        </h2>
-        <p
-          id="reset-form-dialog-description"
-          className="mt-2 text-sm text-muted-foreground"
-        >
-          Reset all fields to their default values? Your current form entries
-          will be removed.
-        </p>
-        <div className="mt-6 flex justify-end gap-2">
-          <button
-            ref={cancelButtonRef}
-            type="button"
-            onClick={onCancel}
-            className={buttonVariants({ variant: "outline" })}
-          >
-            Cancel
-          </button>
-          <Button type="button" variant="destructive" onClick={onConfirm}>
-            Reset fields
-          </Button>
-        </div>
-      </div>
-    </div>,
-    document.body,
   );
 }

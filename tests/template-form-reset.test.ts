@@ -6,8 +6,6 @@ import { fileURLToPath } from "node:url";
 
 import {
   areTemplateValuesAtDefaults,
-} from "../src/components/generate/generate-workspace";
-import {
   buildDefaultValues,
   classifyTemplateFieldDefault,
   fillPromptTemplate,
@@ -183,21 +181,31 @@ test("default classification separates no-preference, absence, auto, and technic
 });
 
 test("reset form UI asks for confirmation only for dirty forms and keeps the current template", () => {
-  const source = readProjectFile(
+  const formSection = readProjectFile(
+    "src",
+    "components",
+    "generate",
+    "generate-form-section.tsx",
+  );
+  const workspace = readProjectFile(
     "src",
     "components",
     "generate",
     "generate-workspace.tsx",
   );
 
-  assert.match(source, /disabled={isFormAtDefaults}/);
-  assert.match(source, /aria-label="Reset form to default values"/);
-  assert.match(source, /Reset form/);
-  assert.match(source, /Reset all fields to their default values/);
-  assert.match(source, /setResetConfirmOpen\(true\)/);
-  assert.match(source, /if \(!selected \|\| isFormAtDefaults\) return/);
-  assert.match(source, /setValues\(buildDefaultValues\(template\.variables\)\)/);
-  assert.match(source, /url\.searchParams\.set\("template", template\.slug\)/);
+  assert.match(formSection, /disabled={isFormAtDefaults}/);
+  assert.match(formSection, /aria-label="Reset form to default values"/);
+  assert.match(formSection, /Reset form/);
+  assert.match(formSection, /Reset all fields to their default values/);
+  assert.match(formSection, /setResetConfirmOpen\(true\)/);
+  assert.match(formSection, /if \(isFormAtDefaults\) return/);
+  assert.match(
+    formSection,
+    /setValues\(buildDefaultValues\(selected\.variables\)\)/,
+  );
+  // Template slug remains owned by workspace selection, not form typing.
+  assert.match(workspace, /url\.searchParams\.set\("template", template\.slug\)/);
 });
 
 test("reset confirmation cancel preserves values while confirm resets only form state", () => {
@@ -205,7 +213,7 @@ test("reset confirmation cancel preserves values while confirm resets only form 
     "src",
     "components",
     "generate",
-    "generate-workspace.tsx",
+    "generate-form-section.tsx",
   );
   const resetBody = source.slice(
     source.indexOf("const resetCurrentForm"),
@@ -217,7 +225,6 @@ test("reset confirmation cancel preserves values while confirm resets only form 
   assert.match(source, /onCancel={closeResetDialog}/);
   assert.match(source, /onConfirm={handleResetConfirm}/);
   assert.match(resetBody, /setValues\(buildDefaultValues\(selected\.variables\)\)/);
-  assert.match(resetBody, /setFormResetVersion\(\(current\) => current \+ 1\)/);
   assert.doesNotMatch(resetBody, /setStreamedContent/);
   assert.doesNotMatch(resetBody, /setGenerationUsage/);
   assert.doesNotMatch(resetBody, /fetch\("\/api\/ai\/generate"/);
@@ -225,6 +232,12 @@ test("reset confirmation cancel preserves values while confirm resets only form 
 });
 
 test("reset dialog accessibility and toolbar placement are wired", () => {
+  const formSection = readProjectFile(
+    "src",
+    "components",
+    "generate",
+    "generate-form-section.tsx",
+  );
   const workspace = readProjectFile(
     "src",
     "components",
@@ -238,11 +251,11 @@ test("reset dialog accessibility and toolbar placement are wired", () => {
     "template-parameters-form.tsx",
   );
 
-  assert.match(workspace, /role="dialog"/);
-  assert.match(workspace, /aria-modal="true"/);
-  assert.match(workspace, /event\.key === "Escape"/);
-  assert.match(workspace, /resetButtonRef\.current\?\.focus\(\)/);
-  assert.match(workspace, /ref={cancelButtonRef}/);
+  assert.match(formSection, /role="dialog"/);
+  assert.match(formSection, /aria-modal="true"/);
+  assert.match(formSection, /event\.key === "Escape"/);
+  assert.match(formSection, /resetButtonRef\.current\?\.focus\(\)/);
+  assert.match(formSection, /ref={cancelButtonRef}/);
   assert.match(workspace, /key={`\$\{selected\.id\}-\$\{formResetVersion\}`}/);
   assert.match(form, /useState<Set<string>>\(initialOpen\)/);
 

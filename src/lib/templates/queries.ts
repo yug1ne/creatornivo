@@ -98,12 +98,20 @@ export function toTemplateListItem(
   return item;
 }
 
+/**
+ * Count variables without full parseTemplateVariables walk.
+ * Catalog only needs a number for UI badges.
+ */
+export function countTemplateVariablesLightweight(variables: unknown): number {
+  if (!Array.isArray(variables)) return 0;
+  return variables.length;
+}
+
 /** Catalog card DTO — never includes prompt or full variables. */
 export function toTemplateCatalogItem(
   template: TemplateMetaSource,
   options: { canAccessPro: boolean },
 ): TemplateCatalogItem {
-  const variables = parseTemplateVariables(template.variables);
   const isLocked = template.requiredPlan === "pro" && !options.canAccessPro;
 
   return {
@@ -114,8 +122,23 @@ export function toTemplateCatalogItem(
     category: template.category,
     requiredPlan: template.requiredPlan,
     isLocked,
-    variableCount: variables.length,
+    variableCount: countTemplateVariablesLightweight(template.variables),
   };
+}
+
+/**
+ * Strip guide-only `help` blocks from form DTOs sent to the client.
+ * Keep labels, hints, options, grouping, showWhen, validation metadata.
+ */
+export function stripHelpFromFormVariables(
+  variables: TemplateVariable[],
+): TemplateVariable[] {
+  return variables.map((variable) => {
+    if (variable.help === undefined) return variable;
+    const { help: _help, ...rest } = variable;
+    void _help;
+    return rest;
+  });
 }
 
 /** Form DTO for one template — variables only, never prompt. */
@@ -123,9 +146,9 @@ export function toTemplateFormDetail(
   template: TemplateMetaSource,
   options: { canAccessPro: boolean },
 ): TemplateFormDetail {
-  const variables = parseTemplateVariables(
-    template.variables,
-  ) as TemplateVariable[];
+  const variables = stripHelpFromFormVariables(
+    parseTemplateVariables(template.variables) as TemplateVariable[],
+  );
   const isLocked = template.requiredPlan === "pro" && !options.canAccessPro;
 
   return {

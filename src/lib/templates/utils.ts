@@ -1026,6 +1026,17 @@ export function buildDefaultValues(
   }, {});
 }
 
+/** True when every field value matches the schema-driven initial default. */
+export function areTemplateValuesAtDefaults(
+  variables: TemplateVariable[],
+  values: Record<string, string>,
+): boolean {
+  const defaults = buildDefaultValues(variables);
+  return variables.every(
+    (variable) => (values[variable.key] ?? "") === (defaults[variable.key] ?? ""),
+  );
+}
+
 /** Group variables for collapsible form sections. */
 export function groupTemplateVariables(variables: TemplateVariable[]): {
   groupId: string;
