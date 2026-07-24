@@ -5,12 +5,16 @@ import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { CountBadge } from "@/components/ui/count-badge";
 import { requireAdminPage } from "@/lib/admin/session";
 import {
   parseAdminSupportListParams,
   type AdminSupportStatusFilter,
 } from "@/lib/support/admin-query";
-import { listAdminSupportThreads } from "@/lib/support/service";
+import {
+  getAdminSupportStatusCounts,
+  listAdminSupportThreads,
+} from "@/lib/support/service";
 import { prismaSupportStore } from "@/lib/support/store";
 import { cn } from "@/lib/utils/cn";
 
@@ -64,7 +68,17 @@ export default async function AdminSupportPage({
 
   const raw = await searchParams;
   const params = parseAdminSupportListParams(raw);
-  const result = await listAdminSupportThreads(params, prismaSupportStore);
+  const [result, statusCounts] = await Promise.all([
+    listAdminSupportThreads(params, prismaSupportStore),
+    getAdminSupportStatusCounts(prismaSupportStore),
+  ]);
+
+  const tabCounts: Record<AdminSupportStatusFilter, number> = {
+    all: statusCounts.all,
+    open: statusCounts.open,
+    answered: statusCounts.answered,
+    closed: statusCounts.closed,
+  };
 
   return (
     <>
@@ -90,22 +104,44 @@ export default async function AdminSupportPage({
       </div>
 
       <div className="mb-4 flex flex-wrap gap-2">
-        {STATUS_TABS.map((tab) => (
-          <Link
-            key={tab}
-            href={buildHref({ status: tab, q: params.q })}
-            className={cn(
-              buttonVariants({
-                variant: params.status === tab ? "default" : "outline",
-                size: "sm",
-              }),
-              "capitalize",
-            )}
-          >
-            {tab}
-          </Link>
-        ))}
+        {STATUS_TABS.map((tab) => {
+          const count = tabCounts[tab];
+          const isActive = params.status === tab;
+          return (
+            <Link
+              key={tab}
+              href={buildHref({ status: tab, q: params.q })}
+              className={cn(
+                buttonVariants({
+                  variant: isActive ? "default" : "outline",
+                  size: "sm",
+                }),
+                "inline-flex items-center gap-1.5 capitalize",
+              )}
+              aria-current={isActive ? "page" : undefined}
+            >
+              {tab}
+              <CountBadge
+                count={count}
+                tone={tab === "open" ? "attention" : "default"}
+                label={`${tab} threads`}
+                className={
+                  isActive
+                    ? "bg-primary-foreground/20 text-primary-foreground"
+                    : undefined
+                }
+              />
+            </Link>
+          );
+        })}
       </div>
+
+      {statusCounts.open > 0 ? (
+        <p className="mb-4 text-sm text-amber-800 dark:text-amber-200">
+          {statusCounts.open} open request
+          {statusCounts.open === 1 ? "" : "s"} need attention.
+        </p>
+      ) : null}
 
       <Card className="mb-6">
         <CardContent className="p-4">

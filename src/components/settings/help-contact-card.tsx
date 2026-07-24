@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { buttonVariants } from "@/components/ui/button";
+import { CountBadge } from "@/components/ui/count-badge";
 import { siteConfig } from "@/config/site";
 import {
   Card,
@@ -11,7 +12,12 @@ import {
 
 const supportEmail = siteConfig.legal.privacyEmail;
 
-export function HelpContactCard() {
+export function HelpContactCard({
+  answeredSupportCount = 0,
+}: {
+  /** Current user's answered threads only (Support replied). */
+  answeredSupportCount?: number;
+}) {
   return (
     <Card id="help-contact">
       <CardContent className="space-y-3 p-6">
@@ -23,12 +29,28 @@ export function HelpContactCard() {
           </CardDescription>
         </div>
 
-        <Link
-          href="/settings/support"
-          className={buttonVariants({ variant: "outline", className: "w-full sm:w-auto" })}
-        >
-          Message support
-        </Link>
+        <div className="flex flex-wrap items-center gap-3">
+          <Link
+            href="/settings/support"
+            className={buttonVariants({
+              variant: "outline",
+              className: "inline-flex w-full items-center gap-2 sm:w-auto",
+            })}
+          >
+            Message support
+            <CountBadge
+              count={answeredSupportCount}
+              tone="success"
+              label="support replies waiting"
+            />
+          </Link>
+          {answeredSupportCount > 0 ? (
+            <p className="text-xs text-emerald-800 dark:text-emerald-200">
+              Support replied on {answeredSupportCount} request
+              {answeredSupportCount === 1 ? "" : "s"}.
+            </p>
+          ) : null}
+        </div>
 
         <p className="text-sm text-foreground">
           <span className="text-muted-foreground">Email: </span>

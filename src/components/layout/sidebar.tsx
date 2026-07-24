@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
 import { SignOutButton } from "@/components/auth/sign-out-button";
+import { CountBadge } from "@/components/ui/count-badge";
 import { siteConfig } from "@/config/site";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { cn } from "@/lib/utils/cn";
@@ -21,14 +22,20 @@ const sidebarItems = [
 interface SidebarProps {
   mobileOpen?: boolean;
   onMobileClose?: () => void;
+  /** User's own answered threads (Support replied). */
+  answeredSupportCount?: number;
+  /** Admin-only: global open support threads. */
+  adminOpenSupportCount?: number;
 }
 
 function NavContent({
   onNavigate,
   showAdmin,
+  adminOpenSupportCount = 0,
 }: {
   onNavigate?: () => void;
   showAdmin: boolean;
+  adminOpenSupportCount?: number;
 }) {
   const pathname = usePathname();
   const items = showAdmin
@@ -43,6 +50,7 @@ function NavContent({
       {items.map((item) => {
         const isActive =
           pathname === item.href || pathname.startsWith(`${item.href}/`);
+        const isAdminLink = item.href === "/admin";
 
         return (
           <Link
@@ -65,7 +73,16 @@ function NavContent({
             >
               {item.icon}
             </span>
-            {item.label}
+            <span className="flex min-w-0 flex-1 items-center gap-2">
+              {item.label}
+              {isAdminLink ? (
+                <CountBadge
+                  count={adminOpenSupportCount}
+                  tone="attention"
+                  label="open support requests"
+                />
+              ) : null}
+            </span>
           </Link>
         );
       })}
@@ -73,7 +90,12 @@ function NavContent({
   );
 }
 
-export function Sidebar({ mobileOpen, onMobileClose }: SidebarProps) {
+export function Sidebar({
+  mobileOpen,
+  onMobileClose,
+  answeredSupportCount = 0,
+  adminOpenSupportCount = 0,
+}: SidebarProps) {
   const { data: session } = useSession();
   const [internalOpen, setInternalOpen] = useState(false);
   const isOpen = mobileOpen ?? internalOpen;
@@ -99,11 +121,18 @@ export function Sidebar({ mobileOpen, onMobileClose }: SidebarProps) {
         type="button"
         onClick={() => setInternalOpen(true)}
         className="fixed bottom-5 right-5 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-[var(--shadow-md)] transition-transform hover:scale-105 lg:hidden"
-        aria-label="Open menu"
+        aria-label={
+          answeredSupportCount > 0
+            ? `Open menu, ${answeredSupportCount} support replies`
+            : "Open menu"
+        }
       >
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <path d="M4 6h16M4 12h16M4 18h16" />
         </svg>
+        {answeredSupportCount > 0 || (showAdmin && adminOpenSupportCount > 0) ? (
+          <span className="absolute right-1 top-1 h-2.5 w-2.5 rounded-full bg-amber-500 ring-2 ring-primary" />
+        ) : null}
       </button>
 
       {isOpen && (
@@ -140,7 +169,11 @@ export function Sidebar({ mobileOpen, onMobileClose }: SidebarProps) {
           </button>
         </div>
 
-        <NavContent onNavigate={close} showAdmin={showAdmin} />
+        <NavContent
+          onNavigate={close}
+          showAdmin={showAdmin}
+          adminOpenSupportCount={showAdmin ? adminOpenSupportCount : 0}
+        />
 
         <div className="mt-6 border-t border-border pt-4">
           {userLabel ? (
@@ -169,7 +202,7 @@ export function Sidebar({ mobileOpen, onMobileClose }: SidebarProps) {
           </Link>
         </div>
 
-        <p className="mt-4 space-x-3 px-1 text-xs text-muted-foreground">
+        <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2 px-1 text-xs text-muted-foreground">
           <Link
             href="/settings#help-contact"
             onClick={close}
@@ -180,11 +213,16 @@ export function Sidebar({ mobileOpen, onMobileClose }: SidebarProps) {
           <Link
             href="/settings/support"
             onClick={close}
-            className="font-medium text-muted-foreground transition-colors hover:text-foreground hover:underline"
+            className="inline-flex items-center gap-1.5 font-medium text-muted-foreground transition-colors hover:text-foreground hover:underline"
           >
             Support
+            <CountBadge
+              count={answeredSupportCount}
+              tone="success"
+              label="support replies waiting"
+            />
           </Link>
-        </p>
+        </div>
       </aside>
     </>
   );

@@ -14,6 +14,10 @@ import {
   type AdminSupportListParams,
   type AdminSupportStatusFilter,
 } from "@/lib/support/admin-query";
+import {
+  emptySupportStatusCounts,
+  type SupportStatusCounts,
+} from "@/lib/support/counts";
 import { SUPPORT_THREAD_LIST_LIMIT } from "@/config/support";
 import {
   normalizeSupportBody,
@@ -199,6 +203,10 @@ export interface SupportStore {
     closedAt: Date | null;
     now: Date;
   }): Promise<void>;
+
+  /** Status counts only — no subjects, emails, or message bodies. */
+  countStatusesForUser(userId: string): Promise<SupportStatusCounts>;
+  countStatusesForAdmin(): Promise<SupportStatusCounts>;
 }
 
 /** Pure: only USER sender is allowed for end-user writes. */
@@ -480,4 +488,25 @@ export async function adminReopenSupportThread(
     closedAt: null,
     now: current,
   });
+}
+
+/** Counts for the owning user only. Caller must pass session.user.id. */
+export async function getUserSupportStatusCounts(
+  userId: string,
+  store: SupportStore,
+): Promise<SupportStatusCounts> {
+  if (!userId.trim()) {
+    return emptySupportStatusCounts();
+  }
+  return store.countStatusesForUser(userId);
+}
+
+/**
+ * Global status counts for admin inbox/nav.
+ * Caller must already have verified admin access.
+ */
+export async function getAdminSupportStatusCounts(
+  store: SupportStore,
+): Promise<SupportStatusCounts> {
+  return store.countStatusesForAdmin();
 }

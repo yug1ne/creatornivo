@@ -313,6 +313,28 @@ class MemorySupportStore implements SupportStore {
     thread.status = input.status;
     thread.closedAt = input.closedAt;
   }
+
+  async countStatusesForUser(userId: string) {
+    const rows = Array.from(this.threads.values()).filter(
+      (t) => t.userId === userId,
+    );
+    return {
+      open: rows.filter((t) => t.status === "open").length,
+      answered: rows.filter((t) => t.status === "answered").length,
+      closed: rows.filter((t) => t.status === "closed").length,
+      all: rows.length,
+    };
+  }
+
+  async countStatusesForAdmin() {
+    const rows = Array.from(this.threads.values());
+    return {
+      open: rows.filter((t) => t.status === "open").length,
+      answered: rows.filter((t) => t.status === "answered").length,
+      closed: rows.filter((t) => t.status === "closed").length,
+      all: rows.length,
+    };
+  }
 }
 
 test("validation enforces subject and body limits", () => {
@@ -701,4 +723,120 @@ test("schema includes support models", () => {
   assert.match(schema, /model SupportMessage/);
   assert.match(schema, /enum SupportThreadStatus/);
   assert.match(schema, /enum SupportMessageSenderType/);
+});
+
+test("status counts and attention badges are scoped correctly", async () => {
+  const {
+    aggregateSupportStatusCounts,
+    adminSupportAttentionCount,
+    userSupportAttentionCount,
+  } = await import("../src/lib/support/counts");
+  const {
+    getAdminSupportStatusCounts,
+    getUserSupportStatusCounts,
+  } = await import("../src/lib/support/service");
+
+  assert.deepEqual(
+    aggregateSupportStatusCounts([
+      { status: "open", count: 2 },
+      { status: "answered", count: 1 },
+      { status: "closed", count: 3 },
+    ]),
+    { open: 2, answered: 1, closed: 3, all: 6 },
+  );
+  assert.equal(
+    userSupportAttentionCount({ open: 2, answered: 4, closed: 1, all: 7 }),
+    4,
+  );
+  assert.equal(
+    adminSupportAttentionCount({ open: 5, answered: 2, closed: 1, all: 8 }),
+    5,
+  );
+
+  const store = new MemorySupportStore();
+  await createUserSupportThread(
+    {
+      userId: "user-a",
+      subject: "Open for A",
+      body: "Open thread body that is long enough for validation rules.",
+    },
+    store,
+  );
+  const answered = await createUserSupportThread(
+    {
+      userId: "user-a",
+      subject: "Answered for A",
+      body: "Answered thread body that is long enough for validation rules.",
+    },
+    store,
+  );
+  await adminReplyToSupportThread(
+    {
+      adminUserId: "admin-1",
+      threadId: answered.id,
+      body: "Admin reply that becomes visible on the answered thread for A.",
+    },
+    store,
+  );
+  await createUserSupportThread(
+    {
+      userId: "user-b",
+      subject: "Open for B",
+      body: "User B open thread body that is long enough for validation rules.",
+    },
+    store,
+  );
+
+  const countsA = await getUserSupportStatusCounts("user-a", store);
+  assert.equal(countsA.open, 1);
+  assert.equal(countsA.answered, 1);
+  assert.equal(countsA.closed, 0);
+  assert.equal(userSupportAttentionCount(countsA), 1);
+
+  const countsB = await getUserSupportStatusCounts("user-b", store);
+  assert.equal(countsB.open, 1);
+  assert.equal(countsB.answered, 0);
+  assert.equal(userSupportAttentionCount(countsB), 0);
+
+  const adminCounts = await getAdminSupportStatusCounts(store);
+  assert.equal(adminCounts.open, 2);
+  assert.equal(adminCounts.answered, 1);
+  assert.equal(adminSupportAttentionCount(adminCounts), 2);
+});
+
+test("badge wiring uses session-scoped counts without message bodies", () => {
+  const protectedLayout = readFileSync(
+    "src/app/(protected)/layout.tsx",
+    "utf8",
+  );
+  const adminLayout = readFileSync("src/app/(admin)/layout.tsx", "utf8");
+  const sidebar = readFileSync("src/components/layout/sidebar.tsx", "utf8");
+  const help = readFileSync(
+    "src/components/settings/help-contact-card.tsx",
+    "utf8",
+  );
+  const userSupport = readFileSync(
+    "src/app/(protected)/settings/support/page.tsx",
+    "utf8",
+  );
+  const adminSupport = readFileSync(
+    "src/app/(admin)/admin/support/page.tsx",
+    "utf8",
+  );
+  const store = readFileSync("src/lib/support/store.ts", "utf8");
+
+  assert.match(protectedLayout, /getUserSupportStatusCounts/);
+  assert.match(protectedLayout, /isAdminSession/);
+  assert.match(protectedLayout, /getAdminSupportStatusCounts/);
+  assert.match(adminLayout, /getAdminSupportStatusCounts/);
+  assert.match(adminLayout, /requireAdminPage/);
+  assert.match(sidebar, /answeredSupportCount/);
+  assert.match(sidebar, /adminOpenSupportCount/);
+  assert.match(help, /answeredSupportCount/);
+  assert.match(userSupport, /Support replied/);
+  assert.match(userSupport, /Waiting for support/);
+  assert.match(adminSupport, /getAdminSupportStatusCounts/);
+  assert.match(adminSupport, /need attention/);
+  assert.match(store, /groupBy/);
+  assert.doesNotMatch(store, /countStatusesForAdmin[\s\S]*body|select:.*body/);
 });

@@ -14,6 +14,9 @@ import { formatSignInMethods } from "@/lib/auth/sign-in-methods";
 import { requireSession } from "@/lib/auth/session";
 import { getAccountDeletionBlock } from "@/lib/privacy/account-deletion-policy";
 import { prisma } from "@/lib/db";
+import { userSupportAttentionCount } from "@/lib/support/counts";
+import { getUserSupportStatusCounts } from "@/lib/support/service";
+import { prismaSupportStore } from "@/lib/support/store";
 
 export const dynamic = "force-dynamic";
 
@@ -22,7 +25,7 @@ export default async function SettingsPage() {
   // Role row only for durable DB admins (not env allowlist alone).
   const showRoleField = session.role === "admin";
 
-  const [subscription, identity] = await Promise.all([
+  const [subscription, identity, supportCounts] = await Promise.all([
     prisma.subscription.findUnique({
       where: { userId: session.id },
       select: {
@@ -43,7 +46,10 @@ export default async function SettingsPage() {
         },
       },
     }),
+    getUserSupportStatusCounts(session.id, prismaSupportStore),
   ]);
+
+  const answeredSupportCount = userSupportAttentionCount(supportCounts);
 
   const signInMethods = formatSignInMethods({
     hasPassword: Boolean(identity?.password),
@@ -142,7 +148,7 @@ export default async function SettingsPage() {
           deletionBlock={deletionBlock}
         />
 
-        <HelpContactCard />
+        <HelpContactCard answeredSupportCount={answeredSupportCount} />
       </div>
     </>
   );

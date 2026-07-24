@@ -1,7 +1,25 @@
 import type { Prisma, SupportThreadStatus } from "@prisma/client";
 
 import { prisma } from "@/lib/db";
+import {
+  aggregateSupportStatusCounts,
+  emptySupportStatusCounts,
+} from "@/lib/support/counts";
 import type { SupportStore } from "@/lib/support/service";
+
+async function groupStatusCounts(
+  where: Prisma.SupportThreadWhereInput,
+): Promise<ReturnType<typeof emptySupportStatusCounts>> {
+  const groups = await prisma.supportThread.groupBy({
+    by: ["status"],
+    where,
+    _count: { _all: true },
+  });
+
+  return aggregateSupportStatusCounts(
+    groups.map((g) => ({ status: g.status, count: g._count._all })),
+  );
+}
 
 export const prismaSupportStore: SupportStore = {
   async listThreadsForUser(userId, limit) {
@@ -240,5 +258,16 @@ export const prismaSupportStore: SupportStore = {
         updatedAt: now,
       },
     });
+  },
+
+  async countStatusesForUser(userId) {
+    if (!userId.trim()) {
+      return emptySupportStatusCounts();
+    }
+    return groupStatusCounts({ userId });
+  },
+
+  async countStatusesForAdmin() {
+    return groupStatusCounts({});
   },
 };
