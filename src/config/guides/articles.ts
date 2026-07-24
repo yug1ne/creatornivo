@@ -17,6 +17,7 @@ export const guideArticles: GuideArticle[] = [
     category: "product",
     relatedSlugs: [
       "how-template-based-ai-drafting-works",
+      "ai-assisted-drafting-vs-chatbots",
       "review-edit-verify-ai-drafts",
     ],
     primaryCta: "register",
@@ -161,6 +162,7 @@ export const guideArticles: GuideArticle[] = [
     relatedSlugs: [
       "what-is-creatornivo",
       "why-structured-inputs-improve-ai-drafts",
+      "common-input-mistakes",
     ],
     primaryCta: "responsible-use",
     sections: [
@@ -195,6 +197,213 @@ export const guideArticles: GuideArticle[] = [
         paragraphs: [
           "Free: up to 5 completed drafts per UTC day. Pro / Early Access: up to 100 completed drafts per UTC calendar month in current product configuration. Failed or incomplete runs should not permanently consume completed-generation quota.",
           "Self-serve paid checkout may be unavailable while we finalize our payment provider. Early Access and paid access requests go through support as described on Pricing. For intended use and prohibited uses, see Responsible Use.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "ai-assisted-drafting-vs-chatbots",
+    title: "AI-assisted drafting vs open-ended chatbots",
+    description:
+      "How CreatorNivo’s template-based, structured-input workflow differs from open-ended chat tools—and why review still matters either way.",
+    publishedAt: "2026-07-24",
+    updatedAt: "2026-07-24",
+    category: "product",
+    relatedSlugs: [
+      "what-is-creatornivo",
+      "how-template-based-ai-drafting-works",
+      "why-structured-inputs-improve-ai-drafts",
+    ],
+    primaryCta: "templates",
+    sections: [
+      {
+        paragraphs: [
+          "Many AI tools are open-ended chatbots: you type a freeform request and hope the reply fits. CreatorNivo is an AI-assisted text drafting SaaS built around predefined business templates and structured inputs instead.",
+          "Both approaches can produce useful text. They optimize for different jobs. CreatorNivo is for repeatable business drafts you still review, edit, and verify before use.",
+        ],
+      },
+      {
+        heading: "Template-based drafting",
+        paragraphs: [
+          "You choose a template for a known format (for example a social post, newsletter, or product page), fill labeled fields, and generate an editable draft. The product UI carries structure so you are not reinventing the brief every time.",
+        ],
+        list: [
+          "Predefined templates for business content workflows",
+          "Structured inputs: topic, audience, tone, facts you supply",
+          "Server-side assembly of the request—you work with fields and output, not private template instruction text",
+          "A library for saving drafts you want to keep iterating",
+        ],
+      },
+      {
+        heading: "Open-ended chat",
+        paragraphs: [
+          "Chat tools shine for exploration, brainstorming, and one-off questions. They often lack a fixed form for each channel, so quality depends heavily on how you prompt and on what you remember to include.",
+          "CreatorNivo does not try to replace every chat use case. It focuses on structured drafting from templates so marketers and founders can move from brief to draft with fewer blank-page steps.",
+        ],
+      },
+      {
+        heading: "What stays the same",
+        paragraphs: [
+          "No drafting tool removes your responsibility. AI-assisted outputs are drafts. Review facts, claims, and channel rules before you publish or send.",
+          "Capacity is limited: Free allows up to 5 completed AI-assisted drafts per UTC day; Pro Early Access currently allows up to 100 completed drafts per UTC calendar month. Self-serve paid checkout may be unavailable; see Pricing for Early Access options.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "free-vs-pro-generations",
+    title: "Free vs Pro generation limits",
+    description:
+      "Honest Free and Pro Early Access limits for completed AI-assisted drafts: 5 per UTC day on Free, 100 per UTC calendar month on Pro while self-serve checkout is paused.",
+    publishedAt: "2026-07-24",
+    updatedAt: "2026-07-24",
+    category: "product",
+    relatedSlugs: [
+      "what-is-creatornivo",
+      "using-the-draft-library",
+      "how-template-based-ai-drafting-works",
+    ],
+    primaryCta: "pricing",
+    sections: [
+      {
+        paragraphs: [
+          "CreatorNivo is an AI-assisted, template-based drafting workspace with plan limits so capacity stays fair. User-facing quota counts successful completed generations only—not every failed attempt.",
+          "Self-serve paid checkout may be unavailable while we finalize our payment provider. Pro and Early Access access may be granted through support as described on the Pricing page. This article reflects current product configuration, not a future billing-period system.",
+        ],
+      },
+      {
+        heading: "Free plan",
+        paragraphs: [
+          "Free is meant for trying the workflow: pick templates, fill structured inputs, generate drafts, and practice review before you rely on higher volume.",
+        ],
+        list: [
+          "Up to 5 completed AI-assisted drafts per UTC day",
+          "Access to free-tier templates as shown in the product",
+          "A personal library with a limited number of saved drafts",
+          "Daily capacity is capped; Free is for learning the workflow",
+        ],
+      },
+      {
+        heading: "Pro / Early Access (today)",
+        paragraphs: [
+          "Pro Early Access currently uses a higher monthly completed-draft limit while self-serve checkout is paused and the Early Access flow is active.",
+        ],
+        list: [
+          "Up to 100 completed AI-assisted drafts per UTC calendar month",
+          "Access to Pro templates and export options as shown in the product",
+          "Higher library capacity (unlimited saved drafts on Pro in product configuration)",
+          "Does not yet mean “quota resets on your payment provider anniversary date”—that would require a future payment integration change",
+        ],
+      },
+      {
+        heading: "What counts toward the limit",
+        paragraphs: [
+          "Completed drafts that finish successfully count. Validation failures, refusals, and incomplete runs should not permanently consume completed-generation quota under current product rules.",
+          "Always review, edit, and verify drafts before use—higher limits do not reduce that responsibility.",
+        ],
+      },
+      {
+        heading: "How to choose next steps",
+        paragraphs: [
+          "Start free if you are learning the template workflow. If you need more monthly capacity or Pro templates, open Pricing for Early Access options. There is no pressure language here—only the limits the product enforces today.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "common-input-mistakes",
+    title: "Common structured-input mistakes",
+    description:
+      "Vague topics, invented proof, missing audience, and other input mistakes that weaken AI-assisted drafts—and how to fix them before you generate.",
+    publishedAt: "2026-07-24",
+    updatedAt: "2026-07-24",
+    category: "how-to",
+    relatedSlugs: [
+      "why-structured-inputs-improve-ai-drafts",
+      "review-edit-verify-ai-drafts",
+      "how-template-based-ai-drafting-works",
+    ],
+    primaryCta: "templates",
+    sections: [
+      {
+        paragraphs: [
+          "CreatorNivo’s templates ask for structured inputs because clearer briefs usually produce more useful AI-assisted drafts. The reverse is also true: weak inputs create generic or risky output you then have to rewrite.",
+          "None of this guarantees rankings or conversions. It only improves the odds that the draft is something you can review, edit, and verify into real work.",
+        ],
+      },
+      {
+        heading: "Mistakes to avoid",
+        paragraphs: [
+          "Watch for these patterns when you fill a form before generating.",
+        ],
+        list: [
+          "Vague topic: “write something about marketing” with no offer, audience, or goal",
+          "Missing audience: no reader role, stage, or context for tone and depth",
+          "Invented proof: fake metrics, quotes, or case results in fields that ask for verified facts",
+          "Overloaded goals: one draft trying to sell, educate, and announce three offers at once",
+          "Ignoring required fields: generating with empty essentials the template marks as required",
+          "Pasting secrets: API keys, private customer data, or credentials into free-text fields",
+        ],
+      },
+      {
+        heading: "Better defaults",
+        paragraphs: [
+          "Prefer specific, honest inputs. If you do not have a proof point, leave proof fields empty rather than fabricating them. Name one primary reader and one primary goal. Keep tone instructions short and concrete.",
+        ],
+      },
+      {
+        heading: "After you generate",
+        paragraphs: [
+          "Even strong inputs need a human pass. Check facts, claims, and channel rules. Save only drafts worth keeping to your library.",
+          "Free: up to 5 completed drafts per UTC day. Pro Early Access: up to 100 completed drafts per UTC calendar month while checkout remains paused and Early Access is active. See Pricing for current options.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "using-the-draft-library",
+    title: "Using the draft library",
+    description:
+      "How CreatorNivo’s personal library helps you save, revisit, and (on eligible plans) export AI-assisted drafts you still review before use.",
+    publishedAt: "2026-07-24",
+    updatedAt: "2026-07-24",
+    category: "workflow",
+    relatedSlugs: [
+      "how-template-based-ai-drafting-works",
+      "free-vs-pro-generations",
+      "review-edit-verify-ai-drafts",
+    ],
+    primaryCta: "register",
+    sections: [
+      {
+        paragraphs: [
+          "After you generate an AI-assisted draft from a template, you can save useful output to your personal library. The library is a workspace for your drafts—not a content feed, marketplace, or social proof wall.",
+          "Saving does not replace review. You should still edit and verify text before you publish or send it.",
+        ],
+      },
+      {
+        heading: "What the library is for",
+        paragraphs: [
+          "Use it to keep versions you may reuse, compare, or finish later. Typical steps: generate on a template form, refine the draft, save with a clear title, then open the item from Library when you return.",
+        ],
+        list: [
+          "Store drafts tied to your account",
+          "Reopen items to copy or continue editing offline in your own tools",
+          "Export to .md or .txt on eligible Pro plans as shown in the product",
+          "Stay within plan save limits on Free (a capped number of saved drafts)",
+        ],
+      },
+      {
+        heading: "What the library is not",
+        paragraphs: [
+          "It is not unlimited public hosting for every generation. Free accounts have a finite save cap. It does not publish content for you, and it does not mean a draft is approved for external use.",
+          "Generation limits are separate from save limits: Free includes up to 5 completed AI-assisted drafts per UTC day; Pro Early Access currently includes up to 100 completed drafts per UTC calendar month while self-serve checkout may be unavailable.",
+        ],
+      },
+      {
+        heading: "Practical tips",
+        paragraphs: [
+          "Title saves with the channel and topic so you can find them later. Delete drafts you will never use so Free save slots stay available. Prefer quality reviews over saving every experiment.",
         ],
       },
     ],

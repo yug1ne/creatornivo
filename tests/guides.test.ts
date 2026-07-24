@@ -16,13 +16,17 @@ const EXPECTED_SLUGS = [
   "how-template-based-ai-drafting-works",
   "why-structured-inputs-improve-ai-drafts",
   "review-edit-verify-ai-drafts",
+  "ai-assisted-drafting-vs-chatbots",
+  "free-vs-pro-generations",
+  "common-input-mistakes",
+  "using-the-draft-library",
 ] as const;
 
-test("published guides include the Phase A article set", () => {
+test("published guides include all eight public articles", () => {
   const published = listPublishedGuides();
   const slugs = published.map((item) => item.slug);
 
-  assert.equal(published.length, 4);
+  assert.equal(published.length, 8);
   for (const slug of EXPECTED_SLUGS) {
     assert.ok(slugs.includes(slug), `missing published slug: ${slug}`);
   }
@@ -46,7 +50,6 @@ test("draft guides are excluded from index and slug lookup", () => {
   const draftSlug = "__test_draft_guide__";
   const hasRealDraft = guideArticles.some((article) => article.draft === true);
 
-  // Phase A ships no drafts; still assert the filter contract.
   assert.equal(hasRealDraft, false);
   assert.ok(!getPublishedGuideSlugs().includes(draftSlug));
   assert.equal(getPublishedGuideBySlug(draftSlug), null);
@@ -76,7 +79,6 @@ test("guides routes and footer link exist", () => {
   assert.match(footer, /href="\/guides"/);
   assert.match(footer, />\s*Guides\s*</);
 
-  // Must not reuse authenticated field-help routes.
   assert.doesNotMatch(indexPage, /\/generate\/guides/);
   assert.doesNotMatch(slugPage, /\/generate\/guides/);
 });
@@ -90,6 +92,10 @@ test("canonical URLs use www.creatornivo.com guides paths", () => {
     getGuideCanonicalUrl("what-is-creatornivo"),
     "https://www.creatornivo.com/guides/what-is-creatornivo",
   );
+  assert.equal(
+    getGuideCanonicalUrl("free-vs-pro-generations"),
+    "https://www.creatornivo.com/guides/free-vs-pro-generations",
+  );
 });
 
 test("public guide copy avoids forbidden marketing and provider claims", () => {
@@ -98,6 +104,7 @@ test("public guide copy avoids forbidden marketing and provider claims", () => {
   for (const unsupported of [
     /unlimited generations/i,
     /unlimited generation/i,
+    /buy pro now/i,
     /guaranteed (seo|conversion|conversions|ranking)/i,
     /publish-ready/i,
     /no review (needed|required)/i,
@@ -109,18 +116,48 @@ test("public guide copy avoids forbidden marketing and provider claims", () => {
     /checkout powered by freemius/i,
     /checkout powered by fastspring/i,
     /merchant of record is paddle/i,
+    /\bpaddle\b/i,
+    /\bfreemius\b/i,
+    /\bfastspring\b/i,
     /#1 ai/i,
     /best ai generator/i,
   ]) {
     assert.doesNotMatch(copy, unsupported);
   }
 
-  // Required product-truth anchors appear across the guide set.
   assert.match(copy, /AI-assisted text drafting SaaS/i);
-  assert.match(copy, /5 completed drafts per UTC day/i);
-  assert.match(copy, /100 completed drafts per UTC calendar month/i);
+  assert.match(copy, /5 completed (AI-assisted )?drafts per UTC day/i);
+  assert.match(
+    copy,
+    /100 completed (AI-assisted )?drafts per UTC calendar month/i,
+  );
   assert.match(copy, /review, edit, and verify/i);
   assert.match(copy, /Self-serve paid checkout may be unavailable/i);
+  assert.match(copy, /structured inputs/i);
+  assert.match(copy, /template-based/i);
+});
+
+test("free-vs-pro guide states honest Early Access limits", () => {
+  const article = getPublishedGuideBySlug("free-vs-pro-generations");
+  assert.ok(article);
+  const body = [
+    article.description,
+    ...article.sections.flatMap((section) => [
+      ...(section.heading ? [section.heading] : []),
+      ...section.paragraphs,
+      ...(section.list ?? []),
+    ]),
+  ].join("\n");
+
+  assert.match(body, /5 completed AI-assisted drafts per UTC day/i);
+  assert.match(
+    body,
+    /100 completed AI-assisted drafts per UTC calendar month/i,
+  );
+  assert.match(body, /Self-serve paid checkout may be unavailable/i);
+  assert.match(body, /Early Access/i);
+  assert.doesNotMatch(body, /billing period quota/i);
+  assert.doesNotMatch(body, /Buy Pro now/i);
 });
 
 test("guide content does not embed private prompt paths or secrets", () => {
