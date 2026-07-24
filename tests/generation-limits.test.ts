@@ -1293,11 +1293,12 @@ test("public generation-limit text matches Free and Pro policies", () => {
     pricing,
   ].join("\n");
 
-  assert.match(hero, /5 free generations per day/);
+  assert.match(hero, /5 free AI-assisted drafts per day/);
   assert.match(dashboardMockup, /3 \/ 5/);
-  assert.match(productScreenshots, /5 generations per day/);
-  assert.match(productScreenshots, /100 generations per month/);
-  assert.match(pricing, /Unlimited saved prompts/);
+  assert.match(productScreenshots, /5 AI-assisted drafts per day/);
+  assert.match(productScreenshots, /100 per month/);
+  assert.match(pricing, /Unlimited saved drafts/);
+  assert.match(pricing, /100 AI-assisted drafts per month/);
   assert.doesNotMatch(publicLimitText, /20 free generations/i);
   assert.doesNotMatch(publicLimitText, /3 \/ 20/);
   assert.doesNotMatch(publicLimitText, /Unlimited generations/i);
