@@ -1,13 +1,14 @@
 "use client";
 
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 import { GoogleSignInButton } from "@/components/auth/google-sign-in-button";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
+import { getOAuthErrorMessage } from "@/lib/auth/google";
 
 type RegisterFormProps = {
   googleEnabled?: boolean;
@@ -15,6 +16,8 @@ type RegisterFormProps = {
 
 export function RegisterForm({ googleEnabled = false }: RegisterFormProps) {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const oauthError = getOAuthErrorMessage(searchParams.get("error"));
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -60,9 +63,9 @@ export function RegisterForm({ googleEnabled = false }: RegisterFormProps) {
 
   return (
     <div className="mt-8 space-y-4">
-      {error && (
+      {(error || oauthError) && (
         <div className="rounded-[var(--radius-md)] bg-destructive/10 px-4 py-3 text-sm text-destructive">
-          {error}
+          {error || oauthError}
         </div>
       )}
 

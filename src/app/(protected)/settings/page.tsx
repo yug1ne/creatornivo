@@ -1,6 +1,7 @@
 import { PageHeader } from "@/components/ui/page-header";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
+import { HelpContactCard } from "@/components/settings/help-contact-card";
 import { PrivacySettings } from "@/components/settings/privacy-settings";
 import { ThemeSettings } from "@/components/settings/theme-settings";
 import { SubscriptionManager } from "@/components/settings/subscription-manager";
@@ -9,6 +10,7 @@ import {
   getActiveBillingProvider,
   isBillingConfigured,
 } from "@/config/billing";
+import { formatSignInMethods } from "@/lib/auth/sign-in-methods";
 import { requireSession } from "@/lib/auth/session";
 import { getAccountDeletionBlock } from "@/lib/privacy/account-deletion-policy";
 import { prisma } from "@/lib/db";
@@ -17,17 +19,37 @@ export const dynamic = "force-dynamic";
 
 export default async function SettingsPage() {
   const session = await requireSession();
+  const isAdmin = session.role === "admin";
 
-  const subscription = await prisma.subscription.findUnique({
-    where: { userId: session.id },
-    select: {
-      status: true,
-      currentPeriodEnd: true,
-      cancelAtPeriodEnd: true,
-      provider: true,
-      paddleStatus: true,
-    },
+  const [subscription, identity] = await Promise.all([
+    prisma.subscription.findUnique({
+      where: { userId: session.id },
+      select: {
+        status: true,
+        currentPeriodEnd: true,
+        cancelAtPeriodEnd: true,
+        provider: true,
+        paddleStatus: true,
+      },
+    }),
+    prisma.user.findUnique({
+      where: { id: session.id },
+      select: {
+        password: true,
+        accounts: {
+          select: { provider: true },
+          orderBy: { provider: "asc" },
+        },
+      },
+    }),
+  ]);
+
+  const signInMethods = formatSignInMethods({
+    hasPassword: Boolean(identity?.password),
+    oauthProviders: (identity?.accounts ?? []).map((account) => account.provider),
   });
+
+  const planLabel = session.plan === PLANS.PRO ? "Pro" : "Free";
 
   const deletionBlock = getAccountDeletionBlock({
     id: session.id,
@@ -49,17 +71,15 @@ export default async function SettingsPage() {
     <>
       <PageHeader
         title="Settings"
-        description="Manage your account and subscription"
+        description="Your account, appearance, plan, and privacy"
         action={
           <Badge variant={session.plan === PLANS.PRO ? "pro" : "free"}>
-            {session.plan === PLANS.PRO ? "Pro" : "Free"}
+            {planLabel}
           </Badge>
         }
       />
 
       <div className="max-w-lg space-y-6">
-        <ThemeSettings />
-
         <Card>
           <CardContent className="p-6">
             <CardTitle className="text-base">Profile</CardTitle>
@@ -77,12 +97,26 @@ export default async function SettingsPage() {
                 </dd>
               </div>
               <div className="flex justify-between gap-4">
-                <dt className="text-muted-foreground">Role</dt>
-                <dd className="capitalize text-foreground">{session.role}</dd>
+                <dt className="text-muted-foreground">Plan</dt>
+                <dd className="text-right text-foreground">{planLabel}</dd>
               </div>
+              <div className="flex justify-between gap-4">
+                <dt className="text-muted-foreground">Sign-in</dt>
+                <dd className="min-w-0 break-words text-right text-foreground [overflow-wrap:anywhere]">
+                  {signInMethods}
+                </dd>
+              </div>
+              {isAdmin ? (
+                <div className="flex justify-between gap-4">
+                  <dt className="text-muted-foreground">Role</dt>
+                  <dd className="capitalize text-foreground">{session.role}</dd>
+                </div>
+              ) : null}
             </dl>
           </CardContent>
         </Card>
+
+        <ThemeSettings />
 
         <SubscriptionManager
           plan={session.plan}
@@ -106,6 +140,8 @@ export default async function SettingsPage() {
           billingProvider={getActiveBillingProvider()}
           deletionBlock={deletionBlock}
         />
+
+        <HelpContactCard />
       </div>
     </>
   );

@@ -202,6 +202,7 @@ test("login and register show Google button only when enabled via prop", () => {
   assert.match(register, /GoogleSignInButton/);
   assert.match(button, /signIn\("google"/);
   assert.match(login, /getOAuthErrorMessage/);
+  assert.match(register, /getOAuthErrorMessage/);
 });
 
 test(".env.example documents Google OAuth placeholders without real secrets", () => {

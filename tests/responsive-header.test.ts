@@ -28,7 +28,7 @@ test("guest and authenticated mobile navigation contain the required actions", (
     "Sign in",
     "Get started",
     "Dashboard",
-    "Account",
+    "Settings",
     "Sign out",
   ]) {
     assert.match(header, new RegExp(`\\n\\s*${label}\\n`));

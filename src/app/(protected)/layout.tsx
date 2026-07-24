@@ -12,7 +12,8 @@ export default function ProtectedLayout({
       <Sidebar />
       <main className="min-w-0 flex-1 overflow-x-hidden">
         <EarlyAccessStatusBanner />
-        <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
+        {/* Extra bottom padding on small screens so the mobile menu FAB does not cover CTAs. */}
+        <div className="mx-auto max-w-6xl px-4 py-6 pb-24 sm:px-6 sm:py-8 sm:pb-24 lg:px-8 lg:pb-8">
           {children}
         </div>
       </main>

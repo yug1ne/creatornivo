@@ -93,10 +93,14 @@ export default async function DashboardPage() {
         <StatsCard
           label="Plan"
           value={session.plan === PLANS.PRO ? "Pro" : "Free"}
-          description={session.email}
+          description={
+            session.plan === PLANS.PRO
+              ? "Your current plan"
+              : "Free plan · Manage account in Settings"
+          }
           icon="◈"
           href="/settings"
-          hrefLabel="Settings"
+          hrefLabel="Open Settings"
         />
       </div>
 
@@ -118,11 +122,12 @@ export default async function DashboardPage() {
               </p>
               <p className="mt-1 text-sm text-muted-foreground">
                 Pro gives you 100/month, all templates, and export to .md /
-                .txt.
+                .txt. Self-serve checkout may be paused — see pricing for Early
+                Access options.
               </p>
             </div>
             <Link href="/pricing" className={buttonVariants()}>
-              Upgrade to Pro
+              View pricing
             </Link>
           </CardContent>
         </Card>

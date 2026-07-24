@@ -154,6 +154,16 @@ export function Sidebar({ mobileOpen, onMobileClose }: SidebarProps) {
             View pricing →
           </Link>
         </div>
+
+        <p className="mt-4 px-1 text-xs text-muted-foreground">
+          <Link
+            href="/settings#help-contact"
+            onClick={close}
+            className="font-medium text-muted-foreground transition-colors hover:text-foreground hover:underline"
+          >
+            Help &amp; contact
+          </Link>
+        </p>
       </aside>
     </>
   );

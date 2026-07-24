@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Suspense } from "react";
 
 import { RegisterForm } from "@/components/auth/register-form";
 import { isGoogleAuthConfigured } from "@/lib/auth/google";
@@ -15,7 +16,13 @@ export default function RegisterPage() {
         Create an account and start drafting with AI-assisted business templates
       </p>
 
-      <RegisterForm googleEnabled={googleEnabled} />
+      <Suspense
+        fallback={
+          <div className="mt-8 text-sm text-muted-foreground">Loading...</div>
+        }
+      >
+        <RegisterForm googleEnabled={googleEnabled} />
+      </Suspense>
 
       <p className="mt-6 text-center text-sm text-muted-foreground">
         Already have an account?{" "}

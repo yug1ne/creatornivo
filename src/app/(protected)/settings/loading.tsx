@@ -7,7 +7,7 @@ export default function SettingsLoading() {
     <>
       <PageHeader
         title="Settings"
-        description="Manage your account and subscription"
+        description="Your account, appearance, plan, and privacy"
       />
       <div
         className="max-w-lg space-y-6"

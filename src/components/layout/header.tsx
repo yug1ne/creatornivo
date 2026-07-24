@@ -78,7 +78,7 @@ export function Header() {
                 href="/settings"
                 className={buttonVariants({ variant: "outline", size: "sm" })}
               >
-                Account
+                Settings
               </Link>
               <button
                 type="button"
@@ -177,7 +177,7 @@ export function Header() {
                     onClick={closeMenu}
                     className="rounded-[var(--radius-md)] px-3 py-2.5 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   >
-                    Account
+                    Settings
                   </Link>
                   <button
                     type="button"
