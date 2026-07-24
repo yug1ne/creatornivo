@@ -16,19 +16,31 @@ const sidebarItems = [
   { href: "/generate", label: "Generate", icon: "✦" },
   { href: "/library", label: "Library", icon: "▤" },
   { href: "/settings", label: "Settings", icon: "⚙" },
-];
+] as const;
 
 interface SidebarProps {
   mobileOpen?: boolean;
   onMobileClose?: () => void;
 }
 
-function NavContent({ onNavigate }: { onNavigate?: () => void }) {
+function NavContent({
+  onNavigate,
+  showAdmin,
+}: {
+  onNavigate?: () => void;
+  showAdmin: boolean;
+}) {
   const pathname = usePathname();
+  const items = showAdmin
+    ? [
+        ...sidebarItems,
+        { href: "/admin", label: "Admin", icon: "⬡" } as const,
+      ]
+    : sidebarItems;
 
   return (
     <nav className="flex flex-col gap-1">
-      {sidebarItems.map((item) => {
+      {items.map((item) => {
         const isActive =
           pathname === item.href || pathname.startsWith(`${item.href}/`);
 
@@ -67,6 +79,8 @@ export function Sidebar({ mobileOpen, onMobileClose }: SidebarProps) {
   const isOpen = mobileOpen ?? internalOpen;
   const close = onMobileClose ?? (() => setInternalOpen(false));
   const userLabel = session?.user?.name ?? session?.user?.email;
+  // Cosmetic only — middleware + requireAdminPage enforce access.
+  const showAdmin = Boolean(session?.user?.isAdmin);
 
   useEffect(() => {
     if (isOpen) {
@@ -126,7 +140,7 @@ export function Sidebar({ mobileOpen, onMobileClose }: SidebarProps) {
           </button>
         </div>
 
-        <NavContent onNavigate={close} />
+        <NavContent onNavigate={close} showAdmin={showAdmin} />
 
         <div className="mt-6 border-t border-border pt-4">
           {userLabel ? (

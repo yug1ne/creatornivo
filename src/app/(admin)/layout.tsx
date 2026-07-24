@@ -1,17 +1,21 @@
 import Link from "next/link";
 
 import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { requireAdminPage } from "@/lib/admin/session";
 
 const adminNav = [
   { href: "/admin", label: "Overview" },
   { href: "/admin/templates", label: "Templates" },
 ];
 
-export default function AdminLayout({
+export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // Defense in depth: layout + each page re-check admin access.
+  await requireAdminPage();
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <header className="sticky top-0 z-30 border-b border-border bg-card/80 px-4 py-4 backdrop-blur-md sm:px-6">
@@ -20,7 +24,7 @@ export default function AdminLayout({
             <p className="text-sm font-medium text-muted-foreground">
               Creatornivo Admin
             </p>
-            <nav className="mt-2 flex gap-4">
+            <nav className="mt-2 flex flex-wrap gap-4">
               {adminNav.map((item) => (
                 <Link
                   key={item.href}

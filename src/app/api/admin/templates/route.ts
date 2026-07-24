@@ -1,12 +1,20 @@
 import { NextResponse } from "next/server";
 
-import { isAdminUser, requireAdmin } from "@/lib/admin/guards";
+import {
+  adminAccessErrorResponse,
+  isAdminUser,
+  requireAdmin,
+} from "@/lib/admin/guards";
 import { getSession } from "@/lib/auth/session";
 import { prisma } from "@/lib/db";
 import { parseTemplateFormBody } from "@/lib/templates/validation";
 
 export async function GET() {
   const session = await getSession();
+
+  if (!session) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
   if (!isAdminUser(session)) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
@@ -21,7 +29,7 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
-    const session = requireAdmin(await getSession());
+    requireAdmin(await getSession());
     const body = await request.json();
     const { data, error } = parseTemplateFormBody(body);
 
@@ -55,10 +63,11 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ template }, { status: 201 });
   } catch (err) {
-    if (err instanceof Error && err.message === "Forbidden") {
-      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    const access = adminAccessErrorResponse(err);
+    if (access) {
+      return NextResponse.json(access.body, { status: access.status });
     }
 
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return NextResponse.json({ error: "Request failed" }, { status: 500 });
   }
 }

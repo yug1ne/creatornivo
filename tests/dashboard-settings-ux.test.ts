@@ -58,14 +58,14 @@ test("settings profile hides role for non-admins and includes help contact", () 
   const layout = readFileSync("src/app/(protected)/layout.tsx", "utf8");
   const header = readFileSync("src/components/layout/header.tsx", "utf8");
 
-  assert.match(settings, /isAdmin/);
+  assert.match(settings, /showRoleField/);
   assert.match(settings, /formatSignInMethods/);
   assert.match(settings, /HelpContactCard/);
   assert.match(settings, /Sign-in/);
-  // Role is only rendered for admins — not always shown to normal users.
+  // Role is only rendered for DB role admin — not always shown to normal users.
   assert.match(
     settings,
-    /isAdmin \? \([\s\S]*?Role[\s\S]*?session\.role[\s\S]*?\) : null/,
+    /showRoleField \? \([\s\S]*?Role[\s\S]*?session\.role[\s\S]*?\) : null/,
   );
 
   assert.match(help, /id="help-contact"/);

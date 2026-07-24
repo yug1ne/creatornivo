@@ -19,7 +19,8 @@ export const dynamic = "force-dynamic";
 
 export default async function SettingsPage() {
   const session = await requireSession();
-  const isAdmin = session.role === "admin";
+  // Role row only for durable DB admins (not env allowlist alone).
+  const showRoleField = session.role === "admin";
 
   const [subscription, identity] = await Promise.all([
     prisma.subscription.findUnique({
@@ -106,7 +107,7 @@ export default async function SettingsPage() {
                   {signInMethods}
                 </dd>
               </div>
-              {isAdmin ? (
+              {showRoleField ? (
                 <div className="flex justify-between gap-4">
                   <dt className="text-muted-foreground">Role</dt>
                   <dd className="capitalize text-foreground">{session.role}</dd>

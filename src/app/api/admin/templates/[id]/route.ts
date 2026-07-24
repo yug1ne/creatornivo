@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 
-import { requireAdmin } from "@/lib/admin/guards";
+import {
+  adminAccessErrorResponse,
+  requireAdmin,
+} from "@/lib/admin/guards";
 import { getSession } from "@/lib/auth/session";
 import { prisma } from "@/lib/db";
 import { parseTemplateFormBody } from "@/lib/templates/validation";
@@ -22,11 +25,12 @@ export async function GET(_request: Request, { params }: RouteParams) {
 
     return NextResponse.json({ template });
   } catch (err) {
-    if (err instanceof Error && err.message === "Forbidden") {
-      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    const access = adminAccessErrorResponse(err);
+    if (access) {
+      return NextResponse.json(access.body, { status: access.status });
     }
 
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return NextResponse.json({ error: "Request failed" }, { status: 500 });
   }
 }
 
@@ -74,11 +78,12 @@ export async function PUT(request: Request, { params }: RouteParams) {
 
     return NextResponse.json({ template });
   } catch (err) {
-    if (err instanceof Error && err.message === "Forbidden") {
-      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    const access = adminAccessErrorResponse(err);
+    if (access) {
+      return NextResponse.json(access.body, { status: access.status });
     }
 
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return NextResponse.json({ error: "Request failed" }, { status: 500 });
   }
 }
 
@@ -97,10 +102,11 @@ export async function DELETE(_request: Request, { params }: RouteParams) {
 
     return NextResponse.json({ success: true });
   } catch (err) {
-    if (err instanceof Error && err.message === "Forbidden") {
-      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    const access = adminAccessErrorResponse(err);
+    if (access) {
+      return NextResponse.json(access.body, { status: access.status });
     }
 
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return NextResponse.json({ error: "Request failed" }, { status: 500 });
   }
 }

@@ -9,6 +9,8 @@ declare module "next-auth" {
       id: string;
       plan: Plan;
       role: UserRole;
+      /** Derived for UI (nav). Server routes must re-check with isAdminSession. */
+      isAdmin?: boolean;
     } & DefaultSession["user"];
   }
 

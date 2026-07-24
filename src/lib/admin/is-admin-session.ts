@@ -1,15 +1,28 @@
 import { getAdminEmails } from "@/config/admin";
 
-/** Edge-safe проверка админ-доступа (без Prisma). */
-export function isAdminSession(user: {
-  role?: string;
-  email?: string | null;
-} | null | undefined): boolean {
+/**
+ * Single source of truth for admin access (edge-safe, no Prisma).
+ *
+ * Admin if:
+ * - user.role === "admin", OR
+ * - normalized email is listed in ADMIN_EMAILS
+ *
+ * Never grants admin based on plan (Pro) or OAuth provider alone.
+ */
+export function isAdminSession(
+  user: {
+    role?: string | null;
+    email?: string | null;
+  } | null | undefined,
+  env: NodeJS.ProcessEnv = process.env,
+): boolean {
   if (!user) return false;
 
   if (user.role === "admin") return true;
 
-  if (!user.email) return false;
+  const email =
+    typeof user.email === "string" ? user.email.trim().toLowerCase() : "";
+  if (!email) return false;
 
-  return getAdminEmails().includes(user.email.toLowerCase());
+  return getAdminEmails(env).includes(email);
 }

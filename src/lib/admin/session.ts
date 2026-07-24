@@ -7,7 +7,7 @@ export async function requireAdminPage() {
   const session = await getSession();
 
   if (!session) {
-    redirect("/login?callbackUrl=/admin/templates");
+    redirect("/login?callbackUrl=/admin");
   }
 
   if (!isAdminUser(session)) {
