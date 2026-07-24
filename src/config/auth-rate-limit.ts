@@ -6,7 +6,9 @@ export type AuthRateLimitAction =
   | "change_password"
   | "export_data"
   | "delete_account"
-  | "resend_verification";
+  | "resend_verification"
+  | "support_create_thread"
+  | "support_reply";
 
 export interface AuthRateLimitPolicy {
   /** Sliding window duration in seconds. */
@@ -46,6 +48,16 @@ export const authRateLimitPolicies = {
   resend_verification: {
     ip: { windowSeconds: 60 * 60, maxAttempts: 10 },
     account: { windowSeconds: 60 * 60, maxAttempts: 3 },
+  },
+  /** New support requests: 5 per account per day, 10 per IP per day. */
+  support_create_thread: {
+    ip: { windowSeconds: 24 * 60 * 60, maxAttempts: 10 },
+    account: { windowSeconds: 24 * 60 * 60, maxAttempts: 5 },
+  },
+  /** Replies on existing threads. */
+  support_reply: {
+    ip: { windowSeconds: 60 * 60, maxAttempts: 40 },
+    account: { windowSeconds: 60 * 60, maxAttempts: 20 },
   },
 } as const satisfies Record<
   AuthRateLimitAction,

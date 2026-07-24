@@ -169,13 +169,20 @@ export function Sidebar({ mobileOpen, onMobileClose }: SidebarProps) {
           </Link>
         </div>
 
-        <p className="mt-4 px-1 text-xs text-muted-foreground">
+        <p className="mt-4 space-x-3 px-1 text-xs text-muted-foreground">
           <Link
             href="/settings#help-contact"
             onClick={close}
             className="font-medium text-muted-foreground transition-colors hover:text-foreground hover:underline"
           >
             Help &amp; contact
+          </Link>
+          <Link
+            href="/settings/support"
+            onClick={close}
+            className="font-medium text-muted-foreground transition-colors hover:text-foreground hover:underline"
+          >
+            Support
           </Link>
         </p>
       </aside>

@@ -71,6 +71,8 @@ test("settings profile hides role for non-admins and includes help contact", () 
   assert.match(help, /id="help-contact"/);
   assert.match(help, /siteConfig\.legal\.privacyEmail/);
   assert.match(help, /mailto:/);
+  assert.match(help, /\/settings\/support/);
+  assert.match(help, /Message support/);
 
   assert.match(sidebar, /settings#help-contact/);
   assert.match(sidebar, /Help &amp; contact|Help & contact/);

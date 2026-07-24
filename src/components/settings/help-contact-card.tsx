@@ -1,3 +1,6 @@
+import Link from "next/link";
+
+import { buttonVariants } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
 import {
   Card,
@@ -16,11 +19,19 @@ export function HelpContactCard() {
           <CardTitle className="text-base">Help &amp; contact</CardTitle>
           <CardDescription className="mt-1">
             Questions about your account, Early Access, or something that is not
-            working as expected? Email us and we will get back to you.
+            working as expected? Send a message in the app or email us.
           </CardDescription>
         </div>
+
+        <Link
+          href="/settings/support"
+          className={buttonVariants({ variant: "outline", className: "w-full sm:w-auto" })}
+        >
+          Message support
+        </Link>
+
         <p className="text-sm text-foreground">
-          <span className="text-muted-foreground">Support: </span>
+          <span className="text-muted-foreground">Email: </span>
           <a
             href={`mailto:${supportEmail}`}
             className="font-medium text-primary break-all hover:underline"
@@ -29,8 +40,8 @@ export function HelpContactCard() {
           </a>
         </p>
         <p className="text-xs text-muted-foreground">
-          Include the email on your account so we can find your workspace
-          quickly. We do not offer live chat yet.
+          In-app support is asynchronous (not live chat). Include the email on
+          your account so we can find your workspace quickly.
         </p>
       </CardContent>
     </Card>

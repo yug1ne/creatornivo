@@ -32,6 +32,18 @@ enum PaymentProvider {
   paddle
 }
 
+enum SupportThreadStatus {
+  open
+  answered
+  closed
+}
+
+enum SupportMessageSenderType {
+  USER
+  ADMIN
+  SYSTEM
+}
+
 enum TemplateCategory {
   x_thread
   linkedin_post
@@ -79,8 +91,42 @@ model User {
   passwordChangedAt           DateTime?
   passwordResetTokens   PasswordResetToken[]
   userUsage             UserUsage[]
+  supportThreads        SupportThread[]
+  supportMessages       SupportMessage[]
   createdAt             DateTime               @default(now())
   updatedAt             DateTime               @updatedAt
+}
+
+model SupportThread {
+  id           String              @id @default(cuid())
+  userId       String
+  user         User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  subject      String
+  status       SupportThreadStatus @default(open)
+  lastMessageAt DateTime           @default(now())
+  closedAt     DateTime?
+  messages     SupportMessage[]
+  createdAt    DateTime            @default(now())
+  updatedAt    DateTime            @updatedAt
+
+  @@index([userId, updatedAt])
+  @@index([status, lastMessageAt])
+  @@index([userId, status])
+}
+
+model SupportMessage {
+  id           String                    @id @default(cuid())
+  threadId     String
+  thread       SupportThread             @relation(fields: [threadId], references: [id], onDelete: Cascade)
+  senderType   SupportMessageSenderType
+  authorUserId String?
+  author       User?                     @relation(fields: [authorUserId], references: [id], onDelete: SetNull)
+  body         String                    @db.Text
+  isInternal   Boolean                   @default(false)
+  createdAt    DateTime                  @default(now())
+
+  @@index([threadId, createdAt])
+  @@index([authorUserId])
 }
 
 model UserUsage {
