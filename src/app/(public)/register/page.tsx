@@ -1,8 +1,11 @@
 import Link from "next/link";
 
 import { RegisterForm } from "@/components/auth/register-form";
+import { isGoogleAuthConfigured } from "@/lib/auth/google";
 
 export default function RegisterPage() {
+  const googleEnabled = isGoogleAuthConfigured();
+
   return (
     <section className="mx-auto flex max-w-md flex-col px-6 py-16">
       <h1 className="text-2xl font-bold tracking-tight text-foreground">
@@ -12,7 +15,7 @@ export default function RegisterPage() {
         Create an account and start drafting with AI-assisted business templates
       </p>
 
-      <RegisterForm />
+      <RegisterForm googleEnabled={googleEnabled} />
 
       <p className="mt-6 text-center text-sm text-muted-foreground">
         Already have an account?{" "}

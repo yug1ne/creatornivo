@@ -4,11 +4,16 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+import { GoogleSignInButton } from "@/components/auth/google-sign-in-button";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
 
-export function RegisterForm() {
+type RegisterFormProps = {
+  googleEnabled?: boolean;
+};
+
+export function RegisterForm({ googleEnabled = false }: RegisterFormProps) {
   const router = useRouter();
 
   const [name, setName] = useState("");
@@ -54,67 +59,86 @@ export function RegisterForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="mt-8 space-y-4">
+    <div className="mt-8 space-y-4">
       {error && (
         <div className="rounded-[var(--radius-md)] bg-destructive/10 px-4 py-3 text-sm text-destructive">
           {error}
         </div>
       )}
 
-      <div>
-        <label
-          htmlFor="name"
-          className="mb-1.5 block text-sm font-medium text-foreground"
-        >
-          Name
-        </label>
-        <Input
-          id="name"
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Your name"
-        />
-      </div>
+      {googleEnabled && (
+        <>
+          <GoogleSignInButton
+            callbackUrl="/dashboard?onboarding=start"
+            label="Continue with Google"
+          />
+          <div className="relative py-1">
+            <div className="absolute inset-0 flex items-center" aria-hidden="true">
+              <div className="w-full border-t border-border" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase tracking-wide">
+              <span className="bg-background px-2 text-muted-foreground">or</span>
+            </div>
+          </div>
+        </>
+      )}
 
-      <div>
-        <label
-          htmlFor="email"
-          className="mb-1.5 block text-sm font-medium text-foreground"
-        >
-          Email
-        </label>
-        <Input
-          id="email"
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          placeholder="you@example.com"
-        />
-      </div>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label
+            htmlFor="name"
+            className="mb-1.5 block text-sm font-medium text-foreground"
+          >
+            Name
+          </label>
+          <Input
+            id="name"
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Your name"
+          />
+        </div>
 
-      <div>
-        <label
-          htmlFor="password"
-          className="mb-1.5 block text-sm font-medium text-foreground"
-        >
-          Password
-        </label>
-        <PasswordInput
-          id="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          minLength={8}
-          placeholder="At least 8 characters"
-          autoComplete="new-password"
-        />
-      </div>
+        <div>
+          <label
+            htmlFor="email"
+            className="mb-1.5 block text-sm font-medium text-foreground"
+          >
+            Email
+          </label>
+          <Input
+            id="email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            placeholder="you@example.com"
+          />
+        </div>
 
-      <Button type="submit" disabled={isLoading} className="w-full">
-        {isLoading ? "Signing up..." : "Create account"}
-      </Button>
-    </form>
+        <div>
+          <label
+            htmlFor="password"
+            className="mb-1.5 block text-sm font-medium text-foreground"
+          >
+            Password
+          </label>
+          <PasswordInput
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            minLength={8}
+            placeholder="At least 8 characters"
+            autoComplete="new-password"
+          />
+        </div>
+
+        <Button type="submit" disabled={isLoading} className="w-full">
+          {isLoading ? "Signing up..." : "Create account"}
+        </Button>
+      </form>
+    </div>
   );
 }
