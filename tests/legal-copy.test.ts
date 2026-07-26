@@ -136,6 +136,48 @@ test("Privacy names Freemius as payment processor and no full card storage", () 
   assert.doesNotMatch(privacy, /Paddle/i);
 });
 
+test("Privacy cookie section discloses essential cookies and no ad tracking", () => {
+  const privacy = legalText(privacyPolicySections);
+
+  assert.match(privacy, /Cookies and Local Storage/i);
+  assert.match(
+    privacy,
+    /essential cookies|required for the Service to work securely/i,
+  );
+  assert.match(privacy, /login and session|authentication and session/i);
+  assert.match(privacy, /checkout and billing|paid checkout/i);
+  assert.match(privacy, /theme|local storage/i);
+  assert.match(
+    privacy,
+    /does not currently use advertising cookies|No advertising cookies/i,
+  );
+  assert.match(
+    privacy,
+    /behavioral tracking cookies|behavioral marketing cookies/i,
+  );
+  assert.match(
+    privacy,
+    /third-party marketing pixels/i,
+  );
+  assert.match(
+    privacy,
+    /If we later add non-essential analytics or marketing cookies/i,
+  );
+  assert.match(privacy, /request consent where required/i);
+  assert.match(
+    privacy,
+    /do not present a cookie consent banner for essential-only/i,
+  );
+  assert.doesNotMatch(privacy, /Accept All Cookies/i);
+});
+
+test("app does not ship an Accept All Cookies consent banner", () => {
+  const layout = readFileSync("src/app/layout.tsx", "utf8");
+  const footer = readFileSync("src/components/layout/footer.tsx", "utf8");
+  assert.doesNotMatch(layout, /Accept All Cookies|CookieBanner|cookie-consent/i);
+  assert.doesNotMatch(footer, /Accept All Cookies|CookieBanner|cookie-consent/i);
+});
+
 test("Refund Policy aligns with 7-day Freemius money-back guarantee", () => {
   const refund = legalText(refundPolicySections);
 

@@ -7,7 +7,7 @@ export type { LegalSection } from "./types";
 export const privacyPolicyMeta = {
   title: "Privacy Policy",
   effectiveDate: "July 2, 2026",
-  lastUpdated: "July 27, 2026",
+  lastUpdated: "July 28, 2026",
 } as const;
 
 export const privacyPolicySections: LegalSection[] = [
@@ -125,12 +125,18 @@ export const privacyPolicySections: LegalSection[] = [
     id: "cookies-and-tracking",
     title: "Cookies and Local Storage",
     paragraphs: [
-      "We use essential cookies and similar technologies for authentication and security. We do not currently use third-party advertising cookies or cross-site marketing pixels.",
+      "Creatornivo uses essential cookies and similar technologies that are required for the Service to work securely. These support login and session management, authentication security, CSRF and OAuth callback protection where applicable, paid checkout and billing return flows, and basic preferences such as theme.",
+      "Creatornivo does not currently use advertising cookies, behavioral tracking cookies, or third-party marketing pixels. We do not currently operate product analytics cookies or cross-site advertising trackers.",
+      "Some preferences (for example theme and certain onboarding UI state) may be stored in your browser’s local storage on your device rather than as cookies. Local storage stays on your device unless an action requires server synchronization.",
+      "Paid checkout and the Freemius customer billing portal may set cookies or similar technologies under Freemius’s control when you leave Creatornivo for hosted checkout or portal pages. Those technologies are governed by Freemius’s policies as Merchant of Record.",
+      "If we later add non-essential analytics or marketing cookies, we will update this policy and request consent where required by law before using them for those purposes. We do not present a cookie consent banner for essential-only technologies.",
     ],
     list: [
-      "Authentication session cookies.",
-      "Security-related tokens needed for secure browsing where applicable.",
-      "Browser local storage for theme and certain onboarding UI state.",
+      "Essential authentication and session cookies (login / Auth.js session).",
+      "Security-related cookies or tokens needed for secure browsing and OAuth callbacks where applicable.",
+      "Checkout and billing return flow support (for example redirect back to Creatornivo after payment or portal use).",
+      "Browser local storage for theme preference and certain onboarding UI state.",
+      "No advertising cookies, no behavioral marketing cookies, and no third-party marketing pixels in the current product.",
     ],
   },
   {

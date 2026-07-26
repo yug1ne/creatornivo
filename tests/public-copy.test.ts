@@ -48,6 +48,10 @@ test("public product copy contains no unsupported performance or social-proof cl
   ]) {
     assert.doesNotMatch(copy, unsupported);
   }
+
+  // No fake marketing cookie CTA in public marketing surfaces.
+  assert.doesNotMatch(copy, /Accept All Cookies/i);
+  assert.doesNotMatch(copy, /CookieBanner|cookie-consent-banner/i);
 });
 
 test("Early Access copy uses a neutral limited-time founding price", () => {
