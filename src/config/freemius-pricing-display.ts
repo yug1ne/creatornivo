@@ -13,22 +13,33 @@ export const freemiusFoundingOfferActive = true;
 
 export const freemiusPricingDisplay = {
   monthlyPrice: "$9.90",
-  monthlyPeriodLabel: "per month",
+  monthlyPeriodLabel: "month",
   annualPrice: "$99",
-  annualPeriodLabel: "per year",
+  annualPeriodLabel: "year",
   foundingMonthlyPrice: "$4.90",
   /** Server coupon id auto-applied only by the Founding CTA. */
   foundingCouponCode: "FOUNDING20",
 
   /** Top of pricing section only (first-20 audience). */
   sectionTopLine: "Founding offer for the first 20 customers.",
-  /** Pro card: short founding price line (no “first 20” if top already says it). */
-  foundingPriceLine: "$4.90/month for early customers.",
-  /** Pro card: checkout automation note. */
-  autoApplyLine: "Discount applied automatically at checkout.",
-  /** Pro card: regular list-price label under $9.90. */
+
+  /** Pro card: regular list price caption under $9.90. */
   regularMonthlyLabel: "Regular monthly price",
-  /** Legacy combined string — prefer surface-specific lines above. */
+
+  /** Billing-options block: founding row */
+  billingOptionFoundingTitle: "Founding monthly",
+  billingOptionFoundingPrice: "$4.90/month",
+  billingOptionFoundingDetail:
+    "First 20 customers. Discount applied automatically.",
+
+  /** Billing-options block: annual row */
+  billingOptionAnnualTitle: "Annual",
+  billingOptionAnnualPrice: "$99/year",
+  billingOptionAnnualDetail: "Save 16%",
+
+  /** Legacy short lines (prefer billing-options block). */
+  foundingPriceLine: "$4.90/month for early customers.",
+  autoApplyLine: "Discount applied automatically at checkout.",
   foundingOfferCopy: "Founding offer for the first 20 customers.",
   regularMonthlyPriceNote: "Regular monthly price: $9.90/month.",
 

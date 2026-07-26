@@ -137,13 +137,15 @@ test("checkout enabled + founding active shows Founding + Annual CTAs only", () 
     "Founding offer for the first 20 customers.",
   );
   assert.equal(
-    freemiusPricingDisplay.foundingPriceLine,
-    "$4.90/month for early customers.",
+    freemiusPricingDisplay.billingOptionFoundingPrice,
+    "$4.90/month",
   );
   assert.equal(
-    freemiusPricingDisplay.autoApplyLine,
-    "Discount applied automatically at checkout.",
+    freemiusPricingDisplay.billingOptionFoundingDetail,
+    "First 20 customers. Discount applied automatically.",
   );
+  assert.equal(freemiusPricingDisplay.billingOptionAnnualPrice, "$99/year");
+  assert.equal(freemiusPricingDisplay.billingOptionAnnualDetail, "Save 16%");
   assert.equal(
     freemiusPricingDisplay.regularMonthlyLabel,
     "Regular monthly price",
@@ -153,6 +155,7 @@ test("checkout enabled + founding active shows Founding + Annual CTAs only", () 
   const proPricing = read("src/components/pricing/freemius-pro-pricing.tsx");
   const pricingPage = read("src/app/(public)/pricing/page.tsx");
   const landing = read("src/components/landing/pricing-section.tsx");
+  const pricingDisplay = read("src/config/pricing-display.ts");
 
   assert.match(pricingPage, /sectionTopLine/);
   assert.match(landing, /sectionTopLine/);
@@ -161,24 +164,29 @@ test("checkout enabled + founding active shows Founding + Annual CTAs only", () 
   assert.match(checkoutCta, /startCheckout\("founding", "monthly", true\)/);
   assert.match(checkoutCta, /startCheckout\("annual", "annual"\)/);
   assert.match(checkoutCta, /foundingPrimary/);
-  // No duplicated founding subcopy under CTAs.
+  // Buttons only — no pricing subcopy under CTAs.
+  assert.doesNotMatch(checkoutCta, /billingOptionFoundingDetail/);
   assert.doesNotMatch(checkoutCta, /foundingOfferCopy/);
-  assert.doesNotMatch(checkoutCta, /regularMonthlyPriceNote/);
-  assert.doesNotMatch(checkoutCta, /foundingPriceLine/);
   assert.match(
     checkoutCta,
     /foundingPrimary \? \([\s\S]*foundingCtaLabel[\s\S]*\) : \([\s\S]*monthlyCtaLabel/,
   );
 
-  // Card owns $9.90 regular + $4.90 founding + auto-apply (not first-20).
-  assert.match(proPricing, /monthlyPrice/);
+  // Compact billing-options block (not floating “or $99” line).
+  assert.match(proPricing, /data-billing-options/);
+  assert.match(proPricing, /billingOptionFoundingTitle/);
+  assert.match(proPricing, /billingOptionFoundingPrice/);
+  assert.match(proPricing, /billingOptionFoundingDetail/);
+  assert.match(proPricing, /billingOptionAnnualTitle/);
+  assert.match(proPricing, /billingOptionAnnualPrice/);
+  assert.match(proPricing, /billingOptionAnnualDetail/);
   assert.match(proPricing, /regularMonthlyLabel/);
-  assert.match(proPricing, /foundingPriceLine/);
-  assert.match(proPricing, /autoApplyLine/);
-  assert.doesNotMatch(proPricing, /sectionTopLine/);
-  assert.doesNotMatch(
-    freemiusPricingDisplay.foundingPriceLine,
-    /first 20/i,
+  assert.doesNotMatch(proPricing, /or \{\s*$|or&nbsp;|or \{"/);
+  assert.doesNotMatch(proPricing, />or </);
+
+  assert.match(
+    pricingDisplay,
+    /For creators and indie makers who need more drafts, templates, and export tools/,
   );
 
   assert.equal(freemiusPricingDisplay.monthlyPrice, "$9.90");
@@ -189,24 +197,33 @@ test("checkout enabled + founding active shows Founding + Annual CTAs only", () 
 test("enabled founding copy is split by surface without duplication noise", () => {
   const top = freemiusPricingDisplay.sectionTopLine;
   const card =
-    freemiusPricingDisplay.foundingPriceLine +
-    freemiusPricingDisplay.autoApplyLine +
     freemiusPricingDisplay.regularMonthlyLabel +
-    freemiusPricingDisplay.monthlyPrice;
+    freemiusPricingDisplay.monthlyPrice +
+    freemiusPricingDisplay.billingOptionFoundingTitle +
+    freemiusPricingDisplay.billingOptionFoundingPrice +
+    freemiusPricingDisplay.billingOptionFoundingDetail +
+    freemiusPricingDisplay.billingOptionAnnualTitle +
+    freemiusPricingDisplay.billingOptionAnnualPrice +
+    freemiusPricingDisplay.billingOptionAnnualDetail;
   const ctas =
     freemiusPricingDisplay.foundingCtaLabel +
     freemiusPricingDisplay.annualCtaLabel;
 
   assert.match(top, /first 20 customers/i);
   assert.doesNotMatch(top, /Discount applied automatically/i);
-  assert.match(card, /\$4\.90\/month for early customers/);
-  assert.match(card, /Discount applied automatically at checkout/);
   assert.match(card, /\$9\.90/);
-  assert.doesNotMatch(card, /first 20/i);
+  assert.match(card, /Regular monthly price/);
+  assert.match(card, /Founding monthly/);
+  assert.match(card, /\$4\.90\/month/);
+  assert.match(card, /First 20 customers\. Discount applied automatically\./);
+  assert.match(card, /Annual/);
+  assert.match(card, /\$99\/year/);
+  assert.match(card, /Save 16%/);
+  assert.doesNotMatch(card, /or \$99 \/ per year/i);
   assert.match(ctas, /Get Founding Pro — \$4\.90\/month/);
   assert.match(ctas, /Get Pro Annual — \$99\/year/);
   assert.doesNotMatch(ctas, /Get Pro Monthly — \$9\.90/);
-  assert.doesNotMatch(ctas, /first 20|Discount applied automatically/i);
+  assert.doesNotMatch(ctas, /first 20|Discount applied automatically|Save 16%/i);
   assert.doesNotMatch(top + card + ctas, /spots? left|Use code FOUNDING20/i);
 });
 

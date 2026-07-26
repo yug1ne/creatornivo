@@ -25,7 +25,7 @@ export const pricingPlans = [
     price: "$9.90",
     period: "per month",
     description:
-      "For marketers, founders, and indie hackers who need more monthly drafts and all business templates.",
+      "For creators and indie makers who need more drafts, templates, and export tools.",
     badge: "pro" as const,
     highlighted: true,
     cta: { label: "Upgrade to Pro", href: "/pricing" },
