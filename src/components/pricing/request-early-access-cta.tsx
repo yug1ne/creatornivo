@@ -2,14 +2,14 @@ import { buttonVariants } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils/cn";
 
-/** Public CTA while paid self-serve checkout is temporarily unavailable. */
+/** Public CTA while self-serve checkout remains behind PUBLIC_CHECKOUT_ENABLED. */
 export const REQUEST_EARLY_ACCESS_MAILTO =
   `mailto:${siteConfig.legal.billingEmail}?subject=CreatorNivo%20Early%20Access`;
 
 export const REQUEST_EARLY_ACCESS_LABEL = "Request Early Access";
 
 export const PAID_CHECKOUT_UNAVAILABLE_NOTE =
-  "Paid checkout is temporarily unavailable while we finalize our payment provider. Contact us to request early access.";
+  "Founding access is available by request while we finish final rollout.";
 
 interface RequestEarlyAccessCtaProps {
   className?: string;

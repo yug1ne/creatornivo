@@ -1,7 +1,7 @@
 /**
- * Public Freemius pricing display copy (Phase 5-pre).
- * Shown only when PUBLIC_CHECKOUT_ENABLED === "true".
+ * Public Freemius pricing display copy (when PUBLIC_CHECKOUT_ENABLED === "true").
  * Does not grant Pro, sync coupon redemptions, or invent live seat counters.
+ * Founding CTA auto-applies FOUNDING20 server-side; regular monthly/annual do not.
  */
 
 export const freemiusPricingDisplay = {
@@ -10,11 +10,11 @@ export const freemiusPricingDisplay = {
   annualPrice: "$99",
   annualPeriodLabel: "per year",
   foundingMonthlyPrice: "$4.90",
+  /** Server coupon id auto-applied only by the Founding CTA (not manual entry UX). */
   foundingCouponCode: "FOUNDING20",
   /** Honest founding offer — no live seat counter. */
-  foundingOfferCopy:
-    "First 20 customers can use code FOUNDING20 for $4.90/month.",
-  foundingCtaLabel: "Founding offer — $4.90/mo with FOUNDING20",
+  foundingOfferCopy: "First 20 customers. Discount applied automatically.",
+  foundingCtaLabel: "Founding Pro — $4.90/month",
   monthlyCtaLabel: "Get Pro Monthly — $9.90",
   annualCtaLabel: "Get Pro Annual — $99",
   checkoutDisabledMessage:

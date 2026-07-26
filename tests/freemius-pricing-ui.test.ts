@@ -55,17 +55,22 @@ test("pricing page keeps Request Early Access path when checkout disabled", () =
   }
 });
 
-test("checkout disabled shows regular $9.90 and visible FOUNDING20 founding offer", async () => {
+test("checkout disabled shows regular $9.90 and auto-applied founding offer (no use-code UX)", async () => {
   assert.equal(earlyAccessConfig.regularPrice, "$9.90");
   assert.equal(earlyAccessConfig.price, "$4.90");
+  // Server coupon id may exist; public disabled copy must not say "use code".
   assert.equal(earlyAccessConfig.foundingCouponCode, "FOUNDING20");
-  assert.match(
+  assert.equal(
     earlyAccessConfig.foundingCouponCopy,
-    /Use code FOUNDING20 to get \$5 off — \$4\.90\/month\./,
+    "Founding offer: $4.90/month for the first 20 customers.",
   );
-  assert.match(
+  assert.equal(
     earlyAccessConfig.limitLabel,
-    /Limited founding offer — first 20 customers only\./,
+    "Applied automatically at checkout.",
+  );
+  assert.doesNotMatch(
+    earlyAccessConfig.foundingCouponCopy + earlyAccessConfig.limitLabel,
+    /Use code FOUNDING20/i,
   );
 
   const status = await getEarlyAccessStatus({
@@ -74,8 +79,8 @@ test("checkout disabled shows regular $9.90 and visible FOUNDING20 founding offe
   assert.equal(status.isAvailable, true);
   assert.equal(status.regularPrice, "$9.90");
   assert.equal(status.price, "$4.90");
-  assert.equal(status.foundingCouponCode, "FOUNDING20");
-  assert.match(status.foundingCouponCopy, /FOUNDING20/);
+  assert.match(status.foundingCouponCopy, /\$4\.90\/month for the first 20/);
+  assert.doesNotMatch(status.foundingCouponCopy, /Use code FOUNDING20/i);
 
   // Display is not gated on Paddle early-access price IDs.
   const statusWithoutPaddleEa = await getEarlyAccessStatus({
@@ -87,6 +92,7 @@ test("checkout disabled shows regular $9.90 and visible FOUNDING20 founding offe
 
   const priceBlock = read("src/components/pricing/pro-plan-price-block.tsx");
   const proPricing = read("src/components/pricing/pro-plan-pricing.tsx");
+  const ctaNote = read("src/components/pricing/request-early-access-cta.tsx");
   assert.match(priceBlock, /isAvailable:\s*true/);
   assert.match(priceBlock, /foundingCouponCopy/);
   assert.match(priceBlock, /return <ProPlanPricing status=\{foundingStatus\}/);
@@ -94,10 +100,19 @@ test("checkout disabled shows regular $9.90 and visible FOUNDING20 founding offe
     priceBlock,
     /if \(isPublicCheckoutEnabled\(\)\) \{\s*return <FreemiusProPricing/,
   );
-  assert.match(priceBlock, /PADDLE_EARLY_ACCESS_PRICE_ID/);
   assert.match(proPricing, /status\.regularPrice/);
   assert.match(proPricing, /foundingCouponCopy/);
-  assert.match(proPricing, /FOUNDING20|foundingCouponCode/);
+  // User-facing strings (config values), not source comments.
+  assert.doesNotMatch(
+    earlyAccessConfig.foundingCouponCopy +
+      earlyAccessConfig.limitLabel +
+      earlyAccessConfig.foundingBadgeLabel,
+    /Use code FOUNDING20/i,
+  );
+  assert.match(
+    ctaNote,
+    /Founding access is available by request while we finish final rollout/,
+  );
 });
 
 test("pricing page does not expose Freemius checkout buttons when disabled by default", () => {
@@ -134,10 +149,14 @@ test("enabled-mode components include Monthly and Annual Freemius CTAs", () => {
   assert.equal(freemiusPricingDisplay.annualPrice, "$99");
 });
 
-test("founding coupon copy is honest and does not claim live remaining seats", () => {
+test("enabled founding copy is honest; auto-apply CTA; no live seats", () => {
   assert.equal(
     freemiusPricingDisplay.foundingOfferCopy,
-    "First 20 customers can use code FOUNDING20 for $4.90/month.",
+    "First 20 customers. Discount applied automatically.",
+  );
+  assert.equal(
+    freemiusPricingDisplay.foundingCtaLabel,
+    "Founding Pro — $4.90/month",
   );
   assert.equal(freemiusPricingDisplay.foundingCouponCode, "FOUNDING20");
   assert.equal(freemiusPricingDisplay.monthlyPrice, "$9.90");
@@ -154,10 +173,12 @@ test("founding coupon copy is honest and does not claim live remaining seats", (
 
   assert.doesNotMatch(userFacing, /spots? left|only \d+ left/i);
   assert.doesNotMatch(userFacing, /countdown|claim your spot/i);
+  assert.doesNotMatch(userFacing, /Use code FOUNDING20/i);
   assert.doesNotMatch(display, /spots? left|only \d+ left/i);
   assert.match(proPricing, /foundingOfferCopy/);
-  assert.match(userFacing, /FOUNDING20/);
   assert.match(userFacing, /First 20 customers/);
+  assert.match(userFacing, /applied automatically/i);
+  assert.match(userFacing, /Founding Pro — \$4\.90\/month/);
 });
 
 test("checkout client builds monthly/annual bodies and founding coupon only when founding", () => {
@@ -167,9 +188,18 @@ test("checkout client builds monthly/annual bodies and founding coupon only when
   assert.deepEqual(buildFreemiusCheckoutRequestBody("annual"), {
     interval: "annual",
   });
+  // Founding CTA auto-applies FOUNDING20; regular paths do not.
   assert.deepEqual(
     buildFreemiusCheckoutRequestBody("monthly", { founding: true }),
     { interval: "monthly", coupon: "FOUNDING20" },
+  );
+  assert.equal(
+    "coupon" in buildFreemiusCheckoutRequestBody("monthly"),
+    false,
+  );
+  assert.equal(
+    "coupon" in buildFreemiusCheckoutRequestBody("annual"),
+    false,
   );
   // Annual founding flag must not invent a coupon.
   assert.deepEqual(
@@ -179,6 +209,7 @@ test("checkout client builds monthly/annual bodies and founding coupon only when
 
   const checkoutCta = read("src/components/pricing/freemius-checkout-cta.tsx");
   assert.match(checkoutCta, /fetch\("\/api\/freemius\/checkout"/);
+  assert.match(checkoutCta, /founding:\s*true|startCheckout\("founding"/);
   assert.doesNotMatch(checkoutCta, /plan:\s*["']pro["']/);
   assert.doesNotMatch(checkoutCta, /user\.update|User\.plan/);
 });

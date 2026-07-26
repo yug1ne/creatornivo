@@ -200,8 +200,8 @@ export function FreemiusCheckoutCta({
         </button>
       ) : null}
       <p className="text-center text-xs leading-relaxed text-muted-foreground">
-        {freemiusPricingDisplay.foundingOfferCopy} Coupon is applied at
-        checkout for the founding offer only.
+        {freemiusPricingDisplay.foundingOfferCopy} Founding discount is applied
+        automatically only when you choose the founding offer.
       </p>
       <p className="text-center text-xs leading-relaxed text-muted-foreground">
         {freemiusPricingDisplay.activationNote}

@@ -11,8 +11,8 @@ interface ProPlanPricingProps {
 /**
  * Early Access Pro price block (public checkout disabled):
  * - Main list price: regular $9.90/month
- * - Founding offer with visible FOUNDING20 code → $4.90/month
- * Does not claim live remaining seats.
+ * - Founding offer $4.90 for first 20 customers (applied automatically at checkout)
+ * - No manual coupon-entry instruction in public copy
  */
 export function ProPlanPricing({ status, size = "md" }: ProPlanPricingProps) {
   const priceClass = size === "lg" ? "text-4xl" : "text-3xl";

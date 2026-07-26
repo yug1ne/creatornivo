@@ -30,7 +30,7 @@ test("Early Access is unavailable only when its Price ID is not configured", () 
   assert.equal(selectedPriceId, "pri_pro");
 });
 
-test("available Early Access renders regular $9.90 with visible FOUNDING20 offer", () => {
+test("available Early Access renders regular $9.90 with auto-applied founding offer", () => {
   const status = buildEarlyAccessStatus(true);
   const markup = renderToStaticMarkup(
     createElement(ProPlanPricing, { status }),
@@ -39,10 +39,10 @@ test("available Early Access renders regular $9.90 with visible FOUNDING20 offer
   assert.match(markup, /Early Access/);
   assert.match(markup, /Limited founding offer/);
   assert.match(markup, /\$9\.90/);
-  assert.match(markup, /FOUNDING20/);
-  assert.match(markup, /\$4\.90\/month/);
-  assert.match(markup, /Use code FOUNDING20 to get \$5 off/);
-  assert.match(markup, /first 20 customers only/i);
+  assert.match(markup, /Founding offer: \$4\.90\/month for the first 20 customers\./);
+  assert.match(markup, /Applied automatically at checkout\./);
+  assert.doesNotMatch(markup, /Use code FOUNDING20/i);
+  assert.doesNotMatch(markup, /FOUNDING20/);
   // Main list price is regular — not a struck-through comparison layout.
   assert.doesNotMatch(markup, /line-through/);
 });

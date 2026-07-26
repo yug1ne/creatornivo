@@ -8,7 +8,7 @@ interface FreemiusProPricingProps {
 
 /**
  * Pro price display when public Freemius checkout is enabled.
- * Shows regular monthly/annual prices and an honest FOUNDING20 note.
+ * Regular monthly/annual list prices + founding offer (auto-applied discount).
  * Does not claim live remaining seats or permanent $4.90 Pro pricing.
  */
 export function FreemiusProPricing({ size = "md" }: FreemiusProPricingProps) {
@@ -34,10 +34,11 @@ export function FreemiusProPricing({ size = "md" }: FreemiusProPricingProps) {
       <div className="flex flex-wrap items-center gap-2">
         <Badge variant="pro">Founding offer</Badge>
         <span className="text-xs text-muted-foreground">
-          Code {freemiusPricingDisplay.foundingCouponCode}
+          {freemiusPricingDisplay.foundingMonthlyPrice}/month
         </span>
       </div>
       <p className="text-sm font-medium text-primary">
+        {freemiusPricingDisplay.foundingCtaLabel}.{" "}
         {freemiusPricingDisplay.foundingOfferCopy}
       </p>
     </div>

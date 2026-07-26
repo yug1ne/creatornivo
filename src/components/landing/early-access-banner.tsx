@@ -19,7 +19,7 @@ export async function EarlyAccessBanner() {
           <span>
             Pro {status.regularPrice}/mo
             <span className="mx-1 text-muted-foreground">·</span>
-            code {status.foundingCouponCode} → {status.price}/mo
+            founding {status.price}/mo for the first 20 customers
           </span>
         </p>
         <Link
