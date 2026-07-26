@@ -1,11 +1,18 @@
 /**
- * Freemius Phase 3: checkout + portal API tests (kill-switch defaults off).
+ * Freemius Phase 3–4: checkout + portal API tests.
+ * Public kill-switch defaults off; Phase 4 adds restricted allowlist mode.
  * Run: npx tsx --test tests/freemius-checkout.test.ts
  */
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
 
+import {
+  canUseRestrictedFreemiusCheckout,
+  isRestrictedCheckoutEnabled,
+  parseRestrictedCheckoutEmails,
+  resolveFreemiusCheckoutAccess,
+} from "../src/config/freemius";
 import { POST as freemiusCheckoutPost } from "../src/app/api/freemius/checkout/route";
 import {
   GET as freemiusPortalGet,
@@ -34,6 +41,9 @@ const baseEnv: NodeJS.ProcessEnv = {
   FREEMIUS_WEBHOOK_SECRET_TOKEN: "wh_token",
   FREEMIUS_CUSTOMER_PORTAL_URL: "https://users.freemius.com/",
   PUBLIC_CHECKOUT_ENABLED: "false",
+  FREEMIUS_RESTRICTED_CHECKOUT_ENABLED: "false",
+  FREEMIUS_RESTRICTED_CHECKOUT_EMAILS: "",
+  FREEMIUS_RESTRICTED_CHECKOUT_ADMIN_ONLY: "false",
   NEXT_PUBLIC_APP_URL: "https://www.creatornivo.com",
 };
 
@@ -159,7 +169,7 @@ test("annual interval uses annual pricing id when configured", () => {
   assert.match(url, /pricing_id=88888/);
 });
 
-test("createFreemiusCheckoutSession is disabled by default kill-switch", async () => {
+test("createFreemiusCheckoutSession is disabled when public and restricted are off", async () => {
   let intentCreated = false;
   await assert.rejects(
     () =>
@@ -185,7 +195,221 @@ test("createFreemiusCheckoutSession is disabled by default kill-switch", async (
   assert.equal(intentCreated, false);
 });
 
-test("createFreemiusCheckoutSession creates intent and URL only when enabled", async () => {
+test("restricted off + non-allowlisted email stays checkout_disabled", async () => {
+  let intentCreated = false;
+  await assert.rejects(
+    () =>
+      createFreemiusCheckoutSession({
+        userId: "user-1",
+        email: "stranger@example.com",
+        name: null,
+        plan: "free",
+        subscription: null,
+        interval: "monthly",
+        env: {
+          ...baseEnv,
+          FREEMIUS_RESTRICTED_CHECKOUT_ENABLED: "true",
+          FREEMIUS_RESTRICTED_CHECKOUT_EMAILS: "tester@creatornivo.com",
+        },
+        intentStore: {
+          async create() {
+            intentCreated = true;
+            return { id: "intent-x" };
+          },
+        },
+      }),
+    (error: unknown) =>
+      error instanceof FreemiusCheckoutError &&
+      error.code === "checkout_disabled",
+  );
+  assert.equal(intentCreated, false);
+});
+
+test("restricted true + allowlisted email returns checkout URL and mode restricted", async () => {
+  let intentCreated = false;
+  const result = await createFreemiusCheckoutSession({
+    userId: "user-1",
+    email: "tester@creatornivo.com",
+    name: "Tester",
+    plan: "free",
+    subscription: null,
+    interval: "monthly",
+    coupon: "FOUNDING20",
+    env: {
+      ...baseEnv,
+      FREEMIUS_RESTRICTED_CHECKOUT_ENABLED: "true",
+      FREEMIUS_RESTRICTED_CHECKOUT_EMAILS: "tester@creatornivo.com",
+    },
+    intentStore: {
+      async create(input) {
+        intentCreated = true;
+        assert.equal(input.userId, "user-1");
+        assert.equal(input.pricingId, "77471");
+        return { id: "intent-restricted" };
+      },
+    },
+  });
+
+  assert.equal(intentCreated, true);
+  assert.equal(result.mode, "restricted");
+  assert.equal(result.intentId, "intent-restricted");
+  assert.match(
+    result.checkoutUrl,
+    /checkout\.freemius\.com\/product\/34975\/plan\/57499\/licenses\/1\//,
+  );
+  assert.match(result.checkoutUrl, /coupon=FOUNDING20/);
+  assert.equal(result.checkoutUrl.includes("sk_secret"), false);
+});
+
+test("restricted email matching is case-insensitive and trims spaces", async () => {
+  assert.deepEqual(
+    parseRestrictedCheckoutEmails({
+      FREEMIUS_RESTRICTED_CHECKOUT_EMAILS:
+        "  Tester@CreatorNivo.com , other@example.com ",
+    }),
+    ["tester@creatornivo.com", "other@example.com"],
+  );
+
+  assert.equal(
+    canUseRestrictedFreemiusCheckout("  TESTER@creatornivo.com ", false, {
+      FREEMIUS_RESTRICTED_CHECKOUT_ENABLED: "true",
+      FREEMIUS_RESTRICTED_CHECKOUT_EMAILS: "tester@creatornivo.com",
+    }),
+    true,
+  );
+
+  const result = await createFreemiusCheckoutSession({
+    userId: "user-1",
+    email: "  Tester@CreatorNivo.com ",
+    name: null,
+    plan: "free",
+    subscription: null,
+    interval: "monthly",
+    env: {
+      ...baseEnv,
+      FREEMIUS_RESTRICTED_CHECKOUT_ENABLED: "true",
+      FREEMIUS_RESTRICTED_CHECKOUT_EMAILS: "tester@creatornivo.com",
+    },
+    intentStore: {
+      async create() {
+        return { id: "intent-case" };
+      },
+    },
+  });
+  assert.equal(result.mode, "restricted");
+});
+
+test("restricted mode allows FOUNDING20 and rejects invalid coupon", async () => {
+  const env = {
+    ...baseEnv,
+    FREEMIUS_RESTRICTED_CHECKOUT_ENABLED: "true",
+    FREEMIUS_RESTRICTED_CHECKOUT_EMAILS: "tester@creatornivo.com",
+  };
+
+  const ok = await createFreemiusCheckoutSession({
+    userId: "user-1",
+    email: "tester@creatornivo.com",
+    name: null,
+    plan: "free",
+    subscription: null,
+    interval: "monthly",
+    coupon: "founding20",
+    env,
+    intentStore: {
+      async create() {
+        return { id: "intent-coupon" };
+      },
+    },
+  });
+  assert.match(ok.checkoutUrl, /coupon=FOUNDING20/);
+
+  let badIntentCreated = false;
+  await assert.rejects(
+    () =>
+      createFreemiusCheckoutSession({
+        userId: "user-1",
+        email: "tester@creatornivo.com",
+        name: null,
+        plan: "free",
+        subscription: null,
+        interval: "monthly",
+        coupon: "BADCOUPON",
+        env,
+        intentStore: {
+          async create() {
+            badIntentCreated = true;
+            return { id: "should-not" };
+          },
+        },
+      }),
+    (error: unknown) =>
+      error instanceof FreemiusCheckoutError && error.code === "invalid_coupon",
+  );
+  assert.equal(badIntentCreated, false);
+});
+
+test("restricted mode supports annual interval", async () => {
+  const result = await createFreemiusCheckoutSession({
+    userId: "user-1",
+    email: "tester@creatornivo.com",
+    name: null,
+    plan: "free",
+    subscription: null,
+    interval: "annual",
+    env: {
+      ...baseEnv,
+      FREEMIUS_PRO_ANNUAL_PRICING_ID: "88888",
+      FREEMIUS_RESTRICTED_CHECKOUT_ENABLED: "true",
+      FREEMIUS_RESTRICTED_CHECKOUT_EMAILS: "tester@creatornivo.com",
+    },
+    intentStore: {
+      async create(input) {
+        assert.equal(input.pricingId, "88888");
+        return { id: "intent-annual" };
+      },
+    },
+  });
+  assert.equal(result.mode, "restricted");
+  assert.equal(result.billingCycle, "annual");
+  assert.match(result.checkoutUrl, /billing_cycle=annual/);
+  assert.match(result.checkoutUrl, /pricing_id=88888/);
+});
+
+test("restricted admin-only allows admin when email not listed", async () => {
+  const env = {
+    ...baseEnv,
+    FREEMIUS_RESTRICTED_CHECKOUT_ENABLED: "true",
+    FREEMIUS_RESTRICTED_CHECKOUT_EMAILS: "",
+    FREEMIUS_RESTRICTED_CHECKOUT_ADMIN_ONLY: "true",
+  };
+  assert.equal(
+    canUseRestrictedFreemiusCheckout("admin@creatornivo.com", true, env),
+    true,
+  );
+  assert.equal(
+    canUseRestrictedFreemiusCheckout("admin@creatornivo.com", false, env),
+    false,
+  );
+
+  const result = await createFreemiusCheckoutSession({
+    userId: "admin-1",
+    email: "admin@creatornivo.com",
+    name: null,
+    plan: "free",
+    subscription: null,
+    interval: "monthly",
+    isAdmin: true,
+    env,
+    intentStore: {
+      async create() {
+        return { id: "intent-admin" };
+      },
+    },
+  });
+  assert.equal(result.mode, "restricted");
+});
+
+test("createFreemiusCheckoutSession creates intent and URL only when public enabled", async () => {
   let intentCreated = false;
   const result = await createFreemiusCheckoutSession({
     userId: "user-1",
@@ -207,6 +431,7 @@ test("createFreemiusCheckoutSession creates intent and URL only when enabled", a
   });
 
   assert.equal(intentCreated, true);
+  assert.equal(result.mode, "public");
   assert.equal(result.intentId, "intent-created");
   assert.match(
     result.checkoutUrl,
@@ -241,6 +466,32 @@ test("createFreemiusCheckoutSession blocks active Pro without creating intent", 
       error.code === "subscription_already_active",
   );
   assert.equal(intentCreated, false);
+});
+
+test("resolveFreemiusCheckoutAccess prefers public over restricted", () => {
+  assert.equal(
+    resolveFreemiusCheckoutAccess(
+      { email: "tester@creatornivo.com" },
+      {
+        PUBLIC_CHECKOUT_ENABLED: "true",
+        FREEMIUS_RESTRICTED_CHECKOUT_ENABLED: "true",
+        FREEMIUS_RESTRICTED_CHECKOUT_EMAILS: "tester@creatornivo.com",
+      },
+    ),
+    "public",
+  );
+  assert.equal(
+    resolveFreemiusCheckoutAccess(
+      { email: "other@example.com" },
+      {
+        PUBLIC_CHECKOUT_ENABLED: "false",
+        FREEMIUS_RESTRICTED_CHECKOUT_ENABLED: "true",
+        FREEMIUS_RESTRICTED_CHECKOUT_EMAILS: "tester@creatornivo.com",
+      },
+    ),
+    null,
+  );
+  assert.equal(isRestrictedCheckoutEnabled(baseEnv), false);
 });
 
 test("getFreemiusCheckoutUrls point at settings billing success/cancel", () => {
@@ -286,12 +537,12 @@ test("HTTP checkout rejects unauthenticated users", async () => {
 });
 
 test("HTTP checkout returns checkout_disabled when kill-switch is false", async () => {
-  // This test verifies the disabled path via createFreemiusCheckoutSession unit above.
-  // Full HTTP auth+session path requires NextAuth session; service-level kill-switch is authoritative.
+  // Full HTTP auth+session path requires NextAuth session; service-level gates are authoritative.
   const source = readFileSync("src/app/api/freemius/checkout/route.ts", "utf8");
   assert.match(source, /checkout_disabled/);
-  assert.match(source, /isPublicCheckoutEnabled/);
+  assert.match(source, /resolveFreemiusCheckoutAccess/);
   assert.match(source, /requireSession/);
+  assert.match(source, /mode:/);
   assert.doesNotMatch(source, /User\.plan\s*=/);
   assert.doesNotMatch(source, /plan:\s*PLANS\.PRO/);
   assert.doesNotMatch(source, /FREEMIUS_SECRET_KEY/);

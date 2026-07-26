@@ -4,8 +4,9 @@ import {
   getFreemiusConfigStatus,
   getFreemiusEnvSnapshot,
   isAllowedFreemiusFoundingCoupon,
-  isPublicCheckoutEnabled,
+  resolveFreemiusCheckoutAccess,
   type FreemiusBillingInterval,
+  type FreemiusCheckoutAccessMode,
 } from "@/config/freemius";
 import { siteConfig } from "@/config/site";
 import { prisma } from "@/lib/db";
@@ -245,8 +246,9 @@ export const prismaFreemiusCheckoutIntentStore: FreemiusCheckoutIntentStore = {
 };
 
 /**
- * Creates checkout intent + hosted URL when kill-switch is on.
- * When kill-switch is off, throws checkout_disabled without creating intent or calling external services.
+ * Creates checkout intent + hosted URL when public checkout or restricted
+ * allowlist access is granted. When disabled, throws checkout_disabled without
+ * creating intent or calling external services. Never grants Pro or sets periods.
  */
 export async function createFreemiusCheckoutSession(input: {
   userId: string;
@@ -261,6 +263,8 @@ export async function createFreemiusCheckoutSession(input: {
   } | null;
   interval: FreemiusCheckoutIntervalInput;
   coupon?: string | null;
+  /** Optional admin flag for FREEMIUS_RESTRICTED_CHECKOUT_ADMIN_ONLY */
+  isAdmin?: boolean;
   env?: NodeJS.ProcessEnv;
   intentStore?: FreemiusCheckoutIntentStore;
   now?: Date;
@@ -271,10 +275,15 @@ export async function createFreemiusCheckoutSession(input: {
   interval: FreemiusCheckoutIntervalInput;
   pricingId: string;
   billingCycle: "monthly" | "annual";
+  mode: FreemiusCheckoutAccessMode;
 }> {
   const env = input.env ?? process.env;
 
-  if (!isPublicCheckoutEnabled(env)) {
+  const accessMode = resolveFreemiusCheckoutAccess(
+    { email: input.email, isAdmin: input.isAdmin },
+    env,
+  );
+  if (!accessMode) {
     throw new FreemiusCheckoutError(
       "checkout_disabled",
       403,
@@ -297,6 +306,17 @@ export async function createFreemiusCheckoutSession(input: {
   });
   if (block) {
     throw new FreemiusCheckoutError(block.code, 409, block.message);
+  }
+
+  // Validate coupon before creating intent (no orphan intents on reject).
+  if (input.coupon) {
+    if (!isAllowedFreemiusFoundingCoupon(input.coupon, env)) {
+      throw new FreemiusCheckoutError(
+        "invalid_coupon",
+        400,
+        "This coupon code is not valid for checkout.",
+      );
+    }
   }
 
   const pricingId = resolveFreemiusPricingIdForInterval(input.interval, env);
@@ -333,6 +353,7 @@ export async function createFreemiusCheckoutSession(input: {
     interval: input.interval,
     pricingId,
     billingCycle: resolveFreemiusCheckoutBillingCycleParam(input.interval),
+    mode: accessMode,
   };
 }
 

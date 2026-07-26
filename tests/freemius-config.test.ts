@@ -11,6 +11,7 @@ import { PaymentProvider, Prisma } from "@prisma/client";
 
 import {
   FREEMIUS_PAID_PRO_PERIOD_POLICY,
+  canUseRestrictedFreemiusCheckout,
   getFreemiusConfigStatus,
   getFreemiusEnvSnapshot,
   getFreemiusPublicAllowlistConfig,
@@ -19,6 +20,9 @@ import {
   isAllowedFreemiusPricingId,
   isAllowedFreemiusProductId,
   isPublicCheckoutEnabled,
+  isRestrictedCheckoutEnabled,
+  parseRestrictedCheckoutEmails,
+  resolveFreemiusCheckoutAccess,
 } from "../src/config/freemius";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -37,6 +41,9 @@ const completeEnv: NodeJS.ProcessEnv = {
   FREEMIUS_API_BEARER_TOKEN: "bearer_test",
   FREEMIUS_WEBHOOK_SECRET_TOKEN: "whsec_url_token",
   PUBLIC_CHECKOUT_ENABLED: "false",
+  FREEMIUS_RESTRICTED_CHECKOUT_ENABLED: "false",
+  FREEMIUS_RESTRICTED_CHECKOUT_EMAILS: "",
+  FREEMIUS_RESTRICTED_CHECKOUT_ADMIN_ONLY: "false",
 };
 
 test("PaymentProvider enum includes freemius alongside paddle and stripe", () => {
@@ -100,6 +107,75 @@ test("PUBLIC_CHECKOUT_ENABLED defaults to false unless exactly true", () => {
   );
 });
 
+test("restricted checkout defaults off and parses allowlisted emails safely", () => {
+  assert.equal(isRestrictedCheckoutEnabled({}), false);
+  assert.equal(
+    isRestrictedCheckoutEnabled({ FREEMIUS_RESTRICTED_CHECKOUT_ENABLED: "true" }),
+    true,
+  );
+  assert.equal(
+    isRestrictedCheckoutEnabled({ FREEMIUS_RESTRICTED_CHECKOUT_ENABLED: "TRUE" }),
+    false,
+  );
+
+  assert.deepEqual(
+    parseRestrictedCheckoutEmails({
+      FREEMIUS_RESTRICTED_CHECKOUT_EMAILS:
+        " A@Example.com, b@example.com,, A@example.com ",
+    }),
+    ["a@example.com", "b@example.com"],
+  );
+
+  assert.equal(
+    canUseRestrictedFreemiusCheckout("a@example.com", false, {
+      FREEMIUS_RESTRICTED_CHECKOUT_ENABLED: "false",
+      FREEMIUS_RESTRICTED_CHECKOUT_EMAILS: "a@example.com",
+    }),
+    false,
+  );
+  assert.equal(
+    canUseRestrictedFreemiusCheckout("a@example.com", false, {
+      FREEMIUS_RESTRICTED_CHECKOUT_ENABLED: "true",
+      FREEMIUS_RESTRICTED_CHECKOUT_EMAILS: "a@example.com",
+    }),
+    true,
+  );
+  assert.equal(
+    canUseRestrictedFreemiusCheckout("other@example.com", false, {
+      FREEMIUS_RESTRICTED_CHECKOUT_ENABLED: "true",
+      FREEMIUS_RESTRICTED_CHECKOUT_EMAILS: "a@example.com",
+    }),
+    false,
+  );
+  assert.equal(
+    canUseRestrictedFreemiusCheckout("admin@example.com", true, {
+      FREEMIUS_RESTRICTED_CHECKOUT_ENABLED: "true",
+      FREEMIUS_RESTRICTED_CHECKOUT_ADMIN_ONLY: "true",
+      FREEMIUS_RESTRICTED_CHECKOUT_EMAILS: "",
+    }),
+    true,
+  );
+
+  assert.equal(
+    resolveFreemiusCheckoutAccess(
+      { email: "a@example.com" },
+      {
+        PUBLIC_CHECKOUT_ENABLED: "false",
+        FREEMIUS_RESTRICTED_CHECKOUT_ENABLED: "true",
+        FREEMIUS_RESTRICTED_CHECKOUT_EMAILS: "a@example.com",
+      },
+    ),
+    "restricted",
+  );
+  assert.equal(
+    resolveFreemiusCheckoutAccess(
+      { email: "a@example.com" },
+      { PUBLIC_CHECKOUT_ENABLED: "false" },
+    ),
+    null,
+  );
+});
+
 test("Freemius config detects complete webhook foundation envs", () => {
   const status = getFreemiusConfigStatus(completeEnv);
   assert.equal(status.allowlistConfigured, true);
@@ -107,6 +183,9 @@ test("Freemius config detects complete webhook foundation envs", () => {
   assert.equal(status.apiBearerConfigured, true);
   assert.equal(status.webhookTokenConfigured, true);
   assert.equal(status.publicCheckoutEnabled, false);
+  assert.equal(status.restrictedCheckoutEnabled, false);
+  assert.equal(status.restrictedCheckoutEmailCount, 0);
+  assert.equal(status.restrictedCheckoutAdminOnly, false);
   assert.equal(status.webhookFoundationReady, true);
   assert.equal(status.checkoutFoundationReady, true);
   assert.deepEqual(status.missingRequiredForWebhook, []);
@@ -184,8 +263,12 @@ test("public allowlist config never includes secret key or bearer token values",
   assert.equal(serialized.includes("whsec_url_token"), false);
   assert.equal(publicConfig.productId, "34975");
   assert.equal(publicConfig.publicCheckoutEnabled, false);
+  assert.equal(publicConfig.restrictedCheckoutEnabled, false);
   assert.equal(publicConfig.paidProPeriodPolicy.usesProviderBillingPeriod, true);
   assert.equal(publicConfig.paidProPeriodPolicy.usesUtcCalendarMonth, false);
+  // Never expose allowlisted emails on public config surface
+  assert.equal("restrictedCheckoutEmails" in publicConfig, false);
+  assert.equal(serialized.includes("tester@"), false);
 });
 
 test("env snapshot does not invent Store keys as required Freemius fields", () => {
@@ -220,9 +303,15 @@ test("paid Freemius Pro period policy is provider-based not calendar month", () 
   );
 });
 
-test("Phase 3 does not wire Freemius into public pricing UI", () => {
+test("Phase 3–4 does not wire Freemius into public pricing UI", () => {
   const pricing = readProject("src", "app", "(public)", "pricing", "page.tsx");
   assert.doesNotMatch(pricing, /freemius/i);
   assert.doesNotMatch(pricing, /PUBLIC_CHECKOUT_ENABLED/);
+  assert.doesNotMatch(pricing, /FREEMIUS_RESTRICTED_CHECKOUT/);
   assert.doesNotMatch(pricing, /\/api\/freemius\/checkout/);
+
+  const envExample = readProject(".env.example");
+  assert.match(envExample, /PUBLIC_CHECKOUT_ENABLED="false"/);
+  assert.match(envExample, /FREEMIUS_RESTRICTED_CHECKOUT_ENABLED="false"/);
+  assert.match(envExample, /FREEMIUS_RESTRICTED_CHECKOUT_EMAILS=/);
 });

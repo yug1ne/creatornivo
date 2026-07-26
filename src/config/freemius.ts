@@ -1,14 +1,19 @@
 /**
- * Freemius billing configuration (Phase 1: config only).
+ * Freemius billing configuration.
  *
  * Server-only secrets must never be imported into client components.
- * Checkout stays disabled unless PUBLIC_CHECKOUT_ENABLED === "true".
+ * Public checkout stays disabled unless PUBLIC_CHECKOUT_ENABLED === "true".
+ * Phase 4: restricted checkout may allow explicitly allowlisted emails
+ * when FREEMIUS_RESTRICTED_CHECKOUT_ENABLED === "true".
  *
  * Paid Freemius Pro periods are provider-based (currentPeriodStart/End from
- * Freemius payloads in Phase 2+). Do not assume calendar-month resets on the 1st.
+ * Freemius payloads). Do not assume calendar-month resets on the 1st.
  */
 
 export type FreemiusBillingInterval = "month" | "year";
+
+/** How checkout access was granted for this request (never "public" unless kill-switch is on). */
+export type FreemiusCheckoutAccessMode = "public" | "restricted";
 
 export interface FreemiusEnvSnapshot {
   productId: string;
@@ -25,10 +30,12 @@ export interface FreemiusEnvSnapshot {
   customerPortalUrl: string;
   /** Optional override for hosted checkout origin (default checkout.freemius.com). */
   checkoutBaseUrl: string;
-}
-
-function readEnv(name: string): string {
-  return (process.env[name] ?? "").trim();
+  /** FREEMIUS_RESTRICTED_CHECKOUT_ENABLED raw value */
+  restrictedCheckoutEnabledRaw: string;
+  /** FREEMIUS_RESTRICTED_CHECKOUT_EMAILS raw value */
+  restrictedCheckoutEmailsRaw: string;
+  /** FREEMIUS_RESTRICTED_CHECKOUT_ADMIN_ONLY raw value */
+  restrictedCheckoutAdminOnlyRaw: string;
 }
 
 /** Snapshot of Freemius-related env vars (empty string when unset). */
@@ -50,6 +57,15 @@ export function getFreemiusEnvSnapshot(
     checkoutBaseUrl: (
       env.FREEMIUS_CHECKOUT_BASE_URL ?? "https://checkout.freemius.com"
     ).trim(),
+    restrictedCheckoutEnabledRaw: (
+      env.FREEMIUS_RESTRICTED_CHECKOUT_ENABLED ?? ""
+    ).trim(),
+    restrictedCheckoutEmailsRaw: (
+      env.FREEMIUS_RESTRICTED_CHECKOUT_EMAILS ?? ""
+    ).trim(),
+    restrictedCheckoutAdminOnlyRaw: (
+      env.FREEMIUS_RESTRICTED_CHECKOUT_ADMIN_ONLY ?? ""
+    ).trim(),
   };
 }
 
@@ -61,6 +77,101 @@ export function isPublicCheckoutEnabled(
   env: NodeJS.ProcessEnv = process.env,
 ): boolean {
   return getFreemiusEnvSnapshot(env).publicCheckoutEnabledRaw === "true";
+}
+
+/**
+ * Restricted checkout testing mode is enabled only when the env is exactly "true".
+ * Defaults to disabled. Does not enable public checkout.
+ */
+export function isRestrictedCheckoutEnabled(
+  env: NodeJS.ProcessEnv = process.env,
+): boolean {
+  return (
+    getFreemiusEnvSnapshot(env).restrictedCheckoutEnabledRaw === "true"
+  );
+}
+
+/**
+ * When exactly "true", users who are admins may use restricted checkout
+ * even if their email is not listed in FREEMIUS_RESTRICTED_CHECKOUT_EMAILS.
+ */
+export function isRestrictedCheckoutAdminOnly(
+  env: NodeJS.ProcessEnv = process.env,
+): boolean {
+  return (
+    getFreemiusEnvSnapshot(env).restrictedCheckoutAdminOnlyRaw === "true"
+  );
+}
+
+/**
+ * Parse FREEMIUS_RESTRICTED_CHECKOUT_EMAILS as a comma-separated allowlist.
+ * Normalizes to lowercase trimmed emails; drops empties. Never returns secrets.
+ */
+export function parseRestrictedCheckoutEmails(
+  env: NodeJS.ProcessEnv = process.env,
+): string[] {
+  const raw = getFreemiusEnvSnapshot(env).restrictedCheckoutEmailsRaw;
+  if (!raw) return [];
+
+  const seen = new Set<string>();
+  const emails: string[] = [];
+  for (const part of raw.split(",")) {
+    const email = part.trim().toLowerCase();
+    if (!email || seen.has(email)) continue;
+    seen.add(email);
+    emails.push(email);
+  }
+  return emails;
+}
+
+/**
+ * Whether this user may use restricted Freemius checkout (Phase 4).
+ * Requires FREEMIUS_RESTRICTED_CHECKOUT_ENABLED === "true" and either:
+ * - email is in FREEMIUS_RESTRICTED_CHECKOUT_EMAILS (case-insensitive), or
+ * - FREEMIUS_RESTRICTED_CHECKOUT_ADMIN_ONLY === "true" and isAdmin is true.
+ *
+ * Independent of PUBLIC_CHECKOUT_ENABLED. Does not expose secrets.
+ */
+export function canUseRestrictedFreemiusCheckout(
+  userEmail: string | null | undefined,
+  isAdmin?: boolean,
+  env: NodeJS.ProcessEnv = process.env,
+): boolean {
+  if (!isRestrictedCheckoutEnabled(env)) return false;
+
+  const email =
+    typeof userEmail === "string" ? userEmail.trim().toLowerCase() : "";
+
+  if (email) {
+    const allowlist = parseRestrictedCheckoutEmails(env);
+    if (allowlist.includes(email)) return true;
+  }
+
+  if (isRestrictedCheckoutAdminOnly(env) && isAdmin === true) {
+    return true;
+  }
+
+  return false;
+}
+
+/**
+ * Resolve whether checkout URL generation is allowed for this user.
+ * - public: PUBLIC_CHECKOUT_ENABLED === "true" (all authenticated eligible users)
+ * - restricted: Phase 4 allowlist / admin rule
+ * - null: disabled (fail closed)
+ */
+export function resolveFreemiusCheckoutAccess(
+  user: {
+    email?: string | null;
+    isAdmin?: boolean;
+  },
+  env: NodeJS.ProcessEnv = process.env,
+): FreemiusCheckoutAccessMode | null {
+  if (isPublicCheckoutEnabled(env)) return "public";
+  if (canUseRestrictedFreemiusCheckout(user.email, user.isAdmin, env)) {
+    return "restricted";
+  }
+  return null;
 }
 
 /** Product / plan / monthly pricing IDs used for allowlisting (server). */
@@ -135,6 +246,12 @@ export type FreemiusConfigStatus = {
   foundingCouponConfigured: boolean;
   /** PUBLIC_CHECKOUT_ENABLED === "true" */
   publicCheckoutEnabled: boolean;
+  /** FREEMIUS_RESTRICTED_CHECKOUT_ENABLED === "true" (Phase 4 testing) */
+  restrictedCheckoutEnabled: boolean;
+  /** Count of allowlisted restricted emails (no addresses exposed). */
+  restrictedCheckoutEmailCount: number;
+  /** FREEMIUS_RESTRICTED_CHECKOUT_ADMIN_ONLY === "true" */
+  restrictedCheckoutAdminOnly: boolean;
   /**
    * Server has enough config to verify webhooks later (Phase 2).
    * Does not enable checkout or entitlement application by itself.
@@ -142,7 +259,7 @@ export type FreemiusConfigStatus = {
   webhookFoundationReady: boolean;
   /**
    * Hosted checkout can be built when product+plan ids exist (no API bearer required).
-   * Public use still requires PUBLIC_CHECKOUT_ENABLED === "true".
+   * Public use still requires PUBLIC_CHECKOUT_ENABLED === "true" (or restricted allowlist).
    */
   checkoutFoundationReady: boolean;
   /** Portal endpoint can return a URL when portal base is configured. */
@@ -198,6 +315,10 @@ export function getFreemiusConfigStatus(
   const publicKeyConfigured = Boolean(snap.publicKey);
   const foundingCouponConfigured = Boolean(snap.foundingCouponCode);
   const publicCheckoutEnabled = isPublicCheckoutEnabled(env);
+  const restrictedCheckoutEnabled = isRestrictedCheckoutEnabled(env);
+  const restrictedCheckoutEmailCount =
+    parseRestrictedCheckoutEmails(env).length;
+  const restrictedCheckoutAdminOnly = isRestrictedCheckoutAdminOnly(env);
 
   const webhookFoundationReady = missingRequiredForWebhook.length === 0;
   const checkoutFoundationReady =
@@ -212,6 +333,9 @@ export function getFreemiusConfigStatus(
     publicKeyConfigured,
     foundingCouponConfigured,
     publicCheckoutEnabled,
+    restrictedCheckoutEnabled,
+    restrictedCheckoutEmailCount,
+    restrictedCheckoutAdminOnly,
     webhookFoundationReady,
     checkoutFoundationReady,
     portalFoundationReady,
@@ -241,7 +365,7 @@ export const FREEMIUS_PAID_PRO_PERIOD_POLICY = {
   fields: ["currentPeriodStart", "currentPeriodEnd"] as const,
 } as const;
 
-/** Safe server config surface: ids only, never secrets. */
+/** Safe server config surface: ids only, never secrets or email allowlists. */
 export function getFreemiusPublicAllowlistConfig(
   env: NodeJS.ProcessEnv = process.env,
 ): {
@@ -251,12 +375,14 @@ export function getFreemiusPublicAllowlistConfig(
   annualPricingId: string;
   foundingCouponCode: string;
   publicCheckoutEnabled: boolean;
+  restrictedCheckoutEnabled: boolean;
   paidProPeriodPolicy: typeof FREEMIUS_PAID_PRO_PERIOD_POLICY;
 } {
   const allowlist = getFreemiusAllowlist(env);
   return {
     ...allowlist,
     publicCheckoutEnabled: isPublicCheckoutEnabled(env),
+    restrictedCheckoutEnabled: isRestrictedCheckoutEnabled(env),
     paidProPeriodPolicy: FREEMIUS_PAID_PRO_PERIOD_POLICY,
   };
 }

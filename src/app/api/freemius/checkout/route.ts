@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
-import { isPublicCheckoutEnabled } from "@/config/freemius";
+import { resolveFreemiusCheckoutAccess } from "@/config/freemius";
+import { isAdminSession } from "@/lib/admin/is-admin-session";
 import { requireSession } from "@/lib/auth/session";
 import { prisma } from "@/lib/db";
 import {
@@ -11,8 +12,9 @@ import {
 } from "@/lib/freemius/checkout-service";
 
 /**
- * Freemius checkout session creator (Phase 3).
- * - Kill-switch: PUBLIC_CHECKOUT_ENABLED must be exactly "true"
+ * Freemius checkout session creator (Phase 3 + Phase 4 restricted testing).
+ * - Public: PUBLIC_CHECKOUT_ENABLED must be exactly "true"
+ * - Restricted (Phase 4): FREEMIUS_RESTRICTED_CHECKOUT_ENABLED + allowlisted email
  * - Never grants Pro (webhooks only)
  * - Does not assign billing periods
  */
@@ -27,8 +29,14 @@ export async function POST(request: Request) {
     );
   }
 
-  // Fail closed before reading body / touching Freemius when disabled.
-  if (!isPublicCheckoutEnabled()) {
+  const isAdmin = isAdminSession(session);
+  const accessMode = resolveFreemiusCheckoutAccess({
+    email: session.email,
+    isAdmin,
+  });
+
+  // Fail closed before reading body / creating intent when disabled.
+  if (!accessMode) {
     return NextResponse.json(
       {
         error: "Public Freemius checkout is disabled.",
@@ -100,6 +108,7 @@ export async function POST(request: Request) {
       subscription: user.subscription,
       interval,
       coupon,
+      isAdmin,
     });
 
     const planAfter = await prisma.user.findUnique({
@@ -123,6 +132,7 @@ export async function POST(request: Request) {
       billingCycle: sessionResult.billingCycle,
       // pricingId is non-secret allowlisted id; useful for support/debug
       pricingId: sessionResult.pricingId,
+      mode: sessionResult.mode,
     });
   } catch (error) {
     if (error instanceof FreemiusCheckoutError) {
