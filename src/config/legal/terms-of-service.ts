@@ -5,7 +5,7 @@ import type { LegalSection } from "./types";
 export const termsOfServiceMeta = {
   title: "Terms of Service",
   effectiveDate: "July 2, 2026",
-  lastUpdated: "July 22, 2026",
+  lastUpdated: "July 27, 2026",
 } as const;
 
 export const termsOfServiceSections: LegalSection[] = [
@@ -32,7 +32,7 @@ export const termsOfServiceSections: LegalSection[] = [
     title: "Early Access / Beta",
     paragraphs: [
       "Creatornivo may be offered as Early Access or beta software. Features, usage limits, availability, pricing, and integrations may change. You should keep your own copies of important content.",
-      "Current plan prices and promotional Early Access pricing, when offered, are shown on the Pricing page. For example, the product may display an Early Access monthly price and a regular monthly Pro price; the amounts shown in the product control. When self-serve paid checkout is re-enabled, applicable prices and taxes will also be shown at purchase.",
+      "Current plan prices and promotional founding offers, when offered, are shown on the Pricing page. For example, the product may display a regular monthly Pro price and a limited founding monthly price; the amounts shown in the product and at checkout control. Applicable prices, taxes, and offers will also be shown when you complete a purchase.",
     ],
   },
   {
@@ -47,7 +47,7 @@ export const termsOfServiceSections: LegalSection[] = [
       "Notify us promptly at the contact address below if you suspect unauthorized access.",
       "You must be at least 16 years old to use the Service.",
       "Do not create multiple free accounts to circumvent plan limits.",
-      "When paid checkout is available, access to paid features depends on successful payment processing and an active eligible subscription status from our designated payment provider, as well as compliance with these Terms. While self-serve paid checkout is unavailable, early access or paid access may be granted only through support as described on the Pricing page.",
+      "Access to paid Pro features depends on successful payment confirmation and an active eligible subscription status recorded by Creatornivo after verification with our authorized payment provider / Merchant of Record (currently Freemius), as well as compliance with these Terms. Early Access or paid access may also be granted through support when self-serve checkout is not available for your account or environment.",
     ],
   },
   {
@@ -99,15 +99,17 @@ export const termsOfServiceSections: LegalSection[] = [
     id: "payments-and-subscriptions",
     title: "Payments and Subscriptions",
     paragraphs: [
-      "Self-serve paid checkout is currently unavailable while we finalize our payment provider. Early Access and paid access requests are handled via support, as described on the Pricing page.",
-      "When paid checkout is available, paid subscriptions will be processed by our designated third-party payment provider acting as Merchant of Record. Pricing, taxes, and checkout details will be presented at purchase and may include Early Access promotional pricing when available.",
+      "Paid Creatornivo subscriptions are processed by our authorized payment provider / Merchant of Record, Freemius (or another authorized provider we designate if we change payment partners). Freemius may handle hosted checkout, renewals, invoices, applicable taxes, payment methods, buyer communications, and subscription management for purchases made through its systems.",
+      "Pricing, taxes, billing interval (for example monthly or annual), and any founding or promotional offer available at the time of purchase are presented at checkout and on the Pricing page. The terms shown at purchase control for that order.",
+      "Pro access is activated after payment is confirmed and Creatornivo records an eligible subscription status (typically after server-side confirmation from the payment provider). Returning from a checkout success page does not by itself guarantee immediate Pro access; activation may take a short time while payment is confirmed.",
     ],
     list: [
       "Prices are typically shown in U.S. dollars unless otherwise noted and may change with notice through the product or communications.",
-      "When paid checkout is available, subscriptions will renew according to the plan and the payment provider’s checkout and buyer terms unless you cancel before renewal through the provider’s customer billing portal or another available cancellation path.",
-      "By completing a purchase when checkout is available, you authorize charges for applicable fees and taxes through the designated payment provider.",
-      "Refunds, if any, are handled as described in our Refund Policy and may involve the payment provider’s buyer and refund processes when a paid purchase exists.",
-      "Access to paid features may change when subscription status is unpaid, past due, paused, canceled, or otherwise ineligible.",
+      "Subscriptions renew according to the plan and Freemius’s checkout and buyer terms unless you cancel before renewal through the Freemius customer billing portal (or another cancellation path we make available) or as otherwise required by law.",
+      "By completing a purchase, you authorize charges for applicable fees and taxes through Freemius as Merchant of Record.",
+      "You are responsible for maintaining a valid payment method and access to the email and billing portal associated with your subscription so renewals and notices can be processed.",
+      "Refunds, if any, are handled as described in our Refund Policy and may involve Freemius’s buyer and refund processes.",
+      "Access to paid features may change when subscription status is unpaid, past due, paused, canceled, refunded, or otherwise ineligible.",
     ],
   },
   {
@@ -115,7 +117,7 @@ export const termsOfServiceSections: LegalSection[] = [
     title: "Termination",
     paragraphs: [
       "You may stop using the Service at any time. Where available, you may delete your account from Settings → Privacy & Data by confirming your password and typing DELETE. Deletion is permanent.",
-      "If you later have an active paid subscription through our payment provider, you may need to cancel or resolve billing through the provider’s customer portal or with support before deleting your account when the product requires it.",
+      "If you have an active paid subscription through Freemius (or another designated payment provider), you may need to cancel or resolve billing through the Freemius customer portal or with support before deleting your account when the product requires it.",
       "We may suspend or terminate access if you violate these Terms, abuse the Service, fail to pay required fees, or if required by law. We may also discontinue the Service with notice where practicable.",
     ],
   },

@@ -5,7 +5,7 @@ import type { LegalSection } from "./types";
 export const responsibleUseMeta = {
   title: "Responsible Use",
   effectiveDate: "July 18, 2026",
-  lastUpdated: "July 18, 2026",
+  lastUpdated: "July 27, 2026",
 } as const;
 
 export const responsibleUseSections: LegalSection[] = [
@@ -91,6 +91,7 @@ export const responsibleUseSections: LegalSection[] = [
     title: "Enforcement",
     paragraphs: [
       "We may review reports, refuse service, limit features, suspend accounts, or terminate access when we reasonably believe these rules or our Terms of Service have been violated. Payment partners and AI providers may also restrict certain categories of activity.",
+      "Misuse, abuse, fraud, chargeback abuse, or other prohibited use may lead to suspension or cancellation of access. Refunds may be denied, and paid access may be revoked, according to our Refund Policy, Terms of Service, and the rules of our payment provider / Merchant of Record (currently Freemius).",
       "If you are unsure whether a use case is allowed, contact us before generating content for that purpose.",
     ],
   },

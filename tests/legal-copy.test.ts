@@ -25,9 +25,6 @@ function legalText(sections: LegalTextSection[]): string {
     .join("\n");
 }
 
-const namedProviderBrands =
-  /Paddle|Freemius|FastSpring|Stripe/i;
-
 test("Terms describe real product basics without overclaiming", () => {
   const terms = legalText(termsOfServiceSections);
 
@@ -49,27 +46,39 @@ test("Terms describe real product basics without overclaiming", () => {
   );
 });
 
-test("Terms use provider-neutral payments language while checkout is paused", () => {
+test("Terms describe Freemius-powered paid subscriptions and delayed Pro activation", () => {
   const terms = legalText(termsOfServiceSections);
 
+  assert.match(terms, /Freemius/i);
   assert.match(
+    terms,
+    /authorized payment provider|Merchant of Record/i,
+  );
+  assert.match(
+    terms,
+    /checkout|renewals|invoices|taxes|payment methods|subscription management/i,
+  );
+  assert.match(
+    terms,
+    /Pro access is activated after payment is confirmed/i,
+  );
+  assert.match(
+    terms,
+    /Returning from a checkout success page does not by itself guarantee immediate Pro access/i,
+  );
+  assert.match(
+    terms,
+    /customer billing portal|Freemius customer/i,
+  );
+  assert.match(
+    terms,
+    /maintaining a valid payment method/i,
+  );
+  assert.doesNotMatch(
     terms,
     /Self-serve paid checkout is currently unavailable while we finalize our payment provider/i,
   );
-  assert.match(
-    terms,
-    /Early Access and paid access requests are handled via support/i,
-  );
-  assert.match(
-    terms,
-    /When paid checkout is available, paid subscriptions will be processed by our designated third-party payment provider acting as Merchant of Record/i,
-  );
-  assert.match(
-    terms,
-    /Pricing, taxes, and checkout details will be presented at purchase/i,
-  );
-  assert.doesNotMatch(terms, namedProviderBrands);
-  assert.doesNotMatch(terms, /authorize charges.*Paddle|Paddle checkout/i);
+  assert.doesNotMatch(terms, /Paddle/i);
 });
 
 test("Terms describe self-service account deletion and conditional billing prerequisites", () => {
@@ -104,54 +113,58 @@ test("Privacy reflects actual processors and product data categories", () => {
   );
 });
 
-test("Privacy uses provider-neutral payment metadata language", () => {
+test("Privacy names Freemius as payment processor and no full card storage", () => {
   const privacy = legalText(privacyPolicySections);
 
+  assert.match(privacy, /Freemius/i);
   assert.match(
     privacy,
-    /When paid subscriptions are enabled, we may receive subscription status, transaction identifiers, and billing metadata from our payment provider \/ Merchant of Record/i,
-  );
-  assert.match(privacy, /We do not store full payment card numbers/i);
-  assert.match(
-    privacy,
-    /designated third-party payment provider acting as Merchant of Record/i,
+    /Merchant of Record|authorized payment provider/i,
   );
   assert.match(
     privacy,
-    /when paid checkout is available, our designated payment provider/i,
+    /payment details|billing address|tax|invoice|subscription data/i,
   );
-  assert.doesNotMatch(privacy, namedProviderBrands);
-  assert.doesNotMatch(privacy, /received from Paddle|billing events with Paddle/i);
+  assert.match(
+    privacy,
+    /We do not store full payment card numbers|do not store full payment card numbers/i,
+  );
+  assert.match(
+    privacy,
+    /Customer Portal|customer portal|billing portal/i,
+  );
+  assert.doesNotMatch(privacy, /Paddle/i);
 });
 
-test("Refund Policy is case-by-case and does not invent automatic guarantees", () => {
+test("Refund Policy aligns with 7-day Freemius money-back guarantee", () => {
   const refund = legalText(refundPolicySections);
 
+  assert.match(refund, /7.?day|seven \(7\) days/i);
+  assert.match(refund, /money-back guarantee/i);
+  assert.match(refund, /product, access, or technical/i);
+  assert.match(refund, /Freemius/i);
+  assert.match(refund, /Merchant of Record/i);
   assert.match(refund, /case-by-case|reviewed individually/i);
   assert.match(refund, /contact support|Email:/i);
-  assert.match(refund, /Merchant of Record/i);
   assert.match(
     refund,
     /After a refund is confirmed, account access may be adjusted/i,
   );
+  assert.match(refund, /Pro access may be revoked|access may be revoked/i);
   assert.match(
     refund,
-    /if and when a paid purchase exists through our designated payment provider/i,
+    /change of mind|abuse|fraud|Terms of Service|Responsible Use/i,
   );
-  assert.match(
+  assert.doesNotMatch(
     refund,
     /Self-serve paid checkout is currently unavailable while we finalize our payment provider/i,
   );
-  assert.match(refund, /Payment Provider \/ Merchant of Record/i);
   assert.doesNotMatch(refund, /14-day money-back guarantee/i);
-  assert.match(refund, /do not promise automatic refunds/i);
   assert.doesNotMatch(
     refund,
     /will be canceled immediately|will be downgraded|within 3.?5 business days/i,
   );
-  assert.doesNotMatch(refund, namedProviderBrands);
-  assert.doesNotMatch(refund, /Approved refunds are processed through Paddle/i);
-  assert.doesNotMatch(refund, /Paddle.?s Role/i);
+  assert.doesNotMatch(refund, /Paddle/i);
 });
 
 test("Responsible Use describes AI-assisted drafting, human review, and prohibited uses", () => {
@@ -169,10 +182,15 @@ test("Responsible Use describes AI-assisted drafting, human review, and prohibit
   assert.match(responsible, /regulated goods or services/i);
   assert.match(responsible, /Hate, harassment/i);
   assert.match(responsible, /Political persuasion or manipulation/i);
+  assert.match(
+    responsible,
+    /Misuse, abuse, fraud|Refunds may be denied|access may be revoked/i,
+  );
+  assert.match(responsible, /Freemius|payment provider/i);
   assert.doesNotMatch(responsible, /app\.creatornivo/i);
 });
 
-test("all public legal documents avoid named payment brands", () => {
+test("legal documents do not keep checkout-unavailable payment-provider-pending wording", () => {
   const allLegal = legalText([
     ...termsOfServiceSections,
     ...privacyPolicySections,
@@ -180,7 +198,16 @@ test("all public legal documents avoid named payment brands", () => {
     ...responsibleUseSections,
   ]);
 
-  assert.doesNotMatch(allLegal, namedProviderBrands);
+  assert.doesNotMatch(
+    allLegal,
+    /Self-serve paid checkout is currently unavailable while we finalize our payment provider/i,
+  );
+  assert.doesNotMatch(
+    allLegal,
+    /while we finalize our payment provider/i,
+  );
+  assert.doesNotMatch(allLegal, /Paddle/i);
+  assert.match(allLegal, /Freemius/i);
 });
 
 test("all legal documents use support@creatornivo.com and production URLs", () => {
@@ -224,7 +251,7 @@ test("public legal routes and footer links remain present", () => {
     "utf8",
   );
   assert.doesNotMatch(refundPage, /Paddle/i);
-  assert.match(refundPage, /Merchant of Record|payment provider/i);
+  assert.match(refundPage, /Freemius|Merchant of Record|7-day/i);
 
   const refundRedirect = readFileSync(
     "src/app/(public)/refund/page.tsx",
