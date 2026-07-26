@@ -6,6 +6,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
 
+import { earlyAccessConfig } from "../src/config/early-access";
 import { freemiusPricingDisplay } from "../src/config/freemius-pricing-display";
 import { isPublicCheckoutEnabled } from "../src/config/freemius";
 import {
@@ -18,6 +19,7 @@ import {
   getPostCheckoutMessage,
   shouldShowFreemiusPortalActions,
 } from "../src/components/settings/subscription-manager";
+import { getEarlyAccessStatus } from "../src/lib/early-access/status";
 
 function read(path: string): string {
   return readFileSync(path, "utf8");
@@ -53,9 +55,55 @@ test("pricing page keeps Request Early Access path when checkout disabled", () =
   }
 });
 
+test("checkout disabled shows regular $9.90 and visible FOUNDING20 founding offer", async () => {
+  assert.equal(earlyAccessConfig.regularPrice, "$9.90");
+  assert.equal(earlyAccessConfig.price, "$4.90");
+  assert.equal(earlyAccessConfig.foundingCouponCode, "FOUNDING20");
+  assert.match(
+    earlyAccessConfig.foundingCouponCopy,
+    /Use code FOUNDING20 to get \$5 off — \$4\.90\/month\./,
+  );
+  assert.match(
+    earlyAccessConfig.limitLabel,
+    /Limited founding offer — first 20 customers only\./,
+  );
+
+  const status = await getEarlyAccessStatus({
+    PUBLIC_CHECKOUT_ENABLED: "false",
+  });
+  assert.equal(status.isAvailable, true);
+  assert.equal(status.regularPrice, "$9.90");
+  assert.equal(status.price, "$4.90");
+  assert.equal(status.foundingCouponCode, "FOUNDING20");
+  assert.match(status.foundingCouponCopy, /FOUNDING20/);
+
+  // Display is not gated on Paddle early-access price IDs.
+  const statusWithoutPaddleEa = await getEarlyAccessStatus({
+    PUBLIC_CHECKOUT_ENABLED: "false",
+    PADDLE_EARLY_ACCESS_PRICE_ID: "",
+  });
+  assert.equal(statusWithoutPaddleEa.isAvailable, true);
+  assert.equal(statusWithoutPaddleEa.regularPrice, "$9.90");
+
+  const priceBlock = read("src/components/pricing/pro-plan-price-block.tsx");
+  const proPricing = read("src/components/pricing/pro-plan-pricing.tsx");
+  assert.match(priceBlock, /isAvailable:\s*true/);
+  assert.match(priceBlock, /foundingCouponCopy/);
+  assert.match(priceBlock, /return <ProPlanPricing status=\{foundingStatus\}/);
+  assert.match(
+    priceBlock,
+    /if \(isPublicCheckoutEnabled\(\)\) \{\s*return <FreemiusProPricing/,
+  );
+  assert.match(priceBlock, /PADDLE_EARLY_ACCESS_PRICE_ID/);
+  assert.match(proPricing, /status\.regularPrice/);
+  assert.match(proPricing, /foundingCouponCopy/);
+  assert.match(proPricing, /FOUNDING20|foundingCouponCode/);
+});
+
 test("pricing page does not expose Freemius checkout buttons when disabled by default", () => {
   // Component exists for enabled mode, but public pages gate via ProPlanCta.
   const checkoutCta = read("src/components/pricing/freemius-checkout-cta.tsx");
+  const proCta = read("src/components/pricing/pro-plan-cta.tsx");
   assert.match(checkoutCta, /\/api\/freemius\/checkout/);
   assert.match(checkoutCta, /monthlyCtaLabel/);
   assert.match(checkoutCta, /annualCtaLabel/);
@@ -67,6 +115,9 @@ test("pricing page does not expose Freemius checkout buttons when disabled by de
 
   // Default env: isPublicCheckoutEnabled is false → ProPlanCta returns Request Early Access.
   assert.equal(isPublicCheckoutEnabled(process.env), false);
+  assert.equal(isPublicCheckoutEnabled({ PUBLIC_CHECKOUT_ENABLED: "false" }), false);
+  // Freemius CTA is not the default branch.
+  assert.match(proCta, /return <RequestEarlyAccessCta/);
 });
 
 test("enabled-mode components include Monthly and Annual Freemius CTAs", () => {

@@ -1,4 +1,7 @@
-import type { EarlyAccessStatus } from "@/config/early-access";
+import {
+  earlyAccessConfig,
+  type EarlyAccessStatus,
+} from "@/config/early-access";
 import { isPublicCheckoutEnabled } from "@/config/freemius";
 import { FreemiusProPricing } from "@/components/pricing/freemius-pro-pricing";
 import { ProPlanPricing } from "@/components/pricing/pro-plan-pricing";
@@ -9,8 +12,9 @@ interface ProPlanPriceBlockProps {
 }
 
 /**
- * Pro price block: Freemius regular + founding copy when public checkout is on;
- * otherwise existing Early Access pricing display.
+ * Pro price block:
+ * - PUBLIC_CHECKOUT_ENABLED === "true" → Freemius monthly/annual + FOUNDING20
+ * - otherwise → regular $9.90 + visible FOUNDING20 founding offer ($4.90)
  */
 export function ProPlanPriceBlock({
   earlyAccessStatus,
@@ -19,5 +23,18 @@ export function ProPlanPriceBlock({
   if (isPublicCheckoutEnabled()) {
     return <FreemiusProPricing size={size} />;
   }
-  return <ProPlanPricing status={earlyAccessStatus} size={size} />;
+
+  // Checkout disabled: always show coupon-visible Early Access founding offer.
+  // Not gated on PADDLE_EARLY_ACCESS_PRICE_ID.
+  const foundingStatus: EarlyAccessStatus = {
+    ...earlyAccessStatus,
+    isAvailable: true,
+    price: earlyAccessConfig.price,
+    regularPrice: earlyAccessConfig.regularPrice,
+    limitLabel: earlyAccessConfig.limitLabel,
+    foundingCouponCode: earlyAccessConfig.foundingCouponCode,
+    foundingCouponCopy: earlyAccessConfig.foundingCouponCopy,
+  };
+
+  return <ProPlanPricing status={foundingStatus} size={size} />;
 }

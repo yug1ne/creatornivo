@@ -31,6 +31,7 @@ export default async function PricingPage() {
           </p>
         ) : earlyAccessStatus.isAvailable ? (
           <p className="mt-3 text-sm font-medium text-primary">
+            {earlyAccessConfig.foundingCouponCopy}{" "}
             {earlyAccessConfig.limitLabel}
           </p>
         ) : null}

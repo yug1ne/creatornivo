@@ -17,10 +17,9 @@ export async function EarlyAccessBanner() {
           <span className="text-primary">{earlyAccessConfig.bannerText}</span>
           <span className="mx-2 text-muted-foreground">·</span>
           <span>
-            Pro for {status.price}/mo
-            <span className="ml-1 text-muted-foreground line-through">
-              {status.regularPrice}
-            </span>
+            Pro {status.regularPrice}/mo
+            <span className="mx-1 text-muted-foreground">·</span>
+            code {status.foundingCouponCode} → {status.price}/mo
           </span>
         </p>
         <Link

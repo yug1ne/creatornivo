@@ -30,21 +30,21 @@ test("Early Access is unavailable only when its Price ID is not configured", () 
   assert.equal(selectedPriceId, "pri_pro");
 });
 
-test("available Early Access renders its founding price and standard comparison", () => {
+test("available Early Access renders regular $9.90 with visible FOUNDING20 offer", () => {
   const status = buildEarlyAccessStatus(true);
   const markup = renderToStaticMarkup(
     createElement(ProPlanPricing, { status }),
   );
 
   assert.match(markup, /Early Access/);
-  assert.match(markup, /Founding price/);
-  assert.match(markup, /\$4\.90/);
+  assert.match(markup, /Limited founding offer/);
   assert.match(markup, /\$9\.90/);
-  assert.match(markup, /line-through/);
-  assert.match(
-    markup,
-    /Early Access founding price — available for a limited time\./,
-  );
+  assert.match(markup, /FOUNDING20/);
+  assert.match(markup, /\$4\.90\/month/);
+  assert.match(markup, /Use code FOUNDING20 to get \$5 off/);
+  assert.match(markup, /first 20 customers only/i);
+  // Main list price is regular — not a struck-through comparison layout.
+  assert.doesNotMatch(markup, /line-through/);
 });
 
 test("unavailable Early Access renders only the standard Pro price", () => {
@@ -54,7 +54,10 @@ test("unavailable Early Access renders only the standard Pro price", () => {
   );
 
   assert.match(markup, /\$9\.90/);
-  assert.doesNotMatch(markup, /\$4\.90|Early Access|Founding price|line-through/);
+  assert.doesNotMatch(
+    markup,
+    /\$4\.90|Early Access|FOUNDING20|Limited founding offer/,
+  );
 });
 
 test("guest and authenticated Early Access CTAs show the founding price", () => {

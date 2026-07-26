@@ -57,11 +57,42 @@ test("Early Access copy uses a neutral limited-time founding price", () => {
     copy,
     /first 50|first users|50 spots|spots? left|spots? run out|claim your spot|countdown/i,
   );
+  assert.match(copy, /FOUNDING20/);
   assert.match(
     copy,
-    /Early Access founding price — available for a limited time\./,
+    /Use code FOUNDING20 to get \$5 off — \$4\.90\/month\./,
   );
+  assert.match(copy, /Limited founding offer — first 20 customers only\./);
   assert.match(copy, /discountPercent: 50/);
+  assert.match(copy, /price: "\$4\.90"/);
+  assert.match(copy, /regularPrice: "\$9\.90"/);
+});
+
+test("checkout-disabled public Pro path shows $9.90, FOUNDING20, and Request Early Access", () => {
+  const earlyAccess = readFileSync("src/config/early-access.ts", "utf8");
+  const priceBlock = readFileSync(
+    "src/components/pricing/pro-plan-price-block.tsx",
+    "utf8",
+  );
+  const proCta = readFileSync("src/components/pricing/pro-plan-cta.tsx", "utf8");
+  const proPricing = readFileSync(
+    "src/components/pricing/pro-plan-pricing.tsx",
+    "utf8",
+  );
+
+  assert.match(earlyAccess, /regularPrice: "\$9\.90"/);
+  assert.match(earlyAccess, /price: "\$4\.90"/);
+  assert.match(earlyAccess, /foundingCouponCode: "FOUNDING20"/);
+  assert.match(earlyAccess, /Use code FOUNDING20 to get \$5 off/);
+  assert.match(priceBlock, /isAvailable:\s*true/);
+  assert.match(priceBlock, /foundingCouponCopy/);
+  // Main list price is regular; coupon line explains $4.90.
+  assert.match(proPricing, /status\.regularPrice/);
+  assert.match(proPricing, /foundingCouponCopy/);
+  assert.match(proCta, /RequestEarlyAccessCta/);
+  // Freemius CTAs only when public checkout is enabled.
+  assert.match(proCta, /if \(isPublicCheckoutEnabled\(\)\)/);
+  assert.doesNotMatch(proCta, /FREEMIUS_RESTRICTED/);
 });
 
 test("public Pro CTA is request-early-access mailto when public checkout is disabled", () => {
