@@ -349,14 +349,19 @@ test("Push Notification catalog and Help integration use the full form", () => {
   assert.equal(item.variables.length, 23);
   assert.deepEqual(sorted(item.variables.map((variable) => variable.key)), sorted(expectedKeys));
 
-  const helpButton = readProjectFile(
+  const helpButtonSource = readProjectFile(
     "src",
     "components",
     "generate",
     "template-help-button.tsx",
   );
-  assert.match(helpButton, /PUSH_NOTIFICATION_GUIDE_PATH/);
-  assert.match(helpButton, /"push-notification": PUSH_NOTIFICATION_GUIDE_PATH/);
+  const guidePathsRegistry = readProjectFile(
+    "src",
+    "config",
+    "template-guide-paths.ts",
+  );
+    assert.match(guidePathsRegistry, /"push-notification": "\/generate\/guides\/push-notification"/);
+  assert.match(helpButtonSource, /@\/config\/template-guide-paths/);
 
   const guidePage = readProjectFile(
     "src",

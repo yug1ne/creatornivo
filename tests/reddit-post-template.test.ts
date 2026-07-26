@@ -497,13 +497,19 @@ test("Reddit Post catalog, summary, builder, and Help integration are in sync", 
   );
   assert.equal(summary.find((item) => item.slug === "reddit-post")?.vars, 23);
 
-  const helpConfig = readProjectFile(
+  const helpButtonSource = readProjectFile(
     "src",
     "components",
     "generate",
     "template-help-button.tsx",
   );
-  assert.match(helpConfig, /"reddit-post": REDDIT_POST_GUIDE_PATH/);
+  const guidePathsRegistry = readProjectFile(
+    "src",
+    "config",
+    "template-guide-paths.ts",
+  );
+  assert.match(guidePathsRegistry, /"reddit-post": "\/generate\/guides\/reddit-post"/);
+  assert.match(helpButtonSource, /@\/config\/template-guide-paths/);
 
   const guidePage = readProjectFile(
     "src",

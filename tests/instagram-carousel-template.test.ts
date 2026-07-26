@@ -410,13 +410,19 @@ test("Instagram Carousel catalog, summary, builder, and Help integration are in 
     34,
   );
 
-  const helpConfig = readProjectFile(
+  const helpButtonSource = readProjectFile(
     "src",
     "components",
     "generate",
     "template-help-button.tsx",
   );
-  assert.match(helpConfig, /"instagram-carousel": INSTAGRAM_CAROUSEL_GUIDE_PATH/);
+  const guidePathsRegistry = readProjectFile(
+    "src",
+    "config",
+    "template-guide-paths.ts",
+  );
+  assert.match(guidePathsRegistry, /"instagram-carousel": "\/generate\/guides\/instagram-carousel"/);
+  assert.match(helpButtonSource, /@\/config\/template-guide-paths/);
 
   const guidePage = readProjectFile(
     "src",

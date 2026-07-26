@@ -410,16 +410,19 @@ test("YouTube Video Package catalog, summary, builder, and Help integration are 
     40,
   );
 
-  const helpConfig = readProjectFile(
+  const helpButtonSource = readProjectFile(
     "src",
     "components",
     "generate",
     "template-help-button.tsx",
   );
-  assert.match(
-    helpConfig,
-    /"youtube-video-package": YOUTUBE_VIDEO_PACKAGE_GUIDE_PATH/,
+  const guidePathsRegistry = readProjectFile(
+    "src",
+    "config",
+    "template-guide-paths.ts",
   );
+  assert.match(guidePathsRegistry, /"youtube-video-package": "\/generate\/guides\/youtube-video-package"/);
+  assert.match(helpButtonSource, /@\/config\/template-guide-paths/);
 
   const guidePage = readProjectFile(
     "src",

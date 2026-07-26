@@ -382,14 +382,19 @@ test("Webinar Package catalog and Help integration use the full form", () => {
   assert.equal(item.variables.length, 44);
   assert.deepEqual(sorted(item.variables.map((variable) => variable.key)), sorted(expectedKeys));
 
-  const helpButton = readProjectFile(
+  const helpButtonSource = readProjectFile(
     "src",
     "components",
     "generate",
     "template-help-button.tsx",
   );
-  assert.match(helpButton, /WEBINAR_PACKAGE_GUIDE_PATH/);
-  assert.match(helpButton, /"webinar-package": WEBINAR_PACKAGE_GUIDE_PATH/);
+  const guidePathsRegistry = readProjectFile(
+    "src",
+    "config",
+    "template-guide-paths.ts",
+  );
+    assert.match(guidePathsRegistry, /"webinar-package": "\/generate\/guides\/webinar-package"/);
+  assert.match(helpButtonSource, /@\/config\/template-guide-paths/);
 
   const guidePage = readProjectFile(
     "src",

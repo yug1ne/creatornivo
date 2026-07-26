@@ -402,16 +402,19 @@ test("Google Business Profile Post catalog, summary, builder, and Help integrati
     23,
   );
 
-  const helpConfig = readProjectFile(
+  const helpButtonSource = readProjectFile(
     "src",
     "components",
     "generate",
     "template-help-button.tsx",
   );
-  assert.match(
-    helpConfig,
-    /"google-business-profile-post": GOOGLE_BUSINESS_PROFILE_POST_GUIDE_PATH/,
+  const guidePathsRegistry = readProjectFile(
+    "src",
+    "config",
+    "template-guide-paths.ts",
   );
+  assert.match(guidePathsRegistry, /"google-business-profile-post": "\/generate\/guides\/google-business-profile-post"/);
+  assert.match(helpButtonSource, /@\/config\/template-guide-paths/);
 
   const guidePage = readProjectFile(
     "src",

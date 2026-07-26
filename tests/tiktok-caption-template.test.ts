@@ -388,13 +388,19 @@ test("TikTok Caption catalog, summary, builder, and Help integration are in sync
   );
   assert.equal(summary.find((item) => item.slug === "tiktok-caption")?.vars, 24);
 
-  const helpConfig = readProjectFile(
+  const helpButtonSource = readProjectFile(
     "src",
     "components",
     "generate",
     "template-help-button.tsx",
   );
-  assert.match(helpConfig, /"tiktok-caption": TIKTOK_CAPTION_GUIDE_PATH/);
+  const guidePathsRegistry = readProjectFile(
+    "src",
+    "config",
+    "template-guide-paths.ts",
+  );
+  assert.match(guidePathsRegistry, /"tiktok-caption": "\/generate\/guides\/tiktok-caption"/);
+  assert.match(helpButtonSource, /@\/config\/template-guide-paths/);
 
   const guidePage = readProjectFile(
     "src",

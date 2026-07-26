@@ -535,14 +535,19 @@ test("App Store Listing catalog stays synced and Help integration uses the full 
   assert.deepEqual(sorted(item.variables.map((variable) => variable.key)), sorted(expectedKeys));
   assert.equal(item.prompt.trim(), prompt.trim());
 
-  const helpButton = readProjectFile(
+  const helpButtonSource = readProjectFile(
     "src",
     "components",
     "generate",
     "template-help-button.tsx",
   );
-  assert.match(helpButton, /APP_STORE_LISTING_GUIDE_PATH/);
-  assert.match(helpButton, /"app-store-listing": APP_STORE_LISTING_GUIDE_PATH/);
+  const guidePathsRegistry = readProjectFile(
+    "src",
+    "config",
+    "template-guide-paths.ts",
+  );
+    assert.match(guidePathsRegistry, /"app-store-listing": "\/generate\/guides\/app-store-listing"/);
+  assert.match(helpButtonSource, /@\/config\/template-guide-paths/);
 
   const guidePage = readProjectFile(
     "src",

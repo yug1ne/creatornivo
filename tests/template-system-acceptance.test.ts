@@ -491,16 +491,28 @@ test("Help button mapping and guide pages cover every template", () => {
     "generate",
     "template-help-button.tsx",
   );
+  const guidePaths = readProjectFile(
+    "src",
+    "config",
+    "template-guide-paths.ts",
+  );
+
+  // Client help button must use the paths-only registry (not form modules).
+  assert.match(helpButton, /@\/config\/template-guide-paths/);
+  assert.doesNotMatch(helpButton, /@\/config\/template-forms/);
+  assert.doesNotMatch(helpButton, /variables\.json/);
 
   for (const template of catalog) {
-    const constName = `${template.slug
-      .replace(/-/g, "_")
-      .toUpperCase()}_GUIDE_PATH`;
-
     const mapKey = template.slug.includes("-")
       ? `"${template.slug}"`
       : template.slug;
-    assert.match(helpButton, new RegExp(`${mapKey}: ${constName}`));
+    const expectedPath = `/generate/guides/${template.slug}`;
+    assert.match(
+      guidePaths,
+      new RegExp(
+        `${mapKey}:\\s*"${expectedPath.replace(/\//g, "\\/")}"`,
+      ),
+    );
 
     const guidePage = readProjectFile(
       "src",

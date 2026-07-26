@@ -377,14 +377,19 @@ test("Amazon Listing catalog stays synced and Help integration uses the full for
   assert.deepEqual(sorted(item.variables.map((variable) => variable.key)), sorted(expectedKeys));
   assert.equal(item.prompt.trim(), prompt.trim());
 
-  const helpButton = readProjectFile(
+  const helpButtonSource = readProjectFile(
     "src",
     "components",
     "generate",
     "template-help-button.tsx",
   );
-  assert.match(helpButton, /AMAZON_LISTING_GUIDE_PATH/);
-  assert.match(helpButton, /"amazon-listing": AMAZON_LISTING_GUIDE_PATH/);
+  const guidePathsRegistry = readProjectFile(
+    "src",
+    "config",
+    "template-guide-paths.ts",
+  );
+    assert.match(guidePathsRegistry, /"amazon-listing": "\/generate\/guides\/amazon-listing"/);
+  assert.match(helpButtonSource, /@\/config\/template-guide-paths/);
 
   const guidePage = readProjectFile(
     "src",

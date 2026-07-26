@@ -413,13 +413,19 @@ test("Pinterest Pin catalog, summary, builder, and Help integration are in sync"
   );
   assert.equal(summary.find((item) => item.slug === "pinterest-pin")?.vars, 24);
 
-  const helpConfig = readProjectFile(
+  const helpButtonSource = readProjectFile(
     "src",
     "components",
     "generate",
     "template-help-button.tsx",
   );
-  assert.match(helpConfig, /"pinterest-pin": PINTEREST_PIN_GUIDE_PATH/);
+  const guidePathsRegistry = readProjectFile(
+    "src",
+    "config",
+    "template-guide-paths.ts",
+  );
+  assert.match(guidePathsRegistry, /"pinterest-pin": "\/generate\/guides\/pinterest-pin"/);
+  assert.match(helpButtonSource, /@\/config\/template-guide-paths/);
 
   const guidePage = readProjectFile(
     "src",
