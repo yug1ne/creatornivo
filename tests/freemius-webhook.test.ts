@@ -692,18 +692,8 @@ test("route source verifies token and signature before JSON parse order is docum
   assert.ok(parseIdx > sigIdx, "json parse after signature");
 });
 
-test("Phase 2 does not add checkout or portal routes", () => {
-  for (const relative of [
-    "src/app/api/freemius/checkout/route.ts",
-    "src/app/api/freemius/portal/route.ts",
-  ]) {
-    try {
-      readFileSync(relative, "utf8");
-      assert.fail(`unexpected file ${relative}`);
-    } catch (error) {
-      assert.equal((error as NodeJS.ErrnoException).code, "ENOENT");
-    }
-  }
+test("Phase 2/3 pricing page remains free of Freemius checkout wiring", () => {
   const pricing = readFileSync("src/app/(public)/pricing/page.tsx", "utf8");
   assert.doesNotMatch(pricing, /freemius/i);
+  assert.doesNotMatch(pricing, /\/api\/freemius\/checkout/);
 });

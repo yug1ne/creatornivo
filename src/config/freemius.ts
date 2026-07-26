@@ -21,6 +21,10 @@ export interface FreemiusEnvSnapshot {
   webhookSecretToken: string;
   publicCheckoutEnabledRaw: string;
   annualPricingId: string;
+  /** Hosted Freemius customer portal / users dashboard base URL (no secrets). */
+  customerPortalUrl: string;
+  /** Optional override for hosted checkout origin (default checkout.freemius.com). */
+  checkoutBaseUrl: string;
 }
 
 function readEnv(name: string): string {
@@ -42,6 +46,10 @@ export function getFreemiusEnvSnapshot(
     webhookSecretToken: (env.FREEMIUS_WEBHOOK_SECRET_TOKEN ?? "").trim(),
     publicCheckoutEnabledRaw: (env.PUBLIC_CHECKOUT_ENABLED ?? "").trim(),
     annualPricingId: (env.FREEMIUS_PRO_ANNUAL_PRICING_ID ?? "").trim(),
+    customerPortalUrl: (env.FREEMIUS_CUSTOMER_PORTAL_URL ?? "").trim(),
+    checkoutBaseUrl: (
+      env.FREEMIUS_CHECKOUT_BASE_URL ?? "https://checkout.freemius.com"
+    ).trim(),
   };
 }
 
@@ -133,12 +141,15 @@ export type FreemiusConfigStatus = {
    */
   webhookFoundationReady: boolean;
   /**
-   * Server has enough config for a future checkout endpoint once kill-switch is on.
-   * Phase 1 still does not expose checkout routes.
+   * Hosted checkout can be built when product+plan ids exist (no API bearer required).
+   * Public use still requires PUBLIC_CHECKOUT_ENABLED === "true".
    */
   checkoutFoundationReady: boolean;
+  /** Portal endpoint can return a URL when portal base is configured. */
+  portalFoundationReady: boolean;
   missingRequiredForWebhook: string[];
   missingRequiredForCheckoutFoundation: string[];
+  missingRequiredForPortal: string[];
 };
 
 /**
@@ -161,11 +172,21 @@ export function getFreemiusConfigStatus(
     missingRequiredForWebhook.push("FREEMIUS_WEBHOOK_SECRET_TOKEN");
   }
 
-  const missingRequiredForCheckoutFoundation: string[] = [
-    ...missingRequiredForWebhook,
-  ];
-  if (!snap.apiBearerToken) {
-    missingRequiredForCheckoutFoundation.push("FREEMIUS_API_BEARER_TOKEN");
+  // Hosted checkout needs product + plan (and monthly pricing id for allowlist consistency).
+  const missingRequiredForCheckoutFoundation: string[] = [];
+  if (!snap.productId) {
+    missingRequiredForCheckoutFoundation.push("FREEMIUS_PRODUCT_ID");
+  }
+  if (!snap.proPlanId) {
+    missingRequiredForCheckoutFoundation.push("FREEMIUS_PRO_PLAN_ID");
+  }
+  if (!snap.proPricingId) {
+    missingRequiredForCheckoutFoundation.push("FREEMIUS_PRO_PRICING_ID");
+  }
+
+  const missingRequiredForPortal: string[] = [];
+  if (!snap.customerPortalUrl) {
+    missingRequiredForPortal.push("FREEMIUS_CUSTOMER_PORTAL_URL");
   }
 
   const allowlistConfigured = Boolean(
@@ -181,6 +202,7 @@ export function getFreemiusConfigStatus(
   const webhookFoundationReady = missingRequiredForWebhook.length === 0;
   const checkoutFoundationReady =
     missingRequiredForCheckoutFoundation.length === 0;
+  const portalFoundationReady = missingRequiredForPortal.length === 0;
 
   return {
     allowlistConfigured,
@@ -192,8 +214,10 @@ export function getFreemiusConfigStatus(
     publicCheckoutEnabled,
     webhookFoundationReady,
     checkoutFoundationReady,
+    portalFoundationReady,
     missingRequiredForWebhook,
     missingRequiredForCheckoutFoundation,
+    missingRequiredForPortal,
   };
 }
 

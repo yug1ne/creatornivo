@@ -130,18 +130,30 @@ test("Freemius config reports missing secret and allowlist envs", () => {
   );
 });
 
-test("checkout foundation requires API bearer in addition to webhook secrets", () => {
+test("hosted checkout foundation needs product/plan/pricing only (not API bearer)", () => {
   const status = getFreemiusConfigStatus({
     ...completeEnv,
     FREEMIUS_API_BEARER_TOKEN: "",
   });
   assert.equal(status.webhookFoundationReady, true);
-  assert.equal(status.checkoutFoundationReady, false);
+  assert.equal(status.checkoutFoundationReady, true);
+  assert.equal(status.apiBearerConfigured, false);
+});
+
+test("portal foundation requires FREEMIUS_CUSTOMER_PORTAL_URL", () => {
+  const withoutPortal = getFreemiusConfigStatus(completeEnv);
+  assert.equal(withoutPortal.portalFoundationReady, false);
   assert.ok(
-    status.missingRequiredForCheckoutFoundation.includes(
-      "FREEMIUS_API_BEARER_TOKEN",
+    withoutPortal.missingRequiredForPortal.includes(
+      "FREEMIUS_CUSTOMER_PORTAL_URL",
     ),
   );
+
+  const withPortal = getFreemiusConfigStatus({
+    ...completeEnv,
+    FREEMIUS_CUSTOMER_PORTAL_URL: "https://users.freemius.com/",
+  });
+  assert.equal(withPortal.portalFoundationReady, true);
 });
 
 test("allowlist helpers match configured product plan pricing coupon", () => {
@@ -208,26 +220,9 @@ test("paid Freemius Pro period policy is provider-based not calendar month", () 
   );
 });
 
-test("Phase 1/2 foundation does not add Freemius checkout, portal, or pricing UI", () => {
-  // Webhook route is Phase 2; checkout/portal remain future phases.
-  for (const relative of [
-    "src/app/api/freemius/checkout/route.ts",
-    "src/app/api/freemius/portal/route.ts",
-  ]) {
-    try {
-      readProject(...relative.split("/"));
-      assert.fail(`unexpected route file present: ${relative}`);
-    } catch (error) {
-      assert.ok(
-        error &&
-          typeof error === "object" &&
-          "code" in error &&
-          (error as NodeJS.ErrnoException).code === "ENOENT",
-      );
-    }
-  }
-
+test("Phase 3 does not wire Freemius into public pricing UI", () => {
   const pricing = readProject("src", "app", "(public)", "pricing", "page.tsx");
   assert.doesNotMatch(pricing, /freemius/i);
   assert.doesNotMatch(pricing, /PUBLIC_CHECKOUT_ENABLED/);
+  assert.doesNotMatch(pricing, /\/api\/freemius\/checkout/);
 });
