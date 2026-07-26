@@ -402,3 +402,22 @@ model SavedPrompt {
 
   @@index([userId])
 }
+
+/// Anti-abuse tombstone for deleted free accounts (HMAC email identity only; no plaintext email).
+model DeletedAccountIdentity {
+  id                     String    @id @default(cuid())
+  /// HMAC-SHA256 hex of normalizeEmailForIdentity(email) using ACCOUNT_IDENTITY_HASH_SECRET
+  emailHash              String    @unique
+  /// Domain only (no local-part) for coarse analytics; never full email
+  normalizedDomain       String?
+  deletedUserId          String?
+  deletedAt              DateTime
+  reRegisterBlockedUntil DateTime?
+  freeTrialLockedUntil   DateTime?
+  deletionCount          Int       @default(1)
+  createdAt              DateTime  @default(now())
+  updatedAt              DateTime  @updatedAt
+
+  @@index([reRegisterBlockedUntil])
+  @@index([normalizedDomain])
+}

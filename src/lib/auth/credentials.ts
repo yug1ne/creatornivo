@@ -1,12 +1,19 @@
 import { createHash, randomUUID } from "node:crypto";
 
-import { isDisposableEmailDomain } from "@/config/disposable-email-domains";
 import type { Plan } from "@/config/plans";
+import {
+  EMAIL_DOMAIN_BLOCKED_DISPOSABLE_MESSAGE,
+  evaluateEmailDomainPolicy,
+} from "@/config/email-domain-policy";
 import type { UserRole } from "@/types/user";
 import {
   AuthRateLimitError,
   enforceAuthRateLimit,
 } from "@/lib/auth/rate-limit";
+import {
+  checkRegistrationAgainstDeletedIdentity,
+  RE_REGISTER_COOLDOWN_MESSAGE,
+} from "@/lib/security/deleted-account-identity";
 
 export type CredentialsAuthorizeFailureReason =
   | "user_not_found"
@@ -60,6 +67,15 @@ interface RegistrationDependencies<TUser> {
     email: string;
     password: string;
   }): Promise<TUser>;
+  /**
+   * Optional deleted-account tombstone check (defaults to HMAC store).
+   * Inject in tests to avoid DB.
+   */
+  checkDeletedIdentity?(email: string): Promise<{
+    allowed: boolean;
+    message?: string;
+  }>;
+  env?: NodeJS.ProcessEnv;
 }
 
 export class CredentialsRegistrationError extends Error {
@@ -68,16 +84,21 @@ export class CredentialsRegistrationError extends Error {
       | "missing_credentials"
       | "password_too_short"
       | "user_exists"
-      | "email_not_allowed",
+      | "email_not_allowed"
+      | "re_register_cooldown",
+    public readonly messageOverride?: string,
   ) {
-    super(code);
+    super(messageOverride ?? code);
     this.name = "CredentialsRegistrationError";
   }
 }
 
-/** Generic client-facing copy for blocked disposable / temporary emails. */
+/** User-facing copy for blocked disposable / temporary emails. */
 export const REGISTRATION_EMAIL_NOT_ALLOWED_MESSAGE =
-  "Unable to create an account with this email. Please try a different email address.";
+  EMAIL_DOMAIN_BLOCKED_DISPOSABLE_MESSAGE;
+
+export const REGISTRATION_RE_REGISTER_COOLDOWN_MESSAGE =
+  RE_REGISTER_COOLDOWN_MESSAGE;
 
 export function normalizeEmail(email: string): string {
   return email.trim().toLowerCase();
@@ -293,8 +314,33 @@ export async function registerCredentialsUser<TUser>(
     throw new CredentialsRegistrationError("missing_credentials");
   }
 
-  if (isDisposableEmailDomain(email)) {
-    throw new CredentialsRegistrationError("email_not_allowed");
+  const env = dependencies.env ?? process.env;
+  const domainPolicy = evaluateEmailDomainPolicy(email, env);
+  if (!domainPolicy.allowed) {
+    throw new CredentialsRegistrationError(
+      "email_not_allowed",
+      domainPolicy.message,
+    );
+  }
+
+  const checkDeleted =
+    dependencies.checkDeletedIdentity ??
+    (async (candidate: string) => {
+      const result = await checkRegistrationAgainstDeletedIdentity(candidate, {
+        env,
+      });
+      if (!result.allowed) {
+        return { allowed: false, message: result.message };
+      }
+      return { allowed: true };
+    });
+
+  const deletedCheck = await checkDeleted(email);
+  if (!deletedCheck.allowed) {
+    throw new CredentialsRegistrationError(
+      "re_register_cooldown",
+      deletedCheck.message ?? REGISTRATION_RE_REGISTER_COOLDOWN_MESSAGE,
+    );
   }
 
   const existingUser = await dependencies.findUserByEmail(email);

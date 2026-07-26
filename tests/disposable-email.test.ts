@@ -116,5 +116,6 @@ test("register route returns generic 400 for disposable email", async () => {
   assert.equal(response.status, 400);
   const payload = await response.json();
   assert.equal(payload.error, REGISTRATION_EMAIL_NOT_ALLOWED_MESSAGE);
-  assert.doesNotMatch(String(payload.error), /disposable|temporary|yopmail/i);
+  assert.match(String(payload.error), /Temporary email domains are not supported/i);
+  assert.doesNotMatch(String(payload.error), /yopmail/i);
 });

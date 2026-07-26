@@ -5,6 +5,7 @@ import { AUTH_RATE_LIMIT_GENERIC_MESSAGE } from "@/config/auth-rate-limit";
 import {
   CredentialsRegistrationError,
   REGISTRATION_EMAIL_NOT_ALLOWED_MESSAGE,
+  REGISTRATION_RE_REGISTER_COOLDOWN_MESSAGE,
   registerCredentialsUser,
 } from "@/lib/auth/credentials";
 import { issueAndSendEmailVerification } from "@/lib/auth/issue-email-verification";
@@ -122,8 +123,25 @@ export async function postAuthRegister(
       }
       if (error.code === "email_not_allowed") {
         return NextResponse.json(
-          { error: REGISTRATION_EMAIL_NOT_ALLOWED_MESSAGE },
+          {
+            error:
+              error.message && error.message !== "email_not_allowed"
+                ? error.message
+                : REGISTRATION_EMAIL_NOT_ALLOWED_MESSAGE,
+          },
           { status: 400 },
+        );
+      }
+      if (error.code === "re_register_cooldown") {
+        return NextResponse.json(
+          {
+            error:
+              error.message && error.message !== "re_register_cooldown"
+                ? error.message
+                : REGISTRATION_RE_REGISTER_COOLDOWN_MESSAGE,
+            code: "re_register_cooldown",
+          },
+          { status: 403 },
         );
       }
       if (error.code === "user_exists") {

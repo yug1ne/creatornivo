@@ -18,8 +18,11 @@ import {
   shouldMarkEmailVerifiedOnGoogleSignIn,
   shouldSendWelcomeOnCreateUser,
 } from "@/lib/auth/google-auth-events";
+import { isEmailDomainAllowedForRegistration } from "@/config/email-domain-policy";
 import { prisma } from "@/lib/db";
 import { sendWelcomeEmail } from "@/lib/email/send-welcome";
+import { normalizeEmail } from "@/lib/auth/credentials";
+import { checkRegistrationAgainstDeletedIdentity } from "@/lib/security/deleted-account-identity";
 
 const credentialsProvider = Credentials({
   name: "credentials",
@@ -64,7 +67,41 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     ...authConfig.callbacks,
     async signIn({ account, profile }) {
       if (account?.provider === "google") {
-        return isGoogleSignInAllowed(profile as GoogleProfileLike);
+        if (!isGoogleSignInAllowed(profile as GoogleProfileLike)) {
+          return false;
+        }
+
+        const googleProfile = profile as GoogleProfileLike;
+        const email =
+          typeof googleProfile?.email === "string"
+            ? normalizeEmail(googleProfile.email)
+            : "";
+        if (!email) {
+          return false;
+        }
+
+        // Existing users may always sign in (policy applies to new signups only).
+        const existing = await prisma.user.findFirst({
+          where: {
+            email: { equals: email, mode: "insensitive" },
+          },
+          select: { id: true },
+        });
+        if (existing) {
+          return true;
+        }
+
+        if (!isEmailDomainAllowedForRegistration(email)) {
+          return false;
+        }
+
+        const deletedCheck =
+          await checkRegistrationAgainstDeletedIdentity(email);
+        if (!deletedCheck.allowed) {
+          return false;
+        }
+
+        return true;
       }
       return true;
     },

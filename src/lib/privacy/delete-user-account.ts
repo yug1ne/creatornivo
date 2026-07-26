@@ -1,4 +1,8 @@
 import { getSafeEmailHash, normalizeEmail } from "@/lib/auth/credentials";
+import {
+  recordDeletedAccountIdentity,
+  type DeletedAccountIdentityStore,
+} from "@/lib/security/deleted-account-identity";
 
 import {
   ACCOUNT_DELETION_AUDIT_STATUS,
@@ -47,11 +51,15 @@ export async function deleteUserAccount(
     dataStore: AccountDeletionDataStore;
     auditStore: AccountDeletionAuditStore;
     verifyPassword?: typeof verifyAccountPassword;
+    recordTombstone?: typeof recordDeletedAccountIdentity;
+    identityStore?: DeletedAccountIdentityStore;
     now?: () => Date;
   },
 ) {
   const now = dependencies.now ?? (() => new Date());
   const verifyPassword = dependencies.verifyPassword ?? verifyAccountPassword;
+  const recordTombstone =
+    dependencies.recordTombstone ?? recordDeletedAccountIdentity;
   const currentTime = now();
 
   const user = await dependencies.dataStore.findDeletionUser(input.userId);
@@ -145,6 +153,16 @@ export async function deleteUserAccount(
   });
 
   try {
+    // Tombstone HMAC identity before hard-delete (no plaintext email stored).
+    await recordTombstone(
+      {
+        email: user.email,
+        deletedUserId: user.id,
+        now: currentTime,
+      },
+      dependencies.identityStore,
+    );
+
     await dependencies.dataStore.deleteUserData(
       user.id,
       normalizeEmail(user.email),

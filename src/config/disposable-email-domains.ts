@@ -3,6 +3,11 @@
  * Intentionally narrow — major providers (Gmail, Outlook, Yahoo, iCloud, Proton)
  * are never listed here.
  */
+
+import { getEmailDomain } from "@/lib/security/email-normalization";
+
+export { getEmailDomain };
+
 export const DISPOSABLE_EMAIL_DOMAINS = [
   "mailinator.com",
   "guerrillamail.com",
@@ -58,22 +63,6 @@ export const DISPOSABLE_EMAIL_DOMAINS = [
 const disposableDomainSet = new Set<string>(
   DISPOSABLE_EMAIL_DOMAINS.map((domain) => domain.toLowerCase()),
 );
-
-/** Extract the domain portion of an email (normalized). Returns null if invalid. */
-export function getEmailDomain(email: string): string | null {
-  const normalized = email.trim().toLowerCase();
-  const at = normalized.lastIndexOf("@");
-  if (at <= 0 || at === normalized.length - 1) {
-    return null;
-  }
-
-  const domain = normalized.slice(at + 1).trim();
-  if (!domain || domain.includes("@") || domain.includes(" ")) {
-    return null;
-  }
-
-  return domain;
-}
 
 /**
  * Returns true when the email uses a known disposable/temporary domain
