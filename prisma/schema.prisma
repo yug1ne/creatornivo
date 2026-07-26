@@ -30,6 +30,7 @@ enum SubscriptionStatus {
 enum PaymentProvider {
   stripe
   paddle
+  freemius
 }
 
 enum SupportThreadStatus {
@@ -82,9 +83,10 @@ model User {
   sessions              Session[]
   savedPrompts          SavedPrompt[]
   generations           Generation[]
-  paddleCheckoutIntents PaddleCheckoutIntent[]
-  paddleAdjustments     PaddleAdjustment[]
-  subscription          Subscription?
+  paddleCheckoutIntents   PaddleCheckoutIntent[]
+  freemiusCheckoutIntents FreemiusCheckoutIntent[]
+  paddleAdjustments       PaddleAdjustment[]
+  subscription            Subscription?
   onboardingCompletedAt DateTime?
   welcomeEmailSentAt          DateTime?
   proConfirmationEmailSentAt  DateTime?
@@ -187,15 +189,32 @@ model Subscription {
   stripeCustomerId     String?            @unique
   stripeSubscriptionId String?            @unique
   stripePriceId        String?
+  /// Freemius buyer user id (provider-native).
+  freemiusUserId         String?          @unique
+  /// Freemius license id (primary SaaS entitlement key).
+  freemiusLicenseId      String?          @unique
+  /// Freemius subscription id when recurring.
+  freemiusSubscriptionId String?          @unique
+  freemiusPlanId         String?
+  freemiusPricingId      String?
+  freemiusProductId      String?
+  /// Billing interval from Freemius pricing (e.g. month | year). Not a calendar-month assumption.
+  billingInterval        String?
   status               SubscriptionStatus @default(incomplete)
+  /// Provider billing period start (Freemius: from license/subscription payload, e.g. anniversary of purchase day).
+  currentPeriodStart   DateTime?
+  /// Provider billing period end (Freemius: renewal/expiry from Freemius, not UTC month-end).
   currentPeriodEnd     DateTime?
   cancelAtPeriodEnd    Boolean            @default(false)
   lastPaddleEventAt    DateTime?
+  lastFreemiusEventAt  DateTime?
   earlyAccessClaimedAt DateTime?
   createdAt            DateTime           @default(now())
   updatedAt            DateTime           @updatedAt
 
   @@index([paddlePriceId, earlyAccessClaimedAt])
+  @@index([freemiusPricingId])
+  @@index([freemiusPlanId])
 }
 
 model PaddleWebhookEvent {
@@ -205,6 +224,33 @@ model PaddleWebhookEvent {
   processedAt DateTime @default(now())
 
   @@index([occurredAt])
+}
+
+/// Freemius webhook idempotency ledger (separate from Paddle event ids).
+model FreemiusWebhookEvent {
+  eventId     String   @id
+  eventType   String
+  occurredAt  DateTime
+  processedAt DateTime @default(now())
+
+  @@index([occurredAt])
+}
+
+/// Checkout binding for later Freemius checkout (Phase 3+). Not used for activation in Phase 1.
+model FreemiusCheckoutIntent {
+  id                 String    @id @default(cuid())
+  userId             String
+  user               User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  pricingId          String
+  freemiusCheckoutId String?   @unique
+  status             String    @default("pending")
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  expiresAt          DateTime
+  completedAt        DateTime?
+
+  @@index([userId, createdAt])
+  @@index([status, expiresAt])
 }
 
 model PaddleCheckoutIntent {
