@@ -57,16 +57,11 @@ test("Early Access copy uses a neutral limited-time founding price", () => {
     copy,
     /first 50|first users|50 spots|spots? left|spots? run out|claim your spot|countdown/i,
   );
-  // Public disabled-mode user-facing founding lines (config string values).
-  assert.match(
-    copy,
-    /Founding offer: \$4\.90\/month for the first 20 customers\./,
-  );
-  assert.match(copy, /Applied automatically at checkout\./);
-  assert.doesNotMatch(
-    copy,
-    /Use code FOUNDING20 to get/i,
-  );
+  // Disabled-mode founding lines are split by surface (top vs card).
+  assert.match(copy, /Founding offer for the first 20 customers\./);
+  assert.match(copy, /\$4\.90\/month for early customers\./);
+  assert.match(copy, /Discount applied automatically at checkout\./);
+  assert.doesNotMatch(copy, /Use code FOUNDING20 to get/i);
   assert.match(copy, /discountPercent: 50/);
   assert.match(copy, /price: "\$4\.90"/);
   assert.match(copy, /regularPrice: "\$9\.90"/);
@@ -83,17 +78,19 @@ test("checkout-disabled public Pro path shows $9.90 founding offer and Request E
     "src/components/pricing/pro-plan-pricing.tsx",
     "utf8",
   );
+  const pricingPage = readFileSync(
+    "src/app/(public)/pricing/page.tsx",
+    "utf8",
+  );
 
   assert.match(earlyAccess, /regularPrice: "\$9\.90"/);
   assert.match(earlyAccess, /price: "\$4\.90"/);
-  assert.match(
-    earlyAccess,
-    /Founding offer: \$4\.90\/month for the first 20 customers\./,
-  );
-  assert.match(earlyAccess, /Applied automatically at checkout\./);
+  assert.match(earlyAccess, /sectionTopLine: "Founding offer for the first 20/);
+  assert.match(earlyAccess, /foundingCouponCopy: "\$4\.90\/month for early/);
+  assert.match(earlyAccess, /Discount applied automatically at checkout\./);
   assert.doesNotMatch(earlyAccess, /Use code FOUNDING20 to get/i);
+  assert.match(pricingPage, /sectionTopLine/);
   assert.match(priceBlock, /isAvailable:\s*true/);
-  assert.match(priceBlock, /foundingCouponCopy/);
   assert.match(proPricing, /status\.regularPrice/);
   assert.match(proPricing, /foundingCouponCopy/);
   assert.match(proCta, /RequestEarlyAccessCta/);

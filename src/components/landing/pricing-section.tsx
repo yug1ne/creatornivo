@@ -30,12 +30,11 @@ export async function PricingSection() {
           </p>
           {publicCheckoutEnabled ? (
             <p className="mt-3 text-sm font-medium text-primary">
-              {freemiusPricingDisplay.foundingOfferCopy}
+              {freemiusPricingDisplay.sectionTopLine}
             </p>
           ) : earlyAccessStatus.isAvailable ? (
             <p className="mt-3 text-sm font-medium text-primary">
-              {earlyAccessConfig.foundingCouponCopy}{" "}
-              {earlyAccessConfig.limitLabel}
+              {earlyAccessConfig.sectionTopLine}
             </p>
           ) : null}
         </div>

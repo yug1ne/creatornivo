@@ -37,13 +37,14 @@ test("available Early Access renders regular $9.90 with auto-applied founding of
   );
 
   assert.match(markup, /Early Access/);
-  assert.match(markup, /Limited founding offer/);
+  assert.match(markup, /Founding offer/);
   assert.match(markup, /\$9\.90/);
-  assert.match(markup, /Founding offer: \$4\.90\/month for the first 20 customers\./);
-  assert.match(markup, /Applied automatically at checkout\./);
+  assert.match(markup, /Regular monthly price/);
+  assert.match(markup, /\$4\.90\/month for early customers\./);
+  assert.match(markup, /Discount applied automatically at checkout\./);
+  assert.doesNotMatch(markup, /first 20/i);
   assert.doesNotMatch(markup, /Use code FOUNDING20/i);
   assert.doesNotMatch(markup, /FOUNDING20/);
-  // Main list price is regular — not a struck-through comparison layout.
   assert.doesNotMatch(markup, /line-through/);
 });
 
@@ -56,7 +57,7 @@ test("unavailable Early Access renders only the standard Pro price", () => {
   assert.match(markup, /\$9\.90/);
   assert.doesNotMatch(
     markup,
-    /\$4\.90|Early Access|FOUNDING20|Limited founding offer/,
+    /\$4\.90|Early Access|FOUNDING20|Founding offer/,
   );
 });
 

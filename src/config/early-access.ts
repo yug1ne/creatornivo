@@ -17,14 +17,15 @@ export const earlyAccessConfig = {
    */
   foundingCouponCode: "FOUNDING20",
   foundingDiscountAmount: "$5",
-  /** Primary founding offer line — no manual coupon-entry instruction. */
-  foundingCouponCopy:
-    "Founding offer: $4.90/month for the first 20 customers.",
-  /** Secondary line — discount is automatic at checkout / by request now. */
-  limitLabel: "Applied automatically at checkout.",
+  /** Top of pricing section only (audience). */
+  sectionTopLine: "Founding offer for the first 20 customers.",
+  /** Pro card founding price line (no “first 20” if top already says it). */
+  foundingCouponCopy: "$4.90/month for early customers.",
+  /** Pro card automation line. */
+  limitLabel: "Discount applied automatically at checkout.",
   bannerText: "Early Access founding price",
   badgeLabel: "Early Access",
-  foundingBadgeLabel: "Limited founding offer",
+  foundingBadgeLabel: "Founding offer",
   /** Short status line for app-wide Early Access banner (pre-launch). */
   statusBannerMessage:
     "Features and limits may change while we actively improve the product.",

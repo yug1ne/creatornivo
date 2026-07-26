@@ -11,8 +11,8 @@ interface ProPlanPricingProps {
 /**
  * Early Access Pro price block (public checkout disabled):
  * - Main list price: regular $9.90/month
- * - Founding offer $4.90 for first 20 customers (applied automatically at checkout)
- * - No manual coupon-entry instruction in public copy
+ * - One short founding $4.90 line + auto-apply note
+ * - “First 20” lives only in the section top line
  */
 export function ProPlanPricing({ status, size = "md" }: ProPlanPricingProps) {
   const priceClass = size === "lg" ? "text-4xl" : "text-3xl";
@@ -40,6 +40,7 @@ export function ProPlanPricing({ status, size = "md" }: ProPlanPricingProps) {
         </span>
         <span className="text-sm text-muted-foreground">/ per month</span>
       </div>
+      <p className="text-sm text-muted-foreground">Regular monthly price</p>
       <p className="text-sm font-medium text-primary">
         {status.foundingCouponCopy ?? earlyAccessConfig.foundingCouponCopy}
       </p>

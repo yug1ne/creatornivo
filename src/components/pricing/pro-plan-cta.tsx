@@ -9,7 +9,8 @@ interface ProPlanCtaProps {
 /**
  * Pro card CTA switch:
  * - PUBLIC_CHECKOUT_ENABLED !== "true" → Request Early Access (mailto)
- * - PUBLIC_CHECKOUT_ENABLED === "true" → Freemius monthly/annual/founding CTAs
+ * - PUBLIC_CHECKOUT_ENABLED === "true" → Freemius CTAs
+ *   (founding-active: founding $4.90 + annual; else monthly $9.90 + annual)
  *
  * Restricted checkout is never exposed on the public pricing UI.
  */

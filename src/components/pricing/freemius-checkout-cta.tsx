@@ -4,7 +4,10 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 
-import { freemiusPricingDisplay } from "@/config/freemius-pricing-display";
+import {
+  freemiusFoundingOfferActive,
+  freemiusPricingDisplay,
+} from "@/config/freemius-pricing-display";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils/cn";
 
@@ -57,13 +60,16 @@ export function resolveFreemiusCheckoutRedirect(
 interface FreemiusCheckoutCtaProps {
   className?: string;
   size?: "md" | "lg";
-  /** When true, show founding monthly CTA that auto-applies FOUNDING20. */
+  /**
+   * When true and freemiusFoundingOfferActive, show founding primary + annual.
+   * When false (or founding inactive), show regular monthly + annual.
+   */
   showFoundingOffer?: boolean;
 }
 
 /**
  * Public Freemius checkout CTAs. Only mount when PUBLIC_CHECKOUT_ENABLED.
- * Does not grant Pro; opens hosted Freemius checkout URL from the API.
+ * Buttons only — founding copy lives in section top + Pro price card.
  */
 export function FreemiusCheckoutCta({
   className,
@@ -73,6 +79,9 @@ export function FreemiusCheckoutCta({
   const { data: session, status } = useSession();
   const [loading, setLoading] = useState<LoadingKey>(null);
   const [error, setError] = useState("");
+
+  const foundingPrimary =
+    showFoundingOffer && freemiusFoundingOfferActive;
 
   async function startCheckout(
     key: LoadingKey,
@@ -136,9 +145,6 @@ export function FreemiusCheckoutCta({
         >
           Sign in to get Pro
         </Link>
-        <p className="text-center text-xs text-muted-foreground">
-          {freemiusPricingDisplay.foundingOfferCopy}
-        </p>
       </div>
     );
   }
@@ -159,53 +165,61 @@ export function FreemiusCheckoutCta({
 
   return (
     <div className={cn("mt-6 space-y-3", className)}>
-      <button
-        type="button"
-        disabled={loading !== null}
-        onClick={() => startCheckout("monthly", "monthly")}
-        className={buttonVariants({ className: "w-full", size })}
-      >
-        {loading === "monthly"
-          ? "Opening checkout..."
-          : freemiusPricingDisplay.monthlyCtaLabel}
-      </button>
-      <button
-        type="button"
-        disabled={loading !== null}
-        onClick={() => startCheckout("annual", "annual")}
-        className={buttonVariants({
-          variant: "outline",
-          className: "w-full",
-          size,
-        })}
-      >
-        {loading === "annual"
-          ? "Opening checkout..."
-          : freemiusPricingDisplay.annualCtaLabel}
-      </button>
-      {showFoundingOffer ? (
-        <button
-          type="button"
-          disabled={loading !== null}
-          onClick={() => startCheckout("founding", "monthly", true)}
-          className={buttonVariants({
-            variant: "secondary",
-            className: "w-full",
-            size,
-          })}
-        >
-          {loading === "founding"
-            ? "Opening checkout..."
-            : freemiusPricingDisplay.foundingCtaLabel}
-        </button>
-      ) : null}
-      <p className="text-center text-xs leading-relaxed text-muted-foreground">
-        {freemiusPricingDisplay.foundingOfferCopy} Founding discount is applied
-        automatically only when you choose the founding offer.
-      </p>
-      <p className="text-center text-xs leading-relaxed text-muted-foreground">
-        {freemiusPricingDisplay.activationNote}
-      </p>
+      {foundingPrimary ? (
+        <>
+          <button
+            type="button"
+            disabled={loading !== null}
+            onClick={() => startCheckout("founding", "monthly", true)}
+            className={buttonVariants({ className: "w-full", size })}
+          >
+            {loading === "founding"
+              ? "Opening checkout..."
+              : freemiusPricingDisplay.foundingCtaLabel}
+          </button>
+          <button
+            type="button"
+            disabled={loading !== null}
+            onClick={() => startCheckout("annual", "annual")}
+            className={buttonVariants({
+              variant: "outline",
+              className: "w-full",
+              size,
+            })}
+          >
+            {loading === "annual"
+              ? "Opening checkout..."
+              : freemiusPricingDisplay.annualCtaLabel}
+          </button>
+        </>
+      ) : (
+        <>
+          <button
+            type="button"
+            disabled={loading !== null}
+            onClick={() => startCheckout("monthly", "monthly")}
+            className={buttonVariants({ className: "w-full", size })}
+          >
+            {loading === "monthly"
+              ? "Opening checkout..."
+              : freemiusPricingDisplay.monthlyCtaLabel}
+          </button>
+          <button
+            type="button"
+            disabled={loading !== null}
+            onClick={() => startCheckout("annual", "annual")}
+            className={buttonVariants({
+              variant: "outline",
+              className: "w-full",
+              size,
+            })}
+          >
+            {loading === "annual"
+              ? "Opening checkout..."
+              : freemiusPricingDisplay.annualCtaLabel}
+          </button>
+        </>
+      )}
       {error ? (
         <p className="text-center text-xs text-red-600 dark:text-red-400">
           {error}
