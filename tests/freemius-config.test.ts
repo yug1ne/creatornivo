@@ -208,13 +208,12 @@ test("paid Freemius Pro period policy is provider-based not calendar month", () 
   );
 });
 
-test("Phase 1 does not add Freemius checkout webhook or pricing UI routes", () => {
-  const freemiusRoutes = [
+test("Phase 1/2 foundation does not add Freemius checkout, portal, or pricing UI", () => {
+  // Webhook route is Phase 2; checkout/portal remain future phases.
+  for (const relative of [
     "src/app/api/freemius/checkout/route.ts",
-    "src/app/api/freemius/webhook/route.ts",
     "src/app/api/freemius/portal/route.ts",
-  ];
-  for (const relative of freemiusRoutes) {
+  ]) {
     try {
       readProject(...relative.split("/"));
       assert.fail(`unexpected route file present: ${relative}`);
