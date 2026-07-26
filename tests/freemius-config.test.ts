@@ -303,12 +303,15 @@ test("paid Freemius Pro period policy is provider-based not calendar month", () 
   );
 });
 
-test("Phase 3–4 does not wire Freemius into public pricing UI", () => {
+test("Phase 5-pre wires Freemius pricing only behind PUBLIC_CHECKOUT_ENABLED", () => {
   const pricing = readProject("src", "app", "(public)", "pricing", "page.tsx");
-  assert.doesNotMatch(pricing, /freemius/i);
-  assert.doesNotMatch(pricing, /PUBLIC_CHECKOUT_ENABLED/);
+  const proCta = readProject("src", "components", "pricing", "pro-plan-cta.tsx");
+  assert.match(pricing, /isPublicCheckoutEnabled/);
+  assert.match(pricing, /ProPlanCta/);
   assert.doesNotMatch(pricing, /FREEMIUS_RESTRICTED_CHECKOUT/);
-  assert.doesNotMatch(pricing, /\/api\/freemius\/checkout/);
+  assert.match(proCta, /isPublicCheckoutEnabled\(\)/);
+  assert.match(proCta, /RequestEarlyAccessCta/);
+  assert.match(proCta, /FreemiusCheckoutCta/);
 
   const envExample = readProject(".env.example");
   assert.match(envExample, /PUBLIC_CHECKOUT_ENABLED="false"/);

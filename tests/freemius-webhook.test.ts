@@ -692,8 +692,11 @@ test("route source verifies token and signature before JSON parse order is docum
   assert.ok(parseIdx > sigIdx, "json parse after signature");
 });
 
-test("Phase 2/3 pricing page remains free of Freemius checkout wiring", () => {
+test("Phase 5-pre pricing page uses ProPlanCta switch, not unrestricted Freemius fetch", () => {
   const pricing = readFileSync("src/app/(public)/pricing/page.tsx", "utf8");
-  assert.doesNotMatch(pricing, /freemius/i);
-  assert.doesNotMatch(pricing, /\/api\/freemius\/checkout/);
+  assert.match(pricing, /ProPlanCta/);
+  assert.match(pricing, /isPublicCheckoutEnabled/);
+  // Direct unrestricted checkout fetch must not live on the page itself.
+  assert.doesNotMatch(pricing, /fetch\(["']\/api\/freemius\/checkout/);
+  assert.doesNotMatch(pricing, /FREEMIUS_RESTRICTED_CHECKOUT/);
 });

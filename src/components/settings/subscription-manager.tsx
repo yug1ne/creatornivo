@@ -6,15 +6,26 @@ import { useSession } from "next-auth/react";
 import { Suspense, useEffect, useState } from "react";
 
 import type { BillingProvider } from "@/config/billing";
+import { freemiusPricingDisplay } from "@/config/freemius-pricing-display";
 import { PLANS, type Plan } from "@/config/plans";
+import {
+  buildFreemiusCheckoutRequestBody,
+  resolveFreemiusCheckoutRedirect,
+  type FreemiusCheckoutApiResponse,
+} from "@/components/pricing/freemius-checkout-cta";
 import { buttonVariants } from "@/components/ui/button";
 import { formatHumanUtcDate } from "@/lib/usage/quota-copy";
 
+/** Shown after checkout return before webhook activates Pro (provider-agnostic). */
 export const CHECKOUT_PENDING_MESSAGE =
-  "Payment received. Pro access will appear after Paddle webhook confirmation.";
+  "Payment received. Pro access may take a moment and is activated after payment confirmation.";
+export const CHECKOUT_CANCELLED_MESSAGE =
+  "Checkout was cancelled. No changes were made to your plan.";
 export const PRO_ACTIVE_MESSAGE = "Your Pro subscription is active.";
 export const QUOTA_RESETS_SEPARATELY_MESSAGE =
   "Generation quota resets separately by UTC calendar month.";
+export const FREEMIUS_PORTAL_UNAVAILABLE_MESSAGE =
+  "No Freemius subscription is linked to this account. Manage billing only works for Freemius Pro subscriptions.";
 
 /** Billing-period end for Settings (human-readable UTC date). */
 export function formatSubscriptionAccessDate(isoDate: string): string {
@@ -23,21 +34,65 @@ export function formatSubscriptionAccessDate(isoDate: string): string {
 
 export function getPostCheckoutMessage(
   isPro: boolean,
-  hasCheckoutSuccess: boolean,
+  checkoutStatus: string | boolean | null,
 ): string | null {
+  // Backward compatible: boolean true means success (legacy tests / Paddle).
+  const status =
+    checkoutStatus === true
+      ? "success"
+      : checkoutStatus === false || checkoutStatus === null
+        ? null
+        : checkoutStatus;
+
+  if (status === "cancelled") {
+    return CHECKOUT_CANCELLED_MESSAGE;
+  }
   if (isPro) return PRO_ACTIVE_MESSAGE;
-  return hasCheckoutSuccess ? CHECKOUT_PENDING_MESSAGE : null;
+  if (status === "success") return CHECKOUT_PENDING_MESSAGE;
+  return null;
 }
 
 export function shouldShowPaddlePortalActions(input: {
   isPro: boolean;
   isBillingConfigured: boolean;
   billingProvider: BillingProvider | null;
+  subscriptionProvider?: string | null;
 }): boolean {
+  const provider = input.subscriptionProvider ?? input.billingProvider;
   return (
     input.isPro &&
     input.isBillingConfigured &&
-    input.billingProvider === "paddle"
+    provider === "paddle"
+  );
+}
+
+export function shouldShowStripePortalActions(input: {
+  isPro: boolean;
+  isBillingConfigured: boolean;
+  billingProvider: BillingProvider | null;
+  subscriptionProvider?: string | null;
+}): boolean {
+  const provider = input.subscriptionProvider ?? input.billingProvider;
+  return (
+    input.isPro &&
+    input.isBillingConfigured &&
+    provider === "stripe"
+  );
+}
+
+/**
+ * Freemius portal only when subscription is linked to Freemius.
+ * Never falls back to Paddle/Stripe for Freemius users or vice versa.
+ */
+export function shouldShowFreemiusPortalActions(input: {
+  isPro: boolean;
+  subscriptionProvider: string | null | undefined;
+  hasFreemiusIds: boolean;
+}): boolean {
+  return (
+    input.isPro &&
+    input.subscriptionProvider === "freemius" &&
+    input.hasFreemiusIds
   );
 }
 
@@ -46,6 +101,9 @@ interface SubscriptionInfo {
   currentPeriodEnd: string | null;
   cancelAtPeriodEnd: boolean;
   provider: BillingProvider | null;
+  freemiusUserId?: string | null;
+  freemiusLicenseId?: string | null;
+  freemiusSubscriptionId?: string | null;
 }
 
 interface SubscriptionManagerProps {
@@ -53,6 +111,8 @@ interface SubscriptionManagerProps {
   subscription: SubscriptionInfo | null;
   isBillingConfigured: boolean;
   billingProvider: BillingProvider | null;
+  /** When true, Free users see Freemius upgrade CTAs instead of only pricing link. */
+  publicCheckoutEnabled?: boolean;
 }
 
 function SubscriptionManagerContent({
@@ -60,6 +120,7 @@ function SubscriptionManagerContent({
   subscription,
   isBillingConfigured,
   billingProvider,
+  publicCheckoutEnabled = false,
 }: SubscriptionManagerProps) {
   const { data: session, update } = useSession();
   const router = useRouter();
@@ -67,20 +128,36 @@ function SubscriptionManagerContent({
   const checkoutStatus = searchParams.get("checkout");
 
   const [loadingAction, setLoadingAction] = useState<
-    "update" | "cancel" | "stripe" | null
+    "update" | "cancel" | "stripe" | "freemius" | "monthly" | "annual" | null
   >(null);
   const [message, setMessage] = useState("");
 
   const isPro =
     plan === PLANS.PRO || session?.user?.plan === PLANS.PRO;
-  const postCheckoutMessage = getPostCheckoutMessage(
-    isPro,
-    checkoutStatus === "success",
+  const postCheckoutMessage = getPostCheckoutMessage(isPro, checkoutStatus);
+  const subscriptionProvider = subscription?.provider ?? null;
+  const hasFreemiusIds = Boolean(
+    subscription?.freemiusUserId ||
+      subscription?.freemiusLicenseId ||
+      subscription?.freemiusSubscriptionId,
   );
+
   const showPaddlePortalActions = shouldShowPaddlePortalActions({
     isPro,
     isBillingConfigured,
     billingProvider,
+    subscriptionProvider,
+  });
+  const showStripePortalActions = shouldShowStripePortalActions({
+    isPro,
+    isBillingConfigured,
+    billingProvider,
+    subscriptionProvider,
+  });
+  const showFreemiusPortalActions = shouldShowFreemiusPortalActions({
+    isPro,
+    subscriptionProvider,
+    hasFreemiusIds,
   });
 
   useEffect(() => {
@@ -90,7 +167,8 @@ function SubscriptionManagerContent({
           plan === PLANS.PRO ||
           updatedSession?.user?.plan === PLANS.PRO
         ) {
-          router.replace("/settings", { scroll: false });
+          // Stay on billing page; do not treat query as granting Pro.
+          router.replace("/settings/billing", { scroll: false });
         }
         router.refresh();
       });
@@ -129,6 +207,65 @@ function SubscriptionManagerContent({
     window.location.href = url;
   }
 
+  async function handleFreemiusPortal() {
+    setLoadingAction("freemius");
+    setMessage("");
+    try {
+      const response = await fetch("/api/freemius/portal", { method: "POST" });
+      const data = (await response.json()) as {
+        portalUrl?: string;
+        error?: string;
+        code?: string;
+      };
+      setLoadingAction(null);
+
+      if (!response.ok || !data.portalUrl) {
+        setMessage(
+          data.error ??
+            (data.code === "freemius_subscription_not_found"
+              ? FREEMIUS_PORTAL_UNAVAILABLE_MESSAGE
+              : "Unable to open Freemius billing portal."),
+        );
+        return;
+      }
+
+      window.location.href = data.portalUrl;
+    } catch {
+      setLoadingAction(null);
+      setMessage("Unable to open Freemius billing portal.");
+    }
+  }
+
+  async function handleFreemiusCheckout(interval: "monthly" | "annual") {
+    setLoadingAction(interval);
+    setMessage("");
+    try {
+      const body = buildFreemiusCheckoutRequestBody(interval);
+      const response = await fetch("/api/freemius/checkout", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      const data = (await response.json()) as FreemiusCheckoutApiResponse;
+      const result = resolveFreemiusCheckoutRedirect(data, response.ok);
+      setLoadingAction(null);
+
+      if (result.type === "redirect") {
+        window.location.href = result.url;
+        return;
+      }
+      setMessage(result.message);
+    } catch {
+      setLoadingAction(null);
+      setMessage("Checkout failed. Please try again.");
+    }
+  }
+
+  const isCancelled = checkoutStatus === "cancelled";
+  const bannerClass = isCancelled
+    ? "mt-3 rounded-lg bg-muted px-3 py-2 text-sm text-muted-foreground"
+    : "mt-3 rounded-lg bg-emerald-50 px-3 py-2 text-sm text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300";
+
   return (
     <div id="subscription" className="rounded-xl border border-border p-6">
       <h3 className="font-medium text-foreground">Subscription</h3>
@@ -147,6 +284,12 @@ function SubscriptionManagerContent({
         </p>
       )}
 
+      {subscription?.provider && (
+        <p className="mt-1 text-xs text-muted-foreground">
+          Billing provider: {subscription.provider}
+        </p>
+      )}
+
       {subscription?.currentPeriodEnd && (
         <p className="mt-1 text-xs text-muted-foreground">
           Access active until{" "}
@@ -161,55 +304,88 @@ function SubscriptionManagerContent({
       )}
 
       {(postCheckoutMessage || message) && (
-        <p className="mt-3 rounded-lg bg-emerald-50 px-3 py-2 text-sm text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">
-          {message || postCheckoutMessage}
-        </p>
+        <p className={bannerClass}>{message || postCheckoutMessage}</p>
       )}
 
       <div className="mt-4 flex flex-wrap gap-3">
-        {!isPro && isBillingConfigured && (
+        {!isPro && publicCheckoutEnabled && (
+          <>
+            <button
+              type="button"
+              onClick={() => handleFreemiusCheckout("monthly")}
+              disabled={loadingAction !== null}
+              className={buttonVariants({
+                size: "sm",
+                className: "disabled:opacity-50",
+              })}
+            >
+              {loadingAction === "monthly"
+                ? "Opening..."
+                : freemiusPricingDisplay.monthlyCtaLabel}
+            </button>
+            <button
+              type="button"
+              onClick={() => handleFreemiusCheckout("annual")}
+              disabled={loadingAction !== null}
+              className={buttonVariants({
+                variant: "outline",
+                size: "sm",
+                className: "disabled:opacity-50",
+              })}
+            >
+              {loadingAction === "annual"
+                ? "Opening..."
+                : freemiusPricingDisplay.annualCtaLabel}
+            </button>
+          </>
+        )}
+
+        {!isPro && !publicCheckoutEnabled && isBillingConfigured && (
           <Link href="/pricing" className={buttonVariants({ size: "sm" })}>
             Upgrade to Pro
           </Link>
         )}
 
-        {showPaddlePortalActions && (
-            <>
-              <button
-                type="button"
-                onClick={() => handlePortal("update")}
-                disabled={loadingAction !== null}
-                className={buttonVariants({
-                  variant: "outline",
-                  size: "sm",
-                  className: "disabled:opacity-50",
-                })}
-              >
-                {loadingAction === "update"
-                  ? "Loading..."
-                  : "Update payment method"}
-              </button>
-              <button
-                type="button"
-                onClick={() => handlePortal("cancel")}
-                disabled={loadingAction !== null}
-                className={buttonVariants({
-                  variant: "outline",
-                  size: "sm",
-                  className: "disabled:opacity-50",
-                })}
-              >
-                {loadingAction === "cancel"
-                  ? "Loading..."
-                  : "Cancel subscription"}
-              </button>
-            </>
+        {!isPro && !publicCheckoutEnabled && !isBillingConfigured && (
+          <Link href="/pricing" className={buttonVariants({ size: "sm" })}>
+            View pricing
+          </Link>
         )}
 
-        {isPro &&
-          subscription &&
-          isBillingConfigured &&
-          billingProvider === "stripe" && (
+        {showPaddlePortalActions && (
+          <>
+            <button
+              type="button"
+              onClick={() => handlePortal("update")}
+              disabled={loadingAction !== null}
+              className={buttonVariants({
+                variant: "outline",
+                size: "sm",
+                className: "disabled:opacity-50",
+              })}
+            >
+              {loadingAction === "update"
+                ? "Loading..."
+                : "Update payment method"}
+            </button>
+            <button
+              type="button"
+              onClick={() => handlePortal("cancel")}
+              disabled={loadingAction !== null}
+              className={buttonVariants({
+                variant: "outline",
+                size: "sm",
+                className: "disabled:opacity-50",
+              })}
+            >
+              {loadingAction === "cancel"
+                ? "Loading..."
+                : "Cancel subscription"}
+            </button>
+          </>
+        )}
+
+        {showStripePortalActions && (
           <button
             type="button"
             onClick={() => handlePortal("stripe")}
@@ -222,6 +398,31 @@ function SubscriptionManagerContent({
           >
             {loadingAction === "stripe" ? "Loading..." : "Manage subscription"}
           </button>
+        )}
+
+        {showFreemiusPortalActions && (
+          <button
+            type="button"
+            onClick={() => handleFreemiusPortal()}
+            disabled={loadingAction !== null}
+            className={buttonVariants({
+              variant: "outline",
+              size: "sm",
+              className: "disabled:opacity-50",
+            })}
+          >
+            {loadingAction === "freemius"
+              ? "Loading..."
+              : "Manage subscription"}
+          </button>
+        )}
+
+        {isPro &&
+          subscriptionProvider === "freemius" &&
+          !hasFreemiusIds && (
+            <p className="w-full text-xs text-muted-foreground">
+              {FREEMIUS_PORTAL_UNAVAILABLE_MESSAGE}
+            </p>
           )}
       </div>
     </div>

@@ -64,7 +64,7 @@ test("Early Access copy uses a neutral limited-time founding price", () => {
   assert.match(copy, /discountPercent: 50/);
 });
 
-test("public Pro CTA is request-early-access mailto, not live checkout", () => {
+test("public Pro CTA is request-early-access mailto when public checkout is disabled", () => {
   const pricingPage = readFileSync("src/app/(public)/pricing/page.tsx", "utf8");
   const landingPricing = readFileSync(
     "src/components/landing/pricing-section.tsx",
@@ -74,11 +74,22 @@ test("public Pro CTA is request-early-access mailto, not live checkout", () => {
     "src/components/pricing/request-early-access-cta.tsx",
     "utf8",
   );
+  const proPlanCta = readFileSync(
+    "src/components/pricing/pro-plan-cta.tsx",
+    "utf8",
+  );
 
+  // Pages use ProPlanCta switch (not raw UpgradeButton / Paddle).
   for (const source of [pricingPage, landingPricing]) {
-    assert.match(source, /RequestEarlyAccessCta/);
+    assert.match(source, /ProPlanCta/);
     assert.doesNotMatch(source, /UpgradeButton/);
+    assert.doesNotMatch(source, /FREEMIUS_RESTRICTED_CHECKOUT/);
   }
+
+  // Default path remains Request Early Access until PUBLIC_CHECKOUT_ENABLED=true.
+  assert.match(proPlanCta, /isPublicCheckoutEnabled/);
+  assert.match(proPlanCta, /RequestEarlyAccessCta/);
+  assert.match(proPlanCta, /FreemiusCheckoutCta/);
 
   assert.match(cta, /Request Early Access/);
   assert.match(

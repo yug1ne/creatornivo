@@ -1,17 +1,20 @@
 import Link from "next/link";
 
 import { earlyAccessConfig } from "@/config/early-access";
+import { freemiusPricingDisplay } from "@/config/freemius-pricing-display";
+import { isPublicCheckoutEnabled } from "@/config/freemius";
 import { pricingPlans } from "@/config/pricing-display";
 import { PLANS } from "@/config/plans";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ProPlanPricing } from "@/components/pricing/pro-plan-pricing";
-import { RequestEarlyAccessCta } from "@/components/pricing/request-early-access-cta";
+import { ProPlanCta } from "@/components/pricing/pro-plan-cta";
+import { ProPlanPriceBlock } from "@/components/pricing/pro-plan-price-block";
 import { getEarlyAccessStatus } from "@/lib/early-access/status";
 import { cn } from "@/lib/utils/cn";
 
 export default async function PricingPage() {
   const earlyAccessStatus = await getEarlyAccessStatus();
+  const publicCheckoutEnabled = isPublicCheckoutEnabled();
 
   return (
     <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
@@ -22,11 +25,15 @@ export default async function PricingPage() {
         <p className="mt-4 text-muted-foreground">
           Start for free and upgrade to Pro when you need more capabilities.
         </p>
-        {earlyAccessStatus.isAvailable && (
+        {publicCheckoutEnabled ? (
+          <p className="mt-3 text-sm font-medium text-primary">
+            {freemiusPricingDisplay.foundingOfferCopy}
+          </p>
+        ) : earlyAccessStatus.isAvailable ? (
           <p className="mt-3 text-sm font-medium text-primary">
             {earlyAccessConfig.limitLabel}
           </p>
-        )}
+        ) : null}
       </div>
 
       <div className="mx-auto mt-12 grid max-w-4xl gap-8 md:grid-cols-2">
@@ -45,7 +52,9 @@ export default async function PricingPage() {
               </div>
 
               {plan.id === PLANS.PRO ? (
-                <ProPlanPricing status={earlyAccessStatus} />
+                <ProPlanPriceBlock
+                  earlyAccessStatus={earlyAccessStatus}
+                />
               ) : (
                 <div className="mt-4 flex items-baseline gap-1">
                   <span className="text-3xl font-bold text-foreground">
@@ -73,7 +82,7 @@ export default async function PricingPage() {
               </ul>
 
               {plan.id === PLANS.PRO ? (
-                <RequestEarlyAccessCta />
+                <ProPlanCta />
               ) : (
                 <Link
                   href={plan.cta.href}

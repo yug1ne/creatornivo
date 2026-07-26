@@ -10,6 +10,7 @@ import {
   getActiveBillingProvider,
   isBillingConfigured,
 } from "@/config/billing";
+import { isPublicCheckoutEnabled } from "@/config/freemius";
 import { formatSignInMethods } from "@/lib/auth/sign-in-methods";
 import { requireSession } from "@/lib/auth/session";
 import { getAccountDeletionBlock } from "@/lib/privacy/account-deletion-policy";
@@ -34,6 +35,9 @@ export default async function SettingsPage() {
         cancelAtPeriodEnd: true,
         provider: true,
         paddleStatus: true,
+        freemiusUserId: true,
+        freemiusLicenseId: true,
+        freemiusSubscriptionId: true,
       },
     }),
     prisma.user.findUnique({
@@ -129,6 +133,7 @@ export default async function SettingsPage() {
           plan={session.plan}
           isBillingConfigured={isBillingConfigured()}
           billingProvider={getActiveBillingProvider()}
+          publicCheckoutEnabled={isPublicCheckoutEnabled()}
           subscription={
             subscription
               ? {
@@ -137,6 +142,9 @@ export default async function SettingsPage() {
                     subscription.currentPeriodEnd?.toISOString() ?? null,
                   cancelAtPeriodEnd: subscription.cancelAtPeriodEnd,
                   provider: subscription.provider,
+                  freemiusUserId: subscription.freemiusUserId,
+                  freemiusLicenseId: subscription.freemiusLicenseId,
+                  freemiusSubscriptionId: subscription.freemiusSubscriptionId,
                 }
               : null
           }
