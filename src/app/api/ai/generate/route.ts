@@ -27,6 +27,11 @@ import {
   type UserUsageSnapshot,
 } from "@/lib/usage";
 import {
+  loadProviderPeriodForUser,
+  resolveQuotaPeriod,
+  type ProviderPeriodInput,
+} from "@/lib/usage/quota-period";
+import {
   buildQuotaExceededBody,
   getRetryAfterSeconds,
 } from "@/lib/usage/quota-exceeded";
@@ -224,9 +229,21 @@ export async function POST(request: Request) {
     }
 
     // UserUsage quota — checked before reservation/idempotency flow
+    // Pro: use provider billing period (e.g. Freemius) when present.
+    const providerPeriod: ProviderPeriodInput | null =
+      user.plan === PLANS.PRO
+        ? await loadProviderPeriodForUser(userId)
+        : null;
+    const nowForQuota = new Date();
+
     let usageSnapshot: UserUsageSnapshot;
     try {
-      usageSnapshot = await getUserUsageSnapshot(userId, user.plan);
+      usageSnapshot = await getUserUsageSnapshot(
+        userId,
+        user.plan,
+        nowForQuota,
+        providerPeriod,
+      );
     } catch (error) {
       if (error instanceof UsageError) {
         console.error("UserUsage check failed:", error);
@@ -249,6 +266,8 @@ export async function POST(request: Request) {
       requestId,
       userId: session.id,
       plan: user.plan,
+      now: nowForQuota,
+      providerPeriod,
     });
 
     const markGenerationStarted = () =>
@@ -286,10 +305,26 @@ export async function POST(request: Request) {
 
       // Count only completed generations toward UserUsage (after DB persist)
       try {
-        await incrementUsage(userId, getUsagePeriodForPlan(user.plan));
+        const completedAt = new Date();
+        const periodBucket = resolveQuotaPeriod(
+          user.plan,
+          completedAt,
+          providerPeriod,
+        );
+        await incrementUsage(
+          userId,
+          getUsagePeriodForPlan(user.plan),
+          completedAt,
+          { bucketStart: periodBucket.start },
+        );
 
         if (user.plan === PLANS.FREE) {
-          const snapshot = await getUserUsageSnapshot(userId, user.plan);
+          const snapshot = await getUserUsageSnapshot(
+            userId,
+            user.plan,
+            completedAt,
+            providerPeriod,
+          );
           if (snapshot.remaining === 0) {
             void maybeSendQuotaExhaustedEmail({
               userId,
@@ -573,6 +608,7 @@ export async function POST(request: Request) {
               used: snapshot.used,
               period: snapshot.period,
               resetAt: snapshot.resetAt,
+              quotaBasis: snapshot.quotaBasis,
               gate: "reservation_completed_plus_active",
             },
             {

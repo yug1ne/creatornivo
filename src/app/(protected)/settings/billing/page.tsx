@@ -29,6 +29,7 @@ export default async function SettingsBillingPage() {
     where: { userId: session.id },
     select: {
       status: true,
+      currentPeriodStart: true,
       currentPeriodEnd: true,
       cancelAtPeriodEnd: true,
       provider: true,
@@ -63,6 +64,8 @@ export default async function SettingsBillingPage() {
             subscription
               ? {
                   status: subscription.status,
+                  currentPeriodStart:
+                    subscription.currentPeriodStart?.toISOString() ?? null,
                   currentPeriodEnd:
                     subscription.currentPeriodEnd?.toISOString() ?? null,
                   cancelAtPeriodEnd: subscription.cancelAtPeriodEnd,
@@ -76,8 +79,10 @@ export default async function SettingsBillingPage() {
         />
 
         <p className="text-sm text-muted-foreground">
-          Paid Pro access is activated after payment confirmation. Generation
-          quotas are separate from billing period dates.
+          Paid Pro access is activated after payment confirmation.
+          {subscription?.currentPeriodStart && subscription?.currentPeriodEnd
+            ? " Generation quota follows your provider billing period when available."
+            : " Generation quota for Pro without a provider period uses UTC calendar months."}
         </p>
 
         <Link

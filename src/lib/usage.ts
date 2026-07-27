@@ -1,7 +1,15 @@
 import type { UserUsage } from "@prisma/client";
 
-import { getGenerationPolicy, type Plan } from "@/config/plans";
+import { getGenerationPolicy, PLANS, type Plan } from "@/config/plans";
 import { prisma } from "@/lib/db";
+import {
+  getUtcDayStart,
+  getUtcMonthStart,
+  loadProviderPeriodForUser,
+  resolveQuotaPeriod,
+  type ProviderPeriodInput,
+  type QuotaBasis,
+} from "@/lib/usage/quota-period";
 
 /** Usage bucket type — aligns with UserUsage.period column. */
 export type UsagePeriod = "daily" | "monthly";
@@ -11,6 +19,8 @@ export const USAGE_PERIOD = {
   MONTHLY: "monthly",
 } as const satisfies Record<string, UsagePeriod>;
 
+export { getUtcDayStart, getUtcMonthStart };
+
 export class UsageError extends Error {
   constructor(
     message: string,
@@ -19,18 +29,6 @@ export class UsageError extends Error {
     super(message);
     this.name = "UsageError";
   }
-}
-
-/** UTC midnight for the given instant (Free daily window). */
-export function getUtcDayStart(now = new Date()): Date {
-  return new Date(
-    Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()),
-  );
-}
-
-/** UTC first day of month at midnight (Pro monthly window). */
-export function getUtcMonthStart(now = new Date()): Date {
-  return new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1));
 }
 
 function assertUserId(userId: string): void {
@@ -47,7 +45,15 @@ function assertUsagePeriod(period: string): asserts period is UsagePeriod {
   }
 }
 
-function periodStartFor(period: UsagePeriod, now = new Date()): Date {
+function periodStartFor(
+  period: UsagePeriod,
+  now = new Date(),
+  bucketStart?: Date,
+): Date {
+  if (bucketStart) {
+    return bucketStart;
+  }
+
   return period === USAGE_PERIOD.DAILY
     ? getUtcDayStart(now)
     : getUtcMonthStart(now);
@@ -57,9 +63,10 @@ async function getOrCreateUsage(
   userId: string,
   period: UsagePeriod,
   now = new Date(),
+  bucketStart?: Date,
 ): Promise<UserUsage> {
   assertUserId(userId);
-  const date = periodStartFor(period, now);
+  const date = periodStartFor(period, now, bucketStart);
 
   try {
     return await prisma.userUsage.upsert({
@@ -98,23 +105,26 @@ export async function getOrCreateDailyUsage(
 export async function getOrCreateMonthlyUsage(
   userId: string,
   now = new Date(),
+  bucketStart?: Date,
 ): Promise<UserUsage> {
-  return getOrCreateUsage(userId, USAGE_PERIOD.MONTHLY, now);
+  return getOrCreateUsage(userId, USAGE_PERIOD.MONTHLY, now, bucketStart);
 }
 
 /**
  * Atomically increments the usage counter by 1 for the active period bucket.
  * Creates the row at count = 1 if it does not exist yet.
+ * Optional `bucketStart` pins the UserUsage.date key (provider billing period start).
  */
 export async function incrementUsage(
   userId: string,
   period: UsagePeriod,
   now = new Date(),
+  options?: { bucketStart?: Date },
 ): Promise<UserUsage> {
   assertUserId(userId);
   assertUsagePeriod(period);
 
-  const date = periodStartFor(period, now);
+  const date = periodStartFor(period, now, options?.bucketStart);
 
   try {
     return await prisma.userUsage.upsert({
@@ -174,25 +184,39 @@ export type UserUsageSnapshot = {
   period: UsagePeriod;
   resetAt: string;
   used: number;
+  /** Resolved quota window basis for honest UI copy. */
+  quotaBasis: QuotaBasis;
 };
 
 /**
  * Full usage snapshot for API/UI — backed by UserUsage counters.
- * Free: daily bucket. Pro: monthly bucket. All boundaries are UTC.
+ * Free: UTC day. Pro: provider billing period when available, else UTC calendar month.
+ *
+ * When `providerPeriod` is omitted for Pro, subscription dates are loaded from the DB.
+ * Pass `null` to force calendar-month fallback without a DB lookup.
  */
 export async function getUserUsageSnapshot(
   userId: string,
   plan: Plan,
   now = new Date(),
+  providerPeriod?: ProviderPeriodInput | null,
 ): Promise<UserUsageSnapshot> {
   assertUserId(userId);
 
+  let periodInput = providerPeriod;
+  if (plan === PLANS.PRO && periodInput === undefined) {
+    periodInput = await loadProviderPeriodForUser(userId);
+  }
+
+  const resolved = resolveQuotaPeriod(plan, now, periodInput);
   const policy = getGenerationPolicy(plan);
-  const usagePeriod = getUsagePeriodForPlan(plan);
-  const usage =
-    usagePeriod === USAGE_PERIOD.DAILY
-      ? await getOrCreateDailyUsage(userId, now)
-      : await getOrCreateMonthlyUsage(userId, now);
+
+  const usage = await getOrCreateUsage(
+    userId,
+    resolved.usagePeriod,
+    now,
+    resolved.start,
+  );
 
   const limit = policy.maxGenerationsPerPeriod;
   const used = usage.count;
@@ -202,15 +226,16 @@ export async function getUserUsageSnapshot(
     plan,
     remaining,
     limit,
-    period: usagePeriod,
-    resetAt: getUsageResetAt(usagePeriod, now).toISOString(),
+    period: resolved.usagePeriod,
+    resetAt: resolved.resetAt.toISOString(),
     used,
+    quotaBasis: resolved.basis,
   };
 }
 
 /**
  * Remaining generations for the user's plan in the current period.
- * Free: 5/day (UTC). Pro: 100/month (UTC).
+ * Free: 5/day (UTC). Pro: 100 per provider period or UTC month fallback.
  */
 export async function getRemainingGenerations(
   userId: string,

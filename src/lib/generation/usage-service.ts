@@ -6,6 +6,11 @@ import {
   type Plan,
 } from "@/config/plans";
 import { prisma } from "@/lib/db";
+import {
+  resolveQuotaPeriod,
+  type ProviderPeriodInput,
+  type QuotaBasis,
+} from "@/lib/usage/quota-period";
 
 export const GENERATION_RESERVATION_TTL_MS = 10 * 60 * 1000;
 export const GENERATION_TRANSACTION_MAX_ATTEMPTS = 3;
@@ -48,6 +53,7 @@ export interface GenerationPeriodWindow {
   end: Date;
   key: string;
   period: GenerationPeriod;
+  basis: QuotaBasis;
 }
 
 export interface GenerationUsage {
@@ -55,6 +61,8 @@ export interface GenerationUsage {
   limit: number;
   period: GenerationPeriod;
   periodKey: string;
+  basis: QuotaBasis;
+  resetAt: string;
 }
 
 export interface ReservationRecord {
@@ -342,40 +350,23 @@ export function reservationCountsTowardPeriodQuota(reservation: {
   return reservation.status === GENERATION_RESERVATION_STATUS.COMPLETED;
 }
 
+/**
+ * Quota counting window for Free (UTC day) or Pro
+ * (provider billing period when provided, else UTC calendar month).
+ */
 export function getGenerationPeriodWindow(
   plan: Plan,
   now = new Date(),
+  providerPeriod?: ProviderPeriodInput | null,
 ): GenerationPeriodWindow {
-  const period = getGenerationPolicy(plan).period;
-
-  if (period === "day") {
-    const start = new Date(
-      Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()),
-    );
-    const end = new Date(
-      Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1),
-    );
-
-    return {
-      start,
-      end,
-      key: start.toISOString().slice(0, 10),
-      period,
-    };
-  }
-
-  const start = new Date(
-    Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1),
-  );
-  const end = new Date(
-    Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, 1),
-  );
+  const resolved = resolveQuotaPeriod(plan, now, providerPeriod);
 
   return {
-    start,
-    end,
-    key: start.toISOString().slice(0, 7),
-    period,
+    start: resolved.start,
+    end: resolved.end,
+    key: resolved.periodKey,
+    period: resolved.generationPeriod,
+    basis: resolved.basis,
   };
 }
 
@@ -423,12 +414,18 @@ export async function reserveGeneration(
     userId: string;
     plan: Plan;
     now?: Date;
+    /** When omitted for Pro, calendar-month fallback is used (no DB lookup). */
+    providerPeriod?: ProviderPeriodInput | null;
   },
   store: GenerationReservationStore = prismaGenerationReservationStore,
 ): Promise<ReservationRecord> {
   const now = input.now ?? new Date();
   const policy = getGenerationPolicy(input.plan);
-  const period = getGenerationPeriodWindow(input.plan, now);
+  const period = getGenerationPeriodWindow(
+    input.plan,
+    now,
+    input.providerPeriod,
+  );
 
   return store.runSerializable(async (transaction) => {
     const duplicate = await transaction.findByRequestId(
@@ -479,7 +476,9 @@ export async function reserveGeneration(
         429,
         input.plan === "free"
           ? "You’ve reached today’s free generation limit."
-          : "You’ve reached your monthly generation limit.",
+          : period.basis === "provider_billing"
+            ? "You’ve reached your billing-period generation limit."
+            : "You’ve reached your monthly generation limit.",
       );
     }
 
@@ -522,9 +521,10 @@ export async function getGenerationUsage(
   plan: Plan,
   now = new Date(),
   store: GenerationReservationStore = prismaGenerationReservationStore,
+  providerPeriod?: ProviderPeriodInput | null,
 ): Promise<GenerationUsage> {
   const policy = getGenerationPolicy(plan);
-  const period = getGenerationPeriodWindow(plan, now);
+  const period = getGenerationPeriodWindow(plan, now, providerPeriod);
   const used = await store.countUsed(userId, period.start, period.end);
 
   return {
@@ -532,5 +532,7 @@ export async function getGenerationUsage(
     limit: policy.maxGenerationsPerPeriod,
     period: period.period,
     periodKey: period.key,
+    basis: period.basis,
+    resetAt: period.end.toISOString(),
   };
 }

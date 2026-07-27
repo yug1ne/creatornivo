@@ -137,6 +137,15 @@ export async function fetchGenerationUsageSnapshot(
       ? data.used
       : Math.max(0, (data.limit as number) - (data.remaining as number));
 
+  const quotaBasis =
+    data.quotaBasis === "utc_day" ||
+    data.quotaBasis === "provider_billing" ||
+    data.quotaBasis === "utc_calendar_month"
+      ? data.quotaBasis
+      : data.period === "daily"
+        ? ("utc_day" as const)
+        : ("utc_calendar_month" as const);
+
   return {
     plan: data.plan,
     remaining: data.remaining,
@@ -144,6 +153,7 @@ export async function fetchGenerationUsageSnapshot(
     period: data.period,
     resetAt: data.resetAt,
     used,
+    quotaBasis,
   };
 }
 
@@ -188,6 +198,7 @@ export function GenerateWorkspace({
       period: initialUsage.period,
       resetAt: initialUsage.resetAt,
       used: initialUsage.used,
+      quotaBasis: initialUsage.quotaBasis,
     });
   const [savedCount, setSavedCount] = useState(initialUsage.savedCount);
   const [savedPromptId, setSavedPromptId] = useState<string | null>(null);
@@ -529,6 +540,7 @@ export function GenerateWorkspace({
         resetAt={generationUsage.resetAt}
         savedCount={savedCount}
         maxSavedPrompts={limits.maxSavedPrompts}
+        quotaBasis={generationUsage.quotaBasis}
       />
 
       <div className="grid gap-6 lg:grid-cols-[300px_1fr]">

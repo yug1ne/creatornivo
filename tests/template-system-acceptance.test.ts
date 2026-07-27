@@ -462,10 +462,10 @@ test("required and optional render behavior is enforced before runtime generatio
 test("server render guard runs before quota, reservation, OpenAI, and usage writes", () => {
   const route = readProjectFile("src", "app", "api", "ai", "generate", "route.ts");
   const renderGuard = route.indexOf('code: "template_render_error"');
-  const usageCheck = route.indexOf("await getUserUsageSnapshot(userId, user.plan)");
+  const usageCheck = route.indexOf("await getUserUsageSnapshot(");
   const reservation = route.indexOf("await reserveGeneration");
   const openAiCall = route.indexOf("await createContentStream");
-  const usageWrite = route.indexOf("await incrementUsage(userId, getUsagePeriodForPlan");
+  const usageWrite = route.indexOf("await incrementUsage(");
 
   assert.ok(renderGuard >= 0);
   assert.ok(usageCheck > renderGuard);

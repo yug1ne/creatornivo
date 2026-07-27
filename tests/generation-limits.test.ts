@@ -711,6 +711,7 @@ test("quota exceeded payload includes reset guidance for Free users", () => {
       period: "daily",
       resetAt: "2026-07-07T00:00:00.000Z",
       used: 5,
+      quotaBasis: "utc_day",
     },
     now,
   );
@@ -733,16 +734,16 @@ test("missing OpenAI API key disables generation before reservation", () => {
   const configurationCheck = routeSource.indexOf(
     "if (!isAIProviderConfigured())",
   );
-  const usageCheck = routeSource.indexOf(
-    "await getUserUsageSnapshot(userId, user.plan)",
-  );
+  const usageCheck = routeSource.indexOf("await getUserUsageSnapshot(");
   const reservation = routeSource.indexOf("await reserveGeneration");
 
   assert.ok(configurationCheck >= 0);
   assert.ok(usageCheck > configurationCheck);
   assert.ok(reservation > usageCheck);
   assert.match(routeSource, /code: "generation_disabled"/);
-  assert.match(routeSource, /await incrementUsage\(userId, getUsagePeriodForPlan/);
+  assert.match(routeSource, /await incrementUsage\(\s*userId,\s*getUsagePeriodForPlan/);
+  assert.match(routeSource, /loadProviderPeriodForUser/);
+  assert.match(routeSource, /providerPeriod/);
   assert.match(routeSource, /quotaExceededResponse/);
   assert.match(routeSource, /buildQuotaExceededBody/);
   // Must not force remaining:0 when UserUsage still has headroom (UI/API mismatch bug).
@@ -791,15 +792,11 @@ test("email verification is required before usage, reservation, and OpenAI", () 
   const configurationCheck = routeSource.indexOf(
     "if (!isAIProviderConfigured())",
   );
-  const usageCheck = routeSource.indexOf(
-    "await getUserUsageSnapshot(userId, user.plan)",
-  );
+  const usageCheck = routeSource.indexOf("await getUserUsageSnapshot(");
   const reservation = routeSource.indexOf("await reserveGeneration");
   const openAiStream = routeSource.indexOf("await createContentStream");
   const openAiText = routeSource.indexOf("await createContentText");
-  const usageIncrement = routeSource.indexOf(
-    "await incrementUsage(userId, getUsagePeriodForPlan",
-  );
+  const usageIncrement = routeSource.indexOf("await incrementUsage(");
 
   assert.ok(verificationGate >= 0, "email verification gate missing");
   assert.ok(bodyParse > verificationGate, "gate must run before body parse");
@@ -843,6 +840,7 @@ test("successful generation usage is reconciled from the server", async () => {
     period: "daily",
     resetAt: "2026-07-07T00:00:00.000Z",
     used: 4,
+    quotaBasis: "utc_day",
   });
 });
 
@@ -1182,6 +1180,71 @@ test("Pro usage resets at UTC calendar month boundary", async () => {
   );
   assert.equal(usage.used, 0);
   assert.equal(usage.periodKey, "2026-07");
+  assert.equal(usage.basis, "utc_calendar_month");
+});
+
+test("Freemius Pro quota uses provider billing period (Jul 28 → Aug 28)", async () => {
+  const store = new MemoryReservationStore();
+  const periodStart = new Date("2026-07-28T12:00:00.000Z");
+  const periodEnd = new Date("2026-08-28T12:00:00.000Z");
+  const now = new Date("2026-07-29T10:00:00.000Z");
+  const providerPeriod = {
+    currentPeriodStart: periodStart,
+    currentPeriodEnd: periodEnd,
+  };
+
+  // Outside previous calendar-month-only assumption: gen on Jul 15 is before period.
+  store.seed({
+    requestId: "before-period",
+    plan: "pro",
+    createdAt: new Date("2026-07-15T10:00:00.000Z"),
+  });
+  store.seed({
+    requestId: "in-period",
+    plan: "pro",
+    createdAt: new Date("2026-07-28T15:00:00.000Z"),
+  });
+
+  const window = getGenerationPeriodWindow("pro", now, providerPeriod);
+  assert.equal(window.basis, "provider_billing");
+  assert.equal(window.start.toISOString(), periodStart.toISOString());
+  assert.equal(window.end.toISOString(), periodEnd.toISOString());
+  assert.match(window.key, /^billing:/);
+
+  const usage = await getGenerationUsage(
+    "user-1",
+    "pro",
+    now,
+    store,
+    providerPeriod,
+  );
+  assert.equal(usage.used, 1);
+  assert.equal(usage.basis, "provider_billing");
+  assert.equal(usage.resetAt, periodEnd.toISOString());
+  assert.equal(usage.periodKey, window.key);
+
+  // Reservation gate counts only in-period completions.
+  await reserveGeneration(
+    {
+      requestId: "after-one",
+      userId: "user-1",
+      plan: "pro",
+      now,
+      providerPeriod,
+    },
+    store,
+  );
+  const reserved = store.reservations.find((r) => r.requestId === "after-one");
+  assert.equal(reserved?.periodKey, window.key);
+});
+
+test("Pro without provider period falls back to UTC calendar month", async () => {
+  const now = new Date("2026-07-28T15:00:00.000Z");
+  const window = getGenerationPeriodWindow("pro", now, null);
+  assert.equal(window.basis, "utc_calendar_month");
+  assert.equal(window.key, "2026-07");
+  assert.equal(window.start.toISOString(), "2026-07-01T00:00:00.000Z");
+  assert.equal(window.end.toISOString(), "2026-08-01T00:00:00.000Z");
 });
 
 test("page refresh restores usage from server reservation data", async () => {

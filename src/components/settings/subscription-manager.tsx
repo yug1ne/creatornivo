@@ -24,8 +24,35 @@ export const CHECKOUT_CANCELLED_MESSAGE =
 export const PRO_ACTIVE_MESSAGE = "Your Pro subscription is active.";
 export const QUOTA_RESETS_SEPARATELY_MESSAGE =
   "Generation quota resets separately by UTC calendar month.";
+/** Freemius (or any provider) Pro when currentPeriodStart/End drive the quota window. */
+export const QUOTA_RESETS_WITH_BILLING_PERIOD_MESSAGE =
+  "Generation quota resets with your billing period.";
 export const FREEMIUS_PORTAL_UNAVAILABLE_MESSAGE =
   "No Freemius subscription is linked to this account. Manage billing only works for Freemius Pro subscriptions.";
+
+/**
+ * Settings copy: provider billing period when both period dates exist;
+ * otherwise honest UTC calendar-month fallback (manual/admin Pro).
+ */
+export function getQuotaResetsSettingsMessage(input: {
+  currentPeriodStart?: string | Date | null;
+  currentPeriodEnd?: string | Date | null;
+}): string {
+  const start = input.currentPeriodStart;
+  const end = input.currentPeriodEnd;
+  if (start == null || end == null || start === "" || end === "") {
+    return QUOTA_RESETS_SEPARATELY_MESSAGE;
+  }
+
+  const startMs =
+    start instanceof Date ? start.getTime() : new Date(start).getTime();
+  const endMs = end instanceof Date ? end.getTime() : new Date(end).getTime();
+  if (Number.isNaN(startMs) || Number.isNaN(endMs) || startMs >= endMs) {
+    return QUOTA_RESETS_SEPARATELY_MESSAGE;
+  }
+
+  return QUOTA_RESETS_WITH_BILLING_PERIOD_MESSAGE;
+}
 
 /** Billing-period end for Settings (human-readable UTC date). */
 export function formatSubscriptionAccessDate(isoDate: string): string {
@@ -98,6 +125,7 @@ export function shouldShowFreemiusPortalActions(input: {
 
 interface SubscriptionInfo {
   status: string | null;
+  currentPeriodStart?: string | null;
   currentPeriodEnd: string | null;
   cancelAtPeriodEnd: boolean;
   provider: BillingProvider | null;
@@ -299,7 +327,10 @@ function SubscriptionManagerContent({
 
       {isPro && (
         <p className="mt-1 text-xs text-muted-foreground">
-          {QUOTA_RESETS_SEPARATELY_MESSAGE}
+          {getQuotaResetsSettingsMessage({
+            currentPeriodStart: subscription?.currentPeriodStart,
+            currentPeriodEnd: subscription?.currentPeriodEnd,
+          })}
         </p>
       )}
 

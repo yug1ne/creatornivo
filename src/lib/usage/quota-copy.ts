@@ -1,6 +1,7 @@
 import { PLANS, type Plan } from "@/config/plans";
 
 import type { UsagePeriod } from "@/lib/usage";
+import type { QuotaBasis } from "@/lib/usage/quota-period";
 
 /** Human-readable countdown until `resetAt` (e.g. "in about 4 hours"). */
 export function getQuotaResetCountdown(
@@ -71,22 +72,32 @@ export function formatQuotaResetUtcDate(value: string | Date): string {
   return formatHumanUtcDate(value, { includeYear: false });
 }
 
+function isProviderBillingBasis(
+  basis: QuotaBasis | undefined,
+): basis is "provider_billing" {
+  return basis === "provider_billing";
+}
+
 /** Compact reset label for usage cards (banner, stats). */
 export function getQuotaResetHint(
   period: UsagePeriod,
   resetAt: string,
   now = new Date(),
+  basis?: QuotaBasis,
 ): string {
   const resetDate = new Date(resetAt);
   if (Number.isNaN(resetDate.getTime())) {
-    return period === "daily"
-      ? "Quota resets at midnight UTC"
+    if (period === "daily") {
+      return "Quota resets at midnight UTC";
+    }
+    return isProviderBillingBasis(basis)
+      ? "Quota resets with your billing period"
       : "Quota resets by UTC calendar month";
   }
 
   const countdown = getQuotaResetCountdown(resetAt, now);
 
-  if (period === "daily") {
+  if (period === "daily" || basis === "utc_day") {
     const time = formatUtcTime(resetDate);
     if (isSameUtcDay(resetDate, now)) {
       return `Quota resets today at ${time} UTC (${countdown})`;
@@ -96,7 +107,13 @@ export function getQuotaResetHint(
     return `Quota resets at ${time} UTC on ${dateLabel} (${countdown})`;
   }
 
-  // Pro: calendar-month bucket — keep wording explicit and free of billing-period confusion.
+  if (isProviderBillingBasis(basis)) {
+    // Provider anniversary: include year, avoid "calendar month" wording.
+    const dateLabel = formatHumanUtcDate(resetDate);
+    return `Quota resets on ${dateLabel}`;
+  }
+
+  // Pro calendar-month fallback.
   const dateLabel = formatQuotaResetUtcDate(resetDate);
   return `Quota resets on ${dateLabel} UTC`;
 }
@@ -106,6 +123,7 @@ export function getQuotaExhaustedBannerMessage(
   plan: Plan,
   resetAt: string,
   now = new Date(),
+  basis?: QuotaBasis,
 ): string {
   const countdown = getQuotaResetCountdown(resetAt, now);
 
@@ -125,6 +143,14 @@ export function getQuotaExhaustedBannerMessage(
   }
 
   const resetDate = new Date(resetAt);
+
+  if (isProviderBillingBasis(basis)) {
+    const dateLabel = Number.isNaN(resetDate.getTime())
+      ? "the end of this billing period"
+      : formatHumanUtcDate(resetDate);
+    return `You've reached this billing period's generation limit. Quota resets on ${dateLabel} (${countdown}).`;
+  }
+
   const dateLabel = Number.isNaN(resetDate.getTime())
     ? "the next calendar month"
     : formatQuotaResetUtcDate(resetDate);
@@ -137,6 +163,7 @@ export function getQuotaExceededCopy(
   plan: Plan,
   resetAt: string,
   now = new Date(),
+  basis?: QuotaBasis,
 ): { error: string; message: string } {
   const countdown = getQuotaResetCountdown(resetAt, now);
 
@@ -159,6 +186,18 @@ export function getQuotaExceededCopy(
   }
 
   const resetDate = new Date(resetAt);
+
+  if (isProviderBillingBasis(basis)) {
+    const dateLabel = Number.isNaN(resetDate.getTime())
+      ? "the end of this billing period"
+      : formatHumanUtcDate(resetDate);
+
+    return {
+      error: "Billing-period generation limit reached",
+      message: `You've used all 100 Pro generations this billing period. Quota resets on ${dateLabel} (${countdown}).`,
+    };
+  }
+
   const dateLabel = Number.isNaN(resetDate.getTime())
     ? "the start of next calendar month"
     : formatQuotaResetUtcDate(resetDate);

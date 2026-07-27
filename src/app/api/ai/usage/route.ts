@@ -37,6 +37,8 @@ export async function GET() {
         limit: snapshot.limit,
         period: snapshot.period,
         resetAt: snapshot.resetAt,
+        used: snapshot.used,
+        quotaBasis: snapshot.quotaBasis,
       },
       {
         headers: {

@@ -4,17 +4,25 @@ import {
   type Plan,
 } from "@/config/plans";
 import { getQuotaExhaustedBannerMessage } from "@/lib/usage/quota-copy";
+import type { QuotaBasis } from "@/lib/usage/quota-period";
 
 /** Primary label for usage UI — remaining quota in the current period. */
 export function getRemainingGenerationsLabel(
   plan: Plan,
   remaining: number,
+  basis?: QuotaBasis,
 ): string {
   const noun = remaining === 1 ? "generation" : "generations";
 
-  return plan === "free"
-    ? `${remaining} ${noun} left today`
-    : `${remaining} ${noun} left this calendar month`;
+  if (plan === "free") {
+    return `${remaining} ${noun} left today`;
+  }
+
+  if (basis === "provider_billing") {
+    return `${remaining} ${noun} left in this billing period`;
+  }
+
+  return `${remaining} ${noun} left this calendar month`;
 }
 
 export function getGenerationLimitMessage(
@@ -22,25 +30,35 @@ export function getGenerationLimitMessage(
   generationsUsed: number,
   resetAt?: string,
   now = new Date(),
+  basis?: QuotaBasis,
 ): string | null {
   const policy = getGenerationPolicy(plan);
 
   if (generationsUsed >= policy.maxGenerationsPerPeriod) {
     if (resetAt) {
-      return getQuotaExhaustedBannerMessage(plan, resetAt, now);
+      return getQuotaExhaustedBannerMessage(plan, resetAt, now, basis);
     }
 
-    return plan === "free"
-      ? "You've reached today's free generation limit."
+    if (plan === "free") {
+      return "You've reached today's free generation limit.";
+    }
+
+    return basis === "provider_billing"
+      ? "You've reached this billing period's generation limit."
       : "You've reached this calendar month's generation limit.";
   }
 
   const remaining = policy.maxGenerationsPerPeriod - generationsUsed;
 
   if (remaining <= 3) {
-    return `${remaining} ${remaining === 1 ? "generation" : "generations"} left ${
-      policy.period === "day" ? "today" : "this calendar month"
-    }.`;
+    const windowLabel =
+      policy.period === "day"
+        ? "today"
+        : basis === "provider_billing"
+          ? "in this billing period"
+          : "this calendar month";
+
+    return `${remaining} ${remaining === 1 ? "generation" : "generations"} left ${windowLabel}.`;
   }
 
   return null;

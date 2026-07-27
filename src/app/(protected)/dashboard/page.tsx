@@ -69,11 +69,16 @@ export default async function DashboardPage() {
       >
         <StatsCard
           label={`Generations ${
-            usageSnapshot.period === "daily" ? "today" : "this calendar month"
+            usageSnapshot.period === "daily"
+              ? "today"
+              : usageSnapshot.quotaBasis === "provider_billing"
+                ? "this billing period"
+                : "this calendar month"
           }`}
           value={getRemainingGenerationsLabel(
             session.plan,
             usageSnapshot.remaining,
+            usageSnapshot.quotaBasis,
           )}
           description={`${usageSnapshot.used} / ${usageSnapshot.limit} used`}
           icon="✦"

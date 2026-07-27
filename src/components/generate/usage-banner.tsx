@@ -11,6 +11,7 @@ import {
 import type { Plan } from "@/config/plans";
 import type { UsagePeriod } from "@/lib/usage";
 import { getQuotaResetHint } from "@/lib/usage/quota-copy";
+import type { QuotaBasis } from "@/lib/usage/quota-period";
 
 interface UsageBannerProps {
   plan: Plan;
@@ -21,6 +22,7 @@ interface UsageBannerProps {
   resetAt: string;
   savedCount: number;
   maxSavedPrompts: number;
+  quotaBasis?: QuotaBasis;
 }
 
 export const UsageBanner = memo(function UsageBanner({
@@ -32,8 +34,15 @@ export const UsageBanner = memo(function UsageBanner({
   resetAt,
   savedCount,
   maxSavedPrompts,
+  quotaBasis,
 }: UsageBannerProps) {
-  const generationWarning = getGenerationLimitMessage(plan, used, resetAt);
+  const generationWarning = getGenerationLimitMessage(
+    plan,
+    used,
+    resetAt,
+    new Date(),
+    quotaBasis,
+  );
   const saveWarning = getSaveLimitMessage(plan, savedCount);
   const isGenerationExhausted = remaining <= 0;
 
@@ -48,10 +57,11 @@ export const UsageBanner = memo(function UsageBanner({
                   Generation quota
                 </p>
                 <p className="mt-1 text-sm font-semibold text-foreground">
-                  {getRemainingGenerationsLabel(plan, remaining)}
+                  {getRemainingGenerationsLabel(plan, remaining, quotaBasis)}
                 </p>
                 <p className="mt-0.5 text-xs text-muted-foreground">
-                  {used} of {limit} used · {getQuotaResetHint(period, resetAt)}
+                  {used} of {limit} used ·{" "}
+                  {getQuotaResetHint(period, resetAt, new Date(), quotaBasis)}
                 </p>
               </div>
             </div>

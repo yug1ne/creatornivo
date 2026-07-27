@@ -31,7 +31,12 @@ export function buildQuotaExceededBody(
   snapshot: UserUsageSnapshot,
   now = new Date(),
 ): QuotaExceededBody {
-  const copy = getQuotaExceededCopy(snapshot.plan, snapshot.resetAt, now);
+  const copy = getQuotaExceededCopy(
+    snapshot.plan,
+    snapshot.resetAt,
+    now,
+    snapshot.quotaBasis,
+  );
 
   return {
     ...copy,
