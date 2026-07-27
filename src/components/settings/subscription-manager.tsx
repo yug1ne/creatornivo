@@ -30,6 +30,15 @@ export const QUOTA_RESETS_WITH_BILLING_PERIOD_MESSAGE =
 export const FREEMIUS_PORTAL_UNAVAILABLE_MESSAGE =
   "No Freemius subscription is linked to this account. Manage billing only works for Freemius Pro subscriptions.";
 
+/** Button label for Freemius Customer Portal (not CreatorNivo login). */
+export const FREEMIUS_PORTAL_BUTTON_LABEL = "Manage billing in Freemius";
+
+/**
+ * Helper under the portal button — separate Freemius portal password vs app login.
+ */
+export const FREEMIUS_PORTAL_HELPER_MESSAGE =
+  'Opens the Freemius Customer Portal for billing, invoices, payment method, and subscription renewal management. This portal uses a separate Freemius password. If you have not received one, use "Never received your password?" on the portal login page.';
+
 /**
  * Settings copy: provider billing period when both period dates exist;
  * otherwise honest UTC calendar-month fallback (manual/admin Pro).
@@ -432,20 +441,25 @@ function SubscriptionManagerContent({
         )}
 
         {showFreemiusPortalActions && (
-          <button
-            type="button"
-            onClick={() => handleFreemiusPortal()}
-            disabled={loadingAction !== null}
-            className={buttonVariants({
-              variant: "outline",
-              size: "sm",
-              className: "disabled:opacity-50",
-            })}
-          >
-            {loadingAction === "freemius"
-              ? "Loading..."
-              : "Manage subscription"}
-          </button>
+          <div className="w-full space-y-2">
+            <button
+              type="button"
+              onClick={() => handleFreemiusPortal()}
+              disabled={loadingAction !== null}
+              className={buttonVariants({
+                variant: "outline",
+                size: "sm",
+                className: "disabled:opacity-50",
+              })}
+            >
+              {loadingAction === "freemius"
+                ? "Opening..."
+                : FREEMIUS_PORTAL_BUTTON_LABEL}
+            </button>
+            <p className="text-xs text-muted-foreground">
+              {FREEMIUS_PORTAL_HELPER_MESSAGE}
+            </p>
+          </div>
         )}
 
         {isPro &&

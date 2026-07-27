@@ -326,6 +326,13 @@ test("settings billing shows portal only for Freemius-linked Pro", () => {
   assert.match(billingPage, /SubscriptionManager/);
   assert.match(billingPage, /freemiusUserId/);
   assert.match(billingPage, /publicCheckoutEnabled/);
+  assert.match(billingPage, /Freemius Customer Portal/);
+  assert.match(billingPage, /Never received your password/);
+
+  const manager = read("src/components/settings/subscription-manager.tsx");
+  assert.match(manager, /Manage billing in Freemius/);
+  assert.match(manager, /Freemius Customer Portal/);
+  assert.match(manager, /separate Freemius password/i);
 });
 
 test("restricted checkout is never exposed on public pricing surfaces", () => {

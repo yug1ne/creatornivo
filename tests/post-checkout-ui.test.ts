@@ -148,6 +148,30 @@ test("Freemius portal only for Freemius-linked Pro; Paddle/Stripe not broken", (
     "utf8",
   );
   assert.match(source, /\/api\/freemius\/portal/);
-  assert.match(source, /Manage subscription/);
+  assert.match(source, /Manage billing in Freemius/);
+  assert.match(source, /Freemius Customer Portal/);
+  assert.match(source, /separate Freemius password/i);
+  assert.match(source, /Never received your password/);
   assert.doesNotMatch(source, /plan:\s*["']pro["']/);
+});
+
+test("Freemius portal helper copy clarifies separate portal password", () => {
+  const manager = readFileSync(
+    "src/components/settings/subscription-manager.tsx",
+    "utf8",
+  );
+  const billing = readFileSync(
+    "src/app/(protected)/settings/billing/page.tsx",
+    "utf8",
+  );
+
+  assert.match(manager, /FREEMIUS_PORTAL_BUTTON_LABEL/);
+  assert.match(manager, /FREEMIUS_PORTAL_HELPER_MESSAGE/);
+  assert.match(manager, /Freemius Customer Portal/);
+  assert.match(manager, /separate Freemius password/i);
+  assert.match(manager, /Never received your password/);
+
+  assert.match(billing, /Freemius Customer Portal/);
+  assert.match(billing, /separate from your CreatorNivo login/i);
+  assert.match(billing, /Never received your password/);
 });

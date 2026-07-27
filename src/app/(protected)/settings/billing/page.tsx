@@ -85,6 +85,18 @@ export default async function SettingsBillingPage() {
             : " Generation quota for Pro without a provider period uses UTC calendar months."}
         </p>
 
+        {subscription?.provider === "freemius" && (
+          <p className="text-sm text-muted-foreground">
+            Billing for Freemius Pro is managed in the Freemius Customer Portal
+            (separate from your CreatorNivo login). The portal uses its own
+            Freemius password—if you need one, use
+            {" "}
+            &quot;Never received your password?&quot;
+            {" "}
+            on the portal login page.
+          </p>
+        )}
+
         <Link
           href="/settings"
           className={buttonVariants({ variant: "outline", size: "sm" })}
