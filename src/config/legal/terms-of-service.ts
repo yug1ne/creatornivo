@@ -54,12 +54,14 @@ export const termsOfServiceSections: LegalSection[] = [
     id: "usage-limits",
     title: "Usage Limits",
     paragraphs: [
-      "Generation is subject to plan limits enforced by the Service. As of the last update of these Terms, the product is configured approximately as follows (the in-app usage display and server rules control if they differ):",
+      "Generation is subject to plan limits enforced by the Service. Plan generation capacity is usage-based and consumptive: each completed generation (AI-assisted draft) consumes capacity for the applicable Free or Pro period and counts as delivered service once the draft is produced.",
+      "As of the last update of these Terms, the product is configured approximately as follows (the in-app usage display and server rules control if they differ):",
     ],
     list: [
       "Free plan: a limited number of completed generations per UTC day (currently five per day in product configuration).",
       "Pro plan: a limited number of completed generations per UTC calendar month (currently one hundred per month in product configuration).",
       "Attempting to bypass quotas, rate limits, security controls, or access controls is prohibited.",
+      "Refund eligibility for paid plans is described in our Refund Policy, including limitations when consumptive generation capacity has already been used.",
     ],
   },
   {

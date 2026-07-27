@@ -33,6 +33,17 @@ export const refundPolicySections: LegalSection[] = [
     ],
   },
   {
+    id: "consumptive-usage",
+    title: "Consumptive Usage (AI-Assisted Drafts and Generations)",
+    paragraphs: [
+      "Creatornivo Pro includes limited AI-assisted draft generation capacity (currently one hundred completed generations per UTC calendar month in product configuration, subject to the in-app usage display and server rules).",
+      "AI-assisted drafts and completed generations are consumptive usage: each completed generation consumes provider resources (including third-party AI processing) and delivers service value immediately when the draft is produced.",
+      "Because that capacity is usage-based and consumed when a generation completes, refunds may be denied or limited when Pro generation capacity has been substantially or fully used during the refund window.",
+      "Consumed generations (completed AI-assisted drafts) are not refundable as a separate credit or cash value, because the service has already been delivered for those generations.",
+      "A refund, if approved, does not reset, restore, or re-credit consumed generation capacity for the period in which it was used.",
+    ],
+  },
+  {
     id: "how-to-request",
     title: "How to Request a Refund",
     paragraphs: [
@@ -63,14 +74,14 @@ export const refundPolicySections: LegalSection[] = [
       "The request is made more than 7 days after purchase (unless mandatory law requires a different remedy).",
       "The request is only a change of mind without an unresolved product, access, or technical issue covered by this policy.",
       "There is evidence of abuse, fraud, chargeback misuse, Terms of Service violations, or Responsible Use violations.",
-      "Usage patterns show excessive completed generations or other abuse of plan limits in a way that is inconsistent with a good-faith trial of the Service.",
+      "Pro generation capacity has been substantially or fully used, or usage patterns show excessive completed generations or other abuse of plan limits in a way that is inconsistent with a good-faith trial of the Service.",
       "Freemius’s rules as Merchant of Record for the transaction do not allow a refund in the circumstances presented.",
     ],
     subsections: [
       {
         title: "No open-ended automatic guarantee",
         paragraphs: [
-          "Creatornivo does not advertise automatic refunds on demand for every purchase. The 7-day money-back guarantee applies as described above for unresolved product, access, or technical issues. Approval remains subject to verification, this policy, Freemius’s processes, and mandatory law.",
+          "Creatornivo does not advertise automatic refunds on demand for every purchase. The 7-day money-back guarantee applies as described above for unresolved product, access, or technical issues. Approval remains subject to verification, this policy (including consumptive usage limitations), Freemius’s processes, and mandatory law.",
         ],
       },
     ],
@@ -98,6 +109,7 @@ export const refundPolicySections: LegalSection[] = [
     paragraphs: [
       "If a refund is approved, it is processed through Freemius, and Creatornivo Pro access may be revoked or adjusted after the refund is confirmed.",
       "After a refund is confirmed, account access may be adjusted, limited, or ended according to subscription status, the reason for the refund, and applicable provider rules.",
+      "A refund does not reset or restore consumed generation capacity. Completed generations that already used Pro capacity remain consumed and are not re-credited.",
     ],
   },
   {

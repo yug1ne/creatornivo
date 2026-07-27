@@ -209,6 +209,44 @@ test("Refund Policy aligns with 7-day Freemius money-back guarantee", () => {
   assert.doesNotMatch(refund, /Paddle/i);
 });
 
+test("Refund Policy treats AI drafts as consumptive usage with limited refunds after substantial use", () => {
+  const refund = legalText(refundPolicySections);
+
+  assert.match(refund, /consumptive usage/i);
+  assert.match(
+    refund,
+    /AI-assisted draft|completed generation|completed generations/i,
+  );
+  assert.match(
+    refund,
+    /refunds may be denied or limited|may decline or limit refunds/i,
+  );
+  assert.match(
+    refund,
+    /substantially or fully used|generation capacity has been substantially/i,
+  );
+  assert.match(
+    refund,
+    /service has already been delivered|counts as delivered service|not refundable/i,
+  );
+  assert.match(
+    refund,
+    /does not reset|do not reset|not reset or restore|not re-credit/i,
+  );
+  assert.match(refund, /consumed generation capacity/i);
+});
+
+test("Terms describe generation capacity as usage-based consumptive delivered service", () => {
+  const terms = legalText(termsOfServiceSections);
+
+  assert.match(terms, /usage-based and consumptive|consumptive/i);
+  assert.match(
+    terms,
+    /completed generation.*delivered service|counts as delivered service/i,
+  );
+  assert.match(terms, /Refund Policy/i);
+});
+
 test("Responsible Use describes AI-assisted drafting, human review, and prohibited uses", () => {
   const responsible = legalText(responsibleUseSections);
 
