@@ -43,7 +43,7 @@ export function buildEmailVerificationHtml(input: {
 
   return renderTransactionalEmailHtml({
     title: "Confirm your email",
-    preheader: "Confirm your email to generate content with Creatornivo.",
+    preheader: "Confirm your email to generate content with CreatorNivo.",
     greetingHtml: emailGreetingHtml(input.name),
     bodyHtml: [
       renderEmailParagraph(

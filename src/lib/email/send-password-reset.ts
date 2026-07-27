@@ -54,7 +54,7 @@ export function buildPasswordResetEmailHtml(input: {
     highlight: {
       title: "Security tip",
       bodyHtml:
-        "Never share this link. Creatornivo will never ask for your password by email.",
+        "Never share this link. CreatorNivo will never ask for your password by email.",
       variant: "info",
     },
     primaryCta: {

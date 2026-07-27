@@ -14,15 +14,15 @@ export const responsibleUseSections: LegalSection[] = [
     title: "Introduction",
     paragraphs: [
       `${siteConfig.name} is an AI-assisted text drafting SaaS for creators, marketers, and indie makers. Users select predefined business templates (for example LinkedIn posts, product descriptions, or email outreach), fill structured fields, and receive draft text they can save or export.`,
-      "This page explains what the product is for, what users must do before using outputs, and what uses are prohibited. It supplements our Terms of Service and helps payment providers, partners, and users understand how Creatornivo is intended to be used.",
+      "This page explains what the product is for, what users must do before using outputs, and what uses are prohibited. It supplements our Terms of Service and helps payment providers, partners, and users understand how CreatorNivo is intended to be used.",
       "If this page and the Terms of Service conflict on a specific rule, the Terms of Service control.",
     ],
   },
   {
-    id: "what-creatornivo-is",
-    title: "What Creatornivo Is",
+    id: "what-CreatorNivo-is",
+    title: "What CreatorNivo Is",
     paragraphs: [
-      "Creatornivo helps people draft professional, business-oriented text using structured templates and third-party AI models. The product is designed for drafting assistance—not for unsupervised publication, not for synthetic media of real people, and not for regulated professional advice.",
+      "CreatorNivo helps people draft professional, business-oriented text using structured templates and third-party AI models. The product is designed for drafting assistance—not for unsupervised publication, not for synthetic media of real people, and not for regulated professional advice.",
     ],
     list: [
       "AI-assisted text drafting with predefined business templates.",
@@ -32,10 +32,10 @@ export const responsibleUseSections: LegalSection[] = [
     ],
   },
   {
-    id: "what-creatornivo-is-not",
-    title: "What Creatornivo Is Not",
+    id: "what-CreatorNivo-is-not",
+    title: "What CreatorNivo Is Not",
     paragraphs: [
-      "Creatornivo is not a marketplace for adult content, not a deepfake or impersonation tool, not a spam engine, and not a substitute for licensed professionals.",
+      "CreatorNivo is not a marketplace for adult content, not a deepfake or impersonation tool, not a spam engine, and not a substitute for licensed professionals.",
     ],
     list: [
       "Not an image, video, voice, or face-generation product.",
@@ -57,7 +57,7 @@ export const responsibleUseSections: LegalSection[] = [
     id: "intended-use",
     title: "Intended Use",
     paragraphs: [
-      "Creatornivo is intended for lawful, professional drafting of business and creator content when you supply truthful inputs and review the result.",
+      "CreatorNivo is intended for lawful, professional drafting of business and creator content when you supply truthful inputs and review the result.",
     ],
     list: [
       "Marketing and social drafts based on templates (for example LinkedIn, product pages, newsletters).",
@@ -70,7 +70,7 @@ export const responsibleUseSections: LegalSection[] = [
     id: "prohibited-use",
     title: "Prohibited Use",
     paragraphs: [
-      "You must not use Creatornivo—or submit inputs intended—to create, promote, or facilitate the following. This list is illustrative, not exhaustive. We may suspend or terminate accounts that violate these rules or our Terms of Service.",
+      "You must not use CreatorNivo—or submit inputs intended—to create, promote, or facilitate the following. This list is illustrative, not exhaustive. We may suspend or terminate accounts that violate these rules or our Terms of Service.",
     ],
     list: [
       "Adult or sexual content, including pornography, erotic roleplay, or sexual services marketing.",

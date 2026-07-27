@@ -24,7 +24,7 @@ test("sign out uses modal instead of window.confirm", () => {
   const source = readFileSync("src/components/auth/sign-out-button.tsx", "utf8");
 
   assert.doesNotMatch(source, /window\.confirm/);
-  assert.match(source, /Sign out of Creatornivo\?/);
+  assert.match(source, /Sign out of CreatorNivo\?/);
   assert.match(source, /variant="destructive"/);
 });
 
@@ -45,6 +45,6 @@ test("dashboard upgrade card uses concrete copy", () => {
   const source = readFileSync("src/app/(protected)/dashboard/page.tsx", "utf8");
 
   assert.match(source, /Need more generations\?/);
-  assert.match(source, /100\/month, all templates/);
+  assert.match(source, /100 drafts per billing period, all templates/);
   assert.doesNotMatch(source, /Unlock full potential/);
 });

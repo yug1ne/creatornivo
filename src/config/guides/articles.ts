@@ -2,8 +2,8 @@ import type { GuideArticle } from "@/config/guides/types";
 
 /**
  * Static public guides. Keep claims aligned with product truth:
- * Free 5 completed drafts / UTC day; Pro 100 / UTC calendar month;
- * self-serve checkout may be unavailable; human review required.
+ * Free 5 completed drafts / UTC day; Pro 100 / provider billing period;
+ * human review required. Do not name payment processors in public guides.
  * Never include system prompts, private template prompts, or fake social proof.
  */
 export const guideArticles: GuideArticle[] = [
@@ -47,8 +47,8 @@ export const guideArticles: GuideArticle[] = [
         ],
         list: [
           "Free: up to 5 completed drafts per UTC day",
-          "Pro / Early Access: up to 100 completed drafts per UTC calendar month",
-          "Self-serve paid checkout may be unavailable while we finalize our payment provider; Early Access and paid access requests are handled via support as described on the Pricing page",
+          "Pro: up to 100 completed drafts per billing period",
+          "See Pricing for current paid plans, founding offers when available, and how to subscribe",
         ],
       },
       {
@@ -101,7 +101,7 @@ export const guideArticles: GuideArticle[] = [
       {
         heading: "Limits still apply",
         paragraphs: [
-          "Free accounts can complete up to 5 drafts per UTC day. Pro and Early Access capacity is currently up to 100 completed drafts per UTC calendar month in product configuration. Self-serve paid checkout may be unavailable; see Pricing for Early Access options via support.",
+          "Free accounts can complete up to 5 drafts per UTC day. Pro capacity is currently up to 100 completed drafts per billing period in product configuration. See Pricing for current paid plans and offers.",
         ],
       },
     ],
@@ -146,7 +146,7 @@ export const guideArticles: GuideArticle[] = [
       {
         heading: "Capacity while you practice",
         paragraphs: [
-          "On Free, you can complete up to 5 drafts per UTC day—enough to learn the workflow. Pro / Early Access currently allows up to 100 completed drafts per UTC calendar month. Self-serve checkout may be paused; Early Access is described on the Pricing page.",
+          "On Free, you can complete up to 5 drafts per UTC day—enough to learn the workflow. Pro currently allows up to 100 completed drafts per billing period. See Pricing for current paid plans and offers.",
         ],
       },
     ],
@@ -195,8 +195,8 @@ export const guideArticles: GuideArticle[] = [
       {
         heading: "Honest product limits",
         paragraphs: [
-          "Free: up to 5 completed drafts per UTC day. Pro / Early Access: up to 100 completed drafts per UTC calendar month in current product configuration. Failed or incomplete runs should not permanently consume completed-generation quota.",
-          "Self-serve paid checkout may be unavailable while we finalize our payment provider. Early Access and paid access requests go through support as described on Pricing. For intended use and prohibited uses, see Responsible Use.",
+          "Free: up to 5 completed drafts per UTC day. Pro: up to 100 completed drafts per billing period in current product configuration. Failed or incomplete runs should not permanently consume completed-generation quota.",
+          "See Pricing for current paid plans and founding offers when available. For intended use and prohibited uses, see Responsible Use.",
         ],
       },
     ],
@@ -245,7 +245,7 @@ export const guideArticles: GuideArticle[] = [
         heading: "What stays the same",
         paragraphs: [
           "No drafting tool removes your responsibility. AI-assisted outputs are drafts. Review facts, claims, and channel rules before you publish or send.",
-          "Capacity is limited: Free allows up to 5 completed AI-assisted drafts per UTC day; Pro Early Access currently allows up to 100 completed drafts per UTC calendar month. Self-serve paid checkout may be unavailable; see Pricing for Early Access options.",
+          "Capacity is limited: Free allows up to 5 completed AI-assisted drafts per UTC day; Pro currently allows up to 100 completed drafts per billing period. See Pricing for current paid plans.",
         ],
       },
     ],
@@ -254,9 +254,9 @@ export const guideArticles: GuideArticle[] = [
     slug: "free-vs-pro-generations",
     title: "Free vs Pro generation limits",
     description:
-      "Honest Free and Pro Early Access limits for completed AI-assisted drafts: 5 per UTC day on Free, 100 per UTC calendar month on Pro while self-serve checkout is paused.",
+      "Honest Free and Pro limits for completed AI-assisted drafts: 5 per UTC day on Free, 100 per billing period on paid Pro.",
     publishedAt: "2026-07-24",
-    updatedAt: "2026-07-24",
+    updatedAt: "2026-07-27",
     category: "product",
     relatedSlugs: [
       "what-is-creatornivo",
@@ -268,7 +268,7 @@ export const guideArticles: GuideArticle[] = [
       {
         paragraphs: [
           "CreatorNivo is an AI-assisted, template-based drafting workspace with plan limits so capacity stays fair. User-facing quota counts successful completed generations only—not every failed attempt.",
-          "Self-serve paid checkout may be unavailable while we finalize our payment provider. Pro and Early Access access may be granted through support as described on the Pricing page. This article reflects current product configuration, not a future billing-period system.",
+          "Paid Pro quota follows your subscription billing period when period dates are available. Free quota resets by UTC day. See Pricing for current plans and founding offers when available.",
         ],
       },
       {
@@ -284,15 +284,15 @@ export const guideArticles: GuideArticle[] = [
         ],
       },
       {
-        heading: "Pro / Early Access (today)",
+        heading: "Pro plan (today)",
         paragraphs: [
-          "Pro Early Access currently uses a higher monthly completed-draft limit while self-serve checkout is paused and the Early Access flow is active.",
+          "Paid Pro uses a higher completed-draft limit aligned with your billing period when your subscription has provider period dates.",
         ],
         list: [
-          "Up to 100 completed AI-assisted drafts per UTC calendar month",
+          "Up to 100 completed AI-assisted drafts per billing period",
           "Access to Pro templates and export options as shown in the product",
           "Higher library capacity (unlimited saved drafts on Pro in product configuration)",
-          "Does not yet mean “quota resets on your payment provider anniversary date”—that would require a future payment integration change",
+          "Quota resets with your billing period for paid provider-backed Pro",
         ],
       },
       {
@@ -305,7 +305,7 @@ export const guideArticles: GuideArticle[] = [
       {
         heading: "How to choose next steps",
         paragraphs: [
-          "Start free if you are learning the template workflow. If you need more monthly capacity or Pro templates, open Pricing for Early Access options. There is no pressure language here—only the limits the product enforces today.",
+          "Start free if you are learning the template workflow. If you need more capacity or Pro templates, open Pricing for current paid options. There is no pressure language here—only the limits the product enforces today.",
         ],
       },
     ],
@@ -355,7 +355,7 @@ export const guideArticles: GuideArticle[] = [
         heading: "After you generate",
         paragraphs: [
           "Even strong inputs need a human pass. Check facts, claims, and channel rules. Save only drafts worth keeping to your library.",
-          "Free: up to 5 completed drafts per UTC day. Pro Early Access: up to 100 completed drafts per UTC calendar month while checkout remains paused and Early Access is active. See Pricing for current options.",
+          "Free: up to 5 completed drafts per UTC day. Pro: up to 100 completed drafts per billing period. See Pricing for current options.",
         ],
       },
     ],
@@ -397,7 +397,7 @@ export const guideArticles: GuideArticle[] = [
         heading: "What the library is not",
         paragraphs: [
           "It is not unlimited public hosting for every generation. Free accounts have a finite save cap. It does not publish content for you, and it does not mean a draft is approved for external use.",
-          "Generation limits are separate from save limits: Free includes up to 5 completed AI-assisted drafts per UTC day; Pro Early Access currently includes up to 100 completed drafts per UTC calendar month while self-serve checkout may be unavailable.",
+          "Generation limits are separate from save limits: Free includes up to 5 completed AI-assisted drafts per UTC day; Pro currently includes up to 100 completed drafts per billing period.",
         ],
       },
       {

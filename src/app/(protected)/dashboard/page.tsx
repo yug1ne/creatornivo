@@ -126,7 +126,7 @@ export default async function DashboardPage() {
                 Need more generations?
               </p>
               <p className="mt-1 text-sm text-muted-foreground">
-                Pro gives you 100/month, all templates, and export to .md /
+                Pro gives you 100 drafts per billing period, all templates, and export to .md /
                 .txt. Self-serve checkout may be paused — see pricing for Early
                 Access options.
               </p>

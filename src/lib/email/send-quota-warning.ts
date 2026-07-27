@@ -43,7 +43,7 @@ export function buildQuotaWarningEmailText(input: {
     "",
     `Your Free plan includes 5 generations per day (UTC). ${resetHint}.`,
     "",
-    "If you want more headroom, Pro includes 100 generations per month — totally optional.",
+    "If you want more headroom, Pro includes 100 generations per billing period — totally optional.",
     "",
     "Continue generating:",
     `${baseUrl}/generate`,
@@ -93,7 +93,7 @@ export function buildQuotaWarningEmailHtml(input: {
       { href: `${baseUrl}/dashboard`, label: "Open dashboard" },
     ],
     footerNoteHtml:
-      "Pro includes 100 generations per month if you ever want more headroom — totally optional.",
+      "Pro includes 100 generations per billing period if you ever want more headroom — totally optional.",
     baseUrl,
   });
 }

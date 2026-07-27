@@ -37,7 +37,9 @@ export function buildQuotaExhaustedEmailText(input: {
   );
   const resetLine = quotaMessage
     .replace(/^You've used all 5 free generations today\. /, "")
-    .replace(/ Upgrade to Pro for 100 generations per month\.$/, "");
+    .replace(/ Upgrade to Pro for 100 generations per billing period\.$/, "")
+    .replace(/ Upgrade to Pro for 100 generations per month\.$/, "")
+    .replace(/ Upgrade to Pro for 100 generations per UTC calendar month\.$/, "");
 
   return [
     emailGreeting(input.name),
@@ -46,7 +48,7 @@ export function buildQuotaExhaustedEmailText(input: {
     "",
     resetLine,
     "",
-    "If you need more capacity before then, Pro includes 100 generations per month — no pressure, your free quota returns automatically.",
+    "If you need more capacity before then, Pro includes 100 generations per billing period — no pressure, your free quota returns automatically.",
     "",
     "View Pro pricing:",
     `${baseUrl}/pricing`,
@@ -73,7 +75,9 @@ export function buildQuotaExhaustedEmailHtml(input: {
   const resetLine = escapeHtml(
     quotaMessage
       .replace(/^You've used all 5 free generations today\. /, "")
-      .replace(/ Upgrade to Pro for 100 generations per month\.$/, ""),
+      .replace(/ Upgrade to Pro for 100 generations per billing period\.$/, "")
+      .replace(/ Upgrade to Pro for 100 generations per month\.$/, "")
+      .replace(/ Upgrade to Pro for 100 generations per UTC calendar month\.$/, ""),
   );
 
   return renderTransactionalEmailHtml({
@@ -103,7 +107,7 @@ export function buildQuotaExhaustedEmailHtml(input: {
       { href: `${baseUrl}/library`, label: "Open library" },
     ],
     footerNoteHtml:
-      "Pro includes 100 generations per month — no pressure either way.",
+      "Pro includes 100 generations per billing period — no pressure either way.",
     baseUrl,
   });
 }

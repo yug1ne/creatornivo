@@ -40,7 +40,7 @@ export const PromptPreview = memo(function PromptPreview({
       <CardHeader className="space-y-1 border-b border-border pb-4">
         <CardTitle className="text-sm">Ready to generate</CardTitle>
         <p className="text-xs text-muted-foreground">
-          Your inputs are ready. Creatornivo assembles the final prompt securely
+          Your inputs are ready. CreatorNivo assembles the final prompt securely
           on the server.
         </p>
       </CardHeader>

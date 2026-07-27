@@ -42,15 +42,15 @@ export function buildProConfirmationEmailText(input: {
     "",
     `Your ${siteConfig.name} Pro subscription is active.`,
     "",
-    "Thank you for supporting Early Access. Here's what's unlocked:",
-    "- 100 generations per month (UTC)",
+    "Thank you for supporting CreatorNivo Pro. Here's what's unlocked:",
+    "- 100 generations per billing period (provider period for paid Freemius Pro)",
     "- Access to all templates",
     "- Export as Markdown (.md) or plain text (.txt)",
     "",
     "Start generating:",
     generateUrl,
     "",
-    "Manage your subscription:",
+    "Manage billing in Freemius (Settings → Billing):",
     settingsUrl,
     "",
     ...renderEmailTextSignOff(),
@@ -67,15 +67,15 @@ export function buildProConfirmationEmailHtml(input: {
   return renderTransactionalEmailHtml({
     title: "Pro is active",
     preheader:
-      "Your Creatornivo Pro subscription is live — 100 generations per month and all templates.",
+      "Your CreatorNivo Pro subscription is live — 100 generations per billing period and all templates.",
     greetingHtml: emailGreetingHtml(input.name),
     bodyHtml: [
       renderEmailParagraph(
-        `Your <strong>${siteConfig.name} Pro</strong> subscription is active. Thank you for supporting Early Access — it helps us keep improving the product honestly.`,
+        `Your <strong>${siteConfig.name} Pro</strong> subscription is active. Thank you for supporting the product — it helps us keep improving honestly.`,
       ),
       renderEmailParagraph("Here&rsquo;s what you can use right away:"),
       renderEmailList([
-        "<strong>100 generations per month</strong> (UTC month)",
+        "<strong>100 generations per billing period</strong> (provider period for paid Freemius Pro)",
         "Access to <strong>all templates</strong>",
         "Export as <strong>Markdown (.md)</strong> or plain text (.txt)",
       ]),
@@ -83,7 +83,7 @@ export function buildProConfirmationEmailHtml(input: {
     highlight: {
       title: "You're on Pro",
       bodyHtml:
-        "No daily free-plan ceiling. Use your monthly quota for the work that matters this month.",
+        "No daily free-plan ceiling. Use your billing-period quota for the work that matters this cycle.",
       variant: "success",
     },
     primaryCta: {
@@ -92,7 +92,7 @@ export function buildProConfirmationEmailHtml(input: {
     },
     secondaryCtas: [
       { href: templatesUrl, label: "Browse templates" },
-      { href: settingsUrl, label: "Manage subscription" },
+      { href: settingsUrl, label: "Manage billing" },
     ],
     baseUrl,
   });
@@ -100,7 +100,7 @@ export function buildProConfirmationEmailHtml(input: {
 
 /**
  * Sends Pro confirmation once per user (idempotent via `proConfirmationEmailSentAt`).
- * Intended after Paddle webhook upgrades plan free → pro.
+ * Triggered after provider webhook upgrades plan free → pro (Freemius or legacy paths).
  */
 export async function sendProConfirmationEmail(
   input: ProConfirmationEmailUser,

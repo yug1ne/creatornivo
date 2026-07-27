@@ -27,7 +27,8 @@ test("buildProConfirmationEmailText includes Pro benefits and action links", () 
 
   assert.match(text, /^Hi Alex,/);
   assert.match(text, /Pro subscription is active/i);
-  assert.match(text, /100 generations per month/i);
+  assert.match(text, /100 generations per billing period/i);
+  assert.doesNotMatch(text, /100 generations per month \(UTC\)/i);
   assert.match(text, /all templates/i);
   assert.match(text, /\.md.*plain text/i);
   assert.match(text, /\/generate/);
@@ -73,11 +74,15 @@ test("buildQuotaExhaustedEmailText states daily limit and reset countdown", () =
   assert.match(text, /used all 5 free generations today/i);
   assert.match(text, /Resets at 00:00 UTC/i);
   assert.match(text, /in about 6 hours/i);
-  assert.match(text, /100 generations per month/i);
+  assert.match(text, /100 generations per billing period/i);
   assert.match(text, /no pressure/i);
   assert.match(text, /\/pricing/);
   assert.match(text, /\/dashboard/);
   assert.doesNotMatch(text, /Upgrade to Pro for 100 generations per month\./);
+  assert.doesNotMatch(
+    text,
+    /Upgrade to Pro for 100 generations per UTC calendar month\./,
+  );
 });
 
 test("buildQuotaExhaustedEmailText uses a generic greeting without a name", () => {
@@ -143,7 +148,7 @@ test("buildQuotaWarningEmailHtml and exhausted HTML share brand layout", () => {
   for (const html of [warning, exhausted]) {
     assert.match(html, /<!DOCTYPE html>/i);
     assert.match(html, /#6366f1/);
-    assert.match(html, /Creatornivo/);
+    assert.match(html, /CreatorNivo|Creatornivo/i);
     assert.match(html, /max-width:560px/);
   }
   assert.match(warning, /1 generation left/i);

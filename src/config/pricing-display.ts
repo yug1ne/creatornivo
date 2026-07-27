@@ -30,7 +30,7 @@ export const pricingPlans = [
     highlighted: true,
     cta: { label: "Upgrade to Pro", href: "/pricing" },
     features: [
-      "100 AI-assisted drafts per month",
+      "100 AI-assisted drafts per billing period",
       "Unlimited saved drafts",
       `All ${TEMPLATE_CATALOG_COUNTS.total} templates`,
       "AI-assisted drafting (GPT-5.6)",
@@ -98,7 +98,7 @@ export const howItWorksSteps = [
     step: "02",
     title: "Fill in the blanks",
     description:
-      "Add your topic, tone, and audience. Creatornivo builds the structured request securely on the server.",
+      "Add your topic, tone, and audience. CreatorNivo builds the structured request securely on the server.",
   },
   {
     step: "03",

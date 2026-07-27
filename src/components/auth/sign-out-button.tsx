@@ -94,7 +94,7 @@ export function SignOutButton({ className, onNavigate }: SignOutButtonProps) {
                 id="sign-out-dialog-title"
                 className="text-lg font-semibold text-foreground"
               >
-                Sign out of Creatornivo?
+                Sign out of CreatorNivo?
               </h2>
               <p className="mt-2 text-sm text-muted-foreground">
                 You will need to sign in again to access your dashboard and

@@ -15,9 +15,9 @@ export const privacyPolicySections: LegalSection[] = [
     id: "introduction",
     title: "Introduction",
     paragraphs: [
-      "Creatornivo is an independent software project operated by an individual based in Ukraine.",
-      `This Privacy Policy explains how the operator of ${siteConfig.name} ("Creatornivo," "we," "us," or "our") collects, uses, and safeguards personal information when you use the Service.`,
-      "Creatornivo helps users create content drafts with AI templates. When you generate content, information included in your request is sent to an AI provider to produce the result.",
+      "CreatorNivo is an independent software project operated by an individual based in Ukraine.",
+      `This Privacy Policy explains how the operator of ${siteConfig.name} ("CreatorNivo," "we," "us," or "our") collects, uses, and safeguards personal information when you use the Service.`,
+      "CreatorNivo helps users create content drafts with AI templates. When you generate content, information included in your request is sent to an AI provider to produce the result.",
       "We do not sell your personal information. We do not use third-party advertising trackers for targeted ads as part of the current product.",
     ],
   },
@@ -49,8 +49,8 @@ export const privacyPolicySections: LegalSection[] = [
         title: "Subscription and payment metadata",
         list: [
           "When you purchase or manage a paid subscription, Freemius (our authorized payment provider / Merchant of Record) may process payment details, billing address, tax and invoice data, and subscription data needed for checkout, renewals, refunds, and order support.",
-          "Creatornivo may receive subscription status, plan/interval information, transaction or license identifiers, customer portal-related identifiers, and billing metadata from Freemius so we can activate, maintain, or revoke Pro access.",
-          "We do not store full payment card numbers on Creatornivo servers. Card and payment-method details are handled by Freemius (or another authorized payment provider if we change partners).",
+          "CreatorNivo may receive subscription status, plan/interval information, transaction or license identifiers, customer portal-related identifiers, and billing metadata from Freemius so we can activate, maintain, or revoke Pro access.",
+          "We do not store full payment card numbers on CreatorNivo servers. Card and payment-method details are handled by Freemius (or another authorized payment provider if we change partners).",
           "The Freemius Customer Portal may process billing and account-management data when you update payment methods, cancel, or manage your subscription.",
         ],
       },
@@ -66,7 +66,7 @@ export const privacyPolicySections: LegalSection[] = [
         title: "Technical and device data",
         list: [
           "Basic request information processed by hosting infrastructure (such as IP address and request headers) when delivering and protecting the Service.",
-          "Creatornivo does not currently operate a separate product analytics or advertising tracking system.",
+          "CreatorNivo does not currently operate a separate product analytics or advertising tracking system.",
         ],
       },
       {
@@ -99,7 +99,7 @@ export const privacyPolicySections: LegalSection[] = [
     ],
     list: [
       "OpenAI — AI model processing for content generation (prompt and related context for the request).",
-      "Freemius — authorized payment provider / Merchant of Record for paid Creatornivo subscriptions (checkout, renewals, invoices, taxes, payment methods, refunds, and customer billing portal).",
+      "Freemius — authorized payment provider / Merchant of Record for paid CreatorNivo subscriptions (checkout, renewals, invoices, taxes, payment methods, refunds, and customer billing portal).",
       "Supabase / PostgreSQL — hosted database for account and Service data.",
       "Vercel — application hosting and delivery.",
       "Resend — transactional email delivery for product emails.",
@@ -125,16 +125,16 @@ export const privacyPolicySections: LegalSection[] = [
     id: "cookies-and-tracking",
     title: "Cookies and Local Storage",
     paragraphs: [
-      "Creatornivo uses essential cookies and similar technologies that are required for the Service to work securely. These support login and session management, authentication security, CSRF and OAuth callback protection where applicable, paid checkout and billing return flows, and basic preferences such as theme.",
-      "Creatornivo does not currently use advertising cookies, behavioral tracking cookies, or third-party marketing pixels. We do not currently operate product analytics cookies or cross-site advertising trackers.",
+      "CreatorNivo uses essential cookies and similar technologies that are required for the Service to work securely. These support login and session management, authentication security, CSRF and OAuth callback protection where applicable, paid checkout and billing return flows, and basic preferences such as theme.",
+      "CreatorNivo does not currently use advertising cookies, behavioral tracking cookies, or third-party marketing pixels. We do not currently operate product analytics cookies or cross-site advertising trackers.",
       "Some preferences (for example theme and certain onboarding UI state) may be stored in your browser’s local storage on your device rather than as cookies. Local storage stays on your device unless an action requires server synchronization.",
-      "Paid checkout and the Freemius customer billing portal may set cookies or similar technologies under Freemius’s control when you leave Creatornivo for hosted checkout or portal pages. Those technologies are governed by Freemius’s policies as Merchant of Record.",
+      "Paid checkout and the Freemius customer billing portal may set cookies or similar technologies under Freemius’s control when you leave CreatorNivo for hosted checkout or portal pages. Those technologies are governed by Freemius’s policies as Merchant of Record.",
       "If we later add non-essential analytics or marketing cookies, we will update this policy and request consent where required by law before using them for those purposes. We do not present a cookie consent banner for essential-only technologies.",
     ],
     list: [
       "Essential authentication and session cookies (login / Auth.js session).",
       "Security-related cookies or tokens needed for secure browsing and OAuth callbacks where applicable.",
-      "Checkout and billing return flow support (for example redirect back to Creatornivo after payment or portal use).",
+      "Checkout and billing return flow support (for example redirect back to CreatorNivo after payment or portal use).",
       "Browser local storage for theme preference and certain onboarding UI state.",
       "No advertising cookies, no behavioral marketing cookies, and no third-party marketing pixels in the current product.",
     ],

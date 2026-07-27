@@ -13,8 +13,8 @@ export const termsOfServiceSections: LegalSection[] = [
     id: "introduction",
     title: "Introduction",
     paragraphs: [
-      "Creatornivo is an independent software project operated by an individual based in Ukraine.",
-      `These Terms of Service ("Terms") govern your access to and use of ${siteConfig.name}, an AI-powered content generation service that helps creators, marketers, and indie makers draft content using structured templates (the "Service"). References to "we," "us," or "our" mean the operator of Creatornivo.`,
+      "CreatorNivo is an independent software project operated by an individual based in Ukraine.",
+      `These Terms of Service ("Terms") govern your access to and use of ${siteConfig.name}, an AI-powered content generation service that helps creators, marketers, and indie makers draft content using structured templates (the "Service"). References to "we," "us," or "our" mean the operator of CreatorNivo.`,
       "By creating an account, accessing, or using the Service, you agree to these Terms and our Privacy Policy. If you do not agree, do not use the Service.",
     ],
   },
@@ -22,7 +22,7 @@ export const termsOfServiceSections: LegalSection[] = [
     id: "the-service",
     title: "The Service",
     paragraphs: [
-      "Creatornivo provides structured content templates, AI-assisted generation, a personal library for saved outputs, and export options for eligible plans as described in the product interface.",
+      "CreatorNivo provides structured content templates, AI-assisted generation, a personal library for saved outputs, and export options for eligible plans as described in the product interface.",
       "The Service uses third-party AI models to process your inputs and return generated drafts. Features, templates, and limits may change as the product evolves.",
       "We may update, modify, suspend, or discontinue parts of the Service. Availability is not guaranteed to be uninterrupted or error-free.",
     ],
@@ -31,7 +31,7 @@ export const termsOfServiceSections: LegalSection[] = [
     id: "early-access",
     title: "Early Access / Beta",
     paragraphs: [
-      "Creatornivo may be offered as Early Access or beta software. Features, usage limits, availability, pricing, and integrations may change. You should keep your own copies of important content.",
+      "CreatorNivo may be offered as Early Access or beta software. Features, usage limits, availability, pricing, and integrations may change. You should keep your own copies of important content.",
       "Current plan prices and promotional founding offers, when offered, are shown on the Pricing page. For example, the product may display a regular monthly Pro price and a limited founding monthly price; the amounts shown in the product and at checkout control. Applicable prices, taxes, and offers will also be shown when you complete a purchase.",
     ],
   },
@@ -47,7 +47,7 @@ export const termsOfServiceSections: LegalSection[] = [
       "Notify us promptly at the contact address below if you suspect unauthorized access.",
       "You must be at least 16 years old to use the Service.",
       "Do not create multiple free accounts to circumvent plan limits.",
-      "Access to paid Pro features depends on successful payment confirmation and an active eligible subscription status recorded by Creatornivo after verification with our authorized payment provider / Merchant of Record (currently Freemius), as well as compliance with these Terms. Early Access or paid access may also be granted through support when self-serve checkout is not available for your account or environment.",
+      "Access to paid Pro features depends on successful payment confirmation and an active eligible subscription status recorded by CreatorNivo after verification with our authorized payment provider / Merchant of Record (currently Freemius), as well as compliance with these Terms. Early Access or paid access may also be granted through support when self-serve checkout is not available for your account or environment.",
     ],
   },
   {
@@ -59,7 +59,7 @@ export const termsOfServiceSections: LegalSection[] = [
     ],
     list: [
       "Free plan: a limited number of completed generations per UTC day (currently five per day in product configuration).",
-      "Pro plan: a limited number of completed generations per UTC calendar month (currently one hundred per month in product configuration).",
+      "Pro plan: a limited number of completed generations per provider billing period when a paid subscription has period dates (currently one hundred per period in product configuration); otherwise per UTC calendar month as a fallback when no provider period is available.",
       "Attempting to bypass quotas, rate limits, security controls, or access controls is prohibited.",
       "Refund eligibility for paid plans is described in our Refund Policy, including limitations when consumptive generation capacity has already been used.",
     ],
@@ -84,7 +84,7 @@ export const termsOfServiceSections: LegalSection[] = [
     title: "AI Outputs Disclaimer",
     paragraphs: [
       "AI-generated content may be inaccurate, incomplete, biased, outdated, or unsuitable for your purpose. Outputs are drafts, not professional advice.",
-      "You must review, edit, and verify all generated content before publishing, sending, or relying on it. Creatornivo does not guarantee factual accuracy, originality, uniqueness, rankings, conversion results, or fitness for a particular purpose.",
+      "You must review, edit, and verify all generated content before publishing, sending, or relying on it. CreatorNivo does not guarantee factual accuracy, originality, uniqueness, rankings, conversion results, or fitness for a particular purpose.",
       "You are responsible for compliance with platform rules, advertising standards, and laws that apply to your use of the content.",
     ],
   },
@@ -92,7 +92,7 @@ export const termsOfServiceSections: LegalSection[] = [
     id: "intellectual-property",
     title: "Intellectual Property",
     paragraphs: [
-      "The Service software, design, branding, and built-in templates are owned by the operator of Creatornivo, subject to third-party rights. Except for rights expressly granted, all rights are reserved.",
+      "The Service software, design, branding, and built-in templates are owned by the operator of CreatorNivo, subject to third-party rights. Except for rights expressly granted, all rights are reserved.",
       "You retain rights in original inputs you provide and in outputs generated for your account, subject to third-party AI provider terms and applicable law. You grant us a limited license to host, process, and store content only as needed to operate the Service, including sending prompts to AI providers on your behalf.",
       "You represent that you have the rights needed to submit your content and that your use does not infringe others' rights.",
     ],
@@ -101,9 +101,9 @@ export const termsOfServiceSections: LegalSection[] = [
     id: "payments-and-subscriptions",
     title: "Payments and Subscriptions",
     paragraphs: [
-      "Paid Creatornivo subscriptions are processed by our authorized payment provider / Merchant of Record, Freemius (or another authorized provider we designate if we change payment partners). Freemius may handle hosted checkout, renewals, invoices, applicable taxes, payment methods, buyer communications, and subscription management for purchases made through its systems.",
+      "Paid CreatorNivo subscriptions are processed by our authorized payment provider / Merchant of Record, Freemius (or another authorized provider we designate if we change payment partners). Freemius may handle hosted checkout, renewals, invoices, applicable taxes, payment methods, buyer communications, and subscription management for purchases made through its systems.",
       "Pricing, taxes, billing interval (for example monthly or annual), and any founding or promotional offer available at the time of purchase are presented at checkout and on the Pricing page. The terms shown at purchase control for that order.",
-      "Pro access is activated after payment is confirmed and Creatornivo records an eligible subscription status (typically after server-side confirmation from the payment provider). Returning from a checkout success page does not by itself guarantee immediate Pro access; activation may take a short time while payment is confirmed.",
+      "Pro access is activated after payment is confirmed and CreatorNivo records an eligible subscription status (typically after server-side confirmation from the payment provider). Returning from a checkout success page does not by itself guarantee immediate Pro access; activation may take a short time while payment is confirmed.",
     ],
     list: [
       "Prices are typically shown in U.S. dollars unless otherwise noted and may change with notice through the product or communications.",
@@ -136,8 +136,8 @@ export const termsOfServiceSections: LegalSection[] = [
     id: "limitation-of-liability",
     title: "Limitation of Liability",
     paragraphs: [
-      "TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE OPERATOR OF CREATORNIVO SHALL NOT BE LIABLE FOR INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR LOSS OF PROFITS, DATA, OR BUSINESS OPPORTUNITIES, ARISING FROM USE OF THE SERVICE.",
-      "TO THE MAXIMUM EXTENT PERMITTED BY LAW, TOTAL LIABILITY FOR CLAIMS RELATING TO THE SERVICE SHALL NOT EXCEED THE GREATER OF (A) AMOUNTS YOU PAID TO CREATORNIVO FOR THE SERVICE IN THE TWELVE MONTHS BEFORE THE CLAIM, OR (B) ONE HUNDRED U.S. DOLLARS (USD $100).",
+      "TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE OPERATOR OF CreatorNivo SHALL NOT BE LIABLE FOR INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR LOSS OF PROFITS, DATA, OR BUSINESS OPPORTUNITIES, ARISING FROM USE OF THE SERVICE.",
+      "TO THE MAXIMUM EXTENT PERMITTED BY LAW, TOTAL LIABILITY FOR CLAIMS RELATING TO THE SERVICE SHALL NOT EXCEED THE GREATER OF (A) AMOUNTS YOU PAID TO CreatorNivo FOR THE SERVICE IN THE TWELVE MONTHS BEFORE THE CLAIM, OR (B) ONE HUNDRED U.S. DOLLARS (USD $100).",
       "Some jurisdictions do not allow certain limitations; in those cases liability is limited to the greatest extent permitted.",
     ],
   },
@@ -145,7 +145,7 @@ export const termsOfServiceSections: LegalSection[] = [
     id: "indemnification",
     title: "Indemnification",
     paragraphs: [
-      "You agree to indemnify and hold harmless the operator of Creatornivo from claims, damages, and expenses arising from your content, your use of the Service, or your violation of these Terms or third-party rights, to the extent permitted by law.",
+      "You agree to indemnify and hold harmless the operator of CreatorNivo from claims, damages, and expenses arising from your content, your use of the Service, or your violation of these Terms or third-party rights, to the extent permitted by law.",
     ],
   },
   {

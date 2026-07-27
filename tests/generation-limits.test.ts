@@ -1359,9 +1359,9 @@ test("public generation-limit text matches Free and Pro policies", () => {
   assert.match(hero, /5 free AI-assisted drafts per day/);
   assert.match(dashboardMockup, /3 \/ 5/);
   assert.match(productScreenshots, /5 AI-assisted drafts per day/);
-  assert.match(productScreenshots, /100 per month/);
+  assert.match(productScreenshots, /100 per billing period/);
   assert.match(pricing, /Unlimited saved drafts/);
-  assert.match(pricing, /100 AI-assisted drafts per month/);
+  assert.match(pricing, /100 AI-assisted drafts per billing period/);
   assert.doesNotMatch(publicLimitText, /20 free generations/i);
   assert.doesNotMatch(publicLimitText, /3 \/ 20/);
   assert.doesNotMatch(publicLimitText, /Unlimited generations/i);

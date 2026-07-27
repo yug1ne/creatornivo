@@ -43,7 +43,7 @@ const screenshots = [
     label: "Dashboard",
     title: "Limits at a glance",
     description:
-      "Track usage at a glance: Free includes 5 AI-assisted drafts per day; Pro includes 100 per month.",
+      "Track usage at a glance: Free includes 5 AI-assisted drafts per day; Pro includes 100 per billing period.",
     url: "creatornivo.com/dashboard",
     Mockup: DashboardMockup,
   },

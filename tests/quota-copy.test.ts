@@ -113,7 +113,8 @@ test("Pro exhausted and exceeded copy name calendar month and Quota resets", () 
   assert.match(exceeded.message, /Quota resets on Aug 1 UTC/i);
 
   const freeExceeded = getQuotaExceededCopy("free", freeResetAt, now);
-  assert.match(freeExceeded.message, /UTC calendar month/i);
+  assert.match(freeExceeded.message, /billing period/i);
+  assert.doesNotMatch(freeExceeded.message, /UTC calendar month/i);
 });
 
 test("Freemius Pro exhausted and exceeded copy use billing period", () => {

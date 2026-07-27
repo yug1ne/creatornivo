@@ -19,9 +19,9 @@ test("buildWelcomeEmailText includes Early Access, Free limits, and starter CTA"
   assert.match(text, /\/templates/);
   assert.match(text, /\/dashboard/);
   assert.match(text, /support@creatornivo\.com/);
-  assert.match(text, /Welcome to Creatornivo/i);
+  assert.match(text, /Welcome to CreatorNivo/i);
   assert.match(text, /Thanks,/);
-  assert.match(text, /The Creatornivo team/);
+  assert.match(text, /The CreatorNivo team/);
 });
 
 test("buildWelcomeEmailText uses a generic greeting without a name", () => {
@@ -41,7 +41,7 @@ test("buildWelcomeEmailHtml is branded HTML with CTAs and key facts", () => {
 
   assert.match(html, /<!DOCTYPE html>/i);
   assert.match(html, /Hi Alex,/);
-  assert.match(html, /Creatornivo/);
+  assert.match(html, /CreatorNivo/i);
   assert.match(html, /#6366f1/);
   assert.match(html, /Early Access/i);
   assert.match(html, /5 generations per day/i);

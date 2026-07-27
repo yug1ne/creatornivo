@@ -153,7 +153,7 @@ test("public plan copy matches implemented Free and Pro limits", () => {
   const pro = pricingPlans.find((plan) => plan.id === "pro");
 
   assert.ok(free?.features.includes("5 AI-assisted drafts per day"));
-  assert.ok(pro?.features.includes("100 AI-assisted drafts per month"));
+  assert.ok(pro?.features.includes("100 AI-assisted drafts per billing period"));
   assert.match(pricing, /Up to \$\{planLimits\.free\.maxSavedPrompts\}/);
   assert.match(pricing, /Unlimited saved drafts/);
   assert.match(pricing, /AI-assisted drafting \(GPT-5\.6\)/);

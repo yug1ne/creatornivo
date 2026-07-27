@@ -22,7 +22,7 @@ export const refundPolicySections: LegalSection[] = [
     id: "seven-day-guarantee",
     title: "7-Day Money-Back Guarantee",
     paragraphs: [
-      "For eligible self-serve Freemius purchases of Creatornivo Pro, we offer a strict money-back guarantee for seven (7) days from the date of purchase when you have a genuine unresolved product, access, or technical issue that we cannot reasonably fix.",
+      "For eligible self-serve Freemius purchases of CreatorNivo Pro, we offer a strict money-back guarantee for seven (7) days from the date of purchase when you have a genuine unresolved product, access, or technical issue that we cannot reasonably fix.",
       "This guarantee is intended for situations where the Service cannot be used as described (for example, you cannot access Pro after confirmed payment, or a product/access/technical problem remains unresolved after reasonable support). It is not an unlimited “no questions asked” refund for any reason.",
     ],
     list: [
@@ -36,7 +36,7 @@ export const refundPolicySections: LegalSection[] = [
     id: "consumptive-usage",
     title: "Consumptive Usage (AI-Assisted Drafts and Generations)",
     paragraphs: [
-      "Creatornivo Pro includes limited AI-assisted draft generation capacity (currently one hundred completed generations per UTC calendar month in product configuration, subject to the in-app usage display and server rules).",
+      "CreatorNivo Pro includes limited AI-assisted draft generation capacity (currently one hundred completed generations per provider billing period for paid Freemius Pro, or per UTC calendar month when no provider period applies; subject to the in-app usage display and server rules).",
       "AI-assisted drafts and completed generations are consumptive usage: each completed generation consumes provider resources (including third-party AI processing) and delivers service value immediately when the draft is produced.",
       "Because that capacity is usage-based and consumed when a generation completes, refunds may be denied or limited when Pro generation capacity has been substantially or fully used during the refund window.",
       "Consumed generations (completed AI-assisted drafts) are not refundable as a separate credit or cash value, because the service has already been delivered for those generations.",
@@ -50,7 +50,7 @@ export const refundPolicySections: LegalSection[] = [
       "If you completed a paid purchase and want to request a refund, contact support by email, or use Freemius’s buyer/order support channels where available for purchases processed by Freemius. Please include:",
     ],
     list: [
-      "The email address on your Creatornivo account.",
+      "The email address on your CreatorNivo account.",
       "Approximate purchase date or other order details you have.",
       "A short description of the product, access, or technical issue (optional but helpful).",
     ],
@@ -81,7 +81,7 @@ export const refundPolicySections: LegalSection[] = [
       {
         title: "No open-ended automatic guarantee",
         paragraphs: [
-          "Creatornivo does not advertise automatic refunds on demand for every purchase. The 7-day money-back guarantee applies as described above for unresolved product, access, or technical issues. Approval remains subject to verification, this policy (including consumptive usage limitations), Freemius’s processes, and mandatory law.",
+          "CreatorNivo does not advertise automatic refunds on demand for every purchase. The 7-day money-back guarantee applies as described above for unresolved product, access, or technical issues. Approval remains subject to verification, this policy (including consumptive usage limitations), Freemius’s processes, and mandatory law.",
         ],
       },
     ],
@@ -90,7 +90,7 @@ export const refundPolicySections: LegalSection[] = [
     id: "payment-provider",
     title: "Payment Provider / Merchant of Record (Freemius)",
     paragraphs: [
-      "Paid Creatornivo subscriptions are processed by Freemius acting as Merchant of Record. Freemius may handle checkout, order support, invoices, taxes, payment methods, and refund processing for purchases made through its systems.",
+      "Paid CreatorNivo subscriptions are processed by Freemius acting as Merchant of Record. Freemius may handle checkout, order support, invoices, taxes, payment methods, and refund processing for purchases made through its systems.",
       "If a refund is approved, it is typically returned to the original payment method through Freemius. Timing depends on Freemius, the payment method, and your financial institution.",
       "You may also contact Freemius about an order using the buyer channels Freemius makes available. This policy is not intended to conflict with Freemius’s refund policy or buyer protections; where Freemius’s rules apply to the payment, those rules govern the payment relationship.",
     ],
@@ -107,7 +107,7 @@ export const refundPolicySections: LegalSection[] = [
     id: "after-refund",
     title: "After a Refund",
     paragraphs: [
-      "If a refund is approved, it is processed through Freemius, and Creatornivo Pro access may be revoked or adjusted after the refund is confirmed.",
+      "If a refund is approved, it is processed through Freemius, and CreatorNivo Pro access may be revoked or adjusted after the refund is confirmed.",
       "After a refund is confirmed, account access may be adjusted, limited, or ended according to subscription status, the reason for the refund, and applicable provider rules.",
       "A refund does not reset or restore consumed generation capacity. Completed generations that already used Pro capacity remain consumed and are not re-credited.",
     ],

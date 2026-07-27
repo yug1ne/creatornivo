@@ -129,15 +129,17 @@ test("public guide copy avoids forbidden marketing and provider claims", () => {
   assert.match(copy, /5 completed (AI-assisted )?drafts per UTC day/i);
   assert.match(
     copy,
-    /100 completed (AI-assisted )?drafts per UTC calendar month/i,
+    /100 completed (AI-assisted )?drafts per billing period/i,
   );
   assert.match(copy, /review, edit, and verify/i);
-  assert.match(copy, /Self-serve paid checkout may be unavailable/i);
+  assert.doesNotMatch(copy, /Self-serve paid checkout may be unavailable/i);
+  assert.doesNotMatch(copy, /finalize our payment provider/i);
+  assert.match(copy, /billing period/i);
   assert.match(copy, /structured inputs/i);
   assert.match(copy, /template-based/i);
 });
 
-test("free-vs-pro guide states honest Early Access limits", () => {
+test("free-vs-pro guide states honest Free and Pro billing-period limits", () => {
   const article = getPublishedGuideBySlug("free-vs-pro-generations");
   assert.ok(article);
   const body = [
@@ -152,11 +154,10 @@ test("free-vs-pro guide states honest Early Access limits", () => {
   assert.match(body, /5 completed AI-assisted drafts per UTC day/i);
   assert.match(
     body,
-    /100 completed AI-assisted drafts per UTC calendar month/i,
+    /100 completed AI-assisted drafts per billing period/i,
   );
-  assert.match(body, /Self-serve paid checkout may be unavailable/i);
-  assert.match(body, /Early Access/i);
-  assert.doesNotMatch(body, /billing period quota/i);
+  assert.match(body, /billing period/i);
+  assert.doesNotMatch(body, /Self-serve paid checkout may be unavailable/i);
   assert.doesNotMatch(body, /Buy Pro now/i);
 });
 

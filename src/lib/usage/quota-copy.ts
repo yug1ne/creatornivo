@@ -181,7 +181,7 @@ export function getQuotaExceededCopy(
 
     return {
       error: "Daily generation limit reached",
-      message: `You've used all 5 free generations today. Quota resets ${resetPhrase} (${countdown}). Upgrade to Pro for 100 generations per UTC calendar month.`,
+      message: `You've used all 5 free generations today. Quota resets ${resetPhrase} (${countdown}). Upgrade to Pro for 100 generations per billing period.`,
     };
   }
 

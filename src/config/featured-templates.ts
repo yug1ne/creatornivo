@@ -103,7 +103,7 @@ The problem isn't ideas — it's the blank page...
     requiredPlan: "free",
     variables: ["Page topic", "Keyword", "Search intent"],
     preview: `Title (58 chars):
-Template-Based Content Drafting for Marketers | Creatornivo
+Template-Based Content Drafting for Marketers | CreatorNivo
 
 Meta (152 chars):
 Compare template-based drafting tools for marketers, including templates, workflows, and example drafts.`,
