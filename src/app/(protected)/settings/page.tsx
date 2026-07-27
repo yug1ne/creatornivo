@@ -31,6 +31,7 @@ export default async function SettingsPage() {
       where: { userId: session.id },
       select: {
         status: true,
+        currentPeriodStart: true,
         currentPeriodEnd: true,
         cancelAtPeriodEnd: true,
         provider: true,
@@ -138,6 +139,8 @@ export default async function SettingsPage() {
             subscription
               ? {
                   status: subscription.status,
+                  currentPeriodStart:
+                    subscription.currentPeriodStart?.toISOString() ?? null,
                   currentPeriodEnd:
                     subscription.currentPeriodEnd?.toISOString() ?? null,
                   cancelAtPeriodEnd: subscription.cancelAtPeriodEnd,

@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import test from "node:test";
 
 import {
@@ -172,9 +173,11 @@ test("settings helper separates access period from generation quota", () => {
     getQuotaResetsSettingsMessage({
       currentPeriodStart: "2026-07-28T12:00:00.000Z",
       currentPeriodEnd: "2026-08-28T12:00:00.000Z",
+      now: new Date("2026-07-29T10:00:00.000Z"),
     }),
     QUOTA_RESETS_WITH_BILLING_PERIOD_MESSAGE,
   );
+  // End-only (or missing start) → UTC calendar month fallback (manual Pro).
   assert.equal(
     getQuotaResetsSettingsMessage({
       currentPeriodStart: null,
@@ -182,6 +185,36 @@ test("settings helper separates access period from generation quota", () => {
     }),
     QUOTA_RESETS_SEPARATELY_MESSAGE,
   );
+  assert.equal(
+    getQuotaResetsSettingsMessage({
+      currentPeriodStart: undefined,
+      currentPeriodEnd: "2026-08-28T12:00:00.000Z",
+    }),
+    QUOTA_RESETS_SEPARATELY_MESSAGE,
+  );
+});
+
+test("settings main page and billing page both pass currentPeriodStart for quota copy", () => {
+  const settingsPage = readFileSync(
+    "src/app/(protected)/settings/page.tsx",
+    "utf8",
+  );
+  const billingPage = readFileSync(
+    "src/app/(protected)/settings/billing/page.tsx",
+    "utf8",
+  );
+  const manager = readFileSync(
+    "src/components/settings/subscription-manager.tsx",
+    "utf8",
+  );
+
+  assert.match(settingsPage, /currentPeriodStart:\s*true/);
+  assert.match(settingsPage, /currentPeriodStart:\s*\n?\s*subscription\.currentPeriodStart/);
+  assert.match(billingPage, /currentPeriodStart:\s*true/);
+  assert.match(billingPage, /currentPeriodStart:\s*\n?\s*subscription\.currentPeriodStart/);
+  assert.match(manager, /getQuotaResetsSettingsMessage/);
+  assert.match(manager, /currentPeriodStart:\s*subscription\?\.currentPeriodStart/);
+  assert.match(manager, /cancels at end of period/);
 });
 
 test("resolveQuotaPeriod maps Freemius Pro to billing window Jul 28–Aug 28", () => {

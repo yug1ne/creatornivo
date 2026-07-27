@@ -15,6 +15,7 @@ import {
 } from "@/components/pricing/freemius-checkout-cta";
 import { buttonVariants } from "@/components/ui/button";
 import { formatHumanUtcDate } from "@/lib/usage/quota-copy";
+import { isUsableProviderBillingPeriod } from "@/lib/usage/quota-period";
 
 /** Shown after checkout return before webhook activates Pro (provider-agnostic). */
 export const CHECKOUT_PENDING_MESSAGE =
@@ -39,28 +40,49 @@ export const FREEMIUS_PORTAL_BUTTON_LABEL = "Manage billing in Freemius";
 export const FREEMIUS_PORTAL_HELPER_MESSAGE =
   'Opens the Freemius Customer Portal for billing, invoices, payment method, and subscription renewal management. This portal uses a separate Freemius password. If you have not received one, use "Never received your password?" on the portal login page.';
 
+function toDateOrNull(value: string | Date | null | undefined): Date | null {
+  if (value == null || value === "") {
+    return null;
+  }
+  if (value instanceof Date) {
+    return Number.isNaN(value.getTime()) ? null : value;
+  }
+  const parsed = new Date(value);
+  return Number.isNaN(parsed.getTime()) ? null : parsed;
+}
+
 /**
- * Settings copy: provider billing period when both period dates exist;
+ * Settings copy aligned with /generate quota basis:
+ * provider billing period when both period dates are present (Freemius/provider Pro);
  * otherwise honest UTC calendar-month fallback (manual/admin Pro).
+ *
+ * Requires both currentPeriodStart and currentPeriodEnd — Settings pages must load both.
  */
 export function getQuotaResetsSettingsMessage(input: {
   currentPeriodStart?: string | Date | null;
   currentPeriodEnd?: string | Date | null;
+  now?: Date;
 }): string {
-  const start = input.currentPeriodStart;
-  const end = input.currentPeriodEnd;
-  if (start == null || end == null || start === "" || end === "") {
-    return QUOTA_RESETS_SEPARATELY_MESSAGE;
+  const start = toDateOrNull(input.currentPeriodStart);
+  const end = toDateOrNull(input.currentPeriodEnd);
+  const now = input.now ?? new Date();
+
+  if (
+    isUsableProviderBillingPeriod(
+      { currentPeriodStart: start, currentPeriodEnd: end },
+      now,
+    )
+  ) {
+    return QUOTA_RESETS_WITH_BILLING_PERIOD_MESSAGE;
   }
 
-  const startMs =
-    start instanceof Date ? start.getTime() : new Date(start).getTime();
-  const endMs = end instanceof Date ? end.getTime() : new Date(end).getTime();
-  if (Number.isNaN(startMs) || Number.isNaN(endMs) || startMs >= endMs) {
-    return QUOTA_RESETS_SEPARATELY_MESSAGE;
+  // Both provider dates present and ordered → billing-period copy (Settings honesty
+  // when access is still shown via currentPeriodEnd, including cancel-at-period-end).
+  if (start && end && start.getTime() < end.getTime()) {
+    return QUOTA_RESETS_WITH_BILLING_PERIOD_MESSAGE;
   }
 
-  return QUOTA_RESETS_WITH_BILLING_PERIOD_MESSAGE;
+  return QUOTA_RESETS_SEPARATELY_MESSAGE;
 }
 
 /** Billing-period end for Settings (human-readable UTC date). */

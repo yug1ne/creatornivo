@@ -9,7 +9,10 @@ import {
   CHECKOUT_CANCELLED_MESSAGE,
   CHECKOUT_PENDING_MESSAGE,
   getPostCheckoutMessage,
+  getQuotaResetsSettingsMessage,
   PRO_ACTIVE_MESSAGE,
+  QUOTA_RESETS_SEPARATELY_MESSAGE,
+  QUOTA_RESETS_WITH_BILLING_PERIOD_MESSAGE,
   shouldShowFreemiusPortalActions,
   shouldShowPaddlePortalActions,
   shouldShowStripePortalActions,
@@ -153,6 +156,36 @@ test("Freemius portal only for Freemius-linked Pro; Paddle/Stripe not broken", (
   assert.match(source, /separate Freemius password/i);
   assert.match(source, /Never received your password/);
   assert.doesNotMatch(source, /plan:\s*["']pro["']/);
+});
+
+test("Freemius provider-period Pro settings card uses billing-period quota copy", () => {
+  assert.equal(
+    getQuotaResetsSettingsMessage({
+      currentPeriodStart: "2026-07-28T12:00:00.000Z",
+      currentPeriodEnd: "2026-08-28T12:00:00.000Z",
+      now: new Date("2026-07-29T15:00:00.000Z"),
+    }),
+    QUOTA_RESETS_WITH_BILLING_PERIOD_MESSAGE,
+  );
+  assert.equal(
+    getQuotaResetsSettingsMessage({
+      currentPeriodStart: null,
+      currentPeriodEnd: "2026-08-28T12:00:00.000Z",
+    }),
+    QUOTA_RESETS_SEPARATELY_MESSAGE,
+  );
+
+  const settingsPage = readFileSync(
+    "src/app/(protected)/settings/page.tsx",
+    "utf8",
+  );
+  const manager = readFileSync(
+    "src/components/settings/subscription-manager.tsx",
+    "utf8",
+  );
+  assert.match(settingsPage, /currentPeriodStart/);
+  assert.match(manager, /cancels at end of period/);
+  assert.match(manager, /Generation quota resets with your billing period/);
 });
 
 test("Freemius portal helper copy clarifies separate portal password", () => {
