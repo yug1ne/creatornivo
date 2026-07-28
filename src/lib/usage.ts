@@ -1,4 +1,5 @@
 import type { UserUsage } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 
 import { getGenerationPolicy, PLANS, type Plan } from "@/config/plans";
 import { prisma } from "@/lib/db";
@@ -19,12 +20,18 @@ export const USAGE_PERIOD = {
   MONTHLY: "monthly",
 } as const satisfies Record<string, UsagePeriod>;
 
+export type UsageErrorCode =
+  | "invalid_input"
+  | "database_error"
+  /** Session user id exists in JWT but User row is gone (deleted account). */
+  | "stale_session";
+
 export { getUtcDayStart, getUtcMonthStart };
 
 export class UsageError extends Error {
   constructor(
     message: string,
-    public readonly code: "invalid_input" | "database_error" = "invalid_input",
+    public readonly code: UsageErrorCode = "invalid_input",
   ) {
     super(message);
     this.name = "UsageError";
@@ -59,6 +66,71 @@ function periodStartFor(
     : getUtcMonthStart(now);
 }
 
+/** Prisma foreign-key failure (e.g. UserUsage_userId_fkey when User is gone). */
+export function isPrismaForeignKeyError(error: unknown): boolean {
+  return (
+    error instanceof Prisma.PrismaClientKnownRequestError &&
+    error.code === "P2003"
+  );
+}
+
+export type FindUserById = (
+  userId: string,
+) => Promise<{ id: string } | null>;
+
+const defaultFindUserById: FindUserById = async (userId) =>
+  prisma.user.findUnique({
+    where: { id: userId },
+    select: { id: true },
+  });
+
+/**
+ * Ensure the User row still exists before any UserUsage write.
+ * Throws UsageError `stale_session` when the session points at a deleted user.
+ */
+export async function ensureUserExistsForUsage(
+  userId: string,
+  findUser: FindUserById = defaultFindUserById,
+): Promise<void> {
+  assertUserId(userId);
+
+  let user: { id: string } | null;
+  try {
+    user = await findUser(userId);
+  } catch {
+    throw new UsageError(
+      `Failed to verify user ${userId} before usage access`,
+      "database_error",
+    );
+  }
+
+  if (!user) {
+    throw new UsageError(
+      "Session is no longer valid because the user account does not exist.",
+      "stale_session",
+    );
+  }
+}
+
+function mapUsageWriteError(
+  error: unknown,
+  userId: string,
+  period: UsagePeriod,
+  action: "load" | "increment",
+): never {
+  if (isPrismaForeignKeyError(error)) {
+    throw new UsageError(
+      "Session is no longer valid because the user account does not exist.",
+      "stale_session",
+    );
+  }
+
+  throw new UsageError(
+    `Failed to ${action} usage for user ${userId} (${period})`,
+    "database_error",
+  );
+}
+
 async function getOrCreateUsage(
   userId: string,
   period: UsagePeriod,
@@ -66,6 +138,7 @@ async function getOrCreateUsage(
   bucketStart?: Date,
 ): Promise<UserUsage> {
   assertUserId(userId);
+  await ensureUserExistsForUsage(userId);
   const date = periodStartFor(period, now, bucketStart);
 
   try {
@@ -85,11 +158,8 @@ async function getOrCreateUsage(
       },
       update: {},
     });
-  } catch {
-    throw new UsageError(
-      `Failed to load usage for user ${userId} (${period})`,
-      "database_error",
-    );
+  } catch (error) {
+    mapUsageWriteError(error, userId, period, "load");
   }
 }
 
@@ -123,6 +193,7 @@ export async function incrementUsage(
 ): Promise<UserUsage> {
   assertUserId(userId);
   assertUsagePeriod(period);
+  await ensureUserExistsForUsage(userId);
 
   const date = periodStartFor(period, now, options?.bucketStart);
 
@@ -145,11 +216,8 @@ export async function incrementUsage(
         count: { increment: 1 },
       },
     });
-  } catch {
-    throw new UsageError(
-      `Failed to increment usage for user ${userId} (${period})`,
-      "database_error",
-    );
+  } catch (error) {
+    mapUsageWriteError(error, userId, period, "increment");
   }
 }
 
@@ -189,11 +257,40 @@ export type UserUsageSnapshot = {
 };
 
 /**
+ * Pure snapshot builder from a usage count (no DB).
+ * Used by getUserUsageSnapshot and unit tests for Free/Pro remaining math.
+ */
+export function buildUserUsageSnapshotFromCount(
+  plan: Plan,
+  used: number,
+  now = new Date(),
+  providerPeriod?: ProviderPeriodInput | null,
+): UserUsageSnapshot {
+  const resolved = resolveQuotaPeriod(plan, now, providerPeriod);
+  const policy = getGenerationPolicy(plan);
+  const limit = policy.maxGenerationsPerPeriod;
+  const safeUsed = Math.max(0, used);
+  const remaining = Math.max(0, limit - safeUsed);
+
+  return {
+    plan,
+    remaining,
+    limit,
+    period: resolved.usagePeriod,
+    resetAt: resolved.resetAt.toISOString(),
+    used: safeUsed,
+    quotaBasis: resolved.basis,
+  };
+}
+
+/**
  * Full usage snapshot for API/UI — backed by UserUsage counters.
  * Free: UTC day. Pro: provider billing period when available, else UTC calendar month.
  *
  * When `providerPeriod` is omitted for Pro, subscription dates are loaded from the DB.
  * Pass `null` to force calendar-month fallback without a DB lookup.
+ *
+ * Throws UsageError `stale_session` when the User row no longer exists.
  */
 export async function getUserUsageSnapshot(
   userId: string,
@@ -209,7 +306,6 @@ export async function getUserUsageSnapshot(
   }
 
   const resolved = resolveQuotaPeriod(plan, now, periodInput);
-  const policy = getGenerationPolicy(plan);
 
   const usage = await getOrCreateUsage(
     userId,
@@ -218,19 +314,12 @@ export async function getUserUsageSnapshot(
     resolved.start,
   );
 
-  const limit = policy.maxGenerationsPerPeriod;
-  const used = usage.count;
-  const remaining = Math.max(0, limit - used);
-
-  return {
+  return buildUserUsageSnapshotFromCount(
     plan,
-    remaining,
-    limit,
-    period: resolved.usagePeriod,
-    resetAt: resolved.resetAt.toISOString(),
-    used,
-    quotaBasis: resolved.basis,
-  };
+    usage.count,
+    now,
+    periodInput ?? null,
+  );
 }
 
 /**

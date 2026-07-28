@@ -773,7 +773,8 @@ test("route and usage-service agree: permanent quota is completed-only", () => {
   assert.match(serviceSource, /completed \+ active >= policy\.maxGenerationsPerPeriod/);
 
   // UI snapshot uses UserUsage.count (incremented only after successful complete).
-  assert.match(usageSource, /const used = usage\.count/);
+  assert.match(usageSource, /usage\.count/);
+  assert.match(usageSource, /buildUserUsageSnapshotFromCount/);
   assert.match(usageSource, /incrementUsage/);
 });
 

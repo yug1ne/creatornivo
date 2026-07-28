@@ -245,6 +245,12 @@ export async function POST(request: Request) {
         providerPeriod,
       );
     } catch (error) {
+      if (error instanceof UsageError && error.code === "stale_session") {
+        return NextResponse.json(
+          { error: "Unauthorized", code: "stale_session" },
+          { status: 401 },
+        );
+      }
       if (error instanceof UsageError) {
         console.error("UserUsage check failed:", error);
         return NextResponse.json(

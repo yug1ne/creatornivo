@@ -131,6 +131,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         if (dbUser) {
           token.plan = dbUser.plan;
           token.role = dbUser.role;
+        } else {
+          // User row was deleted (manual admin delete, account deletion, etc.).
+          // Drop identity so the JWT becomes unauthenticated instead of keeping
+          // a stale session that later crashes on UserUsage foreign keys.
+          return {};
         }
       }
 

@@ -4,6 +4,10 @@ import { GenerateWorkspaceSkeleton } from "@/components/generate/generate-worksp
 import { GenerateWorkspace } from "@/components/generate/generate-workspace";
 import { PageHeader } from "@/components/ui/page-header";
 import { canExportContent } from "@/lib/export/permissions";
+import {
+  clearStaleSessionAndRedirect,
+  isStaleSessionUsageError,
+} from "@/lib/auth/stale-session";
 import { requireSession } from "@/lib/auth/session";
 import { prisma } from "@/lib/db";
 import { getUserUsageSnapshot } from "@/lib/usage";
@@ -23,10 +27,19 @@ export default async function GeneratePage({ searchParams }: GeneratePageProps) 
   const session = await requireSession();
   const { template: templateSlug } = await searchParams;
 
-  const [catalog, usageSnapshot, savedCount, user] = await Promise.all([
+  let usageSnapshot: Awaited<ReturnType<typeof getUserUsageSnapshot>>;
+  try {
+    usageSnapshot = await getUserUsageSnapshot(session.id, session.plan);
+  } catch (error) {
+    if (isStaleSessionUsageError(error)) {
+      await clearStaleSessionAndRedirect();
+    }
+    throw error;
+  }
+
+  const [catalog, savedCount, user] = await Promise.all([
     // Lightweight catalog for the picker — full form loads for the selected template only.
     getTemplateCatalogForUser(session),
-    getUserUsageSnapshot(session.id, session.plan),
     prisma.savedPrompt.count({ where: { userId: session.id } }),
     prisma.user.findUnique({
       where: { id: session.id },

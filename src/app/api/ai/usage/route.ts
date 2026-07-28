@@ -47,6 +47,13 @@ export async function GET() {
       },
     );
   } catch (error) {
+    if (error instanceof UsageError && error.code === "stale_session") {
+      return NextResponse.json(
+        { error: "Unauthorized", code: "stale_session" },
+        { status: 401 },
+      );
+    }
+
     if (error instanceof UsageError) {
       console.error("Failed to load UserUsage snapshot:", error);
     }

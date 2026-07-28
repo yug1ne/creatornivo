@@ -8,6 +8,10 @@ import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
 import { getPlanLimits, PLANS } from "@/config/plans";
+import {
+  clearStaleSessionAndRedirect,
+  isStaleSessionUsageError,
+} from "@/lib/auth/stale-session";
 import { requireSession } from "@/lib/auth/session";
 import { prisma } from "@/lib/db";
 import { getUserUsageSnapshot } from "@/lib/usage";
@@ -19,9 +23,18 @@ export default async function DashboardPage() {
   const session = await requireSession();
   const limits = getPlanLimits(session.plan);
 
-  const [savedCount, usageSnapshot, recentPrompts] = await Promise.all([
+  let usageSnapshot: Awaited<ReturnType<typeof getUserUsageSnapshot>>;
+  try {
+    usageSnapshot = await getUserUsageSnapshot(session.id, session.plan);
+  } catch (error) {
+    if (isStaleSessionUsageError(error)) {
+      await clearStaleSessionAndRedirect();
+    }
+    throw error;
+  }
+
+  const [savedCount, recentPrompts] = await Promise.all([
     prisma.savedPrompt.count({ where: { userId: session.id } }),
-    getUserUsageSnapshot(session.id, session.plan),
     prisma.savedPrompt.findMany({
       where: { userId: session.id },
       orderBy: { updatedAt: "desc" },
