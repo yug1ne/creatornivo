@@ -685,10 +685,14 @@ test("route streaming path stays outside repair branch; repair path is buffered 
 
   const flagCheck = route.indexOf("if (isGenerationAutoRepairEnabled())");
   const bufferedText = route.indexOf("await createContentText(", flagCheck);
-  // Second createContentText is the repairModel callback
+  // Second createContentText is the repairModel callback (templateSlug keeps budgets aligned)
   const repairModelText = route.indexOf(
-    "createContentText({\n                prompt: repairPrompt",
+    "repairModel: (repairPrompt) =>",
     bufferedText,
+  );
+  const repairModelCreateText = route.indexOf(
+    "createContentText({",
+    repairModelText,
   );
   const finalContentResponse = route.indexOf(
     "return new Response(finalContent",
@@ -704,6 +708,11 @@ test("route streaming path stays outside repair branch; repair path is buffered 
   assert.ok(flagCheck >= 0);
   assert.ok(bufferedText > flagCheck);
   assert.ok(repairModelText > bufferedText);
+  assert.ok(repairModelCreateText > repairModelText);
+  assert.match(
+    route.slice(repairModelCreateText, repairModelCreateText + 200),
+    /templateSlug:\s*template\.slug/,
+  );
   assert.ok(finalContentResponse > repairModelText);
   assert.ok(validationFailed > bufferedText && validationFailed < streamPath);
   assert.ok(finalContentResponse < streamPath);

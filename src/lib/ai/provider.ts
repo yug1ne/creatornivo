@@ -2,10 +2,13 @@ import { createOpenAI } from "@ai-sdk/openai";
 import { generateText, streamText } from "ai";
 
 import { getGenerationPolicy, type Plan } from "@/config/plans";
+import { getTemplateMaxOutputTokens } from "@/config/template-output-limits";
 
 export interface StreamContentInput {
   prompt: string;
   plan: Plan;
+  /** Server-resolved template slug; drives maxOutputTokens with plan fallback. */
+  templateSlug?: string | null;
   onStart?: () => Promise<void>;
   onFinish?: (result: {
     text: string;
@@ -23,6 +26,8 @@ export interface StreamContentInput {
 export interface TextContentInput {
   prompt: string;
   plan: Plan;
+  /** Server-resolved template slug; drives maxOutputTokens with plan fallback. */
+  templateSlug?: string | null;
   onStart?: () => Promise<void>;
 }
 
@@ -142,24 +147,25 @@ async function createOpenAIText(
 export async function createContentStream(input: StreamContentInput) {
   const policy = getGenerationPolicy(input.plan);
   const model = policy.model;
-  const maxTokens = policy.maxOutputTokens;
+  const maxTokens = getTemplateMaxOutputTokens(input.templateSlug, input.plan);
 
   if (!isAIProviderConfigured()) {
     throw new Error("AI generation is not configured");
   }
 
   const stream = await createOpenAIStream(input, model, maxTokens);
-  return { stream, model };
+  return { stream, model, maxOutputTokens: maxTokens };
 }
 
 export async function createContentText(input: TextContentInput) {
   const policy = getGenerationPolicy(input.plan);
   const model = policy.model;
-  const maxTokens = policy.maxOutputTokens;
+  const maxTokens = getTemplateMaxOutputTokens(input.templateSlug, input.plan);
 
   if (!isAIProviderConfigured()) {
     throw new Error("AI generation is not configured");
   }
 
-  return createOpenAIText(input, model, maxTokens);
+  const result = await createOpenAIText(input, model, maxTokens);
+  return { ...result, maxOutputTokens: maxTokens };
 }

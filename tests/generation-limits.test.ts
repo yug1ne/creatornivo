@@ -6,6 +6,14 @@ import { Prisma } from "@prisma/client";
 
 import { generationPolicies, getGenerationPolicy, type Plan } from "../src/config/plans";
 import {
+  getTemplateMaxOutputTokens,
+  getTemplateOutputProfile,
+  MAPPED_TEMPLATE_OUTPUT_SLUGS,
+  OUTPUT_TOKEN_PROFILES,
+  TEMPLATE_OUTPUT_PROFILES,
+  type OutputTokenProfile,
+} from "../src/config/template-output-limits";
+import {
   parseGenerationRequestBody,
   POST,
   requireGenerationRequestId,
@@ -1366,4 +1374,287 @@ test("public generation-limit text matches Free and Pro policies", () => {
   assert.doesNotMatch(publicLimitText, /20 free generations/i);
   assert.doesNotMatch(publicLimitText, /3 \/ 20/);
   assert.doesNotMatch(publicLimitText, /Unlimited generations/i);
+});
+
+// ---------------------------------------------------------------------------
+// Template-aware output token profiles
+// ---------------------------------------------------------------------------
+
+const EXPECTED_PROFILE_LIMITS: Record<OutputTokenProfile, number> = {
+  compact: 1000,
+  short: 2000,
+  medium: 4000,
+  long: 6000,
+  xl: 8000,
+  xxl: 10000,
+};
+
+const EXPECTED_SLUG_PROFILES: Record<string, OutputTokenProfile> = {
+  "discord-announcement": "compact",
+  "linkedin-post": "compact",
+  "push-notification": "compact",
+  "review-response": "compact",
+  "seo-meta-tags": "compact",
+  "sms-campaign": "compact",
+  "telegram-post": "compact",
+  "tiktok-caption": "compact",
+  "cold-email-outreach": "short",
+  "facebook-post": "short",
+  "google-business-profile-post": "short",
+  "instagram-post": "short",
+  "pinterest-pin": "short",
+  "short-form-video": "short",
+  "threads-post": "short",
+  "website-popup": "short",
+  "whatsapp-broadcast": "short",
+  "x-thread": "short",
+  "amazon-listing": "medium",
+  "app-store-listing": "medium",
+  "etsy-listing": "medium",
+  "in-app-ux-copy": "medium",
+  "indie-hackers-post": "medium",
+  "instagram-carousel": "medium",
+  "linkedin-carousel": "medium",
+  "paid-ad-copy": "medium",
+  "press-release": "medium",
+  "product-description": "medium",
+  "product-hunt-launch": "medium",
+  "quora-answer": "medium",
+  "reddit-post": "medium",
+  "case-study": "long",
+  "email-sequence": "long",
+  "github-readme": "long",
+  "landing-page-copy": "long",
+  newsletter: "long",
+  "substack-post": "long",
+  "youtube-video-package": "long",
+  "blog-article": "xl",
+  "faq-page": "xl",
+  "kickstarter-campaign": "xl",
+  "sales-proposal": "xl",
+  "podcast-script": "xxl",
+  "webinar-package": "xxl",
+  "youtube-script": "xxl",
+};
+
+test("output token profiles match audited ceilings", () => {
+  assert.deepEqual(OUTPUT_TOKEN_PROFILES, EXPECTED_PROFILE_LIMITS);
+});
+
+test("all 45 audited template slugs are mapped exactly once", () => {
+  const slugs = Object.keys(TEMPLATE_OUTPUT_PROFILES);
+  assert.equal(slugs.length, 45);
+  assert.equal(MAPPED_TEMPLATE_OUTPUT_SLUGS.length, 45);
+  assert.deepEqual([...slugs].sort(), Object.keys(EXPECTED_SLUG_PROFILES).sort());
+  assert.deepEqual(
+    [...MAPPED_TEMPLATE_OUTPUT_SLUGS].sort(),
+    Object.keys(EXPECTED_SLUG_PROFILES).sort(),
+  );
+
+  const unique = new Set(slugs);
+  assert.equal(unique.size, 45);
+
+  for (const [slug, profile] of Object.entries(EXPECTED_SLUG_PROFILES)) {
+    assert.equal(
+      TEMPLATE_OUTPUT_PROFILES[slug as keyof typeof TEMPLATE_OUTPUT_PROFILES],
+      profile,
+      `profile for ${slug}`,
+    );
+    assert.equal(
+      getTemplateMaxOutputTokens(slug, "free"),
+      EXPECTED_PROFILE_LIMITS[profile],
+      `free budget for ${slug}`,
+    );
+    assert.equal(
+      getTemplateMaxOutputTokens(slug, "pro"),
+      EXPECTED_PROFILE_LIMITS[profile],
+      `pro budget for ${slug}`,
+    );
+  }
+});
+
+test("anchor templates keep audited output budgets", () => {
+  assert.equal(getTemplateMaxOutputTokens("linkedin-post", "free"), 1000);
+  assert.equal(getTemplateMaxOutputTokens("linkedin-post", "pro"), 1000);
+  assert.equal(getTemplateOutputProfile("linkedin-post"), "compact");
+
+  assert.equal(getTemplateMaxOutputTokens("x-thread", "free"), 2000);
+  assert.equal(getTemplateMaxOutputTokens("x-thread", "pro"), 2000);
+  assert.equal(getTemplateOutputProfile("x-thread"), "short");
+
+  assert.equal(getTemplateMaxOutputTokens("blog-article", "free"), 8000);
+  assert.equal(getTemplateMaxOutputTokens("blog-article", "pro"), 8000);
+  assert.equal(getTemplateOutputProfile("blog-article"), "xl");
+});
+
+test("unknown Free slug falls back to plan limit 1000, not short profile", () => {
+  assert.equal(getTemplateMaxOutputTokens("unknown-free-template", "free"), 1000);
+  assert.equal(getTemplateMaxOutputTokens(undefined, "free"), 1000);
+  assert.equal(getTemplateMaxOutputTokens(null, "free"), 1000);
+  assert.equal(getTemplateMaxOutputTokens("", "free"), 1000);
+  assert.equal(getTemplateOutputProfile("unknown-free-template"), null);
+  assert.notEqual(
+    getTemplateMaxOutputTokens("unknown-free-template", "free"),
+    OUTPUT_TOKEN_PROFILES.short,
+  );
+});
+
+test("unknown Pro slug falls back to plan limit 2000, not short profile", () => {
+  assert.equal(getTemplateMaxOutputTokens("unknown-pro-template", "pro"), 2000);
+  assert.equal(getTemplateMaxOutputTokens(undefined, "pro"), 2000);
+  assert.equal(getTemplateMaxOutputTokens(null, "pro"), 2000);
+  assert.equal(getTemplateMaxOutputTokens("", "pro"), 2000);
+  assert.equal(getTemplateOutputProfile("unknown-pro-template"), null);
+});
+
+test("reservation estimatedMaxOutputTokens matches template-aware provider budget", async () => {
+  const store = new MemoryReservationStore();
+  const now = new Date("2026-07-03T10:00:00.000Z");
+
+  const cases: Array<{
+    requestId: string;
+    userId: string;
+    plan: Plan;
+    templateSlug: string | null | undefined;
+    expected: number;
+  }> = [
+    {
+      requestId: "est-linkedin",
+      userId: "user-est-1",
+      plan: "free",
+      templateSlug: "linkedin-post",
+      expected: 1000,
+    },
+    {
+      requestId: "est-x-thread",
+      userId: "user-est-2",
+      plan: "free",
+      templateSlug: "x-thread",
+      expected: 2000,
+    },
+    {
+      requestId: "est-blog",
+      userId: "user-est-3",
+      plan: "pro",
+      templateSlug: "blog-article",
+      expected: 8000,
+    },
+    {
+      requestId: "est-unknown-free",
+      userId: "user-est-4",
+      plan: "free",
+      templateSlug: "not-a-real-slug",
+      expected: 1000,
+    },
+    {
+      requestId: "est-unknown-pro",
+      userId: "user-est-5",
+      plan: "pro",
+      templateSlug: "not-a-real-slug",
+      expected: 2000,
+    },
+    {
+      requestId: "est-missing-slug-free",
+      userId: "user-est-6",
+      plan: "free",
+      templateSlug: undefined,
+      expected: 1000,
+    },
+  ];
+
+  for (const testCase of cases) {
+    const reservation = await reserveGeneration(
+      {
+        requestId: testCase.requestId,
+        userId: testCase.userId,
+        plan: testCase.plan,
+        now,
+        templateSlug: testCase.templateSlug,
+      },
+      store,
+    );
+    const providerBudget = getTemplateMaxOutputTokens(
+      testCase.templateSlug,
+      testCase.plan,
+    );
+    assert.equal(reservation.estimatedMaxOutputTokens, testCase.expected);
+    assert.equal(reservation.estimatedMaxOutputTokens, providerBudget);
+  }
+});
+
+test("provider and reservation use the same template-aware maxOutputTokens resolution", () => {
+  const providerSource = readFileSync("src/lib/ai/provider.ts", "utf8");
+  const usageSource = readFileSync(
+    "src/lib/generation/usage-service.ts",
+    "utf8",
+  );
+  const routeSource = readFileSync(
+    "src/app/api/ai/generate/route.ts",
+    "utf8",
+  );
+  const limitsSource = readFileSync(
+    "src/config/template-output-limits.ts",
+    "utf8",
+  );
+
+  assert.match(providerSource, /getTemplateMaxOutputTokens/);
+  assert.match(providerSource, /templateSlug/);
+  assert.match(providerSource, /maxOutputTokens:\s*maxTokens/);
+  assert.match(providerSource, /streamText\(/);
+  assert.match(providerSource, /generateText\(/);
+
+  assert.match(usageSource, /getTemplateMaxOutputTokens/);
+  assert.match(usageSource, /templateSlug/);
+  assert.match(usageSource, /estimatedMaxOutputTokens,/);
+
+  // Generation call sites (not log payloads) must pass server template.slug.
+  assert.match(
+    routeSource,
+    /reserveGeneration\(\{\s*[\s\S]*?templateSlug:\s*template\.slug/,
+  );
+  assert.match(
+    routeSource,
+    /createContentText\(\{\s*[\s\S]*?templateSlug:\s*template\.slug/,
+  );
+  assert.match(
+    routeSource,
+    /createContentStream\(\{\s*[\s\S]*?templateSlug:\s*template\.slug/,
+  );
+  assert.match(
+    routeSource,
+    /repairModel:\s*\(repairPrompt\)\s*=>\s*createContentText\(\{\s*[\s\S]*?templateSlug:\s*template\.slug/,
+  );
+  assert.match(routeSource, /await createContentStream\(/);
+  assert.match(routeSource, /Content-Type": "text\/plain; charset=utf-8"/);
+  assert.match(routeSource, /return new Response\(finalContent/);
+
+  // Unknown slug fallback is plan maxOutputTokens, never a hard-coded short default.
+  assert.match(limitsSource, /generationPolicies\[plan\]\.maxOutputTokens/);
+  assert.doesNotMatch(
+    limitsSource,
+    /TEMPLATE_OUTPUT_PROFILES\[slug\].*\?\?.*short|return OUTPUT_TOKEN_PROFILES\.short/,
+  );
+
+  // Public quotas unchanged in plan policy.
+  assert.equal(generationPolicies.free.maxGenerationsPerPeriod, 5);
+  assert.equal(generationPolicies.free.period, "day");
+  assert.equal(generationPolicies.pro.maxGenerationsPerPeriod, 100);
+  assert.equal(generationPolicies.pro.period, "month");
+  assert.equal(generationPolicies.free.maxOutputTokens, 1000);
+  assert.equal(generationPolicies.pro.maxOutputTokens, 2000);
+});
+
+test("template output limit wiring does not change frontend stream protocol", () => {
+  const workspaceSource = readFileSync(
+    "src/components/generate/generate-workspace.tsx",
+    "utf8",
+  );
+  const resultSource = readFileSync(
+    "src/components/generate/generation-result.tsx",
+    "utf8",
+  );
+
+  assert.match(workspaceSource, /text\/plain|getReader|ReadableStream|body/);
+  assert.doesNotMatch(workspaceSource, /maxOutputTokens|template-output-limits/);
+  assert.doesNotMatch(resultSource, /maxOutputTokens|template-output-limits/);
 });

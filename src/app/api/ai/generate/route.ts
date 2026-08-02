@@ -273,6 +273,7 @@ export async function POST(request: Request) {
       userId: session.id,
       plan: user.plan,
       now: nowForQuota,
+      templateSlug: template.slug,
       providerPeriod,
     });
 
@@ -367,6 +368,7 @@ export async function POST(request: Request) {
         const generated = await createContentText({
           prompt: filledPrompt,
           plan: user.plan,
+          templateSlug: template.slug,
           onStart: markGenerationStarted,
         });
         const sanitizedOutput = sanitizeGeneratedOutput(
@@ -400,6 +402,7 @@ export async function POST(request: Request) {
               createContentText({
                 prompt: repairPrompt,
                 plan: user.plan,
+                templateSlug: template.slug,
               }),
           });
 
@@ -507,6 +510,7 @@ export async function POST(request: Request) {
       const { stream, model } = await createContentStream({
         prompt: filledPrompt,
         plan: user.plan,
+        templateSlug: template.slug,
         onStart: markGenerationStarted,
         onFinish: async ({
           text,

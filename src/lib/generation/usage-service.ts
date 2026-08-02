@@ -5,6 +5,7 @@ import {
   type GenerationPeriod,
   type Plan,
 } from "@/config/plans";
+import { getTemplateMaxOutputTokens } from "@/config/template-output-limits";
 import { prisma } from "@/lib/db";
 import {
   resolveQuotaPeriod,
@@ -414,6 +415,11 @@ export async function reserveGeneration(
     userId: string;
     plan: Plan;
     now?: Date;
+    /**
+     * Server-resolved template slug. Used only to set estimatedMaxOutputTokens
+     * to the same ceiling the provider will use. Unknown/missing → plan fallback.
+     */
+    templateSlug?: string | null;
     /** When omitted for Pro, calendar-month fallback is used (no DB lookup). */
     providerPeriod?: ProviderPeriodInput | null;
   },
@@ -425,6 +431,10 @@ export async function reserveGeneration(
     input.plan,
     now,
     input.providerPeriod,
+  );
+  const estimatedMaxOutputTokens = getTemplateMaxOutputTokens(
+    input.templateSlug,
+    input.plan,
   );
 
   return store.runSerializable(async (transaction) => {
@@ -509,7 +519,7 @@ export async function reserveGeneration(
       plan: input.plan,
       periodKey: period.key,
       model: policy.model,
-      estimatedMaxOutputTokens: policy.maxOutputTokens,
+      estimatedMaxOutputTokens,
       createdAt: now,
       expiresAt: new Date(now.getTime() + GENERATION_RESERVATION_TTL_MS),
     });
