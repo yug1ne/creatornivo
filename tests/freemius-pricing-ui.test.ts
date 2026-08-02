@@ -335,6 +335,70 @@ test("settings billing shows portal only for Freemius-linked Pro", () => {
   assert.match(manager, /separate Freemius password/i);
 });
 
+test("settings subscription shows founding offer copy and founding CTA when active", () => {
+  assert.equal(freemiusFoundingOfferActive, true);
+
+  const manager = read("src/components/settings/subscription-manager.tsx");
+
+  // Shared pricing config only — no independent hard-coded dollar amounts.
+  assert.match(manager, /freemiusFoundingOfferActive/);
+  assert.match(manager, /billingOptionFoundingTitle/);
+  assert.match(manager, /billingOptionFoundingPrice/);
+  assert.match(manager, /billingOptionFoundingDetail/);
+  assert.match(manager, /regularMonthlyPriceNote/);
+  assert.match(manager, /billingOptionAnnualTitle/);
+  assert.match(manager, /billingOptionAnnualPrice/);
+  assert.match(manager, /foundingCtaLabel/);
+  assert.match(manager, /annualCtaLabel/);
+  assert.match(manager, /data-settings-billing-options/);
+
+  // Founding monthly checkout uses the shared body helper with founding flag.
+  assert.match(
+    manager,
+    /handleFreemiusCheckout\("monthly",\s*\{\s*founding:\s*true\s*\}\)/,
+  );
+  assert.match(
+    manager,
+    /buildFreemiusCheckoutRequestBody\(interval,\s*options\)/,
+  );
+
+  // When founding is active, Settings must not prefer the regular monthly CTA label.
+  assert.match(
+    manager,
+    /freemiusFoundingOfferActive && \([\s\S]*foundingCtaLabel/,
+  );
+  assert.match(
+    manager,
+    /!freemiusFoundingOfferActive && \([\s\S]*monthlyCtaLabel/,
+  );
+
+  // Config values match product presentation.
+  assert.equal(
+    freemiusPricingDisplay.billingOptionFoundingTitle,
+    "Founding monthly",
+  );
+  assert.equal(
+    freemiusPricingDisplay.billingOptionFoundingPrice,
+    "$4.90/month",
+  );
+  assert.equal(
+    freemiusPricingDisplay.billingOptionFoundingDetail,
+    "First 20 customers. Discount applied automatically.",
+  );
+  assert.equal(
+    freemiusPricingDisplay.regularMonthlyPriceNote,
+    "Regular monthly price: $9.90/month.",
+  );
+  assert.equal(
+    freemiusPricingDisplay.billingOptionAnnualPrice,
+    "$99/year",
+  );
+  assert.equal(
+    freemiusPricingDisplay.foundingCtaLabel,
+    "Get Founding Pro — $4.90/month",
+  );
+});
+
 test("restricted checkout is never exposed on public pricing surfaces", () => {
   for (const path of [
     "src/app/(public)/pricing/page.tsx",

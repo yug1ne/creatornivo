@@ -6,7 +6,10 @@ import { useSession } from "next-auth/react";
 import { Suspense, useEffect, useState } from "react";
 
 import type { BillingProvider } from "@/config/billing";
-import { freemiusPricingDisplay } from "@/config/freemius-pricing-display";
+import {
+  freemiusFoundingOfferActive,
+  freemiusPricingDisplay,
+} from "@/config/freemius-pricing-display";
 import { PLANS, type Plan } from "@/config/plans";
 import {
   buildFreemiusCheckoutRequestBody,
@@ -187,7 +190,14 @@ function SubscriptionManagerContent({
   const checkoutStatus = searchParams.get("checkout");
 
   const [loadingAction, setLoadingAction] = useState<
-    "update" | "cancel" | "stripe" | "freemius" | "monthly" | "annual" | null
+    | "update"
+    | "cancel"
+    | "stripe"
+    | "freemius"
+    | "monthly"
+    | "annual"
+    | "founding"
+    | null
   >(null);
   const [message, setMessage] = useState("");
 
@@ -295,11 +305,15 @@ function SubscriptionManagerContent({
     }
   }
 
-  async function handleFreemiusCheckout(interval: "monthly" | "annual") {
-    setLoadingAction(interval);
+  async function handleFreemiusCheckout(
+    interval: "monthly" | "annual",
+    options?: { founding?: boolean },
+  ) {
+    setLoadingAction(options?.founding ? "founding" : interval);
     setMessage("");
     try {
-      const body = buildFreemiusCheckoutRequestBody(interval);
+      // Same body helper as public pricing CTAs (founding monthly auto-applies coupon).
+      const body = buildFreemiusCheckoutRequestBody(interval, options);
       const response = await fetch("/api/freemius/checkout", {
         method: "POST",
         headers: { "content-type": "application/json" },
@@ -369,8 +383,72 @@ function SubscriptionManagerContent({
         <p className={bannerClass}>{message || postCheckoutMessage}</p>
       )}
 
+      {!isPro && publicCheckoutEnabled && freemiusFoundingOfferActive && (
+        <div
+          className="mt-4 overflow-hidden rounded-lg border border-border bg-muted/30"
+          data-settings-billing-options="true"
+        >
+          <div className="border-b border-border px-3 py-3 sm:px-4">
+            <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+              {freemiusPricingDisplay.billingOptionFoundingTitle}
+            </p>
+            <p className="mt-1 text-base font-semibold text-foreground">
+              {freemiusPricingDisplay.billingOptionFoundingPrice}
+            </p>
+            <p className="mt-0.5 text-xs leading-snug text-muted-foreground">
+              {freemiusPricingDisplay.billingOptionFoundingDetail}
+            </p>
+            <p className="mt-2 text-xs text-muted-foreground">
+              {freemiusPricingDisplay.regularMonthlyPriceNote}
+            </p>
+          </div>
+          <div className="px-3 py-3 sm:px-4">
+            <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+              {freemiusPricingDisplay.billingOptionAnnualTitle}
+            </p>
+            <p className="mt-1 text-base font-semibold text-foreground">
+              {freemiusPricingDisplay.billingOptionAnnualPrice}
+            </p>
+          </div>
+        </div>
+      )}
+
       <div className="mt-4 flex flex-wrap gap-3">
-        {!isPro && publicCheckoutEnabled && (
+        {!isPro && publicCheckoutEnabled && freemiusFoundingOfferActive && (
+          <>
+            <button
+              type="button"
+              onClick={() =>
+                handleFreemiusCheckout("monthly", { founding: true })
+              }
+              disabled={loadingAction !== null}
+              className={buttonVariants({
+                size: "sm",
+                className: "disabled:opacity-50",
+              })}
+            >
+              {loadingAction === "founding"
+                ? "Opening..."
+                : freemiusPricingDisplay.foundingCtaLabel}
+            </button>
+            <button
+              type="button"
+              onClick={() => handleFreemiusCheckout("annual")}
+              disabled={loadingAction !== null}
+              className={buttonVariants({
+                variant: "outline",
+                size: "sm",
+                className: "disabled:opacity-50",
+              })}
+            >
+              {loadingAction === "annual"
+                ? "Opening..."
+                : freemiusPricingDisplay.annualCtaLabel}
+            </button>
+          </>
+        )}
+
+        {!isPro && publicCheckoutEnabled && !freemiusFoundingOfferActive && (
           <>
             <button
               type="button"
