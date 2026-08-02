@@ -19,6 +19,8 @@ export const DEFAULT_GENERATION_MODELS = {
   pro: "gpt-5.6-terra",
 } as const;
 
+export const BLOG_ARTICLE_MAX_OUTPUT_TOKENS = 6000;
+
 export const generationPolicies = {
   [PLANS.FREE]: {
     model: DEFAULT_GENERATION_MODELS.free,
@@ -76,7 +78,10 @@ function resolveEnvModel(
 /**
  * Server-owned generation policy for a plan, with optional env model override.
  */
-export function getGenerationPolicy(plan: Plan) {
+export function getGenerationPolicy(
+  plan: Plan,
+  templateSlug?: string | null,
+) {
   const base = generationPolicies[plan];
   const model =
     plan === PLANS.PRO
@@ -86,6 +91,10 @@ export function getGenerationPolicy(plan: Plan) {
   return {
     ...base,
     model,
+    maxOutputTokens:
+      templateSlug === "blog-article"
+        ? BLOG_ARTICLE_MAX_OUTPUT_TOKENS
+        : base.maxOutputTokens,
   };
 }
 

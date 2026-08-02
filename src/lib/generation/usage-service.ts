@@ -413,6 +413,7 @@ export async function reserveGeneration(
     requestId: string;
     userId: string;
     plan: Plan;
+    templateSlug?: string | null;
     now?: Date;
     /** When omitted for Pro, calendar-month fallback is used (no DB lookup). */
     providerPeriod?: ProviderPeriodInput | null;
@@ -420,7 +421,7 @@ export async function reserveGeneration(
   store: GenerationReservationStore = prismaGenerationReservationStore,
 ): Promise<ReservationRecord> {
   const now = input.now ?? new Date();
-  const policy = getGenerationPolicy(input.plan);
+  const policy = getGenerationPolicy(input.plan, input.templateSlug);
   const period = getGenerationPeriodWindow(
     input.plan,
     now,

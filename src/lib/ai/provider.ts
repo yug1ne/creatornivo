@@ -6,6 +6,7 @@ import { getGenerationPolicy, type Plan } from "@/config/plans";
 export interface StreamContentInput {
   prompt: string;
   plan: Plan;
+  templateSlug?: string | null;
   onStart?: () => Promise<void>;
   onFinish?: (result: {
     text: string;
@@ -23,6 +24,7 @@ export interface StreamContentInput {
 export interface TextContentInput {
   prompt: string;
   plan: Plan;
+  templateSlug?: string | null;
   onStart?: () => Promise<void>;
 }
 
@@ -140,7 +142,7 @@ async function createOpenAIText(
 }
 
 export async function createContentStream(input: StreamContentInput) {
-  const policy = getGenerationPolicy(input.plan);
+  const policy = getGenerationPolicy(input.plan, input.templateSlug);
   const model = policy.model;
   const maxTokens = policy.maxOutputTokens;
 
@@ -153,7 +155,7 @@ export async function createContentStream(input: StreamContentInput) {
 }
 
 export async function createContentText(input: TextContentInput) {
-  const policy = getGenerationPolicy(input.plan);
+  const policy = getGenerationPolicy(input.plan, input.templateSlug);
   const model = policy.model;
   const maxTokens = policy.maxOutputTokens;
 

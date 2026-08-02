@@ -308,6 +308,70 @@ test("getGenerationPolicy allows optional env model override", () => {
   }
 });
 
+test("Blog Article uses a 6000-token output budget for Free and Pro", () => {
+  assert.equal(getGenerationPolicy("free", "blog-article").maxOutputTokens, 6000);
+  assert.equal(getGenerationPolicy("pro", "blog-article").maxOutputTokens, 6000);
+});
+
+test("LinkedIn Post and X Thread retain the existing plan output budgets", () => {
+  for (const templateSlug of ["linkedin-post", "x-thread"]) {
+    assert.equal(getGenerationPolicy("free", templateSlug).maxOutputTokens, 1000);
+    assert.equal(getGenerationPolicy("pro", templateSlug).maxOutputTokens, 2000);
+  }
+});
+
+test("other templates retain the existing plan output budgets", () => {
+  assert.equal(getGenerationPolicy("free", "newsletter").maxOutputTokens, 1000);
+  assert.equal(getGenerationPolicy("pro", "newsletter").maxOutputTokens, 2000);
+  assert.equal(getGenerationPolicy("free").maxOutputTokens, 1000);
+  assert.equal(getGenerationPolicy("pro").maxOutputTokens, 2000);
+});
+
+test("Blog Article reservation stores the template-specific output estimate", async () => {
+  const freeStore = new MemoryReservationStore();
+  const proStore = new MemoryReservationStore();
+  const now = new Date("2026-07-03T10:00:00.000Z");
+
+  const freeReservation = await reserveGeneration(
+    {
+      requestId: "blog-free",
+      userId: "free-user",
+      plan: "free",
+      templateSlug: "blog-article",
+      now,
+    },
+    freeStore,
+  );
+  const proReservation = await reserveGeneration(
+    {
+      requestId: "blog-pro",
+      userId: "pro-user",
+      plan: "pro",
+      templateSlug: "blog-article",
+      now,
+    },
+    proStore,
+  );
+
+  assert.equal(freeReservation.estimatedMaxOutputTokens, 6000);
+  assert.equal(proReservation.estimatedMaxOutputTokens, 6000);
+});
+
+test("template-aware output policy preserves the raw streaming protocol", () => {
+  const providerSource = readFileSync("src/lib/ai/provider.ts", "utf8");
+  const routeSource = readFileSync("src/app/api/ai/generate/route.ts", "utf8");
+
+  assert.match(providerSource, /streamText\(\{/);
+  assert.match(providerSource, /for await \(const chunk of result\.textStream\)/);
+  assert.match(
+    providerSource,
+    /getGenerationPolicy\(input\.plan, input\.templateSlug\)/,
+  );
+  assert.match(routeSource, /await createContentStream\(\{/);
+  assert.match(routeSource, /return new Response\(stream, \{/);
+  assert.match(routeSource, /"Content-Type": "text\/plain; charset=utf-8"/);
+});
+
 test("Free requests 1 through 5 are allowed", async () => {
   const store = new MemoryReservationStore();
   const start = new Date("2026-07-03T00:00:00.000Z");
