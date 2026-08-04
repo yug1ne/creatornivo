@@ -51,7 +51,7 @@ const FULL_FORM_SCHEMAS = {
       "template-forms",
       "blog-article-variables.json",
     ),
-    buildHint: "node scripts/build-blog-article-form.mjs",
+    buildHint: "src/config/template-forms (committed schema)",
   },
   "cold-email-outreach": {
     path: path.join(
@@ -61,7 +61,7 @@ const FULL_FORM_SCHEMAS = {
       "template-forms",
       "cold-email-outreach-variables.json",
     ),
-    buildHint: "node scripts/build-cold-email-outreach-form.mjs",
+    buildHint: "src/config/template-forms (committed schema)",
   },
   "discord-announcement": {
     path: path.join(
@@ -111,7 +111,7 @@ const FULL_FORM_SCHEMAS = {
       "template-forms",
       "faq-page-variables.json",
     ),
-    buildHint: "node scripts/build-faq-page-form.mjs",
+    buildHint: "src/config/template-forms (committed schema)",
   },
   "google-business-profile-post": {
     path: path.join(
@@ -161,7 +161,7 @@ const FULL_FORM_SCHEMAS = {
       "template-forms",
       "instagram-post-variables.json",
     ),
-    buildHint: "node scripts/build-instagram-post-form.mjs",
+    buildHint: "src/config/template-forms (committed schema)",
   },
   "instagram-carousel": {
     path: path.join(
@@ -191,7 +191,7 @@ const FULL_FORM_SCHEMAS = {
       "template-forms",
       "linkedin-post-variables.json",
     ),
-    buildHint: "node scripts/build-linkedin-post-form.mjs",
+    buildHint: "src/config/template-forms (committed schema)",
   },
   newsletter: {
     path: path.join(
@@ -201,7 +201,7 @@ const FULL_FORM_SCHEMAS = {
       "template-forms",
       "newsletter-variables.json",
     ),
-    buildHint: "node scripts/build-newsletter-form.mjs",
+    buildHint: "src/config/template-forms (committed schema)",
   },
   "product-description": {
     path: path.join(
@@ -211,7 +211,7 @@ const FULL_FORM_SCHEMAS = {
       "template-forms",
       "product-description-variables.json",
     ),
-    buildHint: "node scripts/build-product-description-form.mjs",
+    buildHint: "src/config/template-forms (committed schema)",
   },
   "reddit-post": {
     path: path.join(
@@ -251,7 +251,7 @@ const FULL_FORM_SCHEMAS = {
       "template-forms",
       "seo-meta-tags-variables.json",
     ),
-    buildHint: "node scripts/build-seo-meta-tags-form.mjs",
+    buildHint: "src/config/template-forms (committed schema)",
   },
   "short-form-video": {
     path: path.join(
@@ -261,7 +261,7 @@ const FULL_FORM_SCHEMAS = {
       "template-forms",
       "short-form-video-variables.json",
     ),
-    buildHint: "node scripts/build-short-form-video-form.mjs",
+    buildHint: "src/config/template-forms (committed schema)",
   },
   "sms-campaign": {
     path: path.join(
@@ -351,7 +351,7 @@ const FULL_FORM_SCHEMAS = {
       "template-forms",
       "x-thread-variables.json",
     ),
-    buildHint: "node scripts/build-x-thread-form.mjs",
+    buildHint: "src/config/template-forms (committed schema)",
   },
   "case-study": {
     path: path.join(
@@ -371,7 +371,7 @@ const FULL_FORM_SCHEMAS = {
       "template-forms",
       "landing-page-copy-variables.json",
     ),
-    buildHint: "node scripts/build-landing-page-copy-form.mjs",
+    buildHint: "src/config/template-forms (committed schema)",
   },
   "linkedin-carousel": {
     path: path.join(
@@ -391,7 +391,7 @@ const FULL_FORM_SCHEMAS = {
       "template-forms",
       "paid-ad-copy-variables.json",
     ),
-    buildHint: "node scripts/build-paid-ad-copy-form.mjs",
+    buildHint: "src/config/template-forms (committed schema)",
   },
   "pinterest-pin": {
     path: path.join(
@@ -461,7 +461,7 @@ const FULL_FORM_SCHEMAS = {
       "template-forms",
       "youtube-script-variables.json",
     ),
-    buildHint: "node scripts/build-youtube-script-form.mjs",
+    buildHint: "src/config/template-forms (committed schema)",
   },
   "youtube-video-package": {
     path: path.join(

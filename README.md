@@ -68,9 +68,10 @@ Open [http://localhost:3000](http://localhost:3000).
 - Do not commit backup artifacts (`*.dump`, `*.age`, `backup-key*.txt`, `restore-work/`).
 - Production secrets belong only in your host’s secret store (for example Vercel / GitHub Actions secrets), not in the repository.
 
-## Agent / contributor notes
+## Documentation
 
-Coding conventions for automated agents live in `AGENTS.md` (and `CLAUDE.md`, which points there). Template form standards live under `docs/`.
+- Template form and Help standards: [`docs/template-form-standard.md`](docs/template-form-standard.md)
+- Template migration status: [`docs/template-migration-status.md`](docs/template-migration-status.md)
 
 ## License
 
