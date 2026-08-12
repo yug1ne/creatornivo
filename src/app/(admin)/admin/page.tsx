@@ -13,6 +13,7 @@ import {
 } from "@/config/billing";
 import { buttonVariants } from "@/components/ui/button";
 import { requireAdminPage } from "@/lib/admin/session";
+import { getAdminTrialOverview } from "@/lib/admin/users-read";
 import { prisma } from "@/lib/db";
 
 export const dynamic = "force-dynamic";
@@ -29,9 +30,10 @@ async function probeDatabase(): Promise<boolean> {
 export default async function AdminPage() {
   await requireAdminPage();
 
-  const [userCount, templateCount, databaseOk] = await Promise.all([
+  const [userCount, templateCount, trialOverview, databaseOk] = await Promise.all([
     prisma.user.count(),
     prisma.template.count(),
+    getAdminTrialOverview(),
     probeDatabase(),
   ]);
 
@@ -66,6 +68,35 @@ export default async function AdminPage() {
             </CardContent>
           </Card>
         </Link>
+
+        <Card>
+          <CardContent className="p-6">
+            <CardTitle>Trials</CardTitle>
+            <dl className="mt-3 space-y-2 text-sm">
+              <div className="flex justify-between gap-3">
+                <dt className="text-muted-foreground">Active trials</dt>
+                <dd className="font-medium tabular-nums text-foreground">
+                  {trialOverview.active}
+                </dd>
+              </div>
+              <div className="flex justify-between gap-3">
+                <dt className="text-muted-foreground">Pending verification</dt>
+                <dd className="font-medium tabular-nums text-foreground">
+                  {trialOverview.pendingVerification}
+                </dd>
+              </div>
+              <div className="flex justify-between gap-3">
+                <dt className="text-muted-foreground">Expired trials</dt>
+                <dd className="font-medium tabular-nums text-foreground">
+                  {trialOverview.expired}
+                </dd>
+              </div>
+            </dl>
+            <CardDescription className="mt-3">
+              Read-only invite-trial status counts
+            </CardDescription>
+          </CardContent>
+        </Card>
 
         <Link href="/admin/templates">
           <Card hover className="h-full">

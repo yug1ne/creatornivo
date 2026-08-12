@@ -169,6 +169,30 @@ export default async function AdminUserDetailPage({
 
         <Card>
           <CardContent className="p-5">
+            <CardTitle className="text-base">Trial</CardTitle>
+            <dl className="mt-3">
+              <DetailRow label="Trial status">{user.trial.label}</DetailRow>
+              <DetailRow label="Trial started">
+                {formatDateTime(user.trial.startedAt)}
+              </DetailRow>
+              <DetailRow label="Trial ends">
+                {formatDateTime(user.trial.endsAt)}
+              </DetailRow>
+              <DetailRow label="Trial generations used / 30">
+                {user.trial.status === "never" ? "—" : `${user.trial.used} / 30`}
+              </DetailRow>
+              <DetailRow label="Claimed invite ID">
+                {user.trial.claimedInviteId ?? "—"}
+              </DetailRow>
+            </dl>
+            <CardDescription className="mt-3 text-xs">
+              Historical, read-only trial metadata. Billing plan remains separate.
+            </CardDescription>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent className="p-5">
             <CardTitle className="text-base">Subscription metadata</CardTitle>
             {user.subscription ? (
               <dl className="mt-3">

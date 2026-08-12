@@ -1,6 +1,12 @@
 import { formatSignInMethods } from "@/lib/auth/sign-in-methods";
+import { getTrialPeriodKey } from "@/config/trial";
 import { prisma } from "@/lib/db";
 import { getUserUsageSnapshot } from "@/lib/usage";
+
+import {
+  buildAdminTrialSummary,
+  type AdminTrialSummary,
+} from "./trial-visibility";
 
 import {
   ADMIN_USERS_PAGE_SIZE,
@@ -17,6 +23,11 @@ const listSelect = {
   plan: true,
   role: true,
   emailVerified: true,
+  trialStartedAt: true,
+  trialEndsAt: true,
+  trialInvite: {
+    select: { id: true },
+  },
   createdAt: true,
   // Presence only — never returned as hash to UI mappers.
   password: true,
@@ -53,6 +64,7 @@ export type AdminUserListItem = {
   generationsCount: number;
   subscriptionStatus: string | null;
   subscriptionProvider: string | null;
+  trial: AdminTrialSummary;
 };
 
 export type AdminUsersListResult = {
@@ -71,6 +83,9 @@ function mapListItem(row: {
   plan: "free" | "pro";
   role: "user" | "admin";
   emailVerified: Date | null;
+  trialStartedAt: Date | null;
+  trialEndsAt: Date | null;
+  trialInvite: { id: string } | null;
   createdAt: Date;
   password: string | null;
   accounts: { provider: string }[];
@@ -79,7 +94,7 @@ function mapListItem(row: {
     provider: string;
   } | null;
   _count: { savedPrompts: number; generations: number };
-}): AdminUserListItem {
+}, trialUsed: number, now: Date): AdminUserListItem {
   return {
     id: row.id,
     email: row.email,
@@ -96,7 +111,44 @@ function mapListItem(row: {
     generationsCount: row._count.generations,
     subscriptionStatus: row.subscription?.status ?? null,
     subscriptionProvider: row.subscription?.provider ?? null,
+    trial: buildAdminTrialSummary(
+      {
+        trialStartedAt: row.trialStartedAt,
+        trialEndsAt: row.trialEndsAt,
+        claimedInviteId: row.trialInvite?.id ?? null,
+        used: trialUsed,
+      },
+      now,
+    ),
   };
+}
+
+async function getCompletedTrialUsageByUser(
+  users: Array<{ id: string; trialStartedAt: Date | null }>,
+): Promise<Map<string, number>> {
+  const periods = users.flatMap((user) =>
+    user.trialStartedAt
+      ? [
+          {
+            userId: user.id,
+            periodKey: getTrialPeriodKey(user.trialStartedAt),
+          },
+        ]
+      : [],
+  );
+
+  if (periods.length === 0) return new Map();
+
+  const usage = await prisma.generationReservation.groupBy({
+    by: ["userId", "periodKey"],
+    where: {
+      status: "completed",
+      OR: periods,
+    },
+    _count: { _all: true },
+  });
+
+  return new Map(usage.map((row) => [row.userId, row._count._all]));
 }
 
 /**
@@ -107,6 +159,7 @@ export async function listAdminUsers(
 ): Promise<AdminUsersListResult> {
   const where = buildAdminUserListWhere(params.q);
   const skip = adminUsersSkip(params.page);
+  const now = new Date();
 
   const [total, rows] = await Promise.all([
     prisma.user.count({ where }),
@@ -118,9 +171,12 @@ export async function listAdminUsers(
       select: listSelect,
     }),
   ]);
+  const trialUsageByUser = await getCompletedTrialUsageByUser(rows);
 
   return {
-    users: rows.map(mapListItem),
+    users: rows.map((row) =>
+      mapListItem(row, trialUsageByUser.get(row.id) ?? 0, now),
+    ),
     total,
     page: params.page,
     pageSize: ADMIN_USERS_PAGE_SIZE,
@@ -152,6 +208,7 @@ export type AdminUserDetail = {
     remaining: number;
     resetAt: string;
   };
+  trial: AdminTrialSummary;
   subscription: {
     status: string;
     provider: string;
@@ -185,6 +242,11 @@ export async function getAdminUserDetail(
       plan: true,
       role: true,
       emailVerified: true,
+      trialStartedAt: true,
+      trialEndsAt: true,
+      trialInvite: {
+        select: { id: true },
+      },
       createdAt: true,
       updatedAt: true,
       password: true,
@@ -215,7 +277,7 @@ export async function getAdminUserDetail(
 
   if (!user) return null;
 
-  const [usage, generationsLast7Days] = await Promise.all([
+  const [usage, generationsLast7Days, trialUsed] = await Promise.all([
     getUserUsageSnapshot(user.id, user.plan),
     prisma.generation.count({
       where: {
@@ -223,6 +285,15 @@ export async function getAdminUserDetail(
         createdAt: { gte: sevenDaysAgo },
       },
     }),
+    user.trialStartedAt
+      ? prisma.generationReservation.count({
+          where: {
+            userId: user.id,
+            periodKey: getTrialPeriodKey(user.trialStartedAt),
+            status: "completed",
+          },
+        })
+      : Promise.resolve(0),
   ]);
 
   const oauthProviders = user.accounts.map((a) => a.provider);
@@ -254,6 +325,12 @@ export async function getAdminUserDetail(
       remaining: usage.remaining,
       resetAt: usage.resetAt,
     },
+    trial: buildAdminTrialSummary({
+      trialStartedAt: user.trialStartedAt,
+      trialEndsAt: user.trialEndsAt,
+      claimedInviteId: user.trialInvite?.id ?? null,
+      used: trialUsed,
+    }),
     subscription: user.subscription
       ? {
           status: user.subscription.status,
@@ -268,4 +345,38 @@ export async function getAdminUserDetail(
         }
       : null,
   };
+}
+
+export type AdminTrialOverview = {
+  active: number;
+  pendingVerification: number;
+  expired: number;
+};
+
+/** Counts only. Caller must already have verified admin access. */
+export async function getAdminTrialOverview(
+  now = new Date(),
+): Promise<AdminTrialOverview> {
+  const [active, pendingVerification, expired] = await Promise.all([
+    prisma.user.count({
+      where: {
+        trialStartedAt: { not: null },
+        trialEndsAt: { gt: now },
+      },
+    }),
+    prisma.user.count({
+      where: {
+        trialStartedAt: null,
+        trialInvite: { isNot: null },
+      },
+    }),
+    prisma.user.count({
+      where: {
+        trialStartedAt: { not: null },
+        trialEndsAt: { lte: now },
+      },
+    }),
+  ]);
+
+  return { active, pendingVerification, expired };
 }
