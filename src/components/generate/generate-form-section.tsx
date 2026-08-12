@@ -30,11 +30,11 @@ import {
   buildDefaultValues,
   validateVariableValues,
 } from "@/lib/templates/utils";
-import type { UserUsageSnapshot } from "@/lib/usage";
+import type { EffectiveUsageSnapshot } from "@/lib/trial/access";
 import { getGenerateDisabledHint } from "@/lib/usage/quota-copy";
 import type { TemplateFormDetail } from "@/types/template";
 
-type GenerationUsageSnapshot = UserUsageSnapshot;
+type GenerationUsageSnapshot = EffectiveUsageSnapshot;
 
 export type GenerateFormSectionProps = {
   selected: TemplateFormDetail;
@@ -216,6 +216,9 @@ export const GenerateFormSection = memo(function GenerateFormSection({
                     userPlan,
                     generationUsage.used,
                     generationUsage.resetAt,
+                    new Date(),
+                    generationUsage.quotaBasis,
+                    generationUsage.limit,
                   ) ?? undefined
                 : generateDisabledHint ?? undefined
           }

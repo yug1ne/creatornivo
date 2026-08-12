@@ -9,8 +9,12 @@ import {
   isStaleSessionUsageError,
 } from "@/lib/auth/stale-session";
 import { requireSession } from "@/lib/auth/session";
+import { isAdminSession } from "@/lib/admin/is-admin-session";
 import { prisma } from "@/lib/db";
-import { getUserUsageSnapshot } from "@/lib/usage";
+import {
+  getEffectiveUsageSnapshot,
+  resolveUserAccess,
+} from "@/lib/trial/access";
 import {
   getTemplateCatalogForUser,
   getTemplateFormBySlug,
@@ -27,9 +31,28 @@ export default async function GeneratePage({ searchParams }: GeneratePageProps) 
   const session = await requireSession();
   const { template: templateSlug } = await searchParams;
 
-  let usageSnapshot: Awaited<ReturnType<typeof getUserUsageSnapshot>>;
+  const user = await prisma.user.findUnique({
+    where: { id: session.id },
+    select: {
+      emailVerified: true,
+      plan: true,
+      trialStartedAt: true,
+      trialEndsAt: true,
+    },
+  });
+
+  if (!user) {
+    return clearStaleSessionAndRedirect();
+  }
+
+  const access = resolveUserAccess(user, {
+    isAdmin: isAdminSession(session),
+  });
+  const serverSession = { ...session, plan: user.plan };
+
+  let usageSnapshot: Awaited<ReturnType<typeof getEffectiveUsageSnapshot>>;
   try {
-    usageSnapshot = await getUserUsageSnapshot(session.id, session.plan);
+    usageSnapshot = await getEffectiveUsageSnapshot(session.id, access);
   } catch (error) {
     if (isStaleSessionUsageError(error)) {
       await clearStaleSessionAndRedirect();
@@ -37,14 +60,10 @@ export default async function GeneratePage({ searchParams }: GeneratePageProps) 
     throw error;
   }
 
-  const [catalog, savedCount, user] = await Promise.all([
+  const [catalog, savedCount] = await Promise.all([
     // Lightweight catalog for the picker — full form loads for the selected template only.
-    getTemplateCatalogForUser(session),
+    getTemplateCatalogForUser(serverSession),
     prisma.savedPrompt.count({ where: { userId: session.id } }),
-    prisma.user.findUnique({
-      where: { id: session.id },
-      select: { emailVerified: true },
-    }),
   ]);
 
   const initialCatalogItem = resolveInitialCatalogTemplate(
@@ -54,14 +73,14 @@ export default async function GeneratePage({ searchParams }: GeneratePageProps) 
 
   // Form schema only for the initial selection (never includes prompt).
   const initialForm = initialCatalogItem
-    ? await getTemplateFormBySlug(session, initialCatalogItem.slug)
+    ? await getTemplateFormBySlug(serverSession, initialCatalogItem.slug)
     : null;
 
   // Never hand a locked form into the workspace as the active selection.
   const safeInitialForm =
     initialForm && !initialForm.isLocked ? initialForm : null;
 
-  const emailVerified = Boolean(user?.emailVerified);
+  const emailVerified = Boolean(user.emailVerified);
 
   return (
     <>
@@ -74,8 +93,8 @@ export default async function GeneratePage({ searchParams }: GeneratePageProps) 
         <GenerateWorkspace
           catalog={catalog}
           initialForm={safeInitialForm}
-          userPlan={session.plan}
-          canExport={canExportContent(session)}
+          userPlan={user.plan}
+          canExport={canExportContent(serverSession)}
           emailVerified={emailVerified}
           usage={{
             ...usageSnapshot,

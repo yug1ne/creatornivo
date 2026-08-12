@@ -6,6 +6,10 @@ import {
   type Plan,
 } from "@/config/plans";
 import { getTemplateMaxOutputTokens } from "@/config/template-output-limits";
+import {
+  getTrialPeriodKey,
+  TRIAL_GENERATION_LIMIT,
+} from "@/config/trial";
 import { prisma } from "@/lib/db";
 import {
   resolveQuotaPeriod,
@@ -36,6 +40,7 @@ export type GenerationPolicyErrorCode =
   | "quota"
   | "rate_limit"
   | "concurrent"
+  | "trial_expired"
   | "input_too_long";
 
 export class GenerationPolicyError extends Error {
@@ -60,9 +65,9 @@ export interface GenerationPeriodWindow {
 export interface GenerationUsage {
   used: number;
   limit: number;
-  period: GenerationPeriod;
+  period: GenerationPeriod | "trial";
   periodKey: string;
-  basis: QuotaBasis;
+  basis: QuotaBasis | "trial";
   resetAt: string;
 }
 
@@ -99,7 +104,12 @@ export interface GenerationReservationTransaction {
     userId: string,
     requestId: string,
   ): Promise<ReservationRecord | null>;
-  countUsed(userId: string, start: Date, end: Date): Promise<number>;
+  countUsed(
+    userId: string,
+    start: Date,
+    end: Date,
+    periodKey?: string,
+  ): Promise<number>;
   countRecent(userId: string, since: Date): Promise<number>;
   countActive(userId: string, now: Date): Promise<number>;
   create(input: CreateReservationInput): Promise<ReservationRecord>;
@@ -137,7 +147,12 @@ export interface GenerationReservationStore {
     usage: FailedGenerationUsage,
     now: Date,
   ): Promise<void>;
-  countUsed(userId: string, start: Date, end: Date): Promise<number>;
+  countUsed(
+    userId: string,
+    start: Date,
+    end: Date,
+    periodKey?: string,
+  ): Promise<number>;
 }
 
 function isSerializationConflict(error: unknown): boolean {
@@ -201,11 +216,12 @@ function createPrismaTransaction(
      * expired, not historical startedAt rows. Active in-flight work is
      * counted separately via countActive so concurrency cannot overshoot.
      */
-    countUsed(userId, start, end) {
+    countUsed(userId, start, end, periodKey) {
       return transaction.generationReservation.count({
         where: {
           userId,
           createdAt: { gte: start, lt: end },
+          ...(periodKey ? { periodKey } : {}),
           status: GENERATION_RESERVATION_STATUS.COMPLETED,
         },
       });
@@ -330,11 +346,12 @@ export const prismaGenerationReservationStore: GenerationReservationStore = {
       },
     });
   },
-  countUsed(userId, start, end) {
+  countUsed(userId, start, end, periodKey) {
     return prisma.generationReservation.count({
       where: {
         userId,
         createdAt: { gte: start, lt: end },
+        ...(periodKey ? { periodKey } : {}),
         status: GENERATION_RESERVATION_STATUS.COMPLETED,
       },
     });
@@ -420,6 +437,11 @@ export async function reserveGeneration(
      * to the same ceiling the provider will use. Unknown/missing → plan fallback.
      */
     templateSlug?: string | null;
+    /** Active application-trial window. Keeps billing plan/model policy unchanged. */
+    trialPeriod?: {
+      startedAt: Date;
+      endsAt: Date;
+    } | null;
     /** When omitted for Pro, calendar-month fallback is used (no DB lookup). */
     providerPeriod?: ProviderPeriodInput | null;
   },
@@ -427,11 +449,33 @@ export async function reserveGeneration(
 ): Promise<ReservationRecord> {
   const now = input.now ?? new Date();
   const policy = getGenerationPolicy(input.plan);
-  const period = getGenerationPeriodWindow(
-    input.plan,
-    now,
-    input.providerPeriod,
-  );
+  const trialPeriod = input.trialPeriod ?? null;
+  if (
+    trialPeriod &&
+    !(
+      trialPeriod.startedAt.getTime() <= now.getTime() &&
+      now.getTime() < trialPeriod.endsAt.getTime()
+    )
+  ) {
+    throw new GenerationPolicyError(
+      "trial_expired",
+      403,
+      "Your trial has ended. Free plan limits now apply.",
+    );
+  }
+
+  const period = trialPeriod
+    ? {
+        start: trialPeriod.startedAt,
+        end: trialPeriod.endsAt,
+        key: getTrialPeriodKey(trialPeriod.startedAt),
+        period: "trial" as const,
+        basis: "trial" as const,
+      }
+    : getGenerationPeriodWindow(input.plan, now, input.providerPeriod);
+  const generationLimit = trialPeriod
+    ? TRIAL_GENERATION_LIMIT
+    : policy.maxGenerationsPerPeriod;
   const estimatedMaxOutputTokens = getTemplateMaxOutputTokens(
     input.templateSlug,
     input.plan,
@@ -477,14 +521,17 @@ export async function reserveGeneration(
       input.userId,
       period.start,
       period.end,
+      period.key,
     );
     const active = await transaction.countActive(input.userId, now);
 
-    if (completed + active >= policy.maxGenerationsPerPeriod) {
+    if (completed + active >= generationLimit) {
       throw new GenerationPolicyError(
         "quota",
         429,
-        input.plan === "free"
+        trialPeriod
+          ? "You’ve reached the 30-generation trial limit."
+          : input.plan === "free"
           ? "You’ve reached today’s free generation limit."
           : period.basis === "provider_billing"
             ? "You’ve reached your billing-period generation limit."
@@ -535,7 +582,12 @@ export async function getGenerationUsage(
 ): Promise<GenerationUsage> {
   const policy = getGenerationPolicy(plan);
   const period = getGenerationPeriodWindow(plan, now, providerPeriod);
-  const used = await store.countUsed(userId, period.start, period.end);
+  const used = await store.countUsed(
+    userId,
+    period.start,
+    period.end,
+    period.key,
+  );
 
   return {
     used,
@@ -544,5 +596,29 @@ export async function getGenerationUsage(
     periodKey: period.key,
     basis: period.basis,
     resetAt: period.end.toISOString(),
+  };
+}
+
+export async function getTrialGenerationUsage(
+  userId: string,
+  trialStartedAt: Date,
+  trialEndsAt: Date,
+  store: GenerationReservationStore = prismaGenerationReservationStore,
+): Promise<GenerationUsage> {
+  const periodKey = getTrialPeriodKey(trialStartedAt);
+  const used = await store.countUsed(
+    userId,
+    trialStartedAt,
+    trialEndsAt,
+    periodKey,
+  );
+
+  return {
+    used,
+    limit: TRIAL_GENERATION_LIMIT,
+    period: "trial",
+    periodKey,
+    basis: "trial",
+    resetAt: trialEndsAt.toISOString(),
   };
 }

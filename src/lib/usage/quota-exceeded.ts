@@ -1,6 +1,7 @@
 import { PLANS, type Plan } from "@/config/plans";
 
 import type { UserUsageSnapshot } from "@/lib/usage";
+import type { QuotaBasis } from "@/lib/usage/quota-period";
 import {
   EMAIL_VERIFICATION_REQUIRED_CODE,
   EMAIL_VERIFICATION_REQUIRED_MESSAGE,
@@ -28,7 +29,14 @@ export type ParsedGenerationError = {
 };
 
 export function buildQuotaExceededBody(
-  snapshot: UserUsageSnapshot,
+  snapshot: Pick<
+    UserUsageSnapshot,
+    "plan" | "limit" | "remaining" | "resetAt"
+  > & {
+    quotaBasis: QuotaBasis;
+    period?: UserUsageSnapshot["period"] | "trial";
+    used?: number;
+  },
   now = new Date(),
 ): QuotaExceededBody {
   const copy = getQuotaExceededCopy(

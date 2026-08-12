@@ -742,7 +742,7 @@ test("missing OpenAI API key disables generation before reservation", () => {
   const configurationCheck = routeSource.indexOf(
     "if (!isAIProviderConfigured())",
   );
-  const usageCheck = routeSource.indexOf("await getUserUsageSnapshot(");
+  const usageCheck = routeSource.indexOf("await getEffectiveUsageSnapshot(");
   const reservation = routeSource.indexOf("await reserveGeneration");
 
   assert.ok(configurationCheck >= 0);
@@ -778,7 +778,7 @@ test("route and usage-service agree: permanent quota is completed-only", () => {
     serviceSource,
     /startedAt:\s*\{\s*not:\s*null\s*\}/,
   );
-  assert.match(serviceSource, /completed \+ active >= policy\.maxGenerationsPerPeriod/);
+  assert.match(serviceSource, /completed \+ active >= generationLimit/);
 
   // UI snapshot uses UserUsage.count (incremented only after successful complete).
   assert.match(usageSource, /usage\.count/);
@@ -801,7 +801,7 @@ test("email verification is required before usage, reservation, and OpenAI", () 
   const configurationCheck = routeSource.indexOf(
     "if (!isAIProviderConfigured())",
   );
-  const usageCheck = routeSource.indexOf("await getUserUsageSnapshot(");
+  const usageCheck = routeSource.indexOf("await getEffectiveUsageSnapshot(");
   const reservation = routeSource.indexOf("await reserveGeneration");
   const openAiStream = routeSource.indexOf("await createContentStream");
   const openAiText = routeSource.indexOf("await createContentText");
@@ -850,6 +850,8 @@ test("successful generation usage is reconciled from the server", async () => {
     resetAt: "2026-07-07T00:00:00.000Z",
     used: 4,
     quotaBasis: "utc_day",
+    accessMode: "free",
+    trialEndsAt: null,
   });
 });
 
@@ -1276,7 +1278,7 @@ test("page refresh restores usage from server reservation data", async () => {
   assert.equal(usage.used, 3);
   assert.match(
     pageSource,
-    /getUserUsageSnapshot\(session\.id, session\.plan\)/,
+    /getEffectiveUsageSnapshot\(session\.id, access\)/,
   );
 });
 

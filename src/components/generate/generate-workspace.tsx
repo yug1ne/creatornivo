@@ -23,7 +23,7 @@ import {
 } from "@/lib/templates/output-validation";
 import { getSaveLimitMessage } from "@/lib/subscriptions/messages";
 import type { Plan } from "@/config/plans";
-import type { UserUsageSnapshot } from "@/lib/usage";
+import type { EffectiveUsageSnapshot } from "@/lib/trial/access";
 import {
   parseGenerationApiError,
   type ParsedGenerationError,
@@ -48,11 +48,9 @@ const GenerationResult = dynamic(
   { ssr: false, loading: () => null },
 );
 
-interface UsageStats extends UserUsageSnapshot {
-  savedCount: number;
-}
+type UsageStats = EffectiveUsageSnapshot & { savedCount: number };
 
-export type GenerationUsageSnapshot = UserUsageSnapshot;
+export type GenerationUsageSnapshot = EffectiveUsageSnapshot;
 
 interface GenerateWorkspaceProps {
   /** Lightweight catalog for the picker — no form variables or prompts. */
@@ -126,7 +124,9 @@ export async function fetchGenerationUsageSnapshot(
     (data.plan !== "free" && data.plan !== "pro") ||
     typeof data.remaining !== "number" ||
     typeof data.limit !== "number" ||
-    (data.period !== "daily" && data.period !== "monthly") ||
+    (data.period !== "daily" &&
+      data.period !== "monthly" &&
+      data.period !== "trial") ||
     typeof data.resetAt !== "string"
   ) {
     return null;
@@ -140,11 +140,14 @@ export async function fetchGenerationUsageSnapshot(
   const quotaBasis =
     data.quotaBasis === "utc_day" ||
     data.quotaBasis === "provider_billing" ||
-    data.quotaBasis === "utc_calendar_month"
+    data.quotaBasis === "utc_calendar_month" ||
+    data.quotaBasis === "trial"
       ? data.quotaBasis
-      : data.period === "daily"
-        ? ("utc_day" as const)
-        : ("utc_calendar_month" as const);
+      : data.period === "trial"
+        ? ("trial" as const)
+        : data.period === "daily"
+          ? ("utc_day" as const)
+          : ("utc_calendar_month" as const);
 
   return {
     plan: data.plan,
@@ -154,6 +157,16 @@ export async function fetchGenerationUsageSnapshot(
     resetAt: data.resetAt,
     used,
     quotaBasis,
+    accessMode:
+      data.accessMode === "paid_pro" ||
+      data.accessMode === "trial" ||
+      data.accessMode === "free"
+        ? data.accessMode
+        : data.plan === "pro"
+          ? "paid_pro"
+          : "free",
+    trialEndsAt:
+      typeof data.trialEndsAt === "string" ? data.trialEndsAt : null,
   };
 }
 
@@ -199,6 +212,8 @@ export function GenerateWorkspace({
       resetAt: initialUsage.resetAt,
       used: initialUsage.used,
       quotaBasis: initialUsage.quotaBasis,
+      accessMode: initialUsage.accessMode,
+      trialEndsAt: initialUsage.trialEndsAt,
     });
   const [savedCount, setSavedCount] = useState(initialUsage.savedCount);
   const [savedPromptId, setSavedPromptId] = useState<string | null>(null);
@@ -249,6 +264,23 @@ export function GenerateWorkspace({
       // Keep the last server-provided value if usage refresh is unavailable.
     }
   }, []);
+
+  useEffect(() => {
+    if (!generationUsage.trialEndsAt) return;
+
+    const delay = new Date(generationUsage.trialEndsAt).getTime() - Date.now();
+    if (!Number.isFinite(delay)) return;
+
+    const refreshAfterExpiry = () => window.location.reload();
+
+    if (delay <= 0) {
+      refreshAfterExpiry();
+      return;
+    }
+
+    const timeout = window.setTimeout(refreshAfterExpiry, delay + 250);
+    return () => window.clearTimeout(timeout);
+  }, [generationUsage.trialEndsAt]);
 
   const applyForm = useCallback((form: TemplateFormDetail) => {
     formCacheRef.current.set(form.id, form);

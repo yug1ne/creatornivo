@@ -18,7 +18,7 @@ interface UsageBannerProps {
   remaining: number;
   used: number;
   limit: number;
-  period: UsagePeriod;
+  period: UsagePeriod | "trial";
   resetAt: string;
   savedCount: number;
   maxSavedPrompts: number;
@@ -42,6 +42,7 @@ export const UsageBanner = memo(function UsageBanner({
     resetAt,
     new Date(),
     quotaBasis,
+    limit,
   );
   const saveWarning = getSaveLimitMessage(plan, savedCount);
   const isGenerationExhausted = remaining <= 0;
@@ -54,7 +55,7 @@ export const UsageBanner = memo(function UsageBanner({
             <div className="flex items-start justify-between gap-2">
               <div className="min-w-0">
                 <p className="text-xs font-medium text-muted-foreground">
-                  Generation quota
+                  {quotaBasis === "trial" ? "Trial active" : "Generation quota"}
                 </p>
                 <p className="mt-1 text-sm font-semibold text-foreground">
                   {getRemainingGenerationsLabel(plan, remaining, quotaBasis)}

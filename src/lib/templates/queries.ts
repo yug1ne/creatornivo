@@ -1,6 +1,6 @@
 import { hasProAccess } from "@/lib/auth/guards";
 import { prisma } from "@/lib/db";
-import { canUseTemplate } from "@/lib/subscriptions/limits";
+import { getUserAccessContext } from "@/lib/trial/access";
 import type { SessionUser } from "@/types";
 import type {
   TemplateCatalogItem,
@@ -61,6 +61,15 @@ const templateListSelectWithPrompt = {
   ...templateCatalogSelect,
   prompt: true,
 } as const;
+
+async function canSessionAccessProTemplates(
+  session: SessionUser | null,
+): Promise<boolean> {
+  if (!session) return false;
+
+  const access = await getUserAccessContext(session);
+  return access?.canUseProTemplates ?? hasProAccess(session);
+}
 
 /**
  * Map a template row to a list DTO.
@@ -170,7 +179,7 @@ export function toTemplateFormDetail(
 export async function getTemplateCatalogForUser(
   session: SessionUser | null,
 ): Promise<TemplateCatalogItem[]> {
-  const canAccessPro = hasProAccess(session);
+  const canAccessPro = await canSessionAccessProTemplates(session);
 
   const templates = await prisma.template.findMany({
     where: { isActive: true },
@@ -192,7 +201,7 @@ export async function getTemplateFormBySlug(
   session: SessionUser | null,
   slug: string,
 ): Promise<TemplateFormDetail | null> {
-  const canAccessPro = hasProAccess(session);
+  const canAccessPro = await canSessionAccessProTemplates(session);
 
   const template = await prisma.template.findFirst({
     where: { slug, isActive: true },
@@ -212,7 +221,7 @@ export async function getTemplatesForUser(
   session: SessionUser | null,
   options: GetTemplatesForUserOptions = {},
 ): Promise<TemplateListItem[]> {
-  const canAccessPro = hasProAccess(session);
+  const canAccessPro = await canSessionAccessProTemplates(session);
   // Never leak prompts without a session, even if a caller passes includePrompt: true.
   const includePrompt = Boolean(options.includePrompt && session);
 
@@ -238,6 +247,7 @@ export async function getTemplateBySlug(slug: string) {
 export async function assertTemplateAccess(
   session: SessionUser,
   templateId: string,
+  options: { canAccessPro?: boolean } = {},
 ) {
   const template = await prisma.template.findUnique({
     where: { id: templateId, isActive: true },
@@ -247,7 +257,10 @@ export async function assertTemplateAccess(
     return { error: "Template not found", status: 404 as const, template: null };
   }
 
-  if (!canUseTemplate(session.plan, template.requiredPlan)) {
+  const canAccessPro =
+    options.canAccessPro ?? (await canSessionAccessProTemplates(session));
+
+  if (template.requiredPlan === "pro" && !canAccessPro) {
     return {
       error: "This template is only available on the Pro plan",
       status: 403 as const,

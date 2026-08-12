@@ -18,6 +18,9 @@ import { prisma } from "@/lib/db";
 import { userSupportAttentionCount } from "@/lib/support/counts";
 import { getUserSupportStatusCounts } from "@/lib/support/service";
 import { prismaSupportStore } from "@/lib/support/store";
+import { isAdminSession } from "@/lib/admin/is-admin-session";
+import { resolveUserAccess } from "@/lib/trial/access";
+import { formatHumanUtcDateTime } from "@/lib/usage/quota-copy";
 
 export const dynamic = "force-dynamic";
 
@@ -45,6 +48,10 @@ export default async function SettingsPage() {
       where: { id: session.id },
       select: {
         password: true,
+        plan: true,
+        emailVerified: true,
+        trialStartedAt: true,
+        trialEndsAt: true,
         accounts: {
           select: { provider: true },
           orderBy: { provider: "asc" },
@@ -62,6 +69,9 @@ export default async function SettingsPage() {
   });
 
   const planLabel = session.plan === PLANS.PRO ? "Pro" : "Free";
+  const access = identity
+    ? resolveUserAccess(identity, { isAdmin: isAdminSession(session) })
+    : null;
 
   const deletionBlock = getAccountDeletionBlock({
     id: session.id,
@@ -112,6 +122,14 @@ export default async function SettingsPage() {
                 <dt className="text-muted-foreground">Plan</dt>
                 <dd className="text-right text-foreground">{planLabel}</dd>
               </div>
+              {access?.mode === "trial" && access.trialEndsAt ? (
+                <div className="flex justify-between gap-4">
+                  <dt className="text-muted-foreground">Trial</dt>
+                  <dd className="text-right text-foreground">
+                    Active until {formatHumanUtcDateTime(access.trialEndsAt)}
+                  </dd>
+                </div>
+              ) : null}
               <div className="flex justify-between gap-4">
                 <dt className="text-muted-foreground">Sign-in</dt>
                 <dd className="min-w-0 break-words text-right text-foreground [overflow-wrap:anywhere]">

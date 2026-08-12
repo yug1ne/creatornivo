@@ -91,6 +91,9 @@ model User {
   welcomeEmailSentAt          DateTime?
   proConfirmationEmailSentAt  DateTime?
   passwordChangedAt           DateTime?
+  trialStartedAt              DateTime?
+  trialEndsAt                 DateTime?
+  trialInvite                 TrialInvite?
   passwordResetTokens   PasswordResetToken[]
   userUsage             UserUsage[]
   supportThreads        SupportThread[]
@@ -251,6 +254,20 @@ model FreemiusCheckoutIntent {
 
   @@index([userId, createdAt])
   @@index([status, expiresAt])
+}
+
+model TrialInvite {
+  id              String   @id @default(cuid())
+  tokenHash       String   @unique
+  expiresAt       DateTime
+  revokedAt       DateTime?
+  claimedAt       DateTime?
+  claimedByUserId String?  @unique
+  claimedBy       User?    @relation(fields: [claimedByUserId], references: [id], onDelete: SetNull)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([expiresAt, revokedAt, claimedAt])
 }
 
 model PaddleCheckoutIntent {

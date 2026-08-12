@@ -36,4 +36,5 @@ export const PUBLIC_ROBOTS_DISALLOW = [
   "/generate",
   "/library",
   "/settings",
+  "/try",
 ] as const;

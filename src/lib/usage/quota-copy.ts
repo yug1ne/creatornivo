@@ -67,6 +67,16 @@ export function formatHumanUtcDate(
   });
 }
 
+/** Human-readable UTC date and time, e.g. "Aug 10, 2026 at 14:30 UTC". */
+export function formatHumanUtcDateTime(value: string | Date): string {
+  const date = value instanceof Date ? value : new Date(value);
+  if (Number.isNaN(date.getTime())) {
+    return "unknown time";
+  }
+
+  return `${formatHumanUtcDate(date)} at ${formatUtcTime(date)} UTC`;
+}
+
 /** Compact month/day UTC label for quota reset lines, e.g. "Aug 1". */
 export function formatQuotaResetUtcDate(value: string | Date): string {
   return formatHumanUtcDate(value, { includeYear: false });
@@ -80,12 +90,18 @@ function isProviderBillingBasis(
 
 /** Compact reset label for usage cards (banner, stats). */
 export function getQuotaResetHint(
-  period: UsagePeriod,
+  period: UsagePeriod | "trial",
   resetAt: string,
   now = new Date(),
   basis?: QuotaBasis,
 ): string {
   const resetDate = new Date(resetAt);
+  if (period === "trial" || basis === "trial") {
+    return Number.isNaN(resetDate.getTime())
+      ? "Trial ends soon"
+      : `Trial ends ${formatHumanUtcDateTime(resetDate)}`;
+  }
+
   if (Number.isNaN(resetDate.getTime())) {
     if (period === "daily") {
       return "Quota resets at midnight UTC";
@@ -127,6 +143,10 @@ export function getQuotaExhaustedBannerMessage(
 ): string {
   const countdown = getQuotaResetCountdown(resetAt, now);
 
+  if (basis === "trial") {
+    return `You've reached the 30-generation trial limit. Your trial ends ${countdown}.`;
+  }
+
   if (plan === PLANS.FREE) {
     const resetDate = new Date(resetAt);
     const time =
@@ -166,6 +186,13 @@ export function getQuotaExceededCopy(
   basis?: QuotaBasis,
 ): { error: string; message: string } {
   const countdown = getQuotaResetCountdown(resetAt, now);
+
+  if (basis === "trial") {
+    return {
+      error: "Trial generation limit reached",
+      message: `You've used all 30 trial generations. Your trial ends ${countdown}. You can upgrade to Pro or continue on Free after the trial.`,
+    };
+  }
 
   if (plan === PLANS.FREE) {
     const resetDate = new Date(resetAt);

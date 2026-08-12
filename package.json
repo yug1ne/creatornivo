@@ -12,6 +12,7 @@
     "db:push": "prisma db push",
     "db:seed": "prisma db seed",
     "db:studio": "prisma studio",
+    "trial:invite": "node --env-file-if-exists=.env --env-file-if-exists=.env.local --import tsx scripts/trial-invite.ts",
     "smoke:templates:dry": "node scripts/template-smoke/run.mjs --mode dry-run",
     "smoke:templates:batch": "node scripts/template-smoke/run.mjs --mode batch-smoke --confirm-real-generations"
   },

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { PLANS, type Plan } from "@/config/plans";
+import { isAdminSession } from "@/lib/admin/is-admin-session";
 import {
   createContentText,
   createContentStream,
@@ -24,7 +25,6 @@ import {
   getUserUsageSnapshot,
   incrementUsage,
   UsageError,
-  type UserUsageSnapshot,
 } from "@/lib/usage";
 import {
   loadProviderPeriodForUser,
@@ -56,6 +56,12 @@ import {
   isGenerationAutoRepairEnabled,
   repairGeneratedOutputOnce,
 } from "@/lib/templates/output-repair";
+import {
+  getEffectiveUsageSnapshot,
+  resolveUserAccess,
+  type EffectiveUsageSnapshot,
+  type UserAccessContext,
+} from "@/lib/trial/access";
 
 function isValidRequestId(value: unknown): value is string {
   return (
@@ -98,7 +104,7 @@ export function parseGenerationRequestBody(body: unknown): {
 }
 
 /** Rich 429 payload when UserUsage quota is exhausted (monitoring-friendly Retry-After). */
-function quotaExceededResponse(snapshot: UserUsageSnapshot) {
+function quotaExceededResponse(snapshot: EffectiveUsageSnapshot) {
   const body = buildQuotaExceededBody(snapshot);
 
   return NextResponse.json(body, {
@@ -121,11 +127,17 @@ export async function POST(request: Request) {
 
   let requestId: string | null = null;
   let userPlan: Plan | undefined;
+  let userAccess: UserAccessContext | undefined;
 
   try {
     const user = await prisma.user.findUnique({
       where: { id: session.id },
-      select: { plan: true, emailVerified: true },
+      select: {
+        plan: true,
+        emailVerified: true,
+        trialStartedAt: true,
+        trialEndsAt: true,
+      },
     });
 
     if (!user) {
@@ -133,6 +145,10 @@ export async function POST(request: Request) {
     }
 
     userPlan = user.plan;
+    const access = resolveUserAccess(user, {
+      isAdmin: isAdminSession(session),
+    });
+    userAccess = access;
 
     // Gate before body work, quota, reservation, and OpenAI — no quota cost.
     if (!isEmailVerified(user.emailVerified)) {
@@ -160,6 +176,7 @@ export async function POST(request: Request) {
     const { error, status, template } = await assertTemplateAccess(
       serverSession,
       templateId,
+      { canAccessPro: access.canUseProTemplates },
     );
 
     if (error || !template) {
@@ -236,11 +253,11 @@ export async function POST(request: Request) {
         : null;
     const nowForQuota = new Date();
 
-    let usageSnapshot: UserUsageSnapshot;
+    let usageSnapshot: EffectiveUsageSnapshot;
     try {
-      usageSnapshot = await getUserUsageSnapshot(
+      usageSnapshot = await getEffectiveUsageSnapshot(
         userId,
-        user.plan,
+        access,
         nowForQuota,
         providerPeriod,
       );
@@ -274,6 +291,15 @@ export async function POST(request: Request) {
       plan: user.plan,
       now: nowForQuota,
       templateSlug: template.slug,
+      trialPeriod:
+        access.mode === "trial" &&
+        access.trialStartedAt &&
+        access.trialEndsAt
+          ? {
+              startedAt: access.trialStartedAt,
+              endsAt: access.trialEndsAt,
+            }
+          : null,
       providerPeriod,
     });
 
@@ -310,7 +336,13 @@ export async function POST(request: Request) {
         new Date(),
       );
 
-      // Count only completed generations toward UserUsage (after DB persist)
+      // Trial usage is counted from completed reservations in its exact trial scope.
+      // Do not contaminate the normal Free daily UserUsage bucket.
+      if (access.mode === "trial") {
+        return;
+      }
+
+      // Count only completed non-trial generations toward UserUsage (after DB persist)
       try {
         const completedAt = new Date();
         const periodBucket = resolveQuotaPeriod(
@@ -602,7 +634,18 @@ export async function POST(request: Request) {
         userPlan
       ) {
         try {
-          const snapshot = await getUserUsageSnapshot(session.id, userPlan);
+          const snapshot = userAccess
+            ? await getEffectiveUsageSnapshot(session.id, userAccess)
+            : await getUserUsageSnapshot(session.id, userPlan).then(
+                (fallback) => ({
+                  ...fallback,
+                  accessMode:
+                    userPlan === PLANS.PRO
+                      ? ("paid_pro" as const)
+                      : ("free" as const),
+                  trialEndsAt: null,
+                }),
+              );
           if (snapshot.remaining <= 0) {
             return quotaExceededResponse(snapshot);
           }
@@ -619,6 +662,8 @@ export async function POST(request: Request) {
               period: snapshot.period,
               resetAt: snapshot.resetAt,
               quotaBasis: snapshot.quotaBasis,
+              accessMode: snapshot.accessMode,
+              trialEndsAt: snapshot.trialEndsAt,
               gate: "reservation_completed_plus_active",
             },
             {

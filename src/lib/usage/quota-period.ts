@@ -5,7 +5,8 @@ import { prisma } from "@/lib/db";
 export type QuotaBasis =
   | "utc_day"
   | "provider_billing"
-  | "utc_calendar_month";
+  | "utc_calendar_month"
+  | "trial";
 
 /** Aligns with UserUsage.period column values. */
 export type QuotaUsagePeriod = "daily" | "monthly";

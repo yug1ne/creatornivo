@@ -1,8 +1,13 @@
 import { NextResponse } from "next/server";
 
+import { isAdminSession } from "@/lib/admin/is-admin-session";
 import { requireSession } from "@/lib/auth/session";
 import { prisma } from "@/lib/db";
-import { getUserUsageSnapshot, UsageError } from "@/lib/usage";
+import { UsageError } from "@/lib/usage";
+import {
+  getEffectiveUsageSnapshot,
+  resolveUserAccess,
+} from "@/lib/trial/access";
 
 /** Returns UserUsage-backed quota for the authenticated user. */
 export async function GET() {
@@ -21,14 +26,22 @@ export async function GET() {
   try {
     const user = await prisma.user.findUnique({
       where: { id: session.id },
-      select: { plan: true },
+      select: {
+        plan: true,
+        emailVerified: true,
+        trialStartedAt: true,
+        trialEndsAt: true,
+      },
     });
 
     if (!user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const snapshot = await getUserUsageSnapshot(session.id, user.plan);
+    const access = resolveUserAccess(user, {
+      isAdmin: isAdminSession(session),
+    });
+    const snapshot = await getEffectiveUsageSnapshot(session.id, access);
 
     return NextResponse.json(
       {
@@ -39,6 +52,8 @@ export async function GET() {
         resetAt: snapshot.resetAt,
         used: snapshot.used,
         quotaBasis: snapshot.quotaBasis,
+        accessMode: snapshot.accessMode,
+        trialEndsAt: snapshot.trialEndsAt,
       },
       {
         headers: {

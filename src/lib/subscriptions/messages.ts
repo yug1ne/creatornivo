@@ -14,6 +14,10 @@ export function getRemainingGenerationsLabel(
 ): string {
   const noun = remaining === 1 ? "generation" : "generations";
 
+  if (basis === "trial") {
+    return `${remaining} trial ${noun} left`;
+  }
+
   if (plan === "free") {
     return `${remaining} ${noun} left today`;
   }
@@ -31,12 +35,18 @@ export function getGenerationLimitMessage(
   resetAt?: string,
   now = new Date(),
   basis?: QuotaBasis,
+  limitOverride?: number,
 ): string | null {
   const policy = getGenerationPolicy(plan);
+  const limit = limitOverride ?? policy.maxGenerationsPerPeriod;
 
-  if (generationsUsed >= policy.maxGenerationsPerPeriod) {
+  if (generationsUsed >= limit) {
     if (resetAt) {
       return getQuotaExhaustedBannerMessage(plan, resetAt, now, basis);
+    }
+
+    if (basis === "trial") {
+      return "You've reached the 30-generation trial limit.";
     }
 
     if (plan === "free") {
@@ -48,11 +58,13 @@ export function getGenerationLimitMessage(
       : "You've reached this calendar month's generation limit.";
   }
 
-  const remaining = policy.maxGenerationsPerPeriod - generationsUsed;
+  const remaining = limit - generationsUsed;
 
   if (remaining <= 3) {
     const windowLabel =
-      policy.period === "day"
+      basis === "trial"
+        ? "in your trial"
+        : policy.period === "day"
         ? "today"
         : basis === "provider_billing"
           ? "in this billing period"

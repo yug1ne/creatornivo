@@ -8,6 +8,7 @@ import { GoogleSignInButton } from "@/components/auth/google-sign-in-button";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
+import { getSafeCallbackUrl } from "@/lib/auth/callback-url";
 import { getOAuthErrorMessage } from "@/lib/auth/google";
 
 type RegisterFormProps = {
@@ -17,6 +18,10 @@ type RegisterFormProps = {
 export function RegisterForm({ googleEnabled = false }: RegisterFormProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const callbackUrl = getSafeCallbackUrl(
+    searchParams.get("callbackUrl"),
+    "/dashboard?onboarding=start",
+  );
   const oauthError = getOAuthErrorMessage(searchParams.get("error"));
 
   const [name, setName] = useState("");
@@ -53,11 +58,11 @@ export function RegisterForm({ googleEnabled = false }: RegisterFormProps) {
     setIsLoading(false);
 
     if (signInResult?.error) {
-      router.push("/login");
+      router.push(`/login?callbackUrl=${encodeURIComponent(callbackUrl)}`);
       return;
     }
 
-    router.push("/dashboard?onboarding=start");
+    router.push(callbackUrl);
     router.refresh();
   }
 
@@ -72,7 +77,7 @@ export function RegisterForm({ googleEnabled = false }: RegisterFormProps) {
       {googleEnabled && (
         <>
           <GoogleSignInButton
-            callbackUrl="/dashboard?onboarding=start"
+            callbackUrl={callbackUrl}
             label="Continue with Google"
           />
           <div className="relative py-1">

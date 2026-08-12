@@ -14,7 +14,10 @@ import {
 } from "@/lib/auth/stale-session";
 import { requireSession } from "@/lib/auth/session";
 import { prisma } from "@/lib/db";
-import { getUserUsageSnapshot } from "@/lib/usage";
+import {
+  getEffectiveUsageSnapshot,
+  getUserAccessContext,
+} from "@/lib/trial/access";
 import { getRemainingGenerationsLabel } from "@/lib/subscriptions/messages";
 
 export const dynamic = "force-dynamic";
@@ -23,9 +26,14 @@ export default async function DashboardPage() {
   const session = await requireSession();
   const limits = getPlanLimits(session.plan);
 
-  let usageSnapshot: Awaited<ReturnType<typeof getUserUsageSnapshot>>;
+  const access = await getUserAccessContext(session);
+  if (!access) {
+    return clearStaleSessionAndRedirect();
+  }
+
+  let usageSnapshot: Awaited<ReturnType<typeof getEffectiveUsageSnapshot>>;
   try {
-    usageSnapshot = await getUserUsageSnapshot(session.id, session.plan);
+    usageSnapshot = await getEffectiveUsageSnapshot(session.id, access);
   } catch (error) {
     if (isStaleSessionUsageError(error)) {
       await clearStaleSessionAndRedirect();
@@ -82,7 +90,9 @@ export default async function DashboardPage() {
       >
         <StatsCard
           label={`Generations ${
-            usageSnapshot.period === "daily"
+            usageSnapshot.period === "trial"
+              ? "in trial"
+              : usageSnapshot.period === "daily"
               ? "today"
               : usageSnapshot.quotaBasis === "provider_billing"
                 ? "this billing period"
