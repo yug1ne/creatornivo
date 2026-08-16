@@ -18,6 +18,10 @@ export function getRemainingGenerationsLabel(
     return `${remaining} trial ${noun} left`;
   }
 
+  if (basis === "appsumo_month") {
+    return `${remaining} ${noun} left this calendar month`;
+  }
+
   if (plan === "free") {
     return `${remaining} ${noun} left today`;
   }
@@ -79,8 +83,8 @@ export function getGenerationLimitMessage(
 export function getSaveLimitMessage(
   plan: Plan,
   savedCount: number,
+  maxSavedPrompts = getPlanLimits(plan).maxSavedPrompts,
 ): string | null {
-  const { maxSavedPrompts } = getPlanLimits(plan);
 
   if (maxSavedPrompts === Infinity) {
     return null;

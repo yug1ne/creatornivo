@@ -1,13 +1,23 @@
 import type { Plan } from "@/config/plans";
-import { PLANS } from "@/config/plans";
 import { isAdminSession } from "@/lib/admin/is-admin-session";
+import {
+  isAppSumoAccessMode,
+  resolveUserCapabilities,
+  type AccessMode,
+  type UserCapabilities,
+} from "@/lib/access/capabilities";
+import { countActiveAppSumoRedemptions } from "@/lib/appsumo/entitlement";
 import { prisma } from "@/lib/db";
-import { getTrialGenerationUsage } from "@/lib/generation/usage-service";
+import {
+  getTrialGenerationUsage,
+  prismaGenerationReservationStore,
+} from "@/lib/generation/usage-service";
 import { getUserUsageSnapshot, type UserUsageSnapshot } from "@/lib/usage";
 import type { ProviderPeriodInput } from "@/lib/usage/quota-period";
 import type { SessionUser } from "@/types";
 
-export type AccessMode = "paid_pro" | "trial" | "free";
+export type { AccessMode, UserCapabilities };
+export { isActiveTrial, isAppSumoAccessMode } from "@/lib/access/capabilities";
 
 export type TrialAccessUser = {
   plan: Plan;
@@ -16,13 +26,7 @@ export type TrialAccessUser = {
   trialEndsAt: Date | null;
 };
 
-export type UserAccessContext = {
-  billingPlan: Plan;
-  mode: AccessMode;
-  canUseProTemplates: boolean;
-  trialStartedAt: Date | null;
-  trialEndsAt: Date | null;
-};
+export type UserAccessContext = UserCapabilities;
 
 export type EffectiveUsageSnapshot = Omit<
   UserUsageSnapshot,
@@ -30,51 +34,25 @@ export type EffectiveUsageSnapshot = Omit<
 > & {
   accessMode: AccessMode;
   period: UserUsageSnapshot["period"] | "trial";
-  quotaBasis: UserUsageSnapshot["quotaBasis"] | "trial";
+  quotaBasis: UserUsageSnapshot["quotaBasis"];
   trialEndsAt: string | null;
 };
 
-export function isActiveTrial(
-  user: Pick<
-    TrialAccessUser,
-    "emailVerified" | "trialStartedAt" | "trialEndsAt"
-  >,
-  now = new Date(),
-): boolean {
-  if (!user.emailVerified || !user.trialStartedAt || !user.trialEndsAt) {
-    return false;
-  }
-
-  const start = user.trialStartedAt.getTime();
-  const end = user.trialEndsAt.getTime();
-  const current = now.getTime();
-
-  return (
-    Number.isFinite(start) &&
-    Number.isFinite(end) &&
-    start < end &&
-    current >= start &&
-    current < end
-  );
-}
-
+/**
+ * Central capability resolver. billingPlan is always User.plan.
+ * AppSumo codes are optional so unit tests stay synchronous.
+ */
 export function resolveUserAccess(
   user: TrialAccessUser,
-  options: { isAdmin?: boolean; now?: Date } = {},
+  options: {
+    isAdmin?: boolean;
+    now?: Date;
+    activeAppSumoCodeCount?: number;
+    providerPeriod?: ProviderPeriodInput | null;
+    env?: NodeJS.ProcessEnv;
+  } = {},
 ): UserAccessContext {
-  const now = options.now ?? new Date();
-  const trialActive = user.plan !== PLANS.PRO && isActiveTrial(user, now);
-  const mode: AccessMode =
-    user.plan === PLANS.PRO ? "paid_pro" : trialActive ? "trial" : "free";
-
-  return {
-    billingPlan: user.plan,
-    mode,
-    canUseProTemplates:
-      user.plan === PLANS.PRO || trialActive || options.isAdmin === true,
-    trialStartedAt: user.trialStartedAt,
-    trialEndsAt: user.trialEndsAt,
-  };
+  return resolveUserCapabilities(user, options);
 }
 
 export async function getUserAccessContext(
@@ -93,9 +71,14 @@ export async function getUserAccessContext(
 
   if (!user) return null;
 
+  const activeAppSumoCodeCount = await countActiveAppSumoRedemptions(
+    session.id,
+  );
+
   return resolveUserAccess(user, {
     isAdmin: isAdminSession(session),
     now,
+    activeAppSumoCodeCount,
   });
 }
 
@@ -126,6 +109,27 @@ export async function getEffectiveUsageSnapshot(
       resetAt: trialUsage.resetAt,
       quotaBasis: "trial",
       trialEndsAt: access.trialEndsAt.toISOString(),
+    };
+  }
+
+  if (isAppSumoAccessMode(access.mode)) {
+    const used = await prismaGenerationReservationStore.countUsed(
+      userId,
+      access.quota.startsAt,
+      access.quota.endsAt,
+      access.quota.periodKey,
+    );
+
+    return {
+      plan: access.billingPlan,
+      accessMode: access.mode,
+      used,
+      remaining: Math.max(0, access.quota.limit - used),
+      limit: access.quota.limit,
+      period: "monthly",
+      resetAt: access.quota.endsAt.toISOString(),
+      quotaBasis: "appsumo_month",
+      trialEndsAt: null,
     };
   }
 

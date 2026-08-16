@@ -55,6 +55,7 @@ export const AUTH_RATE_LIMIT_FAIL_CLOSED_ACTIONS = new Set<AuthRateLimitAction>(
   "forgot_password",
   "reset_password",
   "resend_verification",
+  "appsumo_redeem",
 ]);
 
 let warnedDisabled = false;

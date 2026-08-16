@@ -20,6 +20,7 @@ export type QuotaExceededBody = {
   remaining: 0;
   resetAt: string;
   message: string;
+  quotaBasis?: QuotaBasis;
 };
 
 export type ParsedGenerationError = {
@@ -53,6 +54,7 @@ export function buildQuotaExceededBody(
     limit: snapshot.limit,
     remaining: 0,
     resetAt: snapshot.resetAt,
+    quotaBasis: snapshot.quotaBasis,
   };
 }
 
@@ -100,7 +102,11 @@ export function parseGenerationApiError(
     return {
       message,
       code: "quota_exceeded",
-      showUpgradeLink: data.plan === PLANS.FREE,
+      showUpgradeLink:
+        data.plan === PLANS.FREE &&
+        data.quotaBasis !== "appsumo_month" &&
+        data.accessMode !== "appsumo_t1" &&
+        data.accessMode !== "appsumo_t2",
     };
   }
 

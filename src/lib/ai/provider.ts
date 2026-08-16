@@ -4,9 +4,15 @@ import { generateText, streamText } from "ai";
 import { getGenerationPolicy, type Plan } from "@/config/plans";
 import { getTemplateMaxOutputTokens } from "@/config/template-output-limits";
 
+export type ProviderReasoningEffort = "none" | "low";
+
 export interface StreamContentInput {
   prompt: string;
   plan: Plan;
+  /** Explicit model override (AppSumo Luna). Defaults to plan policy. */
+  model?: string;
+  /** AppSumo only. Free/Pro keep the model default by omitting this. */
+  reasoningEffort?: ProviderReasoningEffort | null;
   /** Server-resolved template slug; drives maxOutputTokens with plan fallback. */
   templateSlug?: string | null;
   onStart?: () => Promise<void>;
@@ -26,6 +32,8 @@ export interface StreamContentInput {
 export interface TextContentInput {
   prompt: string;
   plan: Plan;
+  model?: string;
+  reasoningEffort?: ProviderReasoningEffort | null;
   /** Server-resolved template slug; drives maxOutputTokens with plan fallback. */
   templateSlug?: string | null;
   onStart?: () => Promise<void>;
@@ -63,6 +71,17 @@ export function isAIProviderConfigured(
   return typeof apiKey === "string" && apiKey.trim().length > 0;
 }
 
+function providerOptionsForReasoning(
+  reasoningEffort?: ProviderReasoningEffort | null,
+) {
+  if (!reasoningEffort) return undefined;
+  return {
+    openai: {
+      reasoningEffort,
+    },
+  };
+}
+
 async function createOpenAIStream(
   input: StreamContentInput,
   model: string,
@@ -77,6 +96,7 @@ async function createOpenAIStream(
     model: openai(model),
     prompt: input.prompt,
     maxOutputTokens: maxTokens,
+    providerOptions: providerOptionsForReasoning(input.reasoningEffort),
     onFinish: async ({ text, usage }) => {
       if (input.onFinish) {
         await input.onFinish({
@@ -134,6 +154,7 @@ async function createOpenAIText(
     model: openai(model),
     prompt: input.prompt,
     maxOutputTokens: maxTokens,
+    providerOptions: providerOptionsForReasoning(input.reasoningEffort),
   });
 
   return {
@@ -146,7 +167,7 @@ async function createOpenAIText(
 
 export async function createContentStream(input: StreamContentInput) {
   const policy = getGenerationPolicy(input.plan);
-  const model = policy.model;
+  const model = input.model ?? policy.model;
   const maxTokens = getTemplateMaxOutputTokens(input.templateSlug, input.plan);
 
   if (!isAIProviderConfigured()) {
@@ -159,7 +180,7 @@ export async function createContentStream(input: StreamContentInput) {
 
 export async function createContentText(input: TextContentInput) {
   const policy = getGenerationPolicy(input.plan);
-  const model = policy.model;
+  const model = input.model ?? policy.model;
   const maxTokens = getTemplateMaxOutputTokens(input.templateSlug, input.plan);
 
   if (!isAIProviderConfigured()) {

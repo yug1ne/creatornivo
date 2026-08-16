@@ -12,9 +12,11 @@ import type { Plan } from "@/config/plans";
 import type { UsagePeriod } from "@/lib/usage";
 import { getQuotaResetHint } from "@/lib/usage/quota-copy";
 import type { QuotaBasis } from "@/lib/usage/quota-period";
+import type { AccessMode } from "@/lib/trial/access";
 
 interface UsageBannerProps {
   plan: Plan;
+  accessMode?: AccessMode;
   remaining: number;
   used: number;
   limit: number;
@@ -35,6 +37,7 @@ export const UsageBanner = memo(function UsageBanner({
   savedCount,
   maxSavedPrompts,
   quotaBasis,
+  accessMode,
 }: UsageBannerProps) {
   const generationWarning = getGenerationLimitMessage(
     plan,
@@ -55,7 +58,11 @@ export const UsageBanner = memo(function UsageBanner({
             <div className="flex items-start justify-between gap-2">
               <div className="min-w-0">
                 <p className="text-xs font-medium text-muted-foreground">
-                  {quotaBasis === "trial" ? "Trial active" : "Generation quota"}
+                  {quotaBasis === "trial"
+                    ? "Trial active"
+                    : quotaBasis === "appsumo_month"
+                      ? "AppSumo monthly quota"
+                      : "Generation quota"}
                 </p>
                 <p className="mt-1 text-sm font-semibold text-foreground">
                   {getRemainingGenerationsLabel(plan, remaining, quotaBasis)}
@@ -102,7 +109,9 @@ export const UsageBanner = memo(function UsageBanner({
           }`}
         >
           {generationWarning}
-          {isGenerationExhausted && (
+          {isGenerationExhausted &&
+            accessMode !== "appsumo_t1" &&
+            accessMode !== "appsumo_t2" && (
             <Link
               href="/pricing"
               className="ml-2 font-medium underline hover:no-underline"

@@ -46,6 +46,11 @@ next-env.d.ts
 
 terminals/
 
+# AppSumo owner-only code exports (never commit)
+appsumo-*.csv
+*.appsumo.csv
+.appsumo-exports/
+
 # Backup pipeline artifacts (никогда не коммить!)
 backup-key.txt
 backup-key*.txt

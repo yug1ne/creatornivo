@@ -193,6 +193,39 @@ export default async function AdminUserDetailPage({
 
         <Card>
           <CardContent className="p-5">
+            <CardTitle className="text-base">AppSumo</CardTitle>
+            <dl className="mt-3">
+              <DetailRow label="Effective access">{user.appSumo.effectiveMode}</DetailRow>
+              <DetailRow label="Active tier">
+                {user.appSumo.tier === 0 ? "None" : `Tier ${user.appSumo.tier}`}
+              </DetailRow>
+              <DetailRow label="Active codes">{user.appSumo.activeCodeCount}</DetailRow>
+              <DetailRow label="Pro fallback">
+                {user.appSumo.dormant
+                  ? "Yes — Pro is currently granting access"
+                  : "No"}
+              </DetailRow>
+              <DetailRow label="UTC month usage">
+                {user.appSumo.tier === 0
+                  ? "—"
+                  : `${user.appSumo.used} / ${user.appSumo.limit}`}
+              </DetailRow>
+              <DetailRow label="Codes">
+                {user.appSumo.codes.length === 0
+                  ? "None"
+                  : user.appSumo.codes
+                      .map((code) => `…${code.suffix} · ${code.status}`)
+                      .join("; ")}
+              </DetailRow>
+            </dl>
+            <CardDescription className="mt-3 text-xs">
+              Read-only. Codes are shown as suffixes only. Refunds use the owner CLI.
+            </CardDescription>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent className="p-5">
             <CardTitle className="text-base">Subscription metadata</CardTitle>
             {user.subscription ? (
               <dl className="mt-3">

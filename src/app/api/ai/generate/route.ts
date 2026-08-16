@@ -57,11 +57,13 @@ import {
   repairGeneratedOutputOnce,
 } from "@/lib/templates/output-repair";
 import {
+  isAppSumoAccessMode,
   getEffectiveUsageSnapshot,
   resolveUserAccess,
   type EffectiveUsageSnapshot,
   type UserAccessContext,
 } from "@/lib/trial/access";
+import { countActiveAppSumoRedemptions } from "@/lib/appsumo/entitlement";
 
 function isValidRequestId(value: unknown): value is string {
   return (
@@ -147,6 +149,7 @@ export async function POST(request: Request) {
     userPlan = user.plan;
     const access = resolveUserAccess(user, {
       isAdmin: isAdminSession(session),
+      activeAppSumoCodeCount: await countActiveAppSumoRedemptions(session.id),
     });
     userAccess = access;
 
@@ -183,7 +186,11 @@ export async function POST(request: Request) {
       return NextResponse.json({ error }, { status: status ?? 404 });
     }
 
-    validateUserInput(user.plan, body.values);
+    validateUserInput(
+      user.plan,
+      body.values,
+      access.generationPolicy.maxInputChars,
+    );
     const templateValues = body.values;
 
     const variables = parseTemplateVariables(template.variables);
@@ -248,7 +255,7 @@ export async function POST(request: Request) {
     // UserUsage quota — checked before reservation/idempotency flow
     // Pro: use provider billing period (e.g. Freemius) when present.
     const providerPeriod: ProviderPeriodInput | null =
-      user.plan === PLANS.PRO
+      access.mode === "paid_pro"
         ? await loadProviderPeriodForUser(userId)
         : null;
     const nowForQuota = new Date();
@@ -288,7 +295,9 @@ export async function POST(request: Request) {
     const reservation = await reserveGeneration({
       requestId,
       userId: session.id,
-      plan: user.plan,
+      plan: isAppSumoAccessMode(access.mode)
+        ? access.generationPolicy.reservationPlan
+        : user.plan,
       now: nowForQuota,
       templateSlug: template.slug,
       trialPeriod:
@@ -300,6 +309,22 @@ export async function POST(request: Request) {
               endsAt: access.trialEndsAt,
             }
           : null,
+      appsumoPeriod: isAppSumoAccessMode(access.mode)
+        ? {
+            start: access.quota.startsAt,
+            end: access.quota.endsAt,
+            periodKey: access.quota.periodKey,
+            limit: access.quota.limit,
+          }
+        : null,
+      policyOverride: isAppSumoAccessMode(access.mode)
+        ? {
+            model: access.generationPolicy.model,
+            requestsPerMinute: access.generationPolicy.requestsPerMinute,
+            maxConcurrentGenerations:
+              access.generationPolicy.maxConcurrentGenerations,
+          }
+        : null,
       providerPeriod,
     });
 
@@ -339,6 +364,9 @@ export async function POST(request: Request) {
       // Trial usage is counted from completed reservations in its exact trial scope.
       // Do not contaminate the normal Free daily UserUsage bucket.
       if (access.mode === "trial") {
+        return;
+      }
+      if (isAppSumoAccessMode(access.mode)) {
         return;
       }
 
@@ -396,10 +424,15 @@ export async function POST(request: Request) {
     };
 
     try {
-      if (isGenerationAutoRepairEnabled()) {
+      if (
+        isGenerationAutoRepairEnabled() &&
+        access.generationPolicy.autoRepair
+      ) {
         const generated = await createContentText({
           prompt: filledPrompt,
           plan: user.plan,
+          model: access.generationPolicy.model,
+          reasoningEffort: access.generationPolicy.reasoningEffort,
           templateSlug: template.slug,
           onStart: markGenerationStarted,
         });
@@ -434,6 +467,8 @@ export async function POST(request: Request) {
               createContentText({
                 prompt: repairPrompt,
                 plan: user.plan,
+                model: access.generationPolicy.model,
+                reasoningEffort: access.generationPolicy.reasoningEffort,
                 templateSlug: template.slug,
               }),
           });
@@ -542,6 +577,8 @@ export async function POST(request: Request) {
       const { stream, model } = await createContentStream({
         prompt: filledPrompt,
         plan: user.plan,
+        model: access.generationPolicy.model,
+        reasoningEffort: access.generationPolicy.reasoningEffort,
         templateSlug: template.slug,
         onStart: markGenerationStarted,
         onFinish: async ({

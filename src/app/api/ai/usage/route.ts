@@ -4,6 +4,7 @@ import { isAdminSession } from "@/lib/admin/is-admin-session";
 import { requireSession } from "@/lib/auth/session";
 import { prisma } from "@/lib/db";
 import { UsageError } from "@/lib/usage";
+import { countActiveAppSumoRedemptions } from "@/lib/appsumo/entitlement";
 import {
   getEffectiveUsageSnapshot,
   resolveUserAccess,
@@ -40,6 +41,7 @@ export async function GET() {
 
     const access = resolveUserAccess(user, {
       isAdmin: isAdminSession(session),
+      activeAppSumoCodeCount: await countActiveAppSumoRedemptions(session.id),
     });
     const snapshot = await getEffectiveUsageSnapshot(session.id, access);
 

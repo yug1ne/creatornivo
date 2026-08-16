@@ -102,6 +102,13 @@ export function getQuotaResetHint(
       : `Trial ends ${formatHumanUtcDateTime(resetDate)}`;
   }
 
+  if (basis === "appsumo_month") {
+    const dateLabel = Number.isNaN(resetDate.getTime())
+      ? "the next UTC month"
+      : formatHumanUtcDateTime(resetDate);
+    return `Quota resets ${dateLabel}`;
+  }
+
   if (Number.isNaN(resetDate.getTime())) {
     if (period === "daily") {
       return "Quota resets at midnight UTC";
@@ -145,6 +152,14 @@ export function getQuotaExhaustedBannerMessage(
 
   if (basis === "trial") {
     return `You've reached the 30-generation trial limit. Your trial ends ${countdown}.`;
+  }
+
+  if (basis === "appsumo_month") {
+    const resetDate = new Date(resetAt);
+    const dateLabel = Number.isNaN(resetDate.getTime())
+      ? "the next UTC month"
+      : formatHumanUtcDateTime(resetDate);
+    return `You've reached this month's AppSumo generation limit. Quota resets ${dateLabel} (${countdown}).`;
   }
 
   if (plan === PLANS.FREE) {
@@ -191,6 +206,17 @@ export function getQuotaExceededCopy(
     return {
       error: "Trial generation limit reached",
       message: `You've used all 30 trial generations. Your trial ends ${countdown}. You can upgrade to Pro or continue on Free after the trial.`,
+    };
+  }
+
+  if (basis === "appsumo_month") {
+    const resetDate = new Date(resetAt);
+    const dateLabel = Number.isNaN(resetDate.getTime())
+      ? "the start of next calendar month"
+      : formatHumanUtcDateTime(resetDate);
+    return {
+      error: "AppSumo monthly generation limit reached",
+      message: `You've used this month's AppSumo generations. Quota resets ${dateLabel} (${countdown}). Unused generations do not roll over.`,
     };
   }
 

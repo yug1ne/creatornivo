@@ -19,7 +19,8 @@ import { userSupportAttentionCount } from "@/lib/support/counts";
 import { getUserSupportStatusCounts } from "@/lib/support/service";
 import { prismaSupportStore } from "@/lib/support/store";
 import { isAdminSession } from "@/lib/admin/is-admin-session";
-import { resolveUserAccess } from "@/lib/trial/access";
+import { countActiveAppSumoRedemptions } from "@/lib/appsumo/entitlement";
+import { getEffectiveUsageSnapshot, resolveUserAccess } from "@/lib/trial/access";
 import { formatHumanUtcDateTime } from "@/lib/usage/quota-copy";
 
 export const dynamic = "force-dynamic";
@@ -68,9 +69,15 @@ export default async function SettingsPage() {
     oauthProviders: (identity?.accounts ?? []).map((account) => account.provider),
   });
 
-  const planLabel = session.plan === PLANS.PRO ? "Pro" : "Free";
   const access = identity
-    ? resolveUserAccess(identity, { isAdmin: isAdminSession(session) })
+    ? resolveUserAccess(identity, {
+        isAdmin: isAdminSession(session),
+        activeAppSumoCodeCount: await countActiveAppSumoRedemptions(session.id),
+      })
+    : null;
+  const planLabel = session.plan === PLANS.PRO ? "Pro" : "Free";
+  const usageSnapshot = access
+    ? await getEffectiveUsageSnapshot(session.id, access)
     : null;
 
   const deletionBlock = getAccountDeletionBlock({
@@ -129,6 +136,55 @@ export default async function SettingsPage() {
                     Active until {formatHumanUtcDateTime(access.trialEndsAt)}
                   </dd>
                 </div>
+              ) : null}
+              {access && access.appSumo.tier > 0 ? (
+                <>
+                  <div className="flex justify-between gap-4">
+                    <dt className="text-muted-foreground">Lifetime access</dt>
+                    <dd className="text-right text-foreground">
+                      {access.appSumo.dormant
+                        ? `AppSumo Tier ${access.appSumo.tier} — saved as lifetime fallback`
+                        : `AppSumo Tier ${access.appSumo.tier}`}
+                    </dd>
+                  </div>
+                  {access.appSumo.dormant ? (
+                    <div className="flex justify-between gap-4">
+                      <dt className="text-muted-foreground">Current access</dt>
+                      <dd className="text-right text-foreground">
+                        Freemius Pro currently provides access.
+                      </dd>
+                    </div>
+                  ) : usageSnapshot ? (
+                    <>
+                      <div className="flex justify-between gap-4">
+                        <dt className="text-muted-foreground">
+                          Monthly AI-assisted drafts
+                        </dt>
+                        <dd className="text-right text-foreground">
+                          {usageSnapshot.used} / {usageSnapshot.limit} used
+                        </dd>
+                      </div>
+                      <div className="flex justify-between gap-4">
+                        <dt className="text-muted-foreground">Allowance resets</dt>
+                        <dd className="text-right text-foreground">
+                          {formatHumanUtcDateTime(usageSnapshot.resetAt)}
+                        </dd>
+                      </div>
+                      <div className="flex justify-between gap-4">
+                        <dt className="text-muted-foreground">Templates</dt>
+                        <dd className="text-right text-foreground">45</dd>
+                      </div>
+                      <div className="flex justify-between gap-4">
+                        <dt className="text-muted-foreground">Saved drafts</dt>
+                        <dd className="text-right text-foreground">Unlimited</dd>
+                      </div>
+                      <div className="flex justify-between gap-4">
+                        <dt className="text-muted-foreground">Export</dt>
+                        <dd className="text-right text-foreground">Enabled</dd>
+                      </div>
+                    </>
+                  ) : null}
+                </>
               ) : null}
               <div className="flex justify-between gap-4">
                 <dt className="text-muted-foreground">Sign-in</dt>

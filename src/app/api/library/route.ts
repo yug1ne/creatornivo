@@ -8,6 +8,7 @@ import {
 } from "@/lib/library/list";
 import { canSavePrompt } from "@/lib/subscriptions/limits";
 import { getSaveLimitMessage } from "@/lib/subscriptions/messages";
+import { getUserAccessContext } from "@/lib/trial/access";
 import {
   getGeneratedOutputValidationMessage,
   sanitizeGeneratedOutput,
@@ -124,16 +125,24 @@ export async function POST(request: Request) {
       );
     }
 
+    const access = await getUserAccessContext(session);
+    if (!access) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     const savedCount = await prisma.savedPrompt.count({
       where: { userId: session.id },
     });
 
-    if (!canSavePrompt(session.plan, savedCount)) {
+    if (!canSavePrompt(session.plan, savedCount, access.maxSavedPrompts)) {
       return NextResponse.json(
         {
           error:
-            getSaveLimitMessage(session.plan, savedCount) ??
-            "Save limit reached",
+            getSaveLimitMessage(
+              session.plan,
+              savedCount,
+              access.maxSavedPrompts,
+            ) ?? "Save limit reached",
         },
         { status: 429 },
       );

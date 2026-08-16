@@ -4,8 +4,11 @@ import {
   type Plan,
 } from "@/config/plans";
 
-export function canSavePrompt(plan: Plan, currentCount: number): boolean {
-  const { maxSavedPrompts } = getPlanLimits(plan);
+export function canSavePrompt(
+  plan: Plan,
+  currentCount: number,
+  maxSavedPrompts = getPlanLimits(plan).maxSavedPrompts,
+): boolean {
   return currentCount < maxSavedPrompts;
 }
 

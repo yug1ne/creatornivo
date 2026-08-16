@@ -5,6 +5,7 @@ import { ExportButtons } from "@/components/export/export-buttons";
 import { CopyContentButton } from "@/components/library/copy-content-button";
 import { MarkdownContent } from "@/components/ui/markdown-content";
 import { canExportContent } from "@/lib/export/permissions";
+import { getUserAccessContext } from "@/lib/trial/access";
 import { PageHeader } from "@/components/ui/page-header";
 import { Card, CardContent } from "@/components/ui/card";
 import { buttonVariants } from "@/components/ui/button";
@@ -37,7 +38,8 @@ export default async function LibraryDetailPage({
     notFound();
   }
 
-  const canExport = canExportContent(session);
+  const access = await getUserAccessContext(session);
+  const canExport = canExportContent(session, access);
 
   return (
     <>

@@ -81,4 +81,63 @@ test("paid Pro always takes precedence over an overlapping trial window", () => 
   assert.equal(access.billingPlan, "pro");
   assert.equal(access.mode, "paid_pro");
   assert.equal(access.canUseProTemplates, true);
+  assert.equal(access.canExport, true);
+});
+
+test("trial keeps Free save/export while unlocking Pro templates", () => {
+  const access = resolveUserAccess(
+    {
+      plan: "free",
+      emailVerified: startedAt,
+      trialStartedAt: startedAt,
+      trialEndsAt: endsAt,
+    },
+    { now: new Date("2026-08-13T10:00:00.000Z") },
+  );
+
+  assert.equal(access.mode, "trial");
+  assert.equal(access.canUseProTemplates, true);
+  assert.equal(access.canExport, false);
+  assert.equal(access.maxSavedPrompts, 10);
+});
+
+test("AppSumo precedes trial and stays dormant under paid Pro", () => {
+  const trialUser = {
+    plan: "free" as const,
+    emailVerified: startedAt,
+    trialStartedAt: startedAt,
+    trialEndsAt: endsAt,
+  };
+
+  const appsumo = resolveUserAccess(trialUser, {
+    now: new Date("2026-08-13T10:00:00.000Z"),
+    activeAppSumoCodeCount: 1,
+  });
+  assert.equal(appsumo.mode, "appsumo_t1");
+  assert.equal(appsumo.canExport, true);
+  assert.equal(appsumo.maxSavedPrompts, Number.POSITIVE_INFINITY);
+  assert.equal(appsumo.quota.periodKey.startsWith("appsumo:"), true);
+  assert.equal(appsumo.generationPolicy.model.includes("luna"), true);
+  assert.equal(appsumo.generationPolicy.reasoningEffort, "none");
+  assert.equal(appsumo.generationPolicy.autoRepair, false);
+
+  const stacked = resolveUserAccess(trialUser, {
+    now: new Date("2026-08-13T10:00:00.000Z"),
+    activeAppSumoCodeCount: 2,
+  });
+  assert.equal(stacked.mode, "appsumo_t2");
+  assert.equal(stacked.quota.limit, 100);
+
+  const pro = resolveUserAccess(
+    {
+      plan: "pro",
+      emailVerified: startedAt,
+      trialStartedAt: startedAt,
+      trialEndsAt: endsAt,
+    },
+    { activeAppSumoCodeCount: 2 },
+  );
+  assert.equal(pro.mode, "paid_pro");
+  assert.equal(pro.appSumo.dormant, true);
+  assert.equal(pro.appSumo.tier, 2);
 });

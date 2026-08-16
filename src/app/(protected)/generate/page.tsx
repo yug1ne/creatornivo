@@ -3,13 +3,13 @@ import { Suspense } from "react";
 import { GenerateWorkspaceSkeleton } from "@/components/generate/generate-workspace-skeleton";
 import { GenerateWorkspace } from "@/components/generate/generate-workspace";
 import { PageHeader } from "@/components/ui/page-header";
-import { canExportContent } from "@/lib/export/permissions";
 import {
   clearStaleSessionAndRedirect,
   isStaleSessionUsageError,
 } from "@/lib/auth/stale-session";
 import { requireSession } from "@/lib/auth/session";
 import { isAdminSession } from "@/lib/admin/is-admin-session";
+import { countActiveAppSumoRedemptions } from "@/lib/appsumo/entitlement";
 import { prisma } from "@/lib/db";
 import {
   getEffectiveUsageSnapshot,
@@ -47,6 +47,7 @@ export default async function GeneratePage({ searchParams }: GeneratePageProps) 
 
   const access = resolveUserAccess(user, {
     isAdmin: isAdminSession(session),
+    activeAppSumoCodeCount: await countActiveAppSumoRedemptions(session.id),
   });
   const serverSession = { ...session, plan: user.plan };
 
@@ -94,7 +95,8 @@ export default async function GeneratePage({ searchParams }: GeneratePageProps) 
           catalog={catalog}
           initialForm={safeInitialForm}
           userPlan={user.plan}
-          canExport={canExportContent(serverSession)}
+          canExport={access.canExport}
+          maxSavedPrompts={access.maxSavedPrompts}
           emailVerified={emailVerified}
           usage={{
             ...usageSnapshot,

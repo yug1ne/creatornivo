@@ -46,6 +46,8 @@ test("sitemap excludes protected, admin, and api routes", () => {
     "/api/health",
     "/login",
     "/register",
+    "/appsumo",
+    "/try",
   ]) {
     assert.ok(
       !paths.some(

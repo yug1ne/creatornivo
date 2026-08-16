@@ -59,6 +59,7 @@ interface GenerateWorkspaceProps {
   initialForm: TemplateFormDetail | null;
   userPlan: Plan;
   canExport: boolean;
+  maxSavedPrompts?: number;
   /** Server-loaded flag — unverified users may browse but cannot generate. */
   emailVerified?: boolean;
   usage: UsageStats;
@@ -141,6 +142,7 @@ export async function fetchGenerationUsageSnapshot(
     data.quotaBasis === "utc_day" ||
     data.quotaBasis === "provider_billing" ||
     data.quotaBasis === "utc_calendar_month" ||
+    data.quotaBasis === "appsumo_month" ||
     data.quotaBasis === "trial"
       ? data.quotaBasis
       : data.period === "trial"
@@ -159,6 +161,8 @@ export async function fetchGenerationUsageSnapshot(
     quotaBasis,
     accessMode:
       data.accessMode === "paid_pro" ||
+      data.accessMode === "appsumo_t1" ||
+      data.accessMode === "appsumo_t2" ||
       data.accessMode === "trial" ||
       data.accessMode === "free"
         ? data.accessMode
@@ -175,6 +179,7 @@ export function GenerateWorkspace({
   initialForm,
   userPlan,
   canExport,
+  maxSavedPrompts,
   emailVerified = true,
   usage: initialUsage,
 }: GenerateWorkspaceProps) {
@@ -182,6 +187,7 @@ export function GenerateWorkspace({
   const searchParams = useSearchParams();
   const initialSlug = searchParams.get("template");
   const limits = getPlanLimits(userPlan);
+  const savedLimit = maxSavedPrompts ?? limits.maxSavedPrompts;
   const canGenerateByEmail = emailVerified;
 
   const accessibleCatalog = useMemo(
@@ -251,10 +257,13 @@ export function GenerateWorkspace({
   const canGenerateQuota = generationUsage.remaining > 0;
 
   const canSave =
-    limits.maxSavedPrompts === Infinity ||
-    savedCount < limits.maxSavedPrompts;
+    savedLimit === Infinity || savedCount < savedLimit;
 
-  const saveLimitMessage = getSaveLimitMessage(userPlan, savedCount);
+  const saveLimitMessage = getSaveLimitMessage(
+    userPlan,
+    savedCount,
+    savedLimit,
+  );
 
   const refreshGenerationUsage = useCallback(async () => {
     try {
@@ -571,8 +580,9 @@ export function GenerateWorkspace({
         period={generationUsage.period}
         resetAt={generationUsage.resetAt}
         savedCount={savedCount}
-        maxSavedPrompts={limits.maxSavedPrompts}
+        maxSavedPrompts={savedLimit}
         quotaBasis={generationUsage.quotaBasis}
+        accessMode={generationUsage.accessMode}
       />
 
       <div className="grid gap-6 lg:grid-cols-[300px_1fr]">

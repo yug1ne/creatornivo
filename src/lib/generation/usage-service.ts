@@ -408,6 +408,7 @@ function isStringRecord(value: unknown): value is Record<string, string> {
 export function validateUserInput(
   plan: Plan,
   values: unknown,
+  maxInputChars?: number,
 ): asserts values is Record<string, string> {
   if (!isStringRecord(values)) {
     throw new GenerationPolicyError(
@@ -417,7 +418,9 @@ export function validateUserInput(
     );
   }
 
-  if (countUserInputCharacters(values) > getGenerationPolicy(plan).maxInputChars) {
+  const inputLimit =
+    maxInputChars ?? getGenerationPolicy(plan).maxInputChars;
+  if (countUserInputCharacters(values) > inputLimit) {
     throw new GenerationPolicyError(
       "input_too_long",
       400,
@@ -442,6 +445,22 @@ export async function reserveGeneration(
       startedAt: Date;
       endsAt: Date;
     } | null;
+    /**
+     * AppSumo UTC-month window. periodKey must be appsumo:YYYY-MM.
+     * Reservation.plan stays the billing/policy snapshot (free for AppSumo).
+     */
+    appsumoPeriod?: {
+      start: Date;
+      end: Date;
+      periodKey: string;
+      limit: number;
+    } | null;
+    /** Optional compute override (AppSumo Luna policy). */
+    policyOverride?: {
+      model: string;
+      requestsPerMinute: number;
+      maxConcurrentGenerations: number;
+    } | null;
     /** When omitted for Pro, calendar-month fallback is used (no DB lookup). */
     providerPeriod?: ProviderPeriodInput | null;
   },
@@ -450,6 +469,8 @@ export async function reserveGeneration(
   const now = input.now ?? new Date();
   const policy = getGenerationPolicy(input.plan);
   const trialPeriod = input.trialPeriod ?? null;
+  const appsumoPeriod = input.appsumoPeriod ?? null;
+  const policyOverride = input.policyOverride ?? null;
   if (
     trialPeriod &&
     !(
@@ -472,10 +493,26 @@ export async function reserveGeneration(
         period: "trial" as const,
         basis: "trial" as const,
       }
+    : appsumoPeriod
+      ? {
+          start: appsumoPeriod.start,
+          end: appsumoPeriod.end,
+          key: appsumoPeriod.periodKey,
+          period: "month" as const,
+          basis: "appsumo_month" as const,
+        }
     : getGenerationPeriodWindow(input.plan, now, input.providerPeriod);
   const generationLimit = trialPeriod
     ? TRIAL_GENERATION_LIMIT
-    : policy.maxGenerationsPerPeriod;
+    : appsumoPeriod
+      ? appsumoPeriod.limit
+      : policy.maxGenerationsPerPeriod;
+  const requestsPerMinute =
+    policyOverride?.requestsPerMinute ?? policy.requestsPerMinute;
+  const maxConcurrentGenerations =
+    policyOverride?.maxConcurrentGenerations ??
+    policy.maxConcurrentGenerations;
+  const reservationModel = policyOverride?.model ?? policy.model;
   const estimatedMaxOutputTokens = getTemplateMaxOutputTokens(
     input.templateSlug,
     input.plan,
@@ -531,6 +568,8 @@ export async function reserveGeneration(
         429,
         trialPeriod
           ? "You’ve reached the 30-generation trial limit."
+          : appsumoPeriod
+          ? "You’ve reached your AppSumo monthly generation limit."
           : input.plan === "free"
           ? "You’ve reached today’s free generation limit."
           : period.basis === "provider_billing"
@@ -539,7 +578,7 @@ export async function reserveGeneration(
       );
     }
 
-    if (active >= policy.maxConcurrentGenerations) {
+    if (active >= maxConcurrentGenerations) {
       throw new GenerationPolicyError(
         "concurrent",
         409,
@@ -552,7 +591,7 @@ export async function reserveGeneration(
       new Date(now.getTime() - 60_000),
     );
 
-    if (recent >= policy.requestsPerMinute) {
+    if (recent >= requestsPerMinute) {
       throw new GenerationPolicyError(
         "rate_limit",
         429,
@@ -565,7 +604,7 @@ export async function reserveGeneration(
       userId: input.userId,
       plan: input.plan,
       periodKey: period.key,
-      model: policy.model,
+      model: reservationModel,
       estimatedMaxOutputTokens,
       createdAt: now,
       expiresAt: new Date(now.getTime() + GENERATION_RESERVATION_TTL_MS),

@@ -8,6 +8,7 @@ import {
 } from "@/lib/export/utils";
 import { canExportContent, EXPORT_UPGRADE_MESSAGE } from "@/lib/export/permissions";
 import { requireSession } from "@/lib/auth/session";
+import { getUserAccessContext } from "@/lib/trial/access";
 import {
   getGeneratedOutputValidationMessage,
   sanitizeGeneratedOutput,
@@ -17,8 +18,9 @@ import {
 export async function POST(request: Request) {
   try {
     const session = await requireSession();
+    const access = await getUserAccessContext(session);
 
-    if (!canExportContent(session)) {
+    if (!canExportContent(session, access)) {
       return NextResponse.json({ error: EXPORT_UPGRADE_MESSAGE }, { status: 403 });
     }
 

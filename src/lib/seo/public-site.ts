@@ -37,4 +37,5 @@ export const PUBLIC_ROBOTS_DISALLOW = [
   "/library",
   "/settings",
   "/try",
+  "/appsumo",
 ] as const;

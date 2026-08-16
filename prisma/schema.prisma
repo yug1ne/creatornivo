@@ -98,6 +98,7 @@ model User {
   userUsage             UserUsage[]
   supportThreads        SupportThread[]
   supportMessages       SupportMessage[]
+  appSumoRedemptions    AppSumoRedemption[]
   createdAt             DateTime               @default(now())
   updatedAt             DateTime               @updatedAt
 }
@@ -418,6 +419,61 @@ model SavedPrompt {
   updatedAt  DateTime  @updatedAt
 
   @@index([userId])
+}
+
+enum AppSumoRedemptionStatus {
+  active
+  revoked
+  refunded
+}
+
+/// Hashed AppSumo lifetime code. Raw codes are never stored.
+model AppSumoCode {
+  id             String            @id @default(cuid())
+  codeDigest     String            @unique
+  codeSuffix     String
+  batchId        String
+  disabledAt     DateTime?
+  disabledReason String?
+  redemption     AppSumoRedemption?
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+
+  @@index([batchId])
+  @@index([disabledAt])
+}
+
+/// One global redemption per code. userId is SetNull on account delete so the code stays consumed.
+model AppSumoRedemption {
+  id                 String                  @id @default(cuid())
+  codeId             String                  @unique
+  code               AppSumoCode             @relation(fields: [codeId], references: [id], onDelete: Restrict)
+  userId             String?
+  user               User?                   @relation(fields: [userId], references: [id], onDelete: SetNull)
+  status             AppSumoRedemptionStatus @default(active)
+  redeemedAt         DateTime                @default(now())
+  deactivatedAt      DateTime?
+  deactivationReason String?
+  updatedAt          DateTime                @updatedAt
+
+  @@index([userId, status])
+  @@index([status, redeemedAt])
+}
+
+/// Immutable AppSumo operations log. Never store raw codes or digests in metadata.
+model AppSumoAuditEvent {
+  id           String   @id @default(cuid())
+  codeId       String?
+  redemptionId String?
+  userId       String?
+  eventType    String
+  reason       String?
+  metadata     Json?
+  createdAt    DateTime @default(now())
+
+  @@index([codeId, createdAt])
+  @@index([userId, createdAt])
+  @@index([eventType, createdAt])
 }
 
 /// Anti-abuse tombstone for deleted free accounts (HMAC email identity only; no plaintext email).

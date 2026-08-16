@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
-import { getPlanLimits, PLANS } from "@/config/plans";
+import { PLANS } from "@/config/plans";
 import {
   clearStaleSessionAndRedirect,
   isStaleSessionUsageError,
@@ -17,6 +17,7 @@ import { prisma } from "@/lib/db";
 import {
   getEffectiveUsageSnapshot,
   getUserAccessContext,
+  isAppSumoAccessMode,
 } from "@/lib/trial/access";
 import { getRemainingGenerationsLabel } from "@/lib/subscriptions/messages";
 
@@ -24,7 +25,6 @@ export const dynamic = "force-dynamic";
 
 export default async function DashboardPage() {
   const session = await requireSession();
-  const limits = getPlanLimits(session.plan);
 
   const access = await getUserAccessContext(session);
   if (!access) {
@@ -52,16 +52,16 @@ export default async function DashboardPage() {
   ]);
 
   const maxPrompts =
-    limits.maxSavedPrompts === Infinity ? "∞" : limits.maxSavedPrompts;
+    access.maxSavedPrompts === Infinity ? "∞" : access.maxSavedPrompts;
   const generationProgress = {
     current: usageSnapshot.used,
     max: usageSnapshot.limit,
   };
 
   const savedProgress =
-    limits.maxSavedPrompts === Infinity
+    access.maxSavedPrompts === Infinity
       ? undefined
-      : { current: savedCount, max: limits.maxSavedPrompts };
+      : { current: savedCount, max: access.maxSavedPrompts };
 
   return (
     <>
@@ -70,7 +70,13 @@ export default async function DashboardPage() {
         description={`Welcome${session.name ? `, ${session.name}` : ""}! Here is a summary of your account.`}
         action={
           <Badge variant={session.plan === PLANS.PRO ? "pro" : "free"}>
-            {session.plan === PLANS.PRO ? "Pro" : "Free"}
+            {access.mode === "appsumo_t2"
+              ? "AppSumo Tier 2"
+              : access.mode === "appsumo_t1"
+                ? "AppSumo Tier 1"
+                : session.plan === PLANS.PRO
+                  ? "Pro"
+                  : "Free"}
           </Badge>
         }
       />
@@ -120,11 +126,23 @@ export default async function DashboardPage() {
         />
         <StatsCard
           label="Plan"
-          value={session.plan === PLANS.PRO ? "Pro" : "Free"}
+          value={
+            access.mode === "appsumo_t2"
+              ? "AppSumo Tier 2"
+              : access.mode === "appsumo_t1"
+                ? "AppSumo Tier 1"
+                : session.plan === PLANS.PRO
+                  ? "Pro"
+                  : "Free"
+          }
           description={
             session.plan === PLANS.PRO
-              ? "Your current plan"
-              : "Free plan · Manage account in Settings"
+              ? access.appSumo.dormant
+                ? "Pro access · AppSumo saved as fallback"
+                : "Your current plan"
+              : isAppSumoAccessMode(access.mode)
+                ? "Lifetime AppSumo access · Manage account in Settings"
+                : "Free plan · Manage account in Settings"
           }
           icon="◈"
           href="/settings"
@@ -141,7 +159,7 @@ export default async function DashboardPage() {
         }))}
       />
 
-      {session.plan === PLANS.FREE && (
+      {(access.mode === "free" || access.mode === "trial") && (
         <Card className="mt-8 border-primary/20 bg-accent/30">
           <CardContent className="flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between">
             <div>

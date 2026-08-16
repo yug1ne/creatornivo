@@ -1,5 +1,11 @@
 import { formatSignInMethods } from "@/lib/auth/sign-in-methods";
+import {
+  getAppSumoGenerationLimit,
+  getAppSumoPeriodKey,
+  getAppSumoTier,
+} from "@/config/appsumo";
 import { getTrialPeriodKey } from "@/config/trial";
+import { resolveUserAccess } from "@/lib/trial/access";
 import { prisma } from "@/lib/db";
 import { getUserUsageSnapshot } from "@/lib/usage";
 
@@ -65,6 +71,13 @@ export type AdminUserListItem = {
   subscriptionStatus: string | null;
   subscriptionProvider: string | null;
   trial: AdminTrialSummary;
+  appSumo: {
+    tier: 0 | 1 | 2;
+    used: number;
+    limit: number;
+    dormant: boolean;
+    label: string;
+  };
 };
 
 export type AdminUsersListResult = {
@@ -94,7 +107,7 @@ function mapListItem(row: {
     provider: string;
   } | null;
   _count: { savedPrompts: number; generations: number };
-}, trialUsed: number, now: Date): AdminUserListItem {
+}, trialUsed: number, now: Date, appSumo: AdminUserListItem["appSumo"]): AdminUserListItem {
   return {
     id: row.id,
     email: row.email,
@@ -120,7 +133,63 @@ function mapListItem(row: {
       },
       now,
     ),
+    appSumo,
   };
+}
+
+async function getAppSumoSummariesByUser(
+  users: Array<{ id: string; plan: "free" | "pro" }>,
+  now: Date,
+): Promise<Map<string, AdminUserListItem["appSumo"]>> {
+  if (users.length === 0) return new Map();
+
+  const periodKey = getAppSumoPeriodKey(now);
+  const [redemptions, usage] = await Promise.all([
+    prisma.appSumoRedemption.findMany({
+      where: {
+        userId: { in: users.map((user) => user.id) },
+        status: "active",
+      },
+      select: { userId: true },
+    }),
+    prisma.generationReservation.groupBy({
+      by: ["userId"],
+      where: {
+        userId: { in: users.map((user) => user.id) },
+        periodKey,
+        status: "completed",
+      },
+      _count: { _all: true },
+    }),
+  ]);
+
+  const counts = new Map<string, number>();
+  for (const row of redemptions) {
+    if (!row.userId) continue;
+    counts.set(row.userId, (counts.get(row.userId) ?? 0) + 1);
+  }
+  const usedByUser = new Map(
+    usage.map((row) => [row.userId, row._count._all]),
+  );
+
+  return new Map(
+    users.map((user) => {
+      const tier = getAppSumoTier(counts.get(user.id) ?? 0);
+      const limit = getAppSumoGenerationLimit(tier);
+      const used = usedByUser.get(user.id) ?? 0;
+      const dormant = user.plan === "pro" && tier > 0;
+      const label =
+        tier === 0
+          ? "—"
+          : dormant
+            ? `AppSumo T${tier} fallback`
+            : `AppSumo T${tier} · ${used}/${limit}`;
+      return [
+        user.id,
+        { tier, used, limit, dormant, label },
+      ];
+    }),
+  );
 }
 
 async function getCompletedTrialUsageByUser(
@@ -171,11 +240,25 @@ export async function listAdminUsers(
       select: listSelect,
     }),
   ]);
-  const trialUsageByUser = await getCompletedTrialUsageByUser(rows);
+  const [trialUsageByUser, appSumoByUser] = await Promise.all([
+    getCompletedTrialUsageByUser(rows),
+    getAppSumoSummariesByUser(rows, now),
+  ]);
 
   return {
     users: rows.map((row) =>
-      mapListItem(row, trialUsageByUser.get(row.id) ?? 0, now),
+      mapListItem(
+        row,
+        trialUsageByUser.get(row.id) ?? 0,
+        now,
+        appSumoByUser.get(row.id) ?? {
+          tier: 0,
+          used: 0,
+          limit: 0,
+          dormant: false,
+          label: "—",
+        },
+      ),
     ),
     total,
     page: params.page,
@@ -209,6 +292,21 @@ export type AdminUserDetail = {
     resetAt: string;
   };
   trial: AdminTrialSummary;
+  appSumo: {
+    effectiveMode: string;
+    tier: 0 | 1 | 2;
+    activeCodeCount: 0 | 1 | 2;
+    dormant: boolean;
+    used: number;
+    limit: number;
+    codes: Array<{
+      suffix: string;
+      status: string;
+      redeemedAt: string;
+      deactivatedAt: string | null;
+      deactivationReason: string | null;
+    }>;
+  };
   subscription: {
     status: string;
     provider: string;
@@ -277,7 +375,7 @@ export async function getAdminUserDetail(
 
   if (!user) return null;
 
-  const [usage, generationsLast7Days, trialUsed] = await Promise.all([
+  const [usage, generationsLast7Days, trialUsed, redemptions] = await Promise.all([
     getUserUsageSnapshot(user.id, user.plan),
     prisma.generation.count({
       where: {
@@ -294,7 +392,39 @@ export async function getAdminUserDetail(
           },
         })
       : Promise.resolve(0),
+    prisma.appSumoRedemption.findMany({
+      where: { userId: user.id },
+      orderBy: { redeemedAt: "asc" },
+      select: {
+        status: true,
+        redeemedAt: true,
+        deactivatedAt: true,
+        deactivationReason: true,
+        code: { select: { codeSuffix: true } },
+      },
+    }),
   ]);
+
+  const activeCodeCount = redemptions.filter((row) => row.status === "active").length;
+  const access = resolveUserAccess(
+    {
+      plan: user.plan,
+      emailVerified: user.emailVerified,
+      trialStartedAt: user.trialStartedAt,
+      trialEndsAt: user.trialEndsAt,
+    },
+    { activeAppSumoCodeCount: activeCodeCount },
+  );
+  const appSumoUsed =
+    access.appSumo.tier > 0
+      ? await prisma.generationReservation.count({
+          where: {
+            userId: user.id,
+            periodKey: getAppSumoPeriodKey(),
+            status: "completed",
+          },
+        })
+      : 0;
 
   const oauthProviders = user.accounts.map((a) => a.provider);
   const hasPassword = Boolean(user.password);
@@ -331,6 +461,21 @@ export async function getAdminUserDetail(
       claimedInviteId: user.trialInvite?.id ?? null,
       used: trialUsed,
     }),
+    appSumo: {
+      effectiveMode: access.mode,
+      tier: access.appSumo.tier,
+      activeCodeCount: access.appSumo.activeCodeCount,
+      dormant: access.appSumo.dormant,
+      used: appSumoUsed,
+      limit: access.appSumo.tier > 0 ? getAppSumoGenerationLimit(access.appSumo.tier) : 0,
+      codes: redemptions.map((row) => ({
+        suffix: row.code.codeSuffix,
+        status: row.status,
+        redeemedAt: row.redeemedAt.toISOString(),
+        deactivatedAt: row.deactivatedAt?.toISOString() ?? null,
+        deactivationReason: row.deactivationReason,
+      })),
+    },
     subscription: user.subscription
       ? {
           status: user.subscription.status,

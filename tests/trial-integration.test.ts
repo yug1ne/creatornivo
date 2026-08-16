@@ -108,11 +108,11 @@ test("trial is not a billing Plan and migration is additive", () => {
 
 test("trial entitlements are isolated from billing and Free capabilities", () => {
   const generateRoute = source("src/app/api/ai/generate/route.ts");
-  const access = source("src/lib/trial/access.ts");
+  const access = source("src/lib/access/capabilities.ts");
   const workspacePage = source("src/app/(protected)/generate/page.tsx");
 
   assert.match(access, /billingPlan:\s*user\.plan/);
-  assert.match(access, /canUseProTemplates:/);
+  assert.match(access, /canUseProTemplates/);
   assert.match(generateRoute, /plan:\s*user\.plan/);
   assert.match(generateRoute, /trialPeriod:/);
   assert.match(
@@ -120,7 +120,7 @@ test("trial entitlements are isolated from billing and Free capabilities", () =>
     /if \(access\.mode === "trial"\) \{\s*return;\s*\}/,
   );
   assert.match(workspacePage, /userPlan=\{user\.plan\}/);
-  assert.match(workspacePage, /canExport=\{canExportContent\(serverSession\)\}/);
+  assert.match(workspacePage, /canExport=\{access\.canExport\}/);
 });
 
 test("trial UI is minimal and remains absent from public promotion surfaces", () => {

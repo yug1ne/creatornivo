@@ -8,7 +8,8 @@ export type AuthRateLimitAction =
   | "delete_account"
   | "resend_verification"
   | "support_create_thread"
-  | "support_reply";
+  | "support_reply"
+  | "appsumo_redeem";
 
 export interface AuthRateLimitPolicy {
   /** Sliding window duration in seconds. */
@@ -58,6 +59,10 @@ export const authRateLimitPolicies = {
   support_reply: {
     ip: { windowSeconds: 60 * 60, maxAttempts: 40 },
     account: { windowSeconds: 60 * 60, maxAttempts: 20 },
+  },
+  appsumo_redeem: {
+    ip: { windowSeconds: 60 * 60, maxAttempts: 10 },
+    account: { windowSeconds: 60 * 60, maxAttempts: 5 },
   },
 } as const satisfies Record<
   AuthRateLimitAction,
