@@ -382,6 +382,38 @@ function SubscriptionManagerContent({
             Billing plan:{" "}
             <span className="font-medium text-foreground">Free</span>
           </p>
+          {appSumoTier === 1 ? (
+            <div className="mt-4">
+              <p className="text-sm font-medium text-foreground">
+                Upgrade to Tier 2
+              </p>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Redeem a second AppSumo code to increase your monthly allowance
+                from 50 to 100 AI-assisted drafts.
+              </p>
+              <Link
+                href="/appsumo"
+                className={buttonVariants({
+                  variant: "outline",
+                  size: "sm",
+                  className: "mt-3",
+                })}
+              >
+                Redeem second code
+              </Link>
+            </div>
+          ) : null}
+          {appSumoTier === 2 ? (
+            <div className="mt-4">
+              <p className="text-sm font-medium text-foreground">
+                AppSumo Tier 2
+              </p>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Maximum AppSumo tier active — 100 AI-assisted drafts per
+                calendar month.
+              </p>
+            </div>
+          ) : null}
         </>
       ) : (
         <p className="mt-2 text-sm text-muted-foreground">

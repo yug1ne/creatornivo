@@ -1,5 +1,8 @@
+import Link from "next/link";
+
 import { PageHeader } from "@/components/ui/page-header";
 import { Badge } from "@/components/ui/badge";
+import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { HelpContactCard } from "@/components/settings/help-contact-card";
 import { PrivacySettings } from "@/components/settings/privacy-settings";
@@ -184,6 +187,38 @@ export default async function SettingsPage() {
                         <dt className="text-muted-foreground">Export</dt>
                         <dd className="text-right text-foreground">Enabled</dd>
                       </div>
+                      {access.mode === "appsumo_t1" ? (
+                        <div className="pt-3">
+                          <p className="text-sm font-medium text-foreground">
+                            Upgrade to Tier 2
+                          </p>
+                          <p className="mt-1 text-sm text-muted-foreground">
+                            Redeem a second AppSumo code to increase your
+                            monthly allowance from 50 to 100 AI-assisted drafts.
+                          </p>
+                          <Link
+                            href="/appsumo"
+                            className={buttonVariants({
+                              variant: "outline",
+                              size: "sm",
+                              className: "mt-3",
+                            })}
+                          >
+                            Redeem second code
+                          </Link>
+                        </div>
+                      ) : null}
+                      {access.mode === "appsumo_t2" ? (
+                        <div className="pt-3">
+                          <p className="text-sm font-medium text-foreground">
+                            AppSumo Tier 2
+                          </p>
+                          <p className="mt-1 text-sm text-muted-foreground">
+                            Maximum AppSumo tier active — 100 AI-assisted drafts
+                            per calendar month.
+                          </p>
+                        </div>
+                      ) : null}
                     </>
                   ) : null}
                 </>

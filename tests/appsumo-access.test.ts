@@ -140,6 +140,44 @@ test("generate route skips UserUsage for AppSumo and uses Luna policy", () => {
   assert.match(route, /access\.generationPolicy\.autoRepair/);
 });
 
+test("Tier 1 surfaces offer a second-code upgrade; Tier 2 does not", () => {
+  const dashboard = source("src/app/(protected)/dashboard/page.tsx");
+  const settings = source("src/app/(protected)/settings/page.tsx");
+  const manager = source("src/components/settings/subscription-manager.tsx");
+  const appsumoPage = source("src/app/(public)/appsumo/page.tsx");
+  const redeem = source("src/components/appsumo/appsumo-redeem-form.tsx");
+
+  assert.match(dashboard, /access\.mode === "appsumo_t1"/);
+  assert.match(dashboard, /Upgrade to Tier 2/);
+  assert.match(dashboard, /href="\/appsumo"/);
+  assert.match(dashboard, /Upgrade to Tier 2 with a second AppSumo code/);
+  assert.doesNotMatch(
+    dashboard,
+    /access\.mode === "appsumo_t2"[\s\S]{0,200}Upgrade to Tier 2/,
+  );
+  assert.match(dashboard, /access\.mode === "free" \|\| access\.mode === "trial"/);
+
+  assert.match(settings, /Redeem second code/);
+  assert.match(settings, /from 50 to 100 AI-assisted drafts/);
+  assert.match(settings, /Maximum AppSumo tier active/);
+  assert.match(settings, /access\.mode === "appsumo_t1"/);
+  assert.match(settings, /access\.mode === "appsumo_t2"/);
+
+  assert.match(manager, /Redeem second code/);
+  assert.match(manager, /appSumoTier === 1/);
+  assert.match(manager, /appSumoTier === 2/);
+  assert.match(manager, /Maximum AppSumo tier active/);
+
+  assert.match(appsumoPage, /Upgrade to AppSumo Tier 2/);
+  assert.match(appsumoPage, /Current monthly usage is preserved/);
+  assert.match(appsumoPage, /isMaxAppSumoTier/);
+  assert.match(appsumoPage, /You already have the maximum AppSumo tier/);
+  assert.match(appsumoPage, /isMaxAppSumoTier \? null/);
+  assert.match(appsumoPage, /Redeem second code/);
+  assert.match(redeem, /submitLabel/);
+  assert.match(redeem, /router\.push\(APPSUMO_REDEEM_SUCCESS_REDIRECT_HREF\)/);
+});
+
 test("AppSumo Settings and sidebar do not treat lifetime users as ordinary Free", () => {
   const settings = source("src/app/(protected)/settings/page.tsx");
   const manager = source("src/components/settings/subscription-manager.tsx");

@@ -159,6 +159,27 @@ export default async function DashboardPage() {
         }))}
       />
 
+      {access.mode === "appsumo_t1" ? (
+        <Card className="mt-8 border-border bg-muted/40">
+          <CardContent className="flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className="text-sm font-medium text-foreground">
+                Need more generations?
+              </p>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Upgrade to Tier 2 with a second AppSumo code.
+              </p>
+            </div>
+            <Link
+              href="/appsumo"
+              className={buttonVariants({ variant: "outline", size: "sm" })}
+            >
+              Upgrade to Tier 2
+            </Link>
+          </CardContent>
+        </Card>
+      ) : null}
+
       {(access.mode === "free" || access.mode === "trial") && (
         <Card className="mt-8 border-primary/20 bg-accent/30">
           <CardContent className="flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between">

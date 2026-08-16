@@ -12,9 +12,11 @@ export const APPSUMO_REDEEM_SUCCESS_REDIRECT_DELAY_MS = 1600;
 export function AppSumoRedeemForm({
   disabled,
   initialTier,
+  submitLabel = "Redeem code",
 }: {
   disabled?: boolean;
   initialTier: 0 | 1 | 2;
+  submitLabel?: string;
 }) {
   const router = useRouter();
   const redirectTimerRef = useRef<number | null>(null);
@@ -94,7 +96,7 @@ export function AppSumoRedeemForm({
         className="w-full"
         disabled={disabled || pending || tier >= 2 || !code.trim()}
       >
-        {pending ? "Redeeming…" : "Redeem code"}
+        {pending ? "Redeeming…" : submitLabel}
       </Button>
       {message ? (
         <p className="text-sm text-foreground">{message}</p>

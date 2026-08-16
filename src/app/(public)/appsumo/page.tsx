@@ -78,42 +78,69 @@ export default async function AppSumoPage() {
   const verified = isEmailVerified(user.emailVerified);
   const activeCodeCount = await countActiveAppSumoRedemptions(session.id);
   const access = resolveUserAccess(user, { activeAppSumoCodeCount: activeCodeCount });
+  const isActiveTier1 = access.mode === "appsumo_t1";
+  const isMaxAppSumoTier = access.appSumo.tier >= 2;
 
   return (
     <section className="mx-auto flex max-w-md flex-col px-6 py-16">
       <p className="text-sm font-medium text-primary">AppSumo</p>
-      <h1 className="mt-2 text-2xl font-bold tracking-tight text-foreground">
-        Redeem your lifetime code
-      </h1>
-      <p className="mt-3 text-sm text-muted-foreground">
-        One code unlocks AppSumo Tier 1 (50 generations per UTC month). A second
-        code on the same account unlocks Tier 2 (100 per UTC month). Unused
-        generations do not roll over.
-      </p>
+      {isMaxAppSumoTier ? (
+        <>
+          <h1 className="mt-2 text-2xl font-bold tracking-tight text-foreground">
+            AppSumo Tier 2 is active.
+          </h1>
+          <p className="mt-3 text-sm text-muted-foreground">
+            You already have the maximum AppSumo tier with 100 AI-assisted
+            drafts per calendar month.
+          </p>
+        </>
+      ) : isActiveTier1 ? (
+        <>
+          <h1 className="mt-2 text-2xl font-bold tracking-tight text-foreground">
+            Upgrade to AppSumo Tier 2
+          </h1>
+          <p className="mt-3 text-sm text-muted-foreground">
+            Redeem a second AppSumo code on this account to increase your
+            allowance from 50 to 100 AI-assisted drafts per UTC calendar month.
+          </p>
+          <ul className="mt-4 list-disc space-y-1 pl-5 text-sm text-muted-foreground">
+            <li>Current tier: Tier 1</li>
+            <li>After redemption: Tier 2</li>
+            <li>Current monthly usage is preserved</li>
+            <li>Unused drafts do not roll over</li>
+          </ul>
+        </>
+      ) : (
+        <>
+          <h1 className="mt-2 text-2xl font-bold tracking-tight text-foreground">
+            Redeem your lifetime code
+          </h1>
+          <p className="mt-3 text-sm text-muted-foreground">
+            One code unlocks AppSumo Tier 1 (50 generations per UTC month). A
+            second code on the same account unlocks Tier 2 (100 per UTC month).
+            Unused generations do not roll over.
+          </p>
+        </>
+      )}
 
       {access.appSumo.dormant ? (
         <p className="mt-4 text-sm text-muted-foreground">
           Freemius Pro is currently active. Redeemed AppSumo codes stay on this
           account as lifetime fallback if Pro ends.
         </p>
-      ) : access.appSumo.tier > 0 ? (
-        <p className="mt-4 text-sm text-foreground">
-          AppSumo Tier {access.appSumo.tier} is active
-          {access.appSumo.tier === 1
-            ? ". You can redeem one more code for Tier 2."
-            : "."}
-        </p>
       ) : null}
 
-      {!verified ? (
+      {isMaxAppSumoTier ? null : !verified ? (
         <div className="mt-6 rounded-[var(--radius-md)] bg-warning/10 px-4 py-3 text-sm text-warning">
           Verify your email before redeeming this code.
         </div>
       ) : (
         <div className="mt-8">
           <AppSumoRedeemForm
-            disabled={access.appSumo.tier >= 2}
             initialTier={access.appSumo.tier}
+            submitLabel={
+              isActiveTier1 ? "Redeem second code" : "Redeem code"
+            }
           />
         </div>
       )}
