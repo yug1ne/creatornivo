@@ -12,6 +12,10 @@ import {
   getUserSupportStatusCounts,
 } from "@/lib/support/service";
 import { prismaSupportStore } from "@/lib/support/store";
+import {
+  getUserAccessContext,
+  isAppSumoAccessMode,
+} from "@/lib/trial/access";
 
 export default async function ProtectedLayout({
   children,
@@ -22,13 +26,15 @@ export default async function ProtectedLayout({
 
   let answeredSupportCount = 0;
   let adminOpenSupportCount = 0;
+  let showUpgradeCard = true;
 
   if (session) {
-    const userCounts = await getUserSupportStatusCounts(
-      session.id,
-      prismaSupportStore,
-    );
+    const [userCounts, access] = await Promise.all([
+      getUserSupportStatusCounts(session.id, prismaSupportStore),
+      getUserAccessContext(session),
+    ]);
     answeredSupportCount = userSupportAttentionCount(userCounts);
+    showUpgradeCard = !access || !isAppSumoAccessMode(access.mode);
 
     if (isAdminSession(session)) {
       const adminCounts = await getAdminSupportStatusCounts(prismaSupportStore);
@@ -41,6 +47,7 @@ export default async function ProtectedLayout({
       <Sidebar
         answeredSupportCount={answeredSupportCount}
         adminOpenSupportCount={adminOpenSupportCount}
+        showUpgradeCard={showUpgradeCard}
       />
       <main className="min-w-0 flex-1 overflow-x-hidden">
         <EarlyAccessStatusBanner />

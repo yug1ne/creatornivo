@@ -11,6 +11,7 @@ import {
   freemiusPricingDisplay,
 } from "@/config/freemius-pricing-display";
 import { PLANS, type Plan } from "@/config/plans";
+import type { AppSumoTier } from "@/config/appsumo";
 import {
   buildFreemiusCheckoutRequestBody,
   resolveFreemiusCheckoutRedirect,
@@ -168,6 +169,23 @@ interface SubscriptionInfo {
   freemiusSubscriptionId?: string | null;
 }
 
+export const APPSUMO_OPTIONAL_SUBSCRIPTION_TITLE = "Optional subscription";
+export const APPSUMO_OPTIONAL_SUBSCRIPTION_MESSAGE =
+  "Your AppSumo lifetime access remains yours. If you subscribe to Pro, Pro becomes your active plan while the subscription is active.";
+export const APPSUMO_VIEW_PRO_OPTIONS_LABEL = "View Pro options";
+
+export function shouldShowAppSumoLifetimePresentation(input: {
+  isPro: boolean;
+  appSumoTier?: AppSumoTier | number;
+  appSumoDormant?: boolean;
+}): boolean {
+  return (
+    !input.isPro &&
+    (input.appSumoTier ?? 0) > 0 &&
+    input.appSumoDormant !== true
+  );
+}
+
 interface SubscriptionManagerProps {
   plan: Plan;
   subscription: SubscriptionInfo | null;
@@ -175,6 +193,8 @@ interface SubscriptionManagerProps {
   billingProvider: BillingProvider | null;
   /** When true, Free users see Freemius upgrade CTAs instead of only pricing link. */
   publicCheckoutEnabled?: boolean;
+  appSumoTier?: AppSumoTier | number;
+  appSumoDormant?: boolean;
 }
 
 function SubscriptionManagerContent({
@@ -183,6 +203,8 @@ function SubscriptionManagerContent({
   isBillingConfigured,
   billingProvider,
   publicCheckoutEnabled = false,
+  appSumoTier = 0,
+  appSumoDormant = false,
 }: SubscriptionManagerProps) {
   const { data: session, update } = useSession();
   const router = useRouter();
@@ -203,6 +225,11 @@ function SubscriptionManagerContent({
 
   const isPro =
     plan === PLANS.PRO || session?.user?.plan === PLANS.PRO;
+  const showAppSumoLifetime = shouldShowAppSumoLifetimePresentation({
+    isPro,
+    appSumoTier,
+    appSumoDormant,
+  });
   const postCheckoutMessage = getPostCheckoutMessage(isPro, checkoutStatus);
   const subscriptionProvider = subscription?.provider ?? null;
   const hasFreemiusIds = Boolean(
@@ -343,12 +370,27 @@ function SubscriptionManagerContent({
     <div id="subscription" className="rounded-xl border border-border p-6">
       <h3 className="font-medium text-foreground">Subscription</h3>
 
-      <p className="mt-2 text-sm text-muted-foreground">
-        Current plan:{" "}
-        <span className="font-medium text-foreground">
-          {isPro ? "Pro" : "Free"}
-        </span>
-      </p>
+      {showAppSumoLifetime ? (
+        <>
+          <p className="mt-2 text-sm text-foreground">
+            AppSumo Lifetime Access is your active entitlement.
+          </p>
+          <p className="mt-1 text-sm text-muted-foreground">
+            AppSumo Tier {appSumoTier === 2 ? "2" : "1"}
+          </p>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Billing plan:{" "}
+            <span className="font-medium text-foreground">Free</span>
+          </p>
+        </>
+      ) : (
+        <p className="mt-2 text-sm text-muted-foreground">
+          Current plan:{" "}
+          <span className="font-medium text-foreground">
+            {isPro ? "Pro" : "Free"}
+          </span>
+        </p>
+      )}
 
       {subscription?.status && (
         <p className="mt-1 text-xs text-muted-foreground">
@@ -383,7 +425,21 @@ function SubscriptionManagerContent({
         <p className={bannerClass}>{message || postCheckoutMessage}</p>
       )}
 
-      {!isPro && publicCheckoutEnabled && freemiusFoundingOfferActive && (
+      {showAppSumoLifetime ? (
+        <div className="mt-4 rounded-lg border border-border bg-muted/30 px-3 py-3 sm:px-4">
+          <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+            {APPSUMO_OPTIONAL_SUBSCRIPTION_TITLE}
+          </p>
+          <p className="mt-2 text-sm text-muted-foreground">
+            {APPSUMO_OPTIONAL_SUBSCRIPTION_MESSAGE}
+          </p>
+        </div>
+      ) : null}
+
+      {!showAppSumoLifetime &&
+        !isPro &&
+        publicCheckoutEnabled &&
+        freemiusFoundingOfferActive && (
         <div
           className="mt-4 overflow-hidden rounded-lg border border-border bg-muted/30"
           data-settings-billing-options="true"
@@ -414,7 +470,19 @@ function SubscriptionManagerContent({
       )}
 
       <div className="mt-4 flex flex-wrap gap-3">
-        {!isPro && publicCheckoutEnabled && freemiusFoundingOfferActive && (
+        {showAppSumoLifetime ? (
+          <Link
+            href="/pricing"
+            className={buttonVariants({ variant: "outline", size: "sm" })}
+          >
+            {APPSUMO_VIEW_PRO_OPTIONS_LABEL}
+          </Link>
+        ) : null}
+
+        {!showAppSumoLifetime &&
+          !isPro &&
+          publicCheckoutEnabled &&
+          freemiusFoundingOfferActive && (
           <>
             <button
               type="button"
@@ -448,7 +516,10 @@ function SubscriptionManagerContent({
           </>
         )}
 
-        {!isPro && publicCheckoutEnabled && !freemiusFoundingOfferActive && (
+        {!showAppSumoLifetime &&
+          !isPro &&
+          publicCheckoutEnabled &&
+          !freemiusFoundingOfferActive && (
           <>
             <button
               type="button"
@@ -480,13 +551,19 @@ function SubscriptionManagerContent({
           </>
         )}
 
-        {!isPro && !publicCheckoutEnabled && isBillingConfigured && (
+        {!showAppSumoLifetime &&
+          !isPro &&
+          !publicCheckoutEnabled &&
+          isBillingConfigured && (
           <Link href="/pricing" className={buttonVariants({ size: "sm" })}>
             Upgrade to Pro
           </Link>
         )}
 
-        {!isPro && !publicCheckoutEnabled && !isBillingConfigured && (
+        {!showAppSumoLifetime &&
+          !isPro &&
+          !publicCheckoutEnabled &&
+          !isBillingConfigured && (
           <Link href="/pricing" className={buttonVariants({ size: "sm" })}>
             View pricing
           </Link>

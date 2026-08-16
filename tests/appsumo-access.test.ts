@@ -14,6 +14,7 @@ import {
   generateUniqueAppSumoCodes,
   normalizeAppSumoCode,
 } from "../src/lib/appsumo/codes";
+import { shouldShowAppSumoLifetimePresentation } from "../src/components/settings/subscription-manager";
 import { resolveUserAccess } from "../src/lib/trial/access";
 
 function source(path: string): string {
@@ -137,6 +138,64 @@ test("generate route skips UserUsage for AppSumo and uses Luna policy", () => {
   assert.match(route, /appsumoPeriod:/);
   assert.match(route, /reasoningEffort:/);
   assert.match(route, /access\.generationPolicy\.autoRepair/);
+});
+
+test("AppSumo Settings and sidebar do not treat lifetime users as ordinary Free", () => {
+  const settings = source("src/app/(protected)/settings/page.tsx");
+  const manager = source("src/components/settings/subscription-manager.tsx");
+  const sidebar = source("src/components/layout/sidebar.tsx");
+  const layout = source("src/app/(protected)/layout.tsx");
+  const redeem = source("src/components/appsumo/appsumo-redeem-form.tsx");
+
+  assert.match(settings, /Billing plan/);
+  assert.match(settings, /Lifetime access/);
+  assert.match(settings, /appSumoTier=\{access\?\.appSumo\.tier/);
+  assert.match(manager, /AppSumo Lifetime Access is your active entitlement/);
+  assert.match(manager, /Optional subscription/);
+  assert.match(manager, /View Pro options/);
+  assert.match(manager, /showAppSumoLifetime/);
+  assert.doesNotMatch(
+    manager,
+    /showAppSumoLifetime[\s\S]{0,80}Upgrade to Pro/,
+  );
+  assert.match(sidebar, /showUpgradeCard/);
+  assert.match(layout, /isAppSumoAccessMode\(access\.mode\)/);
+  assert.match(layout, /showUpgradeCard=\{showUpgradeCard\}/);
+  assert.match(redeem, /router\.push\(APPSUMO_REDEEM_SUCCESS_REDIRECT_HREF\)/);
+  assert.match(redeem, /if \(!response\.ok\)/);
+  assert.doesNotMatch(redeem, /if \(!response\.ok\)[\s\S]{0,200}router\.push/);
+
+  assert.equal(
+    shouldShowAppSumoLifetimePresentation({
+      isPro: false,
+      appSumoTier: 1,
+      appSumoDormant: false,
+    }),
+    true,
+  );
+  assert.equal(
+    shouldShowAppSumoLifetimePresentation({
+      isPro: false,
+      appSumoTier: 2,
+      appSumoDormant: false,
+    }),
+    true,
+  );
+  assert.equal(
+    shouldShowAppSumoLifetimePresentation({
+      isPro: false,
+      appSumoTier: 0,
+    }),
+    false,
+  );
+  assert.equal(
+    shouldShowAppSumoLifetimePresentation({
+      isPro: true,
+      appSumoTier: 1,
+      appSumoDormant: true,
+    }),
+    false,
+  );
 });
 
 test("AppSumo migration is additive and revokes Data API access", () => {

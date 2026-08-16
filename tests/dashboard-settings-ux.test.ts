@@ -62,6 +62,8 @@ test("settings profile hides role for non-admins and includes help contact", () 
   assert.match(settings, /formatSignInMethods/);
   assert.match(settings, /HelpContactCard/);
   assert.match(settings, /Sign-in/);
+  assert.match(settings, /Billing plan/);
+  assert.match(settings, /Lifetime access/);
   // Role is only rendered for DB role admin — not always shown to normal users.
   assert.match(
     settings,

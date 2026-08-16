@@ -12,6 +12,7 @@ import {
 import { isPublicCheckoutEnabled } from "@/config/freemius";
 import { requireSession } from "@/lib/auth/session";
 import { prisma } from "@/lib/db";
+import { getUserAccessContext } from "@/lib/trial/access";
 
 export const dynamic = "force-dynamic";
 
@@ -25,19 +26,22 @@ export const dynamic = "force-dynamic";
 export default async function SettingsBillingPage() {
   const session = await requireSession();
 
-  const subscription = await prisma.subscription.findUnique({
-    where: { userId: session.id },
-    select: {
-      status: true,
-      currentPeriodStart: true,
-      currentPeriodEnd: true,
-      cancelAtPeriodEnd: true,
-      provider: true,
-      freemiusUserId: true,
-      freemiusLicenseId: true,
-      freemiusSubscriptionId: true,
-    },
-  });
+  const [subscription, access] = await Promise.all([
+    prisma.subscription.findUnique({
+      where: { userId: session.id },
+      select: {
+        status: true,
+        currentPeriodStart: true,
+        currentPeriodEnd: true,
+        cancelAtPeriodEnd: true,
+        provider: true,
+        freemiusUserId: true,
+        freemiusLicenseId: true,
+        freemiusSubscriptionId: true,
+      },
+    }),
+    getUserAccessContext(session),
+  ]);
 
   const planLabel = session.plan === PLANS.PRO ? "Pro" : "Free";
   const publicCheckoutEnabled = isPublicCheckoutEnabled();
@@ -60,6 +64,8 @@ export default async function SettingsBillingPage() {
           isBillingConfigured={isBillingConfigured()}
           billingProvider={getActiveBillingProvider()}
           publicCheckoutEnabled={publicCheckoutEnabled}
+          appSumoTier={access?.appSumo.tier ?? 0}
+          appSumoDormant={access?.appSumo.dormant ?? false}
           subscription={
             subscription
               ? {

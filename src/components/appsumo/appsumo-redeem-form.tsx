@@ -1,9 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+
+export const APPSUMO_REDEEM_SUCCESS_REDIRECT_HREF = "/dashboard";
+export const APPSUMO_REDEEM_SUCCESS_REDIRECT_DELAY_MS = 1600;
 
 export function AppSumoRedeemForm({
   disabled,
@@ -12,11 +16,21 @@ export function AppSumoRedeemForm({
   disabled?: boolean;
   initialTier: 0 | 1 | 2;
 }) {
+  const router = useRouter();
+  const redirectTimerRef = useRef<number | null>(null);
   const [code, setCode] = useState("");
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
   const [tier, setTier] = useState(initialTier);
+
+  useEffect(() => {
+    return () => {
+      if (redirectTimerRef.current !== null) {
+        window.clearTimeout(redirectTimerRef.current);
+      }
+    };
+  }, []);
 
   async function onSubmit(event: React.FormEvent) {
     event.preventDefault();
@@ -46,6 +60,12 @@ export function AppSumoRedeemForm({
         setTier(data.activeCodeCount);
       }
       setCode("");
+      if (redirectTimerRef.current !== null) {
+        window.clearTimeout(redirectTimerRef.current);
+      }
+      redirectTimerRef.current = window.setTimeout(() => {
+        router.push(APPSUMO_REDEEM_SUCCESS_REDIRECT_HREF);
+      }, APPSUMO_REDEEM_SUCCESS_REDIRECT_DELAY_MS);
     } catch {
       setError("Unable to redeem this code right now. Try again.");
     } finally {

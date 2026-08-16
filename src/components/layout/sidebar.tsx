@@ -26,6 +26,8 @@ interface SidebarProps {
   answeredSupportCount?: number;
   /** Admin-only: global open support threads. */
   adminOpenSupportCount?: number;
+  /** Hide the Free upgrade card for active AppSumo users. */
+  showUpgradeCard?: boolean;
 }
 
 function NavContent({
@@ -95,6 +97,7 @@ export function Sidebar({
   onMobileClose,
   answeredSupportCount = 0,
   adminOpenSupportCount = 0,
+  showUpgradeCard = true,
 }: SidebarProps) {
   const { data: session } = useSession();
   const [internalOpen, setInternalOpen] = useState(false);
@@ -188,19 +191,21 @@ export function Sidebar({
           <ThemeToggle showLabel className="w-full" />
         </div>
 
-        <div className="mt-4 rounded-[var(--radius-md)] bg-muted/60 p-4">
-          <p className="text-xs font-medium text-foreground">Need more?</p>
-          <p className="mt-1 text-xs text-muted-foreground">
-            Pro — 100 generations per billing period and export
-          </p>
-          <Link
-            href="/pricing"
-            onClick={close}
-            className="mt-3 inline-flex text-xs font-medium text-primary hover:underline"
-          >
-            View pricing →
-          </Link>
-        </div>
+        {showUpgradeCard ? (
+          <div className="mt-4 rounded-[var(--radius-md)] bg-muted/60 p-4">
+            <p className="text-xs font-medium text-foreground">Need more?</p>
+            <p className="mt-1 text-xs text-muted-foreground">
+              Pro — 100 generations per billing period and export
+            </p>
+            <Link
+              href="/pricing"
+              onClick={close}
+              className="mt-3 inline-flex text-xs font-medium text-primary hover:underline"
+            >
+              View pricing →
+            </Link>
+          </div>
+        ) : null}
 
         <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2 px-1 text-xs text-muted-foreground">
           <Link

@@ -126,7 +126,9 @@ export default async function SettingsPage() {
                 </dd>
               </div>
               <div className="flex justify-between gap-4">
-                <dt className="text-muted-foreground">Plan</dt>
+                <dt className="text-muted-foreground">
+                  {access && access.appSumo.tier > 0 ? "Billing plan" : "Plan"}
+                </dt>
                 <dd className="text-right text-foreground">{planLabel}</dd>
               </div>
               {access?.mode === "trial" && access.trialEndsAt ? (
@@ -209,6 +211,8 @@ export default async function SettingsPage() {
           isBillingConfigured={isBillingConfigured()}
           billingProvider={getActiveBillingProvider()}
           publicCheckoutEnabled={isPublicCheckoutEnabled()}
+          appSumoTier={access?.appSumo.tier ?? 0}
+          appSumoDormant={access?.appSumo.dormant ?? false}
           subscription={
             subscription
               ? {
