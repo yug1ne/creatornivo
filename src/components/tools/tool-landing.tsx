@@ -22,7 +22,7 @@ export function ToolLanding({ tool }: ToolLandingProps) {
   const related = getRelatedPublicTools(tool);
 
   return (
-    <article>
+    <article className="overflow-x-clip">
       <ToolPageJsonLd tool={tool} />
 
       <section className="relative overflow-hidden">
@@ -61,12 +61,12 @@ export function ToolLanding({ tool }: ToolLandingProps) {
             </ol>
           </nav>
 
-          <div className="mt-10 grid items-start gap-12 lg:grid-cols-2 lg:gap-16">
-            <div>
-              <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-border bg-card/80 px-4 py-1.5 text-xs font-medium text-muted-foreground shadow-[var(--shadow-sm)]">
+          <div className="mt-10 grid min-w-0 items-start gap-10 lg:grid-cols-2 lg:gap-16">
+            <div className="min-w-0">
+              <p className="mb-4 inline-flex max-w-full items-center gap-2 rounded-full border border-border bg-card/80 px-3 py-1.5 text-xs font-medium text-muted-foreground shadow-[var(--shadow-sm)] sm:px-4">
                 {tool.eyebrow}
               </p>
-              <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+              <h1 className="text-3xl font-bold tracking-tight break-words text-foreground sm:text-4xl lg:text-5xl">
                 {tool.h1}
               </h1>
               <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
@@ -75,7 +75,7 @@ export function ToolLanding({ tool }: ToolLandingProps) {
               <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
                 {tool.supportingCopy}
               </p>
-              <div className="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+              <div className="mt-8 flex w-full flex-col items-stretch gap-3 sm:w-auto sm:flex-row sm:items-center sm:gap-4">
                 <ToolTryCta
                   templateSlug={tool.templateSlug}
                   label={tool.primaryCtaLabel}
@@ -85,7 +85,7 @@ export function ToolLanding({ tool }: ToolLandingProps) {
                   className={buttonVariants({
                     variant: "outline",
                     size: "lg",
-                    className: "min-w-[220px]",
+                    className: "w-full min-w-0 sm:w-auto sm:min-w-[220px]",
                   })}
                 >
                   Explore all templates
@@ -96,7 +96,9 @@ export function ToolLanding({ tool }: ToolLandingProps) {
               </div>
             </div>
 
-            <ToolDemo tool={tool} fields={demoFields} />
+            <div className="min-w-0">
+              <ToolDemo tool={tool} fields={demoFields} />
+            </div>
           </div>
         </div>
       </section>
@@ -249,8 +251,8 @@ export function ToolLanding({ tool }: ToolLandingProps) {
 
       <section className="pb-20 sm:pb-28">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="relative overflow-hidden rounded-[var(--radius-xl)] border border-primary/25 bg-gradient-to-br from-primary/5 via-accent/60 to-card px-8 py-16 text-center shadow-[var(--shadow-md)] sm:px-16">
-            <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+          <div className="relative overflow-hidden rounded-[var(--radius-xl)] border border-primary/25 bg-gradient-to-br from-primary/5 via-accent/60 to-card px-4 py-10 text-center shadow-[var(--shadow-md)] sm:px-16 sm:py-16">
+            <h2 className="text-2xl font-bold tracking-tight break-words text-foreground sm:text-4xl">
               {tool.primaryCtaLabel}
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-muted-foreground">

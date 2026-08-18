@@ -34,7 +34,8 @@ export function ToolTryCta({
       className={cn(
         buttonVariants({
           size,
-          className: "min-w-[220px] shadow-lg shadow-primary/25",
+          className:
+            "w-full min-w-0 shadow-lg shadow-primary/25 sm:w-auto sm:min-w-[220px]",
         }),
         className,
       )}

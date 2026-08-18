@@ -68,7 +68,7 @@ export function ToolDemo({ tool, fields }: ToolDemoProps) {
                     <p className="text-[10px] text-muted-foreground">
                       {field.label}
                     </p>
-                    <div className="mt-0.5 rounded-md border border-input bg-background px-2 py-1.5 text-foreground">
+                    <div className="mt-0.5 break-words rounded-md border border-input bg-background px-2 py-1.5 text-foreground">
                       {field.value}
                     </div>
                   </div>
@@ -80,7 +80,7 @@ export function ToolDemo({ tool, fields }: ToolDemoProps) {
               <p className="font-medium text-foreground">
                 {tool.demoOutputLabel}
               </p>
-              <pre className="mt-1.5 whitespace-pre-wrap font-sans text-[11px] leading-relaxed text-foreground/90">
+              <pre className="mt-1.5 max-w-full overflow-x-auto whitespace-pre-wrap break-words font-sans text-[11px] leading-relaxed text-foreground/90">
                 {tool.demoOutput}
               </pre>
             </div>

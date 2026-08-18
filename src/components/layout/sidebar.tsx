@@ -152,11 +152,12 @@ export function Sidebar({
           isOpen ? "translate-x-0" : "-translate-x-full",
         )}
       >
-        <div className="mb-8 flex items-center justify-between">
+        <div className="mb-8 flex items-center justify-between gap-2">
           <Link
-            href="/dashboard"
+            href="/"
             onClick={close}
-            className="text-lg font-bold tracking-tight text-foreground"
+            aria-label={`${siteConfig.name} home`}
+            className="min-w-0 text-lg font-bold tracking-tight text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             {siteConfig.name}
           </Link>
@@ -207,26 +208,35 @@ export function Sidebar({
           </div>
         ) : null}
 
-        <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2 px-1 text-xs text-muted-foreground">
+        <div className="mt-auto flex flex-col gap-3 border-t border-border pt-4">
           <Link
-            href="/settings#help-contact"
+            href="/"
             onClick={close}
-            className="font-medium text-muted-foreground transition-colors hover:text-foreground hover:underline"
+            className="px-1 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
-            Help &amp; contact
+            Back to website
           </Link>
-          <Link
-            href="/settings/support"
-            onClick={close}
-            className="inline-flex items-center gap-1.5 font-medium text-muted-foreground transition-colors hover:text-foreground hover:underline"
-          >
-            Support
-            <CountBadge
-              count={answeredSupportCount}
-              tone="success"
-              label="support replies waiting"
-            />
-          </Link>
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-2 px-1 text-xs text-muted-foreground">
+            <Link
+              href="/settings#help-contact"
+              onClick={close}
+              className="font-medium text-muted-foreground transition-colors hover:text-foreground hover:underline"
+            >
+              Help &amp; contact
+            </Link>
+            <Link
+              href="/settings/support"
+              onClick={close}
+              className="inline-flex items-center gap-1.5 font-medium text-muted-foreground transition-colors hover:text-foreground hover:underline"
+            >
+              Support
+              <CountBadge
+                count={answeredSupportCount}
+                tone="success"
+                label="support replies waiting"
+              />
+            </Link>
+          </div>
         </div>
       </aside>
     </>

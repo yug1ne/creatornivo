@@ -208,7 +208,9 @@ test("tool pages never call AI generation or usage reservation APIs", () => {
     publicToolsConfig,
     readFileSync("src/components/tools/tool-faq.tsx", "utf8"),
     readFileSync("src/components/tools/tool-related.tsx", "utf8"),
+    readFileSync("src/components/tools/tools-catalog.tsx", "utf8"),
     readFileSync("src/lib/seo/public-tools.ts", "utf8"),
+    readFileSync("src/lib/seo/public-tool-catalog.ts", "utf8"),
   ].join("\n");
 
   for (const forbidden of [
@@ -328,4 +330,25 @@ test("footer links to the public tools index", () => {
   const footer = readFileSync("src/components/layout/footer.tsx", "utf8");
   assert.match(footer, /href="\/tools"/);
   assert.match(footer, />\s*Tools\s*</);
+});
+
+test("/tools catalog HTML includes a crawlable link for every public tool", () => {
+  const catalog = readFileSync(
+    "src/components/tools/tools-catalog.tsx",
+    "utf8",
+  );
+  const index = readFileSync("src/components/tools/tools-index.tsx", "utf8");
+
+  assert.match(index, /toPublicToolCatalogItems\(listPublicTools\(\)\)/);
+  assert.match(index, /<ToolsCatalog tools=\{tools\}/);
+  assert.match(catalog, /tools\.map\(\(tool\) =>/);
+  assert.match(catalog, /getPublicToolHref\(tool\.slug\)/);
+  assert.match(catalog, /hidden && "hidden"/);
+  assert.doesNotMatch(catalog, /useRouter|router\.(push|replace)/);
+
+  for (const expected of EXPECTED_TOOL_PAGES) {
+    assert.ok(
+      listPublicToolPagePaths().includes(`/tools/${expected.slug}`),
+    );
+  }
 });
