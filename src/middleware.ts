@@ -10,6 +10,7 @@ import {
 } from "@/config/routes";
 import { PLANS } from "@/config/plans";
 import { isAdminSession } from "@/lib/admin/is-admin-session";
+import { getSafeCallbackFromLocation } from "@/lib/auth/callback-url";
 
 const { auth } = NextAuth(authConfig);
 export const CANONICAL_HOST = "www.creatornivo.com";
@@ -41,13 +42,19 @@ export default auth((request) => {
 
   if (isProtectedRoute(pathname) && !isAuthenticated) {
     const loginUrl = new URL("/login", request.url);
-    loginUrl.searchParams.set("callbackUrl", pathname);
+    loginUrl.searchParams.set(
+      "callbackUrl",
+      getSafeCallbackFromLocation(pathname, request.nextUrl.search),
+    );
     return NextResponse.redirect(loginUrl);
   }
 
   if (isProRoute(pathname) && !isAuthenticated) {
     const loginUrl = new URL("/login", request.url);
-    loginUrl.searchParams.set("callbackUrl", pathname);
+    loginUrl.searchParams.set(
+      "callbackUrl",
+      getSafeCallbackFromLocation(pathname, request.nextUrl.search),
+    );
     return NextResponse.redirect(loginUrl);
   }
 
@@ -63,7 +70,10 @@ export default auth((request) => {
   if (isAdminRoute(pathname)) {
     if (!isAuthenticated) {
       const loginUrl = new URL("/login", request.url);
-      loginUrl.searchParams.set("callbackUrl", pathname);
+      loginUrl.searchParams.set(
+        "callbackUrl",
+        getSafeCallbackFromLocation(pathname, request.nextUrl.search),
+      );
       return NextResponse.redirect(loginUrl);
     }
 

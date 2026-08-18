@@ -1,8 +1,10 @@
 "use client";
 
+import { usePathname, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
+import { getSafeCallbackFromLocation } from "@/lib/auth/callback-url";
 import { EMAIL_VERIFICATION_REQUIRED_MESSAGE } from "@/lib/auth/email-verification";
 
 type EmailVerificationBannerProps = {
@@ -12,6 +14,8 @@ type EmailVerificationBannerProps = {
 export function EmailVerificationBanner({
   initialVerified,
 }: EmailVerificationBannerProps) {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [isVerified, setIsVerified] = useState(initialVerified);
   const [isSending, setIsSending] = useState(false);
   const [feedback, setFeedback] = useState<string | null>(null);
@@ -28,9 +32,16 @@ export function EmailVerificationBanner({
     setFeedback(null);
 
     try {
+      const search = searchParams.toString();
+      const callbackUrl = getSafeCallbackFromLocation(
+        pathname,
+        search ? `?${search}` : "",
+      );
+
       const response = await fetch("/api/auth/resend-verification", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ callbackUrl }),
       });
       const data = (await response.json()) as {
         message?: string;

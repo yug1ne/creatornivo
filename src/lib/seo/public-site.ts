@@ -1,3 +1,4 @@
+import { listPublicToolPagePaths } from "@/config/public-tools";
 import { getPublishedGuideSlugs } from "@/lib/guides";
 
 /** Canonical production origin for public SEO (www). */
@@ -17,15 +18,20 @@ export const PUBLIC_SITEMAP_STATIC_PATHS = [
   "/refund-policy",
   "/responsible-use",
   "/guides",
+  "/tools",
 ] as const;
 
 /**
- * Full list of public sitemap paths: static pages + published guide articles.
- * Draft / unpublished guides are excluded via getPublishedGuideSlugs().
+ * Full list of public sitemap paths: static pages + public tool landings +
+ * published guide articles. Draft / unpublished guides are excluded.
  */
 export function getPublicSitemapPaths(): string[] {
   const guidePaths = getPublishedGuideSlugs().map((slug) => `/guides/${slug}`);
-  return [...PUBLIC_SITEMAP_STATIC_PATHS, ...guidePaths];
+  return [
+    ...PUBLIC_SITEMAP_STATIC_PATHS,
+    ...listPublicToolPagePaths(),
+    ...guidePaths,
+  ];
 }
 
 /** Paths and prefixes search engines should not crawl as app/API surfaces. */

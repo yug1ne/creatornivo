@@ -8,6 +8,7 @@ import {
   REGISTRATION_RE_REGISTER_COOLDOWN_MESSAGE,
   registerCredentialsUser,
 } from "@/lib/auth/credentials";
+import { getOptionalSafeCallbackUrl } from "@/lib/auth/callback-url";
 import { issueAndSendEmailVerification } from "@/lib/auth/issue-email-verification";
 import {
   AuthRateLimitError,
@@ -35,10 +36,11 @@ export async function postAuthRegister(
 
   try {
     const body = await request.json();
-    const { name, email, password } = body as {
+    const { name, email, password, callbackUrl } = body as {
       name?: string;
       email?: string;
       password?: string;
+      callbackUrl?: string;
     };
 
     await enforceRateLimit({
@@ -77,6 +79,7 @@ export async function postAuthRegister(
     void issueVerification({
       email: user.email,
       name: user.name,
+      callbackUrl: getOptionalSafeCallbackUrl(callbackUrl),
     }).catch((error) => {
       console.error("[email] Verification email task failed:", error);
     });

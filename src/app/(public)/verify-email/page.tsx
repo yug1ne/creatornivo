@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { VerifyEmailConfirmation } from "@/components/auth/verify-email-confirmation";
+import { getOptionalSafeCallbackUrl } from "@/lib/auth/callback-url";
 
 export const dynamic = "force-dynamic";
 
@@ -10,7 +11,7 @@ export const metadata: Metadata = {
 };
 
 type VerifyEmailPageProps = {
-  searchParams: Promise<{ token?: string }>;
+  searchParams: Promise<{ token?: string; callbackUrl?: string }>;
 };
 
 /**
@@ -22,6 +23,11 @@ export default async function VerifyEmailPage({
 }: VerifyEmailPageProps) {
   const params = await searchParams;
   const token = typeof params.token === "string" ? params.token : "";
+  const callbackUrl = getOptionalSafeCallbackUrl(
+    typeof params.callbackUrl === "string" ? params.callbackUrl : null,
+  );
 
-  return <VerifyEmailConfirmation token={token} />;
+  return (
+    <VerifyEmailConfirmation token={token} callbackUrl={callbackUrl} />
+  );
 }

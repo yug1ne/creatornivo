@@ -71,6 +71,15 @@ test("login callback only accepts internal relative paths", () => {
     "/dashboard",
   );
   assert.equal(getSafeCallbackUrl("//attacker.example"), "/dashboard");
+  assert.equal(getSafeCallbackUrl("javascript:alert(1)"), "/dashboard");
+  assert.equal(
+    getSafeCallbackUrl("/generate?template=linkedin-post"),
+    "/generate?template=linkedin-post",
+  );
+  assert.equal(
+    getSafeCallbackUrl("/generate?template=linkedin-post#ignored"),
+    "/generate?template=linkedin-post",
+  );
 });
 
 test("canonical host redirect is permanent without redirecting API POST", () => {

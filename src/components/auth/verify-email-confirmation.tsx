@@ -4,6 +4,9 @@ import Link from "next/link";
 import { useState } from "react";
 import type { FormEvent } from "react";
 
+import { getAuthPageHref } from "@/lib/auth/callback-url";
+import { getEmailVerificationSuccessHref } from "@/lib/auth/email-verification";
+
 const INVALID_LINK_MESSAGE =
   "This confirmation link is invalid or has expired. Request a new verification email.";
 const SUCCESS_MESSAGE =
@@ -26,7 +29,13 @@ type VerifyEmailResponse = {
   trialActivationNeedsRetry?: boolean;
 };
 
-export function VerifyEmailConfirmation({ token }: { token: string }) {
+export function VerifyEmailConfirmation({
+  token,
+  callbackUrl = null,
+}: {
+  token: string;
+  callbackUrl?: string | null;
+}) {
   const [state, setState] = useState<ConfirmationState>(() =>
     token
       ? { status: "ready" }
@@ -128,9 +137,10 @@ export function VerifyEmailConfirmation({ token }: { token: string }) {
       {isSuccess ? (
         <div className="mt-8 flex flex-wrap gap-3">
           <Link
-            href={
-              state.trialActivationNeedsRetry ? "/try/activate" : "/generate"
-            }
+            href={getEmailVerificationSuccessHref({
+              trialActivationNeedsRetry: state.trialActivationNeedsRetry,
+              callbackUrl,
+            })}
             className="inline-flex h-10 items-center justify-center rounded-[var(--radius-md)] bg-primary px-4 text-sm font-medium text-primary-foreground hover:bg-primary/90"
           >
             Go to Generate
@@ -145,7 +155,7 @@ export function VerifyEmailConfirmation({ token }: { token: string }) {
       ) : state.status === "error" ? (
         <div className="mt-8 flex flex-wrap gap-3">
           <Link
-            href="/login"
+            href={getAuthPageHref("login", callbackUrl)}
             className="inline-flex h-10 items-center justify-center rounded-[var(--radius-md)] bg-primary px-4 text-sm font-medium text-primary-foreground hover:bg-primary/90"
           >
             Sign in

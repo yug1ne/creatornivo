@@ -76,8 +76,13 @@ export async function sendEmailVerificationEmail(input: {
   email: string;
   name: string | null;
   plainToken: string;
+  callbackUrl?: string | null;
 }): Promise<{ delivered: boolean; verifyUrl: string }> {
-  const verifyUrl = getEmailVerificationUrl(input.plainToken);
+  const verifyUrl = getEmailVerificationUrl(
+    input.plainToken,
+    undefined,
+    input.callbackUrl,
+  );
   const emailHash = getSafeEmailHash(input.email);
 
   const text = buildEmailVerificationText({

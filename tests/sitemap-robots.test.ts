@@ -4,6 +4,7 @@ import test from "node:test";
 
 import sitemap from "../src/app/sitemap";
 import robots from "../src/app/robots";
+import { listPublicToolPagePaths } from "../src/config/public-tools";
 import {
   PUBLIC_ROBOTS_DISALLOW,
   PUBLIC_SITE_ORIGIN,
@@ -28,7 +29,15 @@ test("public sitemap paths include marketing, legal, guides index, and published
   }
 
   assert.equal(guideSlugs.length, 8);
-  assert.equal(paths.length, PUBLIC_SITEMAP_STATIC_PATHS.length + 8);
+  assert.ok(paths.includes("/tools"), "missing /tools index");
+  assert.ok(
+    paths.includes("/tools/linkedin-post-generator"),
+    "missing first public tool path",
+  );
+  assert.equal(
+    paths.length,
+    PUBLIC_SITEMAP_STATIC_PATHS.length + listPublicToolPagePaths().length + 8,
+  );
 });
 
 test("sitemap excludes protected, admin, and api routes", () => {
@@ -64,7 +73,10 @@ test("sitemap excludes protected, admin, and api routes", () => {
 
 test("sitemap entries use www.creatornivo.com absolute URLs", () => {
   const entries = sitemap();
-  assert.ok(entries.length >= 8 + PUBLIC_SITEMAP_STATIC_PATHS.length);
+  assert.ok(
+    entries.length >=
+      8 + PUBLIC_SITEMAP_STATIC_PATHS.length + listPublicToolPagePaths().length,
+  );
 
   for (const entry of entries) {
     assert.ok(
@@ -79,9 +91,20 @@ test("sitemap entries use www.creatornivo.com absolute URLs", () => {
   assert.ok(urls.has(`${PUBLIC_SITE_ORIGIN}/`));
   assert.ok(urls.has(`${PUBLIC_SITE_ORIGIN}/guides`));
   assert.ok(urls.has(`${PUBLIC_SITE_ORIGIN}/pricing`));
+  assert.ok(urls.has(`${PUBLIC_SITE_ORIGIN}/tools`));
+  assert.ok(
+    urls.has(`${PUBLIC_SITE_ORIGIN}/tools/linkedin-post-generator`),
+  );
   assert.ok(
     urls.has(`${PUBLIC_SITE_ORIGIN}/guides/what-is-creatornivo`),
   );
+
+  for (const path of listPublicToolPagePaths()) {
+    assert.ok(
+      urls.has(`${PUBLIC_SITE_ORIGIN}${path}`),
+      `sitemap should include ${path}`,
+    );
+  }
 });
 
 test("robots disallows app/api surfaces and points sitemap at www", () => {
@@ -119,6 +142,7 @@ test("robots disallows app/api surfaces and points sitemap at www", () => {
     "/privacy",
     "/refund-policy",
     "/responsible-use",
+    "/tools",
   ]) {
     assert.ok(!disallow.includes(publicPath));
     assert.ok(!disallow.some((item) => item === `${publicPath}/`));

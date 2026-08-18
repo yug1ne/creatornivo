@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Suspense } from "react";
 
+import { AuthSwitchLink } from "@/components/auth/auth-switch-link";
 import { LoginForm } from "@/components/auth/login-form";
 import { isGoogleAuthConfigured } from "@/lib/auth/google";
 
@@ -26,12 +27,18 @@ export default function LoginPage() {
 
       <p className="mt-6 text-center text-sm text-muted-foreground">
         Don&apos;t have an account?{" "}
-        <Link
-          href="/register"
-          className="font-medium text-primary hover:underline"
+        <Suspense
+          fallback={
+            <Link
+              href="/register"
+              className="font-medium text-primary hover:underline"
+            >
+              Sign up
+            </Link>
+          }
         >
-          Sign up
-        </Link>
+          <AuthSwitchLink dest="register">Sign up</AuthSwitchLink>
+        </Suspense>
       </p>
     </section>
   );

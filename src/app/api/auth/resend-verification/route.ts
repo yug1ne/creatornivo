@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { AUTH_RATE_LIMIT_GENERIC_MESSAGE } from "@/config/auth-rate-limit";
+import { getOptionalSafeCallbackUrl } from "@/lib/auth/callback-url";
 import {
   EMAIL_VERIFICATION_ALREADY_VERIFIED_MESSAGE,
   EMAIL_VERIFICATION_RESEND_SUCCESS_MESSAGE,
@@ -48,6 +49,8 @@ export async function postResendVerification(
       email: session.email,
     });
 
+    const callbackUrl = await readOptionalCallbackUrl(request);
+
     const result = await resend(session.id, prismaEmailVerificationStore);
 
     if (result.status === "already_verified") {
@@ -61,6 +64,7 @@ export async function postResendVerification(
       email: result.email,
       name: result.name,
       plainToken: result.plainToken,
+      callbackUrl,
     });
 
     return NextResponse.json({
@@ -94,6 +98,24 @@ export async function postResendVerification(
       message: EMAIL_VERIFICATION_RESEND_SUCCESS_MESSAGE,
       alreadyVerified: false,
     });
+  }
+}
+
+async function readOptionalCallbackUrl(
+  request: Request,
+): Promise<string | null> {
+  const text = await request.text();
+  if (!text.trim()) {
+    return null;
+  }
+
+  try {
+    const parsed = JSON.parse(text) as { callbackUrl?: unknown };
+    return typeof parsed.callbackUrl === "string"
+      ? getOptionalSafeCallbackUrl(parsed.callbackUrl)
+      : null;
+  } catch {
+    return null;
   }
 }
 

@@ -14,6 +14,7 @@ import {
   generateEmailVerificationToken,
   hashEmailVerificationToken,
   isEmailVerified,
+  getEmailVerificationUrl,
   issueEmailVerificationToken,
   resendEmailVerificationForUser,
   verifyEmailWithToken,
@@ -341,7 +342,9 @@ test("verify-email GET is display-only and cannot verify or activate a trial", a
   assert.doesNotMatch(page, /verifyEmailWithToken/);
   assert.doesNotMatch(page, /prismaEmailVerificationStore/);
   assert.doesNotMatch(page, /activateClaimedTrialAfterVerification/);
-  assert.match(page, /<VerifyEmailConfirmation token=\{token\}/);
+  assert.match(page, /<VerifyEmailConfirmation/);
+  assert.match(page, /token=\{token\}/);
+  assert.match(page, /callbackUrl=\{callbackUrl\}/);
   assert.match(confirmation, /<form[\s\S]*onSubmit=\{confirmEmail\}/);
   assert.match(confirmation, /method:\s*"POST"/);
   assert.match(confirmation, /JSON\.stringify\(\{ token \}\)/);
@@ -441,7 +444,7 @@ test("verify-email POST keeps successful verification recoverable when trial act
     "utf8",
   );
   assert.match(confirmation, /trialActivationNeedsRetry/);
-  assert.match(confirmation, /"\/try\/activate"/);
+  assert.match(confirmation, /getEmailVerificationSuccessHref/);
 });
 
 test("verify-email POST rejects expired tokens without verification or trial activation", async () => {
@@ -583,6 +586,20 @@ test("parseGenerationApiError handles email_verification_required", () => {
 test("resend_verification rate limit policy is documented", () => {
   assert.equal(authRateLimitPolicies.resend_verification.account?.maxAttempts, 3);
   assert.equal(authRateLimitPolicies.resend_verification.ip.maxAttempts, 10);
+});
+
+test("verification email URL can carry a safe callback without moving the token", () => {
+  const url = getEmailVerificationUrl(
+    "example-token-value",
+    "https://www.creatornivo.com",
+    "/generate?template=linkedin-post",
+  );
+  const parsed = new URL(url);
+  assert.equal(parsed.searchParams.get("token"), "example-token-value");
+  assert.equal(
+    parsed.searchParams.get("callbackUrl"),
+    "/generate?template=linkedin-post",
+  );
 });
 
 test("verification email content includes confirm CTA without raw secrets", () => {

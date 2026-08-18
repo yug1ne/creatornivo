@@ -1,5 +1,6 @@
 import { createHash, randomBytes } from "node:crypto";
 
+import { getSafeCallbackUrl } from "@/lib/auth/callback-url";
 import { getSafeEmailHash, normalizeEmail } from "@/lib/auth/credentials";
 import { getAppBaseUrl } from "@/lib/email/app-url";
 
@@ -73,11 +74,30 @@ export function generateEmailVerificationToken(): string {
   return randomBytes(32).toString("base64url");
 }
 
-export function getEmailVerificationUrl(token: string, baseUrl?: string): string {
+export function getEmailVerificationUrl(
+  token: string,
+  baseUrl?: string,
+  callbackUrl?: string | null,
+): string {
   const root = (baseUrl ?? getAppBaseUrl()).replace(/\/$/, "");
   const url = new URL("/verify-email", root);
   url.searchParams.set("token", token);
+  const safeCallback = getSafeCallbackUrl(callbackUrl, "");
+  if (safeCallback) {
+    url.searchParams.set("callbackUrl", safeCallback);
+  }
   return url.toString();
+}
+
+/** After a successful confirm, honor trial retry first, then a safe callback. */
+export function getEmailVerificationSuccessHref(input: {
+  trialActivationNeedsRetry?: boolean;
+  callbackUrl?: string | null;
+}): string {
+  if (input.trialActivationNeedsRetry) {
+    return "/try/activate";
+  }
+  return getSafeCallbackUrl(input.callbackUrl, "/generate");
 }
 
 export function isEmailVerified(

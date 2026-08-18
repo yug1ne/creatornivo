@@ -24,15 +24,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: publicAbsoluteUrl(path),
       lastModified,
       changeFrequency:
-        path === "/" || path === "/guides" || path === "/pricing"
+        path === "/" ||
+        path === "/guides" ||
+        path === "/pricing" ||
+        path === "/tools"
           ? "weekly"
           : "monthly",
       priority:
         path === "/"
           ? 1
-          : path === "/guides" || path === "/pricing"
+          : path === "/guides" || path === "/pricing" || path === "/tools"
             ? 0.8
-            : path.startsWith("/guides/")
+            : path.startsWith("/guides/") || path.startsWith("/tools/")
               ? 0.7
               : 0.5,
     };

@@ -7,6 +7,8 @@ import { pricingPlans } from "../src/config/pricing-display";
 const publicCopyFiles = [
   "src/app/(public)/pricing/page.tsx",
   "src/app/(protected)/templates/page.tsx",
+  "src/app/(public)/tools/page.tsx",
+  "src/app/(public)/tools/[slug]/page.tsx",
   "src/components/landing/early-access-banner.tsx",
   "src/components/landing/explore-templates-section.tsx",
   "src/components/landing/hero-section.tsx",
@@ -17,9 +19,11 @@ const publicCopyFiles = [
   "src/components/pricing/pro-plan-pricing.tsx",
   "src/components/pricing/request-early-access-cta.tsx",
   "src/components/pricing/upgrade-button.tsx",
+  "src/components/tools/tool-landing.tsx",
   "src/config/early-access.ts",
   "src/config/featured-templates.ts",
   "src/config/pricing-display.ts",
+  "src/config/public-tools.ts",
 ] as const;
 
 function readPublicCopy(): string {

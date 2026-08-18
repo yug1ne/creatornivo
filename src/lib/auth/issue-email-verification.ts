@@ -12,6 +12,7 @@ import { sendEmailVerificationEmail } from "@/lib/email/send-email-verification"
 export async function issueAndSendEmailVerification(input: {
   email: string;
   name: string | null;
+  callbackUrl?: string | null;
   store?: EmailVerificationStore;
   sendEmail?: typeof sendEmailVerificationEmail;
   now?: () => Date;
@@ -30,6 +31,7 @@ export async function issueAndSendEmailVerification(input: {
       email: issued.email,
       name: input.name,
       plainToken: issued.plainToken,
+      callbackUrl: input.callbackUrl,
     });
     return { delivered };
   } catch (error) {

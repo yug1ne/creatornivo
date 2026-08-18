@@ -8,7 +8,10 @@ import { GoogleSignInButton } from "@/components/auth/google-sign-in-button";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
-import { getSafeCallbackUrl } from "@/lib/auth/callback-url";
+import {
+  getOptionalSafeCallbackUrl,
+  getSafeCallbackUrl,
+} from "@/lib/auth/callback-url";
 import { getOAuthErrorMessage } from "@/lib/auth/google";
 
 type RegisterFormProps = {
@@ -18,10 +21,12 @@ type RegisterFormProps = {
 export function RegisterForm({ googleEnabled = false }: RegisterFormProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const requestedCallbackUrl = searchParams.get("callbackUrl");
   const callbackUrl = getSafeCallbackUrl(
-    searchParams.get("callbackUrl"),
+    requestedCallbackUrl,
     "/dashboard?onboarding=start",
   );
+  const emailCallbackUrl = getOptionalSafeCallbackUrl(requestedCallbackUrl);
   const oauthError = getOAuthErrorMessage(searchParams.get("error"));
 
   const [name, setName] = useState("");
@@ -38,7 +43,12 @@ export function RegisterForm({ googleEnabled = false }: RegisterFormProps) {
     const response = await fetch("/api/auth/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email, password }),
+      body: JSON.stringify({
+        name,
+        email,
+        password,
+        callbackUrl: emailCallbackUrl,
+      }),
     });
 
     const data = await response.json();
