@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
 import { SignOutButton } from "@/components/auth/sign-out-button";
+import { Logo } from "@/components/logo";
 import { CountBadge } from "@/components/ui/count-badge";
 import { siteConfig } from "@/config/site";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
@@ -153,14 +154,12 @@ export function Sidebar({
         )}
       >
         <div className="mb-8 flex items-center justify-between gap-2">
-          <Link
+          <Logo
             href="/"
             onClick={close}
-            aria-label={`${siteConfig.name} home`}
-            className="min-w-0 text-lg font-bold tracking-tight text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-          >
-            {siteConfig.name}
-          </Link>
+            ariaLabel={`${siteConfig.name} home`}
+            className="h-8 max-w-[min(10.5rem,calc(100%-2.5rem))] overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          />
           <button
             type="button"
             onClick={close}

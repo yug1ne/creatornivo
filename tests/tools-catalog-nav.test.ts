@@ -67,12 +67,17 @@ test("search matches title, platform, and description without changing URLs", ()
 });
 
 test("protected sidebar logo and Back to website both go to /", () => {
+  assert.match(sidebar, /<Logo/);
   assert.match(sidebar, /href="\/"/);
-  assert.match(sidebar, /aria-label=\{`\$\{siteConfig\.name\} home`\}/);
+  assert.match(sidebar, /ariaLabel=\{`\$\{siteConfig\.name\} home`\}/);
   assert.match(sidebar, />\s*Back to website\s*</);
   assert.doesNotMatch(
     sidebar,
     /href="\/dashboard"[\s\S]{0,80}\{siteConfig\.name\}/,
+  );
+  assert.doesNotMatch(
+    sidebar,
+    /text-lg font-bold tracking-tight[\s\S]{0,40}\{siteConfig\.name\}/,
   );
 });
 

@@ -8,6 +8,7 @@ interface LogoProps {
   className?: string;
   href?: string;
   onClick?: () => void;
+  ariaLabel?: string;
 }
 
 /**
@@ -20,7 +21,12 @@ interface LogoProps {
  * Size is controlled on the Link (`h-10` by default). Mark spans use h-full
  * so `className="h-12"` on <Logo /> scales the graphic.
  */
-export function Logo({ className, href = "/", onClick }: LogoProps) {
+export function Logo({
+  className,
+  href = "/",
+  onClick,
+  ariaLabel,
+}: LogoProps) {
   const markClassName = cn(
     // 360×105 viewBox → ~3.43∶1; at h-10 (~2.5rem) width ≈ 8.6rem
     "block h-full w-auto aspect-[360/105] bg-current",
@@ -41,7 +47,7 @@ export function Logo({ className, href = "/", onClick }: LogoProps) {
     <Link
       href={href}
       onClick={onClick}
-      aria-label={siteConfig.name}
+      aria-label={ariaLabel ?? siteConfig.name}
       className={cn(
         "inline-flex h-10 shrink-0 items-center text-foreground",
         className,
