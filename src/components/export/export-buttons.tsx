@@ -16,6 +16,7 @@ interface ExportButtonsProps {
   promptId?: string;
   size?: "sm" | "md";
   contentValidationMessage?: string | null;
+  hideUpgradeCtas?: boolean;
 }
 
 const EXPORT_OPTIONS: {
@@ -77,6 +78,7 @@ export function ExportButtons({
   promptId,
   size = "sm",
   contentValidationMessage,
+  hideUpgradeCtas = false,
 }: ExportButtonsProps) {
   const [isExporting, setIsExporting] = useState<ExportFormat | null>(null);
   const [message, setMessage] = useState("");
@@ -158,6 +160,20 @@ export function ExportButtons({
                 ? "Downloading..."
                 : `Export ${option.label}`}
             </button>
+          ) : hideUpgradeCtas ? (
+            <button
+              key={option.format}
+              type="button"
+              disabled
+              title={`${option.title} — unavailable for admin accounts`}
+              className={cn(lockedButtonClass, "cursor-not-allowed")}
+            >
+              <LockIcon />
+              <span>Export {option.label}</span>
+              <Badge variant="pro" className="px-1.5 py-0 text-[10px]">
+                Pro
+              </Badge>
+            </button>
           ) : (
             <Link
               key={option.format}
@@ -178,7 +194,7 @@ export function ExportButtons({
       {message && (
         <p className="mt-2 text-xs text-warning">
           {message}{" "}
-          {!canExport && (
+          {!canExport && !hideUpgradeCtas && (
             <Link href="/pricing" className="font-medium underline">
               Upgrade to Pro
             </Link>

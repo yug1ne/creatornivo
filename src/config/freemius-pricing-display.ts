@@ -1,11 +1,11 @@
 /**
  * Public Freemius pricing display copy (when PUBLIC_CHECKOUT_ENABLED === "true").
  * Split by surface so founding offer wording is not repeated.
- * Does not invent live seat counters. Founding CTA auto-applies FOUNDING20.
+ * Does not invent live seat counters. The server owns founding eligibility.
  */
 
 /**
- * When true, public Pro CTAs prioritize founding monthly ($4.90, auto coupon)
+ * When true, eligible first-time buyers see founding monthly ($4.90)
  * + annual ($99). Regular monthly $9.90 is text-only (no separate buy button).
  * Flip to false later to show Monthly $9.90 + Annual $99 as the two CTAs.
  */
@@ -17,8 +17,6 @@ export const freemiusPricingDisplay = {
   annualPrice: "$99",
   annualPeriodLabel: "year",
   foundingMonthlyPrice: "$4.90",
-  /** Server coupon id auto-applied only by the Founding CTA. */
-  foundingCouponCode: "FOUNDING20",
 
   /** Top of pricing section only (first-20 audience). */
   sectionTopLine: "Founding offer for the first 20 customers.",

@@ -60,6 +60,7 @@ interface GenerateWorkspaceProps {
   userPlan: Plan;
   canExport: boolean;
   maxSavedPrompts?: number;
+  hideUpgradeCtas?: boolean;
   /** Server-loaded flag — unverified users may browse but cannot generate. */
   emailVerified?: boolean;
   usage: UsageStats;
@@ -180,6 +181,7 @@ export function GenerateWorkspace({
   userPlan,
   canExport,
   maxSavedPrompts,
+  hideUpgradeCtas = false,
   emailVerified = true,
   usage: initialUsage,
 }: GenerateWorkspaceProps) {
@@ -583,6 +585,7 @@ export function GenerateWorkspace({
         maxSavedPrompts={savedLimit}
         quotaBasis={generationUsage.quotaBasis}
         accessMode={generationUsage.accessMode}
+        hideUpgradeCtas={hideUpgradeCtas}
       />
 
       <div className="grid gap-6 lg:grid-cols-[300px_1fr]">
@@ -627,6 +630,7 @@ export function GenerateWorkspace({
                 canGenerateQuota={canGenerateQuota}
                 isStreaming={isStreaming}
                 generationUsage={generationUsage}
+                hideUpgradeCtas={hideUpgradeCtas}
                 onGenerate={handleGenerate}
                 onFormEdit={handleFormEdit}
               />
@@ -665,7 +669,7 @@ export function GenerateWorkspace({
                         </Button>
                       )}
                   </div>
-                  {error.showUpgradeLink && (
+                  {error.showUpgradeLink && !hideUpgradeCtas && (
                     <Link
                       href="/pricing"
                       className="mt-2 inline-block font-medium underline hover:no-underline"
@@ -687,6 +691,7 @@ export function GenerateWorkspace({
                   saveLimitMessage={saveLimitMessage}
                   savedPromptId={savedPromptId}
                   outputValidationMessage={outputValidationMessage}
+                  hideUpgradeCtas={hideUpgradeCtas}
                   onSave={handleSave}
                 />
               )}

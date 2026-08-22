@@ -3,8 +3,8 @@
  *
  * Server-only secrets must never be imported into client components.
  * Public checkout stays disabled unless PUBLIC_CHECKOUT_ENABLED === "true".
- * Phase 4: restricted checkout may allow explicitly allowlisted emails
- * when FREEMIUS_RESTRICTED_CHECKOUT_ENABLED === "true".
+ * Phase 4: restricted checkout may allow explicitly allowlisted non-admin
+ * emails when FREEMIUS_RESTRICTED_CHECKOUT_ENABLED === "true".
  *
  * Paid Freemius Pro periods are provider-based (currentPeriodStart/End from
  * Freemius payloads). Do not assume calendar-month resets on the 1st.
@@ -34,7 +34,7 @@ export interface FreemiusEnvSnapshot {
   restrictedCheckoutEnabledRaw: string;
   /** FREEMIUS_RESTRICTED_CHECKOUT_EMAILS raw value */
   restrictedCheckoutEmailsRaw: string;
-  /** FREEMIUS_RESTRICTED_CHECKOUT_ADMIN_ONLY raw value */
+  /** Legacy visibility only. Admin checkout is always denied. */
   restrictedCheckoutAdminOnlyRaw: string;
 }
 
@@ -92,8 +92,8 @@ export function isRestrictedCheckoutEnabled(
 }
 
 /**
- * When exactly "true", users who are admins may use restricted checkout
- * even if their email is not listed in FREEMIUS_RESTRICTED_CHECKOUT_EMAILS.
+ * Legacy configuration visibility. Admin checkout is always denied by
+ * canUseRestrictedFreemiusCheckout and resolveFreemiusCheckoutAccess.
  */
 export function isRestrictedCheckoutAdminOnly(
   env: NodeJS.ProcessEnv = process.env,
@@ -127,8 +127,9 @@ export function parseRestrictedCheckoutEmails(
 /**
  * Whether this user may use restricted Freemius checkout (Phase 4).
  * Requires FREEMIUS_RESTRICTED_CHECKOUT_ENABLED === "true" and either:
- * - email is in FREEMIUS_RESTRICTED_CHECKOUT_EMAILS (case-insensitive), or
- * - FREEMIUS_RESTRICTED_CHECKOUT_ADMIN_ONLY === "true" and isAdmin is true.
+ * - email is in FREEMIUS_RESTRICTED_CHECKOUT_EMAILS (case-insensitive).
+ * Admin users are never eligible, including when the legacy admin-only flag
+ * remains configured in an environment.
  *
  * Independent of PUBLIC_CHECKOUT_ENABLED. Does not expose secrets.
  */
@@ -137,6 +138,7 @@ export function canUseRestrictedFreemiusCheckout(
   isAdmin?: boolean,
   env: NodeJS.ProcessEnv = process.env,
 ): boolean {
+  if (isAdmin === true) return false;
   if (!isRestrictedCheckoutEnabled(env)) return false;
 
   const email =
@@ -145,10 +147,6 @@ export function canUseRestrictedFreemiusCheckout(
   if (email) {
     const allowlist = parseRestrictedCheckoutEmails(env);
     if (allowlist.includes(email)) return true;
-  }
-
-  if (isRestrictedCheckoutAdminOnly(env) && isAdmin === true) {
-    return true;
   }
 
   return false;
@@ -167,6 +165,7 @@ export function resolveFreemiusCheckoutAccess(
   },
   env: NodeJS.ProcessEnv = process.env,
 ): FreemiusCheckoutAccessMode | null {
+  if (user.isAdmin === true) return null;
   if (isPublicCheckoutEnabled(env)) return "public";
   if (canUseRestrictedFreemiusCheckout(user.email, user.isAdmin, env)) {
     return "restricted";

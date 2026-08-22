@@ -44,6 +44,7 @@ export type GenerateFormSectionProps = {
   canGenerateQuota: boolean;
   isStreaming: boolean;
   generationUsage: GenerationUsageSnapshot;
+  hideUpgradeCtas?: boolean;
   /** Called with a snapshot of current field values (identical shape to prior workspace). */
   onGenerate: (values: Record<string, string>) => void;
   /** Clear in-flight request id when the user edits fields. */
@@ -62,6 +63,7 @@ export const GenerateFormSection = memo(function GenerateFormSection({
   canGenerateQuota,
   isStreaming,
   generationUsage,
+  hideUpgradeCtas = false,
   onGenerate,
   onFormEdit,
 }: GenerateFormSectionProps) {
@@ -74,6 +76,7 @@ export const GenerateFormSection = memo(function GenerateFormSection({
 
   // Parent remounts this section on template/reset; keep values aligned if version bumps without remount.
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- reset is intentionally keyed by the parent-owned version
     setValues(buildDefaultValues(selected.variables));
     // eslint-disable-next-line react-hooks/exhaustive-deps -- intentionally keyed by id + reset version
   }, [selected.id, formResetVersion]);
@@ -238,7 +241,8 @@ export const GenerateFormSection = memo(function GenerateFormSection({
             Confirm your email to generate content.
           </span>
         ) : (
-          !canGenerateQuota && (
+          !canGenerateQuota &&
+          !hideUpgradeCtas && (
             <Link
               href="/pricing"
               className="text-sm font-medium text-primary hover:underline"

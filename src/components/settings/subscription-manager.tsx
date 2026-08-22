@@ -13,9 +13,12 @@ import {
 import { PLANS, type Plan } from "@/config/plans";
 import type { AppSumoTier } from "@/config/appsumo";
 import {
+  ADMIN_CHECKOUT_BLOCKED_MESSAGE,
   buildFreemiusCheckoutRequestBody,
+  isAdminCheckoutSessionUser,
   resolveFreemiusCheckoutRedirect,
   type FreemiusCheckoutApiResponse,
+  useFreemiusCheckoutEligibility,
 } from "@/components/pricing/freemius-checkout-cta";
 import { buttonVariants } from "@/components/ui/button";
 import { formatHumanUtcDate } from "@/lib/usage/quota-copy";
@@ -225,6 +228,14 @@ function SubscriptionManagerContent({
 
   const isPro =
     plan === PLANS.PRO || session?.user?.plan === PLANS.PRO;
+  const adminCheckoutBlocked = isAdminCheckoutSessionUser(session?.user);
+  const { eligibility, loading: checkoutEligibilityLoading } =
+    useFreemiusCheckoutEligibility(
+      Boolean(publicCheckoutEnabled && !isPro && !adminCheckoutBlocked),
+    );
+  const foundingCheckoutAvailable =
+    freemiusFoundingOfferActive &&
+    eligibility?.foundingEligible === true;
   const showAppSumoLifetime = shouldShowAppSumoLifetimePresentation({
     isPro,
     appSumoTier,
@@ -339,7 +350,7 @@ function SubscriptionManagerContent({
     setLoadingAction(options?.founding ? "founding" : interval);
     setMessage("");
     try {
-      // Same body helper as public pricing CTAs (founding monthly auto-applies coupon).
+      // Same body helper as public pricing CTAs; the server decides coupon eligibility.
       const body = buildFreemiusCheckoutRequestBody(interval, options);
       const response = await fetch("/api/freemius/checkout", {
         method: "POST",
@@ -457,6 +468,12 @@ function SubscriptionManagerContent({
         <p className={bannerClass}>{message || postCheckoutMessage}</p>
       )}
 
+      {!isPro && adminCheckoutBlocked ? (
+        <p className="mt-3 text-sm text-muted-foreground">
+          {ADMIN_CHECKOUT_BLOCKED_MESSAGE}
+        </p>
+      ) : null}
+
       {showAppSumoLifetime ? (
         <div className="mt-4 rounded-lg border border-border bg-muted/30 px-3 py-3 sm:px-4">
           <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
@@ -470,8 +487,9 @@ function SubscriptionManagerContent({
 
       {!showAppSumoLifetime &&
         !isPro &&
+        !adminCheckoutBlocked &&
         publicCheckoutEnabled &&
-        freemiusFoundingOfferActive && (
+        foundingCheckoutAvailable && (
         <div
           className="mt-4 overflow-hidden rounded-lg border border-border bg-muted/30"
           data-settings-billing-options="true"
@@ -513,8 +531,9 @@ function SubscriptionManagerContent({
 
         {!showAppSumoLifetime &&
           !isPro &&
+          !adminCheckoutBlocked &&
           publicCheckoutEnabled &&
-          freemiusFoundingOfferActive && (
+          foundingCheckoutAvailable && (
           <>
             <button
               type="button"
@@ -550,8 +569,11 @@ function SubscriptionManagerContent({
 
         {!showAppSumoLifetime &&
           !isPro &&
+          !adminCheckoutBlocked &&
           publicCheckoutEnabled &&
-          !freemiusFoundingOfferActive && (
+          !checkoutEligibilityLoading &&
+          eligibility?.canCheckout === true &&
+          !foundingCheckoutAvailable && (
           <>
             <button
               type="button"
@@ -585,6 +607,7 @@ function SubscriptionManagerContent({
 
         {!showAppSumoLifetime &&
           !isPro &&
+          !adminCheckoutBlocked &&
           !publicCheckoutEnabled &&
           isBillingConfigured && (
           <Link href="/pricing" className={buttonVariants({ size: "sm" })}>
@@ -594,6 +617,7 @@ function SubscriptionManagerContent({
 
         {!showAppSumoLifetime &&
           !isPro &&
+          !adminCheckoutBlocked &&
           !publicCheckoutEnabled &&
           !isBillingConfigured && (
           <Link href="/pricing" className={buttonVariants({ size: "sm" })}>

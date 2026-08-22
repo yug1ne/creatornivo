@@ -29,6 +29,7 @@ interface GeneratePageProps {
 
 export default async function GeneratePage({ searchParams }: GeneratePageProps) {
   const session = await requireSession();
+  const isAdmin = isAdminSession(session);
   const { template: templateSlug } = await searchParams;
 
   const user = await prisma.user.findUnique({
@@ -46,7 +47,7 @@ export default async function GeneratePage({ searchParams }: GeneratePageProps) 
   }
 
   const access = resolveUserAccess(user, {
-    isAdmin: isAdminSession(session),
+    isAdmin,
     activeAppSumoCodeCount: await countActiveAppSumoRedemptions(session.id),
   });
   const serverSession = { ...session, plan: user.plan };
@@ -97,6 +98,7 @@ export default async function GeneratePage({ searchParams }: GeneratePageProps) 
           userPlan={user.plan}
           canExport={access.canExport}
           maxSavedPrompts={access.maxSavedPrompts}
+          hideUpgradeCtas={isAdmin}
           emailVerified={emailVerified}
           usage={{
             ...usageSnapshot,

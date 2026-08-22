@@ -13,7 +13,9 @@ import {
 } from "../src/config/freemius-pricing-display";
 import { isPublicCheckoutEnabled } from "../src/config/freemius";
 import {
+  ADMIN_CHECKOUT_BLOCKED_MESSAGE,
   buildFreemiusCheckoutRequestBody,
+  isAdminCheckoutSessionUser,
   resolveFreemiusCheckoutRedirect,
 } from "../src/components/pricing/freemius-checkout-cta";
 import {
@@ -227,7 +229,7 @@ test("enabled founding copy is split by surface without duplication noise", () =
   assert.doesNotMatch(top + card + ctas, /spots? left|Use code FOUNDING20/i);
 });
 
-test("checkout client builds founding coupon only for founding; annual has no coupon", () => {
+test("checkout client requests founding eligibility without exposing a coupon", () => {
   assert.deepEqual(buildFreemiusCheckoutRequestBody("monthly"), {
     interval: "monthly",
   });
@@ -236,7 +238,7 @@ test("checkout client builds founding coupon only for founding; annual has no co
   });
   assert.deepEqual(
     buildFreemiusCheckoutRequestBody("monthly", { founding: true }),
-    { interval: "monthly", coupon: "FOUNDING20" },
+    { interval: "monthly", founding: true },
   );
   assert.equal(
     "coupon" in buildFreemiusCheckoutRequestBody("monthly"),
@@ -244,6 +246,11 @@ test("checkout client builds founding coupon only for founding; annual has no co
   );
   assert.equal(
     "coupon" in buildFreemiusCheckoutRequestBody("annual"),
+    false,
+  );
+  assert.equal(
+    "coupon" in
+      buildFreemiusCheckoutRequestBody("monthly", { founding: true }),
     false,
   );
   assert.deepEqual(
@@ -255,8 +262,33 @@ test("checkout client builds founding coupon only for founding; annual has no co
   assert.match(checkoutCta, /fetch\("\/api\/freemius\/checkout"/);
   assert.match(checkoutCta, /startCheckout\("founding", "monthly", true\)/);
   assert.match(checkoutCta, /startCheckout\("annual", "annual"\)/);
+  assert.doesNotMatch(checkoutCta, /foundingCouponCode/);
   assert.doesNotMatch(checkoutCta, /plan:\s*["']pro["']/);
   assert.doesNotMatch(checkoutCta, /user\.update|User\.plan/);
+});
+
+test("admin checkout CTAs are blocked without changing the plan", () => {
+  assert.equal(isAdminCheckoutSessionUser({ role: "admin" }), true);
+  assert.equal(isAdminCheckoutSessionUser({ isAdmin: true }), true);
+  assert.equal(isAdminCheckoutSessionUser({ role: "user" }), false);
+  assert.match(ADMIN_CHECKOUT_BLOCKED_MESSAGE, /cannot purchase or upgrade/i);
+
+  const checkoutCta = read("src/components/pricing/freemius-checkout-cta.tsx");
+  const requestCta = read("src/components/pricing/request-early-access-cta.tsx");
+  const settings = read("src/components/settings/subscription-manager.tsx");
+  const protectedLayout = read("src/app/(protected)/layout.tsx");
+  const dashboard = read("src/app/(protected)/dashboard/page.tsx");
+  const generatePage = read("src/app/(protected)/generate/page.tsx");
+  const checkoutRoute = read("src/app/api/freemius/checkout/route.ts");
+
+  assert.match(checkoutCta, /isAdminCheckoutSessionUser/);
+  assert.match(requestCta, /isAdminCheckoutSessionUser/);
+  assert.match(settings, /adminCheckoutBlocked/);
+  assert.match(protectedLayout, /showUpgradeCard\s*=\s*!isAdmin/);
+  assert.match(dashboard, /!isAdmin/);
+  assert.match(generatePage, /hideUpgradeCtas=\{isAdmin\}/);
+  assert.match(checkoutRoute, /admin_checkout_forbidden/);
+  assert.doesNotMatch(checkoutRoute, /plan:\s*["']pro["']/);
 });
 
 test("checkout redirect helper never treats disabled as success", () => {
@@ -362,14 +394,14 @@ test("settings subscription shows founding offer copy and founding CTA when acti
     /buildFreemiusCheckoutRequestBody\(interval,\s*options\)/,
   );
 
-  // When founding is active, Settings must not prefer the regular monthly CTA label.
+  // Server eligibility, not only global copy, selects the founding CTA.
   assert.match(
     manager,
-    /freemiusFoundingOfferActive && \([\s\S]*foundingCtaLabel/,
+    /foundingCheckoutAvailable && \([\s\S]*foundingCtaLabel/,
   );
   assert.match(
     manager,
-    /!freemiusFoundingOfferActive && \([\s\S]*monthlyCtaLabel/,
+    /!foundingCheckoutAvailable && \([\s\S]*monthlyCtaLabel/,
   );
 
   // Config values match product presentation.

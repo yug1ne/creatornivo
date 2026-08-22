@@ -7,9 +7,104 @@ import { prisma } from "@/lib/db";
 import {
   createFreemiusCheckoutSession,
   FreemiusCheckoutError,
-  normalizeOptionalCoupon,
+  getFreemiusCheckoutBlock,
+  hasPreviousFreemiusPurchase,
   parseFreemiusCheckoutInterval,
+  resolveFreemiusFoundingCoupon,
 } from "@/lib/freemius/checkout-service";
+
+async function loadCheckoutUser(userId: string) {
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    select: {
+      id: true,
+      email: true,
+      name: true,
+      plan: true,
+      role: true,
+      subscription: {
+        select: {
+          provider: true,
+          status: true,
+          cancelAtPeriodEnd: true,
+          currentPeriodEnd: true,
+          freemiusUserId: true,
+          freemiusLicenseId: true,
+          freemiusSubscriptionId: true,
+        },
+      },
+    },
+  });
+
+  if (!user) return null;
+
+  const completedCheckoutIntentCount =
+    await prisma.freemiusCheckoutIntent.count({
+      where: { userId: user.id, status: "completed" },
+    });
+
+  return {
+    user,
+    hasPreviousPurchase: hasPreviousFreemiusPurchase({
+      subscription: user.subscription,
+      completedCheckoutIntentCount,
+    }),
+  };
+}
+
+function adminCheckoutForbiddenResponse() {
+  return NextResponse.json(
+    {
+      error: "Admin accounts cannot purchase or upgrade to Pro.",
+      code: "admin_checkout_forbidden",
+    },
+    { status: 403 },
+  );
+}
+
+/** Read-only UI eligibility; POST independently re-checks every condition. */
+export async function GET() {
+  let session;
+  try {
+    session = await requireSession();
+  } catch {
+    return NextResponse.json(
+      { error: "Unauthorized", code: "unauthorized" },
+      { status: 401 },
+    );
+  }
+
+  const context = await loadCheckoutUser(session.id);
+  if (!context) {
+    return NextResponse.json(
+      { error: "User not found", code: "user_not_found" },
+      { status: 404 },
+    );
+  }
+
+  const isAdmin = isAdminSession(context.user);
+  const accessMode = resolveFreemiusCheckoutAccess({
+    email: context.user.email,
+    isAdmin,
+  });
+  const block = getFreemiusCheckoutBlock(context.user);
+  const canCheckout = Boolean(accessMode && !isAdmin && !block);
+  const foundingEligible =
+    canCheckout &&
+    resolveFreemiusFoundingCoupon({
+      interval: "monthly",
+      foundingRequested: true,
+      hasPreviousPurchase: context.hasPreviousPurchase,
+    }) !== null;
+
+  return NextResponse.json({
+    canCheckout,
+    foundingEligible,
+    reason: isAdmin
+      ? "admin_checkout_forbidden"
+      : block?.code ?? (!accessMode ? "checkout_disabled" : null),
+  });
+}
 
 /**
  * Freemius checkout session creator (Phase 3 + Phase 4 restricted testing).
@@ -29,7 +124,11 @@ export async function POST(request: Request) {
     );
   }
 
-  const isAdmin = isAdminSession(session);
+  if (isAdminSession(session)) {
+    return adminCheckoutForbiddenResponse();
+  }
+
+  const isAdmin = false;
   const accessMode = resolveFreemiusCheckoutAccess({
     email: session.email,
     isAdmin,
@@ -69,32 +168,22 @@ export async function POST(request: Request) {
     );
   }
 
-  const coupon = normalizeOptionalCoupon(record.coupon);
+  const foundingRequested = record.founding === true;
 
   try {
-    const user = await prisma.user.findUnique({
-      where: { id: session.id },
-      select: {
-        id: true,
-        email: true,
-        name: true,
-        plan: true,
-        subscription: {
-          select: {
-            provider: true,
-            status: true,
-            cancelAtPeriodEnd: true,
-            currentPeriodEnd: true,
-          },
-        },
-      },
-    });
+    const context = await loadCheckoutUser(session.id);
+    const user = context?.user ?? null;
 
-    if (!user) {
+    if (!user || !context) {
       return NextResponse.json(
         { error: "User not found", code: "user_not_found" },
         { status: 404 },
       );
+    }
+
+    const currentIsAdmin = isAdminSession(user);
+    if (currentIsAdmin) {
+      return adminCheckoutForbiddenResponse();
     }
 
     // Snapshot plan before checkout; never mutate plan here.
@@ -107,8 +196,9 @@ export async function POST(request: Request) {
       plan: user.plan,
       subscription: user.subscription,
       interval,
-      coupon,
-      isAdmin,
+      foundingRequested,
+      hasPreviousPurchase: context.hasPreviousPurchase,
+      isAdmin: currentIsAdmin,
     });
 
     const planAfter = await prisma.user.findUnique({
@@ -132,6 +222,7 @@ export async function POST(request: Request) {
       billingCycle: sessionResult.billingCycle,
       // pricingId is non-secret allowlisted id; useful for support/debug
       pricingId: sessionResult.pricingId,
+      foundingApplied: sessionResult.foundingApplied,
       mode: sessionResult.mode,
     });
   } catch (error) {

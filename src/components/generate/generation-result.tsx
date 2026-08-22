@@ -20,6 +20,7 @@ interface GenerationResultProps {
   onSave: () => Promise<{ error?: string; id?: string }>;
   savedPromptId?: string | null;
   outputValidationMessage?: string | null;
+  hideUpgradeCtas?: boolean;
 }
 
 function isSaveLimitError(message: string): boolean {
@@ -37,6 +38,7 @@ export function GenerationResult({
   onSave,
   savedPromptId: initialSavedId,
   outputValidationMessage,
+  hideUpgradeCtas = false,
 }: GenerationResultProps) {
   const [copied, setCopied] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
@@ -149,6 +151,7 @@ export function GenerationResult({
               title={exportTitle}
               content={content}
               contentValidationMessage={outputValidationMessage}
+              hideUpgradeCtas={hideUpgradeCtas}
             />
           </div>
         )}

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useSession } from "next-auth/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
   freemiusFoundingOfferActive,
@@ -21,6 +21,15 @@ export type FreemiusCheckoutApiResponse = {
   code?: string;
 };
 
+export type FreemiusCheckoutEligibility = {
+  canCheckout: boolean;
+  foundingEligible: boolean;
+  reason: string | null;
+};
+
+export const ADMIN_CHECKOUT_BLOCKED_MESSAGE =
+  "Admin accounts cannot purchase or upgrade to Pro.";
+
 /**
  * Pure helper for tests and client: build POST body for Freemius checkout.
  * Never mutates plan. Coupon only when founding offer is selected.
@@ -28,14 +37,71 @@ export type FreemiusCheckoutApiResponse = {
 export function buildFreemiusCheckoutRequestBody(
   interval: CheckoutInterval,
   options?: { founding?: boolean },
-): { interval: CheckoutInterval; coupon?: string } {
+): { interval: CheckoutInterval; founding?: true } {
   if (options?.founding && interval === "monthly") {
     return {
       interval: "monthly",
-      coupon: freemiusPricingDisplay.foundingCouponCode,
+      founding: true,
     };
   }
   return { interval };
+}
+
+export function isAdminCheckoutSessionUser(
+  user:
+    | { role?: string | null; isAdmin?: boolean | null }
+    | null
+    | undefined,
+): boolean {
+  return user?.role === "admin" || user?.isAdmin === true;
+}
+
+export function useFreemiusCheckoutEligibility(enabled: boolean) {
+  const [eligibility, setEligibility] =
+    useState<FreemiusCheckoutEligibility | null>(null);
+
+  useEffect(() => {
+    if (!enabled) return;
+
+    const controller = new AbortController();
+    fetch("/api/freemius/checkout", {
+      method: "GET",
+      cache: "no-store",
+      signal: controller.signal,
+    })
+      .then(async (response) => {
+        if (!response.ok) return null;
+        return (await response.json()) as FreemiusCheckoutEligibility;
+      })
+      .then((value) => {
+        if (!controller.signal.aborted) {
+          setEligibility(
+            value ?? {
+              canCheckout: false,
+              foundingEligible: false,
+              reason: "checkout_eligibility_unavailable",
+            },
+          );
+        }
+      })
+      .catch(() => {
+        if (!controller.signal.aborted) {
+          // Fail closed in UI; POST remains authoritative.
+          setEligibility({
+            canCheckout: false,
+            foundingEligible: false,
+            reason: "checkout_eligibility_unavailable",
+          });
+        }
+      });
+
+    return () => controller.abort();
+  }, [enabled]);
+
+  return {
+    eligibility: enabled ? eligibility : null,
+    loading: enabled && eligibility === null,
+  };
 }
 
 export function resolveFreemiusCheckoutRedirect(
@@ -80,8 +146,13 @@ export function FreemiusCheckoutCta({
   const [loading, setLoading] = useState<LoadingKey>(null);
   const [error, setError] = useState("");
 
+  const isAdmin = isAdminCheckoutSessionUser(session?.user);
+  const { eligibility, loading: eligibilityLoading } =
+    useFreemiusCheckoutEligibility(Boolean(session && !isAdmin));
   const foundingPrimary =
-    showFoundingOffer && freemiusFoundingOfferActive;
+    showFoundingOffer &&
+    freemiusFoundingOfferActive &&
+    eligibility?.foundingEligible === true;
 
   async function startCheckout(
     key: LoadingKey,
@@ -160,6 +231,36 @@ export function FreemiusCheckoutCta({
       >
         ✓ You have active Pro — manage billing
       </Link>
+    );
+  }
+
+  if (isAdmin || eligibility?.reason === "admin_checkout_forbidden") {
+    return (
+      <p className={cn("mt-6 text-center text-sm text-muted-foreground", className)}>
+        {ADMIN_CHECKOUT_BLOCKED_MESSAGE}
+      </p>
+    );
+  }
+
+  if (eligibilityLoading || !eligibility) {
+    return (
+      <div className={cn("mt-6", className)}>
+        <button
+          type="button"
+          disabled
+          className={buttonVariants({ className: "w-full opacity-60", size })}
+        >
+          Checking checkout eligibility...
+        </button>
+      </div>
+    );
+  }
+
+  if (!eligibility.canCheckout) {
+    return (
+      <p className={cn("mt-6 text-center text-sm text-muted-foreground", className)}>
+        Checkout is unavailable for this account.
+      </p>
     );
   }
 

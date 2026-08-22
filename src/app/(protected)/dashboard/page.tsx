@@ -13,6 +13,7 @@ import {
   isStaleSessionUsageError,
 } from "@/lib/auth/stale-session";
 import { requireSession } from "@/lib/auth/session";
+import { isAdminSession } from "@/lib/admin/is-admin-session";
 import { prisma } from "@/lib/db";
 import {
   getEffectiveUsageSnapshot,
@@ -25,6 +26,7 @@ export const dynamic = "force-dynamic";
 
 export default async function DashboardPage() {
   const session = await requireSession();
+  const isAdmin = isAdminSession(session);
 
   const access = await getUserAccessContext(session);
   if (!access) {
@@ -180,7 +182,7 @@ export default async function DashboardPage() {
         </Card>
       ) : null}
 
-      {(access.mode === "free" || access.mode === "trial") && (
+      {!isAdmin && (access.mode === "free" || access.mode === "trial") && (
         <Card className="mt-8 border-primary/20 bg-accent/30">
           <CardContent className="flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between">
             <div>

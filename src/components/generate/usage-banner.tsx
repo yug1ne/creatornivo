@@ -25,6 +25,7 @@ interface UsageBannerProps {
   savedCount: number;
   maxSavedPrompts: number;
   quotaBasis?: QuotaBasis;
+  hideUpgradeCtas?: boolean;
 }
 
 export const UsageBanner = memo(function UsageBanner({
@@ -38,6 +39,7 @@ export const UsageBanner = memo(function UsageBanner({
   maxSavedPrompts,
   quotaBasis,
   accessMode,
+  hideUpgradeCtas = false,
 }: UsageBannerProps) {
   const generationWarning = getGenerationLimitMessage(
     plan,
@@ -110,6 +112,7 @@ export const UsageBanner = memo(function UsageBanner({
         >
           {generationWarning}
           {isGenerationExhausted &&
+            !hideUpgradeCtas &&
             accessMode !== "appsumo_t1" &&
             accessMode !== "appsumo_t2" && (
             <Link

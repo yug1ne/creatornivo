@@ -1,3 +1,11 @@
+"use client";
+
+import { useSession } from "next-auth/react";
+
+import {
+  ADMIN_CHECKOUT_BLOCKED_MESSAGE,
+  isAdminCheckoutSessionUser,
+} from "@/components/pricing/freemius-checkout-cta";
 import { buttonVariants } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils/cn";
@@ -25,6 +33,16 @@ export function RequestEarlyAccessCta({
   className,
   size = "md",
 }: RequestEarlyAccessCtaProps) {
+  const { data: session } = useSession();
+
+  if (isAdminCheckoutSessionUser(session?.user)) {
+    return (
+      <p className={cn("mt-6 text-center text-sm text-muted-foreground", className)}>
+        {ADMIN_CHECKOUT_BLOCKED_MESSAGE}
+      </p>
+    );
+  }
+
   return (
     <div className={cn("mt-6", className)}>
       <a

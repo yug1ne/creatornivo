@@ -153,7 +153,7 @@ test("restricted checkout defaults off and parses allowlisted emails safely", ()
       FREEMIUS_RESTRICTED_CHECKOUT_ADMIN_ONLY: "true",
       FREEMIUS_RESTRICTED_CHECKOUT_EMAILS: "",
     }),
-    true,
+    false,
   );
 
   assert.equal(
@@ -171,6 +171,17 @@ test("restricted checkout defaults off and parses allowlisted emails safely", ()
     resolveFreemiusCheckoutAccess(
       { email: "a@example.com" },
       { PUBLIC_CHECKOUT_ENABLED: "false" },
+    ),
+    null,
+  );
+  assert.equal(
+    resolveFreemiusCheckoutAccess(
+      { email: "admin@example.com", isAdmin: true },
+      {
+        PUBLIC_CHECKOUT_ENABLED: "true",
+        FREEMIUS_RESTRICTED_CHECKOUT_ENABLED: "true",
+        FREEMIUS_RESTRICTED_CHECKOUT_ADMIN_ONLY: "true",
+      },
     ),
     null,
   );

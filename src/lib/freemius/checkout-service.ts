@@ -8,6 +8,7 @@ import {
   type FreemiusBillingInterval,
   type FreemiusCheckoutAccessMode,
 } from "@/config/freemius";
+import { freemiusFoundingOfferActive } from "@/config/freemius-pricing-display";
 import { siteConfig } from "@/config/site";
 import { prisma } from "@/lib/db";
 
@@ -17,7 +18,7 @@ export type FreemiusCheckoutIntervalInput = "monthly" | "annual";
 
 export type FreemiusCheckoutRequestBody = {
   interval?: unknown;
-  coupon?: unknown;
+  founding?: unknown;
 };
 
 export type FreemiusCheckoutBuildInput = {
@@ -29,6 +30,8 @@ export type FreemiusCheckoutBuildInput = {
   intentId: string;
   successUrl: string;
   cancelUrl: string;
+  /** Required caller-owned role check; admin checkout is forbidden. */
+  isAdmin: boolean;
 };
 
 export class FreemiusCheckoutError extends Error {
@@ -39,6 +42,7 @@ export class FreemiusCheckoutError extends Error {
       | "invalid_interval"
       | "invalid_coupon"
       | "subscription_already_active"
+      | "admin_checkout_forbidden"
       | "unauthorized"
       | "user_not_found",
     public readonly status: number,
@@ -67,6 +71,61 @@ export function normalizeOptionalCoupon(value: unknown): string | null {
   if (typeof value !== "string") return null;
   const trimmed = value.trim();
   return trimmed.length > 0 ? trimmed : null;
+}
+
+export type FreemiusPurchaseHistoryInput = {
+  completedCheckoutIntentCount?: number;
+  subscription?: {
+    provider: string;
+    freemiusUserId?: string | null;
+    freemiusLicenseId?: string | null;
+    freemiusSubscriptionId?: string | null;
+  } | null;
+};
+
+/** Durable evidence that this account has already purchased through Freemius. */
+export function hasPreviousFreemiusPurchase(
+  input: FreemiusPurchaseHistoryInput,
+): boolean {
+  if ((input.completedCheckoutIntentCount ?? 0) > 0) return true;
+
+  const subscription = input.subscription;
+  if (!subscription) return false;
+
+  return (
+    subscription.provider === "freemius" ||
+    Boolean(
+      subscription.freemiusUserId ||
+        subscription.freemiusLicenseId ||
+        subscription.freemiusSubscriptionId,
+    )
+  );
+}
+
+/**
+ * Resolve the server-owned founding coupon. The browser requests the offer but
+ * never supplies the coupon code. Missing purchase-history context fails closed.
+ */
+export function resolveFreemiusFoundingCoupon(input: {
+  interval: FreemiusCheckoutIntervalInput;
+  foundingRequested?: boolean;
+  hasPreviousPurchase?: boolean;
+  env?: NodeJS.ProcessEnv;
+}): string | null {
+  if (
+    input.interval !== "monthly" ||
+    input.foundingRequested !== true ||
+    input.hasPreviousPurchase !== false ||
+    !freemiusFoundingOfferActive
+  ) {
+    return null;
+  }
+
+  const env = input.env ?? process.env;
+  const coupon = getFreemiusEnvSnapshot(env).foundingCouponCode;
+  return coupon && isAllowedFreemiusFoundingCoupon(coupon, env)
+    ? coupon
+    : null;
 }
 
 export function resolveFreemiusBillingCycle(
@@ -161,6 +220,14 @@ export function buildFreemiusHostedCheckoutUrl(
   input: FreemiusCheckoutBuildInput,
   env: NodeJS.ProcessEnv = process.env,
 ): string {
+  if (input.isAdmin === true) {
+    throw new FreemiusCheckoutError(
+      "admin_checkout_forbidden",
+      403,
+      "Admin accounts cannot purchase or upgrade to Pro.",
+    );
+  }
+
   const snap = getFreemiusEnvSnapshot(env);
   if (!snap.productId || !snap.proPlanId) {
     throw new FreemiusCheckoutError(
@@ -262,9 +329,11 @@ export async function createFreemiusCheckoutSession(input: {
     currentPeriodEnd: Date | null;
   } | null;
   interval: FreemiusCheckoutIntervalInput;
-  coupon?: string | null;
-  /** Optional admin flag for FREEMIUS_RESTRICTED_CHECKOUT_ADMIN_ONLY */
-  isAdmin?: boolean;
+  foundingRequested?: boolean;
+  /** Server-resolved purchase history. Omitted fails closed for founding. */
+  hasPreviousPurchase?: boolean;
+  /** Required caller-owned role check; admin checkout is always denied. */
+  isAdmin: boolean;
   env?: NodeJS.ProcessEnv;
   intentStore?: FreemiusCheckoutIntentStore;
   now?: Date;
@@ -275,9 +344,18 @@ export async function createFreemiusCheckoutSession(input: {
   interval: FreemiusCheckoutIntervalInput;
   pricingId: string;
   billingCycle: "monthly" | "annual";
+  foundingApplied: boolean;
   mode: FreemiusCheckoutAccessMode;
 }> {
   const env = input.env ?? process.env;
+
+  if (input.isAdmin === true) {
+    throw new FreemiusCheckoutError(
+      "admin_checkout_forbidden",
+      403,
+      "Admin accounts cannot purchase or upgrade to Pro.",
+    );
+  }
 
   const accessMode = resolveFreemiusCheckoutAccess(
     { email: input.email, isAdmin: input.isAdmin },
@@ -308,16 +386,12 @@ export async function createFreemiusCheckoutSession(input: {
     throw new FreemiusCheckoutError(block.code, 409, block.message);
   }
 
-  // Validate coupon before creating intent (no orphan intents on reject).
-  if (input.coupon) {
-    if (!isAllowedFreemiusFoundingCoupon(input.coupon, env)) {
-      throw new FreemiusCheckoutError(
-        "invalid_coupon",
-        400,
-        "This coupon code is not valid for checkout.",
-      );
-    }
-  }
+  const coupon = resolveFreemiusFoundingCoupon({
+    interval: input.interval,
+    foundingRequested: input.foundingRequested,
+    hasPreviousPurchase: input.hasPreviousPurchase,
+    env,
+  });
 
   const pricingId = resolveFreemiusPricingIdForInterval(input.interval, env);
   const now = input.now ?? new Date();
@@ -338,10 +412,11 @@ export async function createFreemiusCheckoutSession(input: {
       email: input.email,
       name: input.name,
       interval: input.interval,
-      coupon: input.coupon,
+      coupon,
       intentId: intent.id,
       successUrl: urls.successUrl,
       cancelUrl: urls.cancelUrl,
+      isAdmin: input.isAdmin,
     },
     env,
   );
@@ -353,6 +428,7 @@ export async function createFreemiusCheckoutSession(input: {
     interval: input.interval,
     pricingId,
     billingCycle: resolveFreemiusCheckoutBillingCycleParam(input.interval),
+    foundingApplied: coupon !== null,
     mode: accessMode,
   };
 }

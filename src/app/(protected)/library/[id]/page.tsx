@@ -11,6 +11,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { buttonVariants } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { requireSession } from "@/lib/auth/session";
+import { isAdminSession } from "@/lib/admin/is-admin-session";
 import { prisma } from "@/lib/db";
 
 export const dynamic = "force-dynamic";
@@ -24,6 +25,7 @@ export default async function LibraryDetailPage({
 }: LibraryDetailPageProps) {
   const { id } = await params;
   const session = await requireSession();
+  const isAdmin = isAdminSession(session);
 
   const prompt = await prisma.savedPrompt.findFirst({
     where: { id, userId: session.id },
@@ -58,6 +60,7 @@ export default async function LibraryDetailPage({
               title={prompt.title}
               promptId={prompt.id}
               size="md"
+              hideUpgradeCtas={isAdmin}
             />
             <Link
               href="/library"

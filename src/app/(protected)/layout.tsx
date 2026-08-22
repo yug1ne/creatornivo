@@ -29,14 +29,16 @@ export default async function ProtectedLayout({
   let showUpgradeCard = true;
 
   if (session) {
+    const isAdmin = isAdminSession(session);
     const [userCounts, access] = await Promise.all([
       getUserSupportStatusCounts(session.id, prismaSupportStore),
       getUserAccessContext(session),
     ]);
     answeredSupportCount = userSupportAttentionCount(userCounts);
-    showUpgradeCard = !access || !isAppSumoAccessMode(access.mode);
+    showUpgradeCard =
+      !isAdmin && (!access || !isAppSumoAccessMode(access.mode));
 
-    if (isAdminSession(session)) {
+    if (isAdmin) {
       const adminCounts = await getAdminSupportStatusCounts(prismaSupportStore);
       adminOpenSupportCount = adminSupportAttentionCount(adminCounts);
     }

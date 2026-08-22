@@ -25,8 +25,10 @@ import {
   FreemiusCheckoutError,
   getFreemiusCheckoutBlock,
   getFreemiusCheckoutUrls,
+  hasPreviousFreemiusPurchase,
   normalizeOptionalCoupon,
   parseFreemiusCheckoutInterval,
+  resolveFreemiusFoundingCoupon,
   resolveFreemiusPricingIdForInterval,
 } from "../src/lib/freemius/checkout-service";
 
@@ -96,6 +98,7 @@ test("buildFreemiusHostedCheckoutUrl uses allowlisted ids and never embeds secre
       email: "buyer@example.com",
       name: "Buyer",
       interval: "monthly",
+      isAdmin: false,
       coupon: "FOUNDING20",
       intentId: "intent-1",
       successUrl: "https://www.creatornivo.com/settings/billing?checkout=success",
@@ -133,6 +136,7 @@ test("buildFreemiusHostedCheckoutUrl rejects invalid coupon", () => {
           email: "buyer@example.com",
           name: null,
           interval: "monthly",
+          isAdmin: false,
           coupon: "NOPE",
           intentId: "intent-1",
           successUrl: "https://www.creatornivo.com/settings/billing?checkout=success",
@@ -159,6 +163,7 @@ test("annual interval uses annual pricing id when configured", () => {
       email: "buyer@example.com",
       name: null,
       interval: "annual",
+      isAdmin: false,
       intentId: "intent-2",
       successUrl: "https://www.creatornivo.com/settings/billing?checkout=success",
       cancelUrl: "https://www.creatornivo.com/settings/billing?checkout=cancelled",
@@ -180,6 +185,7 @@ test("createFreemiusCheckoutSession is disabled when public and restricted are o
         plan: "free",
         subscription: null,
         interval: "monthly",
+        isAdmin: false,
         env: baseEnv,
         intentStore: {
           async create() {
@@ -206,6 +212,7 @@ test("restricted off + non-allowlisted email stays checkout_disabled", async () 
         plan: "free",
         subscription: null,
         interval: "monthly",
+        isAdmin: false,
         env: {
           ...baseEnv,
           FREEMIUS_RESTRICTED_CHECKOUT_ENABLED: "true",
@@ -234,7 +241,9 @@ test("restricted true + allowlisted email returns checkout URL and mode restrict
     plan: "free",
     subscription: null,
     interval: "monthly",
-    coupon: "FOUNDING20",
+    isAdmin: false,
+    foundingRequested: true,
+    hasPreviousPurchase: false,
     env: {
       ...baseEnv,
       FREEMIUS_RESTRICTED_CHECKOUT_ENABLED: "true",
@@ -285,6 +294,7 @@ test("restricted email matching is case-insensitive and trims spaces", async () 
     plan: "free",
     subscription: null,
     interval: "monthly",
+    isAdmin: false,
     env: {
       ...baseEnv,
       FREEMIUS_RESTRICTED_CHECKOUT_ENABLED: "true",
@@ -299,7 +309,7 @@ test("restricted email matching is case-insensitive and trims spaces", async () 
   assert.equal(result.mode, "restricted");
 });
 
-test("restricted mode allows FOUNDING20 and rejects invalid coupon", async () => {
+test("restricted mode applies the server-owned founding coupon only to first-time monthly checkout", async () => {
   const env = {
     ...baseEnv,
     FREEMIUS_RESTRICTED_CHECKOUT_ENABLED: "true",
@@ -313,7 +323,9 @@ test("restricted mode allows FOUNDING20 and rejects invalid coupon", async () =>
     plan: "free",
     subscription: null,
     interval: "monthly",
-    coupon: "founding20",
+    isAdmin: false,
+    foundingRequested: true,
+    hasPreviousPurchase: false,
     env,
     intentStore: {
       async create() {
@@ -322,30 +334,7 @@ test("restricted mode allows FOUNDING20 and rejects invalid coupon", async () =>
     },
   });
   assert.match(ok.checkoutUrl, /coupon=FOUNDING20/);
-
-  let badIntentCreated = false;
-  await assert.rejects(
-    () =>
-      createFreemiusCheckoutSession({
-        userId: "user-1",
-        email: "tester@creatornivo.com",
-        name: null,
-        plan: "free",
-        subscription: null,
-        interval: "monthly",
-        coupon: "BADCOUPON",
-        env,
-        intentStore: {
-          async create() {
-            badIntentCreated = true;
-            return { id: "should-not" };
-          },
-        },
-      }),
-    (error: unknown) =>
-      error instanceof FreemiusCheckoutError && error.code === "invalid_coupon",
-  );
-  assert.equal(badIntentCreated, false);
+  assert.equal(ok.foundingApplied, true);
 });
 
 test("restricted mode supports annual interval", async () => {
@@ -356,6 +345,7 @@ test("restricted mode supports annual interval", async () => {
     plan: "free",
     subscription: null,
     interval: "annual",
+    isAdmin: false,
     env: {
       ...baseEnv,
       FREEMIUS_PRO_ANNUAL_PRICING_ID: "88888",
@@ -375,7 +365,7 @@ test("restricted mode supports annual interval", async () => {
   assert.match(result.checkoutUrl, /pricing_id=88888/);
 });
 
-test("restricted admin-only allows admin when email not listed", async () => {
+test("admin cannot initiate monthly or annual checkout, including legacy restricted admin mode", async () => {
   const env = {
     ...baseEnv,
     FREEMIUS_RESTRICTED_CHECKOUT_ENABLED: "true",
@@ -384,29 +374,43 @@ test("restricted admin-only allows admin when email not listed", async () => {
   };
   assert.equal(
     canUseRestrictedFreemiusCheckout("admin@creatornivo.com", true, env),
-    true,
+    false,
   );
   assert.equal(
     canUseRestrictedFreemiusCheckout("admin@creatornivo.com", false, env),
     false,
   );
 
-  const result = await createFreemiusCheckoutSession({
-    userId: "admin-1",
-    email: "admin@creatornivo.com",
-    name: null,
-    plan: "free",
-    subscription: null,
-    interval: "monthly",
-    isAdmin: true,
-    env,
-    intentStore: {
-      async create() {
-        return { id: "intent-admin" };
-      },
-    },
-  });
-  assert.equal(result.mode, "restricted");
+  for (const interval of ["monthly", "annual"] as const) {
+    let intentCreated = false;
+    await assert.rejects(
+      () =>
+        createFreemiusCheckoutSession({
+          userId: "admin-1",
+          email: "admin@creatornivo.com",
+          name: null,
+          plan: "free",
+          subscription: null,
+          interval,
+          isAdmin: true,
+          env: {
+            ...env,
+            FREEMIUS_PRO_ANNUAL_PRICING_ID: "88888",
+          },
+          intentStore: {
+            async create() {
+              intentCreated = true;
+              return { id: "intent-admin" };
+            },
+          },
+        }),
+      (error: unknown) =>
+        error instanceof FreemiusCheckoutError &&
+        error.code === "admin_checkout_forbidden" &&
+        error.status === 403,
+    );
+    assert.equal(intentCreated, false);
+  }
 });
 
 test("createFreemiusCheckoutSession creates intent and URL only when public enabled", async () => {
@@ -418,7 +422,9 @@ test("createFreemiusCheckoutSession creates intent and URL only when public enab
     plan: "free",
     subscription: null,
     interval: "monthly",
-    coupon: "founding20",
+    isAdmin: false,
+    foundingRequested: true,
+    hasPreviousPurchase: false,
     env: { ...baseEnv, PUBLIC_CHECKOUT_ENABLED: "true" },
     intentStore: {
       async create(input) {
@@ -440,6 +446,90 @@ test("createFreemiusCheckoutSession creates intent and URL only when public enab
   assert.equal(result.checkoutUrl.includes("/mode/page/plugin/"), false);
   assert.equal(result.checkoutUrl.includes("sk_secret"), false);
   assert.equal(result.billingCycle, "monthly");
+  assert.equal(result.foundingApplied, true);
+});
+
+test("previous Freemius customer gets regular monthly checkout, not founding coupon", async () => {
+  const result = await createFreemiusCheckoutSession({
+    userId: "returning-user",
+    email: "returning@example.com",
+    name: null,
+    plan: "free",
+    subscription: null,
+    interval: "monthly",
+    isAdmin: false,
+    foundingRequested: true,
+    hasPreviousPurchase: true,
+    env: { ...baseEnv, PUBLIC_CHECKOUT_ENABLED: "true" },
+    intentStore: {
+      async create() {
+        return { id: "intent-returning" };
+      },
+    },
+  });
+
+  assert.equal(result.foundingApplied, false);
+  assert.equal(result.checkoutUrl.includes("coupon="), false);
+  assert.match(result.checkoutUrl, /billing_cycle=monthly/);
+  assert.match(result.checkoutUrl, /pricing_id=77471/);
+});
+
+test("Freemius purchase history survives cancellation/refund and completed intents", () => {
+  assert.equal(
+    hasPreviousFreemiusPurchase({
+      subscription: null,
+      completedCheckoutIntentCount: 0,
+    }),
+    false,
+  );
+  assert.equal(
+    hasPreviousFreemiusPurchase({
+      subscription: {
+        provider: "freemius",
+        freemiusUserId: "fs-user-1",
+        freemiusSubscriptionId: "fs-sub-ended",
+      },
+      completedCheckoutIntentCount: 0,
+    }),
+    true,
+  );
+  assert.equal(
+    hasPreviousFreemiusPurchase({
+      subscription: null,
+      completedCheckoutIntentCount: 1,
+    }),
+    true,
+  );
+});
+
+test("founding coupon resolution is first-purchase monthly only", () => {
+  assert.equal(
+    resolveFreemiusFoundingCoupon({
+      interval: "monthly",
+      foundingRequested: true,
+      hasPreviousPurchase: false,
+      env: baseEnv,
+    }),
+    "FOUNDING20",
+  );
+  assert.equal(
+    resolveFreemiusFoundingCoupon({
+      interval: "monthly",
+      foundingRequested: true,
+      hasPreviousPurchase: true,
+      env: baseEnv,
+    }),
+    null,
+  );
+  assert.equal(
+    resolveFreemiusFoundingCoupon({
+      interval: "annual",
+      foundingRequested: true,
+      hasPreviousPurchase: false,
+      env: baseEnv,
+    }),
+    null,
+  );
 });
 
 test("createFreemiusCheckoutSession blocks active Pro without creating intent", async () => {
@@ -453,6 +543,7 @@ test("createFreemiusCheckoutSession blocks active Pro without creating intent", 
         plan: "pro",
         subscription: null,
         interval: "monthly",
+        isAdmin: false,
         env: { ...baseEnv, PUBLIC_CHECKOUT_ENABLED: "true" },
         intentStore: {
           async create() {
@@ -466,6 +557,45 @@ test("createFreemiusCheckoutSession blocks active Pro without creating intent", 
       error.code === "subscription_already_active",
   );
   assert.equal(intentCreated, false);
+});
+
+test("existing recurring founding subscriber remains on the active-subscription path", async () => {
+  const existingSubscription = {
+    provider: "freemius",
+    status: "active" as const,
+    cancelAtPeriodEnd: false,
+    currentPeriodEnd: new Date("2099-01-01T00:00:00.000Z"),
+  };
+  let intentCreated = false;
+
+  await assert.rejects(
+    () =>
+      createFreemiusCheckoutSession({
+        userId: "founding-subscriber",
+        email: "founding@example.com",
+        name: null,
+        plan: "pro",
+        subscription: existingSubscription,
+        interval: "monthly",
+        isAdmin: false,
+        foundingRequested: true,
+        hasPreviousPurchase: true,
+        env: { ...baseEnv, PUBLIC_CHECKOUT_ENABLED: "true" },
+        intentStore: {
+          async create() {
+            intentCreated = true;
+            return { id: "must-not-exist" };
+          },
+        },
+      }),
+    (error: unknown) =>
+      error instanceof FreemiusCheckoutError &&
+      error.code === "subscription_already_active",
+  );
+
+  assert.equal(intentCreated, false);
+  assert.equal(existingSubscription.status, "active");
+  assert.equal(existingSubscription.cancelAtPeriodEnd, false);
 });
 
 test("resolveFreemiusCheckoutAccess prefers public over restricted", () => {
@@ -492,6 +622,13 @@ test("resolveFreemiusCheckoutAccess prefers public over restricted", () => {
     null,
   );
   assert.equal(isRestrictedCheckoutEnabled(baseEnv), false);
+  assert.equal(
+    resolveFreemiusCheckoutAccess(
+      { email: "admin@creatornivo.com", isAdmin: true },
+      { PUBLIC_CHECKOUT_ENABLED: "true" },
+    ),
+    null,
+  );
 });
 
 test("getFreemiusCheckoutUrls point at settings billing success/cancel", () => {
@@ -542,6 +679,9 @@ test("HTTP checkout returns checkout_disabled when kill-switch is false", async 
   assert.match(source, /checkout_disabled/);
   assert.match(source, /resolveFreemiusCheckoutAccess/);
   assert.match(source, /requireSession/);
+  assert.match(source, /admin_checkout_forbidden/);
+  assert.match(source, /hasPreviousFreemiusPurchase/);
+  assert.match(source, /status:\s*"completed"/);
   assert.match(source, /mode:/);
   assert.doesNotMatch(source, /User\.plan\s*=/);
   assert.doesNotMatch(source, /plan:\s*PLANS\.PRO/);
